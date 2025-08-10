@@ -1,0 +1,1109 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internet-Protokolle - Abitur 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #06b6d4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            color: var(--text-light);
+            font-size: 1.1rem;
+        }
+
+        .breadcrumb {
+            background: var(--bg-white);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem 2rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .intro-box {
+            background: linear-gradient(135deg, #fef3c7, #fed7aa);
+            border: 2px solid #f59e0b;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .intro-box h3 {
+            color: #92400e;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .protocol-card {
+            background: var(--bg-light);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .protocol-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.1);
+        }
+
+        .protocol-card h4 {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .layer-diagram {
+            background: var(--bg-white);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 2rem 0;
+        }
+
+        .layer {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .layer:last-child {
+            border-bottom: none;
+        }
+
+        .layer-7 { background: #fef3c7; }
+        .layer-4 { background: #dbeafe; }
+        .layer-3 { background: #dcfce7; }
+        .layer-2 { background: #fce7f3; }
+
+        .layer-name {
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+        .layer-protocols {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .comparison-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table tr:hover {
+            background: var(--bg-light);
+        }
+
+        .header-diagram {
+            background: var(--bg-light);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+        }
+
+        .header-field {
+            display: inline-block;
+            border: 1px solid var(--primary-color);
+            padding: 0.5rem 1rem;
+            margin: 0.2rem;
+            background: var(--bg-white);
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.85rem;
+        }
+
+        .example-box {
+            background: #f0f9ff;
+            border-left: 4px solid var(--info-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .example-box h5 {
+            color: var(--info-color);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .highlight {
+            background: #fef3c7;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-weight: bold;
+            color: #92400e;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border: 2px solid var(--danger-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box h5 {
+            color: var(--danger-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .success-box {
+            background: #f0fdf4;
+            border: 2px solid var(--success-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .success-box h5 {
+            color: var(--success-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            gap: 1rem;
+        }
+
+        .nav-button {
+            padding: 0.8rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-button.secondary {
+            background: var(--bg-light);
+            color: var(--text-dark);
+            border: 2px solid var(--border-color);
+        }
+
+        .nav-button.secondary:hover {
+            background: var(--border-color);
+        }
+
+        .toc {
+            background: var(--bg-white);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .toc h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc a {
+            color: var(--text-dark);
+            text-decoration: none;
+            display: block;
+            padding: 0.5rem;
+            border-radius: 4px;
+            transition: background 0.2s ease;
+        }
+
+        .toc a:hover {
+            background: var(--bg-light);
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">🏠 Hauptseite</a> → 
+            <a href="netzwerk-grundlagen.html">🌐 Vernetzte Systeme</a> → 
+            <strong>Internet-Protokolle</strong>
+        </div>
+
+        <header class="header">
+            <h1>🌐 Internet-Protokolle</h1>
+            <p>Die Sprachen des Internets verstehen - Von TCP/IP bis HTTP</p>
+        </header>
+
+        <div class="toc">
+            <h3>📋 Inhaltsverzeichnis</h3>
+            <ul>
+                <li><a href="#intro">🎯 Was sind Internet-Protokolle?</a></li>
+                <li><a href="#schichten">📚 Das Schichtenmodell</a></li>
+                <li><a href="#transport">🚛 Transport-Protokolle (TCP & UDP)</a></li>
+                <li><a href="#internet">🌍 Internet-Protokoll (IP)</a></li>
+                <li><a href="#anwendung">💻 Anwendungs-Protokolle</a></li>
+                <li><a href="#header">📦 Header-Strukturen</a></li>
+                <li><a href="#praxis">🔧 Praktische Beispiele</a></li>
+            </ul>
+        </div>
+
+        <div class="section" id="intro">
+            <div class="section-header">
+                <h2>🎯 Was sind Internet-Protokolle?</h2>
+                <p>Die fundamentalen Regeln der Internet-Kommunikation</p>
+            </div>
+            <div class="section-content">
+                <div class="intro-box">
+                    <h3>🤔 Stell dir vor...</h3>
+                    <p>Du möchtest einem Freund in einem anderen Land einen Brief schicken. Du brauchst:</p>
+                    <ul style="margin: 1rem 0; padding-left: 2rem;">
+                        <li><strong>Eine gemeinsame Sprache</strong> - damit er dich versteht</li>
+                        <li><strong>Eine Adresse</strong> - damit der Brief ankommt</li>
+                        <li><strong>Ein Transportsystem</strong> - Post, DHL, etc.</li>
+                        <li><strong>Regeln</strong> - wie man einen Brief formatiert</li>
+                    </ul>
+                    <p><strong>Genauso funktioniert das Internet!</strong> Computer brauchen Protokolle (= Regeln), um miteinander zu kommunizieren.</p>
+                </div>
+
+                <h3>📚 Definition: Internet-Protokolle</h3>
+                <p><strong>Internet-Protokolle</strong> sind standardisierte Regeln und Verfahren, die festlegen, wie Computer und andere Geräte im Internet oder in Netzwerken miteinander kommunizieren. Sie definieren:</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                        <strong>📝 Format</strong><br>
+                        Wie Daten strukturiert werden müssen
+                    </div>
+                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px; border-left: 4px solid var(--success-color);">
+                        <strong>🚚 Transport</strong><br>
+                        Wie Daten übertragen werden
+                    </div>
+                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px; border-left: 4px solid var(--warning-color);">
+                        <strong>📍 Adressierung</strong><br>
+                        Wie Geräte gefunden werden
+                    </div>
+                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px; border-left: 4px solid var(--danger-color);">
+                        <strong>🔧 Fehlerbehandlung</strong><br>
+                        Was bei Problemen passiert
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <h5>✅ Warum sind Protokolle wichtig?</h5>
+                    <p>Ohne Protokolle wäre das Internet wie ein Turmbau zu Babel - jeder würde seine eigene "Sprache" sprechen und niemand würde den anderen verstehen. Protokolle sorgen dafür, dass ein Windows-PC mit einem Mac, einem Smartphone und einem Server kommunizieren kann!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="schichten">
+            <div class="section-header">
+                <h2>📚 Das TCP/IP-Schichtenmodell</h2>
+                <p>Wie das Internet in Schichten organisiert ist</p>
+            </div>
+            <div class="section-content">
+                <h3>🏗️ Das Schichten-Prinzip</h3>
+                <p>Das Internet funktioniert wie ein <span class="highlight">Schichtsystem</span> - jede Schicht hat eine spezielle Aufgabe und arbeitet mit den anderen zusammen:</p>
+
+                <div class="layer-diagram">
+                    <div class="layer layer-7">
+                        <div class="layer-name">🎯 Schicht 4: Anwendungen</div>
+                        <div class="layer-protocols">HTTP, HTTPS, FTP, SMTP, DNS, DHCP</div>
+                    </div>
+                    <div class="layer layer-4">
+                        <div class="layer-name">🚛 Schicht 3: Transport</div>
+                        <div class="layer-protocols">TCP, UDP</div>
+                    </div>
+                    <div class="layer layer-3">
+                        <div class="layer-name">🌍 Schicht 2: Internet</div>
+                        <div class="layer-protocols">IP (IPv4, IPv6), ICMP</div>
+                    </div>
+                    <div class="layer layer-2">
+                        <div class="layer-name">🔌 Schicht 1: Netzzugang</div>
+                        <div class="layer-protocols">Ethernet, WLAN, etc.</div>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h5>💡 Alltags-Beispiel: Eine Webseite aufrufen</h5>
+                    <ol style="padding-left: 1.5rem;">
+                        <li><strong>Anwendung:</strong> Du tippst "www.google.de" in deinen Browser</li>
+                        <li><strong>Transport:</strong> TCP sorgt dafür, dass alle Daten vollständig ankommen</li>
+                        <li><strong>Internet:</strong> IP findet den Weg zu Googles Servern</li>
+                        <li><strong>Netzzugang:</strong> Ethernet/WLAN schickt die Daten über das Kabel/Funk</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="transport">
+            <div class="section-header">
+                <h2>🚛 Transport-Protokolle: TCP vs UDP</h2>
+                <p>Wie Daten sicher und schnell transportiert werden</p>
+            </div>
+            <div class="section-content">
+                <h3>🤝 TCP - Transmission Control Protocol</h3>
+                <p>TCP ist wie ein <span class="highlight">zuverlässiger Paketdienst</span> - er garantiert, dass alles ankommt!</p>
+
+                <div class="protocol-card">
+                    <h4>🛡️ TCP - Der "Zuverlässige"</h4>
+                    <p><strong>Eigenschaften:</strong></p>
+                    <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                        <li>✅ <strong>Verbindungsorientiert:</strong> Baut eine "Leitung" auf, bevor Daten gesendet werden</li>
+                        <li>✅ <strong>Zuverlässig:</strong> Überprüft, ob alle Daten angekommen sind</li>
+                        <li>✅ <strong>Reihenfolge:</strong> Stellt sicher, dass Daten in der richtigen Reihenfolge ankommen</li>
+                        <li>❌ <strong>Langsamer:</strong> Viel Overhead durch Sicherheitschecks</li>
+                    </ul>
+
+                    <div class="header-diagram">
+                        <h5>📦 TCP-Header Struktur:</h5>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.2rem;">
+                            <span class="header-field">Source Port (16 Bit)</span>
+                            <span class="header-field">Destination Port (16 Bit)</span>
+                            <span class="header-field">Sequence Number (32 Bit)</span>
+                            <span class="header-field">Acknowledgment (32 Bit)</span>
+                            <span class="header-field">Header Länge</span>
+                            <span class="header-field">Flags (SYN,ACK,FIN...)</span>
+                            <span class="header-field">Window Size</span>
+                            <span class="header-field">Checksum</span>
+                        </div>
+                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-light);">
+                            <strong>Wichtige Felder:</strong> Source/Destination Port = Absender/Empfänger, Sequence Number = Paketnummer, ACK = Bestätigung
+                        </p>
+                    </div>
+                </div>
+
+                <h3>⚡ UDP - User Datagram Protocol</h3>
+                <div class="protocol-card">
+                    <h4>⚡ UDP - Der "Schnelle"</h4>
+                    <p><strong>Eigenschaften:</strong></p>
+                    <ul style="margin-left: 1.5rem; margin-bottom: 1rem;">
+                        <li>✅ <strong>Verbindungslos:</strong> Schickt Daten direkt ab - "Fire and Forget"</li>
+                        <li>✅ <strong>Schnell:</strong> Minimaler Overhead</li>
+                        <li>❌ <strong>Unzuverlässig:</strong> Keine Garantie, dass Daten ankommen</li>
+                        <li>❌ <strong>Keine Reihenfolge:</strong> Pakete können durcheinander ankommen</li>
+                    </ul>
+
+                    <div class="header-diagram">
+                        <h5>📦 UDP-Header Struktur (viel einfacher!):</h5>
+                        <div style="display: flex; flex-wrap: wrap; gap: 0.2rem;">
+                            <span class="header-field">Source Port (16 Bit)</span>
+                            <span class="header-field">Destination Port (16 Bit)</span>
+                            <span class="header-field">Length (16 Bit)</span>
+                            <span class="header-field">Checksum (16 Bit)</span>
+                        </div>
+                        <p style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-light);">
+                            <strong>Nur 8 Bytes Header</strong> vs TCP mit 20-60 Bytes!
+                        </p>
+                    </div>
+                </div>
+
+                <h3>⚖️ TCP vs UDP - Der große Vergleich</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Eigenschaft</th>
+                            <th>🛡️ TCP</th>
+                            <th>⚡ UDP</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Verbindung</strong></td>
+                            <td>Verbindungsorientiert (wie Telefon)</td>
+                            <td>Verbindungslos (wie Postkarte)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Zuverlässigkeit</strong></td>
+                            <td>100% zuverlässig</td>
+                            <td>Best Effort (hoffentlich kommt's an)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Geschwindigkeit</strong></td>
+                            <td>Langsamer (viele Checks)</td>
+                            <td>Schneller (keine Checks)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Header-Größe</strong></td>
+                            <td>20-60 Bytes</td>
+                            <td>8 Bytes</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Verwendung</strong></td>
+                            <td>Webseiten, E-Mail, Dateitransfer</td>
+                            <td>Live-Video, Games, DNS</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="example-box">
+                    <h5>🎮 Wann verwende ich was?</h5>
+                    <p><strong>TCP verwenden bei:</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>📧 E-Mail (muss vollständig ankommen)</li>
+                        <li>🌐 Webseiten (alle HTML-Daten sind wichtig)</li>
+                        <li>📁 Datei-Downloads (jedes Bit muss stimmen)</li>
+                    </ul>
+                    <p><strong>UDP verwenden bei:</strong></p>
+                    <ul style="margin-left: 1.5rem;">
+                        <li>🎮 Online-Games (Speed wichtiger als Perfektion)</li>
+                        <li>📹 Video-Streaming (ein verlorenes Bild ist OK)</li>
+                        <li>🎵 Musik-Streaming (ein kurzer Aussetzer ist OK)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="internet">
+            <div class="section-header">
+                <h2>🌍 Das Internet-Protokoll (IP)</h2>
+                <p>Wie Daten den Weg durch das Internet finden</p>
+            </div>
+            <div class="section-content">
+                <h3>🗺️ IP - Das "GPS des Internets"</h3>
+                <p>Das Internet Protocol (IP) ist wie ein <span class="highlight">digitales Postleitsystem</span> - es sorgt dafür, dass Datenpakete den Weg zu ihrem Ziel finden!</p>
+
+                <div class="protocol-card">
+                    <h4>🏠 IP-Adressen - Die "Hausadressen" des Internets</h4>
+                    <p>Jedes Gerät im Internet braucht eine eindeutige Adresse:</p>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin: 1rem 0;">
+                        <div style="background: #dbeafe; padding: 1rem; border-radius: 8px;">
+                            <strong>IPv4 Adressen</strong><br>
+                            <code style="font-size: 1.1em; color: var(--primary-color);">192.168.1.1</code><br>
+                            <small>4 Zahlen von 0-255, durch Punkte getrennt</small>
+                        </div>
+                        <div style="background: #dcfce7; padding: 1rem; border-radius: 8px;">
+                            <strong>IPv6 Adressen</strong><br>
+                            <code style="font-size: 0.9em; color: var(--success-color);">2001:db8::1</code><br>
+                            <small>Längere Adressen mit Hexadezimalzahlen</small>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>📍 Arten von IP-Adressen</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Typ</th>
+                            <th>IPv4 Beispiel</th>
+                            <th>IPv6 Beispiel</th>
+                            <th>Verwendung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>🏠 Private Adressen</strong></td>
+                            <td>192.168.1.100<br>10.0.0.1</td>
+                            <td>fd00::1</td>
+                            <td>Heimnetzwerk, Firma</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🌐 Öffentliche Adressen</strong></td>
+                            <td>8.8.8.8 (Google DNS)</td>
+                            <td>2001:4860:4860::8888</td>
+                            <td>Internet-Server</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🔄 Loopback</strong></td>
+                            <td>127.0.0.1 (localhost)</td>
+                            <td>::1</td>
+                            <td>Eigener Computer</td>
+                        </tr>
+                        <tr>
+                            <td><strong>🔗 Link Local</strong></td>
+                            <td>169.254.x.x</td>
+                            <td>fe80::</td>
+                            <td>Automatische Konfiguration</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="header-diagram">
+                    <h5>📦 IPv4-Header Struktur:</h5>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.2rem; margin: 1rem 0;">
+                        <span class="header-field">Version (4 Bit)</span>
+                        <span class="header-field">IHL (4 Bit)</span>
+                        <span class="header-field">TOS (8 Bit)</span>
+                        <span class="header-field">Paketlänge (16 Bit)</span>
+                        <span class="header-field">Identifikation (16 Bit)</span>
+                        <span class="header-field">Flags (3 Bit)</span>
+                        <span class="header-field">Fragment Offset (13 Bit)</span>
+                        <span class="header-field">TTL (8 Bit)</span>
+                        <span class="header-field">Protokoll (8 Bit)</span>
+                        <span class="header-field">Header Checksum (16 Bit)</span>
+                        <span class="header-field" style="grid-column: span 2;">Sender IP-Adresse (32 Bit)</span>
+                        <span class="header-field" style="grid-column: span 2;">Empfänger IP-Adresse (32 Bit)</span>
+                    </div>
+                    <p style="font-size: 0.9rem; color: var(--text-light);">
+                        <strong>Wichtige Felder:</strong> TTL = Time To Live (verhindert endlose Loops), Protokoll = welches Protokoll folgt (TCP=6, UDP=17)
+                    </p>
+                </div>
+
+                <div class="example-box">
+                    <h5>🚀 So funktioniert IP-Routing:</h5>
+                    <ol style="padding-left: 1.5rem;">
+                        <li><strong>Paket erstellen:</strong> Dein Computer packt Daten in ein IP-Paket mit Ziel-Adresse</li>
+                        <li><strong>Router-Entscheidung:</strong> Jeder Router schaut: "Kenne ich den Weg?" und leitet weiter</li>
+                        <li><strong>Hop by Hop:</strong> Das Paket springt von Router zu Router bis zum Ziel</li>
+                        <li><strong>TTL-Countdown:</strong> Bei jedem Hop wird TTL um 1 reduziert (verhindert endlose Schleifen)</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="anwendung">
+            <div class="section-header">
+                <h2>💻 Anwendungs-Protokolle</h2>
+                <p>Die Protokolle, die du täglich nutzt</p>
+            </div>
+            <div class="section-content">
+                <h3>🌐 HTTP/HTTPS - Das Web-Protokoll</h3>
+                <div class="protocol-card">
+                    <h4>🌐 HTTP - Hypertext Transfer Protocol</h4>
+                    <p><strong>Das ist das Protokoll für Webseiten!</strong></p>
+                    <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                        <li>🏠 <strong>Port 80:</strong> Standard HTTP (unverschlüsselt)</li>
+                        <li>🔒 <strong>Port 443:</strong> HTTPS (verschlüsselt mit TLS)</li>
+                        <li>📝 <strong>Request-Response:</strong> Client fragt, Server antwortet</li>
+                    </ul>
+
+                    <div class="code-block">
+<strong>HTTP Request Beispiel:</strong>
+GET /index.html HTTP/1.1
+Host: www.example.com
+User-Agent: Mozilla/5.0...
+Accept: text/html
+
+<strong>HTTP Response Beispiel:</strong>
+HTTP/1.1 200 OK
+Content-Type: text/html
+Content-Length: 1234
+
+&lt;html&gt;&lt;body&gt;Hello World!&lt;/body&gt;&lt;/html&gt;
+                    </div>
+
+                    <p><strong>HTTP Methoden:</strong></p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;">
+                        <div style="background: var(--bg-light); padding: 1rem; border-radius: 6px;">
+                            <strong>GET</strong><br>Daten abrufen (Webseite laden)
+                        </div>
+                        <div style="background: var(--bg-light); padding: 1rem; border-radius: 6px;">
+                            <strong>POST</strong><br>Daten senden (Formular abschicken)
+                        </div>
+                        <div style="background: var(--bg-light); padding: 1rem; border-radius: 6px;">
+                            <strong>PUT</strong><br>Daten aktualisieren
+                        </div>
+                        <div style="background: var(--bg-light); padding: 1rem; border-radius: 6px;">
+                            <strong>DELETE</strong><br>Daten löschen
+                        </div>
+                    </div>
+                </div>
+
+                <h3>📧 E-Mail Protokolle</h3>
+                <div class="protocol-card">
+                    <h4>📧 SMTP, POP3, IMAP - E-Mail Protokolle</h4>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Protokoll</th>
+                                <th>Port</th>
+                                <th>Funktion</th>
+                                <th>Beispiel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>SMTP</strong></td>
+                                <td>25, 587</td>
+                                <td>E-Mails versenden</td>
+                                <td>Von deinem E-Mail-Client zum Server</td>
+                            </tr>
+                            <tr>
+                                <td><strong>POP3</strong></td>
+                                <td>110, 995</td>
+                                <td>E-Mails abholen (Download)</td>
+                                <td>E-Mails auf den Computer laden</td>
+                            </tr>
+                            <tr>
+                                <td><strong>IMAP</strong></td>
+                                <td>143, 993</td>
+                                <td>E-Mails synchronisieren</td>
+                                <td>E-Mails auf Server und Gerät gleich</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>🔍 DNS - Domain Name System</h3>
+                <div class="protocol-card">
+                    <h4>🔍 DNS - Das "Telefonbuch des Internets"</h4>
+                    <p>DNS übersetzt <span class="highlight">menschenfreundliche Namen</span> in <span class="highlight">IP-Adressen</span>:</p>
+                    
+                    <div class="example-box">
+                        <h5>🔄 DNS-Auflösung Schritt für Schritt:</h5>
+                        <ol style="padding-left: 1.5rem;">
+                            <li>Du tippst: <code>www.google.de</code></li>
+                            <li>DNS-Server antwortet: <code>142.250.185.110</code></li>
+                            <li>Dein Browser verbindet sich zu dieser IP</li>
+                            <li>Google's Server antwortet mit der Webseite</li>
+                        </ol>
+                    </div>
+
+                    <p><strong>DNS Record Typen:</strong></p>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                        <div style="background: var(--bg-light); padding: 1rem; border-radius: 6px;">
+                            <strong>A Record</strong><br>Domain → IPv4 Adresse
+                        </div>
+                        <div style="background: var(--bg-light); padding: 1rem; border-radius: 6px;">
+                            <strong>AAAA Record</strong><br>Domain → IPv6 Adresse
+                        </div>
+                        <div style="background: var(--bg-light); padding: 1rem; border-radius: 6px;">
+                            <strong>CNAME</strong><br>Alias (Umleitung)
+                        </div>
+                        <div style="background: var(--bg-light); padding: 1rem; border-radius: 6px;">
+                            <strong>MX Record</strong><br>Mail Server für Domain
+                        </div>
+                    </div>
+                </div>
+
+                <h3>📁 FTP - File Transfer Protocol</h3>
+                <div class="protocol-card">
+                    <h4>📁 FTP - Datei-Transfer</h4>
+                    <ul style="margin: 1rem 0; padding-left: 1.5rem;">
+                        <li>🏠 <strong>Port 21:</strong> Kontroll-Verbindung</li>
+                        <li>📁 <strong>Port 20:</strong> Daten-Verbindung</li>
+                        <li>👤 <strong>Authentifizierung:</strong> Username/Password</li>
+                        <li>📂 <strong>Funktionen:</strong> Upload, Download, Ordner verwalten</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="header">
+            <div class="section-header">
+                <h2>📦 Header-Strukturen im Detail</h2>
+                <p>Wie Protokoll-Header aufgebaut sind</p>
+            </div>
+            <div class="section-content">
+                <h3>🎯 Was sind Header?</h3>
+                <p>Header sind wie <span class="highlight">Adressaufkleber auf Paketen</span> - sie enthalten alle wichtigen Informationen für die Übertragung:</p>
+
+                <div class="example-box">
+                    <h5>📮 Analogie: Briefpost</h5>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem;">
+                        <div>
+                            <strong>📮 Echter Brief:</strong>
+                            <ul style="padding-left: 1.5rem; margin: 0.5rem 0;">
+                                <li>Absender-Adresse</li>
+                                <li>Empfänger-Adresse</li>
+                                <li>Porto/Briefmarke</li>
+                                <li>Datum</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <strong>📦 Daten-Paket:</strong>
+                            <ul style="padding-left: 1.5rem; margin: 0.5rem 0;">
+                                <li>Source IP/Port</li>
+                                <li>Destination IP/Port</li>
+                                <li>Protokoll-Info</li>
+                                <li>Prüfsumme</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>🧱 Header-Aufbau verschiedener Protokolle</h3>
+                
+                <div class="header-diagram">
+                    <h5>📡 Ethernet Header (Layer 2):</h5>
+                    <div style="display: flex; flex-wrap: wrap; gap: 0.2rem;">
+                        <span class="header-field">Präambel (8 Bytes)</span>
+                        <span class="header-field">Ziel-MAC (6 Bytes)</span>
+                        <span class="header-field">Source-MAC (6 Bytes)</span>
+                        <span class="header-field">Type (2 Bytes)</span>
+                        <span class="header-field">Daten (46-1500 Bytes)</span>
+                        <span class="header-field">Prüfsumme (4 Bytes)</span>
+                    </div>
+                </div>
+
+                <div class="header-diagram">
+                    <h5>🌍 IPv6 Header (einfacher als IPv4!):</h5>
+                    <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 0.2rem;">
+                        <span class="header-field">Version (4)</span>
+                        <span class="header-field">Traffic Class (8)</span>
+                        <span class="header-field">Flow Label (20)</span>
+                        <span class="header-field">-</span>
+                        <span class="header-field" style="grid-column: span 2;">Payload Length (16)</span>
+                        <span class="header-field">Next Header (8)</span>
+                        <span class="header-field">Hop Limit (8)</span>
+                        <span class="header-field" style="grid-column: span 4;">Source Address (128 Bit = 16 Bytes)</span>
+                        <span class="header-field" style="grid-column: span 4;">Destination Address (128 Bit = 16 Bytes)</span>
+                    </div>
+                    <p style="font-size: 0.9rem; color: var(--text-light); margin-top: 1rem;">
+                        <strong>IPv6 Vorteile:</strong> Feste 40 Bytes (vs IPv4: 20-60 Bytes), viel mehr Adressen, bessere Performance
+                    </p>
+                </div>
+
+                <div class="warning-box">
+                    <h5>⚠️ Header-Overhead</h5>
+                    <p>Jede Schicht fügt ihren eigenen Header hinzu! Bei einer einfachen HTTP-Anfrage:</p>
+                    <ul style="padding-left: 1.5rem; margin: 1rem 0;">
+                        <li><strong>Ethernet:</strong> 18 Bytes</li>
+                        <li><strong>IP:</strong> 20 Bytes (IPv4) oder 40 Bytes (IPv6)</li>
+                        <li><strong>TCP:</strong> 20 Bytes</li>
+                        <li><strong>HTTP:</strong> ~200-500 Bytes</li>
+                    </ul>
+                    <p><strong>Total:</strong> ~250-600 Bytes Overhead - bevor auch nur 1 Byte Nutzdaten übertragen wird!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="section" id="praxis">
+            <div class="section-header">
+                <h2>🔧 Praktische Beispiele & Anwendungen</h2>
+                <p>Internet-Protokolle in der realen Welt</p>
+            </div>
+            <div class="section-content">
+                <h3>🌐 Komplettes Beispiel: Webseite aufrufen</h3>
+                <div class="example-box">
+                    <h5>🚀 Was passiert, wenn du "www.example.com" aufrufst?</h5>
+                    <ol style="padding-left: 1.5rem;">
+                        <li><strong>DNS-Auflösung:</strong>
+                            <ul style="padding-left: 1.5rem; margin: 0.5rem 0;">
+                                <li>Browser fragt DNS-Server: "Was ist die IP von www.example.com?"</li>
+                                <li>DNS antwortet: "93.184.216.34"</li>
+                                <li>Protokoll: <span class="highlight">DNS über UDP Port 53</span></li>
+                            </ul>
+                        </li>
+                        <li><strong>TCP-Verbindung aufbauen:</strong>
+                            <ul style="padding-left: 1.5rem; margin: 0.5rem 0;">
+                                <li>3-Way-Handshake: SYN → SYN-ACK → ACK</li>
+                                <li>Ziel: <span class="highlight">93.184.216.34:80 (HTTP)</span></li>
+                            </ul>
+                        </li>
+                        <li><strong>HTTP-Request senden:</strong>
+                            <div class="code-block" style="margin: 0.5rem 0;">
+GET / HTTP/1.1
+Host: www.example.com
+User-Agent: Chrome/91.0
+Accept: text/html,*/*
+                            </div>
+                        </li>
+                        <li><strong>Server-Response:</strong>
+                            <div class="code-block" style="margin: 0.5rem 0;">
+HTTP/1.1 200 OK
+Content-Type: text/html
+Content-Length: 1270
+
+&lt;!DOCTYPE html&gt;
+&lt;html&gt;...&lt;/html&gt;
+                            </div>
+                        </li>
+                        <li><strong>Verbindung schließen:</strong> TCP FIN → FIN-ACK</li>
+                    </ol>
+                </div>
+
+                <h3>🎮 Gaming: Warum UDP?</h3>
+                <div class="protocol-card">
+                    <h4>🎮 Online-Gaming mit UDP</h4>
+                    <p><strong>Warum nutzen Spiele UDP statt TCP?</strong></p>
+                    <ul style="padding-left: 1.5rem; margin: 1rem 0;">
+                        <li>⚡ <strong>Geschwindigkeit:</strong> Keine Zeit für "Bestätigungen"</li>
+                        <li>🎯 <strong>Aktualität:</strong> Lieber neue Position als alte, aber sichere</li>
+                        <li>📊 <strong>Beispiel:</strong> Spielerposition jede 16ms (60 FPS)</li>
+                    </ul>
+                    
+                    <div style="background: #f0f9ff; border: 1px solid var(--info-color); padding: 1rem; border-radius: 8px;">
+                        <strong>🎯 Game-Logik:</strong><br>
+                        • Position alt: (X=100, Y=200) - TCP würde warten bis bestätigt<br>
+                        • Position neu: (X=105, Y=205) - UDP schickt sofort, alte Position ist egal<br>
+                        • Resultat: Flüssigere Bewegung!
+                    </div>
+                </div>
+
+                <h3>📹 Video-Streaming Protokolle</h3>
+                <div class="protocol-card">
+                    <h4>📹 Wie funktioniert Netflix/YouTube?</h4>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Protokoll</th>
+                                <th>Verwendung</th>
+                                <th>Eigenschaften</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>HTTP/HTTPS</strong></td>
+                                <td>Video-Download (progressive)</td>
+                                <td>TCP - zuverlässig, aber langsamer Start</td>
+                            </tr>
+                            <tr>
+                                <td><strong>RTMP</strong></td>
+                                <td>Live-Streaming (Twitch)</td>
+                                <td>TCP - für Live-Übertragungen</td>
+                            </tr>
+                            <tr>
+                                <td><strong>WebRTC</strong></td>
+                                <td>Video-Calls (Zoom, Teams)</td>
+                                <td>UDP - niedrige Latenz für Gespräche</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>🔒 Sicherheits-Protokolle</h3>
+                <div class="protocol-card">
+                    <h4>🔒 TLS/SSL - Verschlüsselung</h4>
+                    <p><strong>HTTPS = HTTP + TLS/SSL Verschlüsselung</strong></p>
+                    
+                    <div style="background: #f0fdf4; border: 2px solid var(--success-color); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <strong>🔒 TLS Handshake:</strong>
+                        <ol style="padding-left: 1.5rem; margin: 0.5rem 0;">
+                            <li>Client: "Hallo Server, ich kann diese Verschlüsselungen"</li>
+                            <li>Server: "OK, nehmen wir diese + hier ist mein Zertifikat"</li>
+                            <li>Client prüft Zertifikat: "Bist du wirklich google.com?"</li>
+                            <li>Beide generieren geheimen Schlüssel</li>
+                            <li>Ab jetzt: Alle Daten verschlüsselt!</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <h3>🏠 Heimnetzwerk-Protokolle</h3>
+                <div class="protocol-card">
+                    <h4>🏠 DHCP - Automatische IP-Vergabe</h4>
+                    <p>DHCP (Dynamic Host Configuration Protocol) vergibt automatisch IP-Adressen in deinem Heimnetzwerk:</p>
+                    
+                    <div class="example-box">
+                        <h5>📱 Handy verbindet sich mit WLAN:</h5>
+                        <ol style="padding-left: 1.5rem;">
+                            <li><strong>DHCP Discover:</strong> "Hallo, ich brauche eine IP-Adresse!"</li>
+                            <li><strong>DHCP Offer:</strong> Router antwortet: "192.168.1.100 ist frei"</li>
+                            <li><strong>DHCP Request:</strong> "OK, ich nehme 192.168.1.100"</li>
+                            <li><strong>DHCP ACK:</strong> "Bestätigt, 24h gültig"</li>
+                        </ol>
+                        <p><strong>Zusätzlich erhält das Handy:</strong> Gateway (192.168.1.1), DNS-Server (8.8.8.8), Subnetzmaske</p>
+                    </div>
+                </div>
+
+                <div class="success-box">
+                    <h5>✅ Zusammenfassung: Internet-Protokolle</h5>
+                    <ul style="padding-left: 1.5rem; margin: 1rem 0;">
+                        <li><strong>🏗️ Schichten:</strong> Jede Schicht hat ihre Aufgabe (Anwendung → Transport → Internet → Netzzugang)</li>
+                        <li><strong>🚛 Transport:</strong> TCP = zuverlässig, UDP = schnell</li>
+                        <li><strong>🌍 Internet:</strong> IP sorgt für Adressierung und Routing</li>
+                        <li><strong>💻 Anwendung:</strong> HTTP, DNS, FTP, E-Mail für konkrete Dienste</li>
+                        <li><strong>📦 Header:</strong> Jede Schicht fügt Steuerungsinformationen hinzu</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="netzwerk-grundlagen.html" class="nav-button secondary">← Netzwerk-Grundlagen</a>
+            <a href="index.html" class="nav-button secondary">🏠 Hauptseite</a>
+            <a href="osi-modell.html" class="nav-button">OSI-Modell →</a>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+
+
+        // Interactive examples
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add visual feedback for protocol cards
+            document.querySelectorAll('.protocol-card').forEach(card => {
+                card.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                });
+                card.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+
+            // Interactive TCP vs UDP comparison
+            const comparisonRows = document.querySelectorAll('.comparison-table tr');
+            comparisonRows.forEach((row, index) => {
+                if (index > 0) { // Skip header
+                    row.addEventListener('click', function() {
+                        this.style.backgroundColor = this.style.backgroundColor ? '' : 'var(--bg-light)';
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

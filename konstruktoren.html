@@ -1,0 +1,1356 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Konstruktoren & Destruktoren - Abitur 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --code-bg: #f1f5f9;
+            --syntax-keyword: #7c3aed;
+            --syntax-string: #059669;
+            --syntax-comment: #64748b;
+            --syntax-number: #dc2626;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .header .breadcrumb {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .header .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .nav-button {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .content-section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .intro-box {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 2px solid var(--accent-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .intro-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .definition-box {
+            background: linear-gradient(135deg, #ecfdf5, #f0fdf4);
+            border: 2px solid var(--success-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .definition-box .definition-title {
+            color: var(--success-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fefce8, #fef3c7);
+            border: 2px solid var(--warning-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box .warning-title {
+            color: var(--warning-color);
+            font-weight: bold;
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .code-container {
+            background: var(--code-bg);
+            border-radius: 12px;
+            overflow: hidden;
+            margin: 1.5rem 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .code-header {
+            background: var(--text-dark);
+            color: white;
+            padding: 0.75rem 1rem;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .code-content {
+            padding: 1.5rem;
+        }
+
+        pre {
+            margin: 0;
+            overflow-x: auto;
+            font-family: 'Courier New', Monaco, monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .syntax-keyword {
+            color: var(--syntax-keyword);
+            font-weight: bold;
+        }
+
+        .syntax-string {
+            color: var(--syntax-string);
+        }
+
+        .syntax-comment {
+            color: var(--syntax-comment);
+            font-style: italic;
+        }
+
+        .syntax-number {
+            color: var(--syntax-number);
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .feature-card {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .feature-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--bg-white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .comparison-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .step-container {
+            margin: 2rem 0;
+        }
+
+        .step {
+            display: flex;
+            margin-bottom: 2rem;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            background: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .step-content {
+            flex: 1;
+        }
+
+        .step-content h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .practical-example {
+            background: linear-gradient(135deg, #f8fafc, #e2e8f0);
+            border: 2px solid var(--accent-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .practical-example h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .key-points {
+            background: linear-gradient(135deg, #fef7ff, #fae8ff);
+            border: 2px solid #a855f7;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .key-points h4 {
+            color: #7c2d92;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .key-points ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .key-points li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .key-points li::before {
+            content: "✓";
+            color: var(--success-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .footer-nav {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--bg-white);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .footer-nav a {
+            color: var(--primary-color);
+            text-decoration: none;
+            padding: 0.75rem 1.5rem;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .footer-nav a:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .footer-nav {
+                flex-direction: column;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .step {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .step-number {
+                margin: 0 auto 1rem auto;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="breadcrumb">
+                <a href="index.html">🏠 Hauptseite</a> → 
+                <a href="oop-grundlagen.html">OOP Grundlagen</a> → 
+                Konstruktoren & Destruktoren
+            </div>
+            <h1>🏗️ Konstruktoren & Destruktoren</h1>
+            <p>Objektorientierter Entwurf I - BPE 8</p>
+        </header>
+
+        <div class="nav-buttons">
+            <a href="index.html" class="nav-button">← Zurück zur Übersicht</a>
+            <a href="vererbung.html" class="nav-button">Vererbung & Polymorphie →</a>
+        </div>
+
+        <!-- Einführung -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>🎯 Was sind Konstruktoren?</h2>
+                <p>Die Grundlagen der Objekterstellung verstehen</p>
+            </div>
+            <div class="section-content">
+                <div class="intro-box">
+                    <h3>📚 Einfach erklärt:</h3>
+                    <p>Stell dir vor, du baust ein LEGO-Haus. Bevor du das Haus nutzen kannst, musst du es erst zusammenbauen und einrichten. Genau das macht ein Konstruktor in der Programmierung - er "baut" ein Objekt zusammen und richtet es ein, bevor es verwendet werden kann.</p>
+                </div>
+
+                <div class="definition-box">
+                    <div class="definition-title">
+                        🔍 Definition: Konstruktor
+                    </div>
+                    <p>Ein <strong>Konstruktor</strong> ist eine spezielle Methode in einer Klasse, die automatisch aufgerufen wird, wenn ein neues Objekt dieser Klasse erstellt wird. Seine Hauptaufgabe ist es, das Objekt in einen definierten Anfangszustand zu versetzen.</p>
+                </div>
+
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h4>🔧 Hauptfunktionen</h4>
+                        <ul>
+                            <li>Objekt initialisieren</li>
+                            <li>Speicher reservieren</li>
+                            <li>Startwerte setzen</li>
+                            <li>Validierung durchführen</li>
+                        </ul>
+                    </div>
+                    <div class="feature-card">
+                        <h4>⚡ Besondere Eigenschaften</h4>
+                        <ul>
+                            <li>Gleicher Name wie Klasse</li>
+                            <li>Kein Rückgabetyp</li>
+                            <li>Automatischer Aufruf</li>
+                            <li>Kann überladen werden</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Aufbau und Syntax -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>📝 Aufbau und Syntax eines Konstruktors</h2>
+                <p>Wie schreibt man einen Konstruktor richtig?</p>
+            </div>
+            <div class="section-content">
+                <div class="step-container">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <h4>Grundaufbau</h4>
+                            <p>Ein Konstruktor hat immer den gleichen Namen wie die Klasse und keinen Rückgabetyp (auch nicht <code>void</code>).</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <h4>Sichtbarkeitsmodifikator</h4>
+                            <p>Meist <code>public</code>, damit Objekte von außerhalb erstellt werden können.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <h4>Parameter</h4>
+                            <p>Können Parameter haben, um Startwerte zu übergeben (optional).</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        📄 Grundsyntax eines Konstruktors
+                    </div>
+                    <div class="code-content">
+                        <pre><code><span class="syntax-keyword">public</span> <span class="syntax-keyword">class</span> KlassenName {
+    <span class="syntax-comment">// Attribute</span>
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">String</span> attribut;
+    
+    <span class="syntax-comment">// Konstruktor - gleicher Name wie Klasse!</span>
+    <span class="syntax-keyword">public</span> KlassenName() {
+        <span class="syntax-comment">// Initialisierung hier</span>
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Arten von Konstruktoren -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>🎭 Verschiedene Arten von Konstruktoren</h2>
+                <p>Standard, parametrisiert und überladene Konstruktoren</p>
+            </div>
+            <div class="section-content">
+                <h3>1. Standard-Konstruktor (Default-Konstruktor)</h3>
+                <div class="definition-box">
+                    <div class="definition-title">
+                        🔍 Standard-Konstruktor
+                    </div>
+                    <p>Ein Konstruktor ohne Parameter, der Standardwerte setzt. Wird automatisch vom Compiler erstellt, wenn kein Konstruktor definiert ist.</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        📄 Beispiel: Standard-Konstruktor
+                    </div>
+                    <div class="code-content">
+                        <pre><code><span class="syntax-keyword">public</span> <span class="syntax-keyword">class</span> Person {
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">String</span> name;
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">int</span> alter;
+    
+    <span class="syntax-comment">// Standard-Konstruktor</span>
+    <span class="syntax-keyword">public</span> Person() {
+        <span class="syntax-keyword">this</span>.name = <span class="syntax-string">"Unbekannt"</span>;
+        <span class="syntax-keyword">this</span>.alter = <span class="syntax-number">0</span>;
+        System.out.println(<span class="syntax-string">"Person erstellt mit Standardwerten"</span>);
+    }
+    
+    <span class="syntax-comment">// Getter-Methoden</span>
+    <span class="syntax-keyword">public</span> <span class="syntax-keyword">String</span> getName() {
+        <span class="syntax-keyword">return</span> name;
+    }
+    
+    <span class="syntax-keyword">public</span> <span class="syntax-keyword">int</span> getAlter() {
+        <span class="syntax-keyword">return</span> alter;
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <h3>2. Parametrisierter Konstruktor</h3>
+                <div class="definition-box">
+                    <div class="definition-title">
+                        🔍 Parametrisierter Konstruktor
+                    </div>
+                    <p>Ein Konstruktor mit Parametern, der es ermöglicht, beim Erstellen des Objekts spezifische Werte zu übergeben.</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        📄 Beispiel: Parametrisierter Konstruktor
+                    </div>
+                    <div class="code-content">
+                        <pre><code><span class="syntax-keyword">public</span> <span class="syntax-keyword">class</span> Auto {
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">String</span> marke;
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">int</span> baujahr;
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">double</span> preis;
+    
+    <span class="syntax-comment">// Parametrisierter Konstruktor</span>
+    <span class="syntax-keyword">public</span> Auto(<span class="syntax-keyword">String</span> marke, <span class="syntax-keyword">int</span> baujahr, <span class="syntax-keyword">double</span> preis) {
+        <span class="syntax-keyword">this</span>.marke = marke;
+        <span class="syntax-keyword">this</span>.baujahr = baujahr;
+        <span class="syntax-keyword">this</span>.preis = preis;
+        System.out.println(<span class="syntax-string">"Auto erstellt: "</span> + marke + <span class="syntax-string">" ("</span> + baujahr + <span class="syntax-string">") für "</span> + preis + <span class="syntax-string">"€"</span>);
+    }
+    
+    <span class="syntax-comment">// Objekterstellung</span>
+    <span class="syntax-keyword">public</span> <span class="syntax-keyword">static</span> <span class="syntax-keyword">void</span> main(<span class="syntax-keyword">String</span>[] args) {
+        Auto meinAuto = <span class="syntax-keyword">new</span> Auto(<span class="syntax-string">"BMW"</span>, <span class="syntax-number">2020</span>, <span class="syntax-number">35000.50</span>);
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <h3>3. Konstruktor-Überladung</h3>
+                <div class="definition-box">
+                    <div class="definition-title">
+                        🔍 Konstruktor-Überladung
+                    </div>
+                    <p>Mehrere Konstruktoren in einer Klasse mit unterschiedlichen Parameterlisten. Ermöglicht flexible Objekterstellung.</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        📄 Beispiel: Überladene Konstruktoren
+                    </div>
+                    <div class="code-content">
+                        <pre><code><span class="syntax-keyword">public</span> <span class="syntax-keyword">class</span> Rechteck {
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">double</span> breite;
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">double</span> hoehe;
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">String</span> farbe;
+    
+    <span class="syntax-comment">// 1. Standard-Konstruktor</span>
+    <span class="syntax-keyword">public</span> Rechteck() {
+        <span class="syntax-keyword">this</span>.breite = <span class="syntax-number">1.0</span>;
+        <span class="syntax-keyword">this</span>.hoehe = <span class="syntax-number">1.0</span>;
+        <span class="syntax-keyword">this</span>.farbe = <span class="syntax-string">"weiß"</span>;
+    }
+    
+    <span class="syntax-comment">// 2. Konstruktor mit Größe</span>
+    <span class="syntax-keyword">public</span> Rechteck(<span class="syntax-keyword">double</span> breite, <span class="syntax-keyword">double</span> hoehe) {
+        <span class="syntax-keyword">this</span>.breite = breite;
+        <span class="syntax-keyword">this</span>.hoehe = hoehe;
+        <span class="syntax-keyword">this</span>.farbe = <span class="syntax-string">"weiß"</span>; <span class="syntax-comment">// Standardfarbe</span>
+    }
+    
+    <span class="syntax-comment">// 3. Konstruktor mit allem</span>
+    <span class="syntax-keyword">public</span> Rechteck(<span class="syntax-keyword">double</span> breite, <span class="syntax-keyword">double</span> hoehe, <span class="syntax-keyword">String</span> farbe) {
+        <span class="syntax-keyword">this</span>.breite = breite;
+        <span class="syntax-keyword">this</span>.hoehe = hoehe;
+        <span class="syntax-keyword">this</span>.farbe = farbe;
+    }
+    
+    <span class="syntax-comment">// 4. Quadrat-Konstruktor (nur eine Seitenlänge)</span>
+    <span class="syntax-keyword">public</span> Rechteck(<span class="syntax-keyword">double</span> seitenlaenge) {
+        <span class="syntax-keyword">this</span>(seitenlaenge, seitenlaenge); <span class="syntax-comment">// Aufruf eines anderen Konstruktors!</span>
+    }
+    
+    <span class="syntax-keyword">public</span> <span class="syntax-keyword">double</span> berechneFlaeche() {
+        <span class="syntax-keyword">return</span> breite * hoehe;
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Konstruktor mit Validierung -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>🛡️ Konstruktor mit Validierung</h2>
+                <p>Sichere Objekterstellung durch Eingabeprüfung</p>
+            </div>
+            <div class="section-content">
+                <div class="warning-box">
+                    <div class="warning-title">
+                        ⚠️ Wichtig: Eingabevalidierung
+                    </div>
+                    <p>Konstruktoren sollten immer prüfen, ob die übergebenen Werte sinnvoll sind. Ungültige Werte können zu Fehlern im Programm führen!</p>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        📄 Beispiel: Konstruktor mit Validierung
+                    </div>
+                    <div class="code-content">
+                        <pre><code><span class="syntax-keyword">public</span> <span class="syntax-keyword">class</span> BankKonto {
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">String</span> kontoinhaber;
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">double</span> kontostand;
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">String</span> iban;
+    
+    <span class="syntax-keyword">public</span> BankKonto(<span class="syntax-keyword">String</span> kontoinhaber, <span class="syntax-keyword">double</span> kontostand, <span class="syntax-keyword">String</span> iban) {
+        <span class="syntax-comment">// Validierung des Kontoinhabers</span>
+        <span class="syntax-keyword">if</span> (kontoinhaber == <span class="syntax-keyword">null</span> || kontoinhaber.trim().isEmpty()) {
+            <span class="syntax-keyword">throw</span> <span class="syntax-keyword">new</span> IllegalArgumentException(<span class="syntax-string">"Kontoinhaber darf nicht leer sein!"</span>);
+        }
+        
+        <span class="syntax-comment">// Validierung des Kontostands</span>
+        <span class="syntax-keyword">if</span> (kontostand < <span class="syntax-number">0</span>) {
+            <span class="syntax-keyword">throw</span> <span class="syntax-keyword">new</span> IllegalArgumentException(<span class="syntax-string">"Kontostand darf nicht negativ sein!"</span>);
+        }
+        
+        <span class="syntax-comment">// Validierung der IBAN (vereinfacht)</span>
+        <span class="syntax-keyword">if</span> (iban == <span class="syntax-keyword">null</span> || iban.length() != <span class="syntax-number">22</span>) {
+            <span class="syntax-keyword">throw</span> <span class="syntax-keyword">new</span> IllegalArgumentException(<span class="syntax-string">"IBAN muss 22 Zeichen lang sein!"</span>);
+        }
+        
+        <span class="syntax-comment">// Erst nach erfolgreicher Validierung zuweisen</span>
+        <span class="syntax-keyword">this</span>.kontoinhaber = kontoinhaber.trim();
+        <span class="syntax-keyword">this</span>.kontostand = kontostand;
+        <span class="syntax-keyword">this</span>.iban = iban.toUpperCase();
+        
+        System.out.println(<span class="syntax-string">"Bankkonto erfolgreich erstellt für: "</span> + <span class="syntax-keyword">this</span>.kontoinhaber);
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="practical-example">
+                    <h4>💡 Praktisches Beispiel: Fehlerbehandlung</h4>
+                    <div class="code-container">
+                        <div class="code-header">
+                            📄 Verwendung mit Fehlerbehandlung
+                        </div>
+                        <div class="code-content">
+                            <pre><code><span class="syntax-keyword">public</span> <span class="syntax-keyword">static</span> <span class="syntax-keyword">void</span> main(<span class="syntax-keyword">String</span>[] args) {
+    <span class="syntax-keyword">try</span> {
+        <span class="syntax-comment">// Gültiges Konto erstellen</span>
+        BankKonto konto1 = <span class="syntax-keyword">new</span> BankKonto(<span class="syntax-string">"Max Mustermann"</span>, <span class="syntax-number">1500.0</span>, <span class="syntax-string">"DE89370400440532013000"</span>);
+        
+        <span class="syntax-comment">// Ungültiges Konto - wirft Exception</span>
+        BankKonto konto2 = <span class="syntax-keyword">new</span> BankKonto(<span class="syntax-string">""</span>, <span class="syntax-number">-100</span>, <span class="syntax-string">"INVALID"</span>);
+        
+    } <span class="syntax-keyword">catch</span> (IllegalArgumentException e) {
+        System.err.println(<span class="syntax-string">"Fehler beim Erstellen des Kontos: "</span> + e.getMessage());
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- this-Schlüsselwort -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>🔗 Das this-Schlüsselwort</h2>
+                <p>Selbstreferenz in Konstruktoren verstehen</p>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <div class="definition-title">
+                        🔍 this-Schlüsselwort
+                    </div>
+                    <p><strong>this</strong> ist eine Referenz auf das aktuelle Objekt. Es wird verwendet, um zwischen Parametern und Instanzvariablen zu unterscheiden oder andere Konstruktoren aufzurufen.</p>
+                </div>
+
+                <h3>1. this für Attributzugriff</h3>
+                <div class="code-container">
+                    <div class="code-header">
+                        📄 Beispiel: this bei Namenskonflikten
+                    </div>
+                    <div class="code-content">
+                        <pre><code><span class="syntax-keyword">public</span> <span class="syntax-keyword">class</span> Student {
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">String</span> name;
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">int</span> matrikelnummer;
+    
+    <span class="syntax-keyword">public</span> Student(<span class="syntax-keyword">String</span> name, <span class="syntax-keyword">int</span> matrikelnummer) {
+        <span class="syntax-comment">// Ohne 'this' würde der Parameter sich selbst zugewiesen!</span>
+        <span class="syntax-keyword">this</span>.name = name;                <span class="syntax-comment">// this.name = Attribut, name = Parameter</span>
+        <span class="syntax-keyword">this</span>.matrikelnummer = matrikelnummer;  <span class="syntax-comment">// Eindeutige Zuordnung</span>
+    }
+    
+    <span class="syntax-comment">// Falsche Variante (ohne this):</span>
+    <span class="syntax-comment">// name = name;  ← Parameter wird sich selbst zugewiesen, Attribut bleibt unverändert!</span>
+}</code></pre>
+                    </div>
+                </div>
+
+                <h3>2. this() für Konstruktor-Verkettung</h3>
+                <div class="code-container">
+                    <div class="code-header">
+                        📄 Beispiel: Konstruktor-Verkettung mit this()
+                    </div>
+                    <div class="code-content">
+                        <pre><code><span class="syntax-keyword">public</span> <span class="syntax-keyword">class</span> Produkt {
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">String</span> name;
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">double</span> preis;
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">String</span> kategorie;
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">boolean</span> verfuegbar;
+    
+    <span class="syntax-comment">// Haupt-Konstruktor mit allen Parametern</span>
+    <span class="syntax-keyword">public</span> Produkt(<span class="syntax-keyword">String</span> name, <span class="syntax-keyword">double</span> preis, <span class="syntax-keyword">String</span> kategorie, <span class="syntax-keyword">boolean</span> verfuegbar) {
+        <span class="syntax-keyword">this</span>.name = name;
+        <span class="syntax-keyword">this</span>.preis = preis;
+        <span class="syntax-keyword">this</span>.kategorie = kategorie;
+        <span class="syntax-keyword">this</span>.verfuegbar = verfuegbar;
+        System.out.println(<span class="syntax-string">"Vollständiges Produkt erstellt: "</span> + name);
+    }
+    
+    <span class="syntax-comment">// Vereinfachter Konstruktor - ruft den Haupt-Konstruktor auf</span>
+    <span class="syntax-keyword">public</span> Produkt(<span class="syntax-keyword">String</span> name, <span class="syntax-keyword">double</span> preis) {
+        <span class="syntax-keyword">this</span>(name, preis, <span class="syntax-string">"Allgemein"</span>, <span class="syntax-keyword">true</span>); <span class="syntax-comment">// Aufruf des anderen Konstruktors</span>
+    }
+    
+    <span class="syntax-comment">// Standard-Konstruktor</span>
+    <span class="syntax-keyword">public</span> Produkt() {
+        <span class="syntax-keyword">this</span>(<span class="syntax-string">"Unbekanntes Produkt"</span>, <span class="syntax-number">0.0</span>); <span class="syntax-comment">// Aufruf des 2-Parameter-Konstruktors</span>
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <div class="warning-title">
+                        ⚠️ Wichtige Regel für this()
+                    </div>
+                    <p><strong>this()</strong> muss immer die erste Anweisung im Konstruktor sein! Davor dürfen keine anderen Anweisungen stehen.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Destruktoren in Java -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>🗑️ Destruktoren in Java</h2>
+                <p>Warum Java keine expliziten Destruktoren hat</p>
+            </div>
+            <div class="section-content">
+                <div class="warning-box">
+                    <div class="warning-title">
+                        ⚠️ Wichtiger Hinweis
+                    </div>
+                    <p>Java hat <strong>keine expliziten Destruktoren</strong> wie C++! Die Speicherverwaltung übernimmt der Garbage Collector automatisch.</p>
+                </div>
+
+                <div class="definition-box">
+                    <div class="definition-title">
+                        🔍 Was ist ein Destruktor?
+                    </div>
+                    <p>In anderen Programmiersprachen (wie C++) ist ein <strong>Destruktor</strong> eine spezielle Methode, die automatisch aufgerufen wird, wenn ein Objekt zerstört wird. Sie räumt Ressourcen auf und gibt Speicher frei.</p>
+                </div>
+
+                <div class="comparison-table">
+                    <table class="comparison-table">
+                        <tr>
+                            <th>Sprache</th>
+                            <th>Destruktor-Konzept</th>
+                            <th>Speicherverwaltung</th>
+                        </tr>
+                        <tr>
+                            <td><strong>C++</strong></td>
+                            <td>Explizite Destruktoren (~KlassenName)</td>
+                            <td>Manuell (new/delete)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Java</strong></td>
+                            <td>Keine Destruktoren, aber finalize()</td>
+                            <td>Automatisch (Garbage Collector)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>C#</strong></td>
+                            <td>Destruktoren (~KlassenName) und Dispose()</td>
+                            <td>Automatisch + manuell möglich</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <h3>Java-Alternative: finalize() Methode</h3>
+                <div class="code-container">
+                    <div class="code-header">
+                        📄 Beispiel: finalize() Methode (VERALTET!)
+                    </div>
+                    <div class="code-content">
+                        <pre><code><span class="syntax-keyword">public</span> <span class="syntax-keyword">class</span> RessourcenKlasse {
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">String</span> ressourcenName;
+    
+    <span class="syntax-keyword">public</span> RessourcenKlasse(<span class="syntax-keyword">String</span> name) {
+        <span class="syntax-keyword">this</span>.ressourcenName = name;
+        System.out.println(<span class="syntax-string">"Ressource erstellt: "</span> + name);
+    }
+    
+    <span class="syntax-comment">// finalize() - wird vom Garbage Collector aufgerufen (NICHT EMPFOHLEN!)</span>
+    @Override
+    <span class="syntax-keyword">protected</span> <span class="syntax-keyword">void</span> finalize() <span class="syntax-keyword">throws</span> Throwable {
+        <span class="syntax-keyword">try</span> {
+            System.out.println(<span class="syntax-string">"Ressource wird freigegeben: "</span> + ressourcenName);
+            <span class="syntax-comment">// Aufräumarbeiten hier...</span>
+        } <span class="syntax-keyword">finally</span> {
+            <span class="syntax-keyword">super</span>.finalize();
+        }
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <div class="warning-title">
+                        ⚠️ finalize() ist veraltet!
+                    </div>
+                    <p>Die <code>finalize()</code>-Methode ist seit Java 9 als <strong>deprecated</strong> (veraltet) markiert und sollte nicht mehr verwendet werden, da sie unvorhersagbar ist und Performanceprobleme verursachen kann.</p>
+                </div>
+
+                <h3>Moderne Alternative: try-with-resources</h3>
+                <div class="code-container">
+                    <div class="code-header">
+                        📄 Beispiel: AutoCloseable Interface (EMPFOHLEN)
+                    </div>
+                    <div class="code-content">
+                        <pre><code><span class="syntax-keyword">public</span> <span class="syntax-keyword">class</span> DateiManager <span class="syntax-keyword">implements</span> AutoCloseable {
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">String</span> dateiname;
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">boolean</span> istOffen;
+    
+    <span class="syntax-keyword">public</span> DateiManager(<span class="syntax-keyword">String</span> dateiname) {
+        <span class="syntax-keyword">this</span>.dateiname = dateiname;
+        <span class="syntax-keyword">this</span>.istOffen = <span class="syntax-keyword">true</span>;
+        System.out.println(<span class="syntax-string">"Datei geöffnet: "</span> + dateiname);
+    }
+    
+    <span class="syntax-keyword">public</span> <span class="syntax-keyword">void</span> schreiben(<span class="syntax-keyword">String</span> inhalt) {
+        <span class="syntax-keyword">if</span> (!istOffen) {
+            <span class="syntax-keyword">throw</span> <span class="syntax-keyword">new</span> IllegalStateException(<span class="syntax-string">"Datei ist bereits geschlossen"</span>);
+        }
+        System.out.println(<span class="syntax-string">"Schreibe in "</span> + dateiname + <span class="syntax-string">": "</span> + inhalt);
+    }
+    
+    <span class="syntax-comment">// AutoCloseable Interface - automatisches Aufräumen</span>
+    @Override
+    <span class="syntax-keyword">public</span> <span class="syntax-keyword">void</span> close() {
+        <span class="syntax-keyword">if</span> (istOffen) {
+            System.out.println(<span class="syntax-string">"Datei geschlossen: "</span> + dateiname);
+            istOffen = <span class="syntax-keyword">false</span>;
+        }
+    }
+    
+    <span class="syntax-comment">// Verwendung mit try-with-resources</span>
+    <span class="syntax-keyword">public</span> <span class="syntax-keyword">static</span> <span class="syntax-keyword">void</span> main(<span class="syntax-keyword">String</span>[] args) {
+        <span class="syntax-comment">// Automatisches Schließen nach dem try-Block!</span>
+        <span class="syntax-keyword">try</span> (DateiManager datei = <span class="syntax-keyword">new</span> DateiManager(<span class="syntax-string">"test.txt"</span>)) {
+            datei.schreiben(<span class="syntax-string">"Hallo Welt!"</span>);
+            datei.schreiben(<span class="syntax-string">"Noch mehr Text..."</span>);
+        } <span class="syntax-comment">// close() wird automatisch aufgerufen!</span>
+        
+        System.out.println(<span class="syntax-string">"Datei wurde automatisch geschlossen"</span>);
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Praktisches Beispiel -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>🚗 Vollständiges Beispiel: Auto-Klasse</h2>
+                <p>Alle Konstruktor-Konzepte in der Praxis</p>
+            </div>
+            <div class="section-content">
+                <div class="code-container">
+                    <div class="code-header">
+                        📄 Komplette Auto-Klasse mit verschiedenen Konstruktoren
+                    </div>
+                    <div class="code-content">
+                        <pre><code><span class="syntax-keyword">public</span> <span class="syntax-keyword">class</span> Auto {
+    <span class="syntax-comment">// Attribute</span>
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">String</span> marke;
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">String</span> modell;
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">int</span> baujahr;
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">double</span> preis;
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">String</span> farbe;
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">int</span> kilometerstand;
+    
+    <span class="syntax-comment">// Standard-Konstruktor</span>
+    <span class="syntax-keyword">public</span> Auto() {
+        <span class="syntax-keyword">this</span>(<span class="syntax-string">"Unbekannt"</span>, <span class="syntax-string">"Unbekannt"</span>, <span class="syntax-number">2024</span>, <span class="syntax-number">0.0</span>, <span class="syntax-string">"Weiß"</span>, <span class="syntax-number">0</span>);
+        System.out.println(<span class="syntax-string">"Standard-Auto erstellt"</span>);
+    }
+    
+    <span class="syntax-comment">// Konstruktor mit Grunddaten</span>
+    <span class="syntax-keyword">public</span> Auto(<span class="syntax-keyword">String</span> marke, <span class="syntax-keyword">String</span> modell) {
+        <span class="syntax-keyword">this</span>(marke, modell, <span class="syntax-number">2024</span>, <span class="syntax-number">0.0</span>, <span class="syntax-string">"Weiß"</span>, <span class="syntax-number">0</span>);
+    }
+    
+    <span class="syntax-comment">// Konstruktor mit Marke, Modell und Baujahr</span>
+    <span class="syntax-keyword">public</span> Auto(<span class="syntax-keyword">String</span> marke, <span class="syntax-keyword">String</span> modell, <span class="syntax-keyword">int</span> baujahr) {
+        <span class="syntax-keyword">this</span>(marke, modell, baujahr, <span class="syntax-number">0.0</span>, <span class="syntax-string">"Weiß"</span>, <span class="syntax-number">0</span>);
+    }
+    
+    <span class="syntax-comment">// Vollständiger Konstruktor mit Validierung</span>
+    <span class="syntax-keyword">public</span> Auto(<span class="syntax-keyword">String</span> marke, <span class="syntax-keyword">String</span> modell, <span class="syntax-keyword">int</span> baujahr, 
+               <span class="syntax-keyword">double</span> preis, <span class="syntax-keyword">String</span> farbe, <span class="syntax-keyword">int</span> kilometerstand) {
+        
+        <span class="syntax-comment">// Validierung der Eingaben</span>
+        <span class="syntax-keyword">if</span> (marke == <span class="syntax-keyword">null</span> || marke.trim().isEmpty()) {
+            <span class="syntax-keyword">throw</span> <span class="syntax-keyword">new</span> IllegalArgumentException(<span class="syntax-string">"Marke darf nicht leer sein"</span>);
+        }
+        
+        <span class="syntax-keyword">if</span> (modell == <span class="syntax-keyword">null</span> || modell.trim().isEmpty()) {
+            <span class="syntax-keyword">throw</span> <span class="syntax-keyword">new</span> IllegalArgumentException(<span class="syntax-string">"Modell darf nicht leer sein"</span>);
+        }
+        
+        <span class="syntax-keyword">if</span> (baujahr < <span class="syntax-number">1886</span> || baujahr > <span class="syntax-number">2025</span>) { <span class="syntax-comment">// 1886: Erstes Auto von Benz</span>
+            <span class="syntax-keyword">throw</span> <span class="syntax-keyword">new</span> IllegalArgumentException(<span class="syntax-string">"Ungültiges Baujahr: "</span> + baujahr);
+        }
+        
+        <span class="syntax-keyword">if</span> (preis < <span class="syntax-number">0</span>) {
+            <span class="syntax-keyword">throw</span> <span class="syntax-keyword">new</span> IllegalArgumentException(<span class="syntax-string">"Preis darf nicht negativ sein"</span>);
+        }
+        
+        <span class="syntax-keyword">if</span> (kilometerstand < <span class="syntax-number">0</span>) {
+            <span class="syntax-keyword">throw</span> <span class="syntax-keyword">new</span> IllegalArgumentException(<span class="syntax-string">"Kilometerstand darf nicht negativ sein"</span>);
+        }
+        
+        <span class="syntax-comment">// Zuweisungen nach erfolgreicher Validierung</span>
+        <span class="syntax-keyword">this</span>.marke = marke.trim();
+        <span class="syntax-keyword">this</span>.modell = modell.trim();
+        <span class="syntax-keyword">this</span>.baujahr = baujahr;
+        <span class="syntax-keyword">this</span>.preis = preis;
+        <span class="syntax-keyword">this</span>.farbe = farbe != <span class="syntax-keyword">null</span> ? farbe.trim() : <span class="syntax-string">"Weiß"</span>;
+        <span class="syntax-keyword">this</span>.kilometerstand = kilometerstand;
+        
+        System.out.println(<span class="syntax-string">"Auto erstellt: "</span> + <span class="syntax-keyword">this</span>.marke + <span class="syntax-string">" "</span> + <span class="syntax-keyword">this</span>.modell + 
+                          <span class="syntax-string">" ("</span> + <span class="syntax-keyword">this</span>.baujahr + <span class="syntax-string">") - "</span> + <span class="syntax-keyword">this</span>.farbe);
+    }
+    
+    <span class="syntax-comment">// Getter-Methoden</span>
+    <span class="syntax-keyword">public</span> <span class="syntax-keyword">String</span> getMarke() { <span class="syntax-keyword">return</span> marke; }
+    <span class="syntax-keyword">public</span> <span class="syntax-keyword">String</span> getModell() { <span class="syntax-keyword">return</span> modell; }
+    <span class="syntax-keyword">public</span> <span class="syntax-keyword">int</span> getBaujahr() { <span class="syntax-keyword">return</span> baujahr; }
+    <span class="syntax-keyword">public</span> <span class="syntax-keyword">double</span> getPreis() { <span class="syntax-keyword">return</span> preis; }
+    <span class="syntax-keyword">public</span> <span class="syntax-keyword">String</span> getFarbe() { <span class="syntax-keyword">return</span> farbe; }
+    <span class="syntax-keyword">public</span> <span class="syntax-keyword">int</span> getKilometerstand() { <span class="syntax-keyword">return</span> kilometerstand; }
+    
+    <span class="syntax-comment">// Setter-Methoden mit Validierung</span>
+    <span class="syntax-keyword">public</span> <span class="syntax-keyword">void</span> setPreis(<span class="syntax-keyword">double</span> preis) {
+        <span class="syntax-keyword">if</span> (preis < <span class="syntax-number">0</span>) {
+            <span class="syntax-keyword">throw</span> <span class="syntax-keyword">new</span> IllegalArgumentException(<span class="syntax-string">"Preis darf nicht negativ sein"</span>);
+        }
+        <span class="syntax-keyword">this</span>.preis = preis;
+    }
+    
+    <span class="syntax-comment">// Methoden</span>
+    <span class="syntax-keyword">public</span> <span class="syntax-keyword">void</span> fahren(<span class="syntax-keyword">int</span> kilometer) {
+        <span class="syntax-keyword">if</span> (kilometer > <span class="syntax-number">0</span>) {
+            <span class="syntax-keyword">this</span>.kilometerstand += kilometer;
+            System.out.println(marke + <span class="syntax-string">" "</span> + modell + <span class="syntax-string">" ist "</span> + kilometer + <span class="syntax-string">" km gefahren. Neuer Stand: "</span> + 
+                              <span class="syntax-keyword">this</span>.kilometerstand + <span class="syntax-string">" km"</span>);
+        }
+    }
+    
+    <span class="syntax-keyword">public</span> <span class="syntax-keyword">int</span> getAlter() {
+        <span class="syntax-keyword">return</span> <span class="syntax-number">2024</span> - baujahr;
+    }
+    
+    @Override
+    <span class="syntax-keyword">public</span> <span class="syntax-keyword">String</span> toString() {
+        <span class="syntax-keyword">return</span> <span class="syntax-string">"Auto{"</span> +
+                <span class="syntax-string">"marke='"</span> + marke + '\'' +
+                <span class="syntax-string">", modell='"</span> + modell + '\'' +
+                <span class="syntax-string">", baujahr="</span> + baujahr +
+                <span class="syntax-string">", preis="</span> + preis +
+                <span class="syntax-string">", farbe='"</span> + farbe + '\'' +
+                <span class="syntax-string">", kilometerstand="</span> + kilometerstand +
+                '}';
+    }
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="code-container">
+                    <div class="code-header">
+                        📄 Verwendung der Auto-Klasse
+                    </div>
+                    <div class="code-content">
+                        <pre><code><span class="syntax-keyword">public</span> <span class="syntax-keyword">class</span> AutoTest {
+    <span class="syntax-keyword">public</span> <span class="syntax-keyword">static</span> <span class="syntax-keyword">void</span> main(<span class="syntax-keyword">String</span>[] args) {
+        <span class="syntax-comment">// Verschiedene Konstruktoren testen</span>
+        
+        <span class="syntax-comment">// 1. Standard-Konstruktor</span>
+        Auto auto1 = <span class="syntax-keyword">new</span> Auto();
+        System.out.println(<span class="syntax-string">"Auto 1: "</span> + auto1.getMarke() + <span class="syntax-string">" "</span> + auto1.getModell());
+        
+        <span class="syntax-comment">// 2. Konstruktor mit Grunddaten</span>
+        Auto auto2 = <span class="syntax-keyword">new</span> Auto(<span class="syntax-string">"BMW"</span>, <span class="syntax-string">"X5"</span>);
+        System.out.println(<span class="syntax-string">"Auto 2: "</span> + auto2);
+        
+        <span class="syntax-comment">// 3. Konstruktor mit Baujahr</span>
+        Auto auto3 = <span class="syntax-keyword">new</span> Auto(<span class="syntax-string">"Audi"</span>, <span class="syntax-string">"A4"</span>, <span class="syntax-number">2020</span>);
+        auto3.fahren(<span class="syntax-number">150</span>);
+        System.out.println(<span class="syntax-string">"Alter von Auto 3: "</span> + auto3.getAlter() + <span class="syntax-string">" Jahre"</span>);
+        
+        <span class="syntax-comment">// 4. Vollständiger Konstruktor</span>
+        Auto auto4 = <span class="syntax-keyword">new</span> Auto(<span class="syntax-string">"Mercedes"</span>, <span class="syntax-string">"C-Klasse"</span>, <span class="syntax-number">2022</span>, 
+                                   <span class="syntax-number">45000.0</span>, <span class="syntax-string">"Schwarz"</span>, <span class="syntax-number">25000</span>);
+        
+        <span class="syntax-comment">// 5. Fehlerbehandlung testen</span>
+        <span class="syntax-keyword">try</span> {
+            Auto fehlerhaftesAuto = <span class="syntax-keyword">new</span> Auto(<span class="syntax-string">""</span>, <span class="syntax-string">"Modell"</span>, <span class="syntax-number">1800</span>, <span class="syntax-number">-1000</span>, <span class="syntax-string">"Rot"</span>, <span class="syntax-number">-50</span>);
+        } <span class="syntax-keyword">catch</span> (IllegalArgumentException e) {
+            System.err.println(<span class="syntax-string">"Erwarteter Fehler: "</span> + e.getMessage());
+        }
+        
+        <span class="syntax-comment">// Ausgabe aller Autos</span>
+        System.out.println(<span class="syntax-string">"\n--- Alle erstellten Autos ---"</span>);
+        System.out.println(auto1);
+        System.out.println(auto2);
+        System.out.println(auto3);
+        System.out.println(auto4);
+    }
+}</code></pre>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Wichtige Punkte für die Prüfung -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>📚 Wichtige Punkte für die Abiturprüfung</h2>
+                <p>Was du unbedingt wissen musst</p>
+            </div>
+            <div class="section-content">
+                <div class="key-points">
+                    <h4>🎯 Prüfungsrelevante Konzepte</h4>
+                    <ul>
+                        <li><strong>Konstruktor-Syntax:</strong> Gleicher Name wie Klasse, kein Rückgabetyp</li>
+                        <li><strong>this-Schlüsselwort:</strong> Unterscheidung Parameter/Attribut, Konstruktor-Verkettung</li>
+                        <li><strong>Konstruktor-Überladung:</strong> Verschiedene Parameterlisten möglich</li>
+                        <li><strong>Validierung:</strong> Eingabeprüfung mit IllegalArgumentException</li>
+                        <li><strong>Standard vs. parametrisiert:</strong> Unterschiede und Anwendungsfälle</li>
+                        <li><strong>Objekterstellung:</strong> new-Operator ruft Konstruktor auf</li>
+                        <li><strong>Java-Besonderheit:</strong> Keine expliziten Destruktoren, Garbage Collector</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <div class="warning-title">
+                        ⚠️ Häufige Prüfungsfehler vermeiden
+                    </div>
+                    <ul>
+                        <li><strong>Rückgabetyp bei Konstruktor:</strong> Konstruktoren haben KEINEN Rückgabetyp!</li>
+                        <li><strong>this() Position:</strong> this() muss die ERSTE Anweisung im Konstruktor sein</li>
+                        <li><strong>Parameter vs. Attribut:</strong> Ohne this. wird der Parameter sich selbst zugewiesen</li>
+                        <li><strong>Validierung vergessen:</strong> Immer Eingaben prüfen, besonders bei kritischen Werten</li>
+                        <li><strong>Exception-Handling:</strong> IllegalArgumentException für ungültige Parameter verwenden</li>
+                    </ul>
+                </div>
+
+                <h3>📝 Typische Prüfungsaufgaben</h3>
+                <div class="practical-example">
+                    <h4>💡 Aufgabe 1: Konstruktor schreiben</h4>
+                    <p><strong>Gegeben:</strong> Eine Klasse "Buch" mit Attributen: titel (String), autor (String), seitenzahl (int), preis (double)</p>
+                    <p><strong>Aufgabe:</strong> Schreibe 3 verschiedene Konstruktoren:</p>
+                    <ul>
+                        <li>Standard-Konstruktor mit Standardwerten</li>
+                        <li>Konstruktor mit titel und autor</li>
+                        <li>Vollständiger Konstruktor mit Validierung</li>
+                    </ul>
+                </div>
+
+                <div class="practical-example">
+                    <h4>💡 Aufgabe 2: Fehler finden</h4>
+                    <div class="code-container">
+                        <div class="code-header">
+                            📄 Fehlerhafter Code - Was ist falsch?
+                        </div>
+                        <div class="code-content">
+                            <pre><code><span class="syntax-keyword">public</span> <span class="syntax-keyword">class</span> Person {
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">String</span> name;
+    <span class="syntax-keyword">private</span> <span class="syntax-keyword">int</span> alter;
+    
+    <span class="syntax-comment">// Fehler 1: Rückgabetyp beim Konstruktor</span>
+    <span class="syntax-keyword">public</span> <span class="syntax-keyword">void</span> Person(<span class="syntax-keyword">String</span> name) {
+        <span class="syntax-comment">// Fehler 2: this() nicht an erster Stelle</span>
+        System.out.println(<span class="syntax-string">"Person wird erstellt"</span>);
+        <span class="syntax-keyword">this</span>(<span class="syntax-string">"Unbekannt"</span>, <span class="syntax-number">0</span>);
+    }
+    
+    <span class="syntax-keyword">public</span> Person(<span class="syntax-keyword">String</span> name, <span class="syntax-keyword">int</span> alter) {
+        <span class="syntax-comment">// Fehler 3: Parameter wird sich selbst zugewiesen</span>
+        name = name;
+        alter = alter;
+    }
+}</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="definition-box">
+                        <div class="definition-title">
+                            ✅ Lösung der Fehler
+                        </div>
+                        <ul>
+                            <li><strong>Fehler 1:</strong> <code>void</code> entfernen - Konstruktoren haben keinen Rückgabetyp</li>
+                            <li><strong>Fehler 2:</strong> <code>this()</code> muss die erste Anweisung sein</li>
+                            <li><strong>Fehler 3:</strong> <code>this.name = name;</code> und <code>this.alter = alter;</code> verwenden</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="practical-example">
+                    <h4>💡 Aufgabe 3: UML zu Java</h4>
+                    <p>Gegeben ist folgendes UML-Klassendiagramm:</p>
+                    <div style="background: #f8fafc; border: 2px solid #e2e8f0; border-radius: 8px; padding: 1rem; margin: 1rem 0; font-family: monospace;">
+                        <strong>Konto</strong><br>
+                        ─────────────────<br>
+                        - kontonummer: String<br>
+                        - inhaber: String<br>
+                        - saldo: double<br>
+                        ─────────────────<br>
+                        + Konto(kontonummer: String)<br>
+                        + Konto(kontonummer: String, inhaber: String)<br>
+                        + Konto(kontonummer: String, inhaber: String, saldo: double)<br>
+                        + einzahlen(betrag: double): void<br>
+                        + getSaldo(): double
+                    </div>
+                    <p><strong>Aufgabe:</strong> Implementiere die komplette Klasse in Java mit allen Konstruktoren und Validierung.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Zusammenfassung -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>📋 Zusammenfassung</h2>
+                <p>Das Wichtigste auf einen Blick</p>
+            </div>
+            <div class="section-content">
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <h4>🔧 Was ist ein Konstruktor?</h4>
+                        <p>Spezielle Methode zur Initialisierung von Objekten. Wird automatisch beim Erstellen mit <code>new</code> aufgerufen.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>📝 Syntax-Regeln</h4>
+                        <p>Gleicher Name wie Klasse, kein Rückgabetyp, kann Parameter haben, meist <code>public</code>.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>🎭 Arten von Konstruktoren</h4>
+                        <p>Standard (ohne Parameter), parametrisiert (mit Parametern), überladen (mehrere verschiedene).</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>🔗 this-Schlüsselwort</h4>
+                        <p>Referenz auf aktuelles Objekt. Für Attributzugriff (<code>this.name</code>) und Konstruktor-Verkettung (<code>this()</code>).</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>🛡️ Validierung</h4>
+                        <p>Eingaben in Konstruktoren prüfen und bei Fehlern <code>IllegalArgumentException</code> werfen.</p>
+                    </div>
+                    
+                    <div class="feature-card">
+                        <h4>🗑️ Destruktoren</h4>
+                        <p>Java hat keine expliziten Destruktoren. Garbage Collector übernimmt automatisch die Speicherverwaltung.</p>
+                    </div>
+                </div>
+
+                <div class="definition-box">
+                    <div class="definition-title">
+                        🎯 Merksätze für die Prüfung
+                    </div>
+                    <ul>
+                        <li><strong>"Konstruktor = Bauanleitung für Objekte"</strong> - Setzt Anfangszustand fest</li>
+                        <li><strong>"this() immer zuerst!"</strong> - Konstruktor-Verkettung nur als erste Anweisung</li>
+                        <li><strong>"Prüfen vor Zuweisen"</strong> - Validierung verhindert fehlerhafte Objekte</li>
+                        <li><strong>"Java räumt automatisch auf"</strong> - Garbage Collector statt Destruktoren</li>
+                        <li><strong>"new ruft Konstruktor auf"</strong> - Objekterstellung und Initialisierung in einem</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <div class="warning-title">
+                        🔥 Prüfungs-Checkliste
+                    </div>
+                    <p>Vor der Prüfung sicherstellen, dass du folgende Punkte beherrschst:</p>
+                    <ul>
+                        <li>✅ Konstruktor-Syntax korrekt schreiben können</li>
+                        <li>✅ this-Schlüsselwort richtig verwenden</li>
+                        <li>✅ Konstruktor-Überladung implementieren</li>
+                        <li>✅ Validierung mit Exception-Handling</li>
+                        <li>✅ UML-Diagramme in Java-Code umsetzen</li>
+                        <li>✅ Unterschied zu anderen Methoden erklären</li>
+                        <li>✅ Objekterstellung mit new verstehen</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="footer-nav">
+            <a href="oop-grundlagen.html">← OOP Grundlagen</a>
+            <a href="index.html">🏠 Hauptseite</a>
+            <a href="vererbung.html">Vererbung & Polymorphie →</a>
+        </div>
+    </div>
+
+    <script>
+        // Syntax-Highlighting für Code-Blöcke
+        document.addEventListener('DOMContentLoaded', function() {
+            // Einfache Syntax-Hervorhebung bereits in CSS definiert
+            console.log('Konstruktoren-Lernzettel geladen');
+            
+            // Scroll-to-top Funktion
+            const scrollButton = document.createElement('button');
+            scrollButton.innerHTML = '↑';
+            scrollButton.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                width: 50px;
+                height: 50px;
+                border-radius: 50%;
+                background: var(--primary-color);
+                color: white;
+                border: none;
+                font-size: 20px;
+                cursor: pointer;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+                z-index: 1000;
+            `;
+            
+            document.body.appendChild(scrollButton);
+            
+            // Scroll-Button ein-/ausblenden
+            window.addEventListener('scroll', function() {
+                if (window.pageYOffset > 300) {
+                    scrollButton.style.opacity = '1';
+                } else {
+                    scrollButton.style.opacity = '0';
+                }
+            });
+            
+            // Scroll nach oben
+            scrollButton.addEventListener('click', function() {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+            
+            // Interaktive Code-Beispiele
+            const codeContainers = document.querySelectorAll('.code-container');
+            codeContainers.forEach(container => {
+                container.addEventListener('click', function() {
+                    // Visuelles Feedback beim Klicken auf Code
+                    container.style.transform = 'scale(1.02)';
+                    setTimeout(() => {
+                        container.style.transform = 'scale(1)';
+                    }, 200);
+                });
+            });
+        });
+
+        // Fortschritts-Tracking (vereinfacht)
+        function markiereFortschritt(thema) {
+            // In einer echten Anwendung würde hier der Fortschritt gespeichert
+            console.log('Fortschritt markiert für:', thema);
+            
+            // Visuelles Feedback
+            const statusIndicators = document.querySelectorAll('.status-indicator');
+            statusIndicators.forEach(indicator => {
+                if (Math.random() > 0.5) { // Simuliert zufälligen Fortschritt
+                    indicator.classList.add('completed');
+                }
+            });
+        }
+
+        // Beispiel-Code ausführbar machen (vereinfacht)
+        function fuehreBeispielAus(beispielCode) {
+            console.log('Beispiel-Code:', beispielCode);
+            alert('In einer echten Umgebung würde hier der Code ausgeführt werden!');
+        }
+    </script>
+</body>
+</html>

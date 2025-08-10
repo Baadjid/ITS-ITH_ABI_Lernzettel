@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ethernet & LAN-Technik - Abitur 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #0ea5e9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .breadcrumb {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+        }
+
+        .breadcrumb a:hover {
+            opacity: 1;
+        }
+
+        .content-section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .definition-box {
+            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+            border: 2px solid var(--info-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .definition-box::before {
+            content: "💡 Definition";
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--info-color);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .definition-box h3 {
+            color: var(--info-color);
+            margin-bottom: 1rem;
+            padding-top: 0.5rem;
+        }
+
+        .important-box {
+            background: linear-gradient(135deg, #fef3c7, #fffbeb);
+            border: 2px solid var(--warning-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .important-box::before {
+            content: "⚠️ Wichtig";
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--warning-color);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #dcfce7, #f0fdf4);
+            border: 2px solid var(--success-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .example-box::before {
+            content: "📝 Beispiel";
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--success-color);
+            color: white;
+            padding: 0.3rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .ethernet-frame {
+            background: var(--bg-light);
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .frame-field {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem;
+            margin: 0.2rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            text-align: center;
+            min-width: 60px;
+        }
+
+        .frame-field.preamble { background: #8b5cf6; }
+        .frame-field.destination { background: #ef4444; }
+        .frame-field.source { background: #f97316; }
+        .frame-field.type { background: #eab308; }
+        .frame-field.data { background: var(--success-color); }
+        .frame-field.fcs { background: #ec4899; }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .network-diagram {
+            background: var(--bg-white);
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .device {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            margin: 0.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .connection {
+            display: inline-block;
+            width: 60px;
+            height: 2px;
+            background: var(--text-dark);
+            margin: 0 0.5rem;
+            vertical-align: middle;
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, transparent 0%, #fbbf24 0%, #fbbf24 100%, transparent 100%);
+            background-size: 100% 0.3em;
+            background-position: 0 0.8em;
+            background-repeat: no-repeat;
+            font-weight: 600;
+        }
+
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--bg-white);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .nav-button {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-button.disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .toc {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .toc h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc li {
+            margin: 0.5rem 0;
+        }
+
+        .toc a {
+            color: var(--text-dark);
+            text-decoration: none;
+            padding: 0.3rem 0.5rem;
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
+        }
+
+        .toc a:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .formula-box {
+            background: linear-gradient(135deg, #f3e8ff, #faf5ff);
+            border: 2px solid #8b5cf6;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+        }
+
+        .csma-cd-diagram {
+            background: var(--bg-white);
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .collision-zone {
+            background: #fee2e2;
+            border: 2px dashed #ef4444;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            color: #991b1b;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+                flex-direction: column;
+                gap: 0.5rem;
+            }
+            
+            .section-content {
+                padding: 1rem;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="breadcrumb">
+                <a href="index.html">🏠 Hauptseite</a> > 
+                <a href="netzwerk-grundlagen.html">🌐 Vernetzte Systeme</a> > 
+                <span>Ethernet & LAN-Technik</span>
+            </div>
+            <h1>🔌 Ethernet & LAN-Technik</h1>
+            <p>Die Grundlage lokaler Netzwerke verstehen - von den Basics bis zur Praxis</p>
+        </header>
+
+        <!-- Inhaltsverzeichnis -->
+        <div class="toc">
+            <h3>📋 Inhaltsverzeichnis</h3>
+            <ul>
+                <li><a href="#was-ist-ethernet">1. Was ist Ethernet?</a></li>
+                <li><a href="#ethernet-grundlagen">2. Ethernet-Grundlagen</a></li>
+                <li><a href="#mac-adressen">3. MAC-Adressen</a></li>
+                <li><a href="#ethernet-frame">4. Der Ethernet-Frame</a></li>
+                <li><a href="#csma-cd">5. CSMA/CD - Kollisionserkennung</a></li>
+                <li><a href="#arp-protokoll">6. ARP-Protokoll</a></li>
+                <li><a href="#switch-hub">7. Switch vs. Hub</a></li>
+                <li><a href="#vlan">8. VLAN - Virtual LAN</a></li>
+                <li><a href="#praktische-anwendung">9. Praktische Anwendung</a></li>
+            </ul>
+        </div>
+
+        <!-- Was ist Ethernet? -->
+        <div class="content-section" id="was-ist-ethernet">
+            <div class="section-header">
+                <h2>🤔 Was ist Ethernet?</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <h3>Ethernet - Die Basis aller LANs</h3>
+                    <p><strong>Ethernet</strong> ist die weltweit am häufigsten verwendete Technologie für lokale Netzwerke (LANs). Es definiert, wie Computer in einem lokalen Netzwerk miteinander kommunizieren - ähnlich wie Regeln für ein Gespräch zwischen Menschen.</p>
+                </div>
+
+                <p>Stell dir vor, du bist in einem Raum voller Menschen und alle wollen gleichzeitig sprechen. Damit das funktioniert, braucht man Regeln:</p>
+                <ul>
+                    <li>🎯 <strong>Wer spricht mit wem?</strong> (Adressen)</li>
+                    <li>📝 <strong>Wie ist die Nachricht aufgebaut?</strong> (Format)</li>
+                    <li>⏰ <strong>Wann darf gesprochen werden?</strong> (Zugriffskontrolle)</li>
+                    <li>🔍 <strong>Wie erkennt man Fehler?</strong> (Fehlererkennung)</li>
+                </ul>
+
+                <p>Genau diese Regeln definiert Ethernet für Computer-Netzwerke!</p>
+
+                <div class="important-box">
+                    <h4>Warum ist Ethernet so wichtig?</h4>
+                    <ul>
+                        <li>✅ <strong>Standard:</strong> Fast alle LANs verwenden Ethernet</li>
+                        <li>✅ <strong>Zuverlässig:</strong> Bewährte Technologie seit 1973</li>
+                        <li>✅ <strong>Schnell:</strong> Von 10 Mbit/s bis 400 Gbit/s</li>
+                        <li>✅ <strong>Günstig:</strong> Kostengünstige Hardware</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ethernet-Grundlagen -->
+        <div class="content-section" id="ethernet-grundlagen">
+            <div class="section-header">
+                <h2>🏗️ Ethernet-Grundlagen</h2>
+            </div>
+            <div class="section-content">
+                <h3>🎯 Die wichtigsten Ethernet-Standards</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Standard</th>
+                            <th>Geschwindigkeit</th>
+                            <th>Kabel</th>
+                            <th>Maximale Entfernung</th>
+                            <th>Verwendung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>10BASE-T</strong></td>
+                            <td>10 Mbit/s</td>
+                            <td>Cat 3/5 (Twisted Pair)</td>
+                            <td>100 m</td>
+                            <td>Veraltet</td>
+                        </tr>
+                        <tr>
+                            <td><strong>100BASE-T</strong></td>
+                            <td>100 Mbit/s</td>
+                            <td>Cat 5 (Twisted Pair)</td>
+                            <td>100 m</td>
+                            <td>Fast Ethernet</td>
+                        </tr>
+                        <tr>
+                            <td><strong>1000BASE-T</strong></td>
+                            <td>1 Gbit/s</td>
+                            <td>Cat 5e/6 (Twisted Pair)</td>
+                            <td>100 m</td>
+                            <td>Gigabit Ethernet (Standard heute)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>10GBASE-T</strong></td>
+                            <td>10 Gbit/s</td>
+                            <td>Cat 6a/7 (Twisted Pair)</td>
+                            <td>100 m</td>
+                            <td>10-Gigabit Ethernet (Server)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="example-box">
+                    <h4>Beispiel: Namensschema verstehen</h4>
+                    <p><strong>1000BASE-T</strong> bedeutet:</p>
+                    <ul>
+                        <li><code>1000</code> = 1000 Mbit/s (1 Gigabit pro Sekunde)</li>
+                        <li><code>BASE</code> = Baseband (das gesamte Kabel wird für ein Signal genutzt)</li>
+                        <li><code>T</code> = Twisted Pair Kabel (die typischen Netzwerkkabel mit 8 Adern)</li>
+                    </ul>
+                </div>
+
+                <h3>📡 Übertragungsarten</h3>
+                <div class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Eigenschaft</th>
+                            <th>Half-Duplex</th>
+                            <th>Full-Duplex</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Gleichzeitiges Senden/Empfangen</strong></td>
+                            <td>❌ Nur eins zur Zeit</td>
+                            <td>✅ Beides gleichzeitig</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kollisionen möglich</strong></td>
+                            <td>✅ Ja, CSMA/CD nötig</td>
+                            <td>❌ Nein</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Verwendung</strong></td>
+                            <td>Alte Hubs</td>
+                            <td>Moderne Switches</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Beispiel</strong></td>
+                            <td>Walkie-Talkie</td>
+                            <td>Telefon</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- MAC-Adressen -->
+        <div class="content-section" id="mac-adressen">
+            <div class="section-header">
+                <h2>🏷️ MAC-Adressen - Die Hardware-Identität</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <h3>MAC-Adresse (Media Access Control)</h3>
+                    <p>Eine <strong>MAC-Adresse</strong> ist wie der Fingerabdruck einer Netzwerkkarte - sie ist weltweit eindeutig und identifiziert jedes Netzwerkgerät auf der physischen Ebene (Layer 2).</p>
+                </div>
+
+                <h3>🔢 Aufbau einer MAC-Adresse</h3>
+                <div class="code-block">
+<strong>Beispiel:</strong> 00:1A:2B:3C:4D:5E
+
+<strong>Aufbau:</strong>
+┌─────────────┬─────────────┐
+│ OUI (24 Bit) │ NIC (24 Bit) │
+│    00:1A:2B  │   3C:4D:5E   │
+└─────────────┴─────────────┘
+
+<strong>OUI</strong> = Organizationally Unique Identifier (Herstellerkennung)
+<strong>NIC</strong> = Network Interface Controller (Eindeutige Gerätenummer)
+                </div>
+
+                <div class="example-box">
+                    <h4>Beispiele bekannter Hersteller-OUIs</h4>
+                    <ul>
+                        <li><code>00:50:56</code> - VMware</li>
+                        <li><code>00:0C:29</code> - VMware</li>
+                        <li><code>08:00:27</code> - VirtualBox</li>
+                        <li><code>00:25:90</code> - SuperMicro</li>
+                        <li><code>D4:BE:D9</code> - Dell</li>
+                    </ul>
+                </div>
+
+                <h3>🎯 Arten von MAC-Adressen</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Art</th>
+                            <th>Beschreibung</th>
+                            <th>Beispiel</th>
+                            <th>Verwendung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Unicast</strong></td>
+                            <td>Ein spezifisches Gerät</td>
+                            <td>00:1A:2B:3C:4D:5E</td>
+                            <td>Normale Kommunikation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Broadcast</strong></td>
+                            <td>Alle Geräte im Netz</td>
+                            <td>FF:FF:FF:FF:FF:FF</td>
+                            <td>ARP-Requests, DHCP</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Multicast</strong></td>
+                            <td>Bestimmte Gruppe</td>
+                            <td>01:00:5E:xx:xx:xx</td>
+                            <td>Streaming, Routing-Protokolle</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="important-box">
+                    <h4>Wichtig zu wissen:</h4>
+                    <ul>
+                        <li>🔍 MAC-Adressen funktionieren nur im <strong>lokalen Netzwerk</strong></li>
+                        <li>🌍 Im Internet werden <strong>IP-Adressen</strong> verwendet</li>
+                        <li>🔄 Router tauschen MAC-Adressen beim Weiterleiten aus</li>
+                        <li>📱 Moderne Geräte können MAC-Adressen randomisieren (Privacy)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ethernet-Frame -->
+        <div class="content-section" id="ethernet-frame">
+            <div class="section-header">
+                <h2>📦 Der Ethernet-Frame - Aufbau einer Nachricht</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <h3>Ethernet-Frame</h3>
+                    <p>Ein <strong>Ethernet-Frame</strong> ist wie ein Brief: Er hat einen Umschlag (Header) mit Absender und Empfänger, den Inhalt (Daten) und eine Prüfsumme zur Fehlererkennung.</p>
+                </div>
+
+                <h3>🏗️ Aufbau des Ethernet II Frames</h3>
+                <div class="ethernet-frame">
+                    <div class="frame-field preamble">Präambel<br>8 Bytes</div>
+                    <div class="frame-field destination">Ziel-MAC<br>6 Bytes</div>
+                    <div class="frame-field source">Quell-MAC<br>6 Bytes</div>
+                    <div class="frame-field type">EtherType<br>2 Bytes</div>
+                    <div class="frame-field data">Daten<br>46-1500 Bytes</div>
+                    <div class="frame-field fcs">FCS<br>4 Bytes</div>
+                </div>
+
+                <h3>📋 Detaillierte Erklärung der Frame-Felder</h3>
+                
+                <h4>1. 🎵 Präambel (8 Bytes)</h4>
+                <div class="code-block">
+Bit-Muster: 10101010 10101010 10101010 10101010 10101010 10101010 10101010 10101011
+            └────────── 7x Präambel ──────────┘                                    └─SFD─┘
+
+<strong>SFD</strong> = Start Frame Delimiter (10101011)
+                </div>
+                <p><strong>Zweck:</strong> Synchronisation zwischen Sender und Empfänger - wie das "Hallo" vor einem Gespräch.</p>
+
+                <h4>2. 🎯 Ziel-MAC-Adresse (6 Bytes)</h4>
+                <p>Die MAC-Adresse des Empfängers. Wie die Adresse auf einem Briefumschlag.</p>
+
+                <h4>3. 📤 Quell-MAC-Adresse (6 Bytes)</h4>
+                <p>Die MAC-Adresse des Senders. Wie die Absenderadresse auf einem Brief.</p>
+
+                <h4>4. 🏷️ EtherType (2 Bytes)</h4>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>EtherType</th>
+                            <th>Protokoll</th>
+                            <th>Beschreibung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>0x0800</code></td>
+                            <td>IPv4</td>
+                            <td>Internet Protocol Version 4</td>
+                        </tr>
+                        <tr>
+                            <td><code>0x86DD</code></td>
+                            <td>IPv6</td>
+                            <td>Internet Protocol Version 6</td>
+                        </tr>
+                        <tr>
+                            <td><code>0x0806</code></td>
+                            <td>ARP</td>
+                            <td>Address Resolution Protocol</td>
+                        </tr>
+                        <tr>
+                            <td><code>0x8100</code></td>
+                            <td>VLAN</td>
+                            <td>Virtual LAN Tagging</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h4>5. 📄 Daten (46-1500 Bytes)</h4>
+                <ul>
+                    <li><strong>Minimum:</strong> 46 Bytes (wird mit Nullen aufgefüllt, falls kleiner)</li>
+                    <li><strong>Maximum:</strong> 1500 Bytes (MTU = Maximum Transmission Unit)</li>
+                    <li><strong>Inhalt:</strong> IP-Paket, ARP-Nachricht oder andere Protokolldaten</li>
+                </ul>
+
+                <h4>6. 🔍 Frame Check Sequence - FCS (4 Bytes)</h4>
+                <p>Eine mathematische Prüfsumme (CRC32) zur Fehlererkennung. Wie eine Quersumme bei Überweisungen.</p>
+
+                <div class="example-box">
+                    <h4>Beispiel: Ping-Frame analysieren</h4>
+                    <div class="code-block">
+<strong>Ethernet-Header:</strong>
+Ziel-MAC:    FF:FF:FF:FF:FF:FF  (Broadcast)
+Quell-MAC:   00:1A:2B:3C:4D:5E  (Mein Computer)  
+EtherType:   0x0800             (IPv4)
+
+<strong>Daten:</strong> IP-Paket mit ICMP-Ping
+<strong>FCS:</strong> A1B2C3D4 (Prüfsumme)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CSMA/CD -->
+        <div class="content-section" id="csma-cd">
+            <div class="section-header">
+                <h2>🚦 CSMA/CD - Kollisionserkennung und -vermeidung</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <h3>CSMA/CD - Carrier Sense Multiple Access / Collision Detection</h3>
+                    <p><strong>CSMA/CD</strong> ist wie die Verkehrsregeln für Daten auf einem geteilten Medium. Es verhindert, dass zwei Computer gleichzeitig "sprechen" und sich dabei gegenseitig stören.</p>
+                </div>
+
+                <h3>🔤 Was bedeutet CSMA/CD?</h3>
+                <ul>
+                    <li><strong>🎧 Carrier Sense:</strong> "Hör zu, ob jemand spricht"</li>
+                    <li><strong>👥 Multiple Access:</strong> "Mehrere können das Medium nutzen"</li>
+                    <li><strong>💥 Collision Detection:</strong> "Erkenne, wenn zwei gleichzeitig sprechen"</li>
+                </ul>
+
+                <h3>⚙️ Wie funktioniert CSMA/CD?</h3>
+                <div class="csma-cd-diagram">
+                    <h4>1. 👂 Listen (Carrier Sense)</h4>
+                    <p>Computer prüft: "Ist das Kabel frei?"</p>
+                    
+                    <div class="device">Computer A</div>
+                    <div class="connection"></div>
+                    <div style="background: var(--success-color);" class="device">Kabel frei ✅</div>
+                    <div class="connection"></div>
+                    <div class="device">Computer B</div>
+
+                    <h4>2. 📤 Send (Transmit)</h4>
+                    <p>Wenn frei: Sende deine Daten</p>
+
+                    <h4>3. 👀 Monitor (Collision Detection)</h4>
+                    <p>Während dem Senden: Überwache das Signal</p>
+
+                    <div class="collision-zone">
+                        ⚡ KOLLISION ERKANNT! ⚡
+                        <br>Zwei Computer senden gleichzeitig
+                    </div>
+
+                    <h4>4. 🛑 Stop & Notify</h4>
+                    <p>Bei Kollision: Stoppe sofort und sende Jam-Signal</p>
+
+                    <h4>5. ⏰ Wait (Exponential Backoff)</h4>
+                    <p>Warte zufällige Zeit, dann versuche es erneut</p>
+                </div>
+
+                <h3>📊 Exponential Backoff Algorithmus</h3>
+                <div class="formula-box">
+                    <strong>Wartezeit = Zufallszahl × Slot-Zeit</strong>
+                    <br><br>
+                    Zufallszahl ∈ {0, 1, 2, ..., min(2^n - 1, 1023)}
+                    <br>
+                    n = Anzahl der Kollisionen (max. 10)
+                    <br>
+                    Slot-Zeit = 512 Bit-Zeiten
+                </div>
+
+                <div class="example-box">
+                    <h4>Beispiel: Backoff nach Kollisionen</h4>
+                    <ul>
+                        <li><strong>1. Kollision:</strong> Warte 0-1 Zeitslots (zufällig)</li>
+                        <li><strong>2. Kollision:</strong> Warte 0-3 Zeitslots (zufällig)</li>
+                        <li><strong>3. Kollision:</strong> Warte 0-7 Zeitslots (zufällig)</li>
+                        <li><strong>4. Kollision:</strong> Warte 0-15 Zeitslots (zufällig)</li>
+                        <li><strong>...</strong></li>
+                        <li><strong>16. Kollision:</strong> Frame wird verworfen ❌</li>
+                    </ul>
+                </div>
+
+                <div class="important-box">
+                    <h4>Warum ist CSMA/CD heute weniger relevant?</h4>
+                    <ul>
+                        <li>🔄 <strong>Switches statt Hubs:</strong> Jeder Port ist eine eigene Kollisionsdomäne</li>
+                        <li>↕️ <strong>Full-Duplex:</strong> Gleichzeitiges Senden und Empfangen möglich</li>
+                        <li>⚡ <strong>Höhere Geschwindigkeiten:</strong> Weniger geteilte Medien</li>
+                        <li>📡 <strong>CSMA/CA in WLAN:</strong> Wireless verwendet Collision Avoidance</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- ARP-Protokoll -->
+        <div class="content-section" id="arp-protokoll">
+            <div class="section-header">
+                <h2>🔍 ARP - Address Resolution Protocol</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <h3>ARP - Address Resolution Protocol</h3>
+                    <p><strong>ARP</strong> ist wie ein Telefonbuch für das Netzwerk. Es übersetzt IP-Adressen (die logischen Adressen) in MAC-Adressen (die physischen Adressen), damit die Ethernet-Kommunikation funktioniert.</p>
+                </div>
+
+                <h3>🤔 Warum brauchen wir ARP?</h3>
+                <p>Computer kommunizieren auf verschiedenen Ebenen:</p>
+                <ul>
+                    <li>🌍 <strong>IP-Adresse (Layer 3):</strong> "Ich will mit 192.168.1.100 sprechen"</li>
+                    <li>🔌 <strong>MAC-Adresse (Layer 2):</strong> "Aber Ethernet braucht die Hardware-Adresse"</li>
+                    <li>❓ <strong>Problem:</strong> Welche MAC-Adresse gehört zu welcher IP-Adresse?</li>
+                    <li>✅ <strong>Lösung:</strong> ARP fragt nach!</li>
+                </ul>
+
+                <h3>⚙️ Wie funktioniert ARP?</h3>
+                <div class="network-diagram">
+                    <h4>Schritt 1: ARP-Request (Broadcast)</h4>
+                    <div class="device" style="background: var(--warning-color);">PC A<br>192.168.1.10</div>
+                    <div class="connection"></div>
+                    <div class="device" style="background: var(--info-color);">Switch</div>
+                    <div class="connection"></div>
+                    <div class="device" style="background: var(--success-color);">PC B<br>192.168.1.20</div>
+                    
+                    <div class="code-block" style="margin-top: 1rem;">
+<strong>ARP-Request von PC A:</strong>
+"Wer hat IP 192.168.1.20? Sag es 00:1A:2B:3C:4D:5E!"
+→ Broadcast an alle (FF:FF:FF:FF:FF:FF)
+                    </div>
+
+                    <h4>Schritt 2: ARP-Reply (Unicast)</h4>
+                    <div class="code-block">
+<strong>ARP-Reply von PC B:</strong>
+"192.168.1.20 gehört mir: 00:AA:BB:CC:DD:EE"
+→ Direkt an 00:1A:2B:3C:4D:5E
+                    </div>
+                </div>
+
+                <h3>📦 ARP-Paket Aufbau</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Feld</th>
+                            <th>Größe</th>
+                            <th>Beschreibung</th>
+                            <th>Typischer Wert</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Hardware Type</td>
+                            <td>2 Bytes</td>
+                            <td>Typ der Hardware</td>
+                            <td>0x0001 (Ethernet)</td>
+                        </tr>
+                        <tr>
+                            <td>Protocol Type</td>
+                            <td>2 Bytes</td>
+                            <td>Protokoll-Typ</td>
+                            <td>0x0800 (IPv4)</td>
+                        </tr>
+                        <tr>
+                            <td>Hardware Length</td>
+                            <td>1 Byte</td>
+                            <td>MAC-Adress-Länge</td>
+                            <td>6 (Bytes)</td>
+                        </tr>
+                        <tr>
+                            <td>Protocol Length</td>
+                            <td>1 Byte</td>
+                            <td>IP-Adress-Länge</td>
+                            <td>4 (Bytes)</td>
+                        </tr>
+                        <tr>
+                            <td>Operation</td>
+                            <td>2 Bytes</td>
+                            <td>ARP-Typ</td>
+                            <td>1=Request, 2=Reply</td>
+                        </tr>
+                        <tr>
+                            <td>Sender MAC</td>
+                            <td>6 Bytes</td>
+                            <td>MAC des Senders</td>
+                            <td>00:1A:2B:3C:4D:5E</td>
+                        </tr>
+                        <tr>
+                            <td>Sender IP</td>
+                            <td>4 Bytes</td>
+                            <td>IP des Senders</td>
+                            <td>192.168.1.10</td>
+                        </tr>
+                        <tr>
+                            <td>Target MAC</td>
+                            <td>6 Bytes</td>
+                            <td>Gesuchte MAC</td>
+                            <td>00:00:00:00:00:00</td>
+                        </tr>
+                        <tr>
+                            <td>Target IP</td>
+                            <td>4 Bytes</td>
+                            <td>Gesuchte IP</td>
+                            <td>192.168.1.20</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>🗃️ ARP-Tabelle (ARP-Cache)</h3>
+                <p>Jeder Computer speichert die erlernten IP-MAC-Zuordnungen in einer Tabelle:</p>
+                <div class="code-block">
+<strong>Windows:</strong> arp -a
+<strong>Linux:</strong> arp -a oder ip neighbor
+
+<strong>Beispiel-Ausgabe:</strong>
+IP-Adresse        MAC-Adresse        Typ
+192.168.1.1       aa:bb:cc:dd:ee:ff  dynamisch
+192.168.1.20      11:22:33:44:55:66  dynamisch
+192.168.1.100     static             statisch
+                </div>
+
+                <div class="important-box">
+                    <h4>ARP-Sicherheitsprobleme</h4>
+                    <ul>
+                        <li>🚨 <strong>ARP-Spoofing:</strong> Falsche ARP-Antworten senden</li>
+                        <li>🎭 <strong>Man-in-the-Middle:</strong> Traffic umleiten</li>
+                        <li>🛡️ <strong>Schutz:</strong> Statische ARP-Einträge, ARP-Monitoring</li>
+                        <li>🔒 <strong>Moderne Lösung:</strong> DAI (Dynamic ARP Inspection) in Switches</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Switch vs Hub -->
+        <div class="content-section" id="switch-hub">
+            <div class="section-header">
+                <h2>🔀 Switch vs. Hub - Der Evolutionssprung</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <h3>Der Unterschied zwischen Hub und Switch</h3>
+                    <p>Ein <strong>Hub</strong> ist wie ein großer Raum, wo alle gleichzeitig sprechen müssen (geteiltes Medium). Ein <strong>Switch</strong> ist wie ein Telefonsystem mit privaten Leitungen für jedes Gespräch.</p>
+                </div>
+
+                <h3>📊 Detaillierter Vergleich</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Eigenschaft</th>
+                            <th>Hub (veraltet)</th>
+                            <th>Switch (modern)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>OSI-Layer</strong></td>
+                            <td>Layer 1 (Physical)</td>
+                            <td>Layer 2 (Data Link)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Funktionsweise</strong></td>
+                            <td>Repeater - verstärkt nur</td>
+                            <td>Lernt MAC-Adressen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kollisionsdomäne</strong></td>
+                            <td>Eine große für alle Ports</td>
+                            <td>Jeder Port ist eine eigene</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Datenübertragung</strong></td>
+                            <td>Half-Duplex</td>
+                            <td>Full-Duplex</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Bandbreite</strong></td>
+                            <td>Geteilt zwischen allen</td>
+                            <td>Voll für jeden Port</td>
+                        </tr>
+                        <tr>
+                            <td><strong>MAC-Tabelle</strong></td>
+                            <td>Keine</td>
+                            <td>Ja, lernt automatisch</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Broadcast</strong></td>
+                            <td>An alle Ports</td>
+                            <td>An alle Ports (aber intelligent)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sicherheit</strong></td>
+                            <td>Keine - alle hören alles</td>
+                            <td>Ports sind isoliert</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>🧠 Wie lernt ein Switch?</h3>
+                <div class="network-diagram">
+                    <h4>Schritt 1: Leere MAC-Tabelle</h4>
+                    <div class="code-block">
+<strong>MAC-Tabelle des Switches:</strong>
+Port | MAC-Adresse        | Status
+-----|-------------------|--------
+  1  | ?                 | Leer
+  2  | ?                 | Leer  
+  3  | ?                 | Leer
+                    </div>
+
+                    <h4>Schritt 2: Erstes Frame kommt an</h4>
+                    <div class="device" style="background: var(--warning-color);">PC A<br>AA:BB:CC:DD:EE:FF</div>
+                    <div class="connection"></div>
+                    <div class="device" style="background: var(--info-color);">Port 1<br>Switch</div>
+                    
+                    <div class="code-block">
+<strong>Frame:</strong> Von AA:BB:CC:DD:EE:FF → an 11:22:33:44:55:66
+<strong>Switch lernt:</strong> "AA:BB:CC:DD:EE:FF ist an Port 1"
+
+<strong>Aktualisierte MAC-Tabelle:</strong>
+Port | MAC-Adresse        | Status
+-----|-------------------|--------
+  1  | AA:BB:CC:DD:EE:FF | Gelernt
+  2  | ?                 | Leer  
+  3  | ?                 | Leer
+                    </div>
+
+                    <h4>Schritt 3: Unbekannte Ziel-MAC</h4>
+                    <p>Switch kennt 11:22:33:44:55:66 noch nicht → <strong>Flood</strong> an alle anderen Ports!</p>
+                </div>
+
+                <h3>⚡ Switch-Betriebsmodi</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Modus</th>
+                            <th>Beschreibung</th>
+                            <th>Latenz</th>
+                            <th>Fehlerbehandlung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Store-and-Forward</strong></td>
+                            <td>Kompletten Frame empfangen und prüfen</td>
+                            <td>Höher</td>
+                            <td>Fehlerhafte Frames werden verworfen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cut-Through</strong></td>
+                            <td>Weiterleitung nach Ziel-MAC (6 Bytes)</td>
+                            <td>Niedrig</td>
+                            <td>Fehler werden weitergeleitet</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Fragment-Free</strong></td>
+                            <td>Weiterleitung nach 64 Bytes</td>
+                            <td>Mittel</td>
+                            <td>Kollisions-Fragmente werden erkannt</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- VLAN -->
+        <div class="content-section" id="vlan">
+            <div class="section-header">
+                <h2>🏢 VLAN - Virtual Local Area Network</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <h3>VLAN - Virtual LAN</h3>
+                    <p>Ein <strong>VLAN</strong> ist wie mehrere separate Netzwerke in einem physischen Switch. Stell dir vor, du teilst ein großes Büro mit unsichtbaren Wänden in verschiedene Bereiche auf.</p>
+                </div>
+
+                <h3>🎯 Warum VLANs?</h3>
+                <ul>
+                    <li>🏛️ <strong>Segmentierung:</strong> IT-Abteilung getrennt von Buchhaltung</li>
+                    <li>📡 <strong>Broadcast-Reduktion:</strong> Weniger Netzwerk-Traffic</li>
+                    <li>🔒 <strong>Sicherheit:</strong> Verschiedene Abteilungen isolieren</li>
+                    <li>💰 <strong>Kostenersparnis:</strong> Ein Switch statt mehrere</li>
+                    <li>⚙️ <strong>Flexibilität:</strong> Einfache Umkonfiguration</li>
+                </ul>
+
+                <h3>🏷️ VLAN-Tagging (IEEE 802.1Q)</h3>
+                <p>Um VLANs zu kennzeichnen, wird der Ethernet-Frame erweitert:</p>
+                <div class="ethernet-frame">
+                    <div class="frame-field preamble">Präambel<br>8 Bytes</div>
+                    <div class="frame-field destination">Ziel-MAC<br>6 Bytes</div>
+                    <div class="frame-field source">Quell-MAC<br>6 Bytes</div>
+                    <div class="frame-field type" style="background: #8b5cf6;">VLAN-Tag<br>4 Bytes</div>
+                    <div class="frame-field type">EtherType<br>2 Bytes</div>
+                    <div class="frame-field data">Daten<br>46-1500 Bytes</div>
+                    <div class="frame-field fcs">FCS<br>4 Bytes</div>
+                </div>
+
+                <h4>📋 VLAN-Tag Aufbau (4 Bytes)</h4>
+                <div class="code-block">
+<strong>VLAN-Tag (IEEE 802.1Q):</strong>
+
+16 Bit: TPID (Tag Protocol Identifier) = 0x8100
+16 Bit: TCI (Tag Control Information)
+        ├─ 3 Bit: PCP (Priority Code Point) - QoS
+        ├─ 1 Bit: DEI (Drop Eligible Indicator)  
+        └─12 Bit: VID (VLAN Identifier) - VLAN-Nummer
+
+<strong>Beispiel:</strong>
+TPID: 0x8100
+PCP:  100 (Priorität 4)
+DEI:  0   (Nicht löschbar)
+VID:  000000010100 (VLAN 20)
+</div>
+
+                <h3>🔢 VLAN-Typen und Nummern</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>VLAN-Bereich</th>
+                            <th>Verwendung</th>
+                            <th>Beschreibung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>0</strong></td>
+                            <td>Reserviert</td>
+                            <td>Nur für Prioritäts-Tagging</td>
+                        </tr>
+                        <tr>
+                            <td><strong>1</strong></td>
+                            <td>Default VLAN</td>
+                            <td>Standard-VLAN (meist Management)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>2-1001</strong></td>
+                            <td>Normal Range</td>
+                            <td>Normale VLANs für Benutzer</td>
+                        </tr>
+                        <tr>
+                            <td><strong>1002-1005</strong></td>
+                            <td>Reserviert</td>
+                            <td>Legacy-Protokolle (Token Ring, etc.)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>1006-4094</strong></td>
+                            <td>Extended Range</td>
+                            <td>Erweiterte VLANs (nur lokal)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>4095</strong></td>
+                            <td>Reserviert</td>
+                            <td>Implementierungs-spezifisch</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>🔌 VLAN-Port-Modi</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Modus</th>
+                            <th>Beschreibung</th>
+                            <th>Tags</th>
+                            <th>Verwendung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Access Port</strong></td>
+                            <td>Gehört zu einem VLAN</td>
+                            <td>Keine Tags</td>
+                            <td>Endgeräte (PCs, Drucker)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Trunk Port</strong></td>
+                            <td>Trägt mehrere VLANs</td>
+                            <td>802.1Q Tags</td>
+                            <td>Switch-zu-Switch Verbindungen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hybrid Port</strong></td>
+                            <td>Mix aus Access und Trunk</td>
+                            <td>Teilweise Tags</td>
+                            <td>Spezielle Konfigurationen</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="example-box">
+                    <h4>Beispiel: Unternehmens-VLAN-Setup</h4>
+                    <div class="code-block">
+<strong>VLAN-Plan:</strong>
+VLAN 10: Management    (192.168.10.0/24)
+VLAN 20: IT-Abteilung  (192.168.20.0/24)  
+VLAN 30: Buchhaltung   (192.168.30.0/24)
+VLAN 40: Gäste-WLAN    (192.168.40.0/24)
+VLAN 99: Native VLAN   (Untagged Traffic)
+
+<strong>Switch-Konfiguration:</strong>
+Port 1-8:   Access VLAN 20 (IT-Abteilung)
+Port 9-16:  Access VLAN 30 (Buchhaltung)  
+Port 17-20: Access VLAN 40 (WLAN APs)
+Port 24:    Trunk (alle VLANs zum Router)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Praktische Anwendung -->
+        <div class="content-section" id="praktische-anwendung">
+            <div class="section-header">
+                <h2>⚙️ Praktische Anwendung & Troubleshooting</h2>
+            </div>
+            <div class="section-content">
+                <h3>🔧 Wichtige Netzwerk-Befehle</h3>
+                <div class="code-block">
+<strong>Windows-Befehle:</strong>
+ipconfig /all          # Netzwerk-Konfiguration anzeigen
+arp -a                 # ARP-Tabelle anzeigen
+ping 192.168.1.1       # Verbindung testen
+tracert google.com     # Route verfolgen
+netstat -an            # Netzwerk-Verbindungen
+
+<strong>Linux-Befehle:</strong>
+ip addr show           # IP-Konfiguration
+ip neighbor show       # ARP-Tabelle (neu)
+arp -a                 # ARP-Tabelle (alt)
+ping 192.168.1.1       # Verbindung testen
+traceroute google.com  # Route verfolgen
+ss -tuln               # Netzwerk-Verbindungen
+</div>
+
+                <h3>🚨 Häufige Ethernet-Probleme</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Problem</th>
+                            <th>Symptome</th>
+                            <th>Mögliche Ursachen</th>
+                            <th>Lösung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Kein Link</strong></td>
+                            <td>LED aus, keine Verbindung</td>
+                            <td>Defektes Kabel, Port defekt</td>
+                            <td>Kabel/Port tauschen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Langsame Verbindung</strong></td>
+                            <td>Downloads sehr langsam</td>
+                            <td>Duplex-Mismatch, schlechtes Kabel</td>
+                            <td>Duplex-Einstellungen prüfen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Intermittierende Verbindung</strong></td>
+                            <td>Verbindung bricht ab</td>
+                            <td>Lose Stecker, EMI-Störungen</td>
+                            <td>Kabel fest anstecken, EMI-Quellen entfernen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Broadcast-Sturm</strong></td>
+                            <td>Netz überlastet, sehr langsam</td>
+                            <td>Switch-Loop, defekte NIC</td>
+                            <td>STP aktivieren, defekte Geräte isolieren</td>
+                        </tr>
+                        <tr>
+                            <td><strong>VLAN-Probleme</strong></td>
+                            <td>Abteilungen können nicht kommunizieren</td>
+                            <td>Falsche VLAN-Konfiguration</td>
+                            <td>VLAN-Tags und Routing prüfen</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>📊 Ethernet-Performance optimieren</h3>
+                <div class="important-box">
+                    <h4>Best Practices für optimale Performance:</h4>
+                    <ul>
+                        <li>🔧 <strong>Auto-Negotiation:</strong> Speed und Duplex automatisch aushandeln lassen</li>
+                        <li>📏 <strong>Kabel-Qualität:</strong> Cat 6 oder höher für Gigabit Ethernet</li>
+                        <li>📐 <strong>Kabellängen:</strong> Maximal 100m für Twisted Pair</li>
+                        <li>🌟 <strong>Strukturierte Verkabelung:</strong> Professionelle Installation</li>
+                        <li>🔄 <strong>Switch-Modernisierung:</strong> Managed Switches verwenden</li>
+                        <li>📈 <strong>Monitoring:</strong> Netzwerk-Traffic überwachen</li>
+                    </ul>
+                </div>
+
+                <h3>🧪 Praktische Übungen</h3>
+                
+                <div class="example-box">
+                    <h4>Übung 1: MAC-Adresse analysieren</h4>
+                    <p><strong>Gegeben:</strong> MAC-Adresse 00:50:56:C0:00:01</p>
+                    <p><strong>Aufgaben:</strong></p>
+                    <ol>
+                        <li>Identifiziere den Hersteller (OUI)</li>
+                        <li>Ist es eine Unicast- oder Multicast-Adresse?</li>
+                        <li>Ist es eine lokal oder global administrierte Adresse?</li>
+                    </ol>
+                    <div class="code-block">
+<strong>Lösung:</strong>
+OUI: 00:50:56 = VMware Inc.
+Typ: Unicast (erstes Bit der ersten Byte = 0)
+Administration: Global (zweites Bit der ersten Byte = 0)
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>Übung 2: Ethernet-Frame berechnen</h4>
+                    <p><strong>Aufgabe:</strong> Berechne die Gesamtgröße eines Ethernet-Frames für einen Ping (ICMP Echo Request) mit 32 Bytes Daten.</p>
+                    <div class="code-block">
+<strong>Berechnung:</strong>
+Ethernet-Header: 14 Bytes (6+6+2)
+IPv4-Header:     20 Bytes (mindestens)
+ICMP-Header:      8 Bytes
+ICMP-Daten:      32 Bytes
+Ethernet-FCS:     4 Bytes
+─────────────────────────
+Gesamt:          78 Bytes
+
+<strong>Hinweis:</strong> Minimum Ethernet-Frame: 64 Bytes
+→ Padding von 10 Bytes nötig: 78 - 10 = 68 Bytes
+→ Tatsächlicher Frame: 64 Bytes (Minimum)
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>Übung 3: VLAN-Szenario</h4>
+                    <p><strong>Szenario:</strong> Firma mit 3 Abteilungen soll VLANs bekommen.</p>
+                    <ul>
+                        <li>IT-Abteilung: 20 Mitarbeiter</li>
+                        <li>Buchhaltung: 10 Mitarbeiter</li>
+                        <li>Vertrieb: 30 Mitarbeiter</li>
+                        <li>Gäste-WLAN: 50 gleichzeitige Nutzer</li>
+                    </ul>
+                    <div class="code-block">
+<strong>Lösungsvorschlag:</strong>
+VLAN 10: IT-Abteilung    → 192.168.10.0/27 (30 IPs)
+VLAN 20: Buchhaltung     → 192.168.20.0/28 (14 IPs)  
+VLAN 30: Vertrieb        → 192.168.30.0/26 (62 IPs)
+VLAN 40: Gäste          → 192.168.40.0/26 (62 IPs)
+VLAN 99: Management     → 192.168.99.0/29 (6 IPs)
+
+<strong>Begründung:</strong>
+- Separate Broadcast-Domänen
+- Sicherheits-Isolation
+- Skalierbarkeit
+- QoS-Möglichkeiten
+                    </div>
+                </div>
+
+                <h3>📚 Prüfungstipps für das Abitur</h3>
+                <div class="important-box">
+                    <h4>Was du für die Prüfung wissen musst:</h4>
+                    <ul>
+                        <li>🎯 <strong>MAC-Adressen:</strong> Aufbau, OUI/NIC, Unicast/Broadcast/Multicast</li>
+                        <li>📦 <strong>Ethernet-Frame:</strong> Alle Felder und deren Zweck</li>
+                        <li>🚦 <strong>CSMA/CD:</strong> Funktionsweise und warum heute weniger relevant</li>
+                        <li>🔍 <strong>ARP:</strong> Request/Reply-Prozess, ARP-Tabelle</li>
+                        <li>🔀 <strong>Switch vs. Hub:</strong> Unterschiede und Vorteile</li>
+                        <li>🏢 <strong>VLAN:</strong> 802.1Q-Tagging, Port-Modi, Einsatzzwecke</li>
+                        <li>⚙️ <strong>Praktisches:</strong> Befehle zur Netzwerk-Diagnose</li>
+                    </ul>
+                </div>
+
+                <h3>🧩 Häufige Prüfungsfragen</h3>
+                
+                <div class="example-box">
+                    <h4>Typische Fragen mit Antworten:</h4>
+                    
+                    <p><strong>Q1: Warum ist die minimale Ethernet-Frame-Größe 64 Bytes?</strong></p>
+                    <p><strong>A:</strong> Für die CSMA/CD-Kollisionserkennung. Ein Gerät muss eine Kollision erkennen können, bevor es aufhört zu senden. Bei 10 Mbit/s Ethernet und maximaler Kabellänge beträgt die minimale Frame-Größe 64 Bytes (512 Bit-Zeiten).</p>
+                    
+                    <p><strong>Q2: Was passiert mit einem Ethernet-Frame mit CRC-Fehler?</strong></p>
+                    <p><strong>A:</strong> Der Frame wird vom empfangenden Gerät verworfen. Ethernet bietet keine automatische Wiederholung - das muss die höhere Schicht (z.B. TCP) übernehmen.</p>
+                    
+                    <p><strong>Q3: Wie unterscheidet ein Switch zwischen verschiedenen VLANs?</strong></p>
+                    <p><strong>A:</strong> Durch 802.1Q VLAN-Tags im Ethernet-Header. Das 4-Byte-Tag enthält die VLAN-ID (12 Bit) und ermöglicht bis zu 4094 verschiedene VLANs.</p>
+                    
+                    <p><strong>Q4: Was ist der Unterschied zwischen einer Kollisionsdomäne und einer Broadcast-Domäne?</strong></p>
+                    <p><strong>A:</strong></p>
+                    <ul>
+                        <li><strong>Kollisionsdomäne:</strong> Bereich, wo Frames kollidieren können (bei Hubs alle Ports, bei Switches jeder Port einzeln)</li>
+                        <li><strong>Broadcast-Domäne:</strong> Bereich, wo Broadcast-Frames empfangen werden (bei Switches alle Ports desselben VLANs)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Zusammenfassung und Navigation -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>📋 Zusammenfassung</h2>
+            </div>
+            <div class="section-content">
+                <h3>🎯 Die wichtigsten Punkte im Überblick:</h3>
+                <ul>
+                    <li>🔌 <strong>Ethernet</strong> ist der Standard für lokale Netzwerke (LANs)</li>
+                    <li>🏷️ <strong>MAC-Adressen</strong> identifizieren Geräte eindeutig auf Layer 2</li>
+                    <li>📦 <strong>Ethernet-Frames</strong> transportieren Daten mit Header, Payload und Prüfsumme</li>
+                    <li>🚦 <strong>CSMA/CD</strong> regelt den Zugriff auf geteilte Medien (heute weniger relevant)</li>
+                    <li>🔍 <strong>ARP</strong> übersetzt IP-Adressen in MAC-Adressen</li>
+                    <li>🔀 <strong>Switches</strong> sind intelligenter als Hubs und schaffen separate Kollisionsdomänen</li>
+                    <li>🏢 <strong>VLANs</strong> ermöglichen virtuelle Netzwerk-Segmentierung</li>
+                </ul>
+
+                <div class="formula-box">
+                    <strong>Merksatz für die Prüfung:</strong><br>
+                    "Ethernet verbindet Geräte mit MAC-Adressen,<br>
+                    Switches lernen und leiten intelligent weiter,<br>
+                    VLANs segmentieren virtuell das Netzwerk."
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation-buttons">
+            <a href="netzwerk-grundlagen.html" class="nav-button">
+                ← Zurück: Netzwerk-Grundlagen
+            </a>
+            <a href="index.html" class="nav-button" style="background: var(--success-color);">
+                🏠 Zur Hauptseite
+            </a>
+            <a href="osi-modell.html" class="nav-button">
+                Weiter: OSI-7-Schichtenmodell →
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling für Inhaltsverzeichnis
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight aktueller Abschnitt beim Scrollen
+        const sections = document.querySelectorAll('.content-section[id]');
+        const tocLinks = document.querySelectorAll('.toc a[href^="#"]');
+
+        function highlightCurrentSection() {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            tocLinks.forEach(link => {
+                link.style.backgroundColor = '';
+                link.style.color = '';
+                if (link.getAttribute('href') === '#' + current) {
+                    link.style.backgroundColor = 'var(--primary-color)';
+                    link.style.color = 'white';
+                }
+            });
+        }
+
+        window.addEventListener('scroll', highlightCurrentSection);
+
+        // Navigation Button States
+        document.querySelectorAll('.nav-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                // Für Demo-Zwecke - in der echten Anwendung würden die Links funktionieren
+                if (this.href.includes('.html') && !this.href.includes('index.html')) {
+                    e.preventDefault();
+                    alert('Diese Seite wird als nächstes erstellt!');
+                }
+            });
+        });
+
+        // Interaktive Beispiele
+        document.addEventListener('DOMContentLoaded', function() {
+            // Beispiel: MAC-Adresse formatieren
+            const macExamples = document.querySelectorAll('code');
+            macExamples.forEach(code => {
+                if (/^[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}:[0-9A-Fa-f]{2}$/.test(code.textContent)) {
+                    code.style.fontWeight = 'bold';
+                    code.style.color = 'var(--primary-color)';
+                    code.title = 'MAC-Adresse';
+                }
+            });
+
+            // Beispiel: Frame-Felder interaktiv machen
+            const frameFields = document.querySelectorAll('.frame-field');
+            frameFields.forEach(field => {
+                field.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.1)';
+                    this.style.transition = 'all 0.2s ease';
+                });
+                
+                field.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+                
+                field.addEventListener('click', function() {
+                    const descriptions = {
+                        'Präambel': 'Synchronisiert Sender und Empfänger für den Frame-Start',
+                        'Ziel-MAC': 'MAC-Adresse des Empfängers (6 Bytes)',
+                        'Quell-MAC': 'MAC-Adresse des Senders (6 Bytes)', 
+                        'EtherType': 'Protokoll-Typ der Nutzdaten (2 Bytes)',
+                        'VLAN-Tag': 'Optional: VLAN-Kennzeichnung (4 Bytes)',
+                        'Daten': 'Nutzdaten: 46-1500 Bytes (wird aufgefüllt wenn < 46)',
+                        'FCS': 'Frame Check Sequence: CRC32-Prüfsumme (4 Bytes)'
+                    };
+                    
+                    const fieldName = this.textContent.split('\n')[0];
+                    const description = descriptions[fieldName] || 'Keine Beschreibung verfügbar';
+                    
+                    alert(`${fieldName}:\n\n${description}`);
+                });
+            });
+        });
+
+        // Print-Funktionalität
+        function printPage() {
+            window.print();
+        }
+
+        // Tastatur-Navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case 'h':
+                        e.preventDefault();
+                        document.querySelector('a[href="index.html"]').click();
+                        break;
+                    case 'p':
+                        e.preventDefault();
+                        printPage();
+                        break;
+                }
+            }
+        });
+    </script>
+</body>
+</html>

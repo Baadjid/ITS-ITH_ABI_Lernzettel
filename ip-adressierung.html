@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IP-Adressierung & Routing - Abitur 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #06b6d4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .breadcrumb {
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+        }
+
+        .nav-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        .section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .info-box {
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            border-left: 4px solid;
+        }
+
+        .info-box.info {
+            background: #ecfeff;
+            border-color: var(--info-color);
+            color: #0e7490;
+        }
+
+        .info-box.warning {
+            background: #fffbeb;
+            border-color: var(--warning-color);
+            color: #92400e;
+        }
+
+        .info-box.success {
+            background: #ecfdf5;
+            border-color: var(--success-color);
+            color: #065f46;
+        }
+
+        .info-box.danger {
+            background: #fef2f2;
+            border-color: var(--danger-color);
+            color: #991b1b;
+        }
+
+        .binary-table {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: var(--bg-light);
+            font-weight: bold;
+            color: var(--text-dark);
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .example-box {
+            background: var(--bg-light);
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .example-box h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .visual-diagram {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .ip-visual {
+            display: inline-block;
+            background: var(--bg-light);
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 0.5rem;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        .network-part {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .host-part {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            margin: 1rem 0;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 1.5rem;
+            padding-left: 3rem;
+            position: relative;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: var(--primary-color);
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .subnet-calculator {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .calc-input {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+        }
+
+        .calc-input label {
+            margin-right: 1rem;
+            min-width: 100px;
+            font-weight: bold;
+        }
+
+        .calc-input input {
+            padding: 0.5rem;
+            border: 2px solid var(--border-color);
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+
+        .calc-result {
+            background: var(--bg-white);
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .routing-table {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #a855f7 0%, #3b82f6 100%);
+            background-clip: text;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-weight: bold;
+        }
+
+        .quiz-section {
+            background: linear-gradient(135deg, #f3e8ff, #e0e7ff);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .quiz-question {
+            background: var(--bg-white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .quiz-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            margin-right: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .quiz-btn:hover {
+            background: var(--secondary-color);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--bg-white);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .nav-buttons {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="breadcrumb">
+                <a href="index.html">🏠 Hauptseite</a> > <a href="netzwerk-grundlagen.html">Vernetzte Systeme</a> > IP-Adressierung & Routing
+            </div>
+            <h1>🌐 IP-Adressierung & Routing</h1>
+            <p>Verständlicher Einstieg in die Grundlagen der Internet-Kommunikation</p>
+        </header>
+
+        <div class="nav-buttons">
+            <a href="netzwerk-grundlagen.html" class="nav-btn">← Netzwerk-Grundlagen</a>
+            <a href="osi-modell.html" class="nav-btn">OSI-Modell →</a>
+        </div>
+
+        <!-- Grundlagen-Sektion -->
+        <section class="section">
+            <div class="section-header">
+                <h2>🎯 Was ist eine IP-Adresse?</h2>
+                <p>Die Grundlagen verstehen - von der Postadresse zur Internet-Adresse</p>
+            </div>
+            <div class="section-content">
+                <div class="info-box info">
+                    <strong>🏠 Analogie zur Postadresse:</strong><br>
+                    Genau wie deine Wohnung eine Postadresse hat (Musterstraße 123, 12345 Musterstadt), braucht jedes Gerät im Internet eine eindeutige <strong>IP-Adresse</strong>, damit andere Geräte es finden können.
+                </div>
+
+                <p>Eine <strong>IP-Adresse</strong> (Internet Protocol Address) ist eine eindeutige Nummer, die jedem Gerät in einem Netzwerk zugewiesen wird. Sie dient zwei Hauptzwecken:</p>
+                
+                <ul>
+                    <li><strong>Identifikation:</strong> Eindeutige Kennzeichnung eines Geräts</li>
+                    <li><strong>Lokalisierung:</strong> Information darüber, wo sich das Gerät im Netzwerk befindet</li>
+                </ul>
+
+                <div class="example-box">
+                    <h4>📱 Beispiel aus dem Alltag:</h4>
+                    <p>Wenn du auf deinem Handy YouTube öffnest, sendet dein Handy eine Anfrage an die YouTube-Server. Dank IP-Adressen weiß YouTube, an welches Gerät die Videos zurückgesendet werden müssen.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- IPv4 Grundlagen -->
+        <section class="section">
+            <div class="section-header">
+                <h2>🔢 IPv4-Adressen verstehen</h2>
+                <p>Der aktuelle Standard im Detail erklärt</p>
+            </div>
+            <div class="section-content">
+                <h3>Aufbau einer IPv4-Adresse</h3>
+                
+                <div class="visual-diagram">
+                    <div class="ip-visual">192</div>
+                    <span>.</span>
+                    <div class="ip-visual">168</div>
+                    <span>.</span>
+                    <div class="ip-visual">1</div>
+                    <span>.</span>
+                    <div class="ip-visual">1</div>
+                    <br><br>
+                    <small>Jede Zahl ist ein <strong>Oktett</strong> (8 Bit) mit Werten von 0-255</small>
+                </div>
+
+                <div class="info-box warning">
+                    <strong>⚡ Wichtig:</strong> Eine IPv4-Adresse besteht aus <strong>32 Bit</strong> (4 × 8 Bit). Jedes Oktett kann Werte von 0 bis 255 haben, da 2⁸ = 256 mögliche Kombinationen existieren.
+                </div>
+
+                <h3>Binäre Darstellung</h3>
+                <p>Computer arbeiten nur mit 0 und 1. Deshalb wird jede IP-Adresse intern als Binärzahl gespeichert:</p>
+
+                <div class="binary-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Dezimal</th>
+                                <th>Binär</th>
+                                <th>Erklärung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>192.168.1.1</td>
+                                <td>11000000.10101000.00000001.00000001</td>
+                                <td>Komplette IP-Adresse in Binär</td>
+                            </tr>
+                            <tr>
+                                <td>192</td>
+                                <td>11000000</td>
+                                <td>128 + 64 = 192</td>
+                            </tr>
+                            <tr>
+                                <td>168</td>
+                                <td>10101000</td>
+                                <td>128 + 32 + 8 = 168</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>00000001</td>
+                                <td>Nur das letzte Bit ist 1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="example-box">
+                    <h4>🧮 Umrechnung Dezimal → Binär:</h4>
+                    <p>Die Zahl 192 in Binär:</p>
+                    <div class="code-block">
+192 ÷ 2 = 96 Rest 0
+96 ÷ 2 = 48 Rest 0  
+48 ÷ 2 = 24 Rest 0
+24 ÷ 2 = 12 Rest 0
+12 ÷ 2 = 6 Rest 0
+6 ÷ 2 = 3 Rest 0
+3 ÷ 2 = 1 Rest 1
+1 ÷ 2 = 0 Rest 1
+
+Von unten nach oben lesen: 11000000
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Netzmasken -->
+        <section class="section">
+            <div class="section-header">
+                <h2>🎭 Netzmasken und Subnetze</h2>
+                <p>Wie IP-Adressen in Netzwerk- und Host-Teil aufgeteilt werden</p>
+            </div>
+            <div class="section-content">
+                <div class="info-box info">
+                    <strong>🏘️ Analogie zur Postadresse:</strong><br>
+                    Eine Postadresse hat eine <strong>Straße</strong> (= Netzwerk) und eine <strong>Hausnummer</strong> (= Host). Genauso wird eine IP-Adresse in einen Netzwerk-Teil und einen Host-Teil aufgeteilt.
+                </div>
+
+                <h3>Was ist eine Netzmaske?</h3>
+                <p>Eine <strong>Netzmaske</strong> (Subnet Mask) bestimmt, welcher Teil der IP-Adresse das Netzwerk und welcher Teil den Host (das einzelne Gerät) identifiziert.</p>
+
+                <div class="visual-diagram">
+                    <h4>IP-Adresse: 192.168.1.1/24</h4>
+                    <div class="ip-visual network-part">192.168.1</div>
+                    <span>.</span>
+                    <div class="ip-visual host-part">1</div>
+                    <br><br>
+                    <small>
+                        <span class="network-part">■ Netzwerk-Teil</span> | 
+                        <span class="host-part">■ Host-Teil</span>
+                    </small>
+                </div>
+
+                <h3>CIDR-Notation verstehen</h3>
+                <p>Die <strong>/24</strong> hinter der IP-Adresse bedeutet, dass die ersten 24 Bits für das Netzwerk reserviert sind.</p>
+
+                <div class="binary-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>CIDR</th>
+                                <th>Netzmaske (dezimal)</th>
+                                <th>Netzmaske (binär)</th>
+                                <th>Anzahl Hosts</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>/24</td>
+                                <td>255.255.255.0</td>
+                                <td>11111111.11111111.11111111.00000000</td>
+                                <td>254 (2⁸ - 2)</td>
+                            </tr>
+                            <tr>
+                                <td>/25</td>
+                                <td>255.255.255.128</td>
+                                <td>11111111.11111111.11111111.10000000</td>
+                                <td>126 (2⁷ - 2)</td>
+                            </tr>
+                            <tr>
+                                <td>/26</td>
+                                <td>255.255.255.192</td>
+                                <td>11111111.11111111.11111111.11000000</td>
+                                <td>62 (2⁶ - 2)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-box warning">
+                    <strong>⚠️ Warum -2 bei der Host-Anzahl?</strong><br>
+                    • Alle Host-Bits = 0: <strong>Netzwerk-Adresse</strong> (z.B. 192.168.1.0)<br>
+                    • Alle Host-Bits = 1: <strong>Broadcast-Adresse</strong> (z.B. 192.168.1.255)<br>
+                    Diese beiden Adressen können nicht für normale Geräte verwendet werden!
+                </div>
+
+                <div class="example-box">
+                    <h4>🎯 Praktisches Beispiel - Netzwerk 192.168.1.0/24:</h4>
+                    <ul>
+                        <li><strong>Netzwerk-Adresse:</strong> 192.168.1.0</li>
+                        <li><strong>Erste verwendbare Adresse:</strong> 192.168.1.1</li>
+                        <li><strong>Letzte verwendbare Adresse:</strong> 192.168.1.254</li>
+                        <li><strong>Broadcast-Adresse:</strong> 192.168.1.255</li>
+                        <li><strong>Anzahl möglicher Geräte:</strong> 254</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Subnetting -->
+        <section class="section">
+            <div class="section-header">
+                <h2>✂️ Subnetting - Netzwerke aufteilen</h2>
+                <p>Wie große Netzwerke in kleinere Teilnetze unterteilt werden</p>
+            </div>
+            <div class="section-content">
+                <div class="info-box info">
+                    <strong>🏠 Analogie:</strong><br>
+                    Stelle dir vor, eine große Straße wird in mehrere Abschnitte unterteilt. Jeder Abschnitt bekommt einen eigenen Namen, aber alle gehören zur gleichen Hauptstraße.
+                </div>
+
+                <h3>Warum Subnetting?</h3>
+                <ul>
+                    <li><strong>Organisation:</strong> Trennung verschiedener Abteilungen</li>
+                    <li><strong>Sicherheit:</strong> Kontrolle des Datenverkehrs zwischen Bereichen</li>
+                    <li><strong>Performance:</strong> Reduzierung des Broadcast-Verkehrs</li>
+                    <li><strong>Effizienz:</strong> Bessere Nutzung des IP-Adressbereichs</li>
+                </ul>
+
+                <div class="example-box">
+                    <h4>🏢 Beispiel - Firma mit 3 Abteilungen:</h4>
+                    <p>Gegeben: Netzwerk 192.168.0.0/24 (254 Hosts)</p>
+                    <p>Aufteilung in 4 Subnetze (je 62 Hosts):</p>
+                    
+                    <div class="binary-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Subnetz</th>
+                                    <th>Netzwerk-Adresse</th>
+                                    <th>Adressbereich</th>
+                                    <th>Broadcast</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Marketing</td>
+                                    <td>192.168.0.0/26</td>
+                                    <td>192.168.0.1 - 192.168.0.62</td>
+                                    <td>192.168.0.63</td>
+                                </tr>
+                                <tr>
+                                    <td>IT</td>
+                                    <td>192.168.0.64/26</td>
+                                    <td>192.168.0.65 - 192.168.0.126</td>
+                                    <td>192.168.0.127</td>
+                                </tr>
+                                <tr>
+                                    <td>Verwaltung</td>
+                                    <td>192.168.0.128/26</td>
+                                    <td>192.168.0.129 - 192.168.0.190</td>
+                                    <td>192.168.0.191</td>
+                                </tr>
+                                <tr>
+                                    <td>Gäste</td>
+                                    <td>192.168.0.192/26</td>
+                                    <td>192.168.0.193 - 192.168.0.254</td>
+                                    <td>192.168.0.255</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="subnet-calculator">
+                    <h4>🧮 Subnetz-Rechner (Beispiel)</h4>
+                    <div class="calc-input">
+                        <label>IP-Adresse:</label>
+                        <input type="text" id="ipInput" value="192.168.1.0" readonly>
+                    </div>
+                    <div class="calc-input">
+                        <label>Subnetzmaske:</label>
+                        <input type="text" id="maskInput" value="/24" readonly>
+                    </div>
+                    <div class="calc-result">
+                        <strong>Ergebnis:</strong><br>
+                        Netzwerk-Adresse: 192.168.1.0<br>
+                        Erste Host-IP: 192.168.1.1<br>
+                        Letzte Host-IP: 192.168.1.254<br>
+                        Broadcast-Adresse: 192.168.1.255<br>
+                        Anzahl möglicher Hosts: 254
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- IP-Adressarten -->
+        <section class="section">
+            <div class="section-header">
+                <h2>🏷️ IP-Adressarten</h2>
+                <p>Öffentlich, privat, und spezielle Adressen</p>
+            </div>
+            <div class="section-content">
+                <h3>Private IP-Adressen (RFC 1918)</h3>
+                <p>Diese Adressen werden <strong>nur in lokalen Netzwerken</strong> verwendet und sind nicht im Internet routbar:</p>
+                
+                <div class="binary-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Klasse</th>
+                                <th>Adressbereich</th>
+                                <th>Verwendung</th>
+                                <th>Beispiel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>A</td>
+                                <td>10.0.0.0/8</td>
+                                <td>Große Unternehmensnetzwerke</td>
+                                <td>10.0.1.100</td>
+                            </tr>
+                            <tr>
+                                <td>B</td>
+                                <td>172.16.0.0/12</td>
+                                <td>Mittlere Netzwerke</td>
+                                <td>172.16.5.20</td>
+                            </tr>
+                            <tr>
+                                <td>C</td>
+                                <td>192.168.0.0/16</td>
+                                <td>Heimnetzwerke, kleine Büros</td>
+                                <td>192.168.1.50</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-box success">
+                    <strong>💡 Dein Heimnetzwerk:</strong><br>
+                    Dein WLAN-Router verwendet wahrscheinlich Adressen wie 192.168.1.1 (Router) und vergibt an deine Geräte Adressen wie 192.168.1.2, 192.168.1.3, usw.
+                </div>
+
+                <h3>Spezielle IP-Adressen</h3>
+                <div class="binary-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Adresse</th>
+                                <th>Name</th>
+                                <th>Bedeutung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>127.0.0.1</td>
+                                <td>Localhost/Loopback</td>
+                                <td>Verweis auf das eigene Gerät</td>
+                            </tr>
+                            <tr>
+                                <td>0.0.0.0</td>
+                                <td>Default Route</td>
+                                <td>"Alle anderen Netzwerke"</td>
+                            </tr>
+                            <tr>
+                                <td>169.254.x.x</td>
+                                <td>Link-Local</td>
+                                <td>Automatische IP bei DHCP-Ausfall</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Routing -->
+        <section class="section">
+            <div class="section-header">
+                <h2>🗺️ Routing - Der Weg durchs Netzwerk</h2>
+                <p>Wie Datenpakete ihren Weg zum Ziel finden</p>
+            </div>
+            <div class="section-content">
+                <div class="info-box info">
+                    <strong>🚗 Analogie zur Autofahrt:</strong><br>
+                    Routing ist wie das Navigationsystem in deinem Auto. Es findet den besten Weg von A nach B und leitet dich über verschiedene Straßen (Netzwerke) zum Ziel.
+                </div>
+
+                <h3>Was ist Routing?</h3>
+                <p><strong>Routing</strong> ist der Prozess, bei dem Datenpakete den optimalen Weg durch ein Netzwerk oder mehrere verbundene Netzwerke zu ihrem Zielort finden.</p>
+
+                <div class="step-list">
+                    <li><strong>Paket kommt an:</strong> Ein Router erhält ein Datenpaket mit einer Ziel-IP-Adresse</li>
+                    <li><strong>Routing-Tabelle prüfen:</strong> Der Router schaut in seiner Routing-Tabelle nach dem besten Weg</li>
+                    <li><strong>Entscheidung treffen:</strong> Basierend auf der Tabelle wird das nächste Zwischenziel (Gateway) bestimmt</li>
+                    <li><strong>Weiterleiten:</strong> Das Paket wird an den nächsten Router oder das Zielgerät gesendet</li>
+                </div>
+
+                <h3>Routing-Tabelle verstehen</h3>
+                <p>Jeder Router hat eine <strong>Routing-Tabelle</strong>, die wie ein Wegweiser funktioniert:</p>
+
+                <div class="binary-table">
+                    <table class="routing-table">
+                        <thead>
+                            <tr>
+                                <th>Netzadresse</th>
+                                <th>Subnetzmaske</th>
+                                <th>Gateway</th>
+                                <th>Interface</th>
+                                <th>Erklärung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>192.168.1.0</td>
+                                <td>/24</td>
+                                <td>*</td>
+                                <td>eth0</td>
+                                <td>Direkt verbundenes Netzwerk</td>
+                            </tr>
+                            <tr>
+                                <td>10.1.0.0</td>
+                                <td>/16</td>
+                                <td>*</td>
+                                <td>eth1</td>
+                                <td>Anderes direkt verbundenes Netzwerk</td>
+                            </tr>
+                            <tr>
+                                <td>172.16.0.0</td>
+                                <td>/12</td>
+                                <td>10.1.0.253</td>
+                                <td>eth1</td>
+                                <td>Entferntes Netzwerk über Gateway</td>
+                            </tr>
+                            <tr>
+                                <td>0.0.0.0</td>
+                                <td>0.0.0.0</td>
+                                <td>192.168.1.1</td>
+                                <td>eth0</td>
+                                <td>Standard-Route (Default Gateway)</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-box warning">
+                    <strong>🔍 Routing-Tabelle lesen:</strong><br>
+                    • <strong>*</strong> bedeutet "direkt verbunden" (kein Gateway nötig)<br>
+                    • <strong>0.0.0.0/0</strong> ist die Standard-Route für alle unbekannten Ziele<br>
+                    • <strong>Gateway</strong> ist die IP des nächsten Routers auf dem Weg zum Ziel
+                </div>
+
+                <div class="example-box">
+                    <h4>🎯 Routing-Beispiel:</h4>
+                    <p><strong>Situation:</strong> Computer 192.168.1.10 möchte Daten an 172.16.5.20 senden</p>
+                    <div class="step-list">
+                        <li>Computer sendet Paket an Standard-Gateway (192.168.1.1)</li>
+                        <li>Router prüft Routing-Tabelle: Ziel 172.16.5.20 gehört zu 172.16.0.0/12</li>
+                        <li>Tabelle zeigt: Gateway für 172.16.0.0/12 ist 10.1.0.253</li>
+                        <li>Router leitet Paket über Interface eth1 an 10.1.0.253 weiter</li>
+                        <li>Prozess wiederholt sich, bis Paket das Ziel erreicht</li>
+                    </div>
+                </div>
+
+                <h3>Statisches vs. Dynamisches Routing</h3>
+                
+                <div class="binary-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Eigenschaft</th>
+                                <th>Statisches Routing</th>
+                                <th>Dynamisches Routing</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Konfiguration</strong></td>
+                                <td>Manuell vom Administrator</td>
+                                <td>Automatisch durch Routing-Protokolle</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Anpassung</strong></td>
+                                <td>Keine automatische Anpassung</td>
+                                <td>Automatische Anpassung bei Änderungen</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Ressourcenverbrauch</strong></td>
+                                <td>Niedrig</td>
+                                <td>Höher (Protokoll-Overhead)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Verwendung</strong></td>
+                                <td>Kleine, stabile Netzwerke</td>
+                                <td>Große, sich ändernde Netzwerke</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-box success">
+                    <strong>💡 In der Praxis:</strong><br>
+                    • <strong>Dein Heimnetzwerk:</strong> Statisches Routing (alles geht über deinen Router ins Internet)<br>
+                    • <strong>Internet-Backbone:</strong> Dynamisches Routing (Millionen von Routen ändern sich ständig)
+                </div>
+            </div>
+        </section>
+
+        <!-- IPv6 Grundlagen -->
+        <section class="section">
+            <div class="section-header">
+                <h2>🔮 IPv6 - Die Zukunft der IP-Adressierung</h2>
+                <p>Der Nachfolger von IPv4 mit praktisch unendlichen Adressen</p>
+            </div>
+            <div class="section-content">
+                <div class="info-box warning">
+                    <strong>⚡ Warum IPv6?</strong><br>
+                    IPv4 hat nur 4,3 Milliarden mögliche Adressen. Bei Milliarden von Geräten weltweit reicht das nicht mehr aus. IPv6 hat 340 Sextillionen (340.282.366.920.938.463.463.374.607.431.768.211.456) mögliche Adressen!
+                </div>
+
+                <h3>IPv6-Adressaufbau</h3>
+                <p>IPv6-Adressen bestehen aus <strong>128 Bit</strong> (statt 32 bei IPv4) und werden in <strong>hexadezimaler</strong> Schreibweise dargestellt:</p>
+
+                <div class="visual-diagram">
+                    <div class="code-block">
+Vollständige Schreibweise:
+2001:0db8:85a3:0000:0000:8a2e:0370:7334
+
+Verkürzte Schreibweise:
+2001:db8:85a3::8a2e:370:7334
+                    </div>
+                </div>
+
+                <h3>IPv6-Adressarten (wichtigste)</h3>
+                <div class="binary-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Adresstyp</th>
+                                <th>Präfix</th>
+                                <th>Beispiel</th>
+                                <th>Verwendung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Global Unicast</td>
+                                <td>2000::/3</td>
+                                <td>2001:db8:85a3::1</td>
+                                <td>Öffentliche Adressen (wie IPv4 öffentlich)</td>
+                            </tr>
+                            <tr>
+                                <td>Link-Local</td>
+                                <td>fe80::/64</td>
+                                <td>fe80::1</td>
+                                <td>Lokale Kommunikation im gleichen Netzwerk</td>
+                            </tr>
+                            <tr>
+                                <td>Unique Local</td>
+                                <td>fc00::/7</td>
+                                <td>fd00::1</td>
+                                <td>Private Adressen (wie IPv4 privat)</td>
+                            </tr>
+                            <tr>
+                                <td>Loopback</td>
+                                <td>::1/128</td>
+                                <td>::1</td>
+                                <td>Wie 127.0.0.1 bei IPv4</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="example-box">
+                    <h4>🔧 IPv6-Schreibweise-Regeln:</h4>
+                    <div class="step-list">
+                        <li><strong>Führende Nullen weglassen:</strong> 0001 → 1</li>
+                        <li><strong>Aufeinanderfolgende Null-Blöcke zusammenfassen:</strong> 0000:0000:0000 → ::  (nur einmal pro Adresse!)</li>
+                        <li><strong>Groß-/Kleinschreibung egal:</strong> A1b2 = a1B2</li>
+                    </div>
+                    
+                    <div class="code-block">
+Beispiel-Umwandlung:
+2001:0db8:0000:0000:0000:0000:0370:7334
+   ↓ Führende Nullen weg
+2001:db8:0:0:0:0:370:7334  
+   ↓ Null-Blöcke zusammenfassen
+2001:db8::370:7334
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Praktische Übungen -->
+        <section class="section">
+            <div class="section-header">
+                <h2>🧪 Praktische Übungen</h2>
+                <p>Teste dein Verständnis mit interaktiven Aufgaben</p>
+            </div>
+            <div class="section-content">
+                <div class="quiz-section">
+                    <h3>📝 Übungsaufgaben</h3>
+                    
+                    <div class="quiz-question">
+                        <h4>Aufgabe 1: IP-Adresse analysieren</h4>
+                        <p>Gegeben: IP-Adresse 192.168.5.100/26</p>
+                        <p><strong>Bestimme:</strong></p>
+                        <ul>
+                            <li>Netzwerk-Adresse</li>
+                            <li>Broadcast-Adresse</li>
+                            <li>Anzahl möglicher Hosts</li>
+                            <li>Erste und letzte verwendbare IP</li>
+                        </ul>
+                        <button class="quiz-btn" onclick="showAnswer('answer1')">Lösung anzeigen</button>
+                        <div id="answer1" style="display: none; margin-top: 1rem; padding: 1rem; background: #ecfdf5; border-radius: 8px;">
+                            <strong>Lösung:</strong><br>
+                            • Netzwerk-Adresse: 192.168.5.64/26 (Host-Bits: 6 Bit → 2⁶ = 64, 100 liegt im Bereich 64-127)<br>
+                            • Broadcast-Adresse: 192.168.5.127<br>
+                            • Anzahl Hosts: 2⁶ - 2 = 62<br>
+                            • Erste verwendbare IP: 192.168.5.65<br>
+                            • Letzte verwendbare IP: 192.168.5.126
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>Aufgabe 2: Subnetting</h4>
+                        <p>Du hast das Netzwerk 10.0.0.0/24 und möchtest es in 4 gleichgroße Subnetze aufteilen.</p>
+                        <p><strong>Bestimme die 4 Subnetz-Adressen mit korrekter CIDR-Notation.</strong></p>
+                        <button class="quiz-btn" onclick="showAnswer('answer2')">Lösung anzeigen</button>
+                        <div id="answer2" style="display: none; margin-top: 1rem; padding: 1rem; background: #ecfdf5; border-radius: 8px;">
+                            <strong>Lösung:</strong><br>
+                            4 Subnetze = 2² → 2 zusätzliche Netz-Bits → /24 wird zu /26<br>
+                            • Subnetz 1: 10.0.0.0/26 (10.0.0.0 - 10.0.0.63)<br>
+                            • Subnetz 2: 10.0.0.64/26 (10.0.0.64 - 10.0.0.127)<br>
+                            • Subnetz 3: 10.0.0.128/26 (10.0.0.128 - 10.0.0.191)<br>
+                            • Subnetz 4: 10.0.0.192/26 (10.0.0.192 - 10.0.0.255)
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>Aufgabe 3: Routing-Entscheidung</h4>
+                        <p>Ein Router hat folgende Routing-Tabelle:</p>
+                        <div class="code-block" style="font-size: 0.8rem;">
+192.168.1.0/24    *           eth0
+10.0.0.0/8        10.1.1.1    eth1  
+172.16.0.0/16     192.168.1.5 eth0
+0.0.0.0/0         192.168.1.1 eth0
+                        </div>
+                        <p><strong>Wohin wird ein Paket für 172.16.50.100 geleitet?</strong></p>
+                        <button class="quiz-btn" onclick="showAnswer('answer3')">Lösung anzeigen</button>
+                        <div id="answer3" style="display: none; margin-top: 1rem; padding: 1rem; background: #ecfdf5; border-radius: 8px;">
+                            <strong>Lösung:</strong><br>
+                            172.16.50.100 passt zu 172.16.0.0/16 in der Routing-Tabelle.<br>
+                            → Paket wird an Gateway 192.168.1.5 über Interface eth0 geleitet.
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <h4>Aufgabe 4: IPv6-Adresse vereinfachen</h4>
+                        <p>Vereinfache diese IPv6-Adresse maximal:</p>
+                        <div class="code-block">2001:0db8:0000:0000:0000:0000:0000:0001</div>
+                        <button class="quiz-btn" onclick="showAnswer('answer4')">Lösung anzeigen</button>
+                        <div id="answer4" style="display: none; margin-top: 1rem; padding: 1rem; background: #ecfdf5; border-radius: 8px;">
+                            <strong>Lösung:</strong><br>
+                            2001:db8::1<br>
+                            (Führende Nullen entfernt, 6 aufeinanderfolgende Null-Blöcke durch :: ersetzt)
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Praxisbezug -->
+        <section class="section">
+            <div class="section-header">
+                <h2>🌍 Praxisbezug und Anwendungen</h2>
+                <p>Wie IP-Adressierung in der realen Welt funktioniert</p>
+            </div>
+            <div class="section-content">
+                <h3>Typische Netzwerk-Szenarien</h3>
+                
+                <div class="example-box">
+                    <h4>🏠 Heimnetzwerk (typisch)</h4>
+                    <ul>
+                        <li><strong>Router/Gateway:</strong> 192.168.1.1 oder 192.168.0.1</li>
+                        <li><strong>DHCP-Bereich:</strong> 192.168.1.100 - 192.168.1.200</li>
+                        <li><strong>Dein Laptop:</strong> 192.168.1.105 (automatisch vergeben)</li>
+                        <li><strong>Dein Handy:</strong> 192.168.1.107 (automatisch vergeben)</li>
+                        <li><strong>Smart-TV:</strong> 192.168.1.110 (automatisch vergeben)</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>🏢 Unternehmensnetzwerk</h4>
+                    <ul>
+                        <li><strong>Server-Segment:</strong> 10.1.1.0/24 (statische IPs)</li>
+                        <li><strong>Mitarbeiter-PCs:</strong> 10.1.100.0/24 (DHCP)</li>
+                        <li><strong>Gäste-WLAN:</strong> 10.1.200.0/24 (isoliert)</li>
+                        <li><strong>Drucker/Geräte:</strong> 10.1.10.0/24 (statische IPs)</li>
+                        <li><strong>DMZ (Webserver):</strong> 10.1.0.0/28 (öffentlich erreichbar)</li>
+                    </ul>
+                </div>
+
+                <h3>Netzwerk-Tools für die Praxis</h3>
+                <div class="binary-table">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Tool</th>
+                                <th>Windows</th>
+                                <th>Linux/Mac</th>
+                                <th>Zweck</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>IP-Konfiguration anzeigen</td>
+                                <td>ipconfig</td>
+                                <td>ifconfig / ip addr</td>
+                                <td>Aktuelle IP-Einstellungen prüfen</td>
+                            </tr>
+                            <tr>
+                                <td>Erreichbarkeit testen</td>
+                                <td>ping</td>
+                                <td>ping</td>
+                                <td>Verbindung zu anderem Gerät testen</td>
+                            </tr>
+                            <tr>
+                                <td>Routing-Tabelle anzeigen</td>
+                                <td>route print</td>
+                                <td>route -n</td>
+                                <td>Aktuelle Routen anzeigen</td>
+                            </tr>
+                            <tr>
+                                <td>Weg zum Ziel verfolgen</td>
+                                <td>tracert</td>
+                                <td>traceroute</td>
+                                <td>Route zu einem Ziel nachverfolgen</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="example-box">
+                    <h4>💻 Häufige Befehle im Detail:</h4>
+                    <div class="code-block">
+# Windows - Eigene IP-Adresse anzeigen
+C:\> ipconfig
+
+# Ausführliche Informationen  
+C:\> ipconfig /all
+
+# Verbindung testen
+C:\> ping 8.8.8.8
+
+# Weg zu Google verfolgen  
+C:\> tracert google.com
+
+# Routing-Tabelle anzeigen
+C:\> route print
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Zusammenfassung -->
+        <section class="section">
+            <div class="section-header">
+                <h2>📚 Zusammenfassung</h2>
+                <p>Das Wichtigste auf einen Blick</p>
+            </div>
+            <div class="section-content">
+                <div class="info-box success">
+                    <h3>🎯 Key-Facts IP-Adressierung:</h3>
+                    <ul>
+                        <li><strong>IPv4:</strong> 32 Bit, 4 Oktette (0-255), Format: xxx.xxx.xxx.xxx</li>
+                        <li><strong>IPv6:</strong> 128 Bit, hexadezimal, praktisch unbegrenzte Adressen</li>
+                        <li><strong>Netzmaske:</strong> Trennt Netzwerk- und Host-Teil der Adresse</li>
+                        <li><strong>CIDR-Notation:</strong> /24 = 255.255.255.0 = 24 Netz-Bits</li>
+                        <li><strong>Private Bereiche:</strong> 10.x.x.x, 172.16-31.x.x, 192.168.x.x</li>
+                    </ul>
+                </div>
+
+                <div class="info-box info">
+                    <h3>🗺️ Key-Facts Routing:</h3>
+                    <ul>
+                        <li><strong>Routing:</strong> Weiterleitung von Datenpaketen zum Ziel</li>
+                        <li><strong>Routing-Tabelle:</strong> "Wegweiser" mit Netzwerk → Gateway Zuordnungen</li>
+                        <li><strong>Default Gateway:</strong> 0.0.0.0/0 - Route für alle unbekannten Ziele</li>
+                        <li><strong>Statisch:</strong> Manuell konfiguriert, für kleine Netzwerke</li>
+                        <li><strong>Dynamisch:</strong> Automatisch per Protokoll, für große Netzwerke</li>
+                    </ul>
+                </div>
+
+                <div class="info-box warning">
+                    <h3>⚠️ Häufige Prüfungsthemen:</h3>
+                    <ul>
+                        <li>Subnetting-Berechnungen (Netzwerk-/Broadcast-Adressen)</li>
+                        <li>CIDR-Notation umwandeln (z.B. /25 → 255.255.255.128)</li>
+                        <li>Routing-Tabellen interpretieren und Routing-Entscheidungen treffen</li>
+                        <li>IPv4 vs. IPv6 Unterschiede und Adressarten</li>
+                        <li>Private vs. öffentliche IP-Adressbereiche</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="nav-buttons">
+            <a href="netzwerk-grundlagen.html" class="nav-btn">← Netzwerk-Grundlagen</a>
+            <a href="osi-modell.html" class="nav-btn">OSI-Modell →</a>
+        </div>
+
+        <footer class="footer">
+            <p>
+                <strong>IP-Adressierung & Routing - Abitur 2026 Lernzettel</strong><br>
+                Erstellt nach dem Baden-Württemberg Bildungsplan für Informationstechnik TG<br>
+                <em>Alle Inhalte systematisch für optimale Prüfungsvorbereitung aufbereitet</em>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        function showAnswer(answerId) {
+            const answer = document.getElementById(answerId);
+            if (answer.style.display === 'none') {
+                answer.style.display = 'block';
+            } else {
+                answer.style.display = 'none';
+            }
+        }
+
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+    </script>
+</body>
+</html>

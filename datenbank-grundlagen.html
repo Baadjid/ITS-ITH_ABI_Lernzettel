@@ -1,0 +1,873 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datenbank-Grundlagen - Abitur 2026 Informatik TG</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #06b6d4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .breadcrumb {
+            background: var(--bg-white);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .content-section {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-section h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+            margin-top: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .info-box {
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+        }
+
+        .info-box.definition {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border-left-color: var(--primary-color);
+        }
+
+        .info-box.important {
+            background: linear-gradient(135deg, #fef3c7, #fed7aa);
+            border-left-color: var(--warning-color);
+        }
+
+        .info-box.example {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border-left-color: var(--success-color);
+        }
+
+        .info-box.warning {
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            border-left-color: var(--danger-color);
+        }
+
+        .info-box h4 {
+            font-weight: bold;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .comparison-table tr:hover {
+            background: #e0e7ff;
+        }
+
+        .diagram-container {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border: 2px dashed var(--border-color);
+            text-align: center;
+        }
+
+        .architecture-diagram {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .layer {
+            background: var(--bg-white);
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 1rem 2rem;
+            min-width: 300px;
+            text-align: center;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .layer.external {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border-color: var(--success-color);
+            color: var(--success-color);
+        }
+
+        .layer.conceptual {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border-color: var(--primary-color);
+            color: var(--primary-color);
+        }
+
+        .layer.internal {
+            background: linear-gradient(135deg, #fef3c7, #fed7aa);
+            border-color: var(--warning-color);
+            color: var(--warning-color);
+        }
+
+        .arrow {
+            font-size: 1.5rem;
+            color: var(--text-light);
+        }
+
+        .key-terms {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .term {
+            background: var(--bg-light);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .term strong {
+            color: var(--primary-color);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .requirements-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .requirement {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .requirement:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .requirement-icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .requirement h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .advantage-disadvantage {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 1.5rem 0;
+        }
+
+        .advantage {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--success-color);
+        }
+
+        .disadvantage {
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .advantage h4,
+        .disadvantage h4 {
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .advantage ul,
+        .disadvantage ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .advantage li,
+        .disadvantage li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .advantage li::before {
+            content: "✓";
+            color: var(--success-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .disadvantage li::before {
+            content: "✗";
+            color: var(--danger-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-top: 2rem;
+        }
+
+        .nav-button {
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .nav-button:disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            border-radius: 16px;
+            margin: 2rem 0;
+        }
+
+        .summary-box h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .summary-points {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .summary-points li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .summary-points li::before {
+            content: "→";
+            color: white;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .advantage-disadvantage {
+                grid-template-columns: 1fr;
+            }
+
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .key-terms {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">← Zurück zur Übersicht</a> | 
+            <strong>Datenbanksysteme</strong> > Datenbank-Grundlagen
+        </div>
+
+        <header class="header">
+            <h1>🗄️ Datenbank-Grundlagen</h1>
+            <p><strong>BPE 9.1:</strong> Aufgaben und Anforderungen an Datenbankmanagementsysteme</p>
+        </header>
+
+        <!-- Was ist eine Datenbank? -->
+        <section class="content-section">
+            <h2>📚 Was ist eine Datenbank?</h2>
+            
+            <div class="info-box definition">
+                <h4>🎯 Definition</h4>
+                <p><strong>Eine Datenbank</strong> ist eine <em>Sammlung gespeicherter Daten</em>, die untereinander in einer logischen Beziehung stehen und von einem <strong>Datenbankverwaltungssystem (DBMS)</strong> verwaltet werden.</p>
+            </div>
+
+            <p>Stellen Sie sich vor, Sie haben einen riesigen, gut organisierten Aktenschrank mit Millionen von Dokumenten. Eine Datenbank funktioniert ähnlich - nur digital und viel effizienter!</p>
+
+            <h3>🏗️ Die drei wichtigsten Komponenten</h3>
+            
+            <div class="key-terms">
+                <div class="term">
+                    <strong>DB (Datenbank)</strong>
+                    Die eigentlichen Daten - wie die Dokumente in unserem Aktenschrank
+                </div>
+                <div class="term">
+                    <strong>DBMS (Datenbankmanagementsystem)</strong>
+                    Die Software, die alles verwaltet - wie ein sehr intelligenter Bibliothekar
+                </div>
+                <div class="term">
+                    <strong>DBS (Datenbanksystem)</strong>
+                    Die Kombination aus Datenbank + DBMS + Anwenderprogramme
+                </div>
+            </div>
+
+            <div class="diagram-container">
+                <h4>🏛️ Aufbau eines Datenbanksystems</h4>
+                <div style="display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 2rem; margin: 2rem 0;">
+                    <div style="text-align: center;">
+                        <div style="width: 80px; height: 60px; border: 2px solid var(--primary-color); border-radius: 50%; background: var(--bg-light); display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem; font-weight: bold;">DB</div>
+                        <small>Datenbank 1</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="width: 80px; height: 60px; border: 2px solid var(--primary-color); border-radius: 50%; background: var(--bg-light); display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem; font-weight: bold;">DB</div>
+                        <small>Datenbank 2</small>
+                    </div>
+                    <div style="text-align: center;">
+                        <div style="width: 100px; height: 60px; border: 2px solid var(--primary-color); border-radius: 50%; background: var(--bg-light); display: flex; align-items: center; justify-content: center; margin-bottom: 0.5rem; font-weight: bold; font-size: 0.8rem;">DB-Beschreibung</div>
+                        <small>Metadaten</small>
+                    </div>
+                </div>
+                <div style="background: var(--primary-color); color: white; padding: 1rem; border-radius: 8px; margin: 1rem 0; font-weight: bold;">
+                    DBMS (Datenbankmanagementsystem)
+                </div>
+                <div style="border: 2px solid var(--text-light); padding: 1rem; border-radius: 8px; background: var(--bg-white);">
+                    Anwenderprogramme / User
+                </div>
+            </div>
+        </section>
+
+        <!-- Zentrale Eigenschaften -->
+        <section class="content-section">
+            <h2>⭐ Zentrale Eigenschaften von Datenbanken</h2>
+            
+            <p>Was macht Datenbanken so besonders? Hier sind die vier Schlüsseleigenschaften:</p>
+
+            <div class="requirements-list">
+                <div class="requirement">
+                    <div class="requirement-icon">🏛️</div>
+                    <h4>Zentrale Verwaltung</h4>
+                    <p>Alle Programme arbeiten mit derselben Datenbasis - keine doppelten oder widersprüchlichen Informationen mehr!</p>
+                </div>
+
+                <div class="requirement">
+                    <div class="requirement-icon">🔄</div>
+                    <h4>Aktualität</h4>
+                    <p>Daten sind für alle Anwendungen gleich aktuell. Wenn sich etwas ändert, sehen es alle sofort.</p>
+                </div>
+
+                <div class="requirement">
+                    <div class="requirement-icon">💾</div>
+                    <h4>Einmalige Speicherung</h4>
+                    <p>Vermeidung von Redundanz - jede Information wird nur einmal gespeichert und überall wiederverwendet.</p>
+                </div>
+
+                <div class="requirement">
+                    <div class="requirement-icon">👥</div>
+                    <h4>Gleichzeitiger Zugriff</h4>
+                    <p>Mehrere Benutzer können parallel arbeiten, ohne sich gegenseitig zu stören.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Anforderungen an Datenbanksysteme -->
+        <section class="content-section">
+            <h2>📋 Die 7 Hauptanforderungen an Datenbanksysteme</h2>
+            
+            <p>Ein professionelles Datenbanksystem muss diese sieben kritischen Anforderungen erfüllen:</p>
+
+            <div class="requirements-list">
+                <div class="requirement">
+                    <div class="requirement-icon">🔄</div>
+                    <h4>1. Redundanzarme Speicherung</h4>
+                    <p>Daten möglichst nur einmal speichern - spart Platz und verhindert Widersprüche</p>
+                </div>
+
+                <div class="requirement">
+                    <div class="requirement-icon">🔍</div>
+                    <h4>2. Abfrage- und Änderbarkeit</h4>
+                    <p>Flexible Datenzugriffe ermöglichen - schnell finden und bearbeiten können</p>
+                </div>
+
+                <div class="requirement">
+                    <div class="requirement-icon">🔒</div>
+                    <h4>3. Logische Unabhängigkeit</h4>
+                    <p>Benutzer muss physische Struktur nicht kennen - einfache Bedienung</p>
+                </div>
+
+                <div class="requirement">
+                    <div class="requirement-icon">🛡️</div>
+                    <h4>4. Zugriffsschutz</h4>
+                    <p>Autorisierung und Passwörter - nur befugte Personen haben Zugang</p>
+                </div>
+
+                <div class="requirement">
+                    <div class="requirement-icon">✅</div>
+                    <h4>5. Integrität</h4>
+                    <p>Physische, logische und semantische Korrektheit - die Daten stimmen</p>
+                </div>
+
+                <div class="requirement">
+                    <div class="requirement-icon">👥</div>
+                    <h4>6. Mehrfachzugriff (Concurrency)</h4>
+                    <p>Gleichzeitige Zugriffe verwalten - viele Nutzer, kein Chaos</p>
+                </div>
+
+                <div class="requirement">
+                    <div class="requirement-icon">🔧</div>
+                    <h4>7. Ausfallsicherheit</h4>
+                    <p>Rekonstruierbarkeit aller Daten - Backup und Recovery</p>
+                </div>
+            </div>
+
+            <div class="info-box important">
+                <h4>💡 Merkhilfe für die Prüfung</h4>
+                <p><strong>R-A-L-Z-I-M-A:</strong> <em>R</em>edundanzarm, <em>A</em>bfragbar, <em>L</em>ogisch unabhängig, <em>Z</em>ugriffsschutz, <em>I</em>ntegrität, <em>M</em>ehrfachzugriff, <em>A</em>usfallsicher</p>
+            </div>
+        </section>
+
+        <!-- Datenbankarchitekturen -->
+        <section class="content-section">
+            <h2>🏗️ Datenbankarchitekturen</h2>
+            
+            <p>Es gibt verschiedene Wege, wie Datenbanken aufgebaut werden können. Hier die drei wichtigsten Architekturen:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Architektur</th>
+                        <th>Aufbau</th>
+                        <th>Vorteile</th>
+                        <th>Nachteile</th>
+                        <th>Anwendung</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Desktop-DB (Einbenutzer)</strong></td>
+                        <td>Frontend + Backend in einer Datei</td>
+                        <td>Einfach, kostengünstig</td>
+                        <td>Nur ein Benutzer</td>
+                        <td>Persönliche Projekte</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Desktop-DB (Mehrbenutzer)</strong></td>
+                        <td>Frontend-Datei + Backend auf Netzwerk</td>
+                        <td>Mehrere Benutzer möglich</td>
+                        <td>Hohe Netzwerklast</td>
+                        <td>Kleine Teams</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Client/Server-DB</strong></td>
+                        <td>Client sendet Anfragen an DB-Server</td>
+                        <td>Effizient, professionell</td>
+                        <td>Komplexer, teurer</td>
+                        <td>Unternehmen</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box example">
+                <h4>🌟 Client/Server - Der Goldstandard</h4>
+                <p>Bei Client/Server-Datenbanken wird nur die <strong>SQL-Anfrage</strong> und das <strong>Ergebnis</strong> über das Netzwerk geschickt - nicht die gesamten Daten! Das macht sie viel effizienter als Desktop-Datenbanken.</p>
+            </div>
+        </section>
+
+        <!-- Drei-Ebenen-Architektur -->
+        <section class="content-section">
+            <h2>🏛️ Die Drei-Ebenen-Architektur</h2>
+            
+            <p>Die Drei-Ebenen-Architektur trennt die Datensicht in verschiedene Abstraktionsebenen - wie ein Hochhaus mit verschiedenen Stockwerken:</p>
+
+            <div class="architecture-diagram">
+                <div class="layer external">
+                    <strong>Externes Schema</strong><br>
+                    <small>Anwendersicht (Views)</small>
+                </div>
+                <div class="arrow">↕️</div>
+                <div class="layer conceptual">
+                    <strong>Konzeptuelles Schema</strong><br>
+                    <small>Logisches Datenmodell (Basistabellen)</small>
+                </div>
+                <div class="arrow">↕️</div>
+                <div class="layer internal">
+                    <strong>Internes Schema</strong><br>
+                    <small>Physische Speicherung</small>
+                </div>
+            </div>
+
+            <div class="key-terms">
+                <div class="term">
+                    <strong>Externes Schema (Obergeschoss)</strong>
+                    Was der Benutzer sieht - individuelle Views und Sichten auf die Daten
+                </div>
+                <div class="term">
+                    <strong>Konzeptuelles Schema (Erdgeschoss)</strong>
+                    Die logische Struktur - wie Tabellen miteinander verknüpft sind
+                </div>
+                <div class="term">
+                    <strong>Internes Schema (Keller)</strong>
+                    Die physische Speicherung - wie die Daten auf der Festplatte liegen
+                </div>
+            </div>
+
+            <div class="info-box important">
+                <h4>🎯 Warum diese Trennung?</h4>
+                <p>Jede Ebene kann verändert werden, ohne die anderen zu beeinflussen. Der Benutzer kann seine Sicht anpassen, ohne die Speicherung zu ändern!</p>
+            </div>
+        </section>
+
+        <!-- Datenbankmodelle -->
+        <section class="content-section">
+            <h2>📊 Datenbankmodelle im Überblick</h2>
+            
+            <p>Es gibt verschiedene Arten, wie Daten in einer Datenbank organisiert werden können:</p>
+
+            <div class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Modell</th>
+                        <th>Aufbau</th>
+                        <th>Besonderheiten</th>
+                        <th>Wichtigkeit fürs Abitur</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="background: linear-gradient(135deg, #ecfdf5, #d1fae5);">
+                        <td><strong>Relationale DB</strong> ⭐</td>
+                        <td>Ausschließlich Tabellen</td>
+                        <td>Mathematisch fundiert, SQL</td>
+                        <td><strong>SEHR WICHTIG</strong></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Objektorientierte DB</strong></td>
+                        <td>Ausschließlich Objekte</td>
+                        <td>Vererbung, Kapselung</td>
+                        <td>Grundwissen</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hierarchische DB</strong></td>
+                        <td>Baumstruktur</td>
+                        <td>Sehr schnell, inflexibel</td>
+                        <td>Grundwissen</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Netzwerkartige DB</strong></td>
+                        <td>Beliebige Verknüpfungen</td>
+                        <td>Flexibel, komplex</td>
+                        <td>Grundwissen</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="info-box definition">
+                <h4>🎯 Fokus: Relationale Datenbanken</h4>
+                <p>Für das Abitur sind <strong>relationale Datenbanken</strong> am wichtigsten! Diese basieren auf <strong>Tabellen</strong> und verwenden <strong>SQL</strong> als Abfragesprache. 95% aller Prüfungsaufgaben behandeln diesen Typ!</p>
+            </div>
+
+            <div class="advantage-disadvantage">
+                <div class="advantage">
+                    <h4>✅ Vorteile relationaler DB</h4>
+                    <ul>
+                        <li>Leichte Änderbarkeit des Aufbaus</li>
+                        <li>Mathematisch fundiert (Relationenalgebra)</li>
+                        <li>Einfach programmierbar</li>
+                        <li>Standardisiert (SQL)</li>
+                        <li>Weit verbreitet</li>
+                    </ul>
+                </div>
+                <div class="disadvantage">
+                    <h4>❌ Nachteile relationaler DB</h4>
+                    <ul>
+                        <li>Viele Ein-/Ausgaben notwendig</li>
+                        <li>Hohe Rechnerleistung erforderlich</li>
+                        <li>Komplex bei großen Datenmengen</li>
+                        <li>Nicht optimal für multimediale Daten</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Zusammenfassung -->
+        <div class="summary-box">
+            <h3>📝 Zusammenfassung: Das Wichtigste auf einen Blick</h3>
+            <ul class="summary-points">
+                <li><strong>Datenbank = DB + DBMS + Anwenderprogramme</strong> - drei Komponenten arbeiten zusammen</li>
+                <li><strong>Vier zentrale Eigenschaften:</strong> Zentrale Verwaltung, Aktualität, einmalige Speicherung, gleichzeitiger Zugriff</li>
+                <li><strong>Sieben Hauptanforderungen:</strong> R-A-L-Z-I-M-A (Redundanzarm, Abfragbar, Logisch unabhängig, Zugriffsschutz, Integrität, Mehrfachzugriff, Ausfallsicher)</li>
+                <li><strong>Client/Server-Architektur</strong> ist der professionelle Standard für Unternehmen</li>
+                <li><strong>Drei-Ebenen-Architektur:</strong> Externe, konzeptuelle und interne Sicht trennen</li>
+                <li><strong>Relationale Datenbanken</strong> mit Tabellen und SQL sind fürs Abitur am wichtigsten</li>
+            </ul>
+        </div>
+
+        <!-- Prüfungstipps -->
+        <section class="content-section">
+            <h2>🎯 Tipps für die Abiturprüfung</h2>
+            
+            <div class="info-box warning">
+                <h4>⚠️ Häufige Prüfungsfragen</h4>
+                <p><strong>Typische Aufgaben:</strong></p>
+                <ul style="margin-top: 0.5rem;">
+                    <li>Erklären Sie die drei Komponenten eines Datenbanksystems</li>
+                    <li>Nennen und erläutern Sie fünf Anforderungen an Datenbanksysteme</li>
+                    <li>Vergleichen Sie Desktop- und Client/Server-Architekturen</li>
+                    <li>Beschreiben Sie die Drei-Ebenen-Architektur</li>
+                    <li>Erläutern Sie Vor- und Nachteile relationaler Datenbanken</li>
+                </ul>
+            </div>
+
+            <div class="info-box example">
+                <h4>📚 Lernstrategie</h4>
+                <ol style="margin-top: 0.5rem;">
+                    <li><strong>Definitionen auswendig lernen:</strong> DB, DBMS, DBS</li>
+                    <li><strong>Die 7 Anforderungen mit Merkhilfe:</strong> R-A-L-Z-I-M-A</li>
+                    <li><strong>Architekturen vergleichen können:</strong> Vor-/Nachteile</li>
+                    <li><strong>Drei-Ebenen-Modell zeichnen können</strong></li>
+                    <li><strong>Relationale DB-Eigenschaften erklären können</strong></li>
+                </ol>
+            </div>
+
+            <div class="info-box important">
+                <h4>💡 Musterlösung für "Anforderungen an DBMS"</h4>
+                <p><strong>Mögliche Antwort (6 Punkte):</strong></p>
+                <p style="margin-top: 0.5rem;">
+                    "Ein DBMS muss folgende Anforderungen erfüllen: (1) <strong>Redundanzarme Speicherung</strong> - Daten nur einmal speichern um Inkonsistenzen zu vermeiden, (2) <strong>Flexible Abfrage- und Änderbarkeit</strong> - unterschiedliche Zugriffsmöglichkeiten auf Daten, (3) <strong>Zugriffsschutz</strong> - Benutzerautorisierung und Rechteverwaltung, (4) <strong>Integrität</strong> - Sicherstellung der Datenkonsistenz, (5) <strong>Mehrfachzugriff</strong> - gleichzeitige Nutzung durch mehrere Anwender, (6) <strong>Ausfallsicherheit</strong> - Backup und Recovery-Mechanismen."
+                </p>
+            </div>
+        </section>
+
+        <!-- Weiterführende Themen -->
+        <section class="content-section">
+            <h2>🔄 Wie geht es weiter?</h2>
+            
+            <p>Jetzt wo Sie die Grundlagen verstehen, können Sie sich den spezifischeren Themen widmen:</p>
+
+            <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+                <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                    <h4 style="color: var(--primary-color); margin-bottom: 0.5rem;">📊 Als nächstes</h4>
+                    <p><strong>Entity-Relationship-Modell (ERM)</strong><br>
+                    Wie man Datenbanken plant und modelliert</p>
+                </div>
+                
+                <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--accent-color);">
+                    <h4 style="color: var(--accent-color); margin-bottom: 0.5rem;">🗂️ Danach</h4>
+                    <p><strong>Relationale Datenbanken</strong><br>
+                    Tabellen, Schlüssel und Beziehungen verstehen</p>
+                </div>
+                
+                <div style="background: var(--bg-light); padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--success-color);">
+                    <h4 style="color: var(--success-color); margin-bottom: 0.5rem;">💾 Später</h4>
+                    <p><strong>SQL (Structured Query Language)</strong><br>
+                    Die Sprache zur Datenbankabfrage</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <a href="index.html" class="nav-button">← Zurück zur Übersicht</a>
+            <a href="er-modell.html" class="nav-button">Weiter zum ER-Modell →</a>
+        </div>
+
+        <!-- Footer -->
+        <footer style="text-align: center; margin-top: 2rem; padding: 2rem; background: var(--bg-white); border-radius: 16px; border: 1px solid var(--border-color);">
+            <p style="color: var(--text-light); font-size: 0.9rem;">
+                <strong>Datenbank-Grundlagen</strong> - Teil der Abitur 2026 Lernzettel-Sammlung<br>
+                Basierend auf BPE 9.1 des Baden-Württemberg Bildungsplans für Informationstechnik TG<br>
+                <em>Nächstes Thema: Entity-Relationship-Modell (ERM)</em>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scrolling for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add click handlers for navigation (since files don't exist yet)
+        document.querySelectorAll('a[href$=".html"]').forEach(link => {
+            if (link.getAttribute('href') !== 'index.html') {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    alert('Dieser Lernzettel wird noch erstellt - folgt in Kürze!');
+                });
+            }
+        });
+
+        // Highlight important terms on hover
+        document.querySelectorAll('.term, .requirement').forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+                this.style.transition = 'all 0.3s ease';
+            });
+            
+            element.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Add interactive elements to tables
+        document.querySelectorAll('.comparison-table tr').forEach(row => {
+            row.addEventListener('click', function() {
+                // Could add additional info or expand functionality
+                this.style.backgroundColor = '#e0e7ff';
+                setTimeout(() => {
+                    this.style.backgroundColor = '';
+                }, 1000);
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1285 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Schaltwerke & FlipFlops - Abitur 2026 Lernzettel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #0ea5e9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+        }
+
+        .breadcrumb a:hover {
+            opacity: 1;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin: 2rem 0;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .content-section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .info-box {
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border-left: 4px solid;
+        }
+
+        .info-box.definition {
+            background: #eff6ff;
+            border-left-color: var(--info-color);
+        }
+
+        .info-box.important {
+            background: #fef3c7;
+            border-left-color: var(--warning-color);
+        }
+
+        .info-box.danger {
+            background: #fee2e2;
+            border-left-color: var(--danger-color);
+        }
+
+        .info-box.success {
+            background: #dcfce7;
+            border-left-color: var(--success-color);
+        }
+
+        .info-box h3 {
+            color: var(--text-dark);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .circuit-diagram {
+            background: var(--bg-light);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            position: relative;
+        }
+
+        .circuit-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .circuit-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .circuit-table td {
+            padding: 0.75rem 1rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .circuit-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .timing-diagram {
+            background: var(--bg-white);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            overflow-x: auto;
+        }
+
+        .wave {
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 2;
+            white-space: pre;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .comparison-card {
+            background: var(--bg-light);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .comparison-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .comparison-card h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding: 0;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+            position: relative;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: -2px;
+            top: -2px;
+            background: var(--primary-color);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .formula {
+            background: var(--bg-light);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            text-align: center;
+            color: var(--text-dark);
+        }
+
+        .symbol-explanation {
+            background: var(--bg-light);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-size: 0.9rem;
+        }
+
+        .symbol-explanation dt {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-top: 0.5rem;
+        }
+
+        .symbol-explanation dd {
+            margin-left: 1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .interactive-demo {
+            background: var(--bg-white);
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .demo-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            margin: 0.25rem;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .demo-button:hover {
+            background: var(--secondary-color);
+        }
+
+        .demo-button:active {
+            transform: scale(0.95);
+        }
+
+        .demo-output {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            padding: 1rem;
+            margin-top: 1rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        @media (max-width: 768px) {
+            .nav-buttons {
+                flex-direction: column;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">🏠 Hauptseite</a> > 
+            <a href="technische-informatik-1.html">Technische Informatik I</a> > 
+            <span>Schaltwerke & FlipFlops</span>
+        </div>
+
+        <header class="header">
+            <h1>⚡ Schaltwerke & FlipFlops</h1>
+            <p>Sequenzielle Logik in der Digitaltechnik</p>
+        </header>
+
+        <div class="nav-buttons">
+            <a href="schaltnetze.html" class="nav-btn">
+                ← Vorheriges Thema: Schaltnetze
+            </a>
+            <a href="zustandsdiagramme.html" class="nav-btn">
+                Nächstes Thema: Zustandsdiagramme →
+            </a>
+        </div>
+
+        <!-- 1. Einführung: Was sind Schaltwerke? -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>🔄 1. Was sind Schaltwerke?</h2>
+                <p>Der Unterschied zwischen Schaltnetzen und Schaltwerken</p>
+            </div>
+            <div class="section-content">
+                <div class="info-box definition">
+                    <h3>📚 Definition: Schaltwerk</h3>
+                    <p><strong>Schaltwerk:</strong> Eine digitale Schaltung, die im Gegensatz zu Schaltnetzen nicht nur von den aktuellen Eingangssignalen abhängt, sondern auch von ihrem vorherigen Zustand (Speicherfähigkeit).</p>
+                </div>
+
+                <h3>🔍 Der entscheidende Unterschied:</h3>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h3>🔧 Schaltnetze (bisher gelernt)</h3>
+                        <ul>
+                            <li>✅ <strong>Kombinatorische Logik</strong></li>
+                            <li>✅ Ausgabe hängt <em>nur</em> von aktuellen Eingängen ab</li>
+                            <li>✅ Kein Gedächtnis</li>
+                            <li>✅ Zeit spielt keine Rolle</li>
+                            <li>✅ Beispiel: AND, OR, XOR-Gatter</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="comparison-card">
+                        <h3>⚡ Schaltwerke (neu!)</h3>
+                        <ul>
+                            <li>🔄 <strong>Sequenzielle Logik</strong></li>
+                            <li>🔄 Ausgabe hängt von Eingängen <em>UND</em> vorherigem Zustand ab</li>
+                            <li>🔄 <strong>Speicherfähigkeit</strong> (Gedächtnis)</li>
+                            <li>🔄 <strong>Zeit ist wichtig</strong> (Takt!)</li>
+                            <li>🔄 Beispiel: FlipFlops, Zähler, Speicher</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-box important">
+                    <h3>🔑 Das Geheimnis: Rückkopplung</h3>
+                    <p><strong>Rückkopplung</strong> bedeutet: Ein Ausgang wird zu einem Eingang zurückgeführt. Dadurch "erinnert" sich die Schaltung an ihren vorherigen Zustand!</p>
+                </div>
+
+                <div class="circuit-diagram">
+                    <h4>Prinzip der Rückkopplung:</h4>
+                    <div style="margin: 1rem 0; font-size: 1.2rem;">
+                        Eingang → [Logik] → Ausgang
+                                     ↑        ↓
+                                     └──────┘
+                                  (Rückkopplung)
+                    </div>
+                    <p><em>Der Ausgang beeinflusst die eigene Eingabe!</em></p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Das Problem mit asynchronen FlipFlops -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>⚠️ 2. Das Problem: Warum brauchen wir einen Takt?</h2>
+                <p>Chaos ohne zentrale Zeitsteuerung</p>
+            </div>
+            <div class="section-content">
+                <div class="info-box danger">
+                    <h3>🚨 Problem bei asynchronen FlipFlops</h3>
+                    <p>Aufgrund der Toleranzen ist unklar, zu welchem Zeitpunkt ein asynchrones FlipFlop reagiert. Dies führt zu unvorhersagbarem Verhalten!</p>
+                </div>
+
+                <h3>💡 Die Lösung: Taktsignal</h3>
+                <p>Ein <strong>Taktsignal</strong> ist eine zentrale "Uhr" für alle FlipFlops in der Schaltung. Alle Änderungen passieren nur zu bestimmten, synchronisierten Zeitpunkten.</p>
+
+                <div class="timing-diagram">
+                    <h4>Beispiel-Taktsignal:</h4>
+                    <div class="wave">
+Takt: ┌─┐   ┌─┐   ┌─┐   ┌─┐   ┌─┐   ┌─┐
+      │ │   │ │   │ │   │ │   │ │   │ │
+    ──┘ └───┘ └───┘ └───┘ └───┘ └───┘ └──
+      ↑     ↑     ↑     ↑     ↑     ↑
+   Flanke Flanke Flanke Flanke Flanke Flanke
+    </div>
+                    <p><em>Änderungen passieren nur bei den ↑ oder ↓ Flanken!</em></p>
+                </div>
+
+                <h3>🔄 Arten der Taktsteuerung:</h3>
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h3>📱 Taktzustandsgesteuert</h3>
+                        <p>FlipFlop reagiert, wenn Takt HIGH (1) oder LOW (0) ist</p>
+                        <div style="margin: 1rem 0; font-family: monospace;">
+                            Takt: ┌─────┐     ┌─────┐
+                                  │  H  │     │  H  │
+                                ──┘     └─────┘     └──
+                        </div>
+                        <p><strong>Problem:</strong> Unerwünschte Mehrfachänderungen möglich</p>
+                    </div>
+                    
+                    <div class="comparison-card">
+                        <h3>⚡ Taktflankengesteuert (besser!)</h3>
+                        <p>FlipFlop reagiert nur bei Flanken (Übergängen)</p>
+                        <ul>
+                            <li><strong>Positiv flankengesteuert:</strong> bei 0→1 Übergang</li>
+                            <li><strong>Negativ flankengesteuert:</strong> bei 1→0 Übergang</li>
+                        </ul>
+                        <p><strong>Vorteil:</strong> Eindeutige Änderungszeitpunkte</p>
+                    </div>
+                </div>
+
+                <div class="symbol-explanation">
+                    <h4>🔣 Schaltsymbole für Taktsteuerung:</h4>
+                    <dl>
+                        <dt>Taktzustandsgesteuert:</dt>
+                        <dd>Takt-Eingang ohne besondere Kennzeichnung</dd>
+                        
+                        <dt>Positiv flankengesteuert:</dt>
+                        <dd>Takt-Eingang mit ↑ oder kleinem Dreieck ▷</dd>
+                        
+                        <dt>Negativ flankengesteuert:</dt>
+                        <dd>Takt-Eingang mit ↓ oder Dreieck mit Kreis ▷○</dd>
+                    </dl>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. RS-FlipFlop -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>🔄 3. RS-FlipFlop - Das Grundprinzip</h2>
+                <p>Set-Reset FlipFlop: Der einfachste Speicher</p>
+            </div>
+            <div class="section-content">
+                <div class="info-box definition">
+                    <h3>📚 RS-FlipFlop</h3>
+                    <p><strong>RS-FlipFlop</strong> (Reset-Set FlipFlop) ist das grundlegendste Speicherelement. Es kann zwei Zustände speichern: gesetzt (Q=1) oder zurückgesetzt (Q=0).</p>
+                </div>
+
+                <div class="circuit-diagram">
+                    <h4>RS-FlipFlop Schaltzeichen:</h4>
+                    <div style="margin: 2rem 0; font-size: 1.3rem;">
+                        <pre>
+    S ──┐     ┌── Q
+        │ RS  │
+    R ──┤ FF  ├── Q̄ (nicht Q)
+        │     │
+    T ──┘     └── (Takt)
+                        </pre>
+                    </div>
+                    <div class="symbol-explanation">
+                        <dl>
+                            <dt>S (Set):</dt><dd>Setzen-Eingang - macht Q = 1</dd>
+                            <dt>R (Reset):</dt><dd>Rücksetzen-Eingang - macht Q = 0</dd>
+                            <dt>Q:</dt><dd>Hauptausgang (Speicherausgang)</dd>
+                            <dt>Q̄:</dt><dd>Invertierter Ausgang (immer gegenteilig zu Q)</dd>
+                            <dt>T:</dt><dd>Takt-Eingang</dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <h3>📊 Zustandstabelle des RS-FlipFlops:</h3>
+                <table class="circuit-table">
+                    <thead>
+                        <tr>
+                            <th>Takt</th>
+                            <th>R (Reset)</th>
+                            <th>S (Set)</th>
+                            <th>Q(n+1)</th>
+                            <th>Bemerkung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>↑</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>Q(n)</td>
+                            <td><strong>Latch</strong> - Zustand bleibt</td>
+                        </tr>
+                        <tr>
+                            <td>↑</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td><strong>Reset</strong> - Q wird 0</td>
+                        </tr>
+                        <tr>
+                            <td>↑</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td><strong>Set</strong> - Q wird 1</td>
+                        </tr>
+                        <tr style="background-color: #fee2e2;">
+                            <td>↑</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>?</td>
+                            <td><strong>VERBOTEN!</strong> Undefiniert</td>
+                        </tr>
+                        <tr>
+                            <td>sonst</td>
+                            <td>x</td>
+                            <td>x</td>
+                            <td>Q(n)</td>
+                            <td>Keine Taktflanke - keine Änderung</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box danger">
+                    <h3>⚠️ Der verbotene Zustand</h3>
+                    <p><strong>Problem:</strong> Was passiert bei R=1 und S=1 gleichzeitig?</p>
+                    <ul>
+                        <li>Das FlipFlop "weiß nicht", ob es setzen oder rücksetzen soll</li>
+                        <li>Das Verhalten ist <strong>unvorhersagbar</strong></li>
+                        <li>Dieser Zustand muss in der Praxis <strong>vermieden</strong> werden!</li>
+                    </ul>
+                </div>
+
+                <div class="timing-diagram">
+                    <h4>📈 Timing-Diagramm RS-FlipFlop:</h4>
+                    <div class="wave">
+Takt: ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐
+      │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │
+    ──┘ └─┘ └─┘ └─┘ └─┘ └─┘ └─┘ └─┘ └──
+
+Set:  ────┐     ┌───────┐     ────────
+          │     │       │
+          └─────┘       └─────────────
+
+Reset:──────────────┐       ┌─────────
+                    │       │      
+                    └───────┘      
+
+Q:    ────┌─────────┐       ┌─────────
+          │         │       │
+          └─────────┘       └─────────
+          ↑                 ↑
+       Set wirkt        Reset wirkt
+    </div>
+                    <p><em>Q ändert sich nur bei Taktflanken (↑) und den entsprechenden Eingangssignalen</em></p>
+                </div>
+
+                <h3>🔧 Praktische Anwendungen des RS-FlipFlops:</h3>
+                <ul class="step-list">
+                    <li><strong>Ein-Bit Speicher:</strong> Speichert eine 1 oder 0</li>
+                    <li><strong>Schalter mit Gedächtnis:</strong> "Erinnert" sich an den letzten Zustand</li>
+                    <li><strong>Grundbaustein:</strong> Basis für komplexere FlipFlops</li>
+                    <li><strong>Entprellschaltungen:</strong> Für mechanische Schalter</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 4. D-FlipFlop -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>📦 4. D-FlipFlop - Der perfekte Speicher</h2>
+                <p>Delay/Data FlipFlop ohne verbotene Zustände</p>
+            </div>
+            <div class="section-content">
+                <div class="info-box definition">
+                    <h3>📚 D-FlipFlop (Delay-FlipFlop)</h3>
+                    <p><strong>D-FlipFlop</strong> löst das Problem des verbotenen Zustands beim RS-FlipFlop. Es hat nur einen Dateneingang (D) und übernimmt dessen Wert bei der nächsten Taktflanke.</p>
+                </div>
+
+                <div class="info-box success">
+                    <h3>✅ Warum ist das D-FlipFlop besser?</h3>
+                    <p>Das D-FlipFlop hat <strong>keinen verbotenen Zustand</strong> und das Taktsignal muss nicht abgeschaltet werden. Es ist der meist verwendete FlipFlop-Typ!</p>
+                </div>
+
+                <div class="circuit-diagram">
+                    <h4>D-FlipFlop Schaltzeichen:</h4>
+                    <div style="margin: 2rem 0; font-size: 1.3rem;">
+                        <pre>
+    D ──┐     ┌── Q
+        │  D  │
+    T ──┤ FF  ├── Q̄
+        │     │
+        └─────┘
+                        </pre>
+                    </div>
+                    <div class="symbol-explanation">
+                        <dl>
+                            <dt>D (Data):</dt><dd>Dateneingang - der Wert, der gespeichert werden soll</dd>
+                            <dt>T (Takt):</dt><dd>Takt-Eingang (meist positiv flankengesteuert)</dd>
+                            <dt>Q:</dt><dd>Ausgang - gespeicherter Wert</dd>
+                            <dt>Q̄:</dt><dd>Invertierter Ausgang</dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <h3>📊 Zustandstabelle des D-FlipFlops:</h3>
+                <table class="circuit-table">
+                    <thead>
+                        <tr>
+                            <th>Takt</th>
+                            <th>D (Data)</th>
+                            <th>Q(n+1)</th>
+                            <th>Bemerkung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>↑</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>D wird übernommen</td>
+                        </tr>
+                        <tr>
+                            <td>↑</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>D wird übernommen</td>
+                        </tr>
+                        <tr>
+                            <td>sonst</td>
+                            <td>x</td>
+                            <td>Q(n)</td>
+                            <td>Keine Änderung ohne Taktflanke</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="formula">
+                    <h4>📐 Charakteristische Gleichung:</h4>
+                    <strong>Q(n+1) = D(n)</strong>
+                    <p><em>Der nächste Zustand ist gleich dem aktuellen D-Eingang</em></p>
+                </div>
+
+                <div class="info-box important">
+                    <h3>⏱️ Wichtig: Timing beim D-FlipFlop</h3>
+                    <p>Gespeichert wird, indem <strong>keine positive Taktflanken auftreten</strong>. Der D-Eingang wird nur bei der Taktflanke "abgetastet" und dann gespeichert.</p>
+                </div>
+
+                <div class="timing-diagram">
+                    <h4>📈 Timing-Diagramm D-FlipFlop:</h4>
+                    <div class="wave">
+Takt: ┌─┐   ┌─┐   ┌─┐   ┌─┐   ┌─┐   
+      │ │   │ │   │ │   │ │   │ │   
+    ──┘ └───┘ └───┘ └───┘ └───┘ └───
+
+D:    ──┐ ┌─────┐   ┌───────┐ ┌─────
+        │ │     │   │       │ │
+        └─┘     └───┘       └─┘
+
+Q:    ──┐       ┌───────────┐ ┌─────
+        │       │           │ │
+        └───────┘           └─┘
+        ↑       ↑           ↑ ↑
+      D=1     D=0         D=1 D=1
+    übernommen übernommen übern. übern.
+    </div>
+                    <p><em>Q ändert sich nur bei Taktflanken und übernimmt dann den aktuellen D-Wert</em></p>
+                </div>
+
+                <h3>🔧 Praktische Anwendungen des D-FlipFlops:</h3>
+                <ul class="step-list">
+                    <li><strong>Datenspeicher:</strong> Speichert 1 Bit Information zuverlässig</li>
+                    <li><strong>Schieberegister:</strong> Mehrere D-FlipFlops hintereinander für Datenverschiebung</li>
+                    <li><strong>Synchronisation:</strong> Synchronisiert asynchrone Signale mit dem Systemtakt</li>
+                    <li><strong>Pipelining:</strong> In Prozessoren für Befehlsverarbeitung</li>
+                </ul>
+
+                <div class="interactive-demo">
+                    <h4>🎮 Interaktive D-FlipFlop Simulation</h4>
+                    <p>Klicken Sie die Buttons, um das Verhalten zu testen:</p>
+                    <div>
+                        <button class="demo-button" onclick="setD(0)">D = 0</button>
+                        <button class="demo-button" onclick="setD(1)">D = 1</button>
+                        <button class="demo-button" onclick="clockTick()">Takt ↑</button>
+                        <button class="demo-button" onclick="resetDemo()">Reset</button>
+                    </div>
+                    <div class="demo-output" id="dff-output">
+                        D-Eingang: 0<br>
+                        Q-Ausgang: 0<br>
+                        Status: Bereit für Taktflanke
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 5. JK-FlipFlop -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>🔄 5. JK-FlipFlop - Der vielseitige Alleskönner</h2>
+                <p>Jump-Kill FlipFlop mit Toggle-Funktion</p>
+            </div>
+            <div class="section-content">
+                <div class="info-box definition">
+                    <h3>📚 JK-FlipFlop</h3>
+                    <p><strong>JK-FlipFlop</strong> kombiniert die Vorteile des RS-FlipFlops ohne dessen Nachteile. Bei J=K=1 wechselt es den Zustand (Toggle-Betrieb).</p>
+                </div>
+
+                <div class="circuit-diagram">
+                    <h4>JK-FlipFlop Schaltzeichen:</h4>
+                    <div style="margin: 2rem 0; font-size: 1.3rem;">
+                        <pre>
+    J ──┐     ┌── Q
+        │ JK  │
+    T ──┤ FF  ├── Q̄
+        │     │
+    K ──┘     └──
+                        </pre>
+                    </div>
+                    <div class="symbol-explanation">
+                        <dl>
+                            <dt>J (Jump):</dt><dd>Entspricht dem Set-Eingang (J=1 setzt Q=1)</dd>
+                            <dt>K (Kill):</dt><dd>Entspricht dem Reset-Eingang (K=1 setzt Q=0)</dd>
+                            <dt>T:</dt><dd>Takt-Eingang</dd>
+                            <dt>Q, Q̄:</dt><dd>Normale und invertierte Ausgänge</dd>
+                        </dl>
+                    </div>
+                </div>
+
+                <h3>📊 Zustandstabelle des JK-FlipFlops:</h3>
+                <table class="circuit-table">
+                    <thead>
+                        <tr>
+                            <th>Takt</th>
+                            <th>J</th>
+                            <th>K</th>
+                            <th>Q(n+1)</th>
+                            <th>Bemerkung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>↑</td>
+                            <td>0</td>
+                            <td>0</td>
+                            <td>Q(n)</td>
+                            <td><strong>Latch</strong> - Zustand bleibt</td>
+                        </tr>
+                        <tr>
+                            <td>↑</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td><strong>Reset</strong> - Q wird 0</td>
+                        </tr>
+                        <tr>
+                            <td>↑</td>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>1</td>
+                            <td><strong>Set</strong> - Q wird 1</td>
+                        </tr>
+                        <tr style="background-color: #dcfce7;">
+                            <td>↑</td>
+                            <td>1</td>
+                            <td>1</td>
+                            <td>Q̄(n)</td>
+                            <td><strong>Toggle</strong> - Zustand wechselt!</td>
+                        </tr>
+                        <tr>
+                            <td>sonst</td>
+                            <td>x</td>
+                            <td>x</td>
+                            <td>Q(n)</td>
+                            <td>Keine Taktflanke - keine Änderung</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box success">
+                    <h3>🎯 Das Besondere: Toggle-Betrieb</h3>
+                    <p>Bei J=K=1 wechselt das JK-FlipFlop bei jeder Taktflanke den Zustand:</p>
+                    <ul>
+                        <li>War Q=0 → wird Q=1</li>
+                        <li>War Q=1 → wird Q=0</li>
+                        <li><strong>Anwendung:</strong> Frequenzteiler (Ausgangsfrequenz = Taktfrequenz ÷ 2)</li>
+                    </ul>
+                </div>
+
+                <div class="formula">
+                    <h4>📐 Charakteristische Gleichung (DNF):</h4>
+                    <strong>Q(n+1) = [J∧¬K∧Q(n)] ∨ [J∧¬K∧¬Q(n)] ∨ [¬J∧¬K∧Q(n)] ∨ [J∧K∧¬Q(n)]</strong>
+                    <br>
+                    <p><em>Vereinfacht:</em></p>
+                    <strong>Q(n+1) = [(J∧¬Q) ∨ (¬K∧Q)]n</strong>
+                </div>
+
+                <div class="timing-diagram">
+                    <h4>📈 Toggle-Betrieb Timing-Diagramm:</h4>
+                    <div class="wave">
+Takt: ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐
+      │ │ │ │ │ │ │ │ │ │ │ │ │ │ │ │
+    ──┘ └─┘ └─┘ └─┘ └─┘ └─┘ └─┘ └─┘ └──
+
+J=K=1:████████████████████████████████
+
+Q:    ────┐   ┌───┐   ┌───┐   ┌───┐ 
+          │   │   │   │   │   │   │
+          └───┘   └───┘   └───┘   └───
+          ↑   ↑   ↑   ↑   ↑   ↑   ↑
+        Toggle bei jeder Taktflanke!
+        
+Frequenz: Takt = f  →  Q = f/2 (Halbierung!)
+    </div>
+                    <p><em>Im Toggle-Betrieb halbiert das JK-FlipFlop die Eingangsfrequenz</em></p>
+                </div>
+
+                <h3>🔧 Praktische Anwendungen des JK-FlipFlops:</h3>
+                <ul class="step-list">
+                    <li><strong>Frequenzteiler:</strong> Teilt Taktfrequenzen durch 2^n</li>
+                    <li><strong>Digitale Zähler:</strong> Basis für synchrone Binärzähler</li>
+                    <li><strong>Zustandsmaschinen:</strong> Für komplexe Steuerungen</li>
+                    <li><strong>Schieberegister:</strong> Mit zusätzlicher Toggle-Funktion</li>
+                </ul>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h3>⚡ 2er-Frequenzteiler</h3>
+                        <p><strong>1 JK-FlipFlop:</strong></p>
+                        <p>J=K=1 → Ausgang = Eingang ÷ 2</p>
+                        <p><em>Beispiel: 100MHz → 50MHz</em></p>
+                    </div>
+                    
+                    <div class="comparison-card">
+                        <h3>🔄 4er-Frequenzteiler</h3>
+                        <p><strong>2 JK-FlipFlops in Reihe:</strong></p>
+                        <p>Erste Stufe: ÷2, Zweite Stufe: ÷2</p>
+                        <p><em>Gesamt: ÷4 (100MHz → 25MHz)</em></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Schieberegister -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>➡️ 6. Schieberegister - Daten in Bewegung</h2>
+                <p>Serielle und parallele Datenübertragung</p>
+            </div>
+            <div class="section-content">
+                <div class="info-box definition">
+                    <h3>📚 Schieberegister</h3>
+                    <p><strong>Schieberegister</strong> sind Ketten von FlipFlops, die Daten von einem zum nächsten "verschieben". Sie ermöglichen serielle Datenübertragung und -speicherung.</p>
+                </div>
+
+                <div class="circuit-diagram">
+                    <h4>4-Bit Schieberegister mit D-FlipFlops:</h4>
+                    <div style="margin: 2rem 0; font-size: 1.1rem;">
+                        <pre>
+Serieller    ┌─────┐   ┌─────┐   ┌─────┐   ┌─────┐
+Eingang ────▶│ DFF0│──▶│ DFF1│──▶│ DFF2│──▶│ DFF3│────▶ Serieller
+           │ │  D Q│ │ │  D Q│ │ │  D Q│ │ │  D Q│      Ausgang
+           │ │   T │ │ │   T │ │ │   T │ │ │   T │
+           │ └──┬──┘ │ └──┬──┘ │ └──┬──┘ │ └──┬──┘
+           │    │    │    │    │    │    │    │
+Takt ──────┴────┴────┴────┴────┴────┴────┴────┴──────
+           │         │         │         │
+           ▼         ▼         ▼         ▼
+          Q0        Q1        Q2        Q3
+       (Parallele Ausgänge)
+                        </pre>
+                    </div>
+                </div>
+
+                <h3>🔄 Die 4 Betriebsarten von Schieberegistern:</h3>
+                
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h3>📥➡️ SIPO</h3>
+                        <p><strong>Serial In, Parallel Out</strong></p>
+                        <p>Serielle Eingabe, parallele Ausgabe</p>
+                        <p><em>Anwendung: Serielle Daten zu parallelen Daten wandeln</em></p>
+                    </div>
+                    
+                    <div class="comparison-card">
+                        <h3>📥➡️📤 SISO</h3>
+                        <p><strong>Serial In, Serial Out</strong></p>
+                        <p>Serielle Eingabe, serielle Ausgabe</p>
+                        <p><em>Anwendung: Verzögerungsleitung, Datenpuffer</em></p>
+                    </div>
+                    
+                    <div class="comparison-card">
+                        <h3>📊➡️📤 PISO</h3>
+                        <p><strong>Parallel In, Serial Out</strong></p>
+                        <p>Parallele Eingabe, serielle Ausgabe</p>
+                        <p><em>Anwendung: Parallele Daten seriell übertragen</em></p>
+                    </div>
+                    
+                    <div class="comparison-card">
+                        <h3>📊➡️📊 PIPO</h3>
+                        <p><strong>Parallel In, Parallel Out</strong></p>
+                        <p>Parallele Eingabe, parallele Ausgabe</p>
+                        <p><em>Anwendung: Datenzwischenspeicher, Register</em></p>
+                    </div>
+                </div>
+
+                <div class="timing-diagram">
+                    <h4>📈 SIPO Schieberegister Beispiel:</h4>
+                    <p><em>Eingabe der Bitfolge: 1011 (von links nach rechts)</em></p>
+                    <div class="wave">
+Takt: ┌─┐ ┌─┐ ┌─┐ ┌─┐ ┌─┐
+      │ │ │ │ │ │ │ │ │ │
+    ──┘ └─┘ └─┘ └─┘ └─┘ └─
+
+Ein:  ──┐ ┌───┐ ┌─┐ ┌─────
+        │ │   │ │ │ │
+        └─┘   └─┘ └─┘
+
+Q0:   ──┐ ┌─────┐ ┌─┐ ┌───
+        │ │     │ │ │ │
+        └─┘     └─┘ └─┘
+
+Q1:   ────┐ ┌─────┐ ┌─┐ ┌─
+          │ │     │ │ │ │
+          └─┘     └─┘ └─┘
+
+Q2:   ──────┐ ┌─────┐ ┌─┐
+            │ │     │ │ │
+            └─┘     └─┘ └─
+
+Q3:   ────────┐ ┌─────┐ ┌─
+              │ │     │ │
+              └─┘     └─┘
+
+Nach 4 Takten: Q3Q2Q1Q0 = 1011 ✓
+    </div>
+                </div>
+
+                <h3>🔧 Praktische Anwendungen von Schieberegistern:</h3>
+                <ul class="step-list">
+                    <li><strong>Serielle Kommunikation:</strong> UART, SPI, I²C Schnittstellen</li>
+                    <li><strong>Verzögerungsleitung:</strong> Zeitverschiebung von Signalen</li>
+                    <li><strong>Pseudozufallsgeneratoren:</strong> Linear Feedback Shift Register (LFSR)</li>
+                    <li><strong>Datenpufferung:</strong> Temporäre Speicherung bei unterschiedlichen Datenraten</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 7. Synchrone Zähler -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>🔢 7. Synchrone Zähler - Digitales Zählen</h2>
+                <p>Binärzähler mit FlipFlops realisieren</p>
+            </div>
+            <div class="section-content">
+                <div class="info-box definition">
+                    <h3>📚 Synchrone Zähler</h3>
+                    <p><strong>Synchrone Zähler</strong> sind Schaltwerke, die bei jeder Taktflanke um eins erhöhen (oder verringern). Alle FlipFlops erhalten denselben Takt - daher "synchron".</p>
+                </div>
+
+                <div class="info-box important">
+                    <h3>⚡ Warum synchron?</h3>
+                    <p><strong>Alle FlipFlops haben denselben Takt</strong> - dadurch ändern sie gleichzeitig ihren Zustand. Dies vermeidet Laufzeitprobleme und "Glitches".</p>
+                </div>
+
+                <div class="circuit-diagram">
+                    <h4>3-Bit synchroner Binärzähler mit JK-FlipFlops:</h4>
+                    <div style="margin: 2rem 0; font-size: 1rem;">
+                        <pre>
+                ┌─────┐      ┌─────┐      ┌─────┐
+                │ JK  │      │ JK  │      │ JK  │
+        J0=1 ───┤  Q0 ├──┬───┤ J1  │   ┌──┤ J2  │
+        K0=1 ───┤     │  │   │  Q1 ├───┤  │  Q2 │ (MSB)
+                │  T  │  │   │     │   │  │     │
+       Takt ────┤     │  │   │  T  │   │  │  T  │
+                └─────┘  │   └─────┘   │  └─────┘
+                   │     │      │      │     │
+                   ▼     │      ▼      │     ▼
+                  Q0     │     Q1      │    Q2
+                 (LSB)   │             │
+                         │    ┌─────┐  │
+                         └────┤ AND ├──┘
+                              └─────┘
+                              
+    Zählsequenz: 000 → 001 → 010 → 011 → 100 → 101 → 110 → 111 → 000...
+                        </pre>
+                    </div>
+                </div>
+
+                <h3>📊 Entwurf eines synchronen Zählers - Schritt für Schritt:</h3>
+                
+                <ol class="step-list">
+                    <li><strong>Zustandstabelle erstellen:</strong> Gewünschte Zählsequenz definieren</li>
+                    <li><strong>FlipFlop-Typ wählen:</strong> Meist JK-FlipFlops (universell einsetzbar)</li>
+                    <li><strong>Erregertabelle aufstellen:</strong> Welche J,K-Werte für gewünschte Übergänge?</li>
+                    <li><strong>Minimierung:</strong> Boolesche Algebra oder KV-Diagramm</li>
+                    <li><strong>Schaltplan zeichnen:</strong> Logikgatter und FlipFlops verknüpfen</li>
+                </ol>
+
+                <h3>📋 Beispiel: 3-Bit Binärzähler Zustandstabelle:</h3>
+                <table class="circuit-table">
+                    <thead>
+                        <tr>
+                            <th>Zustand (n)</th>
+                            <th>Q2 Q1 Q0</th>
+                            <th>Zustand (n+1)</th>
+                            <th>Q2+ Q1+ Q0+</th>
+                            <th>J2 K2</th>
+                            <th>J1 K1</th>
+                            <th>J0 K0</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>0</td><td>0 0 0</td><td>1</td><td>0 0 1</td><td>0 X</td><td>0 X</td><td>1 X</td></tr>
+                        <tr><td>1</td><td>0 0 1</td><td>2</td><td>0 1 0</td><td>0 X</td><td>1 X</td><td>X 1</td></tr>
+                        <tr><td>2</td><td>0 1 0</td><td>3</td><td>0 1 1</td><td>0 X</td><td>X 0</td><td>1 X</td></tr>
+                        <tr><td>3</td><td>0 1 1</td><td>4</td><td>1 0 0</td><td>1 X</td><td>X 1</td><td>X 1</td></tr>
+                        <tr><td>4</td><td>1 0 0</td><td>5</td><td>1 0 1</td><td>X 0</td><td>0 X</td><td>1 X</td></tr>
+                        <tr><td>5</td><td>1 0 1</td><td>6</td><td>1 1 0</td><td>X 0</td><td>1 X</td><td>X 1</td></tr>
+                        <tr><td>6</td><td>1 1 0</td><td>7</td><td>1 1 1</td><td>X 0</td><td>X 0</td><td>1 X</td></tr>
+                        <tr><td>7</td><td>1 1 1</td><td>0</td><td>0 0 0</td><td>X 1</td><td>X 1</td><td>X 1</td></tr>
+                    </tbody>
+                </table>
+
+                <div class="formula">
+                    <h4>📐 Vereinfachte Steuergleichungen:</h4>
+                    <strong>J0 = K0 = 1</strong> (Bit 0 togglet immer)<br>
+                    <strong>J1 = K1 = Q0</strong> (Bit 1 togglet wenn Q0=1)<br>
+                    <strong>J2 = K2 = Q1 ∧ Q0</strong> (Bit 2 togglet wenn Q1 UND Q0 = 1)
+                </div>
+
+                <h3>🔧 Anwendungen synchroner Zähler:</h3>
+                <ul class="step-list">
+                    <li><strong>Digitale Uhren:</strong> Sekunden-, Minuten-, Stundenzähler</li>
+                    <li><strong>Frequenzmessung:</strong> Zählen von Impulsen in definierter Zeit</li>
+                    <li><strong>Adressgenerierung:</strong> Speicheradressen für RAM/ROM</li>
+                    <li><strong>Steuerungen:</strong> Sequentielle Abläufe in Automatisierung</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 8. Zusammenfassung und Vergleich -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>📋 8. Zusammenfassung & Vergleich</h2>
+                <p>Überblick über alle FlipFlop-Typen</p>
+            </div>
+            <div class="section-content">
+                <h3>📊 FlipFlop-Vergleichstabelle:</h3>
+                <table class="circuit-table">
+                    <thead>
+                        <tr>
+                            <th>FlipFlop-Typ</th>
+                            <th>Eingänge</th>
+                            <th>Besonderheit</th>
+                            <th>Vorteil</th>
+                            <th>Nachteil</th>
+                            <th>Hauptanwendung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>RS-FlipFlop</strong></td>
+                            <td>R, S, Takt</td>
+                            <td>Set/Reset Funktion</td>
+                            <td>Einfach zu verstehen</td>
+                            <td>Verbotener Zustand</td>
+                            <td>Grundbaustein, Latch</td>
+                        </tr>
+                        <tr>
+                            <td><strong>D-FlipFlop</strong></td>
+                            <td>D, Takt</td>
+                            <td>Übernimmt D-Wert</td>
+                            <td>Kein verbotener Zustand</td>
+                            <td>Nur Speicherfunktion</td>
+                            <td>Datenspeicher, Register</td>
+                        </tr>
+                        <tr>
+                            <td><strong>JK-FlipFlop</strong></td>
+                            <td>J, K, Takt</td>
+                            <td>Toggle bei J=K=1</td>
+                            <td>Vielseitig, universell</td>
+                            <td>Komplexere Ansteuerung</td>
+                            <td>Zähler, Frequenzteiler</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="comparison-grid">
+                    <div class="comparison-card">
+                        <h3>🎯 Wann welches FlipFlop?</h3>
+                        <ul>
+                            <li><strong>D-FlipFlop:</strong> Einfache Datenspeicherung</li>
+                            <li><strong>JK-FlipFlop:</strong> Zähler und komplexe Logik</li>
+                            <li><strong>RS-FlipFlop:</strong> Grundverständnis, selten praktisch</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="comparison-card">
+                        <h3>⚡ Wichtige Konzepte</h3>
+                        <ul>
+                            <li><strong>Taktsteuerung:</strong> Synchronisation aller Änderungen</li>
+                            <li><strong>Flankensteuerung:</strong> Änderungen nur bei Taktflanken</li>
+                            <li><strong>Zustandsspeicherung:</strong> "Gedächtnis" in Schaltungen</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-box success">
+                    <h3>✅ Lernziele erreicht!</h3>
+                    <p>Nach diesem Kapitel verstehen Sie:</p>
+                    <ul>
+                        <li>Den Unterschied zwischen Schaltnetzen und Schaltwerken</li>
+                        <li>Die Funktionsweise aller wichtigen FlipFlop-Typen</li>
+                        <li>Timing und Taktsteuerung in digitalen Schaltungen</li>
+                        <li>Praktische Anwendungen wie Zähler und Schieberegister</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="schaltnetze.html" class="nav-btn">
+                ← Vorheriges Thema: Schaltnetze
+            </a>
+            <a href="zustandsdiagramme.html" class="nav-btn">
+                Nächstes Thema: Zustandsdiagramme →
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // D-FlipFlop Simulation
+        let dInput = 0;
+        let qOutput = 0;
+
+        function setD(value) {
+            dInput = value;
+            updateDFFDisplay();
+        }
+
+        function clockTick() {
+            qOutput = dInput;
+            updateDFFDisplay();
+        }
+
+        function resetDemo() {
+            dInput = 0;
+            qOutput = 0;
+            updateDFFDisplay();
+        }
+
+        function updateDFFDisplay() {
+            const output = document.getElementById('dff-output');
+            output.innerHTML = `
+                D-Eingang: ${dInput}<br>
+                Q-Ausgang: ${qOutput}<br>
+                Status: ${dInput === qOutput ? 'Synchron' : 'Bereit für Taktflanke'}
+            `;
+        }
+
+        // Navigation functions
+        function goToNext() {
+            // In real implementation, navigate to next page
+            alert('Navigation zu Zustandsdiagramme - wird implementiert wenn alle Seiten erstellt sind');
+        }
+
+        function goToPrevious() {
+            // In real implementation, navigate to previous page  
+            alert('Navigation zu Schaltnetze - wird implementiert wenn alle Seiten erstellt sind');
+        }
+
+        // Initialize demo
+        updateDFFDisplay();
+
+        // Add some visual feedback for timing diagrams
+        document.addEventListener('DOMContentLoaded', function() {
+            // Highlight timing diagram sections on hover
+            const timingDiagrams = document.querySelectorAll('.timing-diagram');
+            timingDiagrams.forEach(diagram => {
+                diagram.addEventListener('mouseenter', function() {
+                    this.style.borderColor = 'var(--primary-color)';
+                    this.style.backgroundColor = '#f8fafc';
+                });
+                diagram.addEventListener('mouseleave', function() {
+                    this.style.borderColor = 'var(--border-color)';
+                    this.style.backgroundColor = 'var(--bg-white)';
+                });
+            });
+
+            // Add click-to-expand functionality for circuit diagrams
+            const circuits = document.querySelectorAll('.circuit-diagram');
+            circuits.forEach(circuit => {
+                circuit.style.cursor = 'pointer';
+                circuit.addEventListener('click', function() {
+                    if (this.style.transform === 'scale(1.1)') {
+                        this.style.transform = 'scale(1)';
+                        this.style.zIndex = '1';
+                    } else {
+                        this.style.transform = 'scale(1.1)';
+                        this.style.zIndex = '10';
+                        this.style.transition = 'all 0.3s ease';
+                    }
+                });
+            });
+        });
+
+        // Add keyboard shortcuts for navigation
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowLeft' && e.ctrlKey) {
+                goToPrevious();
+            } else if (e.key === 'ArrowRight' && e.ctrlKey) {
+                goToNext();
+            }
+        });
+    </script>
+</body>
+</html>

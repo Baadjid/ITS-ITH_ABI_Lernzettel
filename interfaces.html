@@ -1,0 +1,1186 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hardware-Interfaces - Mikrocontroller</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #06b6d4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+
+        .breadcrumb {
+            margin-bottom: 1.5rem;
+            padding: 0.75rem 1rem;
+            background: var(--bg-white);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .content-grid {
+            display: grid;
+            gap: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .section {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .section h3 {
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .section h4 {
+            color: var(--accent-color);
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+            border-left: 4px solid var(--info-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box strong {
+            color: var(--info-color);
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7, #fffbeb);
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-box strong {
+            color: var(--warning-color);
+        }
+
+        .danger-box {
+            background: linear-gradient(135deg, #fee2e2, #fef2f2);
+            border-left: 4px solid var(--danger-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .danger-box strong {
+            color: var(--danger-color);
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #dcfce7, #f0fdf4);
+            border-left: 4px solid var(--success-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .success-box strong {
+            color: var(--success-color);
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .code-block .comment {
+            color: #94a3b8;
+        }
+
+        .code-block .keyword {
+            color: #60a5fa;
+        }
+
+        .code-block .string {
+            color: #34d399;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+        }
+
+        table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        table td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        table tbody tr:hover {
+            background: var(--bg-light);
+        }
+
+        .pin-diagram {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .pin-card {
+            background: var(--bg-light);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            text-align: center;
+        }
+
+        .pin-card.digital {
+            border-color: var(--success-color);
+        }
+
+        .pin-card.analog {
+            border-color: var(--warning-color);
+        }
+
+        .pin-card.power {
+            border-color: var(--danger-color);
+        }
+
+        .pin-card.comm {
+            border-color: var(--info-color);
+        }
+
+        .pin-card h4 {
+            margin: 0 0 0.5rem 0;
+        }
+
+        .circuit-diagram {
+            text-align: center;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .protocol-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .protocol-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .protocol-card h4 {
+            color: var(--primary-color);
+            margin: 0 0 1rem 0;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            display: none;
+            font-size: 1.2rem;
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .navigation {
+            background: var(--bg-white);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-link {
+            padding: 0.5rem 1rem;
+            background: var(--bg-light);
+            border-radius: 6px;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: all 0.2s ease;
+        }
+
+        .nav-link:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .pin-diagram {
+                grid-template-columns: 1fr;
+            }
+            
+            .protocol-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            🏠 <a href="index.html">Lernzettel Übersicht</a> › 
+            <a href="#technische-informatik">Technische Informatik II</a> › 
+            <strong>Hardware-Interfaces</strong>
+        </div>
+
+        <header class="header">
+            <h1>🔌 Hardware-Interfaces</h1>
+            <p>Verbindungen zwischen Mikrocontroller und Außenwelt</p>
+        </header>
+
+        <nav class="navigation">
+            <div class="nav-links">
+                <a href="#grundlagen" class="nav-link">📚 Grundlagen</a>
+                <a href="#pins" class="nav-link">📍 Pin-Typen</a>
+                <a href="#digital" class="nav-link">🔢 Digital I/O</a>
+                <a href="#analog" class="nav-link">📊 Analog I/O</a>
+                <a href="#kommunikation" class="nav-link">📡 Kommunikation</a>
+                <a href="#praktisch" class="nav-link">🛠️ Praktische Beispiele</a>
+            </div>
+        </nav>
+
+        <div class="content-grid">
+            <!-- Grundlagen -->
+            <section id="grundlagen" class="section">
+                <h2>📚 Was sind Hardware-Interfaces?</h2>
+                
+                <div class="info-box">
+                    <strong>💡 Einfach erklärt:</strong> Hardware-Interfaces sind die "Türen" eines Mikrocontrollers zur Außenwelt. 
+                    Stell dir vor, dein Mikrocontroller ist wie dein Handy - er braucht verschiedene Anschlüsse (USB, Kopfhörer, etc.) 
+                    um mit anderen Geräten zu "sprechen".
+                </div>
+
+                <h3>🎯 Warum brauchen wir Hardware-Interfaces?</h3>
+                <p>Ein Mikrocontroller ist wie ein sehr intelligentes Gehirn, aber ohne Sinnesorgane und Gliedmaßen kann er nichts mit der Welt anfangen. Hardware-Interfaces sind seine:</p>
+                
+                <ul style="margin: 1rem 0; padding-left: 2rem;">
+                    <li><strong>👁️ Augen:</strong> Sensoren (Temperatur, Licht, Bewegung)</li>
+                    <li><strong>👂 Ohren:</strong> Mikrofone, Taster, Schalter</li>
+                    <li><strong>🗣️ Mund:</strong> LEDs, Lautsprecher, Displays</li>
+                    <li><strong>🤝 Hände:</strong> Motoren, Servos, Relais</li>
+                    <li><strong>🧠 Nervensystem:</strong> Kommunikation mit anderen Geräten</li>
+                </ul>
+
+                <h3>🔧 Arduino UNO als Beispiel</h3>
+                <p>Der Arduino UNO ist ein perfektes Beispiel für einen Mikrocontroller mit vielen verschiedenen Interfaces. 
+                Er basiert auf dem ATmega328P Chip und bietet:</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Interface-Typ</th>
+                                <th>Anzahl</th>
+                                <th>Verwendung</th>
+                                <th>Beispiele</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Digital I/O Pins</td>
+                                <td>14 (D0-D13)</td>
+                                <td>Ein/Aus Signale</td>
+                                <td>LEDs, Taster, Motoren</td>
+                            </tr>
+                            <tr>
+                                <td>Analog Input Pins</td>
+                                <td>6 (A0-A5)</td>
+                                <td>Analoge Werte messen</td>
+                                <td>Potentiometer, Sensoren</td>
+                            </tr>
+                            <tr>
+                                <td>PWM Pins</td>
+                                <td>6 (D3,D5,D6,D9,D10,D11)</td>
+                                <td>Pseudo-analoge Ausgabe</td>
+                                <td>LED Helligkeit, Servo</td>
+                            </tr>
+                            <tr>
+                                <td>Kommunikation</td>
+                                <td>UART, SPI, I²C</td>
+                                <td>Datenaustausch</td>
+                                <td>Bluetooth, SD-Karte, Displays</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Wichtig:</strong> Jeder Pin hat eine maximale Belastbarkeit von 40mA. 
+                    Für alle Pins zusammen sind maximal 200mA erlaubt. Bei Überschreitung kann der Mikrocontroller zerstört werden!
+                </div>
+            </section>
+
+            <!-- Pin-Typen -->
+            <section id="pins" class="section">
+                <h2>📍 Pin-Typen und ihre Funktionen</h2>
+
+                <div class="pin-diagram">
+                    <div class="pin-card digital">
+                        <h4>🔢 Digital Pins</h4>
+                        <p><strong>D0 - D13</strong></p>
+                        <p>Nur zwei Zustände: HIGH (5V) oder LOW (0V)</p>
+                        <p>Können Ein- oder Ausgang sein</p>
+                    </div>
+
+                    <div class="pin-card analog">
+                        <h4>📊 Analog Pins</h4>
+                        <p><strong>A0 - A5</strong></p>
+                        <p>Messen Spannungen von 0V bis 5V</p>
+                        <p>10-Bit Auflösung (0-1023)</p>
+                    </div>
+
+                    <div class="pin-card power">
+                        <h4>⚡ Power Pins</h4>
+                        <p><strong>5V, 3.3V, GND</strong></p>
+                        <p>Stromversorgung für externe Komponenten</p>
+                        <p>Vin für externe Spannungsquelle</p>
+                    </div>
+
+                    <div class="pin-card comm">
+                        <h4>📡 Kommunikations-Pins</h4>
+                        <p><strong>D0/D1, A4/A5</strong></p>
+                        <p>UART (Serial), I²C</p>
+                        <p>D10-D13 für SPI</p>
+                    </div>
+                </div>
+
+                <h3>🔍 Besondere Pin-Eigenschaften</h3>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Pin</th>
+                                <th>Zusatzfunktion</th>
+                                <th>Beschreibung</th>
+                                <th>Konflikte beachten</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>D0</td>
+                                <td>RX (Receive)</td>
+                                <td>Serielle Datenübertragung empfangen</td>
+                                <td>⚠️ Nicht verwenden wenn Serial aktiv</td>
+                            </tr>
+                            <tr>
+                                <td>D1</td>
+                                <td>TX (Transmit)</td>
+                                <td>Serielle Datenübertragung senden</td>
+                                <td>⚠️ Nicht verwenden wenn Serial aktiv</td>
+                            </tr>
+                            <tr>
+                                <td>D2, D3</td>
+                                <td>INT0, INT1</td>
+                                <td>Externe Interrupts</td>
+                                <td>Können den Mikrocontroller "aufwecken"</td>
+                            </tr>
+                            <tr>
+                                <td>D13</td>
+                                <td>Built-in LED</td>
+                                <td>Onboard LED für Tests</td>
+                                <td>LED leuchtet bei HIGH</td>
+                            </tr>
+                            <tr>
+                                <td>A4</td>
+                                <td>SDA (I²C)</td>
+                                <td>I²C Datenleitung</td>
+                                <td>⚠️ Nicht als Analog verwenden wenn I²C aktiv</td>
+                            </tr>
+                            <tr>
+                                <td>A5</td>
+                                <td>SCL (I²C)</td>
+                                <td>I²C Taktleitung</td>
+                                <td>⚠️ Nicht als Analog verwenden wenn I²C aktiv</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <!-- Digital I/O -->
+            <section id="digital" class="section">
+                <h2>🔢 Digital I/O - Die Grundlagen</h2>
+
+                <div class="info-box">
+                    <strong>💡 Grundprinzip:</strong> Digital bedeutet "nur zwei Zustände" - wie ein Lichtschalter, der entweder AN oder AUS ist. 
+                    Beim Arduino entspricht das 5V (HIGH/1) oder 0V (LOW/0).
+                </div>
+
+                <h3>📝 Pin-Konfiguration</h3>
+                <p>Bevor ein Pin verwendet werden kann, muss festgelegt werden, ob er ein Eingang oder Ausgang ist:</p>
+
+                <div class="code-block">
+<span class="keyword">void</span> <span class="keyword">setup</span>() {
+    <span class="comment">// Pin 13 als Ausgang für LED</span>
+    pinMode(<span class="string">13</span>, OUTPUT);
+    
+    <span class="comment">// Pin 2 als Eingang für Taster</span>
+    pinMode(<span class="string">2</span>, INPUT);
+    
+    <span class="comment">// Pin 3 als Eingang mit internem Pull-Up</span>
+    pinMode(<span class="string">3</span>, INPUT_PULLUP);
+}
+                </div>
+
+                <h4>🔧 Modi im Detail:</h4>
+                <ul style="margin: 1rem 0; padding-left: 2rem;">
+                    <li><strong>OUTPUT:</strong> Pin kann HIGH (5V) oder LOW (0V) ausgeben</li>
+                    <li><strong>INPUT:</strong> Pin liest externe Spannung (hochohmig, ca. 100MΩ)</li>
+                    <li><strong>INPUT_PULLUP:</strong> Wie INPUT, aber mit internem 20-50kΩ Widerstand nach +5V</li>
+                </ul>
+
+                <h3>💡 Digital Output - LEDs steuern</h3>
+
+                <div class="code-block">
+<span class="comment">// LED an Pin 13 anschließen</span>
+<span class="keyword">int</span> ledPin = <span class="string">13</span>;
+
+<span class="keyword">void</span> <span class="keyword">setup</span>() {
+    pinMode(ledPin, OUTPUT);
+}
+
+<span class="keyword">void</span> <span class="keyword">loop</span>() {
+    digitalWrite(ledPin, HIGH);  <span class="comment">// LED einschalten</span>
+    delay(<span class="string">1000</span>);               <span class="comment">// 1 Sekunde warten</span>
+    digitalWrite(ledPin, LOW);   <span class="comment">// LED ausschalten</span>
+    delay(<span class="string">1000</span>);               <span class="comment">// 1 Sekunde warten</span>
+}
+                </div>
+
+                <h3>🔘 Digital Input - Taster einlesen</h3>
+
+                <div class="circuit-diagram">
+                    <h4>🔌 Taster-Schaltungen</h4>
+                    <p><strong>Pull-Up Schaltung:</strong> Taster zwischen Pin und GND, Pin über Widerstand an +5V</p>
+                    <p><strong>Pull-Down Schaltung:</strong> Taster zwischen Pin und +5V, Pin über Widerstand an GND</p>
+                    <p><strong>Interner Pull-Up:</strong> Nur Taster zwischen Pin und GND, Arduino macht den Rest</p>
+                </div>
+
+                <div class="code-block">
+<span class="comment">// Taster mit internem Pull-Up</span>
+<span class="keyword">int</span> buttonPin = <span class="string">2</span>;
+<span class="keyword">int</span> ledPin = <span class="string">13</span>;
+
+<span class="keyword">void</span> <span class="keyword">setup</span>() {
+    pinMode(buttonPin, INPUT_PULLUP);  <span class="comment">// Interner Pull-Up aktiviert</span>
+    pinMode(ledPin, OUTPUT);
+}
+
+<span class="keyword">void</span> <span class="keyword">loop</span>() {
+    <span class="keyword">int</span> buttonState = digitalRead(buttonPin);
+    
+    <span class="keyword">if</span> (buttonState == LOW) {     <span class="comment">// Taster gedrückt (Pull-Up!)</span>
+        digitalWrite(ledPin, HIGH);  <span class="comment">// LED an</span>
+    } <span class="keyword">else</span> {
+        digitalWrite(ledPin, LOW);   <span class="comment">// LED aus</span>
+    }
+}
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ Pull-Up Logik beachten:</strong> Bei INPUT_PULLUP ist der Pin normalerweise HIGH. 
+                    Wenn der Taster gedrückt wird, wird er LOW! Das ist umgekehrt zur intuitiven Erwartung.
+                </div>
+
+                <h3>⚡ Logikpegel und Spannungsbereiche</h3>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Technologie</th>
+                                <th>Eingangsspannung LOW</th>
+                                <th>Eingangsspannung HIGH</th>
+                                <th>Ausgangsspannung LOW</th>
+                                <th>Ausgangsspannung HIGH</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>CMOS (5V)</td>
+                                <td>≤ 1,5V</td>
+                                <td>≥ 3,5V</td>
+                                <td>≤ 0,5V</td>
+                                <td>≥ 4,44V</td>
+                            </tr>
+                            <tr>
+                                <td>TTL (5V)</td>
+                                <td>≤ 0,8V</td>
+                                <td>≥ 2,0V</td>
+                                <td>≤ 0,4V</td>
+                                <td>≥ 2,4V</td>
+                            </tr>
+                            <tr>
+                                <td>CMOS (3,3V)</td>
+                                <td>≤ 0,8V</td>
+                                <td>≥ 2,0V</td>
+                                <td>≤ 0,4V</td>
+                                <td>≥ 2,4V</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="info-box">
+                    <strong>📚 Merksatz:</strong> Arduino UNO arbeitet mit 5V CMOS-Logik. Das bedeutet: 
+                    Alles unter 1,5V ist definitiv LOW, alles über 3,5V ist definitiv HIGH. 
+                    Der Bereich dazwischen ist unzuverlässig!
+                </div>
+            </section>
+
+            <!-- Analog I/O -->
+            <section id="analog" class="section">
+                <h2>📊 Analog I/O - Kontinuierliche Werte</h2>
+
+                <div class="info-box">
+                    <strong>💡 Analog vs. Digital:</strong> Während digital nur AN/AUS kennt, kann analog jeden Wert dazwischen haben - 
+                    wie ein Dimmer für Licht statt nur einem Ein/Aus-Schalter.
+                </div>
+
+                <h3>📈 Analog Input - Werte messen</h3>
+                <p>Die analog Pins (A0-A5) können Spannungen von 0V bis 5V messen und in digitale Werte umwandeln:</p>
+
+                <ul style="margin: 1rem 0; padding-left: 2rem;">
+                    <li><strong>Auflösung:</strong> 10 Bit = 1024 verschiedene Werte (0-1023)</li>
+                    <li><strong>Genauigkeit:</strong> 5V ÷ 1024 = ca. 4,9mV pro Schritt</li>
+                    <li><strong>Messbereich:</strong> 0V = 0, 2,5V = 512, 5V = 1023</li>
+                </ul>
+
+                <div class="code-block">
+<span class="comment">// Potentiometer an A0 anschließen</span>
+<span class="keyword">int</span> analogPin = A0;
+<span class="keyword">int</span> sensorValue = <span class="string">0</span>;
+
+<span class="keyword">void</span> <span class="keyword">setup</span>() {
+    Serial.begin(<span class="string">9600</span>);  <span class="comment">// Serielle Kommunikation starten</span>
+}
+
+<span class="keyword">void</span> <span class="keyword">loop</span>() {
+    sensorValue = analogRead(analogPin);  <span class="comment">// Wert 0-1023 lesen</span>
+    
+    <span class="comment">// In Spannung umrechnen</span>
+    <span class="keyword">float</span> voltage = sensorValue * (<span class="string">5.0</span> / <span class="string">1023.0</span>);
+    
+    Serial.print(<span class="string">"Sensor: "</span>);
+    Serial.print(sensorValue);
+    Serial.print(<span class="string">" -> Spannung: "</span>);
+    Serial.println(voltage);
+    
+    delay(<span class="string">500</span>);
+}
+                </div>
+
+                <h3>🌊 PWM - Pseudo-Analog Output</h3>
+                <p>Da der Arduino keine echten analog Ausgänge hat, wird PWM (Pulsweitenmodulation) verwendet:</p>
+
+                <div class="info-box">
+                    <strong>🔄 PWM Prinzip:</strong> Der Pin schaltet sehr schnell zwischen HIGH und LOW um. 
+                    Das Verhältnis von "AN-Zeit" zu "AUS-Zeit" bestimmt die "durchschnittliche" Spannung.
+                </div>
+
+                <ul style="margin: 1rem 0; padding-left: 2rem;">
+                    <li><strong>Frequenz:</strong> Etwa 490 Hz (bei den meisten Pins)</li>
+                    <li><strong>Auflösung:</strong> 8 Bit = 256 Stufen (0-255)</li>
+                    <li><strong>PWM Pins:</strong> D3, D5, D6, D9, D10, D11 (mit ~ markiert)</li>
+                    <li><strong>Duty Cycle:</strong> 0 = 0% (immer LOW), 128 = 50%, 255 = 100% (immer HIGH)</li>
+                </ul>
+
+                <div class="code-block">
+<span class="comment">// LED Helligkeit mit PWM steuern</span>
+<span class="keyword">int</span> ledPin = <span class="string">9</span>;        <span class="comment">// PWM-fähiger Pin</span>
+<span class="keyword">int</span> brightness = <span class="string">0</span>;
+
+<span class="keyword">void</span> <span class="keyword">setup</span>() {
+    <span class="comment">// Kein pinMode nötig für analogWrite!</span>
+}
+
+<span class="keyword">void</span> <span class="keyword">loop</span>() {
+    <span class="comment">// LED langsam heller werden lassen</span>
+    <span class="keyword">for</span> (brightness = <span class="string">0</span>; brightness <= <span class="string">255</span>; brightness++) {
+        analogWrite(ledPin, brightness);
+        delay(<span class="string">10</span>);
+    }
+    
+    <span class="comment">// LED langsam dunkler werden lassen</span>
+    <span class="keyword">for</span> (brightness = <span class="string">255</span>; brightness >= <span class="string">0</span>; brightness--) {
+        analogWrite(ledPin, brightness);
+        delay(<span class="string">10</span>);
+    }
+}
+                </div>
+
+                <div class="warning-box">
+                    <strong>⚠️ PWM Grenzen:</strong> PWM ist kein echter analoger Ausgang! Für schnelle Elektronik 
+                    oder präzise Messungen reicht es nicht. Für LEDs, Motoren und Servos ist es aber perfekt.
+                </div>
+
+                <h3>🎛️ Referenzspannung ändern</h3>
+                <p>Standardmäßig misst der ADC von 0V bis 5V. Das kann geändert werden:</p>
+
+                <div class="code-block">
+<span class="comment">// Verschiedene Referenzspannungen</span>
+analogReference(DEFAULT);    <span class="comment">// 5V (Standard)</span>
+analogReference(INTERNAL);   <span class="comment">// 1,1V (präziser für kleine Spannungen)</span>
+analogReference(EXTERNAL);   <span class="comment">// Externe Referenz am AREF Pin</span>
+                </div>
+
+                <div class="success-box">
+                    <strong>💡 Tipp:</strong> Für Batteriespannung-Messung ist INTERNAL (1,1V) oft besser, 
+                    da die Auflösung höher wird: 1,1V ÷ 1024 = ca. 1mV pro Schritt!
+                </div>
+            </section>
+
+            <!-- Kommunikation -->
+            <section id="kommunikation" class="section">
+                <h2>📡 Kommunikations-Interfaces</h2>
+
+                <div class="info-box">
+                    <strong>🌐 Warum Kommunikation?</strong> Moderne Projekte bestehen selten aus nur einem Mikrocontroller. 
+                    Oft müssen Daten zwischen Arduino, Sensoren, Displays, SD-Karten oder anderen Mikrocontrollern ausgetauscht werden.
+                </div>
+
+                <div class="protocol-grid">
+                    <!-- UART -->
+                    <div class="protocol-card">
+                        <h4>📞 UART (Serial)</h4>
+                        <p><strong>Pins:</strong> D0 (RX), D1 (TX)</p>
+                        <p><strong>Eigenschaften:</strong></p>
+                        <ul>
+                            <li>Asynchron (kein gemeinsamer Takt)</li>
+                            <li>2 Leitungen: TX (senden), RX (empfangen)</li>
+                            <li>Verschiedene Baudraten möglich</li>
+                            <li>Leitungen müssen gekreuzt werden</li>
+                        </ul>
+                        
+                        <div class="code-block" style="font-size: 0.8rem; margin-top: 1rem;">
+<span class="keyword">void</span> <span class="keyword">setup</span>() {
+    Serial.begin(<span class="string">9600</span>);  <span class="comment">// 9600 Baud</span>
+}
+
+<span class="keyword">void</span> <span class="keyword">loop</span>() {
+    Serial.println(<span class="string">"Hallo Welt!"</span>);
+    delay(<span class="string">1000</span>);
+}
+                        </div>
+                    </div>
+
+                    <!-- SPI -->
+                    <div class="protocol-card">
+                        <h4>⚡ SPI (Serial Peripheral Interface)</h4>
+                        <p><strong>Pins:</strong> D10 (SS), D11 (MOSI), D12 (MISO), D13 (SCK)</p>
+                        <p><strong>Eigenschaften:</strong></p>
+                        <ul>
+                            <li>Synchron (gemeinsamer Takt)</li>
+                            <li>Master-Slave Prinzip</li>
+                            <li>Sehr schnell (MHz-Bereich)</li>
+                            <li>4 Leitungen pro Verbindung</li>
+                        </ul>
+                        
+                        <div style="margin-top: 1rem; font-size: 0.9rem;">
+                            <p><strong>MOSI:</strong> Master Out Slave In (Arduino → Gerät)</p>
+                            <p><strong>MISO:</strong> Master In Slave Out (Gerät → Arduino)</p>
+                            <p><strong>SCK:</strong> Serial Clock (Takt)</p>
+                            <p><strong>SS:</strong> Slave Select (Gerät auswählen)</p>
+                        </div>
+                    </div>
+
+                    <!-- I2C -->
+                    <div class="protocol-card">
+                        <h4>🚌 I²C (Inter-Integrated Circuit)</h4>
+                        <p><strong>Pins:</strong> A4 (SDA), A5 (SCL)</p>
+                        <p><strong>Eigenschaften:</strong></p>
+                        <ul>
+                            <li>Synchron mit nur 2 Leitungen</li>
+                            <li>Multi-Master/Multi-Slave möglich</li>
+                            <li>Geräte haben Adressen (7 oder 10 Bit)</li>
+                            <li>Bis zu 127 Geräte am selben Bus</li>
+                        </ul>
+                        
+                        <div style="margin-top: 1rem; font-size: 0.9rem;">
+                            <p><strong>SDA:</strong> Serial Data (bidirektionale Datenleitung)</p>
+                            <p><strong>SCL:</strong> Serial Clock (Taktleitung)</p>
+                            <p><strong>Pull-Up:</strong> Beide Leitungen brauchen Pull-Up Widerstände</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>📊 Kommunikations-Vergleich</h3>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Protokoll</th>
+                                <th>Leitungen</th>
+                                <th>Geschwindigkeit</th>
+                                <th>Max. Geräte</th>
+                                <th>Typische Anwendung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>UART</td>
+                                <td>2 (+ GND)</td>
+                                <td>9600 - 115200 Baud</td>
+                                <td>1:1 Verbindung</td>
+                                <td>PC-Kommunikation, Bluetooth, GPS</td>
+                            </tr>
+                            <tr>
+                                <td>SPI</td>
+                                <td>4 (+ GND)</td>
+                                <td>MHz-Bereich</td>
+                                <td>Viele (je SS-Pin)</td>
+                                <td>SD-Karten, Displays, Sensoren</td>
+                            </tr>
+                            <tr>
+                                <td>I²C</td>
+                                <td>2 (+ GND)</td>
+                                <td>100 kHz - 400 kHz</td>
+                                <td>127</td>
+                                <td>Sensoren, RTC, EEPROM</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>🔌 UART Frame-Struktur</h3>
+                <p>UART überträgt Daten in "Frames" - jedes Byte wird in ein standardisiertes Paket verpackt:</p>
+
+                <div class="circuit-diagram">
+                    <h4>📦 UART Frame (8N1 - Standard)</h4>
+                    <p><strong>Start Bit (1 Bit):</strong> Immer LOW - signalisiert Beginn</p>
+                    <p><strong>Data Bits (8 Bits):</strong> Das eigentliche Byte (LSB zuerst)</p>
+                    <p><strong>Parity Bit (optional):</strong> Zur Fehlererkennung</p>
+                    <p><strong>Stop Bit (1-2 Bits):</strong> Immer HIGH - signalisiert Ende</p>
+                </div>
+
+                <div class="code-block">
+<span class="comment">// UART Kommunikation mit anderem Arduino</span>
+<span class="keyword">#include</span> <span class="string">&lt;SoftwareSerial.h&gt;</span>
+
+SoftwareSerial mySerial(<span class="string">2</span>, <span class="string">3</span>);  <span class="comment">// RX, TX</span>
+
+<span class="keyword">void</span> <span class="keyword">setup</span>() {
+    Serial.begin(<span class="string">9600</span>);      <span class="comment">// PC Kommunikation</span>
+    mySerial.begin(<span class="string">9600</span>);   <span class="comment">// Arduino-Arduino</span>
+}
+
+<span class="keyword">void</span> <span class="keyword">loop</span>() {
+    <span class="keyword">if</span> (mySerial.available()) {
+        String receivedData = mySerial.readString();
+        Serial.println(<span class="string">"Empfangen: "</span> + receivedData);
+    }
+    
+    mySerial.println(<span class="string">"Hallo anderer Arduino!"</span>);
+    delay(<span class="string">1000</span>);
+}
+                </div>
+            </section>
+
+            <!-- Praktische Beispiele -->
+            <section id="praktisch" class="section">
+                <h2>🛠️ Praktische Beispiele und Schaltungen</h2>
+
+                <h3>💡 Beispiel 1: LED mit Taster steuern</h3>
+                <p>Eine LED soll nur leuchten, wenn ein Taster gedrückt wird:</p>
+
+                <div class="code-block">
+<span class="comment">// Einfache Taster-LED Steuerung</span>
+<span class="keyword">const int</span> buttonPin = <span class="string">2</span>;     <span class="comment">// Taster an Pin 2</span>
+<span class="keyword">const int</span> ledPin = <span class="string">13</span>;        <span class="comment">// LED an Pin 13</span>
+
+<span class="keyword">void</span> <span class="keyword">setup</span>() {
+    pinMode(buttonPin, INPUT_PULLUP);  <span class="comment">// Interner Pull-Up</span>
+    pinMode(ledPin, OUTPUT);
+}
+
+<span class="keyword">void</span> <span class="keyword">loop</span>() {
+    <span class="keyword">int</span> buttonState = digitalRead(buttonPin);
+    
+    <span class="keyword">if</span> (buttonState == LOW) {        <span class="comment">// Taster gedrückt</span>
+        digitalWrite(ledPin, HIGH);    <span class="comment">// LED an</span>
+    } <span class="keyword">else</span> {
+        digitalWrite(ledPin, LOW);     <span class="comment">// LED aus</span>
+    }
+}
+                </div>
+
+                <h3>🌡️ Beispiel 2: Temperatursensor auslesen</h3>
+                <p>Einen analogen Temperatursensor (z.B. TMP36) auslesen und Temperatur berechnen:</p>
+
+                <div class="code-block">
+<span class="comment">// TMP36 Temperatursensor</span>
+<span class="keyword">const int</span> tempPin = A0;
+
+<span class="keyword">void</span> <span class="keyword">setup</span>() {
+    Serial.begin(<span class="string">9600</span>);
+}
+
+<span class="keyword">void</span> <span class="keyword">loop</span>() {
+    <span class="comment">// Rohwert lesen (0-1023)</span>
+    <span class="keyword">int</span> sensorValue = analogRead(tempPin);
+    
+    <span class="comment">// In Spannung umwandeln (0-5V)</span>
+    <span class="keyword">float</span> voltage = sensorValue * (<span class="string">5.0</span> / <span class="string">1023.0</span>);
+    
+    <span class="comment">// TMP36: 0°C = 0.5V, +10mV per °C</span>
+    <span class="keyword">float</span> temperatureC = (voltage - <span class="string">0.5</span>) * <span class="string">100.0</span>;
+    
+    Serial.print(<span class="string">"Temperatur: "</span>);
+    Serial.print(temperatureC);
+    Serial.println(<span class="string">" °C"</span>);
+    
+    delay(<span class="string">1000</span>);
+}
+                </div>
+
+                <h3>🌅 Beispiel 3: PWM für LED-Fading</h3>
+                <p>Eine LED sanft ein- und ausblenden (Atmung-Effekt):</p>
+
+                <div class="code-block">
+<span class="comment">// LED Breathing Effect mit PWM</span>
+<span class="keyword">const int</span> ledPin = <span class="string">9</span>;         <span class="comment">// PWM Pin verwenden</span>
+<span class="keyword">int</span> brightness = <span class="string">0</span>;
+<span class="keyword">int</span> fadeAmount = <span class="string">5</span>;
+
+<span class="keyword">void</span> <span class="keyword">setup</span>() {
+    <span class="comment">// Kein pinMode für PWM nötig</span>
+}
+
+<span class="keyword">void</span> <span class="keyword">loop</span>() {
+    analogWrite(ledPin, brightness);
+    
+    brightness = brightness + fadeAmount;
+    
+    <span class="comment">// Richtung umkehren an den Enden</span>
+    <span class="keyword">if</span> (brightness <= <span class="string">0</span> || brightness >= <span class="string">255</span>) {
+        fadeAmount = -fadeAmount;
+    }
+    
+    delay(<span class="string">30</span>);  <span class="comment">// Sanfte Animation</span>
+}
+                </div>
+
+                <h3>📱 Beispiel 4: I²C LCD Display ansteuern</h3>
+                <p>Ein I²C LCD Display (1602 mit I²C Backpack) verwenden:</p>
+
+                <div class="code-block">
+<span class="comment">// I2C LCD Ansteuerung</span>
+<span class="keyword">#include</span> <span class="string">&lt;LiquidCrystal_I2C.h&gt;</span>
+
+<span class="comment">// LCD Adresse 0x27, 16 Zeichen, 2 Zeilen</span>
+LiquidCrystal_I2C lcd(<span class="string">0x27</span>, <span class="string">16</span>, <span class="string">2</span>);
+
+<span class="keyword">void</span> <span class="keyword">setup</span>() {
+    lcd.init();                <span class="comment">// LCD initialisieren</span>
+    lcd.backlight();           <span class="comment">// Hintergrundbeleuchtung an</span>
+    
+    lcd.setCursor(<span class="string">0</span>, <span class="string">0</span>);        <span class="comment">// Cursor auf Position 0,0</span>
+    lcd.print(<span class="string">"Arduino LCD"</span>);
+    lcd.setCursor(<span class="string">0</span>, <span class="string">1</span>);        <span class="comment">// Zweite Zeile</span>
+    lcd.print(<span class="string">"I2C Interface"</span>);
+}
+
+<span class="keyword">void</span> <span class="keyword">loop</span>() {
+    <span class="comment">// Laufende Zeitanzeige</span>
+    lcd.setCursor(<span class="string">0</span>, <span class="string">1</span>);
+    lcd.print(<span class="string">"Uptime: "</span>);
+    lcd.print(millis() / <span class="string">1000</span>);
+    lcd.print(<span class="string">"s"</span>);
+    
+    delay(<span class="string">1000</span>);
+}
+                </div>
+
+                <h3>🚨 Häufige Fehler und Lösungen</h3>
+
+                <div class="danger-box">
+                    <strong>❌ Häufiger Fehler:</strong> Pin als Input konfigurieren, aber nie einen definierten Zustand schaffen.
+                    <br><strong>✅ Lösung:</strong> Immer Pull-Up oder Pull-Down Widerstände verwenden!
+                </div>
+
+                <div class="danger-box">
+                    <strong>❌ Häufiger Fehler:</strong> PWM-Pin mit digitalRead() auslesen wollen.
+                    <br><strong>✅ Lösung:</strong> PWM stoppt digitale Funktionen! Erst digitalWrite(pin, LOW/HIGH) verwenden.
+                </div>
+
+                <div class="danger-box">
+                    <strong>❌ Häufiger Fehler:</strong> Mehrere Pins gleichzeitig mit zu hohem Strom belasten.
+                    <br><strong>✅ Lösung:</strong> Gesamtstrom aller Pins ≤ 200mA, pro Pin ≤ 40mA beachten!
+                </div>
+
+                <div class="success-box">
+                    <strong>💡 Profi-Tipp:</strong> Verwende aussagekräftige Variablennamen und Kommentare. 
+                    Statt "int a = 2;" schreibe "const int buttonPin = 2; // Taster für Menü"
+                </div>
+
+                <h3>🧪 Test- und Debug-Strategien</h3>
+
+                <div class="code-block">
+<span class="comment">// Debug-Code für Pin-Tests</span>
+<span class="keyword">void</span> <span class="keyword">setup</span>() {
+    Serial.begin(<span class="string">9600</span>);
+    
+    <span class="comment">// Alle Pins als Input mit Pull-Up</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> pin = <span class="string">2</span>; pin <= <span class="string">13</span>; pin++) {
+        pinMode(pin, INPUT_PULLUP);
+    }
+}
+
+<span class="keyword">void</span> <span class="keyword">loop</span>() {
+    <span class="comment">// Status aller Digital-Pins ausgeben</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> pin = <span class="string">2</span>; pin <= <span class="string">13</span>; pin++) {
+        Serial.print(<span class="string">"D"</span>);
+        Serial.print(pin);
+        Serial.print(<span class="string">": "</span>);
+        Serial.print(digitalRead(pin));
+        Serial.print(<span class="string">" | "</span>);
+    }
+    Serial.println();
+    
+    <span class="comment">// Status aller Analog-Pins ausgeben</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> pin = <span class="string">0</span>; pin <= <span class="string">5</span>; pin++) {
+        Serial.print(<span class="string">"A"</span>);
+        Serial.print(pin);
+        Serial.print(<span class="string">": "</span>);
+        Serial.print(analogRead(pin));
+        Serial.print(<span class="string">" | "</span>);
+    }
+    Serial.println();
+    Serial.println(<span class="string">"---"</span>);
+    
+    delay(<span class="string">1000</span>);
+}
+                </div>
+            </section>
+
+            <!-- Zusammenfassung -->
+            <section class="section">
+                <h2>📝 Zusammenfassung</h2>
+                
+                <div class="success-box">
+                    <strong>🎯 Das Wichtigste in Kürze:</strong>
+                    <ul style="margin-top: 0.5rem; padding-left: 1.5rem;">
+                        <li><strong>Digital I/O:</strong> Nur zwei Zustände (HIGH/LOW), perfekt für LEDs und Taster</li>
+                        <li><strong>Analog Input:</strong> Kontinuierliche Werte (0-1023), ideal für Sensoren</li>
+                        <li><strong>PWM Output:</strong> Pseudo-analog durch schnelles Ein/Aus-Schalten</li>
+                        <li><strong>Kommunikation:</strong> UART (einfach), SPI (schnell), I²C (sparsam)</li>
+                        <li><strong>Pull-Up/Pull-Down:</strong> Immer verwenden bei Eingängen!</li>
+                        <li><strong>Strombegrenzung:</strong> Maximal 40mA pro Pin, 200mA gesamt</li>
+                    </ul>
+                </div>
+
+                <h3>🔗 Was kommt als nächstes?</h3>
+                <p>Mit diesem Wissen über Hardware-Interfaces kannst du jetzt:</p>
+                <ul style="margin: 1rem 0; padding-left: 2rem;">
+                    <li>Einfache Schaltungen mit LEDs und Tastern aufbauen</li>
+                    <li>Sensoren auslesen und deren Werte interpretieren</li>
+                    <li>Mit anderen Geräten über verschiedene Protokolle kommunizieren</li>
+                    <li>Komplexere Projekte mit mehreren Komponenten realisieren</li>
+                </ul>
+
+                <div class="info-box">
+                    <strong>📚 Vertiefung:</strong> In den nächsten Kapiteln lernst du mehr über 
+                    <a href="mikrocontroller.html">Mikrocontroller-Architektur</a> und 
+                    <a href="arduino.html">Arduino-Programmierung</a>.
+                </div>
+            </section>
+        </div>
+
+        <button class="back-to-top" onclick="scrollToTop()">↑</button>
+
+        <footer style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--bg-white); border-radius: 16px; border: 1px solid var(--border-color);">
+            <p>
+                <strong>Hardware-Interfaces - Mikrocontroller</strong><br>
+                Teil der Lernzettel-Sammlung für das Abitur 2026 - Informationstechnik TG<br>
+                <em>Technische Informatik II - BPE 2</em>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Back to top button functionality
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.pageYOffset > 100) {
+                backToTop.style.display = 'block';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight current section in navigation
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.offsetHeight;
+                if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.style.background = 'var(--bg-light)';
+                link.style.color = 'var(--text-dark)';
+                if (link.getAttribute('href') === `#${current}`) {
+                    link.style.background = 'var(--primary-color)';
+                    link.style.color = 'white';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

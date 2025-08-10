@@ -1,0 +1,693 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Praktische Programmierung - Java Grundlagen</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --code-bg: #1e293b;
+            --code-text: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .breadcrumb {
+            background: var(--bg-white);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .content {
+            background: var(--bg-white);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin: 2rem 0 1rem 0;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        h3 {
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        h4 {
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, var(--warning-color), #fbbf24);
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-weight: bold;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7, #fed7aa);
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: 'Java';
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+        }
+
+        .inline-code {
+            background: var(--bg-light);
+            color: var(--text-dark);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            border: 1px solid var(--border-color);
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 1rem 0;
+        }
+
+        .example-box {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .data-type-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .data-type-table th,
+        .data-type-table td {
+            padding: 0.8rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .data-type-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .data-type-table tr:hover {
+            background: var(--bg-light);
+        }
+
+        .concept-card {
+            background: var(--bg-white);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .concept-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 8px rgba(37, 99, 235, 0.1);
+        }
+
+        .concept-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding: 0;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+            position: relative;
+            padding-left: 4rem;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary-color);
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 2rem;
+            padding: 1rem;
+            background: var(--bg-white);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .nav-button {
+            display: inline-block;
+            padding: 0.8rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .example-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .step-list li {
+                padding-left: 3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>💻 Praktische Programmierung</h1>
+            <p>Java Grundlagen - BPE 3: Grundlagen der Programmentwicklung</p>
+        </header>
+
+        <nav class="breadcrumb">
+            <a href="index.html">🏠 Hauptseite</a> > 
+            <a href="java-basics.html">Java Grundlagen</a> > 
+            <strong>Praktische Programmierung</strong>
+        </nav>
+
+        <div class="content">
+            <div class="info-box">
+                <strong>Was lernst du hier?</strong><br>
+                Diese Seite erklärt die praktischen Grundlagen der Java-Programmierung von Grund auf. Perfekt für Einsteiger, die noch nie programmiert haben! Du lernst Schritt für Schritt, wie Programme funktionieren und wie du eigene schreibst.
+            </div>
+
+            <h2>🎯 Was ist Programmierung eigentlich?</h2>
+            
+            <p>Stell dir vor, du möchtest einem Roboter erklären, wie er ein Butterbrot macht. Du musst ihm <strong>jeden einzelnen Schritt</strong> genau beschreiben:</p>
+            
+            <ol class="step-list">
+                <li>Nimm das Brot aus der Tüte</li>
+                <li>Lege zwei Scheiben auf den Teller</li>
+                <li>Öffne das Marmeladenglas</li>
+                <li>Nimm einen Löffel Marmelade</li>
+                <li>Streiche die Marmelade auf eine Brotscheibe</li>
+            </ol>
+
+            <p>Genau so funktioniert Programmierung! Du gibst dem Computer <span class="highlight">präzise Anweisungen</span>, was er tun soll. Diese Anweisungen schreibst du in einer <strong>Programmiersprache</strong> wie Java.</p>
+
+            <h2>🚀 Dein erstes Java-Programm</h2>
+
+            <h3>Das berühmte "Hallo Welt" Programm</h3>
+            
+            <div class="code-block">
+public class MeinErstesProgram {
+    public static void main(String[] args) {
+        System.out.println("Hallo Welt!");
+    }
+}
+            </div>
+
+            <div class="warning-box">
+                <strong>Nicht erschrecken!</strong> Das sieht erstmal kompliziert aus, aber wir erklären gleich jeden Teil. Erstmal das Wichtige: Die Zeile <code class="inline-code">System.out.println("Hallo Welt!");</code> gibt den Text "Hallo Welt!" auf dem Bildschirm aus.
+            </div>
+
+            <h4>📋 Erklärung Zeile für Zeile:</h4>
+
+            <div class="concept-card">
+                <h4>public class MeinErstesProgram</h4>
+                <p>Das ist wie ein <strong>Ordner</strong> für dein Programm. "MeinErstesProgram" ist der Name - du kannst ihn ändern, aber er muss mit einem Großbuchstaben anfangen!</p>
+            </div>
+
+            <div class="concept-card">
+                <h4>public static void main(String[] args)</h4>
+                <p>Das ist der <strong>Startpunkt</strong> deines Programms. Wie der Eingang zu einem Haus - hier fängt dein Computer an zu lesen. Musst du erstmal nur abschreiben!</p>
+            </div>
+
+            <div class="concept-card">
+                <h4>System.out.println("Hallo Welt!");</h4>
+                <p>Das ist der <strong>Befehl zum Ausgeben</strong> von Text. Alles was in den Anführungszeichen steht, wird auf dem Bildschirm angezeigt.</p>
+            </div>
+
+            <div class="concept-card">
+                <h4>Die geschweiften Klammern { }</h4>
+                <p>Die sind wie <strong>Klammern um einen Satz</strong>. Alles zwischen { und } gehört zusammen. Sehr wichtig: Für jede öffnende { brauchst du auch eine schließende }!</p>
+            </div>
+
+            <h2>🗃️ Variablen - Deine digitalen Schubladen</h2>
+
+            <p>Variablen sind wie <strong>beschriftete Schubladen</strong> in deinem Computer. Du kannst Werte hineinlegen, sie wieder herausholen und ändern.</p>
+
+            <h3>Was sind Datentypen?</h3>
+
+            <p>Genau wie echte Schubladen sind auch Variablen für verschiedene Sachen gedacht:</p>
+
+            <table class="data-type-table">
+                <thead>
+                    <tr>
+                        <th>Datentyp</th>
+                        <th>Wofür?</th>
+                        <th>Beispiel</th>
+                        <th>Erklärung</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>int</code></td>
+                        <td>Ganze Zahlen</td>
+                        <td>42, -17, 0</td>
+                        <td>Für Alter, Anzahl Äpfel, Punkte im Spiel</td>
+                    </tr>
+                    <tr>
+                        <td><code>double</code></td>
+                        <td>Kommazahlen</td>
+                        <td>3.14, 2.5, -1.75</td>
+                        <td>Für Preise, Temperatur, Durchschnitte</td>
+                    </tr>
+                    <tr>
+                        <td><code>String</code></td>
+                        <td>Text</td>
+                        <td>"Max", "Hallo!"</td>
+                        <td>Für Namen, Sätze, alles mit Buchstaben</td>
+                    </tr>
+                    <tr>
+                        <td><code>boolean</code></td>
+                        <td>Ja/Nein</td>
+                        <td>true, false</td>
+                        <td>Für "ist angemeldet?", "Licht an?"</td>
+                    </tr>
+                    <tr>
+                        <td><code>char</code></td>
+                        <td>Ein Zeichen</td>
+                        <td>'A', '5', '!'</td>
+                        <td>Für einzelne Buchstaben oder Zahlen</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>🎯 Variablen in der Praxis</h3>
+
+            <div class="example-grid">
+                <div class="example-box">
+                    <h4>Variable erstellen (Deklaration)</h4>
+                    <div class="code-block">
+int alter;
+String name;
+double preis;
+                    </div>
+                    <p>Du sagst: "Ich möchte eine Schublade für ganze Zahlen namens 'alter'"</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Wert zuweisen (Initialisierung)</h4>
+                    <div class="code-block">
+alter = 16;
+name = "Max Mustermann";
+preis = 12.50;
+                    </div>
+                    <p>Du legst konkrete Werte in die Schubladen hinein</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <strong>💡 Profi-Tipp:</strong> Du kannst beides auch in einer Zeile machen:<br>
+                <code class="inline-code">int alter = 16;</code> erstellt die Variable und weist gleichzeitig einen Wert zu!
+            </div>
+
+            <h4>Vollständiges Beispiel mit Variablen:</h4>
+
+            <div class="code-block">
+public class VariablenBeispiel {
+    public static void main(String[] args) {
+        // Variablen erstellen und Werte zuweisen
+        String schuelerName = "Anna Schmidt";
+        int schuelerAlter = 17;
+        double durchschnittsnote = 2.3;
+        boolean istBestanden = true;
+        
+        // Werte ausgeben
+        System.out.println("Name: " + schuelerName);
+        System.out.println("Alter: " + schuelerAlter + " Jahre");
+        System.out.println("Durchschnitt: " + durchschnittsnote);
+        System.out.println("Bestanden: " + istBestanden);
+    }
+}
+            </div>
+
+            <h2>🔧 Grundlegende Operatoren</h2>
+
+            <p>Operatoren sind wie <strong>Werkzeuge</strong> für deine Variablen. Du kannst damit rechnen, vergleichen und vieles mehr!</p>
+
+            <h3>Rechenoperatoren</h3>
+
+            <table class="data-type-table">
+                <thead>
+                    <tr>
+                        <th>Operator</th>
+                        <th>Bedeutung</th>
+                        <th>Beispiel</th>
+                        <th>Ergebnis</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><code>+</code></td>
+                        <td>Addition</td>
+                        <td><code>5 + 3</code></td>
+                        <td>8</td>
+                    </tr>
+                    <tr>
+                        <td><code>-</code></td>
+                        <td>Subtraktion</td>
+                        <td><code>10 - 4</code></td>
+                        <td>6</td>
+                    </tr>
+                    <tr>
+                        <td><code>*</code></td>
+                        <td>Multiplikation</td>
+                        <td><code>6 * 7</code></td>
+                        <td>42</td>
+                    </tr>
+                    <tr>
+                        <td><code>/</code></td>
+                        <td>Division</td>
+                        <td><code>15 / 3</code></td>
+                        <td>5</td>
+                    </tr>
+                    <tr>
+                        <td><code>%</code></td>
+                        <td>Rest (Modulo)</td>
+                        <td><code>17 % 5</code></td>
+                        <td>2 (17 ÷ 5 = 3 Rest 2)</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="code-block">
+public class RechnenMitVariablen {
+    public static void main(String[] args) {
+        int a = 10;
+        int b = 3;
+        
+        int summe = a + b;        // 13
+        int differenz = a - b;    // 7
+        int produkt = a * b;      // 30
+        int quotient = a / b;     // 3 (ganze Zahl!)
+        int rest = a % b;         // 1 (10 ÷ 3 = 3 Rest 1)
+        
+        System.out.println("Summe: " + summe);
+        System.out.println("Rest: " + rest);
+    }
+}
+            </div>
+
+            <h3>String-Operationen</h3>
+
+            <p>Mit Strings (Texten) kannst du auch rechnen - allerdings anders als mit Zahlen!</p>
+
+            <div class="code-block">
+public class TextOperationen {
+    public static void main(String[] args) {
+        String vorname = "Max";
+        String nachname = "Mustermann";
+        
+        // Texte zusammenfügen (Konkatenation)
+        String vollername = vorname + " " + nachname;
+        System.out.println(vollername); // Ausgabe: Max Mustermann
+        
+        // Text mit Zahlen mischen
+        int alter = 16;
+        String ausgabe = "Ich bin " + alter + " Jahre alt";
+        System.out.println(ausgabe); // Ausgabe: Ich bin 16 Jahre alt
+        
+        // Wichtig: Reihenfolge beachten!
+        System.out.println(5 + 8 + " Punkte");      // 13 Punkte
+        System.out.println("Punkte: " + 5 + 8);    // Punkte: 58
+    }
+}
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Aufpassen bei der Reihenfolge!</strong><br>
+                • <code>5 + 8 + " Punkte"</code> → Erst wird 5+8=13 gerechnet, dann mit Text verbunden → "13 Punkte"<br>
+                • <code>"Punkte: " + 5 + 8</code> → Text macht alles zu Text → "Punkte: 58" (nicht 13!)
+            </div>
+
+            <h2>🎮 Eingabe vom Benutzer</h2>
+
+            <p>Bis jetzt haben wir nur Werte ausgegeben. Aber richtige Programme können auch <strong>Eingaben vom Benutzer</strong> entgegennehmen!</p>
+
+            <div class="code-block">
+import java.util.Scanner;
+
+public class BenutzerEingabe {
+    public static void main(String[] args) {
+        // Scanner erstellen für Benutzereingaben
+        Scanner scanner = new Scanner(System.in);
+        
+        // Benutzer nach Namen fragen
+        System.out.print("Wie heißt du? ");
+        String name = scanner.nextLine();
+        
+        // Benutzer nach Alter fragen
+        System.out.print("Wie alt bist du? ");
+        int alter = scanner.nextInt();
+        
+        // Persönliche Begrüßung ausgeben
+        System.out.println("Hallo " + name + "!");
+        System.out.println("Du bist " + alter + " Jahre alt.");
+        
+        // Scanner schließen (aufräumen)
+        scanner.close();
+    }
+}
+            </div>
+
+            <h4>📖 Erklärung der neuen Befehle:</h4>
+
+            <div class="concept-card">
+                <h4>import java.util.Scanner;</h4>
+                <p>Lädt das <strong>Scanner-Werkzeug</strong> in dein Programm. Wie einen Werkzeugkasten öffnen.</p>
+            </div>
+
+            <div class="concept-card">
+                <h4>Scanner scanner = new Scanner(System.in);</h4>
+                <p>Erstellt einen <strong>Scanner</strong>, der auf Tastatureingaben wartet. "System.in" bedeutet "von der Tastatur".</p>
+            </div>
+
+            <div class="concept-card">
+                <h4>scanner.nextLine()</h4>
+                <p>Liest eine <strong>ganze Zeile Text</strong> ein (bis Enter gedrückt wird).</p>
+            </div>
+
+            <div class="concept-card">
+                <h4>scanner.nextInt()</h4>
+                <p>Liest eine <strong>ganze Zahl</strong> ein. Es gibt auch nextDouble() für Kommazahlen.</p>
+            </div>
+
+            <h2>🧮 Praktisches Beispiel: Taschenrechner</h2>
+
+            <p>Lass uns alles zusammensetzen und einen einfachen Taschenrechner programmieren!</p>
+
+            <div class="code-block">
+import java.util.Scanner;
+
+public class EinfacherTaschenrechner {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        // Begrüßung
+        System.out.println("=== Einfacher Taschenrechner ===");
+        System.out.println();
+        
+        // Erste Zahl eingeben
+        System.out.print("Erste Zahl eingeben: ");
+        double zahl1 = scanner.nextDouble();
+        
+        // Zweite Zahl eingeben
+        System.out.print("Zweite Zahl eingeben: ");
+        double zahl2 = scanner.nextDouble();
+        
+        // Berechnungen durchführen
+        double summe = zahl1 + zahl2;
+        double differenz = zahl1 - zahl2;
+        double produkt = zahl1 * zahl2;
+        double quotient = zahl1 / zahl2;
+        
+        // Ergebnisse ausgeben
+        System.out.println();
+        System.out.println("=== Ergebnisse ===");
+        System.out.println(zahl1 + " + " + zahl2 + " = " + summe);
+        System.out.println(zahl1 + " - " + zahl2 + " = " + differenz);
+        System.out.println(zahl1 + " * " + zahl2 + " = " + produkt);
+        System.out.println(zahl1 + " / " + zahl2 + " = " + quotient);
+        
+        scanner.close();
+    }
+}
+            </div>
+
+            <h2>✅ Zusammenfassung - Was du gelernt hast</h2>
+
+            <div class="concept-card">
+                <h4>🎯 Grundkonzepte der Programmierung</h4>
+                <p>Programme sind Schritt-für-Schritt-Anleitungen für den Computer. Du schreibst präzise Befehle in einer Programmiersprache.</p>
+            </div>
+
+            <div class="concept-card">
+                <h4>📦 Variablen und Datentypen</h4>
+                <p>Variablen sind Schubladen für deine Daten. Verschiedene Datentypen (int, double, String, boolean) für verschiedene Arten von Information.</p>
+            </div>
+
+            <div class="concept-card">
+                <h4>🔧 Operatoren</h4>
+                <p>Mit +, -, *, /, % kannst du rechnen. Der +-Operator kann auch Texte verbinden (String-Konkatenation).</p>
+            </div>
+
+            <div class="concept-card">
+                <h4>💬 Ein- und Ausgabe</h4>
+                <p><code>System.out.println()</code> gibt Text aus, <code>Scanner</code> liest Benutzereingaben ein.</p>
+            </div>
+
+            
+
+        </div>
+
+        <div class="navigation">
+            <a href="index.html" class="nav-button">⬅️ 🏠 Startseite</a>
+        </div>
+    </div>
+</body>
+</html>

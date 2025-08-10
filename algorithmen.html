@@ -1,0 +1,1609 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Algorithmen & Datenstrukturen - Abitur TG 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --code-bg: #1e293b;
+            --code-text: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            background: var(--bg-white);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .section {
+            background: var(--bg-white);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section h3 {
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+            margin: 2rem 0 1rem 0;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .section h4 {
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            margin: 1.5rem 0 0.5rem 0;
+        }
+
+        .intro-box {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .intro-box h3 {
+            margin: 0 0 1rem 0;
+            border: none;
+            padding: 0;
+            color: white;
+        }
+
+        .definition-box {
+            background: #f0f9ff;
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .definition-box strong {
+            color: var(--primary-color);
+        }
+
+        .example-box {
+            background: #f0fdf4;
+            border-left: 4px solid var(--success-color);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-box {
+            background: #fffbeb;
+            border-left: 4px solid var(--warning-color);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: 'Java';
+            position: absolute;
+            top: 0.5rem;
+            right: 1rem;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.2rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .code-block .comment {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .code-block .keyword {
+            color: #60a5fa;
+            font-weight: bold;
+        }
+
+        .code-block .string {
+            color: #34d399;
+        }
+
+        .code-block .number {
+            color: #fbbf24;
+        }
+
+        .code-block .operator {
+            color: #f87171;
+        }
+
+        .visual-demo {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            text-align: center;
+            border: 2px dashed var(--border-color);
+        }
+
+        .array-visualization {
+            display: flex;
+            gap: 4px;
+            justify-content: center;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .array-cell {
+            width: 50px;
+            height: 50px;
+            border: 2px solid var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-white);
+            font-weight: bold;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .array-cell:hover {
+            transform: scale(1.1);
+            background: var(--accent-color);
+            color: white;
+        }
+
+        .array-index {
+            font-size: 0.8rem;
+            color: var(--text-light);
+            margin-top: 0.5rem;
+        }
+
+        .stack-demo, .queue-demo {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .stack-item, .queue-item {
+            width: 100px;
+            height: 40px;
+            background: var(--accent-color);
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 4px;
+            font-weight: bold;
+            transition: transform 0.3s ease;
+        }
+
+        .stack-item:hover, .queue-item:hover {
+            transform: scale(1.05);
+        }
+
+        .queue-demo {
+            flex-direction: row;
+        }
+
+        .algorithm-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .algorithm-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .algorithm-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .algorithm-card h4 {
+            color: var(--primary-color);
+            margin: 0 0 1rem 0;
+        }
+
+        .complexity-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .complexity-table th,
+        .complexity-table td {
+            border: 1px solid var(--border-color);
+            padding: 0.75rem;
+            text-align: left;
+        }
+
+        .complexity-table th {
+            background: var(--bg-light);
+            color: var(--text-dark);
+            font-weight: bold;
+        }
+
+        .complexity-good {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .complexity-medium {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        .complexity-bad {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .step-by-step {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .step:last-child {
+            margin-bottom: 0;
+        }
+
+        .step-number {
+            background: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: var(--bg-white);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .nav-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+        }
+
+        .tree-visualization {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .tree-level {
+            display: flex;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .tree-node {
+            width: 40px;
+            height: 40px;
+            border: 2px solid var(--primary-color);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--bg-white);
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .tree-node:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+
+        .interactive-demo {
+            background: var(--bg-white);
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .demo-button {
+            padding: 0.5rem 1rem;
+            background: var(--accent-color);
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .demo-button:hover {
+            background: var(--primary-color);
+            transform: translateY(-1px);
+        }
+
+        .demo-button:active {
+            transform: translateY(0);
+        }
+
+        input[type="number"] {
+            padding: 0.5rem;
+            border: 1px solid var(--border-color);
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .array-visualization {
+                justify-content: flex-start;
+            }
+
+            .array-cell {
+                width: 40px;
+                height: 40px;
+            }
+
+            .algorithm-comparison {
+                grid-template-columns: 1fr;
+            }
+
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">🏠 Startseite</a> > 
+            <a href="programmierung-grundlagen.html">💻 Grundlagen der Programmentwicklung</a> > 
+            <strong>📊 Algorithmen & Datenstrukturen</strong>
+        </div>
+
+        <header class="header">
+            <h1>📊 Algorithmen & Datenstrukturen</h1>
+            <p>Die Grundlagen effizienter Programmierung verstehen und anwenden</p>
+        </header>
+
+        <div class="intro-box">
+            <h3>🎯 Was du in diesem Kapitel lernst</h3>
+            <p>Algorithmen und Datenstrukturen sind das Herzstück der Informatik. Du lernst, wie Computer Probleme systematisch lösen und wie Daten effizient organisiert werden können. Nach diesem Kapitel weißt du, warum manche Programme schneller laufen als andere und wie du selbst effiziente Lösungen programmieren kannst.</p>
+        </div>
+
+        <!-- 1. Was sind Algorithmen? -->
+        <section class="section">
+            <h2>🧮 1. Was sind Algorithmen?</h2>
+            
+            <div class="definition-box">
+                <strong>Definition:</strong> Ein Algorithmus ist eine Verarbeitungsvorschrift, die aus einer endlichen Folge von eindeutig ausführbaren Anweisungen besteht, mit der man eine Vielzahl gleichartiger Aufgaben lösen kann.
+            </div>
+
+            <h3>📋 Die Eigenschaften eines Algorithmus</h3>
+            
+            <h4>1. Eindeutigkeit</h4>
+            <p>Jeder Schritt des Algorithmus ist klar definiert. Es gibt keine Mehrdeutigkeiten oder Interpretationsspielräume.</p>
+            
+            <div class="example-box">
+                <strong>Beispiel:</strong> "Addiere 5 zu einer Zahl" ist eindeutig. "Addiere etwas zu einer Zahl" wäre nicht eindeutig.
+            </div>
+
+            <h4>2. Endlichkeit (Finitheit)</h4>
+            <p>Ein Algorithmus besteht aus endlich vielen Anweisungen und muss nach endlich vielen Schritten terminieren.</p>
+
+            <h4>3. Ausführbarkeit (Effektivität)</h4>
+            <p>Jede Anweisung muss für den Ausführenden (Computer oder Mensch) verständlich und ausführbar sein.</p>
+
+            <h4>4. Determinismus</h4>
+            <p>Bei gleichen Eingaben liefert der Algorithmus immer die gleichen Ergebnisse.</p>
+
+            <h3>🏗️ Grundbausteine von Algorithmen</h3>
+            
+            <div class="step-by-step">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <strong>Sequenz:</strong> Anweisungen werden nacheinander abgearbeitet
+                        <div class="code-block">
+<span class="keyword">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">5</span>;
+<span class="keyword">int</span> <span class="variable">b</span> <span class="operator">=</span> <span class="number">10</span>;
+<span class="keyword">int</span> <span class="variable">summe</span> <span class="operator">=</span> <span class="variable">a</span> <span class="operator">+</span> <span class="variable">b</span>; <span class="comment">// Wird nach den oberen Zeilen ausgeführt</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <strong>Verzweigung:</strong> Abhängig von Bedingungen werden unterschiedliche Wege genommen
+                        <div class="code-block">
+<span class="keyword">if</span> (<span class="variable">alter</span> <span class="operator">>=</span> <span class="number">18</span>) {
+    System.out.println(<span class="string">"Du darfst wählen"</span>);
+} <span class="keyword">else</span> {
+    System.out.println(<span class="string">"Du bist noch zu jung"</span>);
+}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <strong>Schleife:</strong> Anweisungen werden wiederholt ausgeführt
+                        <div class="code-block">
+<span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; <span class="variable">i</span> <span class="operator">&lt;</span> <span class="number">5</span>; <span class="variable">i</span><span class="operator">++</span>) {
+    System.out.println(<span class="string">"Durchlauf: "</span> <span class="operator">+</span> <span class="variable">i</span>);
+}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. Datenstrukturen Grundlagen -->
+        <section class="section">
+            <h2>📦 2. Was sind Datenstrukturen?</h2>
+            
+            <div class="definition-box">
+                <strong>Definition:</strong> Datenstrukturen sind Objekte zur Speicherung und Organisation von Daten. Sie bestimmen, wie Daten angeordnet, verknüpft und verwaltet werden, um effizienten Zugriff zu ermöglichen.
+            </div>
+
+            <h3>📊 Statische vs. Dynamische Datenstrukturen</h3>
+            
+            <div class="algorithm-comparison">
+                <div class="algorithm-card">
+                    <h4>📏 Statische Datenstrukturen</h4>
+                    <ul>
+                        <li>Haben eine <strong>festgelegte Größe</strong></li>
+                        <li>Größe wird bei der Erstellung definiert</li>
+                        <li>Schneller Zugriff durch feste Speicherplätze</li>
+                        <li><strong>Beispiel:</strong> Arrays</li>
+                    </ul>
+                </div>
+                
+                <div class="algorithm-card">
+                    <h4>📈 Dynamische Datenstrukturen</h4>
+                    <ul>
+                        <li>Größe kann sich <strong>zur Laufzeit ändern</strong></li>
+                        <li>Flexibler, aber oft etwas langsamer</li>
+                        <li>Speicher wird nach Bedarf allokiert</li>
+                        <li><strong>Beispiele:</strong> Listen, Stacks, Queues</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Arrays -->
+        <section class="section">
+            <h2>📋 3. Arrays (Felder) - Die Grundlage</h2>
+            
+            <div class="definition-box">
+                <strong>Array:</strong> Ein Array ist eine statische Datenstruktur, die mehrere Elemente gleichen Datentyps in einer festen Reihenfolge speichert. Jedes Element hat einen Index (Position).
+            </div>
+
+            <h3>🔢 Eindimensionale Arrays</h3>
+            
+            <div class="visual-demo">
+                <h4>Visualisierung eines int-Arrays mit 5 Elementen:</h4>
+                <div class="array-visualization">
+                    <div>
+                        <div class="array-cell">42</div>
+                        <div class="array-index">Index 0</div>
+                    </div>
+                    <div>
+                        <div class="array-cell">17</div>
+                        <div class="array-index">Index 1</div>
+                    </div>
+                    <div>
+                        <div class="array-cell">8</div>
+                        <div class="array-index">Index 2</div>
+                    </div>
+                    <div>
+                        <div class="array-cell">-5</div>
+                        <div class="array-index">Index 3</div>
+                    </div>
+                    <div>
+                        <div class="array-cell">23</div>
+                        <div class="array-index">Index 4</div>
+                    </div>
+                </div>
+            </div>
+
+            <h4>💻 Array-Erstellung und -Verwendung in Java</h4>
+            <div class="code-block">
+<span class="comment">// Array deklarieren und erstellen</span>
+<span class="keyword">int</span>[] <span class="variable">zahlen</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>]; <span class="comment">// Array mit 5 Plätzen</span>
+
+<span class="comment">// Werte zuweisen</span>
+<span class="variable">zahlen</span>[<span class="number">0</span>] <span class="operator">=</span> <span class="number">42</span>;  <span class="comment">// Erstes Element</span>
+<span class="variable">zahlen</span>[<span class="number">1</span>] <span class="operator">=</span> <span class="number">17</span>;  <span class="comment">// Zweites Element</span>
+<span class="variable">zahlen</span>[<span class="number">4</span>] <span class="operator">=</span> <span class="number">23</span>;  <span class="comment">// Letztes Element (Index 4!)</span>
+
+<span class="comment">// Direkte Initialisierung</span>
+<span class="keyword">int</span>[] <span class="variable">fertigeZahlen</span> <span class="operator">=</span> {<span class="number">42</span>, <span class="number">17</span>, <span class="number">8</span>, <span class="operator">-</span><span class="number">5</span>, <span class="number">23</span>};
+
+<span class="comment">// Alle Elemente ausgeben</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; <span class="variable">i</span> <span class="operator">&lt;</span> <span class="variable">zahlen</span>.length; <span class="variable">i</span><span class="operator">++</span>) {
+    System.out.println(<span class="string">"Element "</span> <span class="operator">+</span> <span class="variable">i</span> <span class="operator">+</span> <span class="string">": "</span> <span class="operator">+</span> <span class="variable">zahlen</span>[<span class="variable">i</span>]);
+}
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Wichtig:</strong> Array-Indizes beginnen bei 0! Ein Array mit 5 Elementen hat die Indizes 0, 1, 2, 3, 4. Der Zugriff auf Index 5 würde einen ArrayIndexOutOfBoundsException-Fehler verursachen.
+            </div>
+
+            <h3>📊 Zweidimensionale Arrays</h3>
+            
+            <p>Stell dir eine Tabelle vor - das ist ein zweidimensionales Array:</p>
+            
+            <div class="visual-demo">
+                <h4>2D-Array (3×3 Matrix):</h4>
+                <div style="display: grid; grid-template-columns: repeat(3, 50px); gap: 4px; justify-content: center;">
+                    <div class="array-cell">1</div>
+                    <div class="array-cell">2</div>
+                    <div class="array-cell">3</div>
+                    <div class="array-cell">4</div>
+                    <div class="array-cell">5</div>
+                    <div class="array-cell">6</div>
+                    <div class="array-cell">7</div>
+                    <div class="array-cell">8</div>
+                    <div class="array-cell">9</div>
+                </div>
+            </div>
+
+            <div class="code-block">
+<span class="comment">// 2D-Array erstellen (3 Zeilen, 3 Spalten)</span>
+<span class="keyword">int</span>[][] <span class="variable">matrix</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>][<span class="number">3</span>];
+
+<span class="comment">// Oder direkt initialisieren</span>
+<span class="keyword">int</span>[][] <span class="variable">fertigeMatrix</span> <span class="operator">=</span> {
+    {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>},
+    {<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>},
+    {<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>}
+};
+
+<span class="comment">// Zugriff auf Element in Zeile 1, Spalte 2</span>
+<span class="keyword">int</span> <span class="variable">element</span> <span class="operator">=</span> <span class="variable">matrix</span>[<span class="number">1</span>][<span class="number">2</span>]; <span class="comment">// Gibt 6 zurück</span>
+
+<span class="comment">// Alle Elemente durchlaufen</span>
+<span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">zeile</span> <span class="operator">=</span> <span class="number">0</span>; <span class="variable">zeile</span> <span class="operator">&lt;</span> <span class="variable">matrix</span>.length; <span class="variable">zeile</span><span class="operator">++</span>) {
+    <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">spalte</span> <span class="operator">=</span> <span class="number">0</span>; <span class="variable">spalte</span> <span class="operator">&lt;</span> <span class="variable">matrix</span>[<span class="variable">zeile</span>].length; <span class="variable">spalte</span><span class="operator">++</span>) {
+        System.out.print(<span class="variable">matrix</span>[<span class="variable">zeile</span>][<span class="variable">spalte</span>] <span class="operator">+</span> <span class="string">" "</span>);
+    }
+    System.out.println(); <span class="comment">// Neue Zeile</span>
+}
+            </div>
+        </section>
+
+        <!-- 4. Dynamische Datenstrukturen -->
+        <section class="section">
+            <h2>🔄 4. Dynamische Datenstrukturen</h2>
+
+            <h3>📚 Stapel (Stack) - LIFO-Prinzip</h3>
+            
+            <div class="definition-box">
+                <strong>Stack (Stapel):</strong> Funktioniert nach dem LIFO-Prinzip (Last In, First Out). Wie ein Stapel Teller - das zuletzt draufgelegte Element wird als erstes wieder weggenommen.
+            </div>
+
+            <div class="visual-demo">
+                <h4>Stack-Visualisierung:</h4>
+                <div class="stack-demo">
+                    <div class="stack-item">Element 3 (Top)</div>
+                    <div class="stack-item">Element 2</div>
+                    <div class="stack-item">Element 1 (Bottom)</div>
+                </div>
+                <p><strong>Push:</strong> Neues Element oben drauflegen<br>
+                <strong>Pop:</strong> Oberstes Element entfernen und zurückgeben</p>
+            </div>
+
+            <h4>🔧 Stack-Operationen</h4>
+            <div class="step-by-step">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div><strong>push(element):</strong> Fügt ein Element oben auf den Stapel hinzu</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div><strong>pop():</strong> Entfernt das oberste Element und gibt es zurück</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div><strong>top():</strong> Zeigt das oberste Element an, ohne es zu entfernen</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div><strong>isEmpty():</strong> Prüft, ob der Stack leer ist</div>
+                </div>
+            </div>
+
+            <h3>🚌 Warteschlange (Queue) - FIFO-Prinzip</h3>
+            
+            <div class="definition-box">
+                <strong>Queue (Schlange):</strong> Funktioniert nach dem FIFO-Prinzip (First In, First Out). Wie eine Warteschlange - wer zuerst kommt, wird zuerst bedient.
+            </div>
+
+            <div class="visual-demo">
+                <h4>Queue-Visualisierung:</h4>
+                <div class="queue-demo">
+                    <div class="queue-item">Element 1</div>
+                    <div class="queue-item">Element 2</div>
+                    <div class="queue-item">Element 3</div>
+                </div>
+                <p><strong>Enqueue:</strong> Element hinten anstellen<br>
+                <strong>Dequeue:</strong> Vorderstes Element entfernen</p>
+            </div>
+
+            <h4>🔧 Queue-Operationen</h4>
+            <div class="step-by-step">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div><strong>enqueue(element):</strong> Fügt ein Element am Ende der Schlange hinzu</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div><strong>dequeue():</strong> Entfernt das vorderste Element und gibt es zurück</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div><strong>head():</strong> Zeigt das vorderste Element an</div>
+                </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div><strong>isEmpty():</strong> Prüft, ob die Queue leer ist</div>
+                </div>
+            </div>
+
+            <h3>📝 Dynamische Liste (ArrayList)</h3>
+            
+            <div class="definition-box">
+                <strong>Dynamische Liste:</strong> Eine veränderbare Sammlung von Elementen, auf die über Indizes zugegriffen werden kann. Im Gegensatz zu Arrays kann die Größe zur Laufzeit verändert werden.
+            </div>
+
+            <div class="code-block">
+<span class="keyword">import</span> java.util.ArrayList;
+
+<span class="comment">// ArrayList erstellen</span>
+ArrayList&lt;Integer&gt; <span class="variable">liste</span> <span class="operator">=</span> <span class="keyword">new</span> ArrayList&lt;&gt;();
+
+<span class="comment">// Elemente hinzufügen</span>
+<span class="variable">liste</span>.add(<span class="number">10</span>);      <span class="comment">// [10]</span>
+<span class="variable">liste</span>.add(<span class="number">20</span>);      <span class="comment">// [10, 20]</span>
+<span class="variable">liste</span>.add(<span class="number">1</span>, <span class="number">15</span>);   <span class="comment">// [10, 15, 20] - an Index 1 einfügen</span>
+
+<span class="comment">// Elemente abrufen</span>
+<span class="keyword">int</span> <span class="variable">element</span> <span class="operator">=</span> <span class="variable">liste</span>.get(<span class="number">0</span>);  <span class="comment">// 10</span>
+
+<span class="comment">// Element entfernen</span>
+<span class="variable">liste</span>.remove(<span class="number">1</span>);    <span class="comment">// [10, 20] - Index 1 entfernen</span>
+
+<span class="comment">// Größe prüfen</span>
+<span class="keyword">int</span> <span class="variable">groesse</span> <span class="operator">=</span> <span class="variable">liste</span>.size();  <span class="comment">// 2</span>
+            </div>
+        </section>
+
+        <!-- 5. Binärbäume -->
+        <section class="section">
+            <h2>🌳 5. Binärbäume - Hierarchische Datenstrukturen</h2>
+            
+            <div class="definition-box">
+                <strong>Binärbaum:</strong> Eine hierarchische Datenstruktur, bei der jeder Knoten maximal zwei Kindknoten hat (linkes und rechtes Kind). Der oberste Knoten heißt Wurzel.
+            </div>
+
+            <h3>🔍 Binärbaum-Terminologie</h3>
+            <ul>
+                <li><strong>Wurzel (Root):</strong> Der oberste Knoten</li>
+                <li><strong>Blatt (Leaf):</strong> Knoten ohne Kinder</li>
+                <li><strong>Innerer Knoten:</strong> Knoten mit mindestens einem Kind</li>
+                <li><strong>Tiefe/Level:</strong> Abstand zur Wurzel</li>
+            </ul>
+
+            <div class="visual-demo">
+                <h4>Beispiel eines Binärbaums:</h4>
+                <div class="tree-visualization">
+                    <div class="tree-level">
+                        <div class="tree-node">8</div>
+                    </div>
+                    <div class="tree-level">
+                        <div class="tree-node">3</div>
+                        <div class="tree-node">10</div>
+                    </div>
+                    <div class="tree-level">
+                        <div class="tree-node">1</div>
+                        <div class="tree-node">6</div>
+                        <div class="tree-node">14</div>
+                    </div>
+                </div>
+                <p>Wurzel: 8 | Blätter: 1, 6, 14 | Tiefe: 3 Ebenen</p>
+            </div>
+
+            <h3>🔄 Baum-Traversierung (Durchlaufen)</h3>
+            
+            <p>Es gibt drei wichtige Arten, einen Binärbaum systematisch zu durchlaufen:</p>
+
+            <div class="algorithm-comparison">
+                <div class="algorithm-card">
+                    <h4>📍 Preorder</h4>
+                    <p><strong>Reihenfolge:</strong> Wurzel → Links → Rechts</p>
+                    <p><strong>Beispiel:</strong> 8, 3, 1, 6, 10, 14</p>
+                    <div class="code-block">
+<span class="keyword">void</span> <span class="variable">preorder</span>(Knoten <span class="variable">k</span>) {
+    <span class="keyword">if</span> (<span class="variable">k</span> <span class="operator">!=</span> <span class="keyword">null</span>) {
+        System.out.print(<span class="variable">k</span>.<span class="variable">wert</span>);
+        <span class="variable">preorder</span>(<span class="variable">k</span>.<span class="variable">links</span>);
+        <span class="variable">preorder</span>(<span class="variable">k</span>.<span class="variable">rechts</span>);
+    }
+}
+                    </div>
+                </div>
+                
+                <div class="algorithm-card">
+                    <h4>📍 Inorder</h4>
+                    <p><strong>Reihenfolge:</strong> Links → Wurzel → Rechts</p>
+                    <p><strong>Beispiel:</strong> 1, 3, 6, 8, 10, 14</p>
+                    <div class="code-block">
+<span class="keyword">void</span> <span class="variable">inorder</span>(Knoten <span class="variable">k</span>) {
+    <span class="keyword">if</span> (<span class="variable">k</span> <span class="operator">!=</span> <span class="keyword">null</span>) {
+        <span class="variable">inorder</span>(<span class="variable">k</span>.<span class="variable">links</span>);
+        System.out.print(<span class="variable">k</span>.<span class="variable">wert</span>);
+        <span class="variable">inorder</span>(<span class="variable">k</span>.<span class="variable">rechts</span>);
+    }
+}
+                    </div>
+                </div>
+
+                <div class="algorithm-card">
+                    <h4>📍 Postorder</h4>
+                    <p><strong>Reihenfolge:</strong> Links → Rechts → Wurzel</p>
+                    <p><strong>Beispiel:</strong> 1, 6, 3, 14, 10, 8</p>
+                    <div class="code-block">
+<span class="keyword">void</span> <span class="variable">postorder</span>(Knoten <span class="variable">k</span>) {
+    <span class="keyword">if</span> (<span class="variable">k</span> <span class="operator">!=</span> <span class="keyword">null</span>) {
+        <span class="variable">postorder</span>(<span class="variable">k</span>.<span class="variable">links</span>);
+        <span class="variable">postorder</span>(<span class="variable">k</span>.<span class="variable">rechts</span>);
+        System.out.print(<span class="variable">k</span>.<span class="variable">wert</span>);
+    }
+}
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <strong>💡 Merkhilfe:</strong><br>
+                • <strong>Pre</strong>order: Wurzel kommt <strong>vor</strong> den Kindern<br>
+                • <strong>In</strong>order: Wurzel kommt <strong>zwischen</strong> den Kindern<br>
+                • <strong>Post</strong>order: Wurzel kommt <strong>nach</strong> den Kindern
+            </div>
+
+            <h3>🔍 Binärer Suchbaum</h3>
+            
+            <div class="definition-box">
+                <strong>Binärer Suchbaum:</strong> Ein spezieller Binärbaum, bei dem für jeden Knoten gilt: Alle Werte im linken Teilbaum sind kleiner, alle Werte im rechten Teilbaum sind größer als der Knotenwert.
+            </div>
+
+            <h4>🔧 Operationen im binären Suchbaum</h4>
+
+            <div class="step-by-step">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <strong>Suchen nach Wert x:</strong>
+                        <ul>
+                            <li>Wenn aktueller Knoten = x → Gefunden!</li>
+                            <li>Wenn aktueller Knoten < x → Rechts weitersuchen</li>
+                            <li>Wenn aktueller Knoten > x → Links weitersuchen</li>
+                            <li>Wenn leerer Teilbaum → Nicht gefunden</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <strong>Einfügen von Wert x:</strong>
+                        <ul>
+                            <li>Suche die richtige Position (wie beim Suchen)</li>
+                            <li>Füge x an der leeren Stelle ein</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <strong>Löschen von Wert x:</strong>
+                        <ul>
+                            <li><strong>Fall 1:</strong> Knoten ist Blatt → Einfach entfernen</li>
+                            <li><strong>Fall 2:</strong> Knoten hat ein Kind → Durch Kind ersetzen</li>
+                            <li><strong>Fall 3:</strong> Knoten hat zwei Kinder → Durch Vorgänger oder Nachfolger ersetzen</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Sortieralgorithmen -->
+        <section class="section">
+            <h2>🔀 6. Sortieralgorithmen</h2>
+            
+            <div class="definition-box">
+                <strong>Sortieralgorithmus:</strong> Ein Verfahren, um Daten in eine bestimmte Reihenfolge zu bringen (meist aufsteigend oder absteigend). Die Effizienz verschiedener Algorithmen unterscheidet sich erheblich.
+            </div>
+
+            <h3>📊 Algorithmus-Komplexität verstehen</h3>
+            
+            <div class="example-box">
+                <strong>Was bedeutet "Komplexität"?</strong><br>
+                Die Komplexität beschreibt, wie sich die Laufzeit eines Algorithmus verändert, wenn die Datenmenge größer wird. Stell dir vor, du sortierst erst 10 Zahlen, dann 100, dann 1000...
+            </div>
+
+            <table class="complexity-table">
+                <tr>
+                    <th>Komplexität</th>
+                    <th>Name</th>
+                    <th>Bei 10 Elementen</th>
+                    <th>Bei 100 Elementen</th>
+                    <th>Bei 1000 Elementen</th>
+                </tr>
+                <tr class="complexity-good">
+                    <td>O(n)</td>
+                    <td>Linear</td>
+                    <td>10 Schritte</td>
+                    <td>100 Schritte</td>
+                    <td>1.000 Schritte</td>
+                </tr>
+                <tr class="complexity-medium">
+                    <td>O(n log n)</td>
+                    <td>Linearithmisch</td>
+                    <td>33 Schritte</td>
+                    <td>664 Schritte</td>
+                    <td>9.966 Schritte</td>
+                </tr>
+                <tr class="complexity-bad">
+                    <td>O(n²)</td>
+                    <td>Quadratisch</td>
+                    <td>100 Schritte</td>
+                    <td>10.000 Schritte</td>
+                    <td>1.000.000 Schritte</td>
+                </tr>
+            </table>
+
+            <div class="warning-box">
+                <strong>⚠️ Wichtig:</strong> Bei 1.000.000 Elementen benötigt ein O(n²) Algorithmus im schlechtesten Fall 1.000.000.000.000 Operationen, während O(n log n) nur etwa 20.000.000 benötigt!
+            </div>
+
+            <h3>🫧 Bubblesort - Der einfachste Sortieralgorithmus</h3>
+            
+            <div class="definition-box">
+                <strong>Bubblesort:</strong> Vergleicht benachbarte Elemente paarweise und vertauscht sie, wenn sie in falscher Reihenfolge stehen. Wie Luftblasen steigen die größten Elemente nach oben.
+            </div>
+
+            <div class="code-block">
+<span class="comment">// Bubblesort Implementation</span>
+<span class="keyword">public static void</span> <span class="variable">bubblesort</span>(<span class="keyword">int</span>[] <span class="variable">array</span>) {
+    <span class="keyword">int</span> <span class="variable">n</span> <span class="operator">=</span> <span class="variable">array</span>.length;
+    
+    <span class="comment">// Äußere Schleife: n-1 Durchläufe</span>
+    <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; <span class="variable">i</span> <span class="operator">&lt;</span> <span class="variable">n</span> <span class="operator">-</span> <span class="number">1</span>; <span class="variable">i</span><span class="operator">++</span>) {
+        <span class="comment">// Innere Schleife: Paarweise Vergleiche</span>
+        <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; <span class="variable">j</span> <span class="operator">&lt;</span> <span class="variable">n</span> <span class="operator">-</span> <span class="variable">i</span> <span class="operator">-</span> <span class="number">1</span>; <span class="variable">j</span><span class="operator">++</span>) {
+            <span class="comment">// Wenn linkes Element größer als rechtes</span>
+            <span class="keyword">if</span> (<span class="variable">array</span>[<span class="variable">j</span>] <span class="operator">&gt;</span> <span class="variable">array</span>[<span class="variable">j</span> <span class="operator">+</span> <span class="number">1</span>]) {
+                <span class="comment">// Vertauschen</span>
+                <span class="keyword">int</span> <span class="variable">temp</span> <span class="operator">=</span> <span class="variable">array</span>[<span class="variable">j</span>];
+                <span class="variable">array</span>[<span class="variable">j</span>] <span class="operator">=</span> <span class="variable">array</span>[<span class="variable">j</span> <span class="operator">+</span> <span class="number">1</span>];
+                <span class="variable">array</span>[<span class="variable">j</span> <span class="operator">+</span> <span class="number">1</span>] <span class="operator">=</span> <span class="variable">temp</span>;
+            }
+        }
+    }
+}
+            </div>
+
+            <h3>⚡ Quicksort - Der schnelle Algorithmus</h3>
+            
+            <div class="definition-box">
+                <strong>Quicksort:</strong> Ein effizienter Divide-and-Conquer-Algorithmus, der ein Pivot-Element auswählt und das Array in kleinere und größere Elemente unterteilt.
+            </div>
+
+            <div class="code-block">
+<span class="comment">// Quicksort Implementation</span>
+<span class="keyword">public static void</span> <span class="variable">quicksort</span>(<span class="keyword">int</span>[] <span class="variable">array</span>, <span class="keyword">int</span> <span class="variable">low</span>, <span class="keyword">int</span> <span class="variable">high</span>) {
+    <span class="keyword">if</span> (<span class="variable">low</span> <span class="operator">&lt;</span> <span class="variable">high</span>) {
+        <span class="comment">// Partitioniere das Array</span>
+        <span class="keyword">int</span> <span class="variable">pi</span> <span class="operator">=</span> <span class="variable">partition</span>(<span class="variable">array</span>, <span class="variable">low</span>, <span class="variable">high</span>);
+        
+        <span class="comment">// Sortiere Elemente vor und nach der Partition</span>
+        <span class="variable">quicksort</span>(<span class="variable">array</span>, <span class="variable">low</span>, <span class="variable">pi</span> <span class="operator">-</span> <span class="number">1</span>);
+        <span class="variable">quicksort</span>(<span class="variable">array</span>, <span class="variable">pi</span> <span class="operator">+</span> <span class="number">1</span>, <span class="variable">high</span>);
+    }
+}
+
+<span class="keyword">private static int</span> <span class="variable">partition</span>(<span class="keyword">int</span>[] <span class="variable">array</span>, <span class="keyword">int</span> <span class="variable">low</span>, <span class="keyword">int</span> <span class="variable">high</span>) {
+    <span class="keyword">int</span> <span class="variable">pivot</span> <span class="operator">=</span> <span class="variable">array</span>[<span class="variable">high</span>]; <span class="comment">// Letztes Element als Pivot</span>
+    <span class="keyword">int</span> <span class="variable">i</span> <span class="operator">=</span> (<span class="variable">low</span> <span class="operator">-</span> <span class="number">1</span>);
+    
+    <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="variable">low</span>; <span class="variable">j</span> <span class="operator">&lt;</span> <span class="variable">high</span>; <span class="variable">j</span><span class="operator">++</span>) {
+        <span class="keyword">if</span> (<span class="variable">array</span>[<span class="variable">j</span>] <span class="operator">&lt;</span> <span class="variable">pivot</span>) {
+            <span class="variable">i</span><span class="operator">++</span>;
+            <span class="comment">// Tausche array[i] und array[j]</span>
+            <span class="keyword">int</span> <span class="variable">temp</span> <span class="operator">=</span> <span class="variable">array</span>[<span class="variable">i</span>];
+            <span class="variable">array</span>[<span class="variable">i</span>] <span class="operator">=</span> <span class="variable">array</span>[<span class="variable">j</span>];
+            <span class="variable">array</span>[<span class="variable">j</span>] <span class="operator">=</span> <span class="variable">temp</span>;
+        }
+    }
+    
+    <span class="comment">// Tausche array[i+1] und array[high] (Pivot)</span>
+    <span class="keyword">int</span> <span class="variable">temp</span> <span class="operator">=</span> <span class="variable">array</span>[<span class="variable">i</span> <span class="operator">+</span> <span class="number">1</span>];
+    <span class="variable">array</span>[<span class="variable">i</span> <span class="operator">+</span> <span class="number">1</span>] <span class="operator">=</span> <span class="variable">array</span>[<span class="variable">high</span>];
+    <span class="variable">array</span>[<span class="variable">high</span>] <span class="operator">=</span> <span class="variable">temp</span>;
+    
+    <span class="keyword">return</span> <span class="variable">i</span> <span class="operator">+</span> <span class="number">1</span>;
+}
+            </div>
+
+            <h3>📈 Vergleich der Sortieralgorithmen</h3>
+            
+            <table class="complexity-table">
+                <tr>
+                    <th>Algorithmus</th>
+                    <th>Best Case</th>
+                    <th>Average Case</th>
+                    <th>Worst Case</th>
+                    <th>Speicher</th>
+                    <th>Stabil?</th>
+                </tr>
+                <tr class="complexity-bad">
+                    <td>Bubblesort</td>
+                    <td>O(n)</td>
+                    <td>O(n²)</td>
+                    <td>O(n²)</td>
+                    <td>O(1)</td>
+                    <td>Ja</td>
+                </tr>
+                <tr class="complexity-good">
+                    <td>Quicksort</td>
+                    <td>O(n log n)</td>
+                    <td>O(n log n)</td>
+                    <td>O(n²)</td>
+                    <td>O(log n)</td>
+                    <td>Nein</td>
+                </tr>
+                <tr class="complexity-good">
+                    <td>Mergesort</td>
+                    <td>O(n log n)</td>
+                    <td>O(n log n)</td>
+                    <td>O(n log n)</td>
+                    <td>O(n)</td>
+                    <td>Ja</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- 7. Suchalgorithmen -->
+        <section class="section">
+            <h2>🔍 7. Suchalgorithmen</h2>
+            
+            <div class="definition-box">
+                <strong>Suchalgorithmus:</strong> Ein Verfahren, um ein bestimmtes Element in einer Datenstruktur zu finden. Die Effizienz hängt stark davon ab, ob die Daten sortiert sind oder nicht.
+            </div>
+
+            <h3>📍 Lineare Suche (Sequenzielle Suche)</h3>
+            
+            <div class="definition-box">
+                <strong>Lineare Suche:</strong> Durchsucht die Daten Element für Element von Anfang bis Ende, bis das gesuchte Element gefunden wird oder das Ende erreicht ist.
+            </div>
+
+            <div class="code-block">
+<span class="comment">// Lineare Suche Implementation</span>
+<span class="keyword">public static int</span> <span class="variable">lineareSuche</span>(<span class="keyword">int</span>[] <span class="variable">array</span>, <span class="keyword">int</span> <span class="variable">gesucht</span>) {
+    <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; <span class="variable">i</span> <span class="operator">&lt;</span> <span class="variable">array</span>.length; <span class="variable">i</span><span class="operator">++</span>) {
+        <span class="keyword">if</span> (<span class="variable">array</span>[<span class="variable">i</span>] <span class="operator">==</span> <span class="variable">gesucht</span>) {
+            <span class="keyword">return</span> <span class="variable">i</span>; <span class="comment">// Index des gefundenen Elements</span>
+        }
+    }
+    <span class="keyword">return</span> <span class="operator">-</span><span class="number">1</span>; <span class="comment">// Element nicht gefunden</span>
+}
+            </div>
+
+            <h3>🎯 Binäre Suche</h3>
+            
+            <div class="definition-box">
+                <strong>Binäre Suche:</strong> Funktioniert nur bei sortierten Daten. Teilt den Suchbereich in jeder Iteration halbiert, indem das mittlere Element mit dem gesuchten verglichen wird.
+            </div>
+
+            <div class="code-block">
+<span class="comment">// Binäre Suche Implementation</span>
+<span class="keyword">public static int</span> <span class="variable">binaereSuche</span>(<span class="keyword">int</span>[] <span class="variable">array</span>, <span class="keyword">int</span> <span class="variable">gesucht</span>) {
+    <span class="keyword">int</span> <span class="variable">links</span> <span class="operator">=</span> <span class="number">0</span>;
+    <span class="keyword">int</span> <span class="variable">rechts</span> <span class="operator">=</span> <span class="variable">array</span>.length <span class="operator">-</span> <span class="number">1</span>;
+    
+    <span class="keyword">while</span> (<span class="variable">links</span> <span class="operator">&lt;=</span> <span class="variable">rechts</span>) {
+        <span class="keyword">int</span> <span class="variable">mitte</span> <span class="operator">=</span> (<span class="variable">links</span> <span class="operator">+</span> <span class="variable">rechts</span>) <span class="operator">/</span> <span class="number">2</span>;
+        
+        <span class="keyword">if</span> (<span class="variable">array</span>[<span class="variable">mitte</span>] <span class="operator">==</span> <span class="variable">gesucht</span>) {
+            <span class="keyword">return</span> <span class="variable">mitte</span>; <span class="comment">// Gefunden</span>
+        }
+        <span class="keyword">else if</span> (<span class="variable">array</span>[<span class="variable">mitte</span>] <span class="operator">&lt;</span> <span class="variable">gesucht</span>) {
+            <span class="variable">links</span> <span class="operator">=</span> <span class="variable">mitte</span> <span class="operator">+</span> <span class="number">1</span>; <span class="comment">// Rechte Hälfte</span>
+        }
+        <span class="keyword">else</span> {
+            <span class="variable">rechts</span> <span class="operator">=</span> <span class="variable">mitte</span> <span class="operator">-</span> <span class="number">1</span>; <span class="comment">// Linke Hälfte</span>
+        }
+    }
+    <span class="keyword">return</span> <span class="operator">-</span><span class="number">1</span>; <span class="comment">// Nicht gefunden</span>
+}
+            </div>
+
+            <h3>📊 Vergleich der Suchalgorithmen</h3>
+            
+            <table class="complexity-table">
+                <tr>
+                    <th>Algorithmus</th>
+                    <th>Voraussetzung</th>
+                    <th>Best Case</th>
+                    <th>Average Case</th>
+                    <th>Worst Case</th>
+                </tr>
+                <tr class="complexity-medium">
+                    <td>Lineare Suche</td>
+                    <td>Keine</td>
+                    <td>O(1)</td>
+                    <td>O(n)</td>
+                    <td>O(n)</td>
+                </tr>
+                <tr class="complexity-good">
+                    <td>Binäre Suche</td>
+                    <td>Sortiert</td>
+                    <td>O(1)</td>
+                    <td>O(log n)</td>
+                    <td>O(log n)</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- 8. Rekursion vs. Iteration -->
+        <section class="section">
+            <h2>🔄 8. Rekursion vs. Iteration</h2>
+            
+            <div class="definition-box">
+                <strong>Rekursion:</strong> Eine Funktion ruft sich selbst auf, um ein Problem zu lösen, indem es in kleinere Teilprobleme zerlegt wird.<br>
+                <strong>Iteration:</strong> Wiederholung von Anweisungen durch Schleifen (for, while).
+            </div>
+
+            <h3>🧮 Beispiel: Fakultät berechnen</h3>
+            
+            <div class="definition-box">
+                <strong>Fakultät:</strong> n! = n × (n-1) × (n-2) × ... × 2 × 1<br>
+                Beispiel: 5! = 5 × 4 × 3 × 2 × 1 = 120
+            </div>
+
+            <div class="algorithm-comparison">
+                <div class="algorithm-card">
+                    <h4>🔄 Rekursive Lösung</h4>
+                    <div class="code-block">
+<span class="keyword">public static int</span> <span class="variable">fakultaetRekursiv</span>(<span class="keyword">int</span> <span class="variable">n</span>) {
+    <span class="comment">// Basisfall</span>
+    <span class="keyword">if</span> (<span class="variable">n</span> <span class="operator">&lt;=</span> <span class="number">1</span>) {
+        <span class="keyword">return</span> <span class="number">1</span>;
+    }
+    <span class="comment">// Rekursiver Aufruf</span>
+    <span class="keyword">return</span> <span class="variable">n</span> <span class="operator">*</span> <span class="variable">fakultaetRekursiv</span>(<span class="variable">n</span> <span class="operator">-</span> <span class="number">1</span>);
+}
+                    </div>
+                    <p><strong>Denkweise:</strong> 5! = 5 × 4!, 4! = 4 × 3!, ...</p>
+                </div>
+                
+                <div class="algorithm-card">
+                    <h4>🔁 Iterative Lösung</h4>
+                    <div class="code-block">
+<span class="keyword">public static int</span> <span class="variable">fakultaetIterativ</span>(<span class="keyword">int</span> <span class="variable">n</span>) {
+    <span class="keyword">int</span> <span class="variable">ergebnis</span> <span class="operator">=</span> <span class="number">1</span>;
+    
+    <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; <span class="variable">i</span> <span class="operator">&lt;=</span> <span class="variable">n</span>; <span class="variable">i</span><span class="operator">++</span>) {
+        <span class="variable">ergebnis</span> <span class="operator">=</span> <span class="variable">ergebnis</span> <span class="operator">*</span> <span class="variable">i</span>;
+    }
+    
+    <span class="keyword">return</span> <span class="variable">ergebnis</span>;
+}
+                    </div>
+                    <p><strong>Denkweise:</strong> 1×1×2×3×4×5 = 120</p>
+                </div>
+            </div>
+
+            <h3>📊 Vor- und Nachteile</h3>
+            
+            <table class="complexity-table">
+                <tr>
+                    <th>Aspekt</th>
+                    <th>Rekursion</th>
+                    <th>Iteration</th>
+                </tr>
+                <tr>
+                    <td><strong>Verständlichkeit</strong></td>
+                    <td class="complexity-good">Oft natürlicher und eleganter</td>
+                    <td class="complexity-medium">Manchmal komplexer zu verstehen</td>
+                </tr>
+                <tr>
+                    <td><strong>Speicherverbrauch</strong></td>
+                    <td class="complexity-bad">Höher (Call Stack)</td>
+                    <td class="complexity-good">Niedriger</td>
+                </tr>
+                <tr>
+                    <td><strong>Geschwindigkeit</strong></td>
+                    <td class="complexity-bad">Langsamer (Funktionsaufrufe)</td>
+                    <td class="complexity-good">Schneller</td>
+                </tr>
+                <tr>
+                    <td><strong>Codekürze</strong></td>
+                    <td class="complexity-good">Meist kürzer</td>
+                    <td class="complexity-medium">Oft länger</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- 9. Interaktive Demos -->
+        <section class="section">
+            <h2>🎮 9. Interaktive Demonstrationen</h2>
+            
+            <div class="interactive-demo">
+                <h3>🫧 Bubblesort Simulator</h3>
+                <div class="demo-controls">
+                    <button class="demo-button" onclick="resetBubbleArray()">🔄 Neues Array</button>
+                    <button class="demo-button" onclick="bubbleStep()">➡️ Ein Schritt</button>
+                    <button class="demo-button" onclick="bubbleSort()">⚡ Komplett sortieren</button>
+                </div>
+                
+                <div id="bubbleArray" class="array-visualization">
+                    <div><div class="array-cell">5</div><div class="array-index">Index 0</div></div>
+                    <div><div class="array-cell">2</div><div class="array-index">Index 1</div></div>
+                    <div><div class="array-cell">8</div><div class="array-index">Index 2</div></div>
+                    <div><div class="array-cell">1</div><div class="array-index">Index 3</div></div>
+                    <div><div class="array-cell">9</div><div class="array-index">Index 4</div></div>
+                </div>
+                
+                <div id="bubbleInfo" style="margin-top: 1rem; font-weight: bold; color: var(--primary-color);">
+                    Klicke auf "Ein Schritt" um den Sortiervorgang zu verfolgen!
+                </div>
+            </div>
+
+            <div class="interactive-demo">
+                <h3>🔍 Binäre Suche Simulator</h3>
+                <div class="demo-controls">
+                    <input type="number" id="searchValue" placeholder="Zahl suchen..." style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 4px;">
+                    <button class="demo-button" onclick="startBinarySearch()">🎯 Suche starten</button>
+                    <button class="demo-button" onclick="resetBinarySearch()">🔄 Reset</button>
+                </div>
+                
+                <div id="binaryArray" class="array-visualization">
+                    <div><div class="array-cell">1</div><div class="array-index">0</div></div>
+                    <div><div class="array-cell">3</div><div class="array-index">1</div></div>
+                    <div><div class="array-cell">5</div><div class="array-index">2</div></div>
+                    <div><div class="array-cell">7</div><div class="array-index">3</div></div>
+                    <div><div class="array-cell">9</div><div class="array-index">4</div></div>
+                    <div><div class="array-cell">11</div><div class="array-index">5</div></div>
+                    <div><div class="array-cell">13</div><div class="array-index">6</div></div>
+                </div>
+                
+                <div id="binaryInfo" style="margin-top: 1rem; font-weight: bold; color: var(--primary-color);">
+                    Sortiertes Array: [1, 3, 5, 7, 9, 11, 13] - Gib eine Zahl ein und starte die Suche!
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. Übungsaufgaben -->
+        <section class="section">
+            <h2>📝 10. Übungsaufgaben</h2>
+            
+            <h3>🎯 Grundlegende Aufgaben</h3>
+            
+            <div class="example-box">
+                <h4>Aufgabe 1: Array-Manipulation</h4>
+                <p>Gegeben ist das Array <code>[4, 2, 7, 1, 9]</code></p>
+                <ol>
+                    <li>Gib das Element an Index 2 aus</li>
+                    <li>Finde den Index des Elements mit Wert 1</li>
+                    <li>Berechne die Summe aller Elemente</li>
+                    <li>Finde das größte Element</li>
+                </ol>
+                
+                <details style="margin-top: 1rem;">
+                    <summary style="cursor: pointer; font-weight: bold;">💡 Lösung anzeigen</summary>
+                    <div style="margin-top: 0.5rem;">
+                        1. array[2] = 7<br>
+                        2. Index 3<br>
+                        3. 4+2+7+1+9 = 23<br>
+                        4. 9
+                    </div>
+                </details>
+            </div>
+
+            <div class="example-box">
+                <h4>Aufgabe 2: Sortieralgorithmus verstehen</h4>
+                <p>Sortiere das Array <code>[3, 1, 4, 1, 5]</code> mit Bubblesort. Zeige jeden Zwischenschritt!</p>
+                
+                <details style="margin-top: 1rem;">
+                    <summary style="cursor: pointer; font-weight: bold;">💡 Lösung anzeigen</summary>
+                    <div style="margin-top: 0.5rem;">
+                        <strong>Start:</strong> [3, 1, 4, 1, 5]<br>
+                        <strong>Durchlauf 1:</strong> [1, 3, 1, 4, 5] (5 ist sortiert)<br>
+                        <strong>Durchlauf 2:</strong> [1, 1, 3, 4, 5] (4 ist sortiert)<br>
+                        <strong>Durchlauf 3:</strong> [1, 1, 3, 4, 5] (3 ist sortiert)<br>
+                        <strong>Ergebnis:</strong> [1, 1, 3, 4, 5]
+                    </div>
+                </details>
+            </div>
+
+            <h3>🧠 Fortgeschrittene Aufgaben</h3>
+            
+            <div class="example-box">
+                <h4>Aufgabe 3: Binäre Suche manuell</h4>
+                <p>Suche die Zahl 6 im sortierten Array <code>[1, 3, 5, 6, 8, 10, 12]</code> mit binärer Suche. Dokumentiere jeden Schritt!</p>
+                
+                <details style="margin-top: 1rem;">
+                    <summary style="cursor: pointer; font-weight: bold;">💡 Lösung anzeigen</summary>
+                    <div style="margin-top: 0.5rem;">
+                        <strong>Schritt 1:</strong> Array [1,3,5,6,8,10,12], Mitte=6, 6=6 → Gefunden bei Index 3!
+                    </div>
+                </details>
+            </div>
+
+            <div class="example-box">
+                <h4>Aufgabe 4: Rekursion vs. Iteration</h4>
+                <p>Implementiere eine Funktion zur Berechnung der n-ten Fibonacci-Zahl sowohl rekursiv als auch iterativ.</p>
+                <p><em>Erinnerung: F(n) = F(n-1) + F(n-2), mit F(0)=0, F(1)=1</em></p>
+            </div>
+        </section>
+
+        <!-- 11. Zusammenfassung -->
+        <section class="section">
+            <h2>📚 11. Zusammenfassung & Klausurvorbereitung</h2>
+            
+            <h3>🎯 Die wichtigsten Konzepte</h3>
+            
+            <div class="algorithm-comparison">
+                <div class="algorithm-card">
+                    <h4>📊 Datenstrukturen</h4>
+                    <ul>
+                        <li><strong>Arrays:</strong> Feste Größe, schneller Zugriff</li>
+                        <li><strong>Listen:</strong> Dynamische Größe, flexibel</li>
+                        <li><strong>Stacks:</strong> LIFO-Prinzip</li>
+                        <li><strong>Queues:</strong> FIFO-Prinzip</li>
+                        <li><strong>Bäume:</strong> Hierarchische Struktur</li>
+                    </ul>
+                </div>
+                
+                <div class="algorithm-card">
+                    <h4>🔀 Sortieralgorithmen</h4>
+                    <ul>
+                        <li><strong>Bubblesort:</strong> O(n²), einfach</li>
+                        <li><strong>Quicksort:</strong> O(n log n), schnell</li>
+                        <li><strong>Mergesort:</strong> O(n log n), stabil</li>
+                        <li><strong>Insertionsort:</strong> Gut für kleine Arrays</li>
+                    </ul>
+                </div>
+
+                <div class="algorithm-card">
+                    <h4>🔍 Suchalgorithmen</h4>
+                    <ul>
+                        <li><strong>Linear:</strong> O(n), unsortierte Daten</li>
+                        <li><strong>Binär:</strong> O(log n), sortierte Daten</li>
+                        <li><strong>Baum-Suche:</strong> O(log n) im Durchschnitt</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>💡 Tipps für die Klausur</h3>
+            
+            <div class="warning-box">
+                <h4>📋 Checkliste</h4>
+                <ul>
+                    <li>✅ Verstehe die Komplexitäten (O-Notation)</li>
+                    <li>✅ Kenne die Vor-/Nachteile jedes Algorithmus</li>
+                    <li>✅ Übe das manuelle Durchführen von Sortier-/Suchalgorithmen</li>
+                    <li>✅ Verstehe Rekursion und deren Grenzen</li>
+                    <li>✅ Wisse, wann welche Datenstruktur sinnvoll ist</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h4>🧠 Häufige Klausurfragen</h4>
+                <ol>
+                    <li>Sortiere Array X mit Algorithmus Y (Schritt für Schritt)</li>
+                    <li>Vergleiche Laufzeiten verschiedener Algorithmen</li>
+                    <li>Implementiere eine rekursive Funktion</li>
+                    <li>Wähle die beste Datenstruktur für Szenario Z</li>
+                    <li>Analysiere die Komplexität eines gegebenen Codes</li>
+                </ol>
+            </div>
+        </section>
+
+        <div class="navigation">
+            <a href="programmiersprachen.html" class="nav-button">⬅️ Vorheriges: Programmiersprachen</a>
+            <span>Algorithmen & Datenstrukturen</span>
+            <a href="java-basics.html" class="nav-button">Nächstes: Java Grundlagen ➡️</a>
+        </div>
+    </div>
+
+    <script>
+        // Bubblesort Demo
+        let bubbleArray = [5, 2, 8, 1, 9];
+        let bubbleStep = 0;
+        let bubblePass = 0;
+        let bubbleComparisons = 0;
+
+        function resetBubbleArray() {
+            bubbleArray = [5, 2, 8, 1, 9];
+            bubbleStep = 0;
+            bubblePass = 0;
+            bubbleComparisons = 0;
+            updateBubbleDisplay();
+            document.getElementById('bubbleInfo').textContent = 'Klicke auf "Ein Schritt" um den Sortiervorgang zu verfolgen!';
+        }
+
+        function updateBubbleDisplay() {
+            const container = document.getElementById('bubbleArray');
+            container.innerHTML = '';
+            bubbleArray.forEach((value, index) => {
+                const cell = document.createElement('div');
+                cell.innerHTML = `<div class="array-cell">${value}</div><div class="array-index">Index ${index}</div>`;
+                container.appendChild(cell);
+            });
+        }
+
+        function bubbleStepForward() {
+            if (bubbleStep < bubbleArray.length - bubblePass - 1) {
+                if (bubbleArray[bubbleStep] > bubbleArray[bubbleStep + 1]) {
+                    // Tauschen
+                    let temp = bubbleArray[bubbleStep];
+                    bubbleArray[bubbleStep] = bubbleArray[bubbleStep + 1];
+                    bubbleArray[bubbleStep + 1] = temp;
+                    
+                    document.getElementById('bubbleInfo').textContent = 
+                        `Tausche ${bubbleArray[bubbleStep + 1]} und ${bubbleArray[bubbleStep]} (Position ${bubbleStep} und ${bubbleStep + 1})`;
+                } else {
+                    document.getElementById('bubbleInfo').textContent = 
+                        `Vergleiche ${bubbleArray[bubbleStep]} und ${bubbleArray[bubbleStep + 1]} - kein Tausch nötig`;
+                }
+                bubbleStep++;
+                bubbleComparisons++;
+            } else {
+                bubblePass++;
+                bubbleStep = 0;
+                if (bubblePass < bubbleArray.length - 1) {
+                    document.getElementById('bubbleInfo').textContent = 
+                        `Durchlauf ${bubblePass} beendet. Starte Durchlauf ${bubblePass + 1}`;
+                } else {
+                    document.getElementById('bubbleInfo').textContent = 
+                        `✅ Sortierung abgeschlossen! Benötigte Vergleiche: ${bubbleComparisons}`;
+                }
+            }
+            updateBubbleDisplay();
+        }
+
+        function bubbleSort() {
+            while (bubblePass < bubbleArray.length - 1) {
+                bubbleStepForward();
+            }
+        }
+
+        window.bubbleStep = bubbleStepForward;
+        window.bubbleSort = bubbleSort;
+        window.resetBubbleArray = resetBubbleArray;
+
+        // Binäre Suche Demo
+        const sortedArray = [1, 3, 5, 7, 9, 11, 13];
+
+        function resetBinarySearch() {
+            const container = document.getElementById('binaryArray');
+            container.innerHTML = '';
+            sortedArray.forEach((value, index) => {
+                const cell = document.createElement('div');
+                cell.innerHTML = `<div class="array-cell">${value}</div><div class="array-index">${index}</div>`;
+                container.appendChild(cell);
+            });
+            document.getElementById('binaryInfo').textContent = 
+                'Sortiertes Array: [1, 3, 5, 7, 9, 11, 13] - Gib eine Zahl ein und starte die Suche!';
+        }
+
+        function startBinarySearch() {
+            const searchValue = parseInt(document.getElementById('searchValue').value);
+            if (isNaN(searchValue)) {
+                alert('Bitte gib eine gültige Zahl ein!');
+                return;
+            }
+
+            let left = 0;
+            let right = sortedArray.length - 1;
+            let steps = 0;
+            let found = false;
+            
+            resetBinarySearch();
+            
+            const searchInterval = setInterval(() => {
+                if (left <= right && !found) {
+                    const middle = Math.floor((left + right) / 2);
+                    steps++;
+                    
+                    // Aktuellen Suchbereich hervorheben
+                    const container = document.getElementById('binaryArray');
+                    const cells = container.children;
+                    
+                    for (let i = 0; i < cells.length; i++) {
+                        const cell = cells[i].children[0];
+                        if (i === middle) {
+                            cell.style.backgroundColor = '#3b82f6';
+                            cell.style.color = 'white';
+                        } else if (i >= left && i <= right) {
+                            cell.style.backgroundColor = '#dbeafe';
+                        } else {
+                            cell.style.backgroundColor = '#f1f5f9';
+                        }
+                    }
+                    
+                    if (sortedArray[middle] === searchValue) {
+                        document.getElementById('binaryInfo').textContent = 
+                            `✅ Gefunden! ${searchValue} ist an Index ${middle}. Benötigte Schritte: ${steps}`;
+                        found = true;
+                        clearInterval(searchInterval);
+                    } else if (sortedArray[middle] < searchValue) {
+                        left = middle + 1;
+                        document.getElementById('binaryInfo').textContent = 
+                            `Schritt ${steps}: Mitte=${sortedArray[middle]} < ${searchValue}. Suche rechts weiter...`;
+                    } else {
+                        right = middle - 1;
+                        document.getElementById('binaryInfo').textContent = 
+                            `Schritt ${steps}: Mitte=${sortedArray[middle]} > ${searchValue}. Suche links weiter...`;
+                    }
+                } else if (!found) {
+                    document.getElementById('binaryInfo').textContent = 
+                        `❌ ${searchValue} nicht gefunden. Benötigte Schritte: ${steps}`;
+                    clearInterval(searchInterval);
+                }
+            }, 1500);
+        }
+
+        window.startBinarySearch = startBinarySearch;
+        window.resetBinarySearch = resetBinarySearch;
+
+        // Initialisierung
+        resetBubbleArray();
+        resetBinarySearch();
+    </script>
+</body>
+</html>

@@ -1,0 +1,1926 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formelsammlung - Abitur 2026 Informatik TG</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --code-bg: #f1f5f9;
+            --formula-bg: #eff6ff;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: var(--secondary-color);
+        }
+
+        .toc {
+            background: var(--bg-white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .toc h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .toc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .toc-item {
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+        }
+
+        .toc-item:hover {
+            background-color: var(--bg-light);
+        }
+
+        .toc-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+        }
+
+        .section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .subsection {
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--accent-color);
+            padding-left: 1rem;
+        }
+
+        .subsection h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .formula-box {
+            background: var(--formula-bg);
+            border: 2px solid var(--accent-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            font-size: 1.1rem;
+            text-align: center;
+        }
+
+        .formula-title {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.5rem;
+            margin: -1rem -1rem 1rem -1rem;
+            border-radius: 6px 6px 0 0;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .truth-table {
+            border-collapse: collapse;
+            width: 100%;
+            margin: 1rem 0;
+            background: var(--bg-white);
+        }
+
+        .truth-table th,
+        .truth-table td {
+            border: 1px solid var(--border-color);
+            padding: 0.5rem;
+            text-align: center;
+        }
+
+        .truth-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .truth-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .important-note {
+            background: #fef3c7;
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .example-box {
+            background: #dcfce7;
+            border-left: 4px solid var(--success-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: var(--success-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .symbol {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .grid-2col {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 1rem 0;
+        }
+
+        .grid-3col {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .logic-gate {
+            text-align: center;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .gate-symbol {
+            font-size: 2rem;
+            font-weight: bold;
+            margin: 0.5rem 0;
+            color: var(--primary-color);
+        }
+
+        @media (max-width: 768px) {
+            .grid-2col,
+            .grid-3col {
+                grid-template-columns: 1fr;
+            }
+            
+            .toc-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+	.back-to-top {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 50px;
+        height: 50px;
+        background-color: var(--primary-color);
+        color: white;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        font-size: 24px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.2);
+        opacity: 0;
+        visibility: hidden;
+        transition: all 0.3s ease;
+    }
+    
+    .back-to-top.visible {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    .back-to-top:hover {
+        background-color: var(--secondary-color);
+        transform: translateY(-3px);
+    }
+
+    </style>
+</head>
+<body>
+    <a href="#" class="back-to-top" id="backToTop">↑</a>
+    <div class="container">
+        <a href="index.html" class="back-link">← Zurück zur Übersicht</a>
+        
+        <header class="header">
+            <h1>📋 Formelsammlung Abitur 2026</h1>
+            <p><strong>Informationstechnik TG - Baden-Württemberg</strong></p>
+            <p>Alle wichtigen Formeln, Gesetze und Grundlagen für das Abitur</p>
+        </header>
+
+        <div class="toc">
+            <h3>📑 Inhaltsverzeichnis</h3>
+            <div class="toc-grid">
+                <div class="toc-item"><a href="#zahlensysteme" class="toc-link">1. Zahlensysteme & Codierung</a></div>
+                <div class="toc-item"><a href="#digitaltechnik" class="toc-link">2. Digitaltechnik & Logik</a></div>
+                <div class="toc-item"><a href="#schaltwerke" class="toc-link">3. Schaltwerke & FlipFlops</a></div>
+                <div class="toc-item"><a href="#mikrocontroller" class="toc-link">4. Mikrocontroller</a></div>
+                <div class="toc-item"><a href="#programmierung" class="toc-link">5. Programmierung</a></div>
+                <div class="toc-item"><a href="#oop" class="toc-link">6. Objektorientierung</a></div>
+                <div class="toc-item"><a href="#datenbanken" class="toc-link">7. Datenbanken & SQL</a></div>
+                <div class="toc-item"><a href="#netzwerke" class="toc-link">8. Netzwerke & Internet</a></div>
+                <div class="toc-item"><a href="#betriebssysteme" class="toc-link">9. Betriebssysteme</a></div>
+                <div class="toc-item"><a href="#projektmanagement" class="toc-link">10. Projektmanagement</a></div>
+            </div>
+        </div>
+
+        <!-- 1. Zahlensysteme & Codierung -->
+        <section class="section" id="zahlensysteme">
+            <div class="section-header">
+                <h2>1. Zahlensysteme & Codierung</h2>
+                <p>Grundlagen der digitalen Informationsverarbeitung</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>1.1 Zahlensystem-Umwandlung</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Stellenwertsystem - Allgemeine Form</div>
+                        Zahl = Σ(Ziffer × Basis^Position)<br>
+                        <strong>Position:</strong> 0, 1, 2, ... (von rechts nach links)<br>
+                        <strong>Beispiel:</strong> 1234₁₀ = 1×10³ + 2×10² + 3×10¹ + 4×10⁰
+                    </div>
+
+                    <div class="grid-2col">
+                        <div>
+                            <div class="formula-box">
+                                <div class="formula-title">Dezimal → Binär</div>
+                                <strong>Methode:</strong> Sukzessive Division durch 2<br>
+                                Reste von unten nach oben lesen<br><br>
+                                <strong>Beispiel 13₁₀:</strong><br>
+                                13 ÷ 2 = 6 Rest 1<br>
+                                6 ÷ 2 = 3 Rest 0<br>
+                                3 ÷ 2 = 1 Rest 1<br>
+                                1 ÷ 2 = 0 Rest 1<br>
+                                → 13₁₀ = 1101₂
+                            </div>
+                        </div>
+                        <div>
+                            <div class="formula-box">
+                                <div class="formula-title">Binär → Dezimal</div>
+                                <strong>Methode:</strong> Stellenwertmethode<br>
+                                Σ(Bit × 2^Position)<br><br>
+                                <strong>Beispiel 1101₂:</strong><br>
+                                1×2³ + 1×2² + 0×2¹ + 1×2⁰<br>
+                                = 8 + 4 + 0 + 1<br>
+                                = 13₁₀
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Hexadezimal-System</div>
+                        <strong>Basis 16:</strong> Ziffern 0-9, A-F (A=10, B=11, C=12, D=13, E=14, F=15)<br>
+                        <strong>Binär ↔ Hex:</strong> 4 Bit = 1 Hex-Ziffer<br>
+                        <strong>Beispiel:</strong> 11111111₂ = FF₁₆ = 255₁₀
+                    </div>
+
+                    <table class="truth-table">
+                        <tr>
+                            <th>Dezimal</th>
+                            <th>Binär</th>
+                            <th>Oktal</th>
+                            <th>Hexadezimal</th>
+                        </tr>
+                        <tr><td>0</td><td>0000</td><td>0</td><td>0</td></tr>
+                        <tr><td>1</td><td>0001</td><td>1</td><td>1</td></tr>
+                        <tr><td>2</td><td>0010</td><td>2</td><td>2</td></tr>
+                        <tr><td>8</td><td>1000</td><td>10</td><td>8</td></tr>
+                        <tr><td>10</td><td>1010</td><td>12</td><td>A</td></tr>
+                        <tr><td>15</td><td>1111</td><td>17</td><td>F</td></tr>
+                        <tr><td>16</td><td>10000</td><td>20</td><td>10</td></tr>
+                        <tr><td>255</td><td>11111111</td><td>377</td><td>FF</td></tr>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h3>1.2 Binäre Arithmetik</h3>
+                    
+                    <div class="grid-2col">
+                        <div>
+                            <div class="formula-box">
+                                <div class="formula-title">Binäre Addition</div>
+                                0 + 0 = 0<br>
+                                0 + 1 = 1<br>
+                                1 + 0 = 1<br>
+                                1 + 1 = 10₂ (Übertrag!)
+                            </div>
+                            
+                            <div class="example-box">
+                                <div class="example-title">Beispiel: 5 + 3</div>
+                                  101₂ (= 5₁₀)<br>
+                                + 011₂ (= 3₁₀)<br>
+                                ______<br>
+                                 1000₂ (= 8₁₀)
+                            </div>
+                        </div>
+                        <div>
+                            <div class="formula-box">
+                                <div class="formula-title">Zweierkomplement</div>
+                                <strong>Negative Zahlen:</strong><br>
+                                1. Alle Bits invertieren<br>
+                                2. 1 addieren<br><br>
+                                <strong>Beispiel -5:</strong><br>
+                                5₁₀ = 0101₂<br>
+                                Invertiert: 1010₂<br>
+                                +1: 1011₂ = -5₁₀
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Zahlenbereich bei n Bit</div>
+                        <strong>Vorzeichenlos:</strong> 0 bis 2ⁿ - 1<br>
+                        <strong>Mit Vorzeichen (Zweierkomplement):</strong> -2^(n-1) bis 2^(n-1) - 1<br>
+                        <strong>Beispiel 8 Bit:</strong> 0-255 (vorzeichenlos) oder -128 bis +127 (mit Vorzeichen)
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>1.3 Zeichencodierung</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">ASCII (American Standard Code)</div>
+                        <strong>7 Bit Code:</strong> 128 Zeichen (0-127)<br>
+                        <strong>Wichtige Bereiche:</strong><br>
+                        Ziffern 0-9: 48-57 (30₁₆-39₁₆)<br>
+                        Großbuchstaben A-Z: 65-90 (41₁₆-5A₁₆)<br>
+                        Kleinbuchstaben a-z: 97-122 (61₁₆-7A₁₆)
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Unicode (UTF-8)</div>
+                        <strong>Variable Länge:</strong> 1-4 Bytes pro Zeichen<br>
+                        <strong>ASCII-kompatibel:</strong> 1 Byte für ASCII-Zeichen<br>
+                        <strong>Weltweite Zeichen:</strong> Über 1 Million Codepoints
+                    </div>
+
+                    <div class="example-box">
+                        <div class="example-title">Codierung-Beispiele:</div>
+                        'A' = 65₁₀ = 41₁₆ = 01000001₂<br>
+                        'a' = 97₁₀ = 61₁₆ = 01100001₂<br>
+                        '0' = 48₁₀ = 30₁₆ = 00110000₂<br>
+                        Leerzeichen = 32₁₀ = 20₁₆
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>1.4 Informationstheorie</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Informationsgehalt I</div>
+                        I = log₂(1/p) = -log₂(p) [bit]<br>
+                        <strong>p:</strong> Wahrscheinlichkeit des Ereignisses<br>
+                        <strong>Interpretation:</strong> Seltene Ereignisse haben hohen Informationsgehalt
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Entscheidungsgehalt H</div>
+                        H = log₂(n) [bit]<br>
+                        <strong>n:</strong> Anzahl gleichwahrscheinlicher Möglichkeiten<br>
+                        <strong>Beispiel:</strong> Münzwurf → H = log₂(2) = 1 bit
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Entropie (mittlerer Informationsgehalt)</div>
+                        H = -Σ(pᵢ × log₂(pᵢ)) [bit]<br>
+                        <strong>Maximum:</strong> Bei Gleichverteilung aller Ereignisse<br>
+                        <strong>Minimum:</strong> Bei einem sicheren Ereignis (p=1)
+                    </div>
+
+                    <div class="example-box">
+                        <div class="example-title">Berechnung Entropie:</div>
+                        <strong>Würfel (6 Seiten, gleichwahrscheinlich):</strong><br>
+                        H = -6 × (1/6 × log₂(1/6)) = log₂(6) ≈ 2,58 bit<br><br>
+                        <strong>Gezinkter Würfel (p₁=0,5, p₂-₆=0,1):</strong><br>
+                        H = -(0,5×log₂(0,5) + 5×0,1×log₂(0,1)) ≈ 2,16 bit
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>1.5 Fehlererkennende & -korrigierende Codes</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Hamming-Distanz</div>
+                        <strong>Definition:</strong> Anzahl unterschiedlicher Stellen zwischen zwei Codewörtern<br>
+                        <strong>Beispiel:</strong> d(1011, 1101) = 2 (Position 1 und 3 unterschiedlich)
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Fehlererkennungs-/Korrekturfähigkeit</div>
+                        <strong>k Fehler erkennen:</strong> Hamming-Distanz ≥ k + 1<br>
+                        <strong>k Fehler korrigieren:</strong> Hamming-Distanz ≥ 2k + 1<br>
+                        <strong>Singleton-Bound:</strong> Maximale Anzahl korrigierbarer Fehler
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Paritätscode</div>
+                        <strong>Gerade Parität:</strong> P = x₁ ⊕ x₂ ⊕ ... ⊕ xₙ<br>
+                        <strong>Ungerade Parität:</strong> P = x₁ ⊕ x₂ ⊕ ... ⊕ xₙ ⊕ 1<br>
+                        <strong>Erkennt:</strong> 1-Bit-Fehler (Hamming-Distanz = 2)
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Hamming-Code</div>
+                        <strong>Prüfbits an Positionen:</strong> 1, 2, 4, 8, 16, ... (2ⁿ)<br>
+                        <strong>Anzahl Prüfbits:</strong> ⌈log₂(Datenbits + Prüfbits + 1)⌉<br>
+                        <strong>Korrigiert:</strong> 1-Bit-Fehler, erkennt 2-Bit-Fehler
+                    </div>
+
+                    <div class="example-box">
+                        <div class="example-title">Hamming(7,4)-Code:</div>
+                        <strong>4 Datenbits, 3 Prüfbits:</strong><br>
+                        Position: 1 2 3 4 5 6 7<br>
+                        Typ: P₁ P₂ D₁ P₃ D₂ D₃ D₄<br><br>
+                        P₁ = D₁ ⊕ D₂ ⊕ D₄ (Positionen 1,3,5,7)<br>
+                        P₂ = D₁ ⊕ D₃ ⊕ D₄ (Positionen 2,3,6,7)<br>
+                        P₃ = D₂ ⊕ D₃ ⊕ D₄ (Positionen 4,5,6,7)
+                    </div>
+
+                    <div class="important-note">
+                        <strong>Redundanz vs. Effizienz:</strong> Mehr Prüfbits = bessere Fehlerkorrektur, aber geringere Datenrate. Abwägung je nach Anwendung (z.B. Speicher vs. Übertragung).
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Mikrocontroller -->
+        <section class="section" id="mikrocontroller">
+            <div class="section-header">
+                <h2>4. Mikrocontroller</h2>
+                <p>Hardware-Architektur und Programmierung</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>4.1 Grundarchitektur</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Von-Neumann-Architektur</div>
+                        CPU + Speicher + Ein-/Ausgabe über gemeinsamen Bus<br>
+                        Befehle und Daten im selben Speicher
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Harvard-Architektur</div>
+                        Getrennte Speicher für Programme und Daten<br>
+                        Paralleler Zugriff möglich → höhere Performance
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Speichertypen</div>
+                        <strong>RAM:</strong> Random Access Memory (flüchtig)<br>
+                        <strong>ROM:</strong> Read Only Memory (nicht flüchtig)<br>
+                        <strong>EEPROM:</strong> Elektrisch löschbar und programmierbar<br>
+                        <strong>Flash:</strong> Blockweise löschbarer Speicher
+                    </div>
+                </div>
+			<div class="subsection">
+                    <h3>4.2 Arduino-Programmierung</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Wichtige Arduino-Funktionen</div>
+                        <strong>Digital I/O:</strong><br>
+                        digitalWrite(pin, HIGH/LOW) - Digitalen Ausgang setzen<br>
+                        digitalRead(pin) - Digitalen Eingang lesen (0 oder 1)<br><br>
+                        <strong>Analog I/O:</strong><br>
+                        analogWrite(pin, wert) - PWM-Ausgang (0-255)<br>
+                        analogRead(pin) - Analogeingang lesen (0-1023)<br><br>
+                        <strong>Zeit:</strong><br>
+                        delay(ms) - Wartezeit in Millisekunden<br>
+                        delayMicroseconds(μs) - Wartezeit in Mikrosekunden<br>
+                        millis() - Zeit seit Programmstart in ms<br>
+                        micros() - Zeit seit Programmstart in μs
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">ADC-Umrechnung (Arduino Uno)</div>
+                        Spannung = (ADC_Wert × Referenzspannung) / 1023<br>
+                        <strong>Standard:</strong> Referenzspannung = 5V<br>
+                        Auflösung: 10 Bit = 1024 Schritte (0-1023)<br>
+                        1 LSB ≈ 4,88 mV bei 5V Referenz
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">PWM-Duty-Cycle</div>
+                        Duty Cycle [%] = (PWM_Wert / 255) × 100%<br>
+                        Mittlere Spannung = (PWM_Wert / 255) × VCC<br>
+                        <strong>Frequenz:</strong> ~490 Hz (Pin 5,6: ~980 Hz)
+                    </div>
+
+                    <div class="code-block">
+<strong>Arduino Grundstruktur:</strong>
+void setup() {
+    // Initialisierung (einmalig)
+    Serial.begin(9600);           // Serielle Kommunikation
+    pinMode(pin, INPUT/OUTPUT);   // Pin-Modus setzen
+}
+
+void loop() {
+    // Hauptschleife (wiederholt sich)
+}
+
+<strong>Wichtige Pin-Modi:</strong>
+INPUT        - Hochohmiger Eingang
+INPUT_PULLUP - Eingang mit internem Pull-up
+OUTPUT       - Ausgang (max. 20mA pro Pin)
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Serielle Kommunikation</div>
+                        <strong>UART-Parameter:</strong> Baudrate, Datenbits, Stopbits, Parität<br>
+                        <strong>Standard:</strong> 9600 Baud, 8N1 (8 Datenbits, No Parity, 1 Stopbit)<br>
+                        Serial.print() / Serial.println() - Daten senden<br>
+                        Serial.available() - Prüfen ob Daten empfangen<br>
+                        Serial.read() - Einzelnes Byte lesen
+                    </div>
+                </div>
+                </div>
+<div class="subsection">
+                    <h3>4.3 Timing und Interrupts</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Timer-Grundlagen</div>
+                        <strong>Timer-Wert berechnen:</strong><br>
+                        Timer_Wert = (CPU_Frequenz / (Prescaler × gewünschte_Frequenz)) - 1<br><br>
+                        <strong>Arduino Uno:</strong> 16 MHz Systemtakt<br>
+                        <strong>Prescaler:</strong> 1, 8, 64, 256, 1024
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">PWM-Frequenzen Arduino Uno</div>
+                        <strong>Timer 0 (Pin 5, 6):</strong> ~980 Hz<br>
+                        <strong>Timer 1 (Pin 9, 10):</strong> ~490 Hz<br>
+                        <strong>Timer 2 (Pin 3, 11):</strong> ~490 Hz<br><br>
+                        <strong>Formel:</strong> f_PWM = f_CPU / (Prescaler × (1 + TOP))
+                    </div>
+
+                    <div class="example-box">
+                        <div class="example-title">Timer-Berechnung Beispiel:</div>
+                        <strong>Gewünschte Frequenz:</strong> 1 kHz<br>
+                        <strong>Prescaler:</strong> 64<br>
+                        Timer_Wert = (16.000.000 / (64 × 1000)) - 1 = 249<br>
+                        → Timer läuft von 0 bis 249 (250 Schritte)
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Interrupt-Grundlagen</div>
+                        <strong>Hardware-Interrupts:</strong> Externe Ereignisse (Pin-Änderung)<br>
+                        <strong>Timer-Interrupts:</strong> Zeitgesteuerte Unterbrechungen<br>
+                        <strong>Software-Interrupts:</strong> Durch Programm ausgelöst<br><br>
+                        <strong>Priorität:</strong> Hardware > Timer > Software
+                    </div>
+
+                    <div class="code-block">
+<strong>Externe Interrupts (Arduino):</strong>
+// Interrupt-Service-Routine (ISR)
+void buttonPressed() {
+    // Kurze, schnelle Verarbeitung!
+    // KEINE delay(), Serial.print(), etc.
+    counter++;
+}
+
+void setup() {
+    pinMode(2, INPUT_PULLUP);
+    // Pin 2 = Interrupt 0, Pin 3 = Interrupt 1
+    attachInterrupt(digitalPinToInterrupt(2), buttonPressed, FALLING);
+}
+
+<strong>Trigger-Modi:</strong>
+LOW     - Dauerhaft LOW-Pegel
+CHANGE  - Jede Flanke (steigend/fallend)
+RISING  - Steigende Flanke (0→1)
+FALLING - Fallende Flanke (1→0)
+                    </div>
+
+                    <div class="code-block">
+<strong>Timer-Interrupt (Arduino Uno Timer1):</strong>
+void setup() {
+    cli();                    // Interrupts deaktivieren
+    TCCR1A = 0;              // Timer1 Register zurücksetzen
+    TCCR1B = 0;
+    TCNT1 = 0;               // Timer-Zähler zurücksetzen
+    
+    OCR1A = 15624;           // Vergleichswert für 1Hz bei Prescaler 1024
+    TCCR1B |= (1 << WGM12);  // CTC-Modus
+    TCCR1B |= (1 << CS12) | (1 << CS10); // Prescaler 1024
+    TIMSK1 |= (1 << OCIE1A); // Timer Compare Interrupt enable
+    sei();                   // Interrupts aktivieren
+}
+
+ISR(TIMER1_COMPA_vect) {     // Timer1 Compare Interrupt
+    // Wird jede Sekunde ausgeführt
+    digitalWrite(13, !digitalRead(13)); // LED togglen
+}
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Interrupt-Service-Routine (ISR) Regeln</div>
+                        ✓ <strong>Kurz und schnell:</strong> Minimale Ausführungszeit<br>
+                        ✓ <strong>Keine blockierenden Funktionen:</strong> delay(), Serial.print()<br>
+                        ✓ <strong>Volatile Variablen:</strong> Bei Zugriff außerhalb der ISR<br>
+                        ✓ <strong>Reentrancy beachten:</strong> Keine lokalen statischen Variablen<br>
+                        ✗ <strong>Vermeiden:</strong> Lange Berechnungen, I/O-Operationen
+                    </div>
+
+                    <div class="code-block">
+<strong>Volatile-Keyword:</strong>
+volatile bool interruptFlag = false;
+volatile unsigned long counter = 0;
+
+void ISR_routine() {
+    interruptFlag = true;    // Von ISR gesetzt
+    counter++;
+}
+
+void loop() {
+    if (interruptFlag) {     // Im Hauptprogramm abfragen
+        interruptFlag = false;
+        // Verarbeitung hier
+    }
+}
+                    </code>
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Watchdog-Timer</div>
+                        <strong>Zweck:</strong> System-Reset bei Programmhängern<br>
+                        <strong>Zeitspannen:</strong> 15ms bis 8s<br>
+                        <strong>Funktionsweise:</strong> Muss regelmäßig zurückgesetzt werden<br>
+                        <strong>Arduino:</strong> wdt_reset() in der Hauptschleife
+                    </div>
+
+                    <div class="important-note">
+                        <strong>Interrupt-Latenz:</strong> Zeit vom Interrupt-Signal bis zur Ausführung der ISR. Bei Arduino Uno: ~5-10 μs bei 16 MHz. Abhängig von aktuell ausgeführter Instruktion.
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Timing-Genauigkeit</div>
+                        <strong>Quarzgenauigkeit:</strong> ±20-50 ppm (parts per million)<br>
+                        <strong>Temperatureinfluss:</strong> ~±100 ppm über Temperaturbereich<br>
+                        <strong>Beispiel:</strong> 50 ppm = 4,3 s Abweichung pro Tag<br>
+                        <strong>Für hohe Genauigkeit:</strong> Externes RTC-Modul verwenden
+                    </div>
+                </div>        </section>
+
+        <!-- 5. Programmierung -->
+        <section class="section" id="programmierung">
+            <div class="section-header">
+                <h2>5. Programmierung</h2>
+                <p>Algorithmen, Datenstrukturen und Programmierkonzepte</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>5.1 Komplexitätsanalyse</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Big-O-Notation</div>
+                        <strong>O(1)</strong> - Konstante Zeit (Array-Zugriff)<br>
+                        <strong>O(log n)</strong> - Logarithmische Zeit (Binäre Suche)<br>
+                        <strong>O(n)</strong> - Lineare Zeit (Lineare Suche)<br>
+                        <strong>O(n log n)</strong> - Linearithmische Zeit (Mergesort, Quicksort)<br>
+                        <strong>O(n²)</strong> - Quadratische Zeit (Bubblesort, Selection Sort)<br>
+                        <strong>O(2ⁿ)</strong> - Exponentiell (naive Fibonacci)
+                    </div>
+
+                    <div class="important-note">
+                        <strong>Faustregel:</strong> Bei doppelter Eingabegröße verdoppelt sich bei O(n) auch die Laufzeit, bei O(n²) vervierfacht sie sich.
+                    </div>
+
+                    <div class="example-box">
+                        <div class="example-title">Laufzeitvergleich bei n=1000:</div>
+                        O(1): 1 Operation<br>
+                        O(log n): ~10 Operationen<br>
+                        O(n): 1.000 Operationen<br>
+                        O(n²): 1.000.000 Operationen
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>5.2 Rekursion</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Rekursive Struktur</div>
+                        1. <strong>Basisfall:</strong> Direktes Ergebnis ohne weitere Rekursion<br>
+                        2. <strong>Rekursionsschritt:</strong> Problem auf kleineres Problem reduzieren<br>
+                        3. <strong>Terminierung:</strong> Sicherstellen, dass Basisfall erreicht wird
+                    </div>
+
+                    <div class="code-block">
+<strong>Fakultät (rekursiv):</strong>
+int fakultaet(int n) {
+    if (n <= 1) return 1;        // Basisfall
+    return n * fakultaet(n-1);   // Rekursionsschritt
+}
+
+<strong>Fibonacci (rekursiv):</strong>
+int fibonacci(int n) {
+    if (n <= 1) return n;        // Basisfall
+    return fibonacci(n-1) + fibonacci(n-2);
+}
+
+<strong>Fibonacci (iterativ, effizienter):</strong>
+int fibonacci_iter(int n) {
+    if (n <= 1) return n;
+    int a = 0, b = 1, temp;
+    for (int i = 2; i <= n; i++) {
+        temp = a + b;
+        a = b;
+        b = temp;
+    }
+    return b;
+}
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Rekursionstiefe</div>
+                        Maximale Anzahl gleichzeitiger Funktionsaufrufe<br>
+                        <strong>Stack Overflow:</strong> Zu tiefe Rekursion führt zu Speicherüberlauf<br>
+                        <strong>Tail Recursion:</strong> Rekursionsaufruf als letzte Operation (optimierbar)
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>5.3 Such- und Sortieralgorithmen</h3>
+                    
+                    <div class="grid-2col">
+                        <div>
+                            <h4>Suchverfahren</h4>
+                            <div class="formula-box">
+                                <div class="formula-title">Lineare Suche</div>
+                                Zeitkomplexität: O(n)<br>
+                                Funktioniert bei unsortierten Arrays<br>
+                                Best Case: O(1), Worst Case: O(n)
+                            </div>
+                            <div class="formula-box">
+                                <div class="formula-title">Binäre Suche</div>
+                                Zeitkomplexität: O(log n)<br>
+                                Nur bei sortierten Arrays<br>
+                                Schritte: ⌈log₂(n)⌉
+                            </div>
+                            <div class="code-block">
+<strong>Binäre Suche (iterativ):</strong>
+int binarySearch(int[] arr, int target) {
+    int left = 0, right = arr.length - 1;
+    while (left <= right) {
+        int mid = left + (right - left) / 2;
+        if (arr[mid] == target) return mid;
+        if (arr[mid] < target) left = mid + 1;
+        else right = mid - 1;
+    }
+    return -1; // nicht gefunden
+}
+                            </div>
+                        </div>
+                        <div>
+                            <h4>Sortierverfahren</h4>
+                            <div class="formula-box">
+                                <div class="formula-title">Bubblesort</div>
+                                Zeitkomplexität: O(n²)<br>
+                                Vergleiche: n×(n-1)/2<br>
+                                Stabil, In-Place
+                            </div>
+                            <div class="formula-box">
+                                <div class="formula-title">Quicksort</div>
+                                Zeitkomplexität: O(n log n) [average]<br>
+                                Worst Case: O(n²)<br>
+                                Nicht stabil, In-Place
+                            </div>
+                            <div class="formula-box">
+                                <div class="formula-title">Mergesort</div>
+                                Zeitkomplexität: O(n log n) [immer]<br>
+                                Stabil, nicht In-Place<br>
+                                Speicherbedarf: O(n)
+                            </div>
+                        </div>
+                    </div>
+
+                    <table class="truth-table">
+                        <tr>
+                            <th>Algorithmus</th>
+                            <th>Best Case</th>
+                            <th>Average Case</th>
+                            <th>Worst Case</th>
+                            <th>Speicher</th>
+                            <th>Stabil</th>
+                        </tr>
+                        <tr>
+                            <td>Bubblesort</td>
+                            <td>O(n)</td>
+                            <td>O(n²)</td>
+                            <td>O(n²)</td>
+                            <td>O(1)</td>
+                            <td>Ja</td>
+                        </tr>
+                        <tr>
+                            <td>Selection Sort</td>
+                            <td>O(n²)</td>
+                            <td>O(n²)</td>
+                            <td>O(n²)</td>
+                            <td>O(1)</td>
+                            <td>Nein</td>
+                        </tr>
+                        <tr>
+                            <td>Insertion Sort</td>
+                            <td>O(n)</td>
+                            <td>O(n²)</td>
+                            <td>O(n²)</td>
+                            <td>O(1)</td>
+                            <td>Ja</td>
+                        </tr>
+                        <tr>
+                            <td>Quicksort</td>
+                            <td>O(n log n)</td>
+                            <td>O(n log n)</td>
+                            <td>O(n²)</td>
+                            <td>O(log n)</td>
+                            <td>Nein</td>
+                        </tr>
+                        <tr>
+                            <td>Mergesort</td>
+                            <td>O(n log n)</td>
+                            <td>O(n log n)</td>
+                            <td>O(n log n)</td>
+                            <td>O(n)</td>
+                            <td>Ja</td>
+                        </tr>
+                        <tr>
+                            <td>Heapsort</td>
+                            <td>O(n log n)</td>
+                            <td>O(n log n)</td>
+                            <td>O(n log n)</td>
+                            <td>O(1)</td>
+                            <td>Nein</td>
+                        </tr>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h3>5.4 Datenstrukturen</h3>
+                    
+                    <div class="grid-2col">
+                        <div>
+                            <h4>Array/Liste</h4>
+                            <div class="formula-box">
+                                <strong>Zugriff:</strong> O(1)<br>
+                                <strong>Suche:</strong> O(n)<br>
+                                <strong>Einfügen:</strong> O(n)<br>
+                                <strong>Löschen:</strong> O(n)
+                            </div>
+                            
+                            <h4>Stack (LIFO)</h4>
+                            <div class="formula-box">
+                                <strong>Push:</strong> O(1)<br>
+                                <strong>Pop:</strong> O(1)<br>
+                                <strong>Top/Peek:</strong> O(1)<br>
+                                Anwendung: Funktionsaufrufe
+                            </div>
+                        </div>
+                        <div>
+                            <h4>Queue (FIFO)</h4>
+                            <div class="formula-box">
+                                <strong>Enqueue:</strong> O(1)<br>
+                                <strong>Dequeue:</strong> O(1)<br>
+                                <strong>Front:</strong> O(1)<br>
+                                Anwendung: Scheduling
+                            </div>
+                            
+                            <h4>Hash Table</h4>
+                            <div class="formula-box">
+                                <strong>Zugriff:</strong> O(1) average, O(n) worst<br>
+                                <strong>Einfügen:</strong> O(1) average<br>
+                                <strong>Löschen:</strong> O(1) average<br>
+                                Kollisionsbehandlung wichtig
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Binärer Baum</div>
+                        <strong>Balancierter Baum:</strong> Höhe = O(log n)<br>
+                        <strong>Degenerierter Baum:</strong> Höhe = O(n)<br>
+                        <strong>Inorder-Traversierung:</strong> Links → Wurzel → Rechts<br>
+                        <strong>Preorder-Traversierung:</strong> Wurzel → Links → Rechts<br>
+                        <strong>Postorder-Traversierung:</strong> Links → Rechts → Wurzel
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>5.5 Grundlegende Programmierkonzepte</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Variablen und Datentypen</div>
+                        <strong>Primitive Typen:</strong> int, double, boolean, char<br>
+                        <strong>Referenztypen:</strong> String, Arrays, Objekte<br>
+                        <strong>Gültigkeitsbereich:</strong> Lokal vs. Global<br>
+                        <strong>Initialisierung:</strong> Wert zuweisen vor Verwendung
+                    </div>
+
+                    <div class="code-block">
+<strong>Java Datentypen und Speicherbedarf:</strong>
+byte    - 1 Byte  (-128 bis 127)
+short   - 2 Bytes (-32.768 bis 32.767)
+int     - 4 Bytes (-2.147.483.648 bis 2.147.483.647)
+long    - 8 Bytes (-9.223.372.036.854.775.808 bis ...)
+float   - 4 Bytes (IEEE 754)
+double  - 8 Bytes (IEEE 754)
+boolean - 1 Bit   (true/false)
+char    - 2 Bytes (Unicode)
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Kontrollstrukturen</div>
+                        <strong>Sequenz:</strong> Nacheinander ausgeführte Anweisungen<br>
+                        <strong>Selektion:</strong> if-else, switch-case<br>
+                        <strong>Iteration:</strong> for, while, do-while<br>
+                        <strong>Verschachtelung:</strong> Kontrollstrukturen ineinander
+                    </div>
+
+                    <div class="code-block">
+<strong>Schleifen-Typen:</strong>
+// For-Schleife (Anzahl bekannt)
+for (int i = 0; i < n; i++) {
+    // Code
+}
+
+// While-Schleife (Bedingung am Anfang)
+while (bedingung) {
+    // Code
+}
+
+// Do-While-Schleife (Bedingung am Ende)
+do {
+    // Code (mindestens einmal ausgeführt)
+} while (bedingung);
+
+// Enhanced For-Loop (Java)
+for (int element : array) {
+    // Code
+}
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Objektorientierte Programmierung -->
+        <section class="section" id="oop">
+            <div class="section-header">
+                <h2>6. Objektorientierte Programmierung</h2>
+                <p>Klassen, Objekte und OOP-Prinzipien</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>6.1 Grundprinzipien der OOP</h3>
+                    
+                    <div class="grid-2col">
+                        <div>
+                            <div class="formula-box">
+                                <div class="formula-title">Kapselung (Encapsulation)</div>
+                                Daten und Methoden werden in Klassen zusammengefasst<br>
+                                Zugriff nur über definierte Schnittstellen (public/private)
+                            </div>
+                            <div class="formula-box">
+                                <div class="formula-title">Vererbung (Inheritance)</div>
+                                Neue Klassen übernehmen Eigenschaften von Basisklassen<br>
+                                "ist-ein"-Beziehung (z.B. Auto ist ein Fahrzeug)
+                            </div>
+                        </div>
+                        <div>
+                            <div class="formula-box">
+                                <div class="formula-title">Polymorphie</div>
+                                Gleiche Methode, unterschiedliche Implementierung<br>
+                                Überladen (Overloading) + Überschreiben (Overriding)
+                            </div>
+                            <div class="formula-box">
+                                <div class="formula-title">Abstraktion</div>
+                                Wesentliche Eigenschaften hervorheben<br>
+                                Unwichtige Details verbergen
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>6.2 Java-Klassenstruktur</h3>
+                    
+                    <div class="code-block">
+<strong>Klassen-Definition:</strong>
+public class Klassenname {
+    // Attribute (Instanzvariablen)
+    private int attribut1;
+    private String attribut2;
+    
+    // Konstruktor
+    public Klassenname(int wert1, String wert2) {
+        this.attribut1 = wert1;
+        this.attribut2 = wert2;
+    }
+    
+    // Getter-Methode
+    public int getAttribut1() {
+        return attribut1;
+    }
+    
+    // Setter-Methode
+    public void setAttribut1(int wert) {
+        this.attribut1 = wert;
+    }
+}
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Sichtbarkeitsmodifikatoren</div>
+                        <strong>public:</strong> Von überall zugänglich<br>
+                        <strong>private:</strong> Nur innerhalb der Klasse<br>
+                        <strong>protected:</strong> Innerhalb Package + Unterklassen<br>
+                        <strong>package-private:</strong> Nur innerhalb des Packages
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>6.3 Vererbung und Polymorphie</h3>
+                    
+                    <div class="code-block">
+<strong>Vererbung:</strong>
+public class Basisklasse {
+    protected int wert;
+    public void methode() { /* ... */ }
+}
+
+public class Unterklasse extends Basisklasse {
+    public void methode() {        // Überschreiben
+        super.methode();          // Aufruf der Basisklasse
+        // Zusätzliche Funktionalität
+    }
+}
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Konstruktor-Vererbung</div>
+                        super() - Aufruf des Basiskonstruktors<br>
+                        Muss erste Anweisung im Konstruktor sein<br>
+                        Wird automatisch eingefügt, wenn nicht explizit angegeben
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>6.4 UML-Diagramme</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Klassendiagramm-Notation</div>
+                        <strong>+</strong> public, <strong>-</strong> private, <strong>#</strong> protected<br>
+                        <strong>Attribute:</strong> sichtbarkeit name : typ<br>
+                        <strong>Methoden:</strong> sichtbarkeit name(parameter) : rückgabetyp
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Beziehungstypen</div>
+                        <strong>Assoziation:</strong> ——————<br>
+                        <strong>Aggregation:</strong> ◇————— (hat-ein, schwach)<br>
+                        <strong>Komposition:</strong> ♦————— (besteht-aus, stark)<br>
+                        <strong>Vererbung:</strong> ————▷ (ist-ein)<br>
+                        <strong>Implementierung:</strong> -------▷ (Interface)
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Multiplizitäten</div>
+                        <strong>1</strong> - genau eins<br>
+                        <strong>0..1</strong> - null oder eins<br>
+                        <strong>*</strong> oder <strong>0..*</strong> - beliebig viele<br>
+                        <strong>1..*</strong> - eins oder mehr<br>
+                        <strong>n..m</strong> - zwischen n und m
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. Datenbanken & SQL -->
+        <section class="section" id="datenbanken">
+            <div class="section-header">
+                <h2>7. Datenbanken & SQL</h2>
+                <p>Relationale Datenbanken, Normalisierung und SQL-Befehle</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>7.1 Relationales Datenmodell</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Grundbegriffe</div>
+                        <strong>Relation:</strong> Tabelle<br>
+                        <strong>Tupel:</strong> Zeile/Datensatz<br>
+                        <strong>Attribut:</strong> Spalte/Feld<br>
+                        <strong>Domäne:</strong> Wertebereich eines Attributs<br>
+                        <strong>Primärschlüssel:</strong> Eindeutige Identifikation eines Tupels<br>
+                        <strong>Fremdschlüssel:</strong> Verweis auf Primärschlüssel anderer Tabelle
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Integritätsbedingungen</div>
+                        <strong>Entitätsintegrität:</strong> Primärschlüssel darf nicht NULL sein<br>
+                        <strong>Referenzielle Integrität:</strong> Fremdschlüssel muss existieren oder NULL<br>
+                        <strong>Domänenintegrität:</strong> Werte müssen im erlaubten Bereich liegen
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>7.2 Entity-Relationship-Modell (ERM)</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">ER-Diagramm Symbole</div>
+                        <strong>Entität:</strong> □ (Rechteck) - Objekt der realen Welt<br>
+                        <strong>Beziehung:</strong> ◇ (Raute) - Zusammenhang zwischen Entitäten<br>
+                        <strong>Attribut:</strong> ○ (Oval) - Eigenschaft einer Entität<br>
+                        <strong>Schlüsselattribut:</strong> ○ (unterstrichen)
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Kardinalitäten</div>
+                        <strong>1:1</strong> - Eins-zu-Eins (z.B. Person - Personalausweis)<br>
+                        <strong>1:n</strong> - Eins-zu-Viele (z.B. Kunde - Bestellungen)<br>
+                        <strong>n:m</strong> - Viele-zu-Viele (z.B. Student - Vorlesung)
+                    </div>
+
+                    <div class="important-note">
+                        <strong>Auflösung n:m-Beziehungen:</strong> Neue Zwischentabelle mit den Primärschlüsseln beider Entitäten als Fremdschlüssel erstellen.
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>7.3 Normalisierung</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">1. Normalform (1NF)</div>
+                        Alle Attributwerte sind atomar (unteilbar)<br>
+                        Keine zusammengesetzten oder mehrwertigen Attribute
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">2. Normalform (2NF)</div>
+                        1NF + Jedes Nicht-Schlüssel-Attribut ist voll funktional abhängig vom Primärschlüssel<br>
+                        Keine partiellen Abhängigkeiten bei zusammengesetzten Schlüsseln
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">3. Normalform (3NF)</div>
+                        2NF + Keine transitiven Abhängigkeiten<br>
+                        Nicht-Schlüssel-Attribute dürfen nicht von anderen Nicht-Schlüssel-Attributen abhängen
+                    </div>
+
+                    <div class="example-box">
+                        <div class="example-title">Funktionale Abhängigkeit:</div>
+                        A → B bedeutet: Wenn A bekannt ist, ist B eindeutig bestimmt<br>
+                        <strong>Beispiel:</strong> Kundennummer → Kundenname
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>7.4 SQL-Grundbefehle</h3>
+                    
+                    <div class="code-block">
+<strong>Datenbank und Tabellen erstellen:</strong>
+CREATE DATABASE datenbankname;
+CREATE TABLE tabellenname (
+    spalte1 INT PRIMARY KEY,
+    spalte2 VARCHAR(50) NOT NULL,
+    spalte3 DATE,
+    FOREIGN KEY (spalte1) REFERENCES andere_tabelle(spalte)
+);
+                    </div>
+
+                    <div class="code-block">
+<strong>Daten einfügen, ändern, löschen:</strong>
+INSERT INTO tabelle (spalte1, spalte2) VALUES (wert1, wert2);
+UPDATE tabelle SET spalte1 = neuer_wert WHERE bedingung;
+DELETE FROM tabelle WHERE bedingung;
+                    </div>
+
+                    <div class="code-block">
+<strong>Daten abfragen (SELECT):</strong>
+SELECT spalten FROM tabelle 
+WHERE bedingung 
+GROUP BY spalte 
+HAVING gruppenbedingung 
+ORDER BY spalte ASC/DESC 
+LIMIT anzahl;
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">JOIN-Operationen</div>
+                        <strong>INNER JOIN:</strong> Nur übereinstimmende Datensätze<br>
+                        <strong>LEFT JOIN:</strong> Alle Datensätze der linken Tabelle<br>
+                        <strong>RIGHT JOIN:</strong> Alle Datensätze der rechten Tabelle<br>
+                        <strong>FULL OUTER JOIN:</strong> Alle Datensätze beider Tabellen
+                    </div>
+
+                    <div class="code-block">
+<strong>JOIN-Syntax:</strong>
+SELECT t1.spalte1, t2.spalte2 
+FROM tabelle1 t1 
+INNER JOIN tabelle2 t2 ON t1.id = t2.fremdschluessel;
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>7.5 SQL-Funktionen</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Aggregatfunktionen</div>
+                        <strong>COUNT(*):</strong> Anzahl Datensätze<br>
+                        <strong>SUM(spalte):</strong> Summe der Werte<br>
+                        <strong>AVG(spalte):</strong> Durchschnitt<br>
+                        <strong>MIN(spalte):</strong> Kleinster Wert<br>
+                        <strong>MAX(spalte):</strong> Größter Wert
+                    </div>
+
+                    <div class="code-block">
+<strong>Gruppierung mit HAVING:</strong>
+SELECT abteilung, AVG(gehalt) 
+FROM mitarbeiter 
+GROUP BY abteilung 
+HAVING AVG(gehalt) > 50000;
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Netzwerke & Internet -->
+        <section class="section" id="netzwerke">
+            <div class="section-header">
+                <h2>8. Netzwerke & Internet</h2>
+                <p>Netzwerkprotokolle, OSI-Modell und Internet-Technologien</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>8.1 OSI-7-Schichtenmodell</h3>
+                    
+                    <table class="truth-table">
+                        <tr>
+                            <th>Schicht</th>
+                            <th>Name</th>
+                            <th>Funktion</th>
+                            <th>Protokolle/Beispiele</th>
+                        </tr>
+                        <tr>
+                            <td>7</td>
+                            <td>Anwendung</td>
+                            <td>Benutzeranwendungen</td>
+                            <td>HTTP, FTP, SMTP, DNS</td>
+                        </tr>
+                        <tr>
+                            <td>6</td>
+                            <td>Darstellung</td>
+                            <td>Datenkonvertierung, Verschlüsselung</td>
+                            <td>SSL/TLS, ASCII, JPEG</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Sitzung</td>
+                            <td>Sitzungsverwaltung</td>
+                            <td>NetBIOS, SQL Sessions</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Transport</td>
+                            <td>Ende-zu-Ende Übertragung</td>
+                            <td>TCP, UDP</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Vermittlung</td>
+                            <td>Routing, Wegewahl</td>
+                            <td>IP, ICMP, OSPF</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Sicherung</td>
+                            <td>Fehlererkennung, MAC-Adressen</td>
+                            <td>Ethernet, WLAN, PPP</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>Bitübertragung</td>
+                            <td>Physikalische Übertragung</td>
+                            <td>Kabel, Funk, Glasfaser</td>
+                        </tr>
+                    </table>
+
+                    <div class="important-note">
+                        <strong>Merkhilfe:</strong> "Please Do Not Throw Sausage Pizza Away"<br>
+                        (Physical, Data Link, Network, Transport, Session, Presentation, Application)
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>8.2 IP-Adressierung</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">IPv4-Adresse</div>
+                        4 Bytes = 32 Bit<br>
+                        Format: xxx.xxx.xxx.xxx (0-255)<br>
+                        Adressraum: 2³² = 4.294.967.296 Adressen
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Subnetzmaske</div>
+                        Trennt Netzwerk- und Host-Anteil<br>
+                        <strong>CIDR-Notation:</strong> /24 = 255.255.255.0<br>
+                        Anzahl Host-Bits = 32 - Netzwerk-Bits
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Subnetz-Berechnung</div>
+                        Anzahl Subnetze = 2ⁿ (n = geliehene Bits)<br>
+                        Hosts pro Subnetz = 2ᵐ - 2 (m = Host-Bits)<br>
+                        -2 wegen Netzwerk- und Broadcast-Adresse
+                    </div>
+
+                    <div class="example-box">
+                        <div class="example-title">Beispiel: 192.168.1.0/26</div>
+                        <strong>Subnetzmaske:</strong> 255.255.255.192<br>
+                        <strong>Host-Bits:</strong> 32 - 26 = 6 Bits<br>
+                        <strong>Hosts pro Subnetz:</strong> 2⁶ - 2 = 62<br>
+                        <strong>Subnetze:</strong> 192.168.1.0, 192.168.1.64, 192.168.1.128, 192.168.1.192
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Private IP-Bereiche (RFC 1918)</div>
+                        <strong>Klasse A:</strong> 10.0.0.0 - 10.255.255.255 (/8)<br>
+                        <strong>Klasse B:</strong> 172.16.0.0 - 172.31.255.255 (/12)<br>
+                        <strong>Klasse C:</strong> 192.168.0.0 - 192.168.255.255 (/16)
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>8.3 Ethernet</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Ethernet-Frame</div>
+                        Preamble (8) + Dest MAC (6) + Source MAC (6) + Type/Length (2) + Data (46-1500) + FCS (4) Bytes
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">CSMA/CD (Collision Detection)</div>
+                        1. Carrier Sense - Prüfe ob Medium frei<br>
+                        2. Multiple Access - Mehrere können senden<br>
+                        3. Collision Detection - Kollisionserkennung<br>
+                        4. Backoff-Algorithmus bei Kollision
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Ethernet-Standards</div>
+                        <strong>10BASE-T:</strong> 10 Mbit/s, Twisted Pair, 100m<br>
+                        <strong>100BASE-TX:</strong> 100 Mbit/s, Cat5, 100m<br>
+                        <strong>1000BASE-T:</strong> 1 Gbit/s, Cat5e, 100m<br>
+                        <strong>10GBASE-T:</strong> 10 Gbit/s, Cat6a, 100m
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>8.4 TCP vs UDP</h3>
+                    
+                    <div class="grid-2col">
+                        <div>
+                            <h4>TCP (Transmission Control Protocol)</h4>
+                            <div class="formula-box">
+                                <strong>Eigenschaften:</strong><br>
+                                ✓ Verbindungsorientiert<br>
+                                ✓ Zuverlässig<br>
+                                ✓ Reihenfolge garantiert<br>
+                                ✓ Flusskontrolle<br>
+                                ✓ Fehlererkennung/-korrektur<br>
+                                ✗ Höherer Overhead
+                            </div>
+                        </div>
+                        <div>
+                            <h4>UDP (User Datagram Protocol)</h4>
+                            <div class="formula-box">
+                                <strong>Eigenschaften:</strong><br>
+                                ✓ Verbindungslos<br>
+                                ✓ Schnell, geringer Overhead<br>
+                                ✓ Broadcast/Multicast möglich<br>
+                                ✗ Nicht zuverlässig<br>
+                                ✗ Keine Reihenfolgengarantie<br>
+                                ✗ Keine Flusskontrolle
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Port-Nummern</div>
+                        <strong>Well-known Ports (0-1023):</strong> HTTP(80), HTTPS(443), FTP(21), SSH(22), DNS(53)<br>
+                        <strong>Registered Ports (1024-49151):</strong> Anwendungsspezifisch<br>
+                        <strong>Dynamic Ports (49152-65535):</strong> Temporäre Client-Ports
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. Betriebssysteme -->
+        <section class="section" id="betriebssysteme">
+            <div class="section-header">
+                <h2>9. Betriebssysteme</h2>
+                <p>Prozesse, Speicherverwaltung und Dateisysteme</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>9.1 Prozessverwaltung</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Prozesszustände</div>
+                        <strong>New:</strong> Prozess wird erstellt<br>
+                        <strong>Ready:</strong> Bereit zur Ausführung, wartet auf CPU<br>
+                        <strong>Running:</strong> Wird gerade ausgeführt<br>
+                        <strong>Waiting/Blocked:</strong> Wartet auf Ereignis (I/O)<br>
+                        <strong>Terminated:</strong> Beendet
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Scheduling-Algorithmen</div>
+                        <strong>FCFS (First Come First Served):</strong> Reihenfolge des Eintreffens<br>
+                        <strong>SJF (Shortest Job First):</strong> Kürzeste Ausführungszeit zuerst<br>
+                        <strong>Round Robin:</strong> Zeitscheiben (Time Slices)<br>
+                        <strong>Prioritätsbasiert:</strong> Nach Prozesspriorität
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Kennzahlen</div>
+                        <strong>Durchlaufzeit:</strong> Ankunft bis Fertigstellung<br>
+                        <strong>Wartezeit:</strong> Zeit im Ready-Zustand<br>
+                        <strong>Antwortzeit:</strong> Ankunft bis erste CPU-Zuteilung<br>
+                        <strong>CPU-Auslastung:</strong> (CPU-Zeit / Gesamtzeit) × 100%
+                    </div>
+
+                    <div class="important-note">
+                        <strong>Context Switch:</strong> Wechsel zwischen Prozessen erfordert Speichern/Laden des Prozesszustands (Register, Programmzähler, etc.)
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>9.2 Speicherverwaltung</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Speicherhierarchie (von schnell zu langsam)</div>
+                        Register → Cache → Hauptspeicher (RAM) → Sekundärspeicher (SSD/HDD)
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Virtueller Speicher</div>
+                        <strong>Virtuelle Adresse:</strong> Vom Programm verwendet<br>
+                        <strong>Physische Adresse:</strong> Tatsächliche RAM-Adresse<br>
+                        <strong>Memory Management Unit (MMU):</strong> Übersetzung virtual → physisch
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Paging (Seitenverwaltung)</div>
+                        <strong>Seitengröße:</strong> Typisch 4 KB (4096 Bytes)<br>
+                        <strong>Seitentabelle:</strong> Zuordnung virtuelle → physische Seiten<br>
+                        <strong>Page Fault:</strong> Zugriff auf nicht geladene Seite
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Segmentierung</div>
+                        Speicher in logische Segmente unterteilt:<br>
+                        Code-Segment, Daten-Segment, Stack-Segment, Heap-Segment
+                    </div>
+
+                    <div class="example-box">
+                        <div class="example-title">Adressberechnung bei Paging:</div>
+                        <strong>Virtuelle Adresse:</strong> 32 Bit, Seitengröße 4 KB<br>
+                        <strong>Seitennummer:</strong> Obere 20 Bit<br>
+                        <strong>Offset:</strong> Untere 12 Bit (2¹² = 4096)<br>
+                        <strong>Physische Adresse:</strong> Frame-Nummer + Offset
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>9.3 Dateisysteme</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Dateisystem-Struktur</div>
+                        <strong>Superblock:</strong> Metadaten des Dateisystems<br>
+                        <strong>Inode-Tabelle:</strong> Datei-Metadaten (Größe, Rechte, Zeiger)<br>
+                        <strong>Datenblöcke:</strong> Eigentlicher Dateiinhalt<br>
+                        <strong>Verzeichnisse:</strong> Zuordnung Name → Inode
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Dateizugriff</div>
+                        <strong>Sequenziell:</strong> Von Anfang bis Ende<br>
+                        <strong>Direktzugriff (Random):</strong> Beliebige Position<br>
+                        <strong>Indexed:</strong> Über Indexstruktur
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Fragmentierung</div>
+                        <strong>Interne Fragmentierung:</strong> Ungenutzter Platz in Blöcken<br>
+                        <strong>Externe Fragmentierung:</strong> Freier Speicher in kleinen Stücken<br>
+                        <strong>Defragmentierung:</strong> Zusammenführung zusammenhängender Bereiche
+                    </div>
+
+                    <div class="grid-2col">
+                        <div>
+                            <h4>FAT32</h4>
+                            <div class="formula-box">
+                                ✓ Kompatibel mit allen Systemen<br>
+                                ✓ Einfache Struktur<br>
+                                ✗ Max. Dateigröße: 4 GB<br>
+                                ✗ Max. Partition: 2 TB<br>
+                                ✗ Keine Berechtigungen
+                            </div>
+                        </div>
+                        <div>
+                            <h4>NTFS</h4>
+                            <div class="formula-box">
+                                ✓ Große Dateien/Partitionen<br>
+                                ✓ Berechtigungssystem<br>
+                                ✓ Journaling<br>
+                                ✓ Komprimierung<br>
+                                ✗ Windows-spezifisch
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>9.4 Deadlocks (Verklemmungen)</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Coffman-Bedingungen (alle 4 müssen erfüllt sein)</div>
+                        1. <strong>Mutual Exclusion:</strong> Ressource kann nur von einem Prozess genutzt werden<br>
+                        2. <strong>Hold and Wait:</strong> Prozess hält Ressourcen und wartet auf weitere<br>
+                        3. <strong>No Preemption:</strong> Ressourcen können nicht gewaltsam entzogen werden<br>
+                        4. <strong>Circular Wait:</strong> Zirkuläre Warteschlange
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Deadlock-Behandlung</div>
+                        <strong>Prävention:</strong> Eine Coffman-Bedingung verhindern<br>
+                        <strong>Vermeidung:</strong> Sichere Zustände garantieren (Banker's Algorithmus)<br>
+                        <strong>Erkennung & Behebung:</strong> Deadlock erkennen und auflösen<br>
+                        <strong>Ignorieren:</strong> "Strauß-Politik" - sehr selten
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 10. Projektmanagement -->
+        <section class="section" id="projektmanagement">
+            <div class="section-header">
+                <h2>10. Projektmanagement</h2>
+                <p>Systementwicklung, Vorgehensmodelle und Qualitätssicherung</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>10.1 Systementwicklung</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Software-Entwicklungsphasen</div>
+                        1. <strong>Anforderungsanalyse:</strong> Was soll das System leisten?<br>
+                        2. <strong>Design/Entwurf:</strong> Wie soll das System aufgebaut sein?<br>
+                        3. <strong>Implementierung:</strong> Programmierung des Systems<br>
+                        4. <strong>Test:</strong> Funktionalität und Qualität prüfen<br>
+                        5. <strong>Deployment:</strong> System in Betrieb nehmen<br>
+                        6. <strong>Wartung:</strong> Fehler beheben, Erweiterungen
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Wasserfallmodell</div>
+                        Sequenzielle Phasen, jede Phase muss abgeschlossen sein<br>
+                        ✓ Einfach zu verstehen und zu planen<br>
+                        ✗ Unflexibel bei Änderungen<br>
+                        ✗ Späte Fehlererkennung
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Spiralmodell</div>
+                        Iterative Entwicklung mit Risikoanalyse<br>
+                        ✓ Frühzeitige Risikoerkennung<br>
+                        ✓ Flexibel bei Änderungen<br>
+                        ✗ Komplex zu verwalten
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Agile Entwicklung (Scrum)</div>
+                        <strong>Sprint:</strong> 1-4 Wochen Entwicklungszyklen<br>
+                        <strong>Product Backlog:</strong> Anforderungsliste<br>
+                        <strong>Sprint Backlog:</strong> Aufgaben für aktuellen Sprint<br>
+                        <strong>Daily Standup:</strong> Tägliche Abstimmung<br>
+                        <strong>Sprint Review/Retrospective:</strong> Bewertung und Verbesserung
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>10.2 Qualitätssicherung</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Testarten</div>
+                        <strong>Unit-Test:</strong> Einzelne Funktionen/Module<br>
+                        <strong>Integrationstests:</strong> Zusammenspiel der Module<br>
+                        <strong>Systemtests:</strong> Gesamtsystem gegen Anforderungen<br>
+                        <strong>Akzeptanztests:</strong> Kundenzufriedenheit
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Black-Box vs White-Box Testing</div>
+                        <strong>Black-Box:</strong> Test ohne Kenntnis der internen Struktur<br>
+                        → Äquivalenzklassen, Grenzwertanalyse<br>
+                        <strong>White-Box:</strong> Test mit Kenntnis des Quellcodes<br>
+                        → Anweisungsüberdeckung, Zweigüberdeckung
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Code-Überdeckung</div>
+                        <strong>C0 (Anweisungsüberdeckung):</strong> % ausgeführter Anweisungen<br>
+                        <strong>C1 (Zweigüberdeckung):</strong> % durchlaufener Verzweigungen<br>
+                        <strong>C2 (Pfadüberdeckung):</strong> % durchlaufener Pfade
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>10.3 Projektplanung</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Aufwandschätzung</div>
+                        <strong>COCOMO:</strong> Effort = a × (KLOC)ᵇ × EAF<br>
+                        KLOC = Kilo Lines of Code<br>
+                        EAF = Effort Adjustment Factor
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Function Points</div>
+                        Funktionale Größe basierend auf:<br>
+                        • Eingaben (External Inputs)<br>
+                        • Ausgaben (External Outputs)<br>
+                        • Abfragen (External Inquiries)<br>
+                        • Logische Dateien (Internal Files)<br>
+                        • Externe Schnittstellen (External Files)
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Kritischer Pfad (CPM)</div>
+                        Längster Pfad durch das Projektnetwork<br>
+                        Bestimmt minimale Projektdauer<br>
+                        Verzögerungen auf kritischem Pfad verzögern Gesamtprojekt
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Meilensteine</div>
+                        Wichtige Zwischenergebnisse im Projekt<br>
+                        Messbare, terminierte Zwischenziele<br>
+                        Basis für Projektcontrolling
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>10.4 Dokumentation</h3>
+                    
+                    <div class="formula-box">
+                        <div class="formula-title">Pflichtenheft vs Lastenheft</div>
+                        <strong>Lastenheft:</strong> Was soll entwickelt werden? (Auftraggeber)<br>
+                        <strong>Pflichtenheft:</strong> Wie soll es realisiert werden? (Auftragnehmer)
+                    </div>
+
+                    <div class="formula-box">
+                        <div class="formula-title">Dokumentationsarten</div>
+                        <strong>Anforderungsdokumentation:</strong> Funktionale/nicht-funktionale Anforderungen<br>
+                        <strong>Entwurfsdokumentation:</strong> Architektur, Design-Entscheidungen<br>
+                        <strong>Implementierungsdokumentation:</strong> Code-Kommentare, API-Docs<br>
+                        <strong>Testdokumentation:</strong> Testfälle, Testergebnisse<br>
+                        <strong>Benutzerdokumentation:</strong> Handbücher, Hilfetexte
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Zusätzliche wichtige Formeln und Konstanten -->
+        <section class="section">
+            <div class="section-header">
+                <h2>🔢 Wichtige Konstanten und Umrechnungen</h2>
+                <p>Häufig benötigte Werte und Umrechnungsformeln</p>
+            </div>
+            <div class="section-content">
+                <div class="grid-2col">
+                    <div>
+                        <h3>Binäre Vorsätze (IEC)</h3>
+                        <div class="formula-box">
+                            1 KiB = 2¹⁰ = 1.024 Bytes<br>
+                            1 MiB = 2²⁰ = 1.048.576 Bytes<br>
+                            1 GiB = 2³⁰ = 1.073.741.824 Bytes<br>
+                            1 TiB = 2⁴⁰ = 1.099.511.627.776 Bytes
+                        </div>
+                        
+                        <h3>Dezimale Vorsätze (SI)</h3>
+                        <div class="formula-box">
+                            1 kB = 10³ = 1.000 Bytes<br>
+                            1 MB = 10⁶ = 1.000.000 Bytes<br>
+                            1 GB = 10⁹ = 1.000.000.000 Bytes<br>
+                            1 TB = 10¹² = 1.000.000.000.000 Bytes
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Zeiteinheiten</h3>
+                        <div class="formula-box">
+                            1 ms (Millisekunde) = 10⁻³ s<br>
+                            1 μs (Mikrosekunde) = 10⁻⁶ s<br>
+                            1 ns (Nanosekunde) = 10⁻⁹ s<br>
+                            1 ps (Pikosekunde) = 10⁻¹² s
+                        </div>
+                        
+                        <h3>Frequenz ↔ Periode</h3>
+                        <div class="formula-box">
+                            f = 1/T<br>
+                            T = 1/f<br>
+                            [f] = Hz (Hertz)<br>
+                            [T] = s (Sekunden)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="important-note">
+                    <strong>Abitur-Tipp:</strong> Diese Formelsammlung deckt alle prüfungsrelevanten Bereiche ab. Lernen Sie die Grundlagen verstehen, nicht nur auswendig! In der Abiturprüfung ist logisches Denken wichtiger als Formeln memorieren.
+                </div>
+
+                <div class="example-box">
+                    <div class="example-title">Prüfungsstrategie:</div>
+                    1. <strong>Verstehen vor Auswendiglernen:</strong> Konzepte durchdringen<br>
+                    2. <strong>Praktisch üben:</strong> Programmieren, Schaltungen entwerfen<br>
+                    3. <strong>Querverbindungen:</strong> Zusammenhänge zwischen Themen erkennen<br>
+                    4. <strong>Alte Prüfungen:</strong> Aufgabentypen und Schwerpunkte verstehen
+                </div>
+            </div>
+        </section>
+
+        <a href="index.html" class="back-link">← Zurück zur Übersicht</a>
+        
+        <footer style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--bg-white); border-radius: 16px; border: 1px solid var(--border-color);">
+            <p><strong>Formelsammlung Abitur 2026 - Informationstechnik TG</strong></p>
+            <p style="color: var(--text-light); margin-top: 1rem;">
+                Diese Sammlung enthält alle wichtigen Formeln, Gesetze und Konzepte für das Abitur 2026.<br>
+                <em>Systematisch aufbereitet nach dem Bildungsplan Baden-Württemberg</em>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scrolling für Inhaltsverzeichnis
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight active section while scrolling
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.section[id]');
+            const navLinks = document.querySelectorAll('.toc-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.parentElement.style.backgroundColor = '';
+                if (link.getAttribute('href') === '#' + current) {
+                    link.parentElement.style.backgroundColor = 'var(--bg-light)';
+                    link.parentElement.style.borderRadius = '6px';
+                }
+            });
+        });
+	
+	// Back-to-top Button
+    const backToTopButton = document.getElementById('backToTop');
+    
+    window.addEventListener('scroll', function() {
+        if (window.pageYOffset > 300) {
+            backToTopButton.classList.add('visible');
+        } else {
+            backToTopButton.classList.remove('visible');
+        }
+    });
+    
+    backToTopButton.addEventListener('click', function(e) {
+        e.preventDefault();
+        window.scrollTo({
+            top: 0,
+            behavior: 'smooth'
+        });
+    });
+
+    </script>
+</body>
+</html>box">

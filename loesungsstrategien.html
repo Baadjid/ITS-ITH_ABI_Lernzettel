@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lösungsstrategien - Abitur 2026 Informatik TG</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #06b6d4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .breadcrumb {
+            background: var(--bg-white);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .strategy-section {
+            background: var(--bg-white);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .strategy-section h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .strategy-section h3 {
+            color: var(--secondary-color);
+            font-size: 1.3rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .method-card {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .method-title {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin: 0.8rem 0;
+            padding: 1rem;
+            background: var(--bg-white);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 1rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary-color);
+            color: white;
+            width: 1.5rem;
+            height: 1.5rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.8rem;
+        }
+
+        .example-box {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .example-title {
+            font-weight: bold;
+            color: var(--info-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-box {
+            background: #fef3c7;
+            border: 1px solid var(--warning-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .warning-title {
+            font-weight: bold;
+            color: var(--warning-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .tip-box {
+            background: #dcfce7;
+            border: 1px solid var(--success-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .tip-title {
+            font-weight: bold;
+            color: var(--success-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .formula {
+            background: var(--bg-white);
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-family: 'Times New Roman', serif;
+            font-size: 1.1rem;
+        }
+
+        .subject-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .subject-card {
+            background: var(--bg-white);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .subject-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .checklist {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .checklist li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .back-button {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-button:hover {
+            background: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .subject-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">🏠 Hauptseite</a> → <strong>💡 Lösungsstrategien</strong>
+        </div>
+
+        <header class="header">
+            <h1>💡 Lösungsstrategien für Informatik TG</h1>
+            <p>Systematische Herangehensweisen für alle Aufgabentypen im Abitur</p>
+        </header>
+
+        <!-- Allgemeine Problemlösungsstrategien -->
+        <div class="strategy-section">
+            <h2>🎯 Allgemeine Problemlösungsstrategien</h2>
+            
+            <h3>Die 5-Schritt-Methode</h3>
+            <div class="method-card">
+                <div class="method-title">Universelle Herangehensweise für alle Informatik-Aufgaben</div>
+                <ol class="step-list">
+                    <li><strong>Verstehen:</strong> Was ist gegeben? Was ist gesucht? Welche Einschränkungen gibt es?</li>
+                    <li><strong>Planen:</strong> Welche Methoden, Formeln oder Algorithmen sind anwendbar?</li>
+                    <li><strong>Durchführen:</strong> Schritt-für-Schritt-Lösung entwickeln</li>
+                    <li><strong>Überprüfen:</strong> Ergebnis auf Plausibilität und Korrektheit prüfen</li>
+                    <li><strong>Reflektieren:</strong> Alternative Lösungswege betrachten</li>
+                </ol>
+            </div>
+
+            <div class="tip-box">
+                <div class="tip-title">💡 Profi-Tipp:</div>
+                Zeichnen Sie immer Diagramme, Skizzen oder Schaltpläne - visuelle Darstellungen helfen enorm beim Verständnis!
+            </div>
+        </div>
+
+        <!-- Bereichsspezifische Strategien -->
+        <div class="strategy-section">
+            <h2>🔧 Bereichsspezifische Lösungsstrategien</h2>
+            
+            <div class="subject-grid">
+                <!-- Digitaltechnik -->
+                <div class="subject-card">
+                    <h4>⚡ Digitaltechnik & Schaltungen</h4>
+                    <div class="method-card">
+                        <div class="method-title">Schaltnetze analysieren:</div>
+                        <ol class="step-list">
+                            <li>Eingänge und Ausgänge identifizieren</li>
+                            <li>Wahrheitstabelle erstellen</li>
+                            <li>Logische Funktion ableiten</li>
+                            <li>Mit KV-Diagramm vereinfachen</li>
+                            <li>Schaltung optimieren</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="example-box">
+                        <div class="example-title">📝 Beispiel: AND-Gatter</div>
+                        <div class="code-block">
+A | B | Y = A ∧ B
+--|---|----------
+0 | 0 | 0
+0 | 1 | 0  
+1 | 0 | 0
+1 | 1 | 1</div>
+                    </div>
+                </div>
+
+                <!-- Schaltwerke -->
+                <div class="subject-card">
+                    <h4>🔄 Schaltwerke & FlipFlops</h4>
+                    <div class="method-card">
+                        <div class="method-title">Zustandsdiagramme erstellen:</div>
+                        <ol class="step-list">
+                            <li>Alle möglichen Zustände definieren</li>
+                            <li>Übergangsbedingungen festlegen</li>
+                            <li>Start- und Endzustände markieren</li>
+                            <li>Zustandstabelle erstellen</li>
+                            <li>Hardware implementieren</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="warning-box">
+                        <div class="warning-title">⚠️ Häufiger Fehler:</div>
+                        Vergessen Sie nicht die Taktflanken! FlipFlops ändern ihren Zustand nur bei steigender (↑) oder fallender (↓) Taktflanke.
+                    </div>
+                </div>
+
+                <!-- Programmierung -->
+                <div class="subject-card">
+                    <h4>💻 Programmierung (Java)</h4>
+                    <div class="method-card">
+                        <div class="method-title">Algorithmus entwickeln:</div>
+                        <ol class="step-list">
+                            <li>Problem in Teilprobleme zerlegen</li>
+                            <li>Pseudocode schreiben</li>
+                            <li>Datentypen und Strukturen wählen</li>
+                            <li>Code implementieren</li>
+                            <li>Testen mit Beispieldaten</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="example-box">
+                        <div class="example-title">📝 Beispiel: Einfache Klasse</div>
+                        <div class="code-block">
+public class Auto {
+    private String marke;
+    private int baujahr;
+    
+    // Konstruktor
+    public Auto(String marke, int baujahr) {
+        this.marke = marke;
+        this.baujahr = baujahr;
+    }
+    
+    // Getter-Methode
+    public String getMarke() {
+        return marke;
+    }
+}</div>
+                    </div>
+                </div>
+
+                <!-- Datenbanken -->
+                <div class="subject-card">
+                    <h4>🗄️ Datenbanken & SQL</h4>
+                    <div class="method-card">
+                        <div class="method-title">SQL-Queries entwickeln:</div>
+                        <ol class="step-list">
+                            <li>Tabellen und Beziehungen verstehen</li>
+                            <li>Benötigte Spalten identifizieren</li>
+                            <li>WHERE-Bedingungen formulieren</li>
+                            <li>JOINs für Verknüpfungen nutzen</li>
+                            <li>Query testen und optimieren</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="example-box">
+                        <div class="example-title">📝 Beispiel: Einfache Abfrage</div>
+                        <div class="code-block">
+SELECT kunde.name, bestellung.datum
+FROM kunde
+INNER JOIN bestellung ON kunde.id = bestellung.kunde_id
+WHERE bestellung.datum > '2024-01-01';</div>
+                    </div>
+                </div>
+
+                <!-- Netzwerktechnik -->
+                <div class="subject-card">
+                    <h4>🌐 Netzwerktechnik</h4>
+                    <div class="method-card">
+                        <div class="method-title">IP-Adressierung lösen:</div>
+                        <ol class="step-list">
+                            <li>Netzklasse bestimmen (A, B, C)</li>
+                            <li>Subnetzmaske analysieren</li>
+                            <li>Netz- und Host-Anteil trennen</li>
+                            <li>Broadcast-Adresse berechnen</li>
+                            <li>Gültige Host-Adressen bestimmen</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <div class="tip-title">💡 Merkhilfe:</div>
+                        /24 = 255.255.255.0 (Klasse C)<br>
+                        /16 = 255.255.0.0 (Klasse B)<br>
+                        /8 = 255.0.0.0 (Klasse A)
+                    </div>
+                </div>
+
+                <!-- Mikrocontroller -->
+                <div class="subject-card">
+                    <h4>🤖 Mikrocontroller & Arduino</h4>
+                    <div class="method-card">
+                        <div class="method-title">Hardware-Software-Integration:</div>
+                        <ol class="step-list">
+                            <li>Hardware-Schaltung verstehen</li>
+                            <li>Pin-Belegung prüfen</li>
+                            <li>Initialisierung programmieren</li>
+                            <li>Hauptschleife implementieren</li>
+                            <li>Debugging und Optimierung</li>
+                        </ol>
+                    </div>
+                    
+                    <div class="example-box">
+                        <div class="example-title">📝 Beispiel: LED blinken</div>
+                        <div class="code-block">
+void setup() {
+    pinMode(13, OUTPUT);  // Pin 13 als Ausgang
+}
+
+void loop() {
+    digitalWrite(13, HIGH);  // LED an
+    delay(1000);             // 1 Sekunde warten
+    digitalWrite(13, LOW);   // LED aus  
+    delay(1000);             // 1 Sekunde warten
+}</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Prüfungsstrategien -->
+        <div class="strategy-section">
+            <h2>📝 Prüfungsstrategien für das Abitur</h2>
+            
+            <h3>Zeitmanagement</h3>
+            <div class="method-card">
+                <div class="method-title">Optimale Zeiteinteilung (240 Minuten Prüfung):</div>
+                <ul class="checklist">
+                    <li><strong>10 Minuten:</strong> Aufgaben durchlesen und Strategie planen</li>
+                    <li><strong>200 Minuten:</strong> Bearbeitung (ca. 20-25 min pro Teilaufgabe)</li>
+                    <li><strong>30 Minuten:</strong> Kontrolle und Verbesserungen</li>
+                </ul>
+            </div>
+
+            <h3>Aufgaben-Prioritäten</h3>
+            <div class="method-card">
+                <div class="method-title">Smart priorisieren:</div>
+                <ol class="step-list">
+                    <li><strong>Einfache Aufgaben zuerst:</strong> Sichere Punkte sammeln</li>
+                    <li><strong>Bekannte Themen bevorzugen:</strong> Bei Wahlaufgaben</li>
+                    <li><strong>Teilpunkte mitnehmen:</strong> Auch bei unvollständigen Lösungen</li>
+                    <li><strong>Schwere Aufgaben am Ende:</strong> Wenn noch Zeit bleibt</li>
+                </ol>
+            </div>
+
+            <div class="warning-box">
+                <div class="warning-title">⚠️ Typische Prüfungsfehler vermeiden:</div>
+                <ul>
+                    <li>Zu lange bei einer Aufgabe "hängenbleiben"</li>
+                    <li>Zwischenergebnisse nicht notieren</li>
+                    <li>Einheiten vergessen</li>
+                    <li>Diagramme nicht beschriften</li>
+                    <li>Code ohne Kommentare schreiben</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Debugging-Strategien -->
+        <div class="strategy-section">
+            <h2>🐛 Debugging-Strategien</h2>
+            
+            <h3>Systematische Fehlersuche</h3>
+            <div class="method-card">
+                <div class="method-title">Der DETECT-Ansatz:</div>
+                <ol class="step-list">
+                    <li><strong>D</strong>escribe: Fehlersymptom genau beschreiben</li>
+                    <li><strong>E</strong>xamine: Code/Schaltung systematisch prüfen</li>
+                    <li><strong>T</strong>est: Hypothesen mit kleinen Tests prüfen</li>
+                    <li><strong>E</strong>valuate: Testergebnisse bewerten</li>
+                    <li><strong>C</strong>orrect: Fehler korrigieren</li>
+                    <li><strong>T</strong>est again: Lösung nochmal testen</li>
+                </ol>
+            </div>
+
+            <div class="tip-box">
+                <div class="tip-title">💡 Debugging-Tools nutzen:</div>
+                <ul>
+                    <li><strong>Digitaltechnik:</strong> Logikanalysator, Oszilloskop</li>
+                    <li><strong>Programmierung:</strong> Debugger, print-Statements</li>
+                    <li><strong>Netzwerk:</strong> ping, traceroute, Wireshark</li>
+                    <li><strong>Datenbank:</strong> EXPLAIN, Execution Plans</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Optimierungsstrategien -->
+        <div class="strategy-section">
+            <h2>⚡ Optimierungsstrategien</h2>
+            
+            <h3>Performance-Verbesserung</h3>
+            <div class="subject-grid">
+                <div class="method-card">
+                    <div class="method-title">Code-Optimierung:</div>
+                    <ul class="checklist">
+                        <li>Algorithmus-Komplexität reduzieren</li>
+                        <li>Unnötige Schleifen vermeiden</li>
+                        <li>Datenstrukturen optimieren</li>
+                        <li>Memory-Leaks verhindern</li>
+                    </ul>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-title">Schaltungs-Optimierung:</div>
+                    <ul class="checklist">
+                        <li>Gatter-Anzahl minimieren</li>
+                        <li>Propagation Delay reduzieren</li>
+                        <li>Stromverbrauch optimieren</li>
+                        <li>Platzbedarf verringern</li>
+                    </ul>
+                </div>
+
+                <div class="method-card">
+                    <div class="method-title">Datenbank-Optimierung:</div>
+                    <ul class="checklist">
+                        <li>Indizes strategisch setzen</li>
+                        <li>Normalisierung prüfen</li>
+                        <li>Query-Performance messen</li>
+                        <li>Redundanz eliminieren</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <a href="index.html" class="back-button">← Zurück zur Hauptseite</a>
+    </div>
+</body>
+</html>

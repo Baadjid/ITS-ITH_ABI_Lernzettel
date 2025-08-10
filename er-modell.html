@@ -1,0 +1,1207 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Entity-Relationship-Modell (ERM) - Abitur 2026 Lernzettel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .back-button {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .back-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: clamp(2rem, 4vw, 2.5rem);
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .content-section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem 2rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header .description {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .intro-box {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border-left: 5px solid var(--primary-color);
+        }
+
+        .intro-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .intro-box p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .definition-grid {
+            display: grid;
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .definition-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .definition-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .definition-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .definition-card p {
+            margin-bottom: 1rem;
+        }
+
+        .visual-example {
+            background: var(--code-bg);
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            text-align: center;
+            border: 2px solid var(--border-color);
+            margin: 1rem 0;
+        }
+
+        .symbol-display {
+            font-size: 2rem;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            display: inline-block;
+            min-width: 100px;
+            border: 2px solid var(--primary-color);
+            font-weight: bold;
+        }
+
+        .kardinalitaet-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .kardinalitaet-card {
+            background: var(--bg-white);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .kardinalitaet-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            transform: translateY(-2px);
+        }
+
+        .kardinalitaet-card h4 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .beispiel-box {
+            background: #f0f9ff;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .beispiel-box h5 {
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+            font-weight: bold;
+        }
+
+        .beispiel-box ul {
+            margin-left: 1.5rem;
+        }
+
+        .diagram-container {
+            background: white;
+            padding: 2rem;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .er-diagram {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .entity {
+            background: var(--bg-white);
+            border: 3px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 1rem 2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            min-width: 120px;
+            font-size: 1.1rem;
+        }
+
+        .relationship {
+            background: var(--warning-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            transform: rotate(45deg);
+            font-weight: bold;
+            font-size: 0.9rem;
+            border-radius: 4px;
+        }
+
+        .relationship-text {
+            transform: rotate(-45deg);
+        }
+
+        .attribute {
+            background: var(--success-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 25px;
+            font-size: 0.9rem;
+            margin: 0.3rem;
+            display: inline-block;
+        }
+
+        .primary-key {
+            background: var(--danger-color);
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+        .step-by-step {
+            counter-reset: step-counter;
+        }
+
+        .step {
+            counter-increment: step-counter;
+            background: var(--bg-light);
+            padding: 2rem;
+            margin-bottom: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-color);
+            position: relative;
+        }
+
+        .step::before {
+            content: "Schritt " counter(step-counter);
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.4rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .step h4 {
+            color: var(--primary-color);
+            margin: 0.5rem 0 1rem 0;
+            font-size: 1.3rem;
+        }
+
+        .step ul {
+            margin-left: 2rem;
+            margin-top: 1rem;
+        }
+
+        .step li {
+            margin-bottom: 0.5rem;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            margin: 1rem 0;
+            border: 1px solid var(--border-color);
+            overflow-x: auto;
+        }
+
+        .code-block .relation-name {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .code-block .primary-key-text {
+            text-decoration: underline;
+            font-weight: bold;
+        }
+
+        .code-block .foreign-key {
+            color: var(--danger-color);
+        }
+
+        .important-note {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 2px solid var(--warning-color);
+            margin: 2rem 0;
+        }
+
+        .important-note .icon {
+            font-size: 2rem;
+            float: left;
+            margin-right: 1rem;
+            color: var(--warning-color);
+        }
+
+        .important-note h4 {
+            color: #92400e;
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .important-note p {
+            color: #92400e;
+            line-height: 1.6;
+        }
+
+        .error-box {
+            background: #fef2f2;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--danger-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .error-box h4 {
+            color: #dc2626;
+            margin-bottom: 0.8rem;
+        }
+
+        .quiz-section {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 2px solid var(--success-color);
+            margin-top: 2rem;
+        }
+
+        .quiz-section h3 {
+            color: #166534;
+            margin-bottom: 1.5rem;
+            text-align: center;
+            font-size: 1.4rem;
+        }
+
+        .quiz-question {
+            background: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            border: 1px solid #bbf7d0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .quiz-question:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .quiz-question h5 {
+            color: #166534;
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .quiz-answer {
+            background: #f0fdf4;
+            padding: 1rem;
+            border-radius: 6px;
+            margin-top: 0.8rem;
+            border-left: 4px solid var(--success-color);
+            font-style: italic;
+            display: none;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: var(--bg-white);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .nav-button {
+            padding: 0.8rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-button.disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+        }
+
+        .attribute-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .attribute-box {
+            background: #f8fafc;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 15px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .kardinalitaet-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .er-diagram {
+                flex-direction: column;
+                gap: 15px;
+            }
+
+            .navigation {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .section-content {
+                padding: 1.5rem;
+            }
+        }
+
+        @keyframes fadeIn {
+            from { 
+                opacity: 0; 
+                transform: translateY(-10px); 
+            }
+            to { 
+                opacity: 1; 
+                transform: translateY(0); 
+            }
+        }
+
+        .fade-in {
+            animation: fadeIn 0.5s ease-in;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-button">← Zurück zur Übersicht</a>
+
+        <header class="header">
+            <h1>🗄️ Entity-Relationship-Modell (ERM)</h1>
+            <div class="subtitle">Die Grundlage für den Entwurf von Datenbanken</div>
+            <div style="margin-top: 1rem; font-size: 0.9rem; color: var(--text-light);">
+                BPE 9 - Datenbanksysteme | Abitur 2026 Informatik TG
+            </div>
+        </header>
+
+        <!-- Einführung -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🎯 Was ist das Entity-Relationship-Modell?</h2>
+                <div class="description">Grundlagen und Bedeutung für die Datenbankentwicklung</div>
+            </div>
+            <div class="section-content">
+                <div class="intro-box">
+                    <h3>Einfache Erklärung</h3>
+                    <p>
+                        Stell dir vor, du willst die Daten einer Schule organisieren: Schüler, Lehrer, Klassen, Fächer. 
+                        Das Entity-Relationship-Modell (ERM) ist wie ein <strong>Bauplan</strong>, mit dem du diese 
+                        komplexen Zusammenhänge <strong>übersichtlich darstellen</strong> kannst, bevor du eine 
+                        Datenbank erstellst.
+                    </p>
+                </div>
+
+                <div class="important-note">
+                    <div class="icon">💡</div>
+                    <h4>Warum ist das ERM wichtig?</h4>
+                    <p>
+                        Das ERM hilft uns, komplexe Datenstrukturen zu verstehen und zu planen, bevor wir sie 
+                        in eine Datenbank umsetzen. Es ist die <strong>konzeptionelle Grundlage</strong> für 
+                        jede professionelle Datenbankentwicklung.
+                    </p>
+                </div>
+
+                <div class="definition-grid">
+                    <div class="definition-card">
+                        <h4>📚 Definition</h4>
+                        <p>
+                            Das <strong>Entity-Relationship-Modell</strong> dient der Beschreibung von permanent 
+                            gespeicherten Daten und ihren Beziehungen aus fachlogischer Sicht.
+                        </p>
+                        <div class="visual-example">
+                            <strong>ERM = Entitäten + Beziehungen + Attribute</strong>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grundbegriffe -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🔤 Die wichtigsten Grundbegriffe</h2>
+                <div class="description">Entitäten, Attribute, Beziehungen und ihre Darstellung</div>
+            </div>
+            <div class="section-content">
+                <div class="definition-grid">
+                    <div class="definition-card">
+                        <h4>📦 Entität (Entity)</h4>
+                        <p>
+                            Ein <strong>individuelles, identifizierbares Objekt der realen Welt</strong>. 
+                            Zum Beispiel: Ein bestimmter Schüler (Max Mustermann), ein bestimmtes Auto, 
+                            ein bestimmtes Buch.
+                        </p>
+                        <div class="visual-example">
+                            <div class="symbol-display">SCHÜLER</div>
+                            <br>Darstellung: <strong>Rechteck</strong>
+                        </div>
+                        <div class="beispiel-box">
+                            <h5>Beispiele für Entitäten:</h5>
+                            <ul>
+                                <li>Schüler "Max Mustermann"</li>
+                                <li>Auto "Mercedes A-Klasse, Kennzeichen: VS-AB 123"</li>
+                                <li>Buch "Harry Potter Band 1, ISBN: 978-3-551-55167-2"</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="definition-card">
+                        <h4>📂 Entitätstyp</h4>
+                        <p>
+                            <strong>Zusammenfassung gleichartiger Entitäten</strong>. Beschreibt alle Objekte, 
+                            die die gleichen Eigenschaften haben.
+                        </p>
+                        <div class="visual-example">
+                            <div class="symbol-display">SCHÜLER</div>
+                            <br>Alle Schüler haben die gleichen <em>Arten</em> von Eigenschaften
+                        </div>
+                        <div class="beispiel-box">
+                            <h5>Unterschied Entität vs. Entitätstyp:</h5>
+                            <ul>
+                                <li><strong>Entitätstyp:</strong> SCHÜLER (die Kategorie)</li>
+                                <li><strong>Entität:</strong> Max Mustermann (eine konkrete Person)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="definition-card">
+                        <h4>🏷️ Attribut</h4>
+                        <p>
+                            Eine <strong>Eigenschaft einer Entität</strong>. Beschreibt, welche Informationen 
+                            wir über eine Entität speichern wollen.
+                        </p>
+                        <div class="visual-example">
+                            <div class="attribute">Name</div>
+                            <div class="attribute">Alter</div>
+                            <div class="attribute primary-key">Schüler-ID</div>
+                            <br><br>Darstellung: <strong>Oval</strong>
+                        </div>
+                        <div class="beispiel-box">
+                            <h5>Attribute eines Schülers:</h5>
+                            <ul>
+                                <li>Name, Vorname, Geburtsdatum</li>
+                                <li>Adresse, Telefonnummer</li>
+                                <li><strong>Schüler-ID</strong> (eindeutige Identifikation)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="definition-card">
+                        <h4>🔑 Primärschlüssel</h4>
+                        <p>
+                            Ein <strong>eindeutiges Attribut</strong>, das jede Entität eines Typs 
+                            unverwechselbar identifiziert.
+                        </p>
+                        <div class="visual-example">
+                            <div class="attribute primary-key">Schüler-ID</div>
+                            <br>Darstellung: <strong>Unterstrichenes Oval</strong>
+                        </div>
+                        <div class="beispiel-box">
+                            <h5>Warum brauchen wir Primärschlüssel?</h5>
+                            <ul>
+                                <li>Zwei Schüler können den gleichen Namen haben</li>
+                                <li>Die Schüler-ID ist aber <strong>immer einzigartig</strong></li>
+                                <li>So können wir jeden Schüler eindeutig identifizieren</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="definition-card">
+                        <h4>🔗 Beziehung (Relationship)</h4>
+                        <p>
+                            Ein <strong>Zusammenhang zwischen Entitäten</strong>. Beschreibt, wie verschiedene 
+                            Entitätstypen miteinander verbunden sind.
+                        </p>
+                        <div class="visual-example">
+                            <div class="relationship">
+                                <div class="relationship-text">besucht</div>
+                            </div>
+                            <br><br>Darstellung: <strong>Raute</strong>
+                        </div>
+                        <div class="beispiel-box">
+                            <h5>Beispiele für Beziehungen:</h5>
+                            <ul>
+                                <li>Schüler <strong>besucht</strong> Klasse</li>
+                                <li>Kunde <strong>bestellt</strong> Artikel</li>
+                                <li>Lehrer <strong>unterrichtet</strong> Fach</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Kardinalitäten -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🔢 Kardinalitäten - Wie viele gehören zusammen?</h2>
+                <div class="description">Die verschiedenen Arten von Beziehungen verstehen</div>
+            </div>
+            <div class="section-content">
+                <div class="intro-box">
+                    <h3>Was sind Kardinalitäten?</h3>
+                    <p>
+                        <strong>Kardinalitäten</strong> (auch Vielfachheiten genannt) beschreiben, 
+                        <strong>wie viele Entitäten eines Typs mit wie vielen Entitäten eines anderen Typs 
+                        in Beziehung stehen können</strong>.
+                    </p>
+                </div>
+
+                <div class="kardinalitaet-grid">
+                    <div class="kardinalitaet-card">
+                        <h4>1:1 Beziehung (Eins-zu-Eins)</h4>
+                        <div class="diagram-container">
+                            <div class="er-diagram">
+                                <div class="entity">KLASSE</div>
+                                <div>— 1 —</div>
+                                <div class="relationship">
+                                    <div class="relationship-text">hat</div>
+                                </div>
+                                <div>— 1 —</div>
+                                <div class="entity">KLASSENRAUM</div>
+                            </div>
+                        </div>
+                        <p><strong>Bedeutung:</strong> Jede Entität von A wird genau einer Entität von B zugeordnet und umgekehrt.</p>
+                        <div class="beispiel-box">
+                            <h5>Beispiel: Klasse ↔ Klassenraum</h5>
+                            <ul>
+                                <li>Eine Klasse hat <strong>genau einen</strong> Klassenraum</li>
+                                <li>Ein Klassenraum gehört <strong>genau einer</strong> Klasse</li>
+                                <li><strong>Kein</strong> Klassenraum wird von mehreren Klassen geteilt</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="kardinalitaet-card">
+                        <h4>1:n Beziehung (Eins-zu-Viele)</h4>
+                        <div class="diagram-container">
+                            <div class="er-diagram">
+                                <div class="entity">KLASSE</div>
+                                <div>— 1 —</div>
+                                <div class="relationship">
+                                    <div class="relationship-text">hat</div>
+                                </div>
+                                <div>— n —</div>
+                                <div class="entity">SCHÜLER</div>
+                            </div>
+                        </div>
+                        <p><strong>Bedeutung:</strong> Jede Entität von A kann mehreren Entitäten von B zugeordnet werden, aber jede Entität von B gehört nur zu genau einer Entität von A.</p>
+                        <div class="beispiel-box">
+                            <h5>Beispiel: Klasse ↔ Schüler</h5>
+                            <ul>
+                                <li>Eine Klasse hat <strong>viele</strong> Schüler (z.B. 25 Schüler)</li>
+                                <li>Ein Schüler gehört zu <strong>genau einer</strong> Klasse</li>
+                                <li><strong>Typisch für:</strong> Kunde → Bestellungen, Autor → Bücher</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="kardinalitaet-card">
+                        <h4>n:m Beziehung (Viele-zu-Viele)</h4>
+                        <div class="diagram-container">
+                            <div class="er-diagram">
+                                <div class="entity">SCHÜLER</div>
+                                <div>— n —</div>
+                                <div class="relationship">
+                                    <div class="relationship-text">belegt</div>
+                                </div>
+                                <div>— m —</div>
+                                <div class="entity">FACH</div>
+                            </div>
+                        </div>
+                        <p><strong>Bedeutung:</strong> Jede Entität von A kann mehreren Entitäten von B zugeordnet werden und umgekehrt.</p>
+                        <div class="beispiel-box">
+                            <h5>Beispiel: Schüler ↔ Fach</h5>
+                            <ul>
+                                <li>Ein Schüler belegt <strong>mehrere</strong> Fächer (Deutsch, Mathe, etc.)</li>
+                                <li>Ein Fach wird von <strong>vielen</strong> Schülern belegt</li>
+                                <li><strong>Besonderheit:</strong> Braucht eigene Tabelle in der Datenbank!</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="important-note">
+                    <div class="icon">⚠️</div>
+                    <h4>Wichtiger Hinweis zu n:m Beziehungen</h4>
+                    <p>
+                        n:m Beziehungen können <strong>nicht direkt in Tabellen umgesetzt</strong> werden! 
+                        Sie müssen in zwei 1:n Beziehungen aufgelöst werden, indem eine 
+                        <strong>zusätzliche Zwischentabelle</strong> erstellt wird.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Schritt-für-Schritt Anleitung -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>📝 ER-Diagramm erstellen - Schritt für Schritt</h2>
+                <div class="description">Praktische Anleitung mit einem konkreten Beispiel</div>
+            </div>
+            <div class="section-content">
+                <div class="intro-box">
+                    <h3>Aufgabenstellung</h3>
+                    <p>
+                        <strong>Beispiel:</strong> Wir wollen eine Datenbank für eine Bibliothek erstellen. 
+                        Bücher können von Mitgliedern ausgeliehen werden. Jedes Buch hat einen Autor.
+                    </p>
+                </div>
+
+                <div class="step-by-step">
+                    <div class="step">
+                        <h4>Entitätstypen identifizieren</h4>
+                        <p>
+                            Suche alle <strong>Hauptobjekte</strong> (Substantive) im Text:
+                        </p>
+                        <ul>
+                            <li><strong>MITGLIED</strong> - Personen, die Bücher ausleihen</li>
+                            <li><strong>BUCH</strong> - Die ausleihbaren Medien</li>
+                            <li><strong>AUTOR</strong> - Die Verfasser der Bücher</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h4>Attribute bestimmen</h4>
+                        <p>
+                            Welche Eigenschaften benötigen wir für jede Entität?
+                        </p>
+                        <div class="attribute-grid">
+                            <div class="attribute-box">
+                                <strong>AUTOR:</strong><br>
+                                • <span class="primary-key-text">Autor-ID</span><br>
+                                • Name<br>
+                                • Vorname<br>
+                                • Geburtsjahr<br>
+                                • Nationalität
+                            </div>
+                            <div class="attribute-box">
+                                <strong>MITGLIED:</strong><br>
+                                • <span class="primary-key-text">Mitglied-ID</span><br>
+                                • Name<br>
+                                • Vorname<br>
+                                • Adresse<br>
+                                • Telefon
+                            </div>
+                            <div class="attribute-box">
+                                <strong>BUCH:</strong><br>
+                                • <span class="primary-key-text">ISBN</span><br>
+                                • Titel<br>
+                                • Erscheinungsjahr<br>
+                                • Verlag<br>
+                                • Seitenzahl
+                            </div>
+                        </div>
+                        <p style="margin-top: 1rem; font-style: italic;">
+                            <strong>Hinweis:</strong> Unterstrichene Attribute sind Primärschlüssel!
+                        </p>
+                    </div>
+
+                    <div class="step">
+                        <h4>Beziehungen finden</h4>
+                        <p>
+                            Analysiere die <strong>Verben</strong> und Zusammenhänge im Text:
+                        </p>
+                        <ul>
+                            <li>Mitglied <strong>leiht aus</strong> Buch</li>
+                            <li>Autor <strong>schreibt</strong> Buch</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h4>Kardinalitäten bestimmen</h4>
+                        <p>
+                            Überlege für jede Beziehung: "Wie viele können zu wie vielen gehören?"
+                        </p>
+                        <div style="display: grid; gap: 1rem; margin-top: 1rem;">
+                            <div style="background: #f0f9ff; padding: 1rem; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                                <strong>Mitglied ↔ Buch (leiht aus):</strong><br>
+                                • Ein Mitglied kann <strong>mehrere</strong> Bücher ausleihen<br>
+                                • Ein Buch kann (zu verschiedenen Zeiten) von <strong>mehreren</strong> Mitgliedern ausgeliehen werden<br>
+                                → <strong>n:m Beziehung</strong>
+                            </div>
+                            <div style="background: #f0f9ff; padding: 1rem; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                                <strong>Autor ↔ Buch (schreibt):</strong><br>
+                                • Ein Autor kann <strong>mehrere</strong> Bücher schreiben<br>
+                                • Ein Buch hat (meist) <strong>einen</strong> Autor<br>
+                                → <strong>1:n Beziehung</strong>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="step">
+                        <h4>ER-Diagramm zeichnen</h4>
+                        <p>Nun setzen wir alles grafisch um:</p>
+                        <div class="diagram-container" style="background: #f8fafc;">
+                            <h5 style="margin-bottom: 1.5rem; color: var(--primary-color);">Bibliotheks-ER-Diagramm</h5>
+                            
+                            <!-- Autor-Buch Beziehung -->
+                            <div style="display: flex; align-items: center; justify-content: center; margin-bottom: 2rem; flex-wrap: wrap; gap: 15px;">
+                                <div class="entity">AUTOR</div>
+                                <div>— 1 —</div>
+                                <div class="relationship">
+                                    <div class="relationship-text">schreibt</div>
+                                </div>
+                                <div>— n —</div>
+                                <div class="entity">BUCH</div>
+                            </div>
+
+                            <!-- Mitglied-Buch Beziehung -->
+                            <div style="display: flex; align-items: center; justify-content: center; margin-top: 2rem; flex-wrap: wrap; gap: 15px;">
+                                <div class="entity">MITGLIED</div>
+                                <div>— n —</div>
+                                <div class="relationship">
+                                    <div class="relationship-text">leiht aus</div>
+                                </div>
+                                <div>— m —</div>
+                                <div class="entity">BUCH</div>
+                            </div>
+
+                            <!-- Attribute anzeigen -->
+                            <div style="margin-top: 2rem; display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem;">
+                                <div>
+                                    <strong>AUTOR Attribute:</strong><br>
+                                    <div class="attribute primary-key">Autor-ID</div>
+                                    <div class="attribute">Name</div>
+                                    <div class="attribute">Vorname</div>
+                                </div>
+                                <div>
+                                    <strong>BUCH Attribute:</strong><br>
+                                    <div class="attribute primary-key">ISBN</div>
+                                    <div class="attribute">Titel</div>
+                                    <div class="attribute">Erscheinungsjahr</div>
+                                </div>
+                                <div>
+                                    <strong>MITGLIED Attribute:</strong><br>
+                                    <div class="attribute primary-key">Mitglied-ID</div>
+                                    <div class="attribute">Name</div>
+                                    <div class="attribute">Vorname</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vom ER-Modell zur Datenbank -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🔄 Vom ER-Modell zum Relationenmodell</h2>
+                <div class="description">Wie wird das ER-Diagramm zu Datenbanktabellen?</div>
+            </div>
+            <div class="section-content">
+                <div class="intro-box">
+                    <h3>Was ist das Relationenmodell?</h3>
+                    <p>
+                        Das <strong>Relationenmodell</strong> ist die Kurzschreibweise für Tabellen einer relationalen Datenbank. 
+                        Es zeigt alle Entitätstypen mit ihren Primär- und Fremdschlüsseln in einer kompakten Form.
+                    </p>
+                </div>
+
+                <div class="step-by-step">
+                    <div class="step">
+                        <h4>Grundregeln für die Umwandlung</h4>
+                        <ul>
+                            <li><strong>Jeder Entitätstyp</strong> wird zu einer Tabelle</li>
+                            <li><strong>Primärschlüssel</strong> werden unterstrichen dargestellt</li>
+                            <li><strong>Fremdschlüssel</strong> werden mit Pfeil nach oben (↑) gekennzeichnet</li>
+                            <li><strong>1:n Beziehungen:</strong> Primärschlüssel von "1" wird Fremdschlüssel bei "n"</li>
+                            <li><strong>n:m Beziehungen:</strong> Bekommen eine eigene Zwischentabelle</li>
+                        </ul>
+                    </div>
+
+                    <div class="step">
+                        <h4>Unser Bibliotheks-Beispiel umwandeln</h4>
+                        
+                        <div class="code-block">
+                            <strong style="color: var(--primary-color); font-size: 1.1rem;">Relationenmodell:</strong><br><br>
+                            
+                            <span class="relation-name">AUTOR</span>(<span class="primary-key-text">Autor-ID</span>, Name, Vorname, Geburtsjahr, Nationalität)<br><br>
+                            
+                            <span class="relation-name">BUCH</span>(<span class="primary-key-text">ISBN</span>, Titel, Erscheinungsjahr, Verlag, Seitenzahl, <span class="foreign-key">↑Autor-ID</span>)<br><br>
+                            
+                            <span class="relation-name">MITGLIED</span>(<span class="primary-key-text">Mitglied-ID</span>, Name, Vorname, Adresse, Telefon)<br><br>
+                            
+                            <span class="relation-name">AUSLEIHE</span>(<span class="foreign-key">↑</span><span class="primary-key-text">Mitglied-ID</span>, <span class="foreign-key">↑</span><span class="primary-key-text">ISBN</span>, Ausleih-Datum, Rückgabe-Datum)
+                        </div>
+
+                        <div style="margin-top: 1rem;">
+                            <div class="beispiel-box">
+                                <h5>Erklärung der Umwandlung:</h5>
+                                <p>
+                                    <strong>1:n Beziehung (Autor → Buch):</strong><br>
+                                    • Die Autor-ID wird als Fremdschlüssel in die BUCH-Tabelle eingefügt<br><br>
+                                    
+                                    <strong>n:m Beziehung (Mitglied ↔ Buch):</strong><br>
+                                    • Eine neue Tabelle "AUSLEIHE" wird erstellt<br>
+                                    • Sie enthält die Primärschlüssel beider Entitätstypen als Fremdschlüssel<br>
+                                    • Zusätzliche Attribute der Beziehung (Daten) können hinzugefügt werden
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Häufige Fehler -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>⚠️ Häufige Fehler vermeiden</h2>
+                <div class="description">Typische Stolperfallen beim Erstellen von ER-Modellen</div>
+            </div>
+            <div class="section-content">
+                <div style="display: grid; gap: 1.5rem;">
+                    <div class="error-box">
+                        <h4>❌ Fehler 1: Falsche Kardinalitäten</h4>
+                        <p><strong>Problem:</strong> "Ein Schüler besucht eine Klasse" wird als n:m interpretiert</p>
+                        <p><strong>Richtig:</strong> Das ist eine 1:n Beziehung (Eine Klasse hat viele Schüler, ein Schüler gehört zu einer Klasse)</p>
+                    </div>
+
+                    <div class="error-box">
+                        <h4>❌ Fehler 2: Fehlende Primärschlüssel</h4>
+                        <p><strong>Problem:</strong> Entitäten ohne eindeutige Identifikation</p>
+                        <p><strong>Richtig:</strong> Jeder Entitätstyp braucht mindestens ein Attribut als Primärschlüssel</p>
+                    </div>
+
+                    <div class="error-box">
+                        <h4>❌ Fehler 3: Verben als Entitäten</h4>
+                        <p><strong>Problem:</strong> "Bestellung" als Entität statt als Beziehung</p>
+                        <p><strong>Richtig:</strong> Unterscheide zwischen Objekten (Entitäten) und Handlungen (Beziehungen)</p>
+                    </div>
+
+                    <div class="error-box">
+                        <h4>❌ Fehler 4: n:m Beziehungen nicht auflösen</h4>
+                        <p><strong>Problem:</strong> Vergessen, dass n:m Beziehungen eine eigene Tabelle brauchen</p>
+                        <p><strong>Richtig:</strong> Immer eine Zwischentabelle für n:m Beziehungen erstellen</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Übungsaufgaben -->
+        <section class="quiz-section">
+            <h3>🧠 Teste dein Wissen!</h3>
+            
+            <div class="quiz-question" onclick="toggleAnswer(this)">
+                <h5>Aufgabe 1: Kardinalitäten bestimmen</h5>
+                <p>Ein Kunde kann mehrere Bestellungen aufgeben. Jede Bestellung gehört zu genau einem Kunden. 
+                   Welche Kardinalität hat die Beziehung "Kunde bestellt"?</p>
+                <div class="quiz-answer">
+                    <strong>Antwort:</strong> 1:n Beziehung<br>
+                    <em>Begründung: Ein Kunde (1) kann mehrere Bestellungen (n) haben, aber jede Bestellung gehört zu genau einem Kunden.</em>
+                </div>
+            </div>
+
+            <div class="quiz-question" onclick="toggleAnswer(this)">
+                <h5>Aufgabe 2: Entitäten identifizieren</h5>
+                <p>"In einer Firma arbeiten Mitarbeiter an verschiedenen Projekten. Jedes Projekt hat einen Projektleiter."</p>
+                <p>Nenne die Entitätstypen und eine mögliche Beziehung!</p>
+                <div class="quiz-answer">
+                    <strong>Entitätstypen:</strong> MITARBEITER, PROJEKT<br>
+                    <strong>Beziehungen:</strong> "arbeitet an" (n:m), "leitet" (1:n)<br>
+                    <em>Ein Mitarbeiter kann an mehreren Projekten arbeiten, ein Projekt kann mehrere Mitarbeiter haben.</em>
+                </div>
+            </div>
+
+            <div class="quiz-question" onclick="toggleAnswer(this)">
+                <h5>Aufgabe 3: Relationenmodell erstellen</h5>
+                <p>Wandle folgendes ER-Diagramm in ein Relationenmodell um:<br>
+                   STUDENT (1) ← wohnt in → (n) ZIMMER</p>
+                <div class="quiz-answer">
+                    <strong>Relationenmodell:</strong><br>
+                    <div class="code-block" style="margin-top: 0.5rem;">
+                        <span class="relation-name">STUDENT</span>(<span class="primary-key-text">Matrikel-Nr</span>, Name, Vorname, <span class="foreign-key">↑Zimmer-Nr</span>)<br>
+                        <span class="relation-name">ZIMMER</span>(<span class="primary-key-text">Zimmer-Nr</span>, Stockwerk, Größe)
+                    </div>
+                    <em>Der Primärschlüssel von ZIMMER wird als Fremdschlüssel zu STUDENT.</em>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <a href="datenbank-grundlagen.html" class="nav-button">← Datenbank-Grundlagen</a>
+            <div style="text-align: center;">
+                <strong>Entity-Relationship-Modell</strong><br>
+                <small>BPE 9 - Datenbanksysteme</small>
+            </div>
+            <a href="sql.html" class="nav-button">SQL Grundlagen →</a>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling für Anker-Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Hover-Effekte für Definition Cards
+        document.querySelectorAll('.definition-card, .kardinalitaet-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-4px)';
+                this.style.boxShadow = '0 8px 25px rgba(0, 0, 0, 0.15)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+                this.style.boxShadow = 'none';
+            });
+        });
+
+        // Quiz-Antworten Toggle-Funktion
+        function toggleAnswer(questionElement) {
+            const answer = questionElement.querySelector('.quiz-answer');
+            if (answer.style.display === 'none' || answer.style.display === '') {
+                answer.style.display = 'block';
+                answer.classList.add('fade-in');
+            } else {
+                answer.style.display = 'none';
+                answer.classList.remove('fade-in');
+            }
+        }
+
+        // Initialisierung der Quiz-Antworten (versteckt)
+        document.addEventListener('DOMContentLoaded', function() {
+            document.querySelectorAll('.quiz-answer').forEach(answer => {
+                answer.style.display = 'none';
+            });
+        });
+
+        // Navigation Button Funktionalität
+        document.querySelectorAll('.nav-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (!this.href.includes('index.html')) {
+                    e.preventDefault();
+                    alert('Diese Seite wird noch erstellt - folgt in Kürze!');
+                }
+            });
+        });
+
+        // Scroll-to-Top Funktion bei langem Inhalt
+        let scrollToTopButton = document.createElement('button');
+        scrollToTopButton.innerHTML = '↑';
+        scrollToTopButton.style.cssText = `
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 20px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        `;
+        
+        scrollToTopButton.addEventListener('click', function() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+        
+        document.body.appendChild(scrollToTopButton);
+        
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                scrollToTopButton.style.display = 'block';
+            } else {
+                scrollToTopButton.style.display = 'none';
+            }
+        });
+
+        // Print-Styling hinzufügen
+        const printStyle = document.createElement('style');
+        printStyle.media = 'print';
+        printStyle.textContent = `
+            @media print {
+                body { background: white !important; }
+                .back-button, .navigation, .quiz-section { display: none !important; }
+                .content-section { break-inside: avoid; }
+                .step { break-inside: avoid; }
+                * { color-adjust: exact !important; }
+            }
+        `;
+        document.head.appendChild(printStyle);
+    </script>
+</body>
+</html>

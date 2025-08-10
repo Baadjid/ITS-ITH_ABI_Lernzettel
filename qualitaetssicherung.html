@@ -1,0 +1,1761 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Qualitätssicherung - Abitur 2026 Lernzettel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --highlight-bg: #fef3c7;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: #bfdbfe;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: white;
+        }
+
+        .content-section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .definition-box {
+            background: var(--highlight-bg);
+            border-left: 4px solid var(--warning-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .definition-box h3 {
+            color: var(--warning-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .example-box {
+            background: #f0fdf4;
+            border-left: 4px solid var(--success-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .example-box h3 {
+            color: var(--success-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border-left: 4px solid var(--danger-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-box h3 {
+            color: var(--danger-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .concept-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            transition: transform 0.2s ease;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .concept-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .process-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .process-step {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 1.5rem;
+            border-radius: 25px;
+            text-align: center;
+            flex: 1;
+            min-width: 150px;
+            position: relative;
+        }
+
+        .process-step:not(:last-child)::after {
+            content: '→';
+            position: absolute;
+            right: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-size: 1.5rem;
+            font-weight: bold;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: var(--bg-light);
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-block pre {
+            margin: 0;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .code-section {
+            margin-bottom: 1.5rem;
+        }
+
+        .code-section-title {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px 4px 0 0;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .code-section-content {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-top: none;
+            padding: 1rem;
+            border-radius: 0 0 4px 4px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+        }
+
+        .highlight {
+            background: var(--highlight-bg);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-weight: bold;
+        }
+
+        .tabs {
+            display: flex;
+            background: var(--bg-light);
+            border-radius: 8px 8px 0 0;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            border-bottom: none;
+        }
+
+        .tab {
+            padding: 1rem 2rem;
+            cursor: pointer;
+            background: var(--bg-light);
+            border-right: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .tab:hover, .tab.active {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .tab-content {
+            background: var(--bg-white);
+            padding: 2rem;
+            border: 1px solid var(--border-color);
+            border-top: none;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .tab-pane {
+            display: none;
+        }
+
+        .tab-pane.active {
+            display: block;
+        }
+
+        .navigation {
+            background: var(--bg-white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .nav-link {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover {
+            background: var(--secondary-color);
+            transform: translateY(-1px);
+        }
+
+        .nav-link.disabled {
+            background: var(--text-light);
+            pointer-events: none;
+        }
+
+        /* Scroll to Top Button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            font-size: 1.5rem;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .scroll-to-top.show {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Bottom Navigation */
+        .bottom-nav {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            border: 1px solid var(--border-color);
+            text-align: center;
+        }
+
+        .bottom-nav .nav-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 1rem 2rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin: 0 0.5rem;
+        }
+
+        .bottom-nav .nav-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .process-flow {
+                flex-direction: column;
+            }
+
+            .process-step:not(:last-child)::after {
+                content: '↓';
+                right: 50%;
+                top: auto;
+                bottom: -20px;
+                transform: translateX(50%);
+            }
+
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .tabs {
+                flex-wrap: wrap;
+            }
+
+            .tab {
+                min-width: 120px;
+                text-align: center;
+            }
+
+            .bottom-nav .nav-button {
+                display: block;
+                margin: 0.5rem 0;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🛡️ Qualitätssicherung</h1>
+            <p>Systemgestaltung & Projektarbeit - Abitur 2026</p>
+            <div class="breadcrumb">
+                <a href="index.html">🏠 Hauptseite</a> » 
+                <a href="systemgestaltung.html">📋 Systemgestaltung & Projektarbeit</a> » 
+                <span>🛡️ Qualitätssicherung</span>
+            </div>
+        </header>
+
+        <nav class="navigation">
+            <a href="projektmanagement.html" class="nav-link">
+                ⬅️ Projektmanagement
+            </a>
+            <span>Lernfortschritt: 4/4 Themen</span>
+            <a href="index.html" class="nav-link">
+                📋 Zurück zur Übersicht
+            </a>
+        </nav>
+
+        <!-- 1. Was ist Qualitätssicherung? -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🎯 Was ist Qualitätssicherung?</h2>
+                <p>Die Grundlagen verstehen - Von der Theorie zur Praxis</p>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <h3>📖 Definition: Qualitätssicherung (QS)</h3>
+                    <p><strong>Qualitätssicherung</strong> umfasst alle geplanten und systematischen Tätigkeiten, die sicherstellen, dass ein Produkt, eine Software oder ein System die gestellten Anforderungen erfüllt und fehlerfrei funktioniert.</p>
+                    
+                    <p><strong>Einfach erklärt:</strong> Stell dir vor, du backst einen Kuchen. Qualitätssicherung wäre, wenn du:</p>
+                    <ul style="margin-top: 1rem;">
+                        <li>✅ Das Rezept vorher überprüfst</li>
+                        <li>✅ Die Zutaten kontrollierst</li>
+                        <li>✅ Während des Backens die Temperatur überwachst</li>
+                        <li>✅ Den fertigen Kuchen testest, bevor Gäste kommen</li>
+                    </ul>
+                </div>
+
+                <div class="definition-box">
+                    <h3>🧠 Wichtige Begriffe für die Prüfung</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Begriff</th>
+                                    <th>Definition</th>
+                                    <th>Beispiel</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Verifikation</strong></td>
+                                    <td>"Bauen wir das Produkt richtig?"</td>
+                                    <td>Code entspricht den Spezifikationen</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Validation</strong></td>
+                                    <td>"Bauen wir das richtige Produkt?"</td>
+                                    <td>Software erfüllt Benutzerbedürfnisse</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Black-Box Test</strong></td>
+                                    <td>Testen ohne Code-Kenntnisse</td>
+                                    <td>Eingabe → erwartete Ausgabe</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>White-Box Test</strong></td>
+                                    <td>Testen mit Code-Kenntnissen</td>
+                                    <td>Alle Pfade im Code durchlaufen</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Test Coverage</strong></td>
+                                    <td>Anteil getesteter Code</td>
+                                    <td>80% der Codezeilen wurden getestet</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Definition of Done</strong></td>
+                                    <td>Kriterien für "fertige" Arbeit</td>
+                                    <td>Code + Tests + Review + Dokumentation</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h3>🎯 Warum ist Qualitätssicherung wichtig?</h3>
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>💰 Kostenersparnis</h4>
+                        <p>Fehler frühzeitig zu finden ist <span class="highlight">100x günstiger</span> als sie später beim Kunden zu beheben.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>😊 Kundenzufriedenheit</h4>
+                        <p>Zufriedene Kunden kaufen wieder und empfehlen das Produkt weiter.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🛡️ Risikominimierung</h4>
+                        <p>Verhindert teure Rückrufaktionen und Imageschäden.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>⚖️ Rechtssicherheit</h4>
+                        <p>Erfüllung gesetzlicher Vorschriften und Standards.</p>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h3>🌟 Beispiel aus der Praxis</h3>
+                    <p><strong>Szenario:</strong> Eine Banking-App wird entwickelt.</p>
+                    <p><strong>Ohne QS:</strong> App geht online → Benutzer können keine Überweisungen tätigen → Millionen Verlust → Vertrauensverlust</p>
+                    <p><strong>Mit QS:</strong> Alle Funktionen werden getestet → Fehler werden vor Release gefunden → App funktioniert perfekt → Zufriedene Kunden</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- 2. QS in der Softwareentwicklung -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>💻 Qualitätssicherung in der Softwareentwicklung</h2>
+                <p>Spezielle Methoden und Techniken für Software-Projekte</p>
+            </div>
+            <div class="section-content">
+                <div class="tabs">
+                    <div class="tab active" onclick="showTab('verification')">Verifikation</div>
+                    <div class="tab" onclick="showTab('validation')">Validation</div>
+                    <div class="tab" onclick="showTab('testing')">Testing</div>
+                    <div class="tab" onclick="showTab('review')">Code Review</div>
+                </div>
+                
+                <div class="tab-content">
+                    <div class="tab-pane active" id="verification">
+                        <h3>🔍 Verifikation - "Bauen wir das Produkt richtig?"</h3>
+                        <p>Verifikation überprüft, ob das System nach den <strong>technischen Spezifikationen</strong> entwickelt wurde.</p>
+                        
+                        <div class="example-box">
+                            <h3>💡 Einfaches Beispiel</h3>
+                            <p><strong>Spezifikation:</strong> "Das Login-Formular soll ein Passwort-Feld haben."</p>
+                            <p><strong>Verifikation:</strong> ✅ Ist ein Passwort-Feld vorhanden? → JA = Verifikation erfolgreich</p>
+                        </div>
+
+                        <h4>Verifikationsmethoden:</h4>
+                        <ul>
+                            <li><strong>Statische Analyse:</strong> Code ohne Ausführung prüfen</li>
+                            <li><strong>Inspektion:</strong> Manuelle Überprüfung der Dokumente</li>
+                            <li><strong>Walkthrough:</strong> Schritt-für-Schritt Durchgang</li>
+                            <li><strong>Unit Tests:</strong> Einzelne Programmteile testen</li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-pane" id="validation">
+                        <h3>✅ Validation - "Bauen wir das richtige Produkt?"</h3>
+                        <p>Validation überprüft, ob das System die <strong>Benutzerbedürfnisse</strong> erfüllt.</p>
+                        
+                        <div class="example-box">
+                            <h3>💡 Einfaches Beispiel</h3>
+                            <p><strong>Benutzerbedürfnis:</strong> "Ich möchte mich schnell einloggen können."</p>
+                            <p><strong>Validation:</strong> ✅ Dauert der Login weniger als 3 Sekunden? → JA = Validation erfolgreich</p>
+                        </div>
+
+                        <h4>Validationsmethoden:</h4>
+                        <ul>
+                            <li><strong>Akzeptanztests:</strong> Kunde testet die Funktionen</li>
+                            <li><strong>Usability Tests:</strong> Benutzerfreundlichkeit prüfen</li>
+                            <li><strong>Beta-Tests:</strong> Echte Benutzer testen vorab</li>
+                            <li><strong>Feldtests:</strong> Test unter realen Bedingungen</li>
+                        </ul>
+                    </div>
+
+                    <div class="tab-pane" id="testing">
+                        <h3>🧪 Software-Testing</h3>
+                        <p>Systematisches Ausführen von Software um Fehler zu finden.</p>
+
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Testart</th>
+                                        <th>Was wird getestet?</th>
+                                        <th>Wann?</th>
+                                        <th>Beispiel</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><strong>Unit Tests</strong></td>
+                                        <td>Einzelne Funktionen</td>
+                                        <td>Während Entwicklung</td>
+                                        <td>Login-Funktion isoliert testen</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Integration Tests</strong></td>
+                                        <td>Zusammenspiel von Modulen</td>
+                                        <td>Nach Unit Tests</td>
+                                        <td>Login + Datenbank zusammen</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>System Tests</strong></td>
+                                        <td>Gesamtes System</td>
+                                        <td>Vor Release</td>
+                                        <td>Komplette App testen</td>
+                                    </tr>
+                                    <tr>
+                                        <td><strong>Akzeptanz Tests</strong></td>
+                                        <td>Kundenanforderungen</td>
+                                        <td>Vor Übergabe</td>
+                                        <td>Kunde testet alle Features</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="review">
+                        <h3>👀 Code Review</h3>
+                        <p>Systematische Überprüfung von Programmcode durch andere Entwickler.</p>
+
+                        <h4>Was wird beim Code Review geprüft?</h4>
+                        <div class="concept-grid">
+                            <div class="concept-card">
+                                <h4>📝 Lesbarkeit</h4>
+                                <p>Ist der Code für andere verständlich?</p>
+                            </div>
+                            <div class="concept-card">
+                                <h4>🐛 Fehler</h4>
+                                <p>Gibt es logische oder syntaktische Fehler?</p>
+                            </div>
+                            <div class="concept-card">
+                                <h4>📏 Standards</h4>
+                                <p>Werden Coding-Standards eingehalten?</p>
+                            </div>
+                            <div class="concept-card">
+                                <h4>🏗️ Architektur</h4>
+                                <p>Passt der Code zur Gesamtarchitektur?</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 3. Qualitätssicherung im agilen Umfeld -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>⚡ QS im Agilen Umfeld (SCRUM)</h2>
+                <p>Wie Qualitätssicherung in modernen Entwicklungsprojekten funktioniert</p>
+            </div>
+            <div class="section-content">
+                <p>In agilen Projekten (wie <strong>SCRUM</strong>) wird Qualitätssicherung <strong>kontinuierlich</strong> durchgeführt, nicht erst am Ende.</p>
+
+                <div class="definition-box">
+                    <h3>🔄 Agiles Manifest & Qualität</h3>
+                    <p>Das Agile Manifest betont: <em>"Funktionierende Software ist das wichtigste Fortschrittsmaß"</em> und <em>"Ständiges Augenmerk auf technische Exzellenz und gutes Design fördert Agilität."</em></p>
+                </div>
+
+                <h3>🔄 QS in SCRUM-Prozessen</h3>
+                <div class="process-flow">
+                    <div class="process-step">Sprint Planning<br><small>QS-Kriterien definieren</small></div>
+                    <div class="process-step">Daily Development<br><small>Kontinuierliche Tests</small></div>
+                    <div class="process-step">Sprint Review<br><small>Demo & Feedback</small></div>
+                    <div class="process-step">Retrospektive<br><small>QS-Prozess verbessern</small></div>
+                </div>
+
+                <h4>🎯 Definition of Done (DoD)</h4>
+                <div class="example-box">
+                    <h3>📋 Beispiel: Definition of Done für eine User Story</h3>
+                    <p>Eine Funktion gilt nur als "fertig", wenn:</p>
+                    <ul>
+                        <li>✅ Code geschrieben und getestet</li>
+                        <li>✅ Unit Tests geschrieben (mindestens 80% Abdeckung)</li>
+                        <li>✅ Code Review durchgeführt</li>
+                        <li>✅ Integration Tests erfolgreich</li>
+                        <li>✅ Dokumentation aktualisiert</li>
+                        <li>✅ Kunde hat die Funktion abgenommen</li>
+                    </ul>
+                </div>
+
+                <h4>🔄 Continuous Integration/Continuous Deployment (CI/CD)</h4>
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>🔄 Continuous Integration</h4>
+                        <p>Code wird <strong>täglich</strong> zusammengeführt und automatisch getestet.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🚀 Continuous Deployment</h4>
+                        <p>Erfolgreiche Tests führen zu <strong>automatischer</strong> Bereitstellung.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🤖 Automatisierung</h4>
+                        <p><strong>Alle Tests</strong> laufen automatisch bei jeder Code-Änderung.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>⚡ Schnelles Feedback</h4>
+                        <p>Fehler werden <strong>sofort</strong> erkannt und gemeldet.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 4. Testverfahren und -methoden -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🔬 Testverfahren und -methoden</h2>
+                <p>Systematisches Vorgehen beim Testen von Software</p>
+            </div>
+            <div class="section-content">
+                <h3>🎯 Testarten nach Zielrichtung</h3>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Testtyp</th>
+                                <th>Ziel</th>
+                                <th>Methode</th>
+                                <th>Beispiel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Funktionale Tests</strong></td>
+                                <td>Funktionen prüfen</td>
+                                <td>Black-Box</td>
+                                <td>"Kann ich mich einloggen?"</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Performance Tests</strong></td>
+                                <td>Geschwindigkeit prüfen</td>
+                                <td>Last-Tests</td>
+                                <td>"Login unter 2 Sekunden?"</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Security Tests</strong></td>
+                                <td>Sicherheit prüfen</td>
+                                <td>Penetration</td>
+                                <td>"Können Hacker eindringen?"</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Usability Tests</strong></td>
+                                <td>Benutzerfreundlichkeit</td>
+                                <td>User-Tests</td>
+                                <td>"Finden Benutzer den Login?"</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>🔍 Black-Box vs. White-Box Testing</h3>
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>⬛ Black-Box Testing</h4>
+                        <p><strong>Wie:</strong> Tester kennt den Code nicht</p>
+                        <p><strong>Fokus:</strong> Eingabe → Erwartete Ausgabe</p>
+                        <p><strong>Beispiel:</strong> Login mit falschen Daten → Fehlermeldung erwartet</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>⬜ White-Box Testing</h4>
+                        <p><strong>Wie:</strong> Tester kennt den Code</p>
+                        <p><strong>Fokus:</strong> Interne Logik und Pfade</p>
+                        <p><strong>Beispiel:</strong> Werden alle if-else Zweige durchlaufen?</p>
+                    </div>
+                </div>
+
+                <h3>📊 Testabdeckung (Test Coverage)</h3>
+                <div class="definition-box">
+                    <h3>📈 Was ist Testabdeckung?</h3>
+                    <p><strong>Testabdeckung</strong> misst, welcher Anteil des Codes durch Tests geprüft wurde.</p>
+                    
+                    <div class="code-section">
+                        <div class="code-section-title">💻 Beispiel: Testabdeckung berechnen</div>
+                        <div class="code-section-content">
+                            <pre>Gesamte Codezeilen: 1000
+Getestete Codezeilen: 800
+Testabdeckung = 800/1000 = 80%</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h3>⚠️ Wichtiger Hinweis</h3>
+                    <p>100% Testabdeckung bedeutet NICHT 100% fehlerfreie Software! Es bedeutet nur, dass jede Codezeile mindestens einmal ausgeführt wurde.</p>
+                </div>
+
+                <h4>🎯 Testabdeckungsarten:</h4>
+                <ul>
+                    <li><strong>Statement Coverage:</strong> Wurden alle Codezeilen ausgeführt?</li>
+                    <li><strong>Branch Coverage:</strong> Wurden alle Verzweigungen getestet?</li>
+                    <li><strong>Function Coverage:</strong> Wurden alle Funktionen aufgerufen?</li>
+                    <li><strong>Condition Coverage:</strong> Wurden alle Bedingungen getestet?</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- 5. Qualitätssicherung in Projekten -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>📋 QS in Projekten planen und durchführen</h2>
+                <p>Von der Planung bis zur Umsetzung - Der komplette QS-Prozess</p>
+            </div>
+            <div class="section-content">
+                <h3>📋 QS-Plan erstellen</h3>
+                <p>Ein guter Qualitätssicherungsplan ist wie ein Bauplan für ein Haus - ohne ihn wird das Ergebnis chaotisch.</p>
+
+                <div class="process-flow">
+                    <div class="process-step">1. Ziele definieren<br><small>Was soll erreicht werden?</small></div>
+                    <div class="process-step">2. Standards festlegen<br><small>Welche Regeln gelten?</small></div>
+                    <div class="process-step">3. Methoden wählen<br><small>Wie wird getestet?</small></div>
+                    <div class="process-step">4. Ressourcen planen<br><small>Wer macht was wann?</small></div>
+                    <div class="process-step">5. Durchführung<br><small>Tests ausführen</small></div>
+                    <div class="process-step">6. Bewertung<br><small>Ergebnisse analysieren</small></div>
+                </div>
+
+                <h4>📊 Beispiel: QS-Plan für eine Schulverwaltungs-Software</h4>
+                <div class="example-box">
+                    <h3>🎯 Projekt: Digitales Klassenbuch</h3>
+                    
+                    <h4>1. QS-Ziele:</h4>
+                    <ul>
+                        <li>✅ Alle Noten können korrekt eingegeben werden</li>
+                        <li>✅ Datenschutz wird zu 100% eingehalten</li>
+                        <li>✅ System ist für 500 gleichzeitige Benutzer ausgelegt</li>
+                        <li>✅ Benutzerfreundlichkeit: Lehrer finden alle Funktionen in unter 30 Sekunden</li>
+                    </ul>
+
+                    <h4>2. Standards & Richtlinien:</h4>
+                    <ul>
+                        <li>🔒 DSGVO-Konformität</li>
+                        <li>📱 Responsive Design (funktioniert auf allen Geräten)</li>
+                        <li>♿ Barrierefreiheit (WCAG 2.1)</li>
+                        <li>⚡ Ladezeiten unter 3 Sekunden</li>
+                    </ul>
+
+                    <h4>3. Testmethoden:</h4>
+                    <ul>
+                        <li>🧪 Unit Tests für alle Berechnungen</li>
+                        <li>🔗 Integrationstests für Datenbank-Verbindungen</li>
+                        <li>👥 Usability Tests mit echten Lehrern</li>
+                        <li>🚀 Performance Tests mit 500 simulierten Benutzern</li>
+                        <li>🔒 Security Tests (Penetrationstests)</li>
+                    </ul>
+                </div>
+
+                <h3>📈 QS-Metriken und KPIs</h3>
+                <p>Um den Erfolg der Qualitätssicherung zu messen, brauchen wir konkrete Zahlen:</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Metrik</th>
+                                <th>Beschreibung</th>
+                                <th>Zielwert</th>
+                                <th>Wie messen?</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Defect Density</strong></td>
+                                <td>Fehler pro Codezeile</td>
+                                <td>< 0.5 Fehler/1000 LOC</td>
+                                <td>Gefundene Fehler ÷ Lines of Code</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Test Pass Rate</strong></td>
+                                <td>Anteil erfolgreicher Tests</td>
+                                <td>> 95%</td>
+                                <td>Erfolgreiche Tests ÷ Alle Tests</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Code Coverage</strong></td>
+                                <td>Testabdeckung des Codes</td>
+                                <td>> 80%</td>
+                                <td>Automatische Messung durch Tools</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mean Time to Fix</strong></td>
+                                <td>Durchschnittliche Reparaturzeit</td>
+                                <td>< 4 Stunden</td>
+                                <td>Zeit vom Fehlerreport bis Fix</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>🚨 Fehlermanagement</h3>
+                <p>Wenn Fehler gefunden werden, müssen sie systematisch behandelt werden:</p>
+
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>🔍 1. Fehler entdecken</h4>
+                        <p>Durch Tests, Code Reviews oder Benutzer-Feedback</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>📝 2. Fehler dokumentieren</h4>
+                        <p>In Bug-Tracking-System erfassen (z.B. Jira, GitHub Issues)</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>⚖️ 3. Fehler bewerten</h4>
+                        <p>Priorität festlegen: Kritisch, Hoch, Mittel, Niedrig</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🔧 4. Fehler beheben</h4>
+                        <p>Entwickler behebt den Fehler und testet die Lösung</p>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h3>🐛 Beispiel: Fehlerklassifikation</h3>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Priorität</th>
+                                    <th>Beispiel</th>
+                                    <th>Reaktionszeit</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr style="background: #fee2e2;">
+                                    <td><strong>🔴 Kritisch</strong></td>
+                                    <td>System stürzt ab, Datenverlust</td>
+                                    <td>Sofort (< 2h)</td>
+                                </tr>
+                                <tr style="background: #fef3c7;">
+                                    <td><strong>🟡 Hoch</strong></td>
+                                    <td>Login funktioniert nicht</td>
+                                    <td>Heute (< 8h)</td>
+                                </tr>
+                                <tr style="background: #e0f2fe;">
+                                    <td><strong>🔵 Mittel</strong></td>
+                                    <td>Tippfehler in Texten</td>
+                                    <td>Diese Woche</td>
+                                </tr>
+                                <tr style="background: #f3f4f6;">
+                                    <td><strong>⚪ Niedrig</strong></td>
+                                    <td>Verbesserungsvorschlag</td>
+                                    <td>Nächste Version</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 6. Tools und Techniken -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🛠️ QS-Tools und Techniken</h2>
+                <p>Werkzeuge, die Qualitätssicherung effizienter machen</p>
+            </div>
+            <div class="section-content">
+                <h3>🤖 Automatisierungs-Tools</h3>
+                <p>Moderne QS setzt stark auf Automatisierung, um Zeit zu sparen und menschliche Fehler zu vermeiden:</p>
+
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>🧪 Test-Frameworks</h4>
+                        <p><strong>Java:</strong> JUnit, TestNG<br>
+                        <strong>Python:</strong> pytest, unittest<br>
+                        <strong>JavaScript:</strong> Jest, Mocha</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🔄 CI/CD Tools</h4>
+                        <p><strong>Jenkins:</strong> Build-Automatisierung<br>
+                        <strong>GitHub Actions:</strong> Automatische Tests<br>
+                        <strong>GitLab CI:</strong> Integrierte Pipeline</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>📊 Code-Analyse</h4>
+                        <p><strong>SonarQube:</strong> Code-Qualität<br>
+                        <strong>ESLint:</strong> JavaScript-Analyse<br>
+                        <strong>CheckStyle:</strong> Java-Standards</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🐛 Bug-Tracking</h4>
+                        <p><strong>Jira:</strong> Professionelle Verwaltung<br>
+                        <strong>GitHub Issues:</strong> Einfach und integriert<br>
+                        <strong>Bugzilla:</strong> Open-Source Lösung</p>
+                    </div>
+                </div>
+
+                <h3>📋 Manuelle QS-Techniken</h3>
+                <p>Nicht alles kann automatisiert werden - manche Dinge brauchen menschliche Expertise:</p>
+
+                <h4>🔍 Code-Review-Checkliste</h4>
+                <div class="code-section">
+                    <div class="code-section-title">✅ Code-Review Checkliste</div>
+                    <div class="code-section-content">
+                        <pre>📝 Lesbarkeit & Stil:
+   ▫ Sind Variablen aussagekräftig benannt?
+   ▫ Sind Funktionen kurz und fokussiert?
+   ▫ Werden Coding-Standards eingehalten?
+
+🐛 Funktionalität:
+   ▫ Macht der Code was er soll?
+   ▫ Sind Edge-Cases berücksichtigt?
+   ▫ Ist Error-Handling implementiert?
+
+🏗️ Architektur:
+   ▫ Passt der Code zur Gesamtarchitektur?
+   ▫ Gibt es Code-Duplikation?
+   ▫ Sind Abhängigkeiten minimal?
+
+🔒 Sicherheit:
+   ▫ Werden Eingaben validiert?
+   ▫ Sind sensible Daten geschützt?
+   ▫ Gibt es SQL-Injection-Risiken?</pre>
+                    </div>
+                </div>
+
+                <h4>🎯 Usability Testing</h4>
+                <div class="example-box">
+                    <h3>👥 Beispiel: Usability Test für eine E-Learning-App</h3>
+                    
+                    <h4>Test-Szenario:</h4>
+                    <p><em>"Sie sind Schüler und möchten eine Mathe-Aufgabe lösen und Ihre Lösung einreichen."</em></p>
+
+                    <h4>Beobachtete Aspekte:</h4>
+                    <ul>
+                        <li>⏱️ <strong>Zeit:</strong> Wie lange braucht der Schüler?</li>
+                        <li>🔄 <strong>Klicks:</strong> Wie viele Klicks sind nötig?</li>
+                        <li>😕 <strong>Probleme:</strong> Wo stockt der Schüler?</li>
+                        <li>😊 <strong>Zufriedenheit:</strong> Wie bewertet er die Bedienung?</li>
+                    </ul>
+
+                    <h4>Typische Erkenntnisse:</h4>
+                    <ul>
+                        <li>🔍 "Der Abgabe-Button ist zu klein und schwer zu finden"</li>
+                        <li>📝 "Die Eingabe von mathematischen Formeln ist umständlich"</li>
+                        <li>✅ "Die Rückmeldung nach der Abgabe ist hilfreich"</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 7. QS in verschiedenen Projekttypen -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🎨 QS in verschiedenen Projektarten</h2>
+                <p>Je nach Projekt sind unterschiedliche QS-Ansätze erforderlich</p>
+            </div>
+            <div class="section-content">
+                <div class="tabs">
+                    <div class="tab active" onclick="showTab2('web-app')">Web-Anwendungen</div>
+                    <div class="tab" onclick="showTab2('mobile-app')">Mobile Apps</div>
+                    <div class="tab" onclick="showTab2('embedded')">Embedded Systems</div>
+                    <div class="tab" onclick="showTab2('database')">Datenbanken</div>
+                </div>
+                
+                <div class="tab-content">
+                    <div class="tab-pane active" id="web-app">
+                        <h3>🌐 Qualitätssicherung für Web-Anwendungen</h3>
+                        
+                        <h4>🎯 Besondere Herausforderungen:</h4>
+                        <ul>
+                            <li>📱 <strong>Cross-Browser Kompatibilität:</strong> Funktioniert in allen Browsern?</li>
+                            <li>📲 <strong>Responsive Design:</strong> Sieht auf allen Bildschirmgrößen gut aus?</li>
+                            <li>⚡ <strong>Performance:</strong> Lädt die Seite schnell genug?</li>
+                            <li>🔒 <strong>Web-Sicherheit:</strong> Schutz vor XSS, CSRF, SQL-Injection</li>
+                        </ul>
+
+                        <h4>🛠️ Spezielle Tools:</h4>
+                        <div class="concept-grid">
+                            <div class="concept-card">
+                                <h4>🔍 Browser-Testing</h4>
+                                <p><strong>Selenium:</strong> Automatisierte Browser-Tests<br>
+                                <strong>BrowserStack:</strong> Tests auf verschiedenen Geräten</p>
+                            </div>
+                            <div class="concept-card">
+                                <h4>⚡ Performance</h4>
+                                <p><strong>Lighthouse:</strong> Google's Performance-Tool<br>
+                                <strong>WebPageTest:</strong> Detaillierte Ladezeit-Analyse</p>
+                            </div>
+                        </div>
+
+                        <div class="example-box">
+                            <h3>✅ Beispiel: QS-Checkliste für Online-Shop</h3>
+                            <ul>
+                                <li>🛒 Warenkorb funktioniert in allen Browsern</li>
+                                <li>💳 Bezahlvorgang ist sicher und einfach</li>
+                                <li>📱 Shop ist auf Smartphones gut bedienbar</li>
+                                <li>⚡ Produktseiten laden in unter 2 Sekunden</li>
+                                <li>🔍 Suchfunktion findet relevante Produkte</li>
+                                <li>🔒 SSL-Verschlüsselung ist aktiv</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="mobile-app">
+                        <h3>📱 Qualitätssicherung für Mobile Apps</h3>
+                        
+                        <h4>🎯 Mobile-spezifische Aspekte:</h4>
+                        <ul>
+                            <li>🔋 <strong>Battery Life:</strong> Verbraucht die App zu viel Akku?</li>
+                            <li>📶 <strong>Offline-Funktionalität:</strong> Was passiert ohne Internet?</li>
+                            <li>🔄 <strong>App-Store Guidelines:</strong> Erfüllt die App alle Vorgaben?</li>
+                            <li>👆 <strong>Touch-Bedienung:</strong> Sind alle Elemente gut erreichbar?</li>
+                        </ul>
+
+                        <div class="example-box">
+                            <h3>📊 Beispiel: QS für Fitness-Tracking-App</h3>
+                            
+                            <h4>Funktionale Tests:</h4>
+                            <ul>
+                                <li>⏱️ Stopuhr funktioniert korrekt</li>
+                                <li>📊 Statistiken werden richtig berechnet</li>
+                                <li>☁️ Daten werden in Cloud synchronisiert</li>
+                            </ul>
+
+                            <h4>Usability Tests:</h4>
+                            <ul>
+                                <li>👆 Buttons sind mindestens 44px groß (Apple-Richtlinie)</li>
+                                <li>📱 App funktioniert im Hoch- und Querformat</li>
+                                <li>🔄 Rotation wird korrekt behandelt</li>
+                            </ul>
+
+                            <h4>Performance Tests:</h4>
+                            <ul>
+                                <li>🔋 Akku-Verbrauch während GPS-Tracking messen</li>
+                                <li>💾 Speicher-Verbrauch bei längeren Trainings</li>
+                                <li>📶 Verhalten bei schlechter Netzverbindung</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="embedded">
+                        <h3>🔧 QS für Embedded Systems (Arduino, Mikrocontroller)</h3>
+                        
+                        <p>Bei Embedded Systems geht es oft um kritische Anwendungen - ein Fehler kann gefährlich sein!</p>
+
+                        <h4>🎯 Besondere Anforderungen:</h4>
+                        <ul>
+                            <li>⚡ <strong>Real-Time Constraints:</strong> Reaktionen müssen in bestimmter Zeit erfolgen</li>
+                            <li>🔋 <strong>Energieeffizienz:</strong> Minimaler Stromverbrauch</li>
+                            <li>🌡️ <strong>Umgebungsbedingungen:</strong> Temperatur, Feuchtigkeit, Vibrationen</li>
+                            <li>🔒 <strong>Sicherheit:</strong> System darf nie in gefährlichen Zustand gelangen</li>
+                        </ul>
+
+                        <div class="example-box">
+                            <h3>🚗 Beispiel: QS für Arduino-basierte Ampelsteuerung</h3>
+                            
+                            <h4>Arduino Code-Struktur für Tests:</h4>
+                            <div class="code-section">
+                                <div class="code-section-title">🚦 Setup & Konfiguration</div>
+                                <div class="code-section-content">
+                                    <pre>void setup() {
+  // LED-Pins konfigurieren
+  pinMode(RED_LED, OUTPUT);
+  pinMode(YELLOW_LED, OUTPUT);
+  pinMode(GREEN_LED, OUTPUT);
+  
+  // Sensor-Pins konfigurieren
+  pinMode(SENSOR_PIN, INPUT);
+  
+  // Serial für Debugging
+  Serial.begin(9600);
+  
+  // Initialer Zustand: Rot
+  setTrafficLight(RED);
+}</pre>
+                                </div>
+                            </div>
+
+                            <div class="code-section">
+                                <div class="code-section-title">🔄 Hauptprogramm-Loop</div>
+                                <div class="code-section-content">
+                                    <pre>void loop() {
+  // Sensor-Eingaben lesen
+  boolean carDetected = digitalRead(SENSOR_PIN);
+  
+  // Ampel-Logik ausführen
+  switch(currentState) {
+    case RED:
+      if (carDetected && timeInState > MIN_RED_TIME) {
+        changeToGreen();
+      }
+      break;
+      
+    case GREEN:
+      if (!carDetected || timeInState > MAX_GREEN_TIME) {
+        changeToYellow();
+      }
+      break;
+      
+    case YELLOW:
+      if (timeInState > YELLOW_TIME) {
+        changeToRed();
+      }
+      break;
+  }
+  
+  updateTimer();
+  checkSafety();
+}</pre>
+                                </div>
+                            </div>
+
+                            <div class="code-section">
+                                <div class="code-section-title">🛡️ Sicherheitsfunktionen</div>
+                                <div class="code-section-content">
+                                    <pre>void checkSafety() {
+  // Niemals beide Richtungen grün!
+  if (digitalRead(GREEN_LED_1) && digitalRead(GREEN_LED_2)) {
+    // NOTFALL: Alle Ampeln auf Rot
+    emergencyStop();
+    Serial.println("FEHLER: Beide Richtungen grün!");
+  }
+  
+  // Watchdog-Timer prüfen
+  if (millis() - lastHeartbeat > WATCHDOG_TIMEOUT) {
+    emergencyStop();
+    Serial.println("FEHLER: System hängt!");
+  }
+}
+
+void emergencyStop() {
+  // Alle Ampeln auf Rot setzen
+  setAllLights(RED);
+  // Warnsignal aktivieren
+  digitalWrite(WARNING_LED, HIGH);
+}</pre>
+                                </div>
+                            </div>
+
+                            <h4>Testfälle für Arduino-Ampel:</h4>
+                            <ul>
+                                <li>✅ <strong>Funktional:</strong> Alle LED-Kombinationen funktionieren</li>
+                                <li>⏱️ <strong>Timing:</strong> Phasenwechsel erfolgen in korrekter Zeit</li>
+                                <li>🚨 <strong>Notfall:</strong> Emergency-Stop bei kritischen Fehlern</li>
+                                <li>🔋 <strong>Power:</strong> Verhalten bei Stromausfall</li>
+                                <li>🌡️ <strong>Umgebung:</strong> Funktion bei -20°C bis +60°C</li>
+                                <li>⚡ <strong>Performance:</strong> Reaktionszeit < 100ms</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="tab-pane" id="database">
+                        <h3>🗄️ Qualitätssicherung für Datenbanken</h3>
+                        
+                        <h4>🎯 Datenbank-spezifische QS:</h4>
+                        <ul>
+                            <li>🔐 <strong>Datenintegrität:</strong> Sind die Daten konsistent und korrekt?</li>
+                            <li>⚡ <strong>Performance:</strong> Sind Queries schnell genug?</li>
+                            <li>🔒 <strong>Security:</strong> Schutz vor SQL-Injection und unbefugtem Zugriff</li>
+                            <li>💾 <strong>Backup & Recovery:</strong> Können Daten wiederhergestellt werden?</li>
+                        </ul>
+
+                        <div class="example-box">
+                            <h3>🏫 Beispiel: QS für Schüler-Notenverwaltung-DB</h3>
+                            
+                            <h4>Datenintegrität Tests:</h4>
+                            <div class="code-section">
+                                <div class="code-section-title">🔍 SQL-Testqueries</div>
+                                <div class="code-section-content">
+                                    <pre>-- Test: Noten müssen zwischen 1 und 6 liegen
+SELECT * FROM noten WHERE note < 1 OR note > 6;
+-- Ergebnis muss leer sein!
+
+-- Test: Jeder Schüler muss einer gültigen Klasse zugeordnet sein
+SELECT s.* FROM schueler s 
+LEFT JOIN klassen k ON s.klassen_id = k.id 
+WHERE k.id IS NULL;
+-- Ergebnis muss leer sein!
+
+-- Test: Keine doppelten Noten pro Schüler/Fach
+SELECT schueler_id, fach_id, COUNT(*) 
+FROM noten 
+GROUP BY schueler_id, fach_id 
+HAVING COUNT(*) > 1;</pre>
+                                </div>
+                            </div>
+
+                            <h4>Performance Tests:</h4>
+                            <ul>
+                                <li>📊 Notenliste für eine Klasse laden: < 200ms</li>
+                                <li>🔍 Schüler-Suche über alle Klassen: < 500ms</li>
+                                <li>📈 Zeugnis-Generierung: < 2s pro Schüler</li>
+                            </ul>
+
+                            <h4>Security Tests:</h4>
+                            <ul>
+                                <li>🔐 Lehrer können nur ihre eigenen Klassen sehen</li>
+                                <li>🛡️ Direkte SQL-Eingaben werden blockiert</li>
+                                <li>🔑 Passwort-Hash wird nie im Klartext gespeichert</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 8. Prüfungsvorbereitung -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🎓 Prüfungsvorbereitung: QS im Abitur</h2>
+                <p>Typische Aufgabenstellungen und Lösungsansätze</p>
+            </div>
+            <div class="section-content">
+                <h3>📝 Typische Abitur-Aufgaben zu QS</h3>
+                
+                <div class="example-box">
+                    <h3>📋 Muster-Aufgabe 1: Testplan erstellen</h3>
+                    <p><strong>Aufgabe:</strong> "Erstellen Sie einen Testplan für eine Online-Banking-Anwendung. Berücksichtigen Sie funktionale und nicht-funktionale Anforderungen."</p>
+                    
+                    <h4>✅ Musterlösung - Struktur:</h4>
+                    <div class="code-section">
+                        <div class="code-section-title">📋 Testplan-Struktur</div>
+                        <div class="code-section-content">
+                            <pre>1. Testziele definieren
+   - Funktionalität: Überweisungen, Kontostand, Login
+   - Sicherheit: Schutz vor unbefugtem Zugriff
+   - Performance: Antwortzeiten unter 3 Sekunden
+   - Usability: Intuitive Bedienung für alle Altersgruppen
+
+2. Teststufen festlegen
+   - Unit Tests: Einzelne Funktionen (z.B. Betragsberechnung)
+   - Integrationstests: Datenbank-Anbindung
+   - Systemtests: Gesamte Anwendung
+   - Akzeptanztests: Test durch echte Bank-Kunden
+
+3. Testmethoden auswählen
+   - Black-Box: Funktionalität aus Benutzersicht
+   - White-Box: Interne Programmlogik
+   - Penetrationstests: Sicherheitslücken finden
+
+4. Ressourcen planen
+   - Testteam: 3 Tester für 2 Wochen
+   - Testumgebung: Separater Server mit Testdaten
+   - Tools: Selenium für Automatisierung</pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h3>🔍 Muster-Aufgabe 2: Testfälle entwickeln</h3>
+                    <p><strong>Aufgabe:</strong> "Entwickeln Sie Testfälle für ein Login-System mit folgenden Anforderungen: Benutzername muss eine E-Mail sein, Passwort mindestens 8 Zeichen."</p>
+                    
+                    <h4>✅ Musterlösung:</h4>
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Test-ID</th>
+                                    <th>Eingabe</th>
+                                    <th>Erwartetes Ergebnis</th>
+                                    <th>Testtyp</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>T001</td>
+                                    <td>E-Mail: user@test.de<br>Passwort: 12345678</td>
+                                    <td>Login erfolgreich</td>
+                                    <td>Valid Data</td>
+                                </tr>
+                                <tr>
+                                    <td>T002</td>
+                                    <td>E-Mail: ungültige-email<br>Passwort: 12345678</td>
+                                    <td>Fehlermeldung: "Ungültige E-Mail"</td>
+                                    <td>Invalid Data</td>
+                                </tr>
+                                <tr>
+                                    <td>T003</td>
+                                    <td>E-Mail: user@test.de<br>Passwort: 123</td>
+                                    <td>Fehlermeldung: "Passwort zu kurz"</td>
+                                    <td>Boundary</td>
+                                </tr>
+                                <tr>
+                                    <td>T004</td>
+                                    <td>E-Mail: (leer)<br>Passwort: (leer)</td>
+                                    <td>Fehlermeldung für beide Felder</td>
+                                    <td>Empty Data</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h3>💡 Lösungsstrategien für QS-Aufgaben</h3>
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>1️⃣ Struktur beachten</h4>
+                        <p>Immer systematisch vorgehen: Ziele → Methoden → Durchführung → Bewertung</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>2️⃣ Vollständigkeit</h4>
+                        <p>Alle Aspekte berücksichtigen: Funktional, Performance, Security, Usability</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>3️⃣ Praxisbezug</h4>
+                        <p>Konkrete Beispiele nennen und realistische Werte angeben</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>4️⃣ Fachbegriffe</h4>
+                        <p>Korrekte Terminologie verwenden: Verifikation, Validation, Black-Box, etc.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- 9. Zusammenfassung & Checkliste -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>📋 Zusammenfassung & Lern-Checkliste</h2>
+                <p>Das Wichtigste auf einen Blick - perfekt für die Wiederholung</p>
+            </div>
+            <div class="section-content">
+                <h3>🎯 Die wichtigsten Punkte</h3>
+                
+                <div class="definition-box">
+                    <h3>🔑 Kern-Konzept: Qualitätssicherung</h3>
+                    <p>Qualitätssicherung ist ein <strong>systematischer Prozess</strong>, der sicherstellt, dass Produkte/Software die gestellten Anforderungen erfüllen. Sie umfasst:</p>
+                    <ul>
+                        <li>🔍 <strong>Verifikation:</strong> Wird korrekt entwickelt?</li>
+                        <li>✅ <strong>Validation:</strong> Wird das Richtige entwickelt?</li>
+                        <li>🧪 <strong>Testing:</strong> Systematisches Fehler finden</li>
+                        <li>👀 <strong>Reviews:</strong> Manuelle Überprüfung</li>
+                        <li>📊 <strong>Metriken:</strong> Messbare Qualitätskriterien</li>
+                    </ul>
+                </div>
+
+                <h3>✅ Lern-Checkliste für die Prüfung</h3>
+                
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>📚 Grundlagen verstehen</h4>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li>☐ Definition von Qualitätssicherung</li>
+                            <li>☐ Unterschied Verifikation vs. Validation</li>
+                            <li>☐ Warum ist QS wichtig? (Kosten, Risiken)</li>
+                            <li>☐ QS im Software-Lebenszyklus</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="concept-card">
+                        <h4>🧪 Testverfahren kennen</h4>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li>☐ Black-Box vs. White-Box Testing</li>
+                            <li>☐ Unit, Integration, System, Akzeptanztests</li>
+                            <li>☐ Funktionale vs. nicht-funktionale Tests</li>
+                            <li>☐ Test Coverage verstehen</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="concept-card">
+                        <h4>⚡ Agile QS verstehen</h4>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li>☐ SCRUM und Qualitätssicherung</li>
+                            <li>☐ Definition of Done</li>
+                            <li>☐ Continuous Integration/Deployment</li>
+                            <li>☐ Agiles Manifest & QS-Prinzipien</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="concept-card">
+                        <h4>📋 Praktische Anwendung</h4>
+                        <ul style="list-style: none; padding-left: 0;">
+                            <li>☐ QS-Plan erstellen können</li>
+                            <li>☐ Testfälle entwickeln</li>
+                            <li>☐ Fehler klassifizieren</li>
+                            <li>☐ Tools und Techniken kennen</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>📝 Typische Prüfungsfragen</h3>
+                <div class="example-box">
+                    <h3>❓ Übungsaufgaben</h3>
+                    
+                    <h4>Aufgabe 1:</h4>
+                    <p><strong>Erklären Sie den Unterschied zwischen Verifikation und Validation anhand eines Beispiels.</strong></p>
+                    <details style="margin-top: 1rem;">
+                        <summary>💡 Antwort anzeigen</summary>
+                        <div style="margin-top: 1rem; padding: 1rem; background: #f0fdf4; border-radius: 4px;">
+                            <p><strong>Verifikation:</strong> "Bauen wir das Produkt richtig?" - Überprüfung gegen technische Spezifikationen</p>
+                            <p><strong>Validation:</strong> "Bauen wir das richtige Produkt?" - Überprüfung gegen Benutzerbedürfnisse</p>
+                            <p><strong>Beispiel Online-Shop:</strong></p>
+                            <ul>
+                                <li><strong>Verifikation:</strong> Hat der Warenkorb-Button die richtige Farbe (laut Design-Spezifikation)?</li>
+                                <li><strong>Validation:</strong> Können Kunden damit erfolgreich einkaufen?</li>
+                            </ul>
+                        </div>
+                    </details>
+
+                    <h4>Aufgabe 2:</h4>
+                    <p><strong>Nennen Sie vier verschiedene Testarten und erklären Sie deren Zweck.</strong></p>
+                    <details style="margin-top: 1rem;">
+                        <summary>💡 Antwort anzeigen</summary>
+                        <div style="margin-top: 1rem; padding: 1rem; background: #f0fdf4; border-radius: 4px;">
+                            <ul>
+                                <li><strong>Unit Tests:</strong> Testen einzelner Funktionen isoliert</li>
+                                <li><strong>Integrationstests:</strong> Testen des Zusammenspiels mehrerer Module</li>
+                                <li><strong>Systemtests:</strong> Testen der gesamten Anwendung</li>
+                                <li><strong>Akzeptanztests:</strong> Abnahme durch Kunde/Endbenutzer</li>
+                            </ul>
+                        </div>
+                    </details>
+
+                    <h4>Aufgabe 3:</h4>
+                    <p><strong>Wie wird Qualitätssicherung in agilen Projekten (SCRUM) umgesetzt?</strong></p>
+                    <details style="margin-top: 1rem;">
+                        <summary>💡 Antwort anzeigen</summary>
+                        <div style="margin-top: 1rem; padding: 1rem; background: #f0fdf4; border-radius: 4px;">
+                            <ul>
+                                <li><strong>Definition of Done:</strong> Klare Kriterien für fertige Arbeit</li>
+                                <li><strong>Sprint Review:</strong> Regelmäßige Demos und Feedback</li>
+                                <li><strong>Retrospektiven:</strong> Kontinuierliche Prozessverbesserung</li>
+                                <li><strong>Continuous Testing:</strong> Tests während der Entwicklung</li>
+                                <li><strong>Kurze Zyklen:</strong> Frühe Fehlererkennung durch häufige Releases</li>
+                            </ul>
+                        </div>
+                    </details>
+                </div>
+
+                <h3>🚀 Weiterführende Themen</h3>
+                <div class="warning-box">
+                    <h3>📖 Für Interessierte</h3>
+                    <p>Diese Themen gehen über den Abitur-Stoff hinaus, sind aber für ein tieferes Verständnis hilfreich:</p>
+                    <ul>
+                        <li>🤖 <strong>Test-Driven Development (TDD):</strong> Tests vor dem Code schreiben</li>
+                        <li>🔄 <strong>Behavior-Driven Development (BDD):</strong> Tests in natürlicher Sprache</li>
+                        <li>📊 <strong>Mutation Testing:</strong> Testen der Tests</li>
+                        <li>🏗️ <strong>DevOps & QS:</strong> Integration in Deployment-Pipeline</li>
+                        <li>🧠 <strong>AI in QS:</strong> Machine Learning für automatische Tests</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bottom Navigation -->
+        <div class="bottom-nav">
+            <h3 style="color: var(--primary-color); margin-bottom: 1rem;">🎓 Navigation</h3>
+            <a href="index.html" class="nav-button">
+                🏠 Zurück zur Hauptseite
+            </a>
+            <a href="projektmanagement.html" class="nav-button">
+                ⬅️ Projektmanagement
+            </a>
+        </div>
+
+        <footer style="text-align: center; padding: 2rem; background: var(--bg-white); border-radius: 12px; margin-top: 2rem; border: 1px solid var(--border-color);">
+            <h3 style="color: var(--primary-color); margin-bottom: 1rem;">🎓 Abitur 2026 - Qualitätssicherung</h3>
+            <p style="color: var(--text-light);">
+                <strong>Zusammenfassung:</strong> Qualitätssicherung ist ein systematischer Prozess zur Sicherstellung der Produktqualität durch Verifikation, Validation und Testing.<br>
+                <strong>Praxis:</strong> Moderne QS nutzt agile Methoden, Automatisierung und kontinuierliche Integration.<br>
+                <strong>Ziel:</strong> Fehlerfreie Software, die Benutzerbedürfnisse erfüllt und rechtzeitig geliefert wird.
+            </p>
+            
+            <div style="margin-top: 2rem; padding: 1rem; background: var(--highlight-bg); border-radius: 8px;">
+                <p><strong>💡 Merksatz für die Prüfung:</strong></p>
+                <p><em>"Qualitätssicherung beginnt mit der Planung, läuft parallel zur Entwicklung und endet erst mit der Kundenzufriedenheit."</em></p>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scrollToTopBtn" onclick="scrollToTop()">
+        ↑
+    </button>
+
+    <script>
+        // Tab-Funktionalität für Testing-Methoden
+        function showTab(tabName) {
+            // Alle Tab-Panes ausblenden
+            const panes = document.querySelectorAll('.tab-pane');
+            panes.forEach(pane => pane.classList.remove('active'));
+            
+            // Alle Tabs deaktivieren
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Gewählten Tab aktivieren
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        // Tab-Funktionalität für Projektarten
+        function showTab2(tabName) {
+            // Alle Tab-Panes ausblenden
+            const panes = document.querySelectorAll('.tab-pane');
+            panes.forEach(pane => pane.classList.remove('active'));
+            
+            // Alle Tabs deaktivieren
+            const tabs = document.querySelectorAll('.tab');
+            tabs.forEach(tab => tab.classList.remove('active'));
+            
+            // Gewählten Tab aktivieren
+            event.target.classList.add('active');
+            document.getElementById(tabName).classList.add('active');
+        }
+
+        // Scroll to Top Funktionalität
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Scroll to Top Button ein-/ausblenden
+        window.addEventListener('scroll', function() {
+            const scrollToTopBtn = document.getElementById('scrollToTopBtn');
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('show');
+            } else {
+                scrollToTopBtn.classList.remove('show');
+            }
+        });
+
+        // Smooth Scrolling für Anker-Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Interaktive Checkliste
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', function() {
+                // Fortschritt speichern (in echtem System)
+                console.log('Checkbox geändert:', this.checked);
+            });
+        });
+
+        // Erweiterte Interaktivität für bessere User Experience
+        document.addEventListener('DOMContentLoaded', function() {
+            // Hervorhebung wichtiger Begriffe beim Laden
+            const highlights = document.querySelectorAll('.highlight');
+            highlights.forEach((highlight, index) => {
+                setTimeout(() => {
+                    highlight.style.animation = 'pulse 0.5s ease-in-out';
+                }, index * 100);
+            });
+
+            // Fortschritts-Tracking
+            const sections = document.querySelectorAll('.content-section');
+            const totalSections = sections.length;
+            let completedSections = 0;
+
+            // Intersection Observer für Fortschritt
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('in-view');
+                    }
+                });
+            }, { threshold: 0.1 });
+
+            sections.forEach(section => observer.observe(section));
+        });
+
+        // CSS-Animationen hinzufügen
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes pulse {
+                0% { transform: scale(1); }
+                50% { transform: scale(1.05); }
+                100% { transform: scale(1); }
+            }
+            
+            .content-section {
+                opacity: 0.8;
+                transition: opacity 0.5s ease;
+            }
+            
+            .content-section.in-view {
+                opacity: 1;
+            }
+            
+            details summary {
+                cursor: pointer;
+                padding: 0.5rem;
+                background: var(--primary-color);
+                color: white;
+                border-radius: 4px;
+                margin-bottom: 0.5rem;
+                transition: background-color 0.3s ease;
+            }
+            
+            details summary:hover {
+                background: var(--secondary-color);
+            }
+            
+            details[open] summary {
+                margin-bottom: 1rem;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

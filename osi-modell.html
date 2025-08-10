@@ -1,0 +1,1021 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>OSI-7-Schichtenmodell - Abitur 2026 Informatik TG</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --purple: #8b5cf6;
+            --orange: #f97316;
+            --emerald: #059669;
+            --rose: #e11d48;
+            --cyan: #06b6d4;
+            --amber: #d97706;
+            --indigo: #6366f1;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            background: var(--bg-white);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .section {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .section h3 {
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .section h4 {
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .intro-box {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .intro-box h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .intro-box p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+        }
+
+        .osi-model {
+            margin: 2rem 0;
+        }
+
+        .layers-container {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .layer {
+            display: grid;
+            grid-template-columns: 60px 200px 1fr;
+            align-items: center;
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+            cursor: pointer;
+        }
+
+        .layer:hover {
+            transform: translateX(5px);
+            box-shadow: 0 8px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .layer-7 { background: linear-gradient(135deg, var(--rose), #fda4af); color: white; }
+        .layer-6 { background: linear-gradient(135deg, var(--orange), #fb923c); color: white; }
+        .layer-5 { background: linear-gradient(135deg, var(--amber), #fbbf24); color: white; }
+        .layer-4 { background: linear-gradient(135deg, var(--emerald), #34d399); color: white; }
+        .layer-3 { background: linear-gradient(135deg, var(--cyan), #38bdf8); color: white; }
+        .layer-2 { background: linear-gradient(135deg, var(--indigo), #818cf8); color: white; }
+        .layer-1 { background: linear-gradient(135deg, var(--purple), #a78bfa); color: white; }
+
+        .layer-number {
+            font-size: 2rem;
+            font-weight: bold;
+            text-align: center;
+        }
+
+        .layer-name {
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .layer-description {
+            font-size: 1rem;
+            opacity: 0.95;
+        }
+
+        .layer-details {
+            display: none;
+            margin-top: 1rem;
+            padding-top: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            grid-column: 1 / -1;
+        }
+
+        .layer-details.active {
+            display: block;
+        }
+
+        .protocols-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 0.5rem;
+            margin: 1rem 0;
+        }
+
+        .protocol {
+            background: rgba(255, 255, 255, 0.2);
+            padding: 0.5rem;
+            border-radius: 6px;
+            text-align: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+            background: var(--bg-white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .example-box {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--success-color);
+            margin: 1.5rem 0;
+        }
+
+        .example-box h4 {
+            color: var(--success-color);
+            margin-bottom: 1rem;
+        }
+
+        .important-note {
+            background: linear-gradient(135deg, var(--warning-color), #fbbf24);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .important-note h4 {
+            color: white;
+            margin-bottom: 0.5rem;
+        }
+
+        .data-flow {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .flow-step {
+            display: flex;
+            align-items: center;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: var(--bg-white);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .flow-arrow {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin: 0 1rem;
+        }
+
+        .memory-aid {
+            background: linear-gradient(135deg, var(--purple), #a78bfa);
+            color: white;
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .memory-aid h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .memory-phrase {
+            font-size: 1.2rem;
+            font-weight: bold;
+            text-align: center;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: rgba(255, 255, 255, 0.1);
+            border-radius: 8px;
+        }
+
+        .quiz-section {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+        }
+
+        .quiz-question {
+            background: var(--bg-white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .quiz-answer {
+            background: var(--success-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            display: none;
+        }
+
+        .show-answer {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 0.5rem;
+        }
+
+        .show-answer:hover {
+            background: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            .layer {
+                grid-template-columns: 1fr;
+                gap: 1rem;
+                text-align: center;
+            }
+
+            .layer-number {
+                font-size: 1.5rem;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .protocols-grid {
+                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+            }
+        }
+
+        .back-link {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            text-decoration: none;
+            margin-bottom: 2rem;
+            transition: background-color 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: var(--secondary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Zurück zur Übersicht</a>
+
+        <div class="breadcrumb">
+            <a href="index.html">Abitur 2026</a> > 
+            <a href="index.html">Vernetzte Systeme & Internet</a> > 
+            <strong>OSI-7-Schichtenmodell</strong>
+        </div>
+
+        <header class="header">
+            <h1>🌐 OSI-7-Schichtenmodell</h1>
+            <p>Das fundamentale Referenzmodell für die Netzwerkkommunikation</p>
+        </header>
+
+        <div class="intro-box">
+            <h3>🎯 Was ist das OSI-Modell?</h3>
+            <p>
+                Das <strong>OSI-Modell</strong> (Open Systems Interconnection) ist ein Referenzmodell, das beschreibt, 
+                wie Daten in einem Netzwerk von einem Computer zum anderen übertragen werden. Es teilt den 
+                Kommunikationsprozess in <strong>7 verschiedene Schichten</strong> auf, wobei jede Schicht 
+                spezifische Aufgaben hat. Stell dir vor, du schickst einen Brief - jede Schicht fügt etwas 
+                hinzu oder verarbeitet etwas, damit der Brief sicher ankommt!
+            </p>
+        </div>
+
+        <div class="section">
+            <h2>🏗️ Warum gibt es das OSI-Modell?</h2>
+            
+            <h3>Probleme ohne Standardisierung:</h3>
+            <ul>
+                <li>🔴 Verschiedene Hersteller entwickelten eigene Netzwerkprotokolle</li>
+                <li>🔴 Geräte verschiedener Hersteller konnten nicht miteinander kommunizieren</li>
+                <li>🔴 Komplexe Netzwerkprobleme waren schwer zu lokalisieren</li>
+                <li>🔴 Softwareentwicklung war unübersichtlich</li>
+            </ul>
+
+            <h3>Lösung durch das OSI-Modell:</h3>
+            <ul>
+                <li>✅ <strong>Standardisierung:</strong> Einheitliche Regeln für alle Hersteller</li>
+                <li>✅ <strong>Modularität:</strong> Jede Schicht hat klar definierte Aufgaben</li>
+                <li>✅ <strong>Fehlerlokalisierung:</strong> Probleme können schichtweise analysiert werden</li>
+                <li>✅ <strong>Interoperabilität:</strong> Verschiedene Technologien können zusammenarbeiten</li>
+            </ul>
+        </div>
+
+        <div class="memory-aid">
+            <h3>🧠 Merkhilfen für die 7 Schichten</h3>
+            <div class="memory-phrase">
+                <strong>Deutsch:</strong><br>
+                "Alle Deutsche Studenten Trinken Verschiedene Sorten Bier"
+            </div>
+            <div class="memory-phrase">
+                <strong>Englisch:</strong><br>
+                "All People Seem To Need Data Processing"
+            </div>
+            <div class="memory-phrase">
+                <strong>Alternativ:</strong><br>
+                "Alle Programmierer Sind Tierisch Nette, Doofe Personen"
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🔄 Die 7 OSI-Schichten im Detail</h2>
+            
+            <div class="important-note">
+                <h4>⚠️ Wichtig für das Abitur!</h4>
+                Merke dir: Die Schichten werden <strong>von unten nach oben</strong> nummeriert (1-7), 
+                aber die Daten durchlaufen sie <strong>von oben nach unten</strong> beim Senden und 
+                <strong>von unten nach oben</strong> beim Empfangen!
+            </div>
+
+            <div class="layers-container">
+                <!-- Schicht 7: Anwendungsschicht -->
+                <div class="layer layer-7" onclick="toggleDetails('layer7-details')">
+                    <div class="layer-number">7</div>
+                    <div class="layer-name">Anwendungsschicht<br>(Application Layer)</div>
+                    <div class="layer-description">
+                        Schnittstelle zwischen Netzwerk und Anwendungsprogrammen
+                    </div>
+                    <div class="layer-details" id="layer7-details">
+                        <h4>🎯 Aufgaben:</h4>
+                        <ul>
+                            <li>Bereitstellung von Netzwerkdiensten für Anwendungen</li>
+                            <li>Authentifizierung und Autorisierung</li>
+                            <li>Datenformatierung für spezifische Anwendungen</li>
+                            <li>Benutzeroberfläche für Netzwerkzugriff</li>
+                        </ul>
+                        
+                        <h4>📡 Wichtige Protokolle:</h4>
+                        <div class="protocols-grid">
+                            <div class="protocol">HTTP/HTTPS</div>
+                            <div class="protocol">FTP</div>
+                            <div class="protocol">SMTP</div>
+                            <div class="protocol">POP3</div>
+                            <div class="protocol">IMAP</div>
+                            <div class="protocol">Telnet</div>
+                            <div class="protocol">SSH</div>
+                            <div class="protocol">DNS</div>
+                            <div class="protocol">DHCP</div>
+                            <div class="protocol">MQTT</div>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>💡 Beispiel:</h4>
+                            Du öffnest deinen Webbrowser und tippst "www.google.de" ein. 
+                            Die Anwendungsschicht sorgt dafür, dass diese Anfrage über das HTTP-Protokoll 
+                            verarbeitet wird.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schicht 6: Darstellungsschicht -->
+                <div class="layer layer-6" onclick="toggleDetails('layer6-details')">
+                    <div class="layer-number">6</div>
+                    <div class="layer-name">Darstellungsschicht<br>(Presentation Layer)</div>
+                    <div class="layer-description">
+                        Datenformatierung, Verschlüsselung und Komprimierung
+                    </div>
+                    <div class="layer-details" id="layer6-details">
+                        <h4>🎯 Aufgaben:</h4>
+                        <ul>
+                            <li><strong>Datenformatierung:</strong> ASCII, EBCDIC, Unicode</li>
+                            <li><strong>Verschlüsselung:</strong> SSL/TLS, AES, RSA</li>
+                            <li><strong>Komprimierung:</strong> ZIP, GZIP, JPEG</li>
+                            <li><strong>Syntax-Konvertierung:</strong> Verschiedene Datenformate</li>
+                        </ul>
+                        
+                        <h4>📡 Wichtige Protokolle:</h4>
+                        <div class="protocols-grid">
+                            <div class="protocol">TLS/SSL</div>
+                            <div class="protocol">JPEG</div>
+                            <div class="protocol">GIF</div>
+                            <div class="protocol">MPEG</div>
+                            <div class="protocol">ASCII</div>
+                            <div class="protocol">EBCDIC</div>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>💡 Beispiel:</h4>
+                            Wenn du eine verschlüsselte Website (https://) besuchst, wandelt diese Schicht 
+                            die Daten in ein verschlüsseltes Format um, bevor sie gesendet werden.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schicht 5: Sitzungsschicht -->
+                <div class="layer layer-5" onclick="toggleDetails('layer5-details')">
+                    <div class="layer-number">5</div>
+                    <div class="layer-name">Sitzungsschicht<br>(Session Layer)</div>
+                    <div class="layer-description">
+                        Aufbau, Verwaltung und Beendigung von Kommunikationssitzungen
+                    </div>
+                    <div class="layer-details" id="layer5-details">
+                        <h4>🎯 Aufgaben:</h4>
+                        <ul>
+                            <li><strong>Session-Management:</strong> Aufbau und Abbau von Verbindungen</li>
+                            <li><strong>Dialogkontrolle:</strong> Halbduplex oder Vollduplex</li>
+                            <li><strong>Checkpointing:</strong> Synchronisation bei langen Übertragungen</li>
+                            <li><strong>Recovery:</strong> Wiederherstellung nach Unterbrechungen</li>
+                        </ul>
+                        
+                        <h4>📡 Wichtige Protokolle:</h4>
+                        <div class="protocols-grid">
+                            <div class="protocol">NetBIOS</div>
+                            <div class="protocol">RPC</div>
+                            <div class="protocol">PPTP</div>
+                            <div class="protocol">L2TP</div>
+                            <div class="protocol">SQL Sessions</div>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>💡 Beispiel:</h4>
+                            Bei einem Videocall über Zoom verwaltet diese Schicht die gesamte Sitzung - 
+                            wann sie startet, wer sprechen darf, und wann sie beendet wird.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schicht 4: Transportschicht -->
+                <div class="layer layer-4" onclick="toggleDetails('layer4-details')">
+                    <div class="layer-number">4</div>
+                    <div class="layer-name">Transportschicht<br>(Transport Layer)</div>
+                    <div class="layer-description">
+                        Zuverlässige Ende-zu-Ende Datenübertragung
+                    </div>
+                    <div class="layer-details" id="layer4-details">
+                        <h4>🎯 Aufgaben:</h4>
+                        <ul>
+                            <li><strong>Segmentierung:</strong> Große Daten in kleine Pakete aufteilen</li>
+                            <li><strong>Flusskontrolle:</strong> Überlastung vermeiden</li>
+                            <li><strong>Fehlerkorrektur:</strong> Verlorene Pakete erneut senden</li>
+                            <li><strong>Port-Addressing:</strong> Richtige Anwendung zuordnen</li>
+                        </ul>
+                        
+                        <h4>📡 Wichtige Protokolle:</h4>
+                        <div class="protocols-grid">
+                            <div class="protocol">TCP</div>
+                            <div class="protocol">UDP</div>
+                            <div class="protocol">SCTP</div>
+                            <div class="protocol">SPX</div>
+                        </div>
+
+                        <div class="important-note">
+                            <h4>🔍 TCP vs UDP:</h4>
+                            <strong>TCP (Transmission Control Protocol):</strong> Zuverlässig, aber langsamer<br>
+                            <strong>UDP (User Datagram Protocol):</strong> Schnell, aber unzuverlässig
+                        </div>
+
+                        <div class="example-box">
+                            <h4>💡 Beispiel:</h4>
+                            Beim Herunterladen einer Datei sorgt TCP dafür, dass alle Pakete ankommen 
+                            und in der richtigen Reihenfolge zusammengesetzt werden. Bei einem Live-Stream 
+                            verwendet UDP, weil Geschwindigkeit wichtiger ist als Vollständigkeit.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schicht 3: Vermittlungsschicht -->
+                <div class="layer layer-3" onclick="toggleDetails('layer3-details')">
+                    <div class="layer-number">3</div>
+                    <div class="layer-name">Vermittlungsschicht<br>(Network Layer)</div>
+                    <div class="layer-description">
+                        Routing und logische Adressierung (IP-Adressen)
+                    </div>
+                    <div class="layer-details" id="layer3-details">
+                        <h4>🎯 Aufgaben:</h4>
+                        <ul>
+                            <li><strong>Routing:</strong> Besten Weg durch das Netzwerk finden</li>
+                            <li><strong>Logical Addressing:</strong> IP-Adressen verwalten</li>
+                            <li><strong>Packet Switching:</strong> Pakete weiterleiten</li>
+                            <li><strong>Congestion Control:</strong> Netzwerküberlastung vermeiden</li>
+                        </ul>
+                        
+                        <h4>📡 Wichtige Protokolle:</h4>
+                        <div class="protocols-grid">
+                            <div class="protocol">IPv4</div>
+                            <div class="protocol">IPv6</div>
+                            <div class="protocol">ICMP</div>
+                            <div class="protocol">IGMP</div>
+                            <div class="protocol">IPSec</div>
+                            <div class="protocol">OSPF</div>
+                            <div class="protocol">BGP</div>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>💡 Beispiel:</h4>
+                            Wenn du eine E-Mail nach Japan schickst, entscheidet diese Schicht, über welche 
+                            Router und Netzwerke die E-Mail den kürzesten oder schnellsten Weg nimmt.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schicht 2: Sicherungsschicht -->
+                <div class="layer layer-2" onclick="toggleDetails('layer2-details')">
+                    <div class="layer-number">2</div>
+                    <div class="layer-name">Sicherungsschicht<br>(Data Link Layer)</div>
+                    <div class="layer-description">
+                        Fehlererkennung und physische Adressierung (MAC-Adressen)
+                    </div>
+                    <div class="layer-details" id="layer2-details">
+                        <h4>🎯 Aufgaben:</h4>
+                        <ul>
+                            <li><strong>Framing:</strong> Daten in Frames verpacken</li>
+                            <li><strong>Physical Addressing:</strong> MAC-Adressen verwenden</li>
+                            <li><strong>Error Detection:</strong> Fehler in Frames erkennen</li>
+                            <li><strong>Flow Control:</strong> Datenfluss zwischen direkt verbundenen Geräten</li>
+                        </ul>
+                        
+                        <h4>📡 Wichtige Protokolle/Standards:</h4>
+                        <div class="protocols-grid">
+                            <div class="protocol">Ethernet</div>
+                            <div class="protocol">Wi-Fi (802.11)</div>
+                            <div class="protocol">PPP</div>
+                            <div class="protocol">HDLC</div>
+                            <div class="protocol">Frame Relay</div>
+                            <div class="protocol">ATM</div>
+                        </div>
+
+                        <div class="important-note">
+                            <h4>🔍 MAC-Adresse:</h4>
+                            Jede Netzwerkkarte hat eine eindeutige 48-Bit MAC-Adresse 
+                            (z.B. 00:1B:44:11:3A:B7), die wie ein "Hardware-Ausweis" funktioniert.
+                        </div>
+
+                        <div class="example-box">
+                            <h4>💡 Beispiel:</h4>
+                            In deinem WLAN zu Hause sorgt diese Schicht dafür, dass deine Daten 
+                            zwischen deinem Laptop und dem Router korrekt übertragen werden.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Schicht 1: Physische Schicht -->
+                <div class="layer layer-1" onclick="toggleDetails('layer1-details')">
+                    <div class="layer-number">1</div>
+                    <div class="layer-name">Physische Schicht<br>(Physical Layer)</div>
+                    <div class="layer-description">
+                        Hardware und elektrische Übertragung der rohen Bits
+                    </div>
+                    <div class="layer-details" id="layer1-details">
+                        <h4>🎯 Aufgaben:</h4>
+                        <ul>
+                            <li><strong>Bit-Übertragung:</strong> 0en und 1en als elektrische Signale</li>
+                            <li><strong>Mechanische Spezifikation:</strong> Kabel, Stecker, Pins</li>
+                            <li><strong>Elektrische Spezifikation:</strong> Spannungen, Ströme</li>
+                            <li><strong>Timing:</strong> Wie schnell Bits übertragen werden</li>
+                        </ul>
+                        
+                        <h4>🔌 Übertragungsmedien:</h4>
+                        <div class="protocols-grid">
+                            <div class="protocol">Kupferkabel</div>
+                            <div class="protocol">Glasfaser</div>
+                            <div class="protocol">WLAN</div>
+                            <div class="protocol">Bluetooth</div>
+                            <div class="protocol">Koaxialkabel</div>
+                            <div class="protocol">Satellit</div>
+                        </div>
+
+                        <div class="example-box">
+                            <h4>💡 Beispiel:</h4>
+                            Das Ethernet-Kabel zwischen deinem Computer und dem Switch überträgt 
+                            die Daten als elektrische Impulse. Ein "1" könnte +5V sein, ein "0" könnte 0V sein.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📊 OSI vs. TCP/IP Modell Vergleich</h2>
+            
+            <p>In der Praxis wird oft das <strong>TCP/IP-Modell</strong> verwendet, welches nur 4 Schichten hat. 
+            Hier die Zuordnung:</p>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>OSI-Schicht</th>
+                        <th>OSI-Name</th>
+                        <th>TCP/IP-Schicht</th>
+                        <th>TCP/IP-Name</th>
+                        <th>Wichtige Protokolle</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>7</td>
+                        <td>Anwendungsschicht</td>
+                        <td rowspan="3">4</td>
+                        <td rowspan="3">Anwendungsschicht</td>
+                        <td>HTTP, FTP, SMTP, DNS</td>
+                    </tr>
+                    <tr>
+                        <td>6</td>
+                        <td>Darstellungsschicht</td>
+                        <td>TLS, SSL, JPEG</td>
+                    </tr>
+                    <tr>
+                        <td>5</td>
+                        <td>Sitzungsschicht</td>
+                        <td>NetBIOS, RPC</td>
+                    </tr>
+                    <tr>
+                        <td>4</td>
+                        <td>Transportschicht</td>
+                        <td>3</td>
+                        <td>Transportschicht</td>
+                        <td>TCP, UDP</td>
+                    </tr>
+                    <tr>
+                        <td>3</td>
+                        <td>Vermittlungsschicht</td>
+                        <td>2</td>
+                        <td>Internetschicht</td>
+                        <td>IP, ICMP, IGMP</td>
+                    </tr>
+                    <tr>
+                        <td>2</td>
+                        <td>Sicherungsschicht</td>
+                        <td rowspan="2">1</td>
+                        <td rowspan="2">Netzzugangsschicht</td>
+                        <td>Ethernet, Wi-Fi</td>
+                    </tr>
+                    <tr>
+                        <td>1</td>
+                        <td>Physische Schicht</td>
+                        <td>Kabel, Funkwellen</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="section">
+            <h2>🔄 Datenfluss durch die Schichten</h2>
+            
+            <div class="data-flow">
+                <h3>📤 Beim Senden (Encapsulation):</h3>
+                
+                <div class="flow-step">
+                    <strong>Schicht 7:</strong> Anwendung erstellt Nachricht (z.B. "Hallo Welt!")
+                    <span class="flow-arrow">⬇️</span>
+                </div>
+                
+                <div class="flow-step">
+                    <strong>Schicht 6:</strong> Verschlüsselung/Komprimierung hinzufügen
+                    <span class="flow-arrow">⬇️</span>
+                </div>
+                
+                <div class="flow-step">
+                    <strong>Schicht 5:</strong> Session-Header hinzufügen
+                    <span class="flow-arrow">⬇️</span>
+                </div>
+                
+                <div class="flow-step">
+                    <strong>Schicht 4:</strong> TCP/UDP-Header hinzufügen (Port-Nummern)
+                    <span class="flow-arrow">⬇️</span>
+                </div>
+                
+                <div class="flow-step">
+                    <strong>Schicht 3:</strong> IP-Header hinzufügen (Quell- und Ziel-IP)
+                    <span class="flow-arrow">⬇️</span>
+                </div>
+                
+                <div class="flow-step">
+                    <strong>Schicht 2:</strong> Ethernet-Header hinzufügen (MAC-Adressen)
+                    <span class="flow-arrow">⬇️</span>
+                </div>
+                
+                <div class="flow-step">
+                    <strong>Schicht 1:</strong> Umwandlung in elektrische Signale und Übertragung
+                </div>
+
+                <h3>📥 Beim Empfangen (Decapsulation):</h3>
+                <p><strong>Der umgekehrte Prozess:</strong> Jede Schicht entfernt ihren Header und gibt die Daten an die nächsthöhere Schicht weiter.</p>
+            </div>
+
+            <div class="example-box">
+                <h4>💡 Analogie: Brief versenden</h4>
+                <ul>
+                    <li><strong>Schicht 7:</strong> Du schreibst den Brief (Inhalt)</li>
+                    <li><strong>Schicht 6:</strong> Du verpackst ihn in einen Umschlag</li>
+                    <li><strong>Schicht 5:</strong> Du gibst Absender und Empfänger an</li>
+                    <li><strong>Schicht 4:</strong> Du klebst eine Briefmarke drauf (Zustellung garantiert)</li>
+                    <li><strong>Schicht 3:</strong> Die Post plant die Route</li>
+                    <li><strong>Schicht 2:</strong> Der Brief wird in Postsäcke sortiert</li>
+                    <li><strong>Schicht 1:</strong> LKW/Flugzeug transportiert physisch</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>🛠️ Praktische Anwendung und Fehlerbehebung</h2>
+            
+            <h3>🔍 Netzwerk-Troubleshooting mit dem OSI-Modell:</h3>
+            
+            <div class="example-box">
+                <h4>📋 Systematische Fehlersuche:</h4>
+                <ol>
+                    <li><strong>Schicht 1:</strong> Ist das Kabel angeschlossen? Leuchten die LEDs?</li>
+                    <li><strong>Schicht 2:</strong> Wird die MAC-Adresse erkannt? Switch-Ports aktiv?</li>
+                    <li><strong>Schicht 3:</strong> Ist die IP-Konfiguration korrekt? Ping möglich?</li>
+                    <li><strong>Schicht 4:</strong> Sind die Ports geöffnet? Firewall-Einstellungen?</li>
+                    <li><strong>Schicht 5-7:</strong> Funktioniert die Anwendung? Login möglich?</li>
+                </ol>
+            </div>
+
+            <h3>🔧 Wichtige Netzwerk-Tools pro Schicht:</h3>
+            <ul>
+                <li><strong>Schicht 1:</strong> Multimeter, Kabeltester</li>
+                <li><strong>Schicht 2:</strong> Switch-Management, MAC-Tabellen</li>
+                <li><strong>Schicht 3:</strong> Ping, Traceroute, Route-Tabellen</li>
+                <li><strong>Schicht 4:</strong> Netstat, Nmap, Wireshark</li>
+                <li><strong>Schicht 7:</strong> Telnet, Browser, FTP-Client</li>
+            </ul>
+        </div>
+
+        <div class="quiz-section">
+            <h2>🧠 Lernkontrolle - Teste dein Wissen!</h2>
+            
+            <div class="quiz-question">
+                <h4>❓ Frage 1:</h4>
+                <p>Auf welcher OSI-Schicht arbeitet ein Router hauptsächlich?</p>
+                <button class="show-answer" onclick="toggleAnswer('answer1')">Antwort anzeigen</button>
+                <div class="quiz-answer" id="answer1">
+                    <strong>Antwort: Schicht 3 (Vermittlungsschicht)</strong><br>
+                    Router arbeiten mit IP-Adressen und entscheiden, wohin Datenpakete weitergeleitet werden sollen.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <h4>❓ Frage 2:</h4>
+                <p>Welches Protokoll gehört zur Schicht 4 und garantiert zuverlässige Datenübertragung?</p>
+                <button class="show-answer" onclick="toggleAnswer('answer2')">Antwort anzeigen</button>
+                <div class="quiz-answer" id="answer2">
+                    <strong>Antwort: TCP (Transmission Control Protocol)</strong><br>
+                    TCP sorgt dafür, dass alle Datenpakete ankommen und in der richtigen Reihenfolge zusammengesetzt werden.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <h4>❓ Frage 3:</h4>
+                <p>Ein User kann sich nicht bei einer Website einloggen. Das Netzwerk funktioniert (Ping ist möglich). Auf welcher Schicht liegt wahrscheinlich das Problem?</p>
+                <button class="show-answer" onclick="toggleAnswer('answer3')">Antwort anzeigen</button>
+                <div class="quiz-answer" id="answer3">
+                    <strong>Antwort: Schicht 7 (Anwendungsschicht)</strong><br>
+                    Da das Netzwerk funktioniert (Schicht 1-3 OK), liegt das Problem wahrscheinlich in der Anwendung selbst - falsches Passwort, Server-Probleme, etc.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <h4>❓ Frage 4:</h4>
+                <p>Was passiert beim "Encapsulation"-Prozess?</p>
+                <button class="show-answer" onclick="toggleAnswer('answer4')">Antwort anzeigen</button>
+                <div class="quiz-answer" id="answer4">
+                    <strong>Antwort: Header werden hinzugefügt</strong><br>
+                    Beim Senden fügt jede Schicht ihren eigenen Header zu den Daten hinzu, wie bei russischen Puppen - eine Schicht um die andere.
+                </div>
+            </div>
+
+            <div class="quiz-question">
+                <h4>❓ Frage 5:</h4>
+                <p>Nenne die 7 OSI-Schichten in der richtigen Reihenfolge (von unten nach oben).</p>
+                <button class="show-answer" onclick="toggleAnswer('answer5')">Antwort anzeigen</button>
+                <div class="quiz-answer" id="answer5">
+                    <strong>Antwort:</strong><br>
+                    1. Physische Schicht (Physical)<br>
+                    2. Sicherungsschicht (Data Link)<br>
+                    3. Vermittlungsschicht (Network)<br>
+                    4. Transportschicht (Transport)<br>
+                    5. Sitzungsschicht (Session)<br>
+                    6. Darstellungsschicht (Presentation)<br>
+                    7. Anwendungsschicht (Application)
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>📚 Abitur-relevante Fakten</h2>
+            
+            <div class="important-note">
+                <h4>⚠️ Das musst du für die Prüfung wissen:</h4>
+                <ul>
+                    <li>✅ Alle 7 Schichten mit Namen und Hauptaufgaben</li>
+                    <li>✅ Wichtigste Protokolle pro Schicht (TCP, IP, HTTP, Ethernet...)</li>
+                    <li>✅ Encapsulation/Decapsulation-Prozess verstehen</li>
+                    <li>✅ Unterschied zwischen OSI und TCP/IP-Modell</li>
+                    <li>✅ Praktische Anwendung bei der Fehlersuche</li>
+                    <li>✅ MAC-Adressen vs. IP-Adressen zuordnen können</li>
+                </ul>
+            </div>
+
+            <h3>💡 Typische Abitur-Aufgaben:</h3>
+            <ul>
+                <li>🔸 Zuordnung von Protokollen zu OSI-Schichten</li>
+                <li>🔸 Beschreibung des Datenflusses durch die Schichten</li>
+                <li>🔸 Fehleranalyse anhand des OSI-Modells</li>
+                <li>🔸 Vergleich OSI vs. TCP/IP-Modell</li>
+                <li>🔸 Erklärung von Encapsulation</li>
+            </ul>
+        </div>
+
+        <div class="section">
+            <h2>🔗 Verbindungen zu anderen Themen</h2>
+            
+            <p>Das OSI-Modell ist fundamental für das Verständnis von:</p>
+            <ul>
+                <li>🌐 <strong>Internet-Protokolle:</strong> TCP/IP, HTTP, DNS</li>
+                <li>🔧 <strong>Netzwerk-Hardware:</strong> Router, Switches, Hubs</li>
+                <li>🛡️ <strong>Netzwerk-Sicherheit:</strong> Firewalls, VPN, Verschlüsselung</li>
+                <li>📡 <strong>Drahtlose Netzwerke:</strong> WLAN, Bluetooth</li>
+                <li>🏠 <strong>LAN/WAN-Technologien:</strong> Ethernet, Glasfaser</li>
+            </ul>
+        </div>
+
+        <footer class="section">
+            <h2>📖 Zusammenfassung</h2>
+            <p>
+                Das OSI-7-Schichtenmodell ist ein <strong>theoretisches Referenzmodell</strong>, das die 
+                Netzwerkkommunikation in 7 logische Schichten unterteilt. Jede Schicht hat spezifische 
+                Aufgaben und kommuniziert nur mit den direkt benachbarten Schichten. In der Praxis wird 
+                oft das 4-schichtige TCP/IP-Modell verwendet, aber das OSI-Modell hilft beim Verständnis 
+                und bei der systematischen Fehlersuche in Netzwerken.
+            </p>
+            
+            <p><strong>🎯 Nächste Themen:</strong> 
+                <a href="internet-protokolle.html">Internet-Protokolle</a> | 
+                <a href="ip-adressierung.html">IP-Adressierung</a> | 
+                <a href="ethernet.html">Ethernet</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleDetails(elementId) {
+            const details = document.getElementById(elementId);
+            const isActive = details.classList.contains('active');
+            
+            // Hide all details first
+            document.querySelectorAll('.layer-details').forEach(detail => {
+                detail.classList.remove('active');
+            });
+            
+            // Show clicked details if it wasn't active
+            if (!isActive) {
+                details.classList.add('active');
+            }
+        }
+
+        function toggleAnswer(answerId) {
+            const answer = document.getElementById(answerId);
+            if (answer.style.display === 'block') {
+                answer.style.display = 'none';
+            } else {
+                answer.style.display = 'block';
+            }
+        }
+
+        // Add some interactive effects
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add click effect to layers
+            const layers = document.querySelectorAll('.layer');
+            layers.forEach(layer => {
+                layer.addEventListener('click', function() {
+                    this.style.transform = 'translateX(10px)';
+                    setTimeout(() => {
+                        this.style.transform = 'translateX(5px)';
+                    }, 200);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

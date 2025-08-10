@@ -1,0 +1,1709 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mikrocontroller-Systeme - Lernzettel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --code-bg: #1e293b;
+            --code-text: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+            color: var(--text-light);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .content-grid {
+            display: grid;
+            gap: 2rem;
+        }
+
+        .section {
+            background: var(--bg-white);
+            border-radius: 16px;
+            padding: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .section h3 {
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .section h4 {
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            margin: 1rem 0 0.5rem 0;
+        }
+
+        .definition-box {
+            background: linear-gradient(135deg, #e0f2fe, #f0f9ff);
+            border: 2px solid #0284c7;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .definition-box h4 {
+            color: #0284c7;
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .important-box {
+            background: linear-gradient(135deg, #fef7cd, #fffbeb);
+            border: 2px solid var(--warning-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .important-box h4 {
+            color: var(--warning-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #dcfce7, #f0fdf4);
+            border: 2px solid var(--success-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .example-box h4 {
+            color: var(--success-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .diagram-container {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            border: 2px solid var(--border-color);
+        }
+
+        .block-diagram {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .block {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            font-weight: bold;
+            text-align: center;
+            min-width: 120px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .block.cpu { background: #dc2626; }
+        .block.memory { background: #7c3aed; }
+        .block.io { background: #059669; }
+        .block.peripheral { background: #ea580c; }
+
+        .arrow {
+            font-size: 1.5rem;
+            color: var(--text-light);
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            color: var(--code-text);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            border: 1px solid #374151;
+        }
+
+        .code-header {
+            background: #374151;
+            color: #9ca3af;
+            padding: 0.5rem 1rem;
+            border-radius: 8px 8px 0 0;
+            margin: 1rem 0 0 0;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .architecture-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .architecture-card {
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            background: var(--bg-white);
+        }
+
+        .architecture-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .register-diagram {
+            font-family: 'Courier New', monospace;
+            background: var(--bg-light);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .register-row {
+            display: flex;
+            align-items: center;
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: var(--bg-white);
+            border-radius: 4px;
+            border: 1px solid var(--border-color);
+        }
+
+        .register-name {
+            font-weight: bold;
+            color: var(--primary-color);
+            min-width: 60px;
+        }
+
+        .register-description {
+            margin-left: 1rem;
+            color: var(--text-dark);
+        }
+
+        .memory-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .memory-card {
+            background: var(--bg-light);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+        }
+
+        .memory-card h5 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .pros, .cons {
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .pros {
+            background: linear-gradient(135deg, #dcfce7, #f0fdf4);
+            border: 1px solid var(--success-color);
+        }
+
+        .cons {
+            background: linear-gradient(135deg, #fee2e2, #fef2f2);
+            border: 1px solid var(--danger-color);
+        }
+
+        .pros h5 {
+            color: var(--success-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .cons h5 {
+            color: var(--danger-color);
+            margin-bottom: 0.5rem;
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        li {
+            margin: 0.5rem 0;
+        }
+
+        .navigation {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--bg-white);
+            border-radius: 12px;
+            padding: 1rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            max-width: 200px;
+            z-index: 1000;
+        }
+
+        .navigation h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+        }
+
+        .navigation ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .navigation li {
+            margin: 0.3rem 0;
+        }
+
+        .navigation a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.8rem;
+            display: block;
+            padding: 0.3rem 0;
+            border-bottom: 1px solid transparent;
+            transition: all 0.2s ease;
+        }
+
+        .navigation a:hover {
+            color: var(--primary-color);
+            border-bottom-color: var(--primary-color);
+        }
+
+        @media (max-width: 1024px) {
+            .navigation {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .architecture-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+
+            .block-diagram {
+                flex-direction: column;
+            }
+
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="breadcrumb">
+                <a href="index.html">🏠 Abitur 2026</a>
+                <span>→</span>
+                <a href="index.html#technische-informatik-ii">Technische Informatik II</a>
+                <span>→</span>
+                <span>Mikrocontroller-Systeme</span>
+            </div>
+            <h1>🔧 Mikrocontroller-Systeme</h1>
+            <p>BPE 2 - Technische Informatik II • Grundlagen für das Verständnis eingebetteter Systeme</p>
+        </div>
+
+        <div class="navigation">
+            <h4>📖 Navigation</h4>
+            <ul>
+                <li><a href="#was-ist-mc">Was ist ein MC?</a></li>
+                <li><a href="#aufbau">Grundaufbau</a></li>
+                <li><a href="#cpu-aufbau">CPU-Aufbau</a></li>
+                <li><a href="#speicher">Speicherarten</a></li>
+                <li><a href="#architekturen">Architekturen</a></li>
+                <li><a href="#register">Register-System</a></li>
+                <li><a href="#peripherie">Peripherie</a></li>
+                <li><a href="#programmierung">Programmierung</a></li>
+                <li><a href="#beispiele">Praktische Beispiele</a></li>
+            </ul>
+        </div>
+
+        <div class="content-grid">
+            <!-- Was ist ein Mikrocontroller? -->
+            <div class="section" id="was-ist-mc">
+                <h2>📚 Was ist ein Mikrocontroller?</h2>
+                
+                <div class="definition-box">
+                    <h4>🎯 Definition: Mikrocontroller (MC)</h4>
+                    <p>Ein <strong>Mikrocontroller</strong> ist ein vollständiger kleiner Computer auf einem einzigen Chip. Er enthält alle notwendigen Komponenten eines Computers:</p>
+                    <ul>
+                        <li><strong>CPU (Prozessor)</strong> - das "Gehirn" für Berechnungen</li>
+                        <li><strong>Speicher</strong> - für Programme und Daten</li>
+                        <li><strong>Ein-/Ausgabe-Ports</strong> - für Verbindungen zur Außenwelt</li>
+                        <li><strong>Peripherie</strong> - Timer, Kommunikationsschnittstellen, etc.</li>
+                    </ul>
+                </div>
+
+                <h3>🔍 Unterschied zwischen CPU und Mikrocontroller</h3>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Eigenschaft</th>
+                            <th>CPU (Computer-Prozessor)</th>
+                            <th>Mikrocontroller</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Integration</strong></td>
+                            <td>Nur Recheneinheit, benötigt externe Komponenten</td>
+                            <td>Alles auf einem Chip integriert</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Anwendungsbereich</strong></td>
+                            <td>Komplexe, leistungsintensive Aufgaben (Computer, Server)</td>
+                            <td>Einfache, spezialisierte Aufgaben (Embedded Systems)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Energieverbrauch</strong></td>
+                            <td>Hoch (50-200 Watt)</td>
+                            <td>Sehr niedrig (Milliwatt bis wenige Watt)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kosten</strong></td>
+                            <td>Teuer (50€ - 1000€+)</td>
+                            <td>Günstig (1€ - 20€)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Geschwindigkeit</strong></td>
+                            <td>Sehr hoch (GHz-Bereich)</td>
+                            <td>Moderat (MHz-Bereich)</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="example-box">
+                    <h4>🌟 Praktische Anwendungen von Mikrocontrollern</h4>
+                    <ul>
+                        <li><strong>Haushaltsgeräte:</strong> Waschmaschinen, Mikrowellen, Kaffeemaschinen</li>
+                        <li><strong>Automotive:</strong> Motorsteuerung, ABS, Airbag-Systeme</li>
+                        <li><strong>IoT-Geräte:</strong> Smart Home, Sensoren, Überwachungssysteme</li>
+                        <li><strong>Medizintechnik:</strong> Herzschrittmacher, Blutzuckermessgeräte</li>
+                        <li><strong>Industrieautomation:</strong> Robotersteuerung, Fertigungsanlagen</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Grundaufbau eines Mikrocontrollers -->
+            <div class="section" id="aufbau">
+                <h2>🏗️ Grundaufbau eines Mikrocontrollers</h2>
+
+                <div class="diagram-container">
+                    <h3>Blockschaltbild eines Mikrocontrollers</h3>
+                    <div class="block-diagram">
+                        <div class="block cpu">CPU<br>(Prozessorkern)</div>
+                        <div class="arrow">↔</div>
+                        <div class="block memory">ROM<br>(Programmspeicher)</div>
+                        <div class="arrow">↔</div>
+                        <div class="block memory">RAM<br>(Datenspeicher)</div>
+                    </div>
+                    <div class="arrow" style="font-size: 2rem;">↕</div>
+                    <div style="text-align: center; margin: 1rem 0;">
+                        <strong>Adress-, Daten- und Steuerbus</strong>
+                    </div>
+                    <div class="arrow" style="font-size: 2rem;">↕</div>
+                    <div class="block-diagram">
+                        <div class="block io">GPIO<br>Ports</div>
+                        <div class="block peripheral">Timer</div>
+                        <div class="block peripheral">UART</div>
+                        <div class="block peripheral">I²C</div>
+                        <div class="block peripheral">SPI</div>
+                        <div class="block peripheral">A/D<br>Wandler</div>
+                    </div>
+                </div>
+
+                <h3>🧩 Die Hauptkomponenten im Detail</h3>
+
+                <h4>1. CPU (Central Processing Unit)</h4>
+                <p>Die CPU ist das Herzstück des Mikrocontrollers und besteht aus:</p>
+                <ul>
+                    <li><strong>ALU (Arithmetic Logic Unit)</strong> - führt Berechnungen durch</li>
+                    <li><strong>Steuerwerk</strong> - koordiniert alle Abläufe</li>
+                    <li><strong>Register</strong> - schnelle Zwischenspeicher</li>
+                    <li><strong>Instruction Decoder</strong> - entschlüsselt Programmbefehle</li>
+                </ul>
+
+                <h4>2. Speicher-Subsystem</h4>
+                <ul>
+                    <li><strong>ROM/Flash</strong> - speichert das Programm dauerhaft</li>
+                    <li><strong>RAM</strong> - speichert temporäre Daten und Variablen</li>
+                    <li><strong>EEPROM</strong> - speichert Konfigurationsdaten dauerhaft</li>
+                </ul>
+
+                <h4>3. Bus-System</h4>
+                <ul>
+                    <li><strong>Adressbus</strong> - bestimmt, wo Daten gespeichert/gelesen werden</li>
+                    <li><strong>Datenbus</strong> - transportiert die eigentlichen Informationen</li>
+                    <li><strong>Steuerbus</strong> - koordiniert Lese-/Schreibvorgänge</li>
+                </ul>
+
+                <h4>4. Peripherie-Module</h4>
+                <ul>
+                    <li><strong>GPIO</strong> - digitale Ein-/Ausgänge</li>
+                    <li><strong>Timer/Counter</strong> - Zeitmessung und PWM</li>
+                    <li><strong>Kommunikation</strong> - UART, I²C, SPI</li>
+                    <li><strong>Wandler</strong> - A/D und D/A Konverter</li>
+                </ul>
+            </div>
+
+            <!-- CPU-Aufbau -->
+            <div class="section" id="cpu-aufbau">
+                <h2>🧠 CPU-Aufbau im Detail</h2>
+
+                <h3>⚡ Das Rechenwerk (ALU)</h3>
+                <div class="definition-box">
+                    <h4>ALU - Arithmetic Logic Unit</h4>
+                    <p>Die ALU ist die "Rechenzentrale" des Mikrocontrollers. Sie kann verschiedene Operationen durchführen:</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>🔧 ALU-Funktionen</h4>
+                    <p>Eine typische 32-Bit ALU besteht aus:</p>
+                    <ul>
+                        <li><strong>32-Bit Volladdierer</strong> - für Addition</li>
+                        <li><strong>32-Bit Subtrahierer</strong> - für Subtraktion</li>
+                        <li><strong>32-Bit UND-Gatter</strong> - für logische UND-Verknüpfung</li>
+                        <li><strong>32-Bit ODER-Gatter</strong> - für logische ODER-Verknüpfung</li>
+                        <li><strong>32-Bit NICHT-Gatter</strong> - für Negation</li>
+                        <li><strong>NOP-Funktion</strong> - Durchleitung ohne Operation</li>
+                    </ul>
+                    <p><strong>Funktionsweise:</strong> Beide Operanden werden gleichzeitig mit allen Recheneinheiten verbunden. Ein Multiplexer wählt je nach Anweisung das passende Rechenergebnis aus.</p>
+                </div>
+
+                <div class="code-header">Assembly-Beispiele für ALU-Operationen</div>
+                <div class="code-block">
+; Addition ohne Flags
+ADD R5, R7, R6    ; R5 = R7 + R6
+
+; Addition mit Status-Flags
+ADDS R5, R7, R6   ; R5 = R7 + R6, Flags werden gesetzt
+
+; Subtraktion mit Flags  
+SUBS R5, R7, R6   ; R5 = R7 - R6, Flags werden gesetzt
+
+; Laden einer Konstante
+LDR R7, =0x23     ; Lade Wert 0x23 in Register R7
+                </div>
+
+                <h3>🚩 Status-Register (Program Status Register - PSR)</h3>
+                <p>Das PSR enthält wichtige Informationen über das Ergebnis der letzten Operation:</p>
+
+                <div class="register-diagram">
+                    <div class="register-row">
+                        <span class="register-name">N-Flag</span>
+                        <span class="register-description">Negative Flag - Ergebnis ist negativ</span>
+                    </div>
+                    <div class="register-row">
+                        <span class="register-name">Z-Flag</span>
+                        <span class="register-description">Zero Flag - Ergebnis ist Null</span>
+                    </div>
+                    <div class="register-row">
+                        <span class="register-name">C-Flag</span>
+                        <span class="register-description">Carry Flag - Übertrag bei Rechnung</span>
+                    </div>
+                    <div class="register-row">
+                        <span class="register-name">V-Flag</span>
+                        <span class="register-description">Overflow Flag - Zahlenbereich überschritten</span>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>💡 Beispiel: Schleifenprogramm</h4>
+                    <p>Dieses Programm zählt von 0 bis zu einem bestimmten Wert:</p>
+                </div>
+
+                <div class="code-header">Assembly-Schleifenprogramm</div>
+                <div class="code-block">
+main:
+    LDR R0, =0        ; Startwert 0 in R0 laden
+    
+schleife:             ; Sprungmarke
+    ADD R0, R0, #1    ; Addiere 1 zum Startwert
+    CMP R0, #10       ; Vergleiche R0 mit 10
+    BNE schleife      ; Springe zu "schleife" wenn nicht gleich
+    
+    ; Ende der Schleife - R0 enthält jetzt 10
+                </div>
+            </div>
+
+            <!-- Speicherarten -->
+            <div class="section" id="speicher">
+                <h2>💾 Speicherarten in Mikrocontrollern</h2>
+
+                <h3>🔄 RAM - Random Access Memory</h3>
+                <div class="definition-box">
+                    <h4>Was ist RAM?</h4>
+                    <p><strong>RAM (Random Access Memory)</strong> ist der Arbeitsspeicher des Mikrocontrollers. Charakteristika:</p>
+                    <ul>
+                        <li><strong>Flüchtig</strong> - Daten gehen bei Spannungsausfall verloren</li>
+                        <li><strong>Schnell</strong> - direkter Zugriff auf jede Speicherzelle</li>
+                        <li><strong>Beschreibbar</strong> - Daten können jederzeit geändert werden</li>
+                    </ul>
+                </div>
+
+                <div class="memory-types">
+                    <div class="memory-card">
+                        <h5>SRAM (Static RAM)</h5>
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <h5>✅ Vorteile</h5>
+                                <ul>
+                                    <li>Sehr schnell</li>
+                                    <li>Kein Refresh nötig</li>
+                                    <li>Niedrige Latenz</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h5>❌ Nachteile</h5>
+                                <ul>
+                                    <li>Großer Platzbedarf</li>
+                                    <li>Teuer</li>
+                                    <li>Niedrige Kapazität</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p><strong>Speicherprinzip:</strong> Daten werden in Flipflops gespeichert</p>
+                    </div>
+
+                    <div class="memory-card">
+                        <h5>DRAM (Dynamic RAM)</h5>
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <h5>✅ Vorteile</h5>
+                                <ul>
+                                    <li>Hohe Kapazität</li>
+                                    <li>Kleiner Platzbedarf</li>
+                                    <li>Günstig</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h5>❌ Nachteile</h5>
+                                <ul>
+                                    <li>Langsamer</li>
+                                    <li>Refresh-Zyklen nötig</li>
+                                    <li>Während Refresh nicht verfügbar</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <p><strong>Speicherprinzip:</strong> Daten werden in Kondensatoren gespeichert</p>
+                    </div>
+                </div>
+
+                <h3>📚 ROM - Read-Only Memory</h3>
+                <div class="definition-box">
+                    <h4>Was ist ROM?</h4>
+                    <p><strong>ROM (Read-Only Memory)</strong> ist der Programmspeicher. Charakteristika:</p>
+                    <ul>
+                        <li><strong>Nicht-flüchtig</strong> - Daten bleiben ohne Spannung erhalten</li>
+                        <li><strong>Dauerhaft</strong> - speichert das Hauptprogramm</li>
+                        <li><strong>Nur lesbar</strong> - kann im normalen Betrieb nicht verändert werden</li>
+                    </ul>
+                </div>
+
+                <div class="memory-types">
+                    <div class="memory-card">
+                        <h5>Statischer ROM</h5>
+                        <p><strong>Programmierung:</strong> Einmalig bei der Herstellung</p>
+                        <p><strong>Änderung:</strong> Nicht möglich</p>
+                        <p><strong>Verwendung:</strong> Massenproduktion mit festem Code</p>
+                    </div>
+
+                    <div class="memory-card">
+                        <h5>PROM</h5>
+                        <p><strong>Programmierung:</strong> Einmalig vom Benutzer</p>
+                        <p><strong>Änderung:</strong> Nicht möglich</p>
+                        <p><strong>Verwendung:</strong> Kleine Serien, Prototyping</p>
+                    </div>
+
+                    <div class="memory-card">
+                        <h5>EPROM</h5>
+                        <p><strong>Programmierung:</strong> Elektrisch programmierbar</p>
+                        <p><strong>Löschung:</strong> UV-Licht (kompletter Chip)</p>
+                        <p><strong>Verwendung:</strong> Entwicklung, mehrfache Nutzung</p>
+                    </div>
+
+                    <div class="memory-card">
+                        <h5>EEPROM</h5>
+                        <p><strong>Programmierung:</strong> Elektrisch programmierbar</p>
+                        <p><strong>Löschung:</strong> Elektrisch, byteweise</p>
+                        <p><strong>Verwendung:</strong> Konfigurationsdaten, Parameter</p>
+                    </div>
+
+                    <div class="memory-card">
+                        <h5>Flash-ROM</h5>
+                        <p><strong>Programmierung:</strong> Elektrisch, blockweise</p>
+                        <p><strong>Löschung:</strong> Elektrisch, blockweise</p>
+                        <p><strong>Verwendung:</strong> Moderne Mikrocontroller, häufigste Art</p>
+                    </div>
+                </div>
+
+                <div class="important-box">
+                    <h4>⚠️ Wichtiger Hinweis zu Speichergrößen</h4>
+                    <p>Typische Speichergrößen bei Mikrocontrollern:</p>
+                    <ul>
+                        <li><strong>Flash-ROM:</strong> 32KB - 2MB (Programmspeicher)</li>
+                        <li><strong>RAM:</strong> 2KB - 256KB (Arbeitsspeicher)</li>
+                        <li><strong>EEPROM:</strong> 1KB - 64KB (Konfigurationsdaten)</li>
+                    </ul>
+                    <p>Zum Vergleich: Ein moderner PC hat 8-32GB RAM!</p>
+                </div>
+            </div>
+
+            <!-- Prozessorarchitekturen -->
+            <div class="section" id="architekturen">
+                <h2>🏛️ Prozessorarchitekturen</h2>
+
+                <div class="architecture-grid">
+                    <div class="architecture-card">
+                        <h4>🏢 Von-Neumann-Architektur</h4>
+                        <div class="diagram-container">
+                            <div class="block-diagram" style="flex-direction: column;">
+                                <div class="block cpu">CPU</div>
+                                <div class="arrow">↕</div>
+                                <div style="background: var(--warning-color); color: white; padding: 0.5rem; border-radius: 4px; font-weight: bold;">
+                                    Gemeinsamer Bus
+                                </div>
+                                <div class="arrow">↕</div>
+                                <div style="display: flex; gap: 1rem;">
+                                    <div class="block memory">Code-<br>speicher</div>
+                                    <div class="block memory">Daten-<br>speicher</div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <h5>✅ Vorteile</h5>
+                                <ul>
+                                    <li>Einfacher Aufbau</li>
+                                    <li>Flexible Speicheraufteilung</li>
+                                    <li>Günstiger</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h5>❌ Nachteile</h5>
+                                <ul>
+                                    <li>Von-Neumann-Flaschenhals</li>
+                                    <li>Sequenzieller Zugriff</li>
+                                    <li>Langsamere Ausführung</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="definition-box">
+                            <h4>🔍 Funktionsweise</h4>
+                            <p>Bei der Von-Neumann-Architektur teilen sich Programme und Daten einen gemeinsamen Speicher und Bus. Dies führt zu einem "Flaschenhals", da Befehle und Daten nacheinander übertragen werden müssen.</p>
+                        </div>
+                    </div>
+
+                    <div class="architecture-card">
+                        <h4>🏛️ Harvard-Architektur</h4>
+                        <div class="diagram-container">
+                            <div class="block-diagram" style="flex-direction: column;">
+                                <div class="block cpu">CPU</div>
+                                <div style="display: flex; gap: 2rem; margin: 1rem 0;">
+                                    <div style="display: flex; flex-direction: column; align-items: center;">
+                                        <div class="arrow">↕</div>
+                                        <div style="background: var(--success-color); color: white; padding: 0.3rem; border-radius: 4px; font-size: 0.8rem;">I-Bus</div>
+                                        <div class="arrow">↕</div>
+                                        <div class="block memory">Code-<br>speicher</div>
+                                    </div>
+                                    <div style="display: flex; flex-direction: column; align-items: center;">
+                                        <div class="arrow">↕</div>
+                                        <div style="background: var(--primary-color); color: white; padding: 0.3rem; border-radius: 4px; font-size: 0.8rem;">D-Bus</div>
+                                        <div class="arrow">↕</div>
+                                        <div class="block memory">Daten-<br>speicher</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <h5>✅ Vorteile</h5>
+                                <ul>
+                                    <li>Gleichzeitiger Zugriff</li>
+                                    <li>Höhere Performance</li>
+                                    <li>Kein Flaschenhals</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h5>❌ Nachteile</h5>
+                                <ul>
+                                    <li>Komplexerer Aufbau</li>
+                                    <li>Feste Speicheraufteilung</li>
+                                    <li>Teurer</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="definition-box">
+                            <h4>🔍 Funktionsweise</h4>
+                            <p>Die Harvard-Architektur verwendet getrennte Speicher und separate Busse für Programme und Daten. Dadurch können Befehle und Daten gleichzeitig übertragen werden, was zu höherer Performance führt.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="important-box">
+                    <h4>🎯 Welche Architektur verwenden moderne Mikrocontroller?</h4>
+                    <p>Die meisten modernen Mikrocontroller (wie ARM Cortex-M, AVR, PIC) verwenden eine <strong>modifizierte Harvard-Architektur</strong>:</p>
+                    <ul>
+                        <li>Getrennte Caches für Befehle und Daten (Harvard-Prinzip)</li>
+                        <li>Gemeinsamer Hauptspeicher (Von-Neumann-Prinzip)</li>
+                        <li>Beste Kombination aus Performance und Flexibilität</li>
+                    </ul>
+                </div>
+
+                <h3>🔧 RISC vs. CISC</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Eigenschaft</th>
+                            <th>RISC (Reduced Instruction Set)</th>
+                            <th>CISC (Complex Instruction Set)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Befehlsanzahl</strong></td>
+                            <td>Wenige, einfache Befehle</td>
+                            <td>Viele, komplexe Befehle</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Befehlslänge</strong></td>
+                            <td>Konstant (z.B. 32 Bit)</td>
+                            <td>Variabel (1-15 Bytes)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ausführungszeit</strong></td>
+                            <td>1 Taktzyklus pro Befehl</td>
+                            <td>Mehrere Taktzyklen pro Befehl</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Speicherzugriff</strong></td>
+                            <td>Load-Store-Architektur</td>
+                            <td>Direkter Speicherzugriff in Befehlen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Beispiele</strong></td>
+                            <td>ARM, MIPS, RISC-V</td>
+                            <td>x86, x86-64</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="example-box">
+                    <h4>💡 Load-Store-Architektur (RISC)</h4>
+                    <p>Bei RISC-Prozessoren können arithmetische Operationen nur mit Registern durchgeführt werden:</p>
+                </div>
+
+                <div class="code-header">RISC: Load-Store Beispiel</div>
+                <div class="code-block">
+; Laden der Werte aus dem Speicher in Register
+LDR R1, [address1]    ; Lade Wert von address1 in R1
+LDR R2, [address2]    ; Lade Wert von address2 in R2
+
+; Arithmetische Operation nur mit Registern
+ADD R3, R1, R2        ; R3 = R1 + R2
+
+; Ergebnis zurück in den Speicher schreiben
+STR R3, [result]      ; Speichere R3 an Adresse result
+                </div>
+
+                <div class="code-header">CISC: Direkter Speicherzugriff</div>
+                <div class="code-block">
+; Bei CISC kann direkt mit Speicherwerten gerechnet werden
+ADD [result], [address1], [address2]  ; Direkte Addition von Speicherwerten
+                </div>
+            </div>
+
+            <!-- Register-System -->
+            <div class="section" id="register">
+                <h2>📋 Register-System</h2>
+
+                <div class="definition-box">
+                    <h4>Was sind Register?</h4>
+                    <p><strong>Register</strong> sind die schnellsten Speicher im Mikrocontroller. Sie befinden sich direkt in der CPU und können in einem Taktzyklus gelesen oder beschrieben werden.</p>
+                </div>
+
+                <h3>🏗️ Aufbau eines Registers</h3>
+                <div class="example-box">
+                    <h4>🔧 Technische Umsetzung</h4>
+                    <p>Ein Register besteht aus mehreren D-Flipflops:</p>
+                    <ul>
+                        <li><strong>1 Bit = 1 D-Flipflop</strong></li>
+                        <li><strong>32-Bit Register = 32 D-Flipflops</strong></li>
+                        <li><strong>Multiplexer</strong> vor jedem D-FF ermöglicht Datenweiterleitung</li>
+                        <li><strong>Bei steigender Taktflanke</strong> wird das Signal am D-Eingang gespeichert</li>
+                    </ul>
+                </div>
+
+                <h3>📊 ARM Cortex-M Register (Beispiel STM32)</h3>
+                <div class="register-diagram">
+                    <h4>General Purpose Register (R0-R15)</h4>
+                    <div class="register-row">
+                        <span class="register-name">R0-R12</span>
+                        <span class="register-description">Allzweck-Register für Datenoperationen (Load-Store-Arithmetic-Logic)</span>
+                    </div>
+                    <div class="register-row">
+                        <span class="register-name">R13 (SP)</span>
+                        <span class="register-description">Stack Pointer - zeigt auf die aktuelle Position im Stack</span>
+                    </div>
+                    <div class="register-row">
+                        <span class="register-name">R14 (LR)</span>
+                        <span class="register-description">Link Register - speichert Rücksprungadresse bei Funktionsaufrufen</span>
+                    </div>
+                    <div class="register-row">
+                        <span class="register-name">R15 (PC)</span>
+                        <span class="register-description">Program Counter - zeigt auf den nächsten auszuführenden Befehl</span>
+                    </div>
+                </div>
+
+                <div class="register-diagram">
+                    <h4>Spezial-Register</h4>
+                    <div class="register-row">
+                        <span class="register-name">PSR</span>
+                        <span class="register-description">Program Status Register - enthält Flags und Systemstatus</span>
+                    </div>
+                    <div class="register-row">
+                        <span class="register-name">PRIMASK</span>
+                        <span class="register-description">Exception Mask Register - steuert Interrupt-Verhalten</span>
+                    </div>
+                    <div class="register-row">
+                        <span class="register-name">CONTROL</span>
+                        <span class="register-description">Control Register - steuert Privilegien und Stack-Auswahl</span>
+                    </div>
+                </div>
+
+                <h3>💡 Datenbreiten bei ARM</h3>
+                <div class="important-box">
+                    <h4>📏 ARM Datentypen</h4>
+                    <p>ARM-Prozessoren verwenden folgende Bezeichnungen:</p>
+                    <ul>
+                        <li><strong>Byte:</strong> 8 Bit (wie üblich)</li>
+                        <li><strong>Halfword:</strong> 16 Bit (bei x86 = 1 Word)</li>
+                        <li><strong>Word:</strong> 32 Bit (bei x86 = Double Word)</li>
+                    </ul>
+                    <p><strong>Achtung:</strong> Andere Prozessorfamilien haben andere Konventionen!</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>🔧 Register-Beispiel in Assembly</h4>
+                </div>
+
+                <div class="code-header">ARM Assembly - Register verwenden</div>
+                <div class="code-block">
+; GPIO-Port verwenden
+LDR R3, =GPIOB          ; Lade GPIOB-Adresse in Register R3
+LDRB R6, [R3, #IDR]     ; Lade Byte vom Input Data Register in R6
+ADD R1, R6, #5          ; Addiere Konstante 5 zu R6, Ergebnis in R1
+
+; Anderes GPIO-Port
+LDR R3, =GPIOC          ; Lade GPIOC-Adresse in R3 (überschreibt alten Wert!)
+STRB R1, [R3, #ODR]     ; Speichere Byte aus R1 in Output Data Register
+                </div>
+            </div>
+
+            <!-- Peripherie -->
+            <div class="section" id="peripherie">
+                <h2>🔌 Peripherie-Module</h2>
+
+                <h3>📡 GPIO - General Purpose Input/Output</h3>
+                <div class="definition-box">
+                    <h4>Was ist GPIO?</h4>
+                    <p><strong>GPIO</strong> sind die "Tore zur Außenwelt" des Mikrocontrollers. Jeder Pin kann als Eingang oder Ausgang konfiguriert werden.</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>🏗️ GPIO-Register</h4>
+                    <p>Jeder GPIO-Port hat mehrere Register:</p>
+                    <ul>
+                        <li><strong>IDR (Input Data Register):</strong> Liest den aktuellen Zustand der Eingänge</li>
+                        <li><strong>ODR (Output Data Register):</strong> Steuert den Zustand der Ausgänge</li>
+                        <li><strong>DDR (Data Direction Register):</strong> Bestimmt ob Pin Ein- oder Ausgang ist</li>
+                    </ul>
+                </div>
+
+                <div class="code-header">GPIO Programmierung</div>
+                <div class="code-block">
+// Pin als Ausgang konfigurieren
+pinMode(13, OUTPUT);
+
+// LED einschalten (HIGH = 5V)
+digitalWrite(13, HIGH);
+
+// LED ausschalten (LOW = 0V)  
+digitalWrite(13, LOW);
+
+// Pin als Eingang konfigurieren
+pinMode(2, INPUT);
+
+// Digitalen Wert lesen
+int sensorValue = digitalRead(2);
+                </div>
+
+                <h3>⏱️ Timer und PWM</h3>
+                <div class="definition-box">
+                    <h4>Timer-Module</h4>
+                    <p><strong>Timer</strong> sind sehr vielseitige Module, die für verschiedene Aufgaben verwendet werden können:</p>
+                    <ul>
+                        <li><strong>Zeitmessung</strong> - Präzise Zeitintervalle</li>
+                        <li><strong>PWM-Erzeugung</strong> - Pulsweitenmodulation für analoge Ausgaben</li>
+                        <li><strong>Frequenzmessung</strong> - Messen von Signalfrequenzen</li>
+                        <li><strong>Interrupts</strong> - Zeitgesteuerte Unterbrechungen</li>
+                    </ul>
+                </div>
+
+                <div class="diagram-container">
+                    <h4>PWM-Signal (Pulsweitenmodulation)</h4>
+                    <div style="font-family: monospace; line-height: 1.2;">
+                        <pre>
+PWM mit 25% Duty Cycle:
+         ┌─┐   ┌─┐   ┌─┐   ┌─┐
+         │ │   │ │   │ │   │ │
+      ───┘ └───┘ └───┘ └───┘ └───
+         <-- T --> 25% EIN, 75% AUS
+
+PWM mit 75% Duty Cycle:
+         ┌─────┐ ┌─────┐ ┌─────┐
+         │     │ │     │ │     │  
+      ───┘     └─┘     └─┘     └─
+         <-- T --> 75% EIN, 25% AUS
+                        </pre>
+                    </div>
+                    <p><strong>Anwendung:</strong> Helligkeit von LEDs, Geschwindigkeit von Motoren, analoge Spannungen simulieren</p>
+                </div>
+
+                <h3>🌐 Kommunikationsschnittstellen</h3>
+
+                <h4>📞 UART/USART</h4>
+                <div class="memory-card">
+                    <h5>Universal Asynchronous Receiver Transmitter</h5>
+                    <ul>
+                        <li><strong>Serielle Kommunikation</strong> - ein Bit nach dem anderen</li>
+                        <li><strong>Asynchron</strong> - kein gemeinsamer Takt, Start-/Stop-Bits</li>
+                        <li><strong>Punkt-zu-Punkt</strong> - zwischen zwei Geräten</li>
+                        <li><strong>Anwendung:</strong> PC-Verbindung, GPS-Module, Bluetooth</li>
+                    </ul>
+                </div>
+
+                <h4>🔄 I²C (Inter-Integrated Circuit)</h4>
+                <div class="memory-card">
+                    <h5>Serieller Bus für kurze Distanzen</h5>
+                    <ul>
+                        <li><strong>2 Leitungen:</strong> SDA (Daten) und SCL (Takt)</li>
+                        <li><strong>Master-Slave-Prinzip:</strong> Ein Master, mehrere Slaves</li>
+                        <li><strong>Adressierung:</strong> Jeder Slave hat eigene 7-Bit-Adresse</li>
+                        <li><strong>Anwendung:</strong> Sensoren, EEPROMs, Displays</li>
+                    </ul>
+                </div>
+
+                <h4>⚡ SPI (Serial Peripheral Interface)</h4>
+                <div class="memory-card">
+                    <h5>Schnelle serielle Schnittstelle</h5>
+                    <ul>
+                        <li><strong>4 Leitungen:</strong> MOSI, MISO, SCK, CS</li>
+                        <li><strong>Vollduplex:</strong> Gleichzeitig senden und empfangen</li>
+                        <li><strong>Höhere Geschwindigkeit</strong> als I²C</li>
+                        <li><strong>Anwendung:</strong> SD-Karten, Flash-Speicher, Displays</li>
+                    </ul>
+                </div>
+
+                <h3>🔄 A/D und D/A Wandler</h3>
+                <div class="definition-box">
+                    <h4>Analog-Digital-Wandlung</h4>
+                    <p>Mikrocontroller sind digitale Geräte, aber die reale Welt ist analog. Wandler ermöglichen die Brücke zwischen beiden Welten:</p>
+                </div>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Wandler-Typ</th>
+                            <th>Funktion</th>
+                            <th>Beispiele</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>A/D-Wandler (ADC)</strong></td>
+                            <td>Analoge Spannung → Digitaler Wert</td>
+                            <td>Temperatursensoren, Potentiometer, Mikrofone</td>
+                        </tr>
+                        <tr>
+                            <td><strong>D/A-Wandler (DAC)</strong></td>
+                            <td>Digitaler Wert → Analoge Spannung</td>
+                            <td>Audio-Ausgabe, Spannungsregelung</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="example-box">
+                    <h4>💡 ADC-Beispiel</h4>
+                    <p>12-Bit ADC bei 3.3V Referenzspannung:</p>
+                    <ul>
+                        <li><strong>Auflösung:</strong> 2¹² = 4096 Stufen</li>
+                        <li><strong>Kleinste messbare Spannung:</strong> 3.3V / 4096 = 0.8mV</li>
+                        <li><strong>Digitalwert 2048 entspricht:</strong> 1.65V (Mitte des Bereichs)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Programmierung -->
+            <div class="section" id="programmierung">
+                <h2>💻 Programmierung von Mikrocontrollern</h2>
+
+                <h3>🛠️ Entwicklungsumgebung (IDE)</h3>
+                <div class="definition-box">
+                    <h4>Was ist eine IDE?</h4>
+                    <p><strong>IDE (Integrated Development Environment)</strong> stellt alle Komponenten zur Verfügung, um ein Programm zu erstellen:</p>
+                    <ul>
+                        <li><strong>Editor</strong> - zum Schreiben des Quellcodes</li>
+                        <li><strong>Compiler</strong> - übersetzt Hochsprache in Maschinencode</li>
+                        <li><strong>Debugger</strong> - hilft bei der Fehlersuche</li>
+                        <li><strong>Programmer</strong> - lädt das Programm in den Mikrocontroller</li>
+                    </ul>
+                </div>
+
+                <div class="diagram-container">
+                    <h4>Vom Quellcode zum lauffähigen Programm</h4>
+                    <div class="block-diagram">
+                        <div class="block" style="background: #059669;">C/C++ Code<br>(.c, .cpp)</div>
+                        <div class="arrow">→</div>
+                        <div class="block" style="background: #7c3aed;">Compiler<br>(GCC)</div>
+                        <div class="arrow">→</div>
+                        <div class="block" style="background: #ea580c;">Assembly<br>(.asm)</div>
+                        <div class="arrow">→</div>
+                        <div class="block" style="background: #dc2626;">Maschinencode<br>(.hex)</div>
+                    </div>
+                </div>
+
+                <h3>🔤 Programmiersprachen</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Sprache</th>
+                            <th>Abstraktionsgrad</th>
+                            <th>Vorteile</th>
+                            <th>Nachteile</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Assembly</strong></td>
+                            <td>Niedrig</td>
+                            <td>Maximale Kontrolle, sehr effizient</td>
+                            <td>Schwer lesbar, hardwarespezifisch</td>
+                        </tr>
+                        <tr>
+                            <td><strong>C</strong></td>
+                            <td>Mittel</td>
+                            <td>Gute Balance zwischen Kontrolle und Lesbarkeit</td>
+                            <td>Manuelle Speicherverwaltung</td>
+                        </tr>
+                        <tr>
+                            <td><strong>C++</strong></td>
+                            <td>Mittel-Hoch</td>
+                            <td>Objektorientierung, moderne Features</td>
+                            <td>Komplexer, größerer Overhead</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Arduino IDE</strong></td>
+                            <td>Hoch</td>
+                            <td>Einfach zu lernen, viele Bibliotheken</td>
+                            <td>Weniger Kontrolle, größerer Code</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>⚙️ Minimaler Hardwareaufbau</h3>
+                <div class="important-box">
+                    <h4>🔧 Was braucht ein Mikrocontroller zum Laufen?</h4>
+                    <ul>
+                        <li><strong>Betriebsspannung</strong> - meist 3.3V oder 5V</li>
+                        <li><strong>Taktgenerator</strong> - Quarz oder interner Oszillator</li>
+                        <li><strong>Reset-Schaltung</strong> - für definierten Start</li>
+                        <li><strong>Programm im Flash-Speicher</strong> - der auszuführende Code</li>
+                        <li><strong>Entkoppelkondensatoren</strong> - für stabile Spannungsversorgung</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>🎯 Erstes Programm: LED blinken lassen</h4>
+                </div>
+
+                <div class="code-header">Arduino C++ Code</div>
+                <div class="code-block">
+// Erstes Mikrocontroller-Programm
+void setup() {
+    // Pin 13 als Ausgang konfigurieren
+    pinMode(13, OUTPUT);
+}
+
+void loop() {
+    digitalWrite(13, HIGH);  // LED einschalten
+    delay(1000);             // 1 Sekunde warten
+    digitalWrite(13, LOW);   // LED ausschalten  
+    delay(1000);             // 1 Sekunde warten
+    // loop() wiederholt sich automatisch
+}
+                </div>
+
+                <div class="code-header">Entsprechender Assembly Code (vereinfacht)</div>
+                <div class="code-block">
+; GPIO-Port B konfigurieren
+LDR R0, =GPIOB_BASE
+LDR R1, =0x00002000    ; Pin 13 als Ausgang
+STR R1, [R0, #MODER]
+
+loop:
+    ; LED einschalten
+    LDR R1, =0x00002000
+    STR R1, [R0, #ODR]
+    
+    ; Delay-Funktion aufrufen
+    BL delay_1s
+    
+    ; LED ausschalten
+    LDR R1, =0x00000000
+    STR R1, [R0, #ODR]
+    
+    ; Delay-Funktion aufrufen
+    BL delay_1s
+    
+    ; Zurück zum Schleifenanfang
+    B loop
+                </div>
+            </div>
+
+            <!-- Praktische Beispiele -->
+            <div class="section" id="beispiele">
+                <h2>🎯 Praktische Beispiele</h2>
+
+                <h3>🤖 Arduino Uno (ATmega328P)</h3>
+                <div class="example-box">
+                    <h4>📊 Technische Daten Arduino Uno</h4>
+                    <ul>
+                        <li><strong>Mikrocontroller:</strong> ATmega328P (8-Bit)</li>
+                        <li><strong>Betriebsspannung:</strong> 5V</li>
+                        <li><strong>Taktfrequenz:</strong> 16 MHz</li>
+                        <li><strong>Flash-Speicher:</strong> 32 KB</li>
+                        <li><strong>RAM:</strong> 2 KB</li>
+                        <li><strong>EEPROM:</strong> 1 KB</li>
+                        <li><strong>Digitale I/O Pins:</strong> 14 (6 davon PWM)</li>
+                        <li><strong>Analoge Eingänge:</strong> 6 (10-Bit ADC)</li>
+                    </ul>
+                </div>
+
+                <div class="diagram-container">
+                    <h4>Arduino Uno Pinbelegung (vereinfacht)</h4>
+                    <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; text-align: left;">
+                        <div>
+                            <h5>Digitale Pins</h5>
+                            <ul style="font-size: 0.9rem;">
+                                <li><strong>D0, D1:</strong> UART (RX/TX)</li>
+                                <li><strong>D2, D3:</strong> Externe Interrupts</li>
+                                <li><strong>D3, D5, D6, D9, D10, D11:</strong> PWM</li>
+                                <li><strong>D13:</strong> Onboard LED</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5>Analoge Pins</h5>
+                            <ul style="font-size: 0.9rem;">
+                                <li><strong>A0-A5:</strong> 10-Bit ADC</li>
+                                <li><strong>A4 (SDA):</strong> I²C Daten</li>
+                                <li><strong>A5 (SCL):</strong> I²C Takt</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5>Kommunikation</h5>
+                            <ul style="font-size: 0.9rem;">
+                                <li><strong>D10-D13:</strong> SPI</li>
+                                <li><strong>D0, D1:</strong> UART</li>
+                                <li><strong>A4, A5:</strong> I²C</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>💪 STM32 (ARM Cortex-M)</h3>
+                <div class="example-box">
+                    <h4>📊 Technische Daten STM32L152RE</h4>
+                    <ul>
+                        <li><strong>Mikrocontroller:</strong> ARM Cortex-M3 (32-Bit)</li>
+                        <li><strong>Betriebsspannung:</strong> 1.8V - 3.6V</li>
+                        <li><strong>Taktfrequenz:</strong> bis 32 MHz</li>
+                        <li><strong>Flash-Speicher:</strong> 512 KB</li>
+                        <li><strong>RAM:</strong> 80 KB</li>
+                        <li><strong>EEPROM:</strong> 16 KB</li>
+                        <li><strong>GPIO Pins:</strong> bis 83</li>
+                        <li><strong>ADC:</strong> 12-Bit, bis 24 Kanäle</li>
+                        <li><strong>DAC:</strong> 12-Bit, 2 Kanäle</li>
+                    </ul>
+                </div>
+
+                <h3>🔧 Praktische Programmierbeispiele</h3>
+
+                <h4>💡 Beispiel 1: Temperatur messen und anzeigen</h4>
+                <div class="code-header">Arduino Code - Temperatursensor</div>
+                <div class="code-block">
+#include <LiquidCrystal.h>
+
+// LCD initialisieren (RS, Enable, D4, D5, D6, D7)
+LiquidCrystal lcd(12, 11, 5, 4, 3, 2);
+
+void setup() {
+    lcd.begin(16, 2);           // 16x2 LCD initialisieren
+    lcd.print("Temperatur:");   // Anfangstext
+}
+
+void loop() {
+    // Analogwert vom Temperatursensor lesen (Pin A0)
+    int sensorValue = analogRead(A0);
+    
+    // Umrechnung in Temperatur (für LM35: 10mV/°C)
+    float voltage = sensorValue * (5.0 / 1024.0);  // Spannung berechnen
+    float temperature = voltage * 100.0;           // Temperatur in °C
+    
+    // Temperatur auf LCD anzeigen
+    lcd.setCursor(0, 1);        // Zweite Zeile
+    lcd.print(temperature);     // Temperaturwert
+    lcd.print(" C");            // Einheit
+    
+    delay(1000);                // 1 Sekunde warten
+}
+                </div>
+
+                <h4>🚦 Beispiel 2: Ampelsteuerung mit Timer</h4>
+                <div class="code-header">Arduino Code - Ampelsteuerung</div>
+                <div class="code-block">
+// Pin-Definitionen
+const int ROT = 13;
+const int GELB = 12;
+const int GRUEN = 11;
+
+// Zeiten in Millisekunden
+const unsigned long GRUEN_ZEIT = 5000;   // 5 Sekunden
+const unsigned long GELB_ZEIT = 2000;    // 2 Sekunden  
+const unsigned long ROT_ZEIT = 3000;     // 3 Sekunden
+
+unsigned long letzteSchaltung = 0;
+int aktuellerZustand = 0;  // 0=Rot, 1=Rot+Gelb, 2=Grün, 3=Gelb
+
+void setup() {
+    pinMode(ROT, OUTPUT);
+    pinMode(GELB, OUTPUT);
+    pinMode(GRUEN, OUTPUT);
+    
+    // Startzustand: Rot
+    digitalWrite(ROT, HIGH);
+    letzteSchaltung = millis();
+}
+
+void loop() {
+    unsigned long aktuelleZeit = millis();
+    
+    switch(aktuellerZustand) {
+        case 0: // Rot
+            if(aktuelleZeit - letzteSchaltung >= ROT_ZEIT) {
+                digitalWrite(GELB, HIGH);  // Rot + Gelb
+                aktuellerZustand = 1;
+                letzteSchaltung = aktuelleZeit;
+            }
+            break;
+            
+        case 1: // Rot + Gelb
+            if(aktuelleZeit - letzteSchaltung >= 1000) {
+                digitalWrite(ROT, LOW);
+                digitalWrite(GELB, LOW);
+                digitalWrite(GRUEN, HIGH);  // Grün
+                aktuellerZustand = 2;
+                letzteSchaltung = aktuelleZeit;
+            }
+            break;
+            
+        case 2: // Grün
+            if(aktuelleZeit - letzteSchaltung >= GRUEN_ZEIT) {
+                digitalWrite(GRUEN, LOW);
+                digitalWrite(GELB, HIGH);   // Gelb
+                aktuellerZustand = 3;
+                letzteSchaltung = aktuelleZeit;
+            }
+            break;
+            
+        case 3: // Gelb
+            if(aktuelleZeit - letzteSchaltung >= GELB_ZEIT) {
+                digitalWrite(GELB, LOW);
+                digitalWrite(ROT, HIGH);    // Rot
+                aktuellerZustand = 0;
+                letzteSchaltung = aktuelleZeit;
+            }
+            break;
+    }
+}
+                </div>
+
+                <h4>📡 Beispiel 3: I²C Kommunikation mit Sensor</h4>
+                <div class="code-header">Arduino Code - I²C Temperatursensor LM75</div>
+                <div class="code-block">
+#include <Wire.h>
+
+// I²C-Adresse des LM75 Temperatursensors
+const int LM75_ADRESSE = 0x48;
+
+void setup() {
+    Serial.begin(9600);    // Serielle Kommunikation starten
+    Wire.begin();          // I²C initialisieren
+    
+    Serial.println("LM75 Temperatursensor Test");
+}
+
+void loop() {
+    // Temperatur-Register lesen (Register 0x00)
+    Wire.beginTransmission(LM75_ADRESSE);
+    Wire.write(0x00);      // Register-Adresse senden
+    Wire.endTransmission();
+    
+    // 2 Bytes vom Sensor lesen
+    Wire.requestFrom(LM75_ADRESSE, 2);
+    
+    if(Wire.available() >= 2) {
+        // Erste Byte: Hauptteil der Temperatur
+        int highByte = Wire.read();
+        // Zweite Byte: Nachkommastellen
+        int lowByte = Wire.read();
+        
+        // Temperatur berechnen (LM75 spezifisch)
+        float temperatur = highByte;
+        if(lowByte & 0x80) temperatur += 0.5;  // 0.5°C Auflösung
+        
+        // Ergebnis ausgeben
+        Serial.print("Temperatur: ");
+        Serial.print(temperatur);
+        Serial.println(" °C");
+    }
+    
+    delay(2000);  // 2 Sekunden warten
+}
+                </div>
+
+                <h4>⚡ Beispiel 4: PWM für Motorsteuerung</h4>
+                <div class="code-header">Arduino Code - DC Motor mit PWM</div>
+                <div class="code-block">
+// Motor-Pins
+const int MOTOR_PWM = 9;     // PWM-Pin für Geschwindigkeit
+const int MOTOR_DIR1 = 7;    // Richtungssteuerung 1
+const int MOTOR_DIR2 = 8;    // Richtungssteuerung 2
+
+// Potentiometer für Geschwindigkeitssteuerung
+const int POTI_PIN = A0;
+
+void setup() {
+    pinMode(MOTOR_PWM, OUTPUT);
+    pinMode(MOTOR_DIR1, OUTPUT);
+    pinMode(MOTOR_DIR2, OUTPUT);
+    
+    Serial.begin(9600);
+}
+
+void loop() {
+    // Potentiometer lesen (0-1023)
+    int potiWert = analogRead(POTI_PIN);
+    
+    // In Geschwindigkeit umrechnen (-255 bis +255)
+    int geschwindigkeit = map(potiWert, 0, 1023, -255, 255);
+    
+    // Motorrichtung und -geschwindigkeit einstellen
+    if(geschwindigkeit > 0) {
+        // Vorwärts
+        digitalWrite(MOTOR_DIR1, HIGH);
+        digitalWrite(MOTOR_DIR2, LOW);
+        analogWrite(MOTOR_PWM, geschwindigkeit);
+        
+        Serial.print("Vorwärts: ");
+        Serial.println(geschwindigkeit);
+        
+    } else if(geschwindigkeit < 0) {
+        // Rückwärts
+        digitalWrite(MOTOR_DIR1, LOW);
+        digitalWrite(MOTOR_DIR2, HIGH);
+        analogWrite(MOTOR_PWM, -geschwindigkeit);  // Betrag verwenden
+        
+        Serial.print("Rückwärts: ");
+        Serial.println(-geschwindigkeit);
+        
+    } else {
+        // Stop
+        digitalWrite(MOTOR_DIR1, LOW);
+        digitalWrite(MOTOR_DIR2, LOW);
+        analogWrite(MOTOR_PWM, 0);
+        
+        Serial.println("Motor gestoppt");
+    }
+    
+    delay(100);  // Kurze Pause
+}
+                </div>
+
+                <h3>🚨 Häufige Fehler und Lösungen</h3>
+                <div class="important-box">
+                    <h4>⚠️ Typische Anfängerfehler</h4>
+                    <ul>
+                        <li><strong>Offene Eingänge:</strong> Digitale Eingänge ohne Pull-Up-Widerstand "schweben" und können zufällige Werte haben</li>
+                        <li><strong>Stromüberlastung:</strong> Ein GPIO-Pin kann max. 20-40mA liefern - für LEDs Vorwiderstände verwenden!</li>
+                        <li><strong>Falsche Referenzspannung:</strong> Bei ADC-Messungen die richtige Referenz (meist VCC) verwenden</li>
+                        <li><strong>Timing-Probleme:</strong> delay() blockiert den ganzen Mikrocontroller - besser Timer verwenden</li>
+                        <li><strong>Stack Overflow:</strong> Zu tiefe Rekursion oder zu große lokale Variablen</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>💡 Best Practices</h4>
+                    <ul>
+                        <li><strong>Konstanten definieren:</strong> Verwende #define für Pin-Nummern und Werte</li>
+                        <li><strong>Funktionen verwenden:</strong> Teile Code in kleine, wiederverwendbare Funktionen</li>
+                        <li><strong>Kommentare schreiben:</strong> Erkläre, was dein Code macht</li>
+                        <li><strong>Hardware testen:</strong> Teste neue Hardware erst mit einfachen Programmen</li>
+                        <li><strong>Schaltplan zeichnen:</strong> Dokumentiere deine Verschaltung</li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Zusammenfassung und Ausblick -->
+            <div class="section">
+                <h2>📋 Zusammenfassung</h2>
+                
+                <div class="definition-box">
+                    <h4>🎯 Das Wichtigste im Überblick</h4>
+                    <p>Ein <strong>Mikrocontroller</strong> ist ein vollständiger Computer auf einem Chip, der speziell für eingebettete Anwendungen entwickelt wurde:</p>
+                </div>
+
+                <h3>🏗️ Hauptkomponenten</h3>
+                <ul>
+                    <li><strong>CPU:</strong> Führt Programme aus (ALU, Steuerwerk, Register)</li>
+                    <li><strong>Speicher:</strong> RAM (flüchtig), ROM/Flash (dauerhaft), EEPROM (konfigurierbar)</li>
+                    <li><strong>Peripherie:</strong> GPIO, Timer, Kommunikationsschnittstellen, Wandler</li>
+                    <li><strong>Bus-System:</strong> Verbindet alle Komponenten miteinander</li>
+                </ul>
+
+                <h3>🏛️ Architekturen</h3>
+                <ul>
+                    <li><strong>Harvard:</strong> Getrennte Speicher für Code und Daten (schneller)</li>
+                    <li><strong>Von-Neumann:</strong> Gemeinsamer Speicher (flexibler)</li>
+                    <li><strong>RISC:</strong> Einfache Befehle, Load-Store-Architektur</li>
+                    <li><strong>CISC:</strong> Komplexe Befehle, direkter Speicherzugriff</li>
+                </ul>
+
+                <h3>💻 Programmierung</h3>
+                <ul>
+                    <li><strong>Sprachen:</strong> Assembly, C, C++, Arduino IDE</li>
+                    <li><strong>Werkzeuge:</strong> IDE, Compiler, Debugger, Programmer</li>
+                    <li><strong>Konzepte:</strong> Register, Interrupts, Timer, Kommunikation</li>
+                </ul>
+
+                <div class="example-box">
+                    <h4>🎓 Prüfungsrelevante Themen</h4>
+                    <ul>
+                        <li>Unterschied CPU vs. Mikrocontroller</li>
+                        <li>Harvard vs. Von-Neumann Architektur</li>
+                        <li>RISC vs. CISC Prinzipien</li>
+                        <li>Speicherarten (RAM, ROM, Flash, EEPROM)</li>
+                        <li>Register-System (ARM Cortex-M)</li>
+                        <li>GPIO-Programmierung</li>
+                        <li>PWM-Funktionsweise</li>
+                        <li>Kommunikationsschnittstellen (UART, I²C, SPI)</li>
+                        <li>A/D und D/A Wandlung</li>
+                    </ul>
+                </div>
+
+                <div class="important-box">
+                    <h4>🔄 Weiterführende Themen</h4>
+                    <p>Die nächsten Kapitel bauen auf diesem Grundwissen auf:</p>
+                    <ul>
+                        <li><strong>Arduino Programming:</strong> Praktische Umsetzung</li>
+                        <li><strong>Interrupts:</strong> Ereignisgesteuerte Programmierung</li>
+                        <li><strong>Timer und PWM:</strong> Zeitgesteuerte Anwendungen</li>
+                        <li><strong>Kommunikation:</strong> Vernetzung von Mikrocontrollern</li>
+                        <li><strong>Sensoren und Aktoren:</strong> Verbindung zur realen Welt</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--bg-white); border-radius: 16px; border: 1px solid var(--border-color);">
+            <p>
+                <strong>Mikrocontroller-Systeme - Technische Informatik II</strong><br>
+                BPE 2 • Abitur 2026 • Baden-Württemberg<br>
+                <a href="index.html" style="color: var(--primary-color); text-decoration: none;">← Zurück zur Übersicht</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scrolling für Navigation
+        document.querySelectorAll('.navigation a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href').substring(1);
+                const targetElement = document.getElementById(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight aktive Navigation
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.section[id]');
+            const navLinks = document.querySelectorAll('.navigation a');
+            
+            let currentSection = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                if (window.pageYOffset >= sectionTop) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.style.color = '';
+                link.style.borderBottomColor = '';
+                if (link.getAttribute('href') === '#' + currentSection) {
+                    link.style.color = 'var(--primary-color)';
+                    link.style.borderBottomColor = 'var(--primary-color)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

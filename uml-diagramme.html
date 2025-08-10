@@ -1,0 +1,1226 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UML-Diagramme - Objektorientierter Entwurf I</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #06b6d4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .section {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .section h3 {
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .section h4 {
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .intro-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #e0e7ff 100%);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--primary-color);
+            margin-bottom: 2rem;
+        }
+
+        .intro-box h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .definition-box {
+            background: #f0fdf4;
+            border: 1px solid #bbf7d0;
+            border-left: 4px solid var(--success-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .definition-box h4 {
+            color: var(--success-color);
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .important-box {
+            background: #fef3c7;
+            border: 1px solid #fde68a;
+            border-left: 4px solid var(--warning-color);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .important-box h4 {
+            color: var(--warning-color);
+            margin-top: 0;
+            margin-bottom: 0.5rem;
+        }
+
+        .diagram-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .diagram-card {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 2px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .diagram-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+        }
+
+        .diagram-card h4 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .uml-example {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .uml-box {
+            background: white;
+            border: 2px solid var(--text-dark);
+            border-radius: 4px;
+            padding: 1rem;
+            margin: 1rem 0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+        }
+
+        .uml-class-name {
+            font-weight: bold;
+            border-bottom: 1px solid var(--text-dark);
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .uml-attributes {
+            border-bottom: 1px solid var(--text-dark);
+            padding-bottom: 0.5rem;
+            margin-bottom: 0.5rem;
+            text-align: left;
+        }
+
+        .uml-methods {
+            text-align: left;
+        }
+
+        .visibility-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .visibility-table th,
+        .visibility-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .visibility-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .visibility-table tr:hover {
+            background: var(--bg-light);
+        }
+
+        .code-example {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .code-example .keyword {
+            color: #7c3aed;
+        }
+
+        .code-example .string {
+            color: #10b981;
+        }
+
+        .code-example .comment {
+            color: #64748b;
+            font-style: italic;
+        }
+
+        .relationship-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .relationship-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .relationship-card h4 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 1rem;
+        }
+
+        .relationship-visual {
+            background: var(--bg-light);
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            gap: 1rem;
+            margin-top: 3rem;
+            flex-wrap: wrap;
+        }
+
+        .nav-button {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            flex: 1;
+            text-align: center;
+            min-width: 200px;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-button.previous {
+            background: var(--text-light);
+        }
+
+        .nav-button.previous:hover {
+            background: var(--text-dark);
+        }
+
+        .sequence-timeline {
+            display: flex;
+            justify-content: space-around;
+            margin: 2rem 0;
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 12px;
+            position: relative;
+        }
+
+        .sequence-object {
+            text-align: center;
+            position: relative;
+        }
+
+        .sequence-object::after {
+            content: '';
+            position: absolute;
+            bottom: -50px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 2px;
+            height: 100px;
+            background: var(--text-dark);
+            border-style: dashed;
+        }
+
+        .sequence-box {
+            background: white;
+            border: 2px solid var(--text-dark);
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            margin-bottom: 1rem;
+        }
+
+        @media (max-width: 768px) {
+            .diagram-types, .relationship-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">🏠 Startseite</a> > 
+            <a href="oop-grundlagen.html">Objektorientierter Entwurf I</a> > 
+            <strong>UML-Diagramme</strong>
+        </div>
+
+        <header class="header">
+            <h1>📊 UML-Diagramme</h1>
+            <p>Unified Modeling Language - Die Sprache der objektorientierten Modellierung</p>
+        </header>
+
+        <!-- Einführung -->
+        <div class="section">
+            <div class="intro-box">
+                <h3>🎯 Was sind UML-Diagramme?</h3>
+                <p><strong>UML (Unified Modeling Language)</strong> ist eine standardisierte Sprache zur Visualisierung, Spezifikation, Konstruktion und Dokumentation von Softwaresystemen. UML-Diagramme helfen uns dabei, komplexe Software-Strukturen und -Abläufe grafisch darzustellen, bevor wir sie programmieren.</p>
+                
+                <p><strong>Warum UML verwenden?</strong></p>
+                <ul style="margin-top: 1rem;">
+                    <li>📈 <strong>Visualisierung:</strong> Komplexe Systeme werden verständlich dargestellt</li>
+                    <li>🗣️ <strong>Kommunikation:</strong> Einheitliche "Sprache" für Entwickler</li>
+                    <li>📋 <strong>Planung:</strong> Struktur wird vor der Implementierung durchdacht</li>
+                    <li>📚 <strong>Dokumentation:</strong> Code wird durch Diagramme erklärt</li>
+                </ul>
+            </div>
+
+            <div class="definition-box">
+                <h4>🔍 Definition: UML</h4>
+                <p><strong>UML (Unified Modeling Language)</strong> ist eine grafische Modellierungssprache, die verschiedene Diagrammtypen bereitstellt, um sowohl die statische Struktur als auch das dynamische Verhalten von objektorientierten Systemen zu beschreiben.</p>
+            </div>
+        </div>
+
+        <!-- Die vier wichtigsten UML-Diagrammtypen -->
+        <div class="section">
+            <h2>🎨 Die vier wichtigsten UML-Diagrammtypen im Abitur</h2>
+            
+            <p>Für das Abitur in Informationstechnik sind vier UML-Diagrammtypen besonders wichtig:</p>
+            
+            <div class="diagram-types">
+                <div class="diagram-card">
+                    <h4>🏗️ Klassendiagramm</h4>
+                    <p><strong>Zweck:</strong> Zeigt die statische Struktur des Systems</p>
+                    <p><strong>Inhalt:</strong> Klassen, Attribute, Methoden und ihre Beziehungen</p>
+                    <p><strong>Verwendung:</strong> Planung der Code-Struktur</p>
+                </div>
+                
+                <div class="diagram-card">
+                    <h4>📸 Objektdiagramm</h4>
+                    <p><strong>Zweck:</strong> Zeigt einen "Schnappschuss" zur Laufzeit</p>
+                    <p><strong>Inhalt:</strong> Konkrete Objekte mit aktuellen Attributwerten</p>
+                    <p><strong>Verwendung:</strong> Verstehen der Objekt-Beziehungen</p>
+                </div>
+                
+                <div class="diagram-card">
+                    <h4>📞 Sequenzdiagramm</h4>
+                    <p><strong>Zweck:</strong> Zeigt zeitliche Abfolge von Methodenaufrufen</p>
+                    <p><strong>Inhalt:</strong> Objekte und ihre Kommunikation über Zeit</p>
+                    <p><strong>Verwendung:</strong> Analyse von Programmabläufen</p>
+                </div>
+                
+                <div class="diagram-card">
+                    <h4>🔄 Zustandsdiagramm</h4>
+                    <p><strong>Zweck:</strong> Zeigt mögliche Zustände eines Objekts</p>
+                    <p><strong>Inhalt:</strong> Zustände und Übergänge zwischen ihnen</p>
+                    <p><strong>Verwendung:</strong> Modellierung von Systemverhalten</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Klassendiagramm -->
+        <div class="section">
+            <h2>🏗️ Klassendiagramm - Der Bauplan des Systems</h2>
+            
+            <div class="definition-box">
+                <h4>🔍 Was ist ein Klassendiagramm?</h4>
+                <p>Ein <strong>Klassendiagramm</strong> zeigt die statische Struktur eines Systems. Es stellt Klassen als "Baupläne" für Objekte dar und zeigt deren Attribute, Methoden sowie die Beziehungen zwischen den Klassen.</p>
+            </div>
+
+            <h3>📋 Aufbau einer Klasse im UML-Klassendiagramm</h3>
+            
+            <p>Eine Klasse wird als Rechteck dargestellt, das in drei Bereiche unterteilt ist:</p>
+            
+            <div class="uml-example">
+                <div class="uml-box">
+                    <div class="uml-class-name">Klassenname</div>
+                    <div class="uml-attributes">
+                        + attribut1: String<br>
+                        - attribut2: int = 2<br>
+                        # attribut3: boolean
+                    </div>
+                    <div class="uml-methods">
+                        + methode1(): String<br>
+                        + setMethode(param1: String): void<br>
+                        - privateMethode(): int
+                    </div>
+                </div>
+            </div>
+
+            <h4>🎯 Die drei Bereiche einer Klasse:</h4>
+            <ol>
+                <li><strong>Klassenname:</strong> Steht im Singular, beginnt mit Großbuchstaben</li>
+                <li><strong>Attribute:</strong> Eigenschaften der Klasse (Variablen)</li>
+                <li><strong>Methoden:</strong> Funktionen der Klasse (was sie kann)</li>
+            </ol>
+
+            <h3>👁️ Sichtbarkeitsmodifikatoren</h3>
+            
+            <p>Vor jedem Attribut und jeder Methode steht ein Symbol, das die <strong>Sichtbarkeit</strong> anzeigt:</p>
+            
+            <table class="visibility-table">
+                <thead>
+                    <tr>
+                        <th>Symbol</th>
+                        <th>Bedeutung</th>
+                        <th>Java-Keyword</th>
+                        <th>Zugriff von</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>+</strong></td>
+                        <td>public (öffentlich)</td>
+                        <td>public</td>
+                        <td>Überall</td>
+                    </tr>
+                    <tr>
+                        <td><strong>-</strong></td>
+                        <td>private (privat)</td>
+                        <td>private</td>
+                        <td>Nur innerhalb der Klasse</td>
+                    </tr>
+                    <tr>
+                        <td><strong>#</strong></td>
+                        <td>protected (geschützt)</td>
+                        <td>protected</td>
+                        <td>Klasse und Subklassen</td>
+                    </tr>
+                    <tr>
+                        <td><strong>~</strong></td>
+                        <td>package (paketbezogen)</td>
+                        <td>(kein Keyword)</td>
+                        <td>Innerhalb des Pakets</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3>📝 Notation von Attributen und Methoden</h3>
+            
+            <div class="important-box">
+                <h4>⚠️ Wichtige Notation:</h4>
+                <ul>
+                    <li><strong>Attribute:</strong> sichtbarkeit name: Datentyp = Anfangswert</li>
+                    <li><strong>Methoden:</strong> sichtbarkeit name(parameter: Typ): Rückgabetyp</li>
+                    <li><strong>Unterstrichen:</strong> static (Klassenmethode/-attribut)</li>
+                    <li><strong>Kursiv:</strong> abstract (abstrakte Klasse/Methode)</li>
+                    <li><strong>{final}:</strong> final (nicht veränderbar)</li>
+                </ul>
+            </div>
+
+            <h4>📖 Beispiel einer vollständigen Klasse:</h4>
+            
+            <div class="uml-example">
+                <div class="uml-box">
+                    <div class="uml-class-name">Auto</div>
+                    <div class="uml-attributes">
+                        - marke: String<br>
+                        - geschwindigkeit: int = 0<br>
+                        + maxGeschwindigkeit: int = 200<br>
+                        <u>- anzahlAutos: int = 0</u>
+                    </div>
+                    <div class="uml-methods">
+                        + Auto(marke: String)<br>
+                        + beschleunigen(): void<br>
+                        + bremsen(): void<br>
+                        + getGeschwindigkeit(): int<br>
+                        - motorStarten(): boolean<br>
+                        <u>+ getAnzahlAutos(): int</u>
+                    </div>
+                </div>
+            </div>
+
+            <div class="code-example">
+<span class="keyword">public class</span> Auto {
+    <span class="comment">// private Attribute</span>
+    <span class="keyword">private</span> String marke;
+    <span class="keyword">private int</span> geschwindigkeit = 0;
+    
+    <span class="comment">// public Attribut</span>
+    <span class="keyword">public int</span> maxGeschwindigkeit = 200;
+    
+    <span class="comment">// static Attribut (unterstrichen in UML)</span>
+    <span class="keyword">private static int</span> anzahlAutos = 0;
+    
+    <span class="comment">// Konstruktor</span>
+    <span class="keyword">public</span> Auto(String marke) {
+        <span class="keyword">this</span>.marke = marke;
+        anzahlAutos++;
+    }
+    
+    <span class="comment">// public Methoden</span>
+    <span class="keyword">public void</span> beschleunigen() { /* ... */ }
+    <span class="keyword">public int</span> getGeschwindigkeit() { <span class="keyword">return</span> geschwindigkeit; }
+    
+    <span class="comment">// private Methode</span>
+    <span class="keyword">private boolean</span> motorStarten() { /* ... */ }
+    
+    <span class="comment">// static Methode (unterstrichen in UML)</span>
+    <span class="keyword">public static int</span> getAnzahlAutos() { <span class="keyword">return</span> anzahlAutos; }
+}
+            </div>
+
+            <h3>🔗 Beziehungen zwischen Klassen</h3>
+            
+            <p>Klassen stehen nicht allein - sie haben Beziehungen zueinander. Die wichtigsten Beziehungstypen sind:</p>
+            
+            <div class="relationship-grid">
+                <div class="relationship-card">
+                    <h4>🧬 Vererbung (Generalization)</h4>
+                    <div class="relationship-visual">
+                        Subklasse ——————————▷ Superklasse
+                    </div>
+                    <p><strong>Bedeutung:</strong> "ist-ein" Beziehung</p>
+                    <p><strong>Beispiel:</strong> Auto erbt von Fahrzeug</p>
+                    <p><strong>Java:</strong> <code>class Auto extends Fahrzeug</code></p>
+                </div>
+                
+                <div class="relationship-card">
+                    <h4>📋 Interface-Implementierung</h4>
+                    <div class="relationship-visual">
+                        Klasse ——————————▷ Interface<br>
+                        (gestrichelte Linie)
+                    </div>
+                    <p><strong>Bedeutung:</strong> Klasse implementiert Interface</p>
+                    <p><strong>Beispiel:</strong> Auto implementiert Bewegbar</p>
+                    <p><strong>Java:</strong> <code>class Auto implements Bewegbar</code></p>
+                </div>
+                
+                <div class="relationship-card">
+                    <h4>🤝 Assoziation</h4>
+                    <div class="relationship-visual">
+                        Klasse1 ——————————— Klasse2
+                    </div>
+                    <p><strong>Bedeutung:</strong> "kennt" oder "verwendet" Beziehung</p>
+                    <p><strong>Beispiel:</strong> Person kennt Auto</p>
+                    <p><strong>Java:</strong> Person hat Auto-Referenz</p>
+                </div>
+                
+                <div class="relationship-card">
+                    <h4>🔓 Aggregation</h4>
+                    <div class="relationship-visual">
+                        Klasse1 ◇——————————— Klasse2
+                    </div>
+                    <p><strong>Bedeutung:</strong> "hat-ein" Beziehung (schwach)</p>
+                    <p><strong>Beispiel:</strong> Abteilung hat Mitarbeiter</p>
+                    <p><strong>Besonderheit:</strong> Teile können ohne Ganzes existieren</p>
+                </div>
+                
+                <div class="relationship-card">
+                    <h4>🔒 Komposition</h4>
+                    <div class="relationship-visual">
+                        Klasse1 ◆——————————— Klasse2
+                    </div>
+                    <p><strong>Bedeutung:</strong> "hat-ein" Beziehung (stark)</p>
+                    <p><strong>Beispiel:</strong> Haus hat Zimmer</p>
+                    <p><strong>Besonderheit:</strong> Teile können nicht ohne Ganzes existieren</p>
+                </div>
+                
+                <div class="relationship-card">
+                    <h4>📦 Abhängigkeit</h4>
+                    <div class="relationship-visual">
+                        Klasse1 - - - - - - - - - →ᐟ Klasse2<br>
+                        (gestrichelte Linie)
+                    </div>
+                    <p><strong>Bedeutung:</strong> temporäre Verwendung</p>
+                    <p><strong>Beispiel:</strong> Methode verwendet Parameter-Objekt</p>
+                    <p><strong>Java:</strong> Objekt wird als Parameter übergeben</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Objektdiagramm -->
+        <div class="section">
+            <h2>📸 Objektdiagramm - Momentaufnahme zur Laufzeit</h2>
+            
+            <div class="definition-box">
+                <h4>🔍 Was ist ein Objektdiagramm?</h4>
+                <p>Ein <strong>Objektdiagramm</strong> zeigt einen "Schnappschuss" des Systems zu einem bestimmten Zeitpunkt. Es stellt konkrete Objekte (Instanzen) mit ihren aktuellen Attributwerten dar, nicht die abstrakten Klassen.</p>
+            </div>
+
+            <h3>📋 Aufbau eines Objekts im UML-Objektdiagramm</h3>
+            
+            <p>Ein Objekt wird ähnlich wie eine Klasse dargestellt, aber mit wichtigen Unterschieden:</p>
+            
+            <div class="uml-example">
+                <div class="uml-box">
+                    <div class="uml-class-name"><u>objektName: Klassenname</u></div>
+                    <div class="uml-attributes">
+                        marke: String = "BMW"<br>
+                        geschwindigkeit: int = 60<br>
+                        maxGeschwindigkeit: int = 200
+                    </div>
+                </div>
+            </div>
+
+            <h4>🎯 Wichtige Merkmale des Objektdiagramms:</h4>
+            <ul>
+                <li><strong>Objektname:</strong> konkrete Bezeichnung, z.B. "meinAuto"</li>
+                <li><strong>Klassenname:</strong> wird nach dem Doppelpunkt angegeben</li>
+                <li><strong>Unterstreichung:</strong> der gesamte Objektname ist unterstrichen</li>
+                <li><strong>Attributwerte:</strong> konkrete Werte statt Datentypen</li>
+                <li><strong>Keine Methoden:</strong> Objektdiagramme zeigen nur Attribute</li>
+            </ul>
+
+            <h4>📖 Praktisches Beispiel:</h4>
+            
+            <p>Gegeben sei die Klasse <code>Auto</code> aus dem vorherigen Beispiel. Zur Laufzeit könnten drei konkrete Auto-Objekte so aussehen:</p>
+            
+            <div class="uml-example">
+                <div style="display: flex; gap: 2rem; flex-wrap: wrap; justify-content: center;">
+                    <div class="uml-box" style="flex: 1; min-width: 200px;">
+                        <div class="uml-class-name"><u>bmwX5: Auto</u></div>
+                        <div class="uml-attributes">
+                            marke = "BMW"<br>
+                            geschwindigkeit = 80<br>
+                            maxGeschwindigkeit = 250
+                        </div>
+                    </div>
+                    <div class="uml-box" style="flex: 1; min-width: 200px;">
+                        <div class="uml-class-name"><u>vwGolf: Auto</u></div>
+                        <div class="uml-attributes">
+                            marke = "Volkswagen"<br>
+                            geschwindigkeit = 0<br>
+                            maxGeschwindigkeit = 180
+                        </div>
+                    </div>
+                    <div class="uml-box" style="flex: 1; min-width: 200px;">
+                        <div class="uml-class-name"><u>audiA4: Auto</u></div>
+                        <div class="uml-attributes">
+                            marke = "Audi"<br>
+                            geschwindigkeit = 120<br>
+                            maxGeschwindigkeit = 220
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="important-box">
+                <h4>⚠️ Objektdiagramm vs. Klassendiagramm:</h4>
+                <table style="width: 100%; margin-top: 1rem;">
+                    <tr>
+                        <th style="background: var(--primary-color); color: white; padding: 0.5rem;">Klassendiagramm</th>
+                        <th style="background: var(--success-color); color: white; padding: 0.5rem;">Objektdiagramm</th>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border-color);">Zeigt abstrakte Struktur</td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border-color);">Zeigt konkreten Zustand</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border-color);">Datentypen (String, int)</td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border-color);">Konkrete Werte ("BMW", 80)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border-color);">Methoden sichtbar</td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border-color);">Nur Attribute sichtbar</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border-color);">Zur Designzeit</td>
+                        <td style="padding: 0.5rem; border: 1px solid var(--border-color);">Zur Laufzeit</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+
+        <!-- Sequenzdiagramm -->
+        <div class="section">
+            <h2>📞 Sequenzdiagramm - Kommunikation über die Zeit</h2>
+            
+            <div class="definition-box">
+                <h4>🔍 Was ist ein Sequenzdiagramm?</h4>
+                <p>Ein <strong>Sequenzdiagramm</strong> beschreibt die zeitliche Abfolge von Nachrichten (Methodenaufrufen) zwischen Objekten. Es zeigt, wie Objekte miteinander kommunizieren, um eine bestimmte Aufgabe zu erfüllen.</p>
+            </div>
+
+            <h3>📋 Aufbau eines Sequenzdiagramms</h3>
+            
+            <div class="sequence-timeline">
+                <div class="sequence-object">
+                    <div class="sequence-box">objektA:KlasseA</div>
+                </div>
+                <div class="sequence-object">
+                    <div class="sequence-box">objektB:KlasseB</div>
+                </div>
+                <div class="sequence-object">
+                    <div class="sequence-box">objektC:KlasseC</div>
+                </div>
+            </div>
+
+            <h4>🎯 Die wichtigsten Elemente:</h4>
+            <ul>
+                <li><strong>Objekte:</strong> Rechtecke oben mit "objektName:Klassenname"</li>
+                <li><strong>Lebenslinie:</strong> Senkrechte gestrichelte Linie unter jedem Objekt</li>
+                <li><strong>Aktivitätsbalken:</strong> Schmale Rechtecke auf der Lebenslinie (Methode ist aktiv)</li>
+                <li><strong>Nachrichten:</strong> Pfeile zwischen den Lebenslinien (Methodenaufrufe)</li>
+                <li><strong>Rückgaben:</strong> Gestrichelte Pfeile zurück (return-Werte)</li>
+            </ul>
+
+            <h3>📨 Arten von Nachrichten</h3>
+            
+            <div class="relationship-grid">
+                <div class="relationship-card">
+                    <h4>🔄 Synchroner Aufruf</h4>
+                    <div class="relationship-visual">
+                        ————————————————————————▶
+                    </div>
+                    <p><strong>Bedeutung:</strong> Aufrufer wartet auf Antwort</p>
+                    <p><strong>Beispiel:</strong> methode(parameter)</p>
+                    <p><strong>Pfeil:</strong> Durchgezogene Linie mit gefüllter Pfeilspitze</p>
+                </div>
+                
+                <div class="relationship-card">
+                    <h4>⚡ Asynchroner Aufruf</h4>
+                    <div class="relationship-visual">
+                        ————————————————————————▷
+                    </div>
+                    <p><strong>Bedeutung:</strong> Aufrufer wartet nicht</p>
+                    <p><strong>Beispiel:</strong> Thread-Start, Event-Handling</p>
+                    <p><strong>Pfeil:</strong> Durchgezogene Linie mit offener Pfeilspitze</p>
+                </div>
+                
+                <div class="relationship-card">
+                    <h4>📤 Rückgabe</h4>
+                    <div class="relationship-visual">
+                        ◀————————————————————————
+                        (gestrichelte Linie)
+                    </div>
+                    <p><strong>Bedeutung:</strong> Return-Wert oder Bestätigung</p>
+                    <p><strong>Beispiel:</strong> return result;</p>
+                    <p><strong>Pfeil:</strong> Gestrichelte Linie mit offener Pfeilspitze</p>
+                </div>
+                
+                <div class="relationship-card">
+                    <h4>🎯 Selbstaufruf</h4>
+                    <div class="relationship-visual">
+                        |————————————————————————⤷
+                    </div>
+                    <p><strong>Bedeutung:</strong> Objekt ruft eigene Methode auf</p>
+                    <p><strong>Beispiel:</strong> this.privateMethode()</p>
+                    <p><strong>Pfeil:</strong> Schleife zurück zum selben Objekt</p>
+                </div>
+            </div>
+
+            <h4>📖 Praktisches Beispiel: Online-Bestellung</h4>
+            
+            <p>Stellen wir uns vor, ein Kunde bestellt online ein Produkt. Das Sequenzdiagramm könnte so aussehen:</p>
+            
+            <div class="uml-example">
+                <div style="font-family: 'Courier New', monospace; background: white; padding: 2rem; border-radius: 8px;">
+                    <div style="display: flex; justify-content: space-around; margin-bottom: 2rem;">
+                        <div style="text-align: center; border: 2px solid black; padding: 0.5rem;">kunde:Kunde</div>
+                        <div style="text-align: center; border: 2px solid black; padding: 0.5rem;">shop:OnlineShop</div>
+                        <div style="text-align: center; border: 2px solid black; padding: 0.5rem;">lager:Lager</div>
+                        <div style="text-align: center; border: 2px solid black; padding: 0.5rem;">zahlung:Zahlung</div>
+                    </div>
+                    <div style="text-align: left; line-height: 2;">
+                        1. kunde ——————▶ shop: bestelleProdukt(produktId)<br>
+                        2. shop ——————▶ lager: prüfeVerfügbarkeit(produktId)<br>
+                        3. lager - - - - ▶ shop: return: true<br>
+                        4. shop ——————▶ zahlung: verarbeiteZahlung(betrag)<br>
+                        5. zahlung - - - ▶ shop: return: erfolgreich<br>
+                        6. shop ——————▶ lager: reserviereProdukt(produktId)<br>
+                        7. shop - - - - - ▶ kunde: return: bestellbestätigung
+                    </div>
+                </div>
+            </div>
+
+            <div class="important-box">
+                <h4>💡 Tipps zum Lesen von Sequenzdiagrammen:</h4>
+                <ul>
+                    <li><strong>Zeit:</strong> Von oben nach unten = zeitlicher Ablauf</li>
+                    <li><strong>Reihenfolge:</strong> Nachrichten sind nummeriert (1, 2, 3, ...)</li>
+                    <li><strong>Aktivität:</strong> Rechtecke auf Lebenslinien = Methode wird ausgeführt</li>
+                    <li><strong>Return:</strong> Gestrichelte Pfeile zeigen Rückgabewerte</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Zustandsdiagramm -->
+        <div class="section">
+            <h2>🔄 Zustandsdiagramm - Verhalten über die Zeit</h2>
+            
+            <div class="definition-box">
+                <h4>🔍 Was ist ein Zustandsdiagramm?</h4>
+                <p>Ein <strong>Zustandsdiagramm</strong> beschreibt die möglichen Zustände eines Objekts und die Bedingungen, unter denen es von einem Zustand in einen anderen wechselt. Es zeigt das dynamische Verhalten eines Systems.</p>
+            </div>
+
+            <h3>📋 Grundelemente eines Zustandsdiagramms</h3>
+            
+            <div class="relationship-grid">
+                <div class="relationship-card">
+                    <h4>⚫ Startzustand</h4>
+                    <div class="relationship-visual">
+                        ⚫————————▶ [Zustand]
+                    </div>
+                    <p><strong>Symbol:</strong> Schwarzer Kreis</p>
+                    <p><strong>Bedeutung:</strong> Anfangszustand des Systems</p>
+                    <p><strong>Regel:</strong> Genau einer pro Diagramm</p>
+                </div>
+                
+                <div class="relationship-card">
+                    <h4>🔚 Endzustand</h4>
+                    <div class="relationship-visual">
+                        [Zustand] ————————▶ ⦿
+                    </div>
+                    <p><strong>Symbol:</strong> Schwarzer Kreis mit Rand</p>
+                    <p><strong>Bedeutung:</strong> System ist beendet</p>
+                    <p><strong>Regel:</strong> Kann mehrere geben</p>
+                </div>
+                
+                <div class="relationship-card">
+                    <h4>📦 Zustand</h4>
+                    <div class="relationship-visual">
+                        ┌─────────────┐<br>
+                        │   Zustand   │<br>
+                        │ entry/aktion│<br>
+                        │ do/verhalten│<br>
+                        └─────────────┘
+                    </div>
+                    <p><strong>Symbol:</strong> Abgerundetes Rechteck</p>
+                    <p><strong>Inhalt:</strong> Name, entry/exit-Aktionen</p>
+                </div>
+                
+                <div class="relationship-card">
+                    <h4>➡️ Transition</h4>
+                    <div class="relationship-visual">
+                        [Zustand1] ————————▶ [Zustand2]<br>
+                        ereignis[bedingung]/aktion
+                    </div>
+                    <p><strong>Symbol:</strong> Pfeil zwischen Zuständen</p>
+                    <p><strong>Label:</strong> ereignis[bedingung]/aktion</p>
+                </div>
+            </div>
+
+            <h4>📖 Praktisches Beispiel: Ampelsteuerung</h4>
+            
+            <p>Eine Verkehrsampel ist ein perfektes Beispiel für ein Zustandsdiagramm:</p>
+            
+            <div class="uml-example">
+                <div style="background: white; padding: 2rem; border-radius: 8px; font-family: 'Courier New', monospace;">
+                    <div style="text-align: center; margin-bottom: 2rem;">
+                        <div style="display: inline-block; margin: 1rem;">
+                            ⚫ ——————————▶ [Rot]
+                        </div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: space-around; align-items: center; margin: 2rem 0;">
+                        <div style="border: 2px solid black; padding: 1rem; border-radius: 8px;">
+                            <strong>Rot</strong><br>
+                            entry/rotAn()<br>
+                            do/warten()
+                        </div>
+                        
+                        <div style="margin: 0 1rem;">
+                            timer(30s) ————————▶
+                        </div>
+                        
+                        <div style="border: 2px solid black; padding: 1rem; border-radius: 8px;">
+                            <strong>Grün</strong><br>
+                            entry/grünAn()<br>
+                            do/fahrenErlaubt()
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin: 2rem 0;">
+                        <div style="margin: 1rem 0;">⬆</div>
+                        <div>timer(5s)/gelbAn()</div>
+                        <div style="margin: 1rem 0;">⬇</div>
+                    </div>
+                    
+                    <div style="display: flex; justify-content: center;">
+                        <div style="border: 2px solid black; padding: 1rem; border-radius: 8px;">
+                            <strong>Gelb</strong><br>
+                            entry/gelbAn()<br>
+                            do/bremsbereit()
+                        </div>
+                    </div>
+                    
+                    <div style="text-align: center; margin-top: 1rem;">
+                        timer(3s) ————————▶ zurück zu Rot
+                    </div>
+                </div>
+            </div>
+
+            <h4>🔄 Implementierung in Code (Beispiel Arduino)</h4>
+            
+            <div class="code-example">
+<span class="comment">// Zustandsdiagramm in C++ implementiert</span>
+<span class="keyword">enum</span> AmpelZustand {
+    ROT,
+    GELB,
+    GRUEN
+};
+
+AmpelZustand aktuellerZustand = ROT;
+<span class="keyword">unsigned long</span> letzteZeit = 0;
+
+<span class="keyword">void</span> ampelSteuern() {
+    <span class="keyword">unsigned long</span> aktuelleZeit = millis();
+    
+    <span class="keyword">switch</span>(aktuellerZustand) {
+        <span class="keyword">case</span> ROT:
+            <span class="comment">// entry/rotAn()</span>
+            digitalWrite(ROT_PIN, HIGH);
+            digitalWrite(GELB_PIN, LOW);
+            digitalWrite(GRUEN_PIN, LOW);
+            
+            <span class="comment">// Transition nach 30 Sekunden</span>
+            <span class="keyword">if</span>(aktuelleZeit - letzteZeit > 30000) {
+                aktuellerZustand = GRUEN;
+                letzteZeit = aktuelleZeit;
+            }
+            <span class="keyword">break</span>;
+            
+        <span class="keyword">case</span> GRUEN:
+            <span class="comment">// entry/grünAn()</span>
+            digitalWrite(GRUEN_PIN, HIGH);
+            digitalWrite(ROT_PIN, LOW);
+            
+            <span class="comment">// Transition nach 25 Sekunden</span>
+            <span class="keyword">if</span>(aktuelleZeit - letzteZeit > 25000) {
+                aktuellerZustand = GELB;
+                letzteZeit = aktuelleZeit;
+            }
+            <span class="keyword">break</span>;
+            
+        <span class="keyword">case</span> GELB:
+            <span class="comment">// entry/gelbAn()</span>
+            digitalWrite(GELB_PIN, HIGH);
+            digitalWrite(GRUEN_PIN, LOW);
+            
+            <span class="comment">// Transition nach 5 Sekunden</span>
+            <span class="keyword">if</span>(aktuelleZeit - letzteZeit > 5000) {
+                aktuellerZustand = ROT;
+                letzteZeit = aktuelleZeit;
+            }
+            <span class="keyword">break</span>;
+    }
+}
+            </div>
+        </div>
+
+        <!-- Pakete -->
+        <div class="section">
+            <h2>📁 Pakete - Organisation von Klassen</h2>
+            
+            <div class="definition-box">
+                <h4>🔍 Was sind Pakete?</h4>
+                <p><strong>Pakete</strong> fassen zusammengehörige Klassen zu logischen Einheiten zusammen. Sie helfen dabei, große Projekte zu strukturieren und Namenskonflikte zu vermeiden.</p>
+            </div>
+
+            <h3>📋 Darstellung von Paketen</h3>
+            
+            <p>Pakete werden in UML wie ein Aktenordner dargestellt:</p>
+            
+            <div class="uml-example">
+                <div style="background: white; padding: 2rem; border-radius: 8px;">
+                    <div style="border: 2px solid black; width: 300px; height: 200px; position: relative; margin: 2rem auto;">
+                        <div style="position: absolute; top: -10px; left: -2px; width: 100px; height: 30px; border: 2px solid black; background: white; text-align: center; line-height: 26px;">
+                            <strong>fahrzeuge</strong>
+                        </div>
+                        <div style="padding: 2rem; padding-top: 3rem;">
+                            <div style="border: 1px solid gray; padding: 0.5rem; margin: 0.5rem 0; text-align: center;">Auto</div>
+                            <div style="border: 1px solid gray; padding: 0.5rem; margin: 0.5rem 0; text-align: center;">Fahrrad</div>
+                            <div style="border: 1px solid gray; padding: 0.5rem; margin: 0.5rem 0; text-align: center;">Motorrad</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h4>🎯 Eigenschaften von Paketen:</h4>
+            <ul>
+                <li><strong>Name:</strong> Wird groß geschrieben (wie Klassennamen)</li>
+                <li><strong>Inhalt:</strong> Können Klassen und andere Pakete enthalten</li>
+                <li><strong>Hierarchie:</strong> Pakete können verschachtelt werden</li>
+                <li><strong>Namespace:</strong> Jede Klasse gehört zu genau einem Paket</li>
+            </ul>
+
+            <h4>📖 Beispiel einer Paketstruktur:</h4>
+            
+            <div class="code-example">
+<span class="comment">// Java-Paketstruktur</span>
+package de.schule.fahrzeuge;
+
+<span class="keyword">public class</span> Auto {
+    <span class="comment">// Klassen-Inhalt...</span>
+}
+
+<span class="comment">// In einer anderen Datei:</span>
+package de.schule.personen;
+
+<span class="keyword">import</span> de.schule.fahrzeuge.Auto;  <span class="comment">// Import aus anderem Paket</span>
+
+<span class="keyword">public class</span> Person {
+    <span class="keyword">private</span> Auto meinAuto;  <span class="comment">// Verwendung der importierten Klasse</span>
+}
+            </div>
+        </div>
+
+        <!-- Zusammenfassung -->
+        <div class="section">
+            <h2>📚 Zusammenfassung: UML-Diagramme im Überblick</h2>
+            
+            <div class="important-box">
+                <h4>🎯 Die vier wichtigsten UML-Diagramme für das Abitur:</h4>
+                <table style="width: 100%; margin-top: 1rem; border-collapse: collapse;">
+                    <thead>
+                        <tr style="background: var(--primary-color); color: white;">
+                            <th style="padding: 1rem; border: 1px solid white;">Diagrammtyp</th>
+                            <th style="padding: 1rem; border: 1px solid white;">Zweck</th>
+                            <th style="padding: 1rem; border: 1px solid white;">Zeigt</th>
+                            <th style="padding: 1rem; border: 1px solid white;">Wann verwenden</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td style="padding: 0.8rem; border: 1px solid var(--border-color);"><strong>Klassendiagramm</strong></td>
+                            <td style="padding: 0.8rem; border: 1px solid var(--border-color);">Statische Struktur</td>
+                            <td style="padding: 0.8rem; border: 1px solid var(--border-color);">Klassen, Attribute, Methoden, Beziehungen</td>
+                            <td style="padding: 0.8rem; border: 1px solid var(--border-color);">Planung der Software-Architektur</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.8rem; border: 1px solid var(--border-color);"><strong>Objektdiagramm</strong></td>
+                            <td style="padding: 0.8rem; border: 1px solid var(--border-color);">Momentaufnahme</td>
+                            <td style="padding: 0.8rem; border: 1px solid var(--border-color);">Konkrete Objekte mit Werten</td>
+                            <td style="padding: 0.8rem; border: 1px solid var(--border-color);">Verstehen der Laufzeit-Struktur</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.8rem; border: 1px solid var(--border-color);"><strong>Sequenzdiagramm</strong></td>
+                            <td style="padding: 0.8rem; border: 1px solid var(--border-color);">Zeitlicher Ablauf</td>
+                            <td style="padding: 0.8rem; border: 1px solid var(--border-color);">Methodenaufrufe über Zeit</td>
+                            <td style="padding: 0.8rem; border: 1px solid var(--border-color);">Analyse von Programmabläufen</td>
+                        </tr>
+                        <tr>
+                            <td style="padding: 0.8rem; border: 1px solid var(--border-color);"><strong>Zustandsdiagramm</strong></td>
+                            <td style="padding: 0.8rem; border: 1px solid var(--border-color);">Verhalten modellieren</td>
+                            <td style="padding: 0.8rem; border: 1px solid var(--border-color);">Zustände und Übergänge</td>
+                            <td style="padding: 0.8rem; border: 1px solid var(--border-color);">Steuerungslogik, Automaten</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="definition-box">
+                <h4>💡 Prüfungstipps für UML-Diagramme:</h4>
+                <ul>
+                    <li><strong>Sichtbarkeit:</strong> + (public), - (private), # (protected), ~ (package)</li>
+                    <li><strong>Notation:</strong> attribut:Typ, methode(parameter:Typ):Rückgabetyp</li>
+                    <li><strong>Beziehungen:</strong> Pfeile richtig zeichnen (gefüllt/offen, durchgezogen/gestrichelt)</li>
+                    <li><strong>Objekte:</strong> Immer unterstrichen, konkrete Werte statt Typen</li>
+                    <li><strong>Sequenz:</strong> Zeit läuft von oben nach unten</li>
+                    <li><strong>Zustand:</strong> Startzustand (⚫), Endzustand (⦿), Transitionen beschriften</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="nav-buttons">
+            <a href="vererbung.html" class="nav-button previous">
+                ← Vererbung & Polymorphie
+            </a>
+            <a href="index.html" class="nav-button">
+                🏠 Zurück zur Übersicht
+            </a>
+            <a href="datenbank-grundlagen.html" class="nav-button">
+                Datenbank-Grundlagen →
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Interaktive Elemente
+        document.addEventListener('DOMContentLoaded', function() {
+            // Smooth scrolling for internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+
+            // Highlight code examples on hover
+            document.querySelectorAll('.code-example').forEach(code => {
+                code.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.02)';
+                    this.style.transition = 'transform 0.3s ease';
+                });
+                
+                code.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+
+            // Interactive UML boxes
+            document.querySelectorAll('.uml-box').forEach(box => {
+                box.addEventListener('click', function() {
+                    this.style.backgroundColor = this.style.backgroundColor === 'lightblue' ? 'white' : 'lightblue';
+                    this.style.transition = 'background-color 0.3s ease';
+                });
+            });
+
+            // Add tooltips to important terms
+            const terms = {
+                'Klassendiagramm': 'Zeigt die statische Struktur mit Klassen, Attributen, Methoden und Beziehungen',
+                'Objektdiagramm': 'Momentaufnahme zur Laufzeit mit konkreten Objekten und Werten',
+                'Sequenzdiagramm': 'Zeitliche Abfolge von Methodenaufrufen zwischen Objekten',
+                'Zustandsdiagramm': 'Mögliche Zustände eines Objekts und deren Übergänge'
+            };
+
+            Object.keys(terms).forEach(term => {
+                const elements = document.querySelectorAll('*');
+                elements.forEach(element => {
+                    if (element.childNodes.length === 1 && element.childNodes[0].nodeType === 3) {
+                        const text = element.textContent;
+                        if (text.includes(term)) {
+                            element.innerHTML = text.replace(
+                                new RegExp(term, 'g'),
+                                `<span title="${terms[term]}" style="border-bottom: 1px dotted var(--primary-color); cursor: help;">${term}</span>`
+                            );
+                        }
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

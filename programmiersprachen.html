@@ -1,0 +1,1174 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Programmiersprachen-Grundlagen | Abitur 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #0891b2;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --code-bg: #1e293b;
+            --code-text: #f8fafc;
+            --comment-color: #94a3b8;
+            --keyword-color: #60a5fa;
+            --string-color: #34d399;
+            --number-color: #fbbf24;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        /* Header Styles */
+        .breadcrumb {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: var(--bg-white);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .chapter-info {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        /* Content Section Styles */
+        .content-section {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 3px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .subsection-title {
+            color: var(--secondary-color);
+            font-size: 1.3rem;
+            margin: 2rem 0 1rem 0;
+            font-weight: 600;
+        }
+
+        /* Box Styles */
+        .definition-box {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border-left: 4px solid var(--success-color);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+
+        .definition-box h4 {
+            color: var(--success-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border-left: 4px solid var(--info-color);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+
+        .example-box h4 {
+            color: var(--info-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-left: 4px solid var(--warning-color);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+
+        .warning-box h4 {
+            color: var(--warning-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-left: 4px solid var(--info-color);
+            padding: 1.5rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+        }
+
+        .info-box h4 {
+            color: var(--info-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        /* Improved Code Styles */
+        .code-example {
+            background: var(--code-bg);
+            color: var(--code-text);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'JetBrains Mono', 'Fira Code', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            overflow-x: auto;
+            position: relative;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            border: 1px solid #334155;
+        }
+
+        .code-example::before {
+            content: "Code";
+            position: absolute;
+            top: 0.5rem;
+            right: 1rem;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .code-example.java::before {
+            content: "Java";
+            background: #ed8936;
+        }
+
+        .code-example.python::before {
+            content: "Python";
+            background: #3776ab;
+        }
+
+        .code-example.javascript::before {
+            content: "JavaScript";
+            background: #f7df1e;
+            color: #000;
+        }
+
+        .code-example .comment {
+            color: var(--comment-color);
+            font-style: italic;
+        }
+
+        .code-example .keyword {
+            color: var(--keyword-color);
+            font-weight: bold;
+        }
+
+        .code-example .string {
+            color: var(--string-color);
+        }
+
+        .code-example .number {
+            color: var(--number-color);
+        }
+
+        .code-example .method {
+            color: #a78bfa;
+        }
+
+        .code-example .class-name {
+            color: #fbbf24;
+            font-weight: bold;
+        }
+
+        .code-example .operator {
+            color: #f472b6;
+        }
+
+        /* Arduino-style code formatting */
+        .arduino-code {
+            background: #263238;
+            color: #eeffff;
+            border-left: 4px solid #ff5722;
+        }
+
+        .arduino-code::before {
+            content: "Arduino C++";
+            background: #ff5722;
+        }
+
+        .arduino-code .arduino-function {
+            color: #ffcc02;
+        }
+
+        .arduino-code .arduino-constant {
+            color: #00acc1;
+        }
+
+        .arduino-code .arduino-datatype {
+            color: #ff5722;
+        }
+
+        /* Grid and Card Styles */
+        .language-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .language-card {
+            background: var(--bg-white);
+            border: 1px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .language-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+        }
+
+        .language-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .language-level {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            padding: 0.3rem 0.6rem;
+            border-radius: 12px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .level-low {
+            background: #dcfce7;
+            color: #166534;
+        }
+
+        .level-high {
+            background: #fef3c7;
+            color: #92400e;
+        }
+
+        /* Table Styles */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        /* Process Flow */
+        .process-flow {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .process-step {
+            background: var(--bg-white);
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            flex: 1;
+            margin: 0.5rem;
+            min-width: 150px;
+        }
+
+        .process-arrow {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+            margin: 0 0.5rem;
+        }
+
+        /* Key Points */
+        .key-points {
+            background: linear-gradient(135deg, #fef7ff, #fae8ff);
+            border: 1px solid #e879f9;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .key-points h4 {
+            color: #a855f7;
+            margin-bottom: 1rem;
+        }
+
+        .key-points ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .key-points li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #f3e8ff;
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .key-points li:before {
+            content: "✓";
+            color: #a855f7;
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .key-points li:last-child {
+            border-bottom: none;
+        }
+
+        /* Navigation */
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .nav-button {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.75rem 1.5rem;
+            border-radius: 6px;
+            text-decoration: none;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+        }
+
+        .nav-button.disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .process-flow {
+                flex-direction: column;
+            }
+            
+            .process-arrow {
+                transform: rotate(90deg);
+            }
+
+            .code-example {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Navigation Breadcrumb -->
+        <nav class="breadcrumb">
+            <a href="index.html">🏠 Hauptseite</a> > 
+            <a href="#grundlagen">Grundlagen der Programmentwicklung</a> > 
+            <strong>Programmiersprachen-Grundlagen</strong>
+        </nav>
+
+        <!-- Header -->
+        <header class="header">
+            <h1>💻 Programmiersprachen-Grundlagen</h1>
+            <p>Die Basis der Programmierung verstehen - Von der Maschinensprache zu modernen Hochsprachen</p>
+            <div class="chapter-info">
+                <strong>BPE 3: Grundlagen der Programmentwicklung</strong><br>
+                Kapitel 5.2: Programmiersprachen | 39 Stunden (39 praktisch)
+            </div>
+        </header>
+
+        <!-- Was ist Software? -->
+        <section class="content-section">
+            <h2 class="section-title">🔧 Was ist Software?</h2>
+            
+            <div class="definition-box">
+                <h4>📖 Definition: Software</h4>
+                <p><strong>Software</strong> sind alle Programme, die auf einem Computer ausgeführt werden können. Sie bestehen aus Anweisungen, die dem Computer genau sagen, was er tun soll.</p>
+                <p>Im Gegensatz zur <strong>Hardware</strong> (die physischen Teile des Computers) ist Software nicht greifbar - sie existiert nur als Code und Daten.</p>
+            </div>
+
+            <h3 class="subsection-title">🎯 Warum gibt es so viele Programmiersprachen?</h3>
+            <p>Es gibt hunderte verschiedene Programmiersprachen, weil jede für bestimmte Zwecke optimiert ist:</p>
+            
+            <div class="language-grid">
+                <div class="language-card">
+                    <div class="language-level level-high">Hochsprache</div>
+                    <h4>Java</h4>
+                    <p><strong>Einsatzgebiet:</strong> Große Anwendungen, Web-Server, Android-Apps</p>
+                    <p><strong>Besonderheit:</strong> "Write once, run anywhere" - läuft auf allen Betriebssystemen</p>
+                </div>
+                
+                <div class="language-card">
+                    <div class="language-level level-high">Hochsprache</div>
+                    <h4>Python</h4>
+                    <p><strong>Einsatzgebiet:</strong> Datenanalyse, Künstliche Intelligenz, Automatisierung</p>
+                    <p><strong>Besonderheit:</strong> Sehr einfach zu lernen und zu lesen</p>
+                </div>
+                
+                <div class="language-card">
+                    <div class="language-level level-high">Hochsprache</div>
+                    <h4>C/C++</h4>
+                    <p><strong>Einsatzgebiet:</strong> Betriebssysteme, Spiele, Hardware-nahe Programmierung</p>
+                    <p><strong>Besonderheit:</strong> Sehr schnell und effizient</p>
+                </div>
+                
+                <div class="language-card">
+                    <div class="language-level level-low">Maschinensprache</div>
+                    <h4>Assembler</h4>
+                    <p><strong>Einsatzgebiet:</strong> Hardware-Steuerung, Mikrocontroller</p>
+                    <p><strong>Besonderheit:</strong> Direkte Kommunikation mit dem Prozessor</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Programmiersprachen-Hierarchie -->
+        <section class="content-section">
+            <h2 class="section-title">📊 Die Hierarchie der Programmiersprachen</h2>
+            
+            <div class="info-box">
+                <h4>💡 Grundprinzip</h4>
+                <p>Computer verstehen nur <strong>Maschinensprache</strong> (Nullen und Einsen). Alle höheren Programmiersprachen müssen zuerst in Maschinensprache übersetzt werden, bevor der Computer sie ausführen kann.</p>
+            </div>
+
+            <h3 class="subsection-title">🏗️ Sprachebenen von niedrig zu hoch</h3>
+            
+            <div class="process-flow">
+                <div class="process-step">
+                    <h4>Maschinensprache</h4>
+                    <p>01001110...</p>
+                    <small>Nur Nullen und Einsen</small>
+                </div>
+                <div class="process-arrow">➡️</div>
+                <div class="process-step">
+                    <h4>Assembler</h4>
+                    <p>MOV AX, 5<br>ADD BX, AX</p>
+                    <small>Hardware-orientiert</small>
+                </div>
+                <div class="process-arrow">➡️</div>
+                <div class="process-step">
+                    <h4>Höhere Sprachen</h4>
+                    <p>int x = 5;<br>int y = x + 3;</p>
+                    <small>Mensch-freundlich</small>
+                </div>
+            </div>
+
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Sprachebene</th>
+                        <th>Verständlichkeit für Menschen</th>
+                        <th>Ausführungsgeschwindigkeit</th>
+                        <th>Beispiele</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Maschinensprache</strong></td>
+                        <td>Sehr schwer</td>
+                        <td>Sehr schnell</td>
+                        <td>10110000 01100001</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Assembler</strong></td>
+                        <td>Schwer</td>
+                        <td>Schnell</td>
+                        <td>MOV AL, 61h</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Höhere Sprachen</strong></td>
+                        <td>Gut verständlich</td>
+                        <td>Langsamer (muss übersetzt werden)</td>
+                        <td>System.out.println("Hello");</td>
+                    </tr>
+                </tbody>
+            </table>
+        </section>
+
+        <!-- Übersetzer: Interpreter vs. Compiler -->
+        <section class="content-section">
+            <h2 class="section-title">🔄 Interpreter vs. Compiler</h2>
+            
+            <div class="warning-box">
+                <h4>⚠️ Wichtig zu verstehen</h4>
+                <p>Höhere Programmiersprachen müssen in Maschinensprache übersetzt werden. Dafür gibt es zwei verschiedene Methoden: <strong>Interpreter</strong> und <strong>Compiler</strong>.</p>
+            </div>
+
+            <div class="language-grid">
+                <div class="language-card">
+                    <h4>🔄 Interpreter</h4>
+                    <p><strong>Funktionsweise:</strong> Übersetzt während das Programm läuft, Zeile für Zeile</p>
+                    <p><strong>Vorteil:</strong> Programm kann sofort gestartet werden</p>
+                    <p><strong>Nachteil:</strong> Langsam, da jede Zeile bei jedem Durchlauf neu übersetzt wird</p>
+                    
+                    <div class="code-example">
+<span class="comment">// Beispiele für interpretierte Sprachen:</span>
+- JavaScript
+- PHP  
+- Python
+- Basic
+                    </div>
+                </div>
+
+                <div class="language-card">
+                    <h4>⚙️ Compiler</h4>
+                    <p><strong>Funktionsweise:</strong> Übersetzt das komplette Programm vor der Ausführung</p>
+                    <p><strong>Vorteil:</strong> Sehr schnell bei der Ausführung</p>
+                    <p><strong>Nachteil:</strong> Kompilieren kostet Zeit, Syntaxfehler werden erst beim Kompilieren erkannt</p>
+                    
+                    <div class="code-example">
+<span class="comment">// Beispiele für kompilierte Sprachen:</span>
+- Java
+- C/C++
+- C#
+- Go
+                    </div>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">🔧 Der Übersetzungsvorgang im Detail</h3>
+            
+            <div class="example-box">
+                <h4>🔍 Beispiel: Interpreter</h4>
+                <div class="code-example python">
+<span class="number">1.</span> Programmierer schreibt: <span class="keyword">print</span>(<span class="string">"Hallo Welt"</span>)
+<span class="number">2.</span> Interpreter liest diese Zeile
+<span class="number">3.</span> Interpreter übersetzt sie in Maschinencode
+<span class="number">4.</span> Computer führt die Zeile aus
+<span class="number">5.</span> Interpreter geht zur nächsten Zeile
+<span class="comment"># Bei jedem Programmstart passiert das wieder!</span>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>🔍 Beispiel: Compiler</h4>
+                <div class="code-example java">
+<span class="number">1.</span> Programmierer schreibt: <span class="class-name">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Hallo Welt"</span>);
+<span class="number">2.</span> Compiler übersetzt das komplette Programm
+<span class="number">3.</span> Erstellt eine ausführbare Datei (.exe, .class)
+<span class="number">4.</span> Computer kann die Datei direkt ausführen
+<span class="comment">// Kompilieren muss nur einmal gemacht werden!</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Die 3 Grundbausteine der Programmierung -->
+        <section class="content-section">
+            <h2 class="section-title">🔧 Die 3 Grundbausteine jedes Programms</h2>
+            
+            <div class="warning-box">
+                <h4>⚠️ Fundamentales Konzept</h4>
+                <p>JEDES Programm besteht aus nur drei Grundbausteinen! Wenn du diese verstehst, kannst du jedes Programm verstehen.</p>
+            </div>
+
+            <h3 class="subsection-title">1️⃣ Sequenz (Reihenfolge)</h3>
+            <div class="definition-box">
+                <h4>📖 Was ist eine Sequenz?</h4>
+                <p>Befehle werden <strong>nacheinander, in der richtigen Reihenfolge</strong> ausgeführt. Wie beim Anziehen: erst Socken, dann Schuhe!</p>
+            </div>
+
+            <div class="example-box">
+                <h4>🔍 Beispiel: Sequenz</h4>
+                <div class="code-example java">
+<span class="comment">// Diese Befehle werden von oben nach unten ausgeführt</span>
+<span class="keyword">int</span> a <span class="operator">=</span> <span class="number">5</span>;                     <span class="comment">// 1. Variable a wird auf 5 gesetzt</span>
+<span class="keyword">int</span> b <span class="operator">=</span> <span class="number">3</span>;                     <span class="comment">// 2. Variable b wird auf 3 gesetzt</span>
+<span class="keyword">int</span> summe <span class="operator">=</span> a <span class="operator">+</span> b;            <span class="comment">// 3. summe wird berechnet (5 + 3 = 8)</span>
+<span class="class-name">System</span>.<span class="method">out</span>.<span class="method">println</span>(summe);      <span class="comment">// 4. Das Ergebnis wird ausgegeben</span>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">2️⃣ Auswahl (Verzweigung)</h3>
+            <div class="definition-box">
+                <h4>📖 Was ist eine Auswahl?</h4>
+                <p>Das Programm <strong>entscheidet</strong> basierend auf einer Bedingung, welcher Code ausgeführt wird. Wie bei einer Kreuzung: links oder rechts?</p>
+            </div>
+
+            <div class="example-box">
+                <h4>🔍 Beispiel: Auswahl (if-else)</h4>
+                <div class="code-example java">
+<span class="keyword">int</span> alter <span class="operator">=</span> <span class="number">16</span>;
+
+<span class="keyword">if</span> (alter <span class="operator">>=</span> <span class="number">18</span>) {
+    <span class="class-name">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Du darfst wählen!"</span>);     <span class="comment">// Wird NUR ausgeführt wenn alter >= 18</span>
+} <span class="keyword">else</span> {
+    <span class="class-name">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Du darfst noch nicht wählen."</span>);  <span class="comment">// Wird ausgeführt wenn alter < 18</span>
+}
+
+<span class="comment">// Da alter = 16, wird "Du darfst noch nicht wählen." ausgegeben</span>
+                </div>
+            </div>
+
+            <h3 class="subsection-title">3️⃣ Wiederholung (Schleife)</h3>
+            <div class="definition-box">
+                <h4>📖 Was ist eine Wiederholung?</h4>
+                <p>Ein Code-Block wird <strong>mehrfach ausgeführt</strong>, solange eine Bedingung erfüllt ist. Wie beim Zähneputzen: so lange schrubben, bis alle Zähne sauber sind!</p>
+            </div>
+
+            <div class="example-box">
+                <h4>🔍 Beispiel: Schleife (while)</h4>
+                <div class="code-example java">
+<span class="keyword">int</span> countdown <span class="operator">=</span> <span class="number">5</span>;
+
+<span class="keyword">while</span> (countdown <span class="operator">></span> <span class="number">0</span>) {                     <span class="comment">// Solange countdown größer als 0</span>
+    <span class="class-name">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Noch "</span> <span class="operator">+</span> countdown <span class="operator">+</span> <span class="string">" Sekunden"</span>);
+    countdown <span class="operator">=</span> countdown <span class="operator">-</span> <span class="number">1</span>;               <span class="comment">// countdown verringern</span>
+}
+
+<span class="class-name">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Zeit abgelaufen!"</span>);
+
+<span class="comment">/* Ausgabe:
+ * Noch 5 Sekunden
+ * Noch 4 Sekunden  
+ * Noch 3 Sekunden
+ * Noch 2 Sekunden
+ * Noch 1 Sekunden
+ * Zeit abgelaufen!
+ */</span>
+                </div>
+            </div>
+
+            <div class="key-points">
+                <h4>🎯 Kombinationen der Grundbausteine</h4>
+                <ul>
+                    <li>Komplexe Programme sind nur Kombinationen dieser drei Bausteine</li>
+                    <li>Schleifen können Verzweigungen enthalten</li>
+                    <li>Verzweigungen können weitere Schleifen enthalten</li>
+                    <li>Alles wird in Sequenzen angeordnet</li>
+                    <li>Diese Konzepte funktionieren in JEDER Programmiersprache</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Arduino Code-Beispiele -->
+        <section class="content-section">
+            <h2 class="section-title">🔌 Arduino-Programmierung</h2>
+            
+            <div class="info-box">
+                <h4>💡 Arduino - Hardware-nahe Programmierung</h4>
+                <p>Arduino ist eine Plattform für Mikrocontroller-Programmierung. Hier siehst du, wie die gleichen Konzepte in der Hardware-Programmierung angewendet werden.</p>
+            </div>
+
+            <h3 class="subsection-title">📟 Grundstruktur eines Arduino-Programms</h3>
+            <div class="example-box">
+                <h4>🔍 Arduino Setup und Loop</h4>
+                <div class="code-example arduino-code">
+<span class="comment">// Arduino-Programm Grundstruktur</span>
+<span class="arduino-datatype">void</span> <span class="arduino-function">setup</span>() {
+    <span class="comment">// Wird einmal beim Start ausgeführt</span>
+    <span class="arduino-function">Serial</span>.<span class="arduino-function">begin</span>(<span class="arduino-constant">9600</span>);        <span class="comment">// Serielle Kommunikation starten</span>
+    <span class="arduino-function">pinMode</span>(<span class="arduino-constant">LED_BUILTIN</span>, <span class="arduino-constant">OUTPUT</span>);   <span class="comment">// Pin als Ausgang definieren</span>
+}
+
+<span class="arduino-datatype">void</span> <span class="arduino-function">loop</span>() {
+    <span class="comment">// Wird endlos wiederholt</span>
+    <span class="arduino-function">digitalWrite</span>(<span class="arduino-constant">LED_BUILTIN</span>, <span class="arduino-constant">HIGH</span>);   <span class="comment">// LED einschalten</span>
+    <span class="arduino-function">delay</span>(<span class="arduino-constant">1000</span>);                       <span class="comment">// 1 Sekunde warten</span>
+    <span class="arduino-function">digitalWrite</span>(<span class="arduino-constant">LED_BUILTIN</span>, <span class="arduino-constant">LOW</span>);    <span class="comment">// LED ausschalten</span>
+    <span class="arduino-function">delay</span>(<span class="arduino-constant">1000</span>);                       <span class="comment">// 1 Sekunde warten</span>
+}
+                </div>
+            </div>
+
+            <h3 class="subsection-title">🔄 Verzweigungen in Arduino</h3>
+            <div class="example-box">
+                <h4>🔍 Arduino Sensor-Auswertung</h4>
+                <div class="code-example arduino-code">
+<span class="arduino-datatype">int</span> sensorPin <span class="operator">=</span> <span class="arduino-constant">A0</span>;         <span class="comment">// Analoger Pin A0</span>
+<span class="arduino-datatype">int</span> ledPin <span class="operator">=</span> <span class="arduino-constant">13</span>;           <span class="comment">// Digital Pin 13</span>
+<span class="arduino-datatype">int</span> sensorValue <span class="operator">=</span> <span class="arduino-constant">0</span>;        <span class="comment">// Variable für Sensorwert</span>
+
+<span class="arduino-datatype">void</span> <span class="arduino-function">setup</span>() {
+    <span class="arduino-function">Serial</span>.<span class="arduino-function">begin</span>(<span class="arduino-constant">9600</span>);
+    <span class="arduino-function">pinMode</span>(ledPin, <span class="arduino-constant">OUTPUT</span>);
+}
+
+<span class="arduino-datatype">void</span> <span class="arduino-function">loop</span>() {
+    sensorValue <span class="operator">=</span> <span class="arduino-function">analogRead</span>(sensorPin);    <span class="comment">// Sensor auslesen</span>
+    
+    <span class="keyword">if</span> (sensorValue <span class="operator">></span> <span class="arduino-constant">500</span>) {              <span class="comment">// Wenn Wert größer als 500</span>
+        <span class="arduino-function">digitalWrite</span>(ledPin, <span class="arduino-constant">HIGH</span>);        <span class="comment">// LED einschalten</span>
+        <span class="arduino-function">Serial</span>.<span class="arduino-function">println</span>(<span class="string">"Sensor: HELL"</span>);
+    } <span class="keyword">else</span> {                              <span class="comment">// Sonst</span>
+        <span class="arduino-function">digitalWrite</span>(ledPin, <span class="arduino-constant">LOW</span>);         <span class="comment">// LED ausschalten</span>
+        <span class="arduino-function">Serial</span>.<span class="arduino-function">println</span>(<span class="string">"Sensor: DUNKEL"</span>);
+    }
+    
+    <span class="arduino-function">delay</span>(<span class="arduino-constant">100</span>);                        <span class="comment">// Kurz warten</span>
+}
+                </div>
+            </div>
+
+            <h3 class="subsection-title">🔢 Schleifen in Arduino</h3>
+            <div class="example-box">
+                <h4>🔍 Arduino for-Schleife</h4>
+                <div class="code-example arduino-code">
+<span class="comment">// LED mehrmals blinken lassen</span>
+<span class="arduino-datatype">void</span> <span class="arduino-function">blinkPattern</span>() {
+    <span class="keyword">for</span> (<span class="arduino-datatype">int</span> i <span class="operator">=</span> <span class="arduino-constant">0</span>; i <span class="operator"><</span> <span class="arduino-constant">5</span>; i<span class="operator">++</span>) {        <span class="comment">// 5 mal wiederholen</span>
+        <span class="arduino-function">digitalWrite</span>(<span class="arduino-constant">LED_BUILTIN</span>, <span class="arduino-constant">HIGH</span>);  <span class="comment">// LED an</span>
+        <span class="arduino-function">delay</span>(<span class="arduino-constant">200</span>);                      <span class="comment">// 200ms warten</span>
+        <span class="arduino-function">digitalWrite</span>(<span class="arduino-constant">LED_BUILTIN</span>, <span class="arduino-constant">LOW</span>);   <span class="comment">// LED aus</span>
+        <span class="arduino-function">delay</span>(<span class="arduino-constant">200</span>);                      <span class="comment">// 200ms warten</span>
+    }
+    
+    <span class="arduino-function">delay</span>(<span class="arduino-constant">1000</span>);                        <span class="comment">// Pause zwischen Mustern</span>
+}
+
+<span class="arduino-datatype">void</span> <span class="arduino-function">loop</span>() {
+    <span class="arduino-function">blinkPattern</span>();                  <span class="comment">// Blinkmuster ausführen</span>
+}
+                </div>
+            </div>
+        </section>
+
+        <!-- Syntax-Grundlagen -->
+        <section class="content-section">
+            <h2 class="section-title">📝 Syntax-Grundlagen</h2>
+            
+            <div class="warning-box">
+                <h4>⚠️ Wichtig zu verstehen</h4>
+                <p>Programmiersprachen haben sehr strenge Regeln! Ein Computer kann nicht "raten" was gemeint ist - alles muss exakt richtig geschrieben werden.</p>
+            </div>
+
+            <h3 class="subsection-title">🔤 Grundelemente der Syntax</h3>
+            
+            <table class="comparison-table">
+                <thead>
+                    <tr>
+                        <th>Element</th>
+                        <th>Zweck</th>
+                        <th>Beispiel in Java</th>
+                        <th>Erklärung</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Schlüsselwörter</strong></td>
+                        <td>Reservierte Wörter der Sprache</td>
+                        <td>class, int, if, while</td>
+                        <td>Haben feste Bedeutung, können nicht als Namen verwendet werden</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Runde Klammern ()</strong></td>
+                        <td>Methodenaufrufe & Parameter</td>
+                        <td>System.out.println("Text")</td>
+                        <td>Zeigen an, dass eine Methode aufgerufen wird</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Geschweifte Klammern {}</strong></td>
+                        <td>Code-Blöcke</td>
+                        <td>if (x > 5) { ... }</td>
+                        <td>Fassen zusammengehörigen Code zusammen</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Semikolon ;</strong></td>
+                        <td>Ende einer Anweisung</td>
+                        <td>int x = 5;</td>
+                        <td>Trennt Befehle voneinander</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Kommentare</strong></td>
+                        <td>Erklärungen für Menschen</td>
+                        <td>// Das ist ein Kommentar</td>
+                        <td>Werden vom Computer ignoriert</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 class="subsection-title">💬 Kommentare - Wichtige Notizen im Code</h3>
+            <div class="example-box">
+                <h4>🔍 Arten von Kommentaren</h4>
+                <div class="code-example java">
+<span class="comment">// Zeilenkommentar - gilt nur für diese Zeile</span>
+<span class="keyword">int</span> alter <span class="operator">=</span> <span class="number">18</span>; <span class="comment">// Kann auch am Ende einer Zeile stehen</span>
+
+<span class="comment">/* 
+   Blockkommentar - kann sich über 
+   mehrere Zeilen erstrecken 
+   Sehr nützlich für längere Erklärungen
+*/</span>
+<span class="keyword">double</span> pi <span class="operator">=</span> <span class="number">3.14159</span>;
+
+<span class="comment">/**
+ * JavaDoc-Kommentar
+ * Spezielle Dokumentation für Methoden und Klassen
+ * @param parameter Beschreibung des Parameters
+ * @return Beschreibung des Rückgabewerts
+ */</span>
+                </div>
+            </div>
+
+            <div class="key-points">
+                <h4>🎯 Warum sind Kommentare wichtig?</h4>
+                <ul>
+                    <li>Erklären, WAS der Code macht</li>
+                    <li>Erklären, WARUM bestimmte Entscheidungen getroffen wurden</li>
+                    <li>Helfen anderen Programmierern (und dir selbst später!)</li>
+                    <li>Werden vom Computer komplett ignoriert</li>
+                    <li>Verlangsamen das Programm NICHT</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Arten von Fehlern -->
+        <section class="content-section">
+            <h2 class="section-title">🐛 Arten von Programmierfehlern</h2>
+            
+            <div class="info-box">
+                <h4>💡 Warum ist das wichtig?</h4>
+                <p>Jeder Programmierer macht Fehler! Das Wichtige ist zu verstehen, welche Arten von Fehlern es gibt und wann sie auftreten.</p>
+            </div>
+
+            <h3 class="subsection-title">1️⃣ Syntaxfehler (Grammatikfehler)</h3>
+            <div class="definition-box">
+                <h4>📖 Was sind Syntaxfehler?</h4>
+                <p><strong>Syntaxfehler</strong> sind wie Rechtschreibfehler in natürlichen Sprachen. Der Computer kann den Code nicht verstehen, weil die Grammatik der Programmiersprache nicht befolgt wurde.</p>
+            </div>
+
+            <div class="example-box">
+                <h4>🔍 Beispiele für Syntaxfehler in Java</h4>
+                <div class="code-example java">
+<span class="comment">// ❌ Falsch - fehlendes Semikolon</span>
+<span class="keyword">int</span> zahl <span class="operator">=</span> <span class="number">5</span>
+
+<span class="comment">// ✅ Richtig</span>
+<span class="keyword">int</span> zahl <span class="operator">=</span> <span class="number">5</span>;
+
+<span class="comment">// ❌ Falsch - falsche Klammern</span>
+<span class="keyword">if</span> (x <span class="operator">></span> <span class="number">5</span>) [
+    <span class="class-name">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Groß"</span>);
+}
+
+<span class="comment">// ✅ Richtig</span>
+<span class="keyword">if</span> (x <span class="operator">></span> <span class="number">5</span>) {
+    <span class="class-name">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Groß"</span>);
+}
+                </div>
+            </div>
+
+            <h3 class="subsection-title">2️⃣ Laufzeitfehler</h3>
+            <div class="definition-box">
+                <h4>📖 Was sind Laufzeitfehler?</h4>
+                <p><strong>Laufzeitfehler</strong> treten auf, während das Programm ausgeführt wird. Der Code ist syntaktisch richtig, aber bei der Ausführung passiert etwas Unerwartetes.</p>
+            </div>
+
+            <div class="example-box">
+                <h4>🔍 Beispiele für Laufzeitfehler</h4>
+                <div class="code-example java">
+<span class="comment">// ❌ Division durch Null</span>
+<span class="keyword">int</span> a <span class="operator">=</span> <span class="number">10</span>;
+<span class="keyword">int</span> b <span class="operator">=</span> <span class="number">0</span>;
+<span class="keyword">int</span> ergebnis <span class="operator">=</span> a <span class="operator">/</span> b; <span class="comment">// Programmabsturz!</span>
+
+<span class="comment">// ❌ Array-Index außerhalb der Grenzen</span>
+<span class="keyword">int</span>[] zahlen <span class="operator">=</span> {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>};
+<span class="keyword">int</span> wert <span class="operator">=</span> zahlen[<span class="number">5</span>]; <span class="comment">// Index 5 existiert nicht!</span>
+
+<span class="comment">// ✅ Besser: Prüfung einbauen</span>
+<span class="keyword">if</span> (b <span class="operator">!=</span> <span class="number">0</span>) {
+    <span class="keyword">int</span> ergebnis <span class="operator">=</span> a <span class="operator">/</span> b;
+}
+                </div>
+            </div>
+
+            <h3 class="subsection-title">3️⃣ Logische Fehler</h3>
+            <div class="definition-box">
+                <h4>📖 Was sind logische Fehler?</h4>
+                <p><strong>Logische Fehler</strong> sind die schwierigsten zu finden. Das Programm läuft ohne Absturz, macht aber nicht das, was der Programmierer wollte.</p>
+            </div>
+
+            <div class="example-box">
+                <h4>🔍 Beispiel für einen logischen Fehler</h4>
+                <div class="code-example java">
+<span class="comment">// Ziel: Durchschnitt von zwei Zahlen berechnen</span>
+<span class="keyword">int</span> a <span class="operator">=</span> <span class="number">10</span>;
+<span class="keyword">int</span> b <span class="operator">=</span> <span class="number">20</span>;
+<span class="keyword">int</span> durchschnitt <span class="operator">=</span> a <span class="operator">+</span> b <span class="operator">/</span> <span class="number">2</span>; <span class="comment">// ❌ Falsch!</span>
+<span class="comment">// Ergebnis: 20 (nicht 15 wie gewünscht)</span>
+<span class="comment">// Grund: Division wird vor Addition ausgeführt</span>
+
+<span class="comment">// ✅ Richtig:</span>
+<span class="keyword">int</span> durchschnitt <span class="operator">=</span> (a <span class="operator">+</span> b) <span class="operator">/</span> <span class="number">2</span>; <span class="comment">// Ergebnis: 15</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Zusammenfassung -->
+        <section class="content-section">
+            <h2 class="section-title">📚 Zusammenfassung und Test</h2>
+            
+            <div class="key-points">
+                <h4>🎯 Das Wichtigste auf einen Blick</h4>
+                <ul>
+                    <li>Es gibt viele Programmiersprachen, jede für bestimmte Zwecke optimiert</li>
+                    <li>Computer verstehen nur Maschinensprache (0 und 1)</li>
+                    <li>Höhere Sprachen werden durch Compiler oder Interpreter übersetzt</li>
+                    <li>Es gibt drei Arten von Fehlern: Syntax-, Laufzeit- und logische Fehler</li>
+                    <li>Alle Programme bestehen aus nur 3 Grundbausteinen: Sequenz, Auswahl, Wiederholung</li>
+                    <li>Arduino zeigt Hardware-nahe Programmierung mit denselben Konzepten</li>
+                    <li>Kommentare sind wichtig für Verständlichkeit und Dokumentation</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h4>🔍 Teste dein Verständnis</h4>
+                <p><strong>Frage:</strong> Welche Grundbausteine erkennst du in diesem Programm?</p>
+                <div class="code-example java">
+<span class="keyword">int</span> zahl <span class="operator">=</span> <span class="number">1</span>;                         <span class="comment">// 🤔 Welcher Grundbaustein?</span>
+<span class="keyword">while</span> (zahl <span class="operator"><=</span> <span class="number">10</span>) {                   <span class="comment">// 🤔 Welcher Grundbaustein?</span>
+    <span class="keyword">if</span> (zahl <span class="operator">%</span> <span class="number">2</span> <span class="operator">==</span> <span class="number">0</span>) {               <span class="comment">// 🤔 Welcher Grundbaustein?</span>
+        <span class="class-name">System</span>.<span class="method">out</span>.<span class="method">println</span>(zahl <span class="operator">+</span> <span class="string">" ist gerade"</span>);
+    }
+    zahl <span class="operator">=</span> zahl <span class="operator">+</span> <span class="number">1</span>;
+}
+
+<span class="comment">/* Antwort:
+ * - Sequenz: Befehle werden nacheinander ausgeführt
+ * - Wiederholung: while-Schleife wiederholt Code
+ * - Auswahl: if-Verzweigung entscheidet ob Zahl ausgegeben wird
+ */</span>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>💡 Nächste Schritte</h4>
+                <p>Jetzt, da du die Grundlagen verstehst, können wir mit den praktischen Details beginnen:</p>
+                <ul style="margin-left: 1.5rem; margin-top: 1rem;">
+                    <li>Java-Syntax im Detail</li>
+                    <li>Variablen und Datentypen</li>
+                    <li>Operatoren und Berechnungen</li>
+                    <li>Kontrollstrukturen (if, while, for)</li>
+                    <li>Methoden und Funktionen</li>
+                    <li>Objektorientierte Programmierung</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <nav class="navigation">
+            <a href="index.html" class="nav-button">🏠 Zurück zur Übersicht</a>
+            <a href="java-basics.html" class="nav-button">▶️ Weiter: Java Grundlagen</a>
+        </nav>
+    </div>
+
+    <script>
+        // Smooth scrolling für interne Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight Code-Beispiele beim Klicken
+        document.querySelectorAll('.code-example').forEach(example => {
+            example.addEventListener('click', function() {
+                this.style.backgroundColor = '#374151';
+                this.style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    this.style.backgroundColor = '';
+                    this.style.transform = '';
+                }, 1000);
+            });
+        });
+
+        // Interaktive Navigation-Buttons
+        document.querySelectorAll('.nav-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (this.classList.contains('disabled')) {
+                    e.preventDefault();
+                    return;
+                }
+                if (this.getAttribute('href') !== 'index.html' && this.getAttribute('href') !== '#') {
+                    e.preventDefault();
+                    alert('Diese Seite wird als nächstes erstellt! 📝\n\nBisher verfügbar:\n• Programmiersprachen-Grundlagen (aktuell)\n• Index-Übersicht');
+                }
+            });
+        });
+
+        // Scroll-Animation für Boxes
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.opacity = '1';
+                    entry.target.style.transform = 'translateY(0)';
+                }
+            });
+        }, observerOptions);
+
+        // Beobachte alle content-sections
+        document.querySelectorAll('.content-section').forEach(section => {
+            section.style.opacity = '0';
+            section.style.transform = 'translateY(20px)';
+            section.style.transition = 'opacity 0.6s ease, transform 0.6s ease';
+            observer.observe(section);
+        });
+
+        // Code-Beispiel Kopieren
+        document.querySelectorAll('.code-example').forEach(example => {
+            const copyButton = document.createElement('button');
+            copyButton.innerHTML = '📋';
+            copyButton.className = 'copy-button';
+            copyButton.style.cssText = `
+                position: absolute;
+                top: 0.5rem;
+                left: 1rem;
+                background: rgba(59, 130, 246, 0.8);
+                color: white;
+                border: none;
+                border-radius: 4px;
+                padding: 0.25rem 0.5rem;
+                cursor: pointer;
+                font-size: 0.75rem;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            `;
+            
+            example.style.position = 'relative';
+            example.appendChild(copyButton);
+            
+            example.addEventListener('mouseenter', () => {
+                copyButton.style.opacity = '1';
+            });
+            
+            example.addEventListener('mouseleave', () => {
+                copyButton.style.opacity = '0';
+            });
+            
+            copyButton.addEventListener('click', (e) => {
+                e.stopPropagation();
+                const text = example.innerText;
+                navigator.clipboard.writeText(text).then(() => {
+                    copyButton.innerHTML = '✅';
+                    setTimeout(() => {
+                        copyButton.innerHTML = '📋';
+                    }, 1000);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1991 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SQL - Structured Query Language | Abitur 2026 Lernzettel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #06b6d4;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .content-section {
+            background: var(--bg-white);
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .intro-box {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 2px solid var(--info-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .intro-box h3 {
+            color: var(--info-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .sql-categories {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .category-card {
+            background: var(--bg-light);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .category-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+        }
+
+        .category-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+            font-size: 1.2rem;
+        }
+
+        .category-card p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 0.8rem;
+        }
+
+        .category-commands {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+        }
+
+        .command-tag {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 6px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .sql-structure {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .sql-structure h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .structure-steps {
+            counter-reset: step-counter;
+        }
+
+        .structure-step {
+            counter-increment: step-counter;
+            background: var(--bg-white);
+            border-left: 4px solid var(--primary-color);
+            padding: 1rem;
+            margin-bottom: 1rem;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+
+        .structure-step:before {
+            content: counter(step-counter);
+            background: var(--primary-color);
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            position: absolute;
+            left: -1rem;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+
+        .structure-step h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            margin-left: 1rem;
+        }
+
+        .structure-step p {
+            margin-left: 1rem;
+            color: var(--text-light);
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #f1f5f9;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            overflow-x: auto;
+            position: relative;
+        }
+
+        .code-block:before {
+            content: 'SQL';
+            position: absolute;
+            top: 0.5rem;
+            right: 1rem;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .code-block pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+        }
+
+        .sql-keyword {
+            color: #60a5fa;
+            font-weight: bold;
+        }
+
+        .sql-string {
+            color: #34d399;
+        }
+
+        .sql-comment {
+            color: #9ca3af;
+            font-style: italic;
+        }
+
+        .operators-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .operator-group {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .operator-group h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .operator-list {
+            list-style: none;
+        }
+
+        .operator-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .operator-item:last-child {
+            border-bottom: none;
+        }
+
+        .operator-symbol {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.3rem 0.6rem;
+            border-radius: 4px;
+            font-family: monospace;
+            font-weight: bold;
+        }
+
+        .example-section {
+            background: linear-gradient(135deg, #f0fdf4, #ecfdf5);
+            border: 2px solid var(--success-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .example-section h4 {
+            color: var(--success-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fffbeb, #fef3c7);
+            border: 2px solid var(--warning-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box h4 {
+            color: var(--warning-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .tip-box {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 2px solid var(--info-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .tip-box h4 {
+            color: var(--info-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .table-example {
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .table-example table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-white);
+        }
+
+        .table-example th,
+        .table-example td {
+            padding: 0.8rem;
+            text-align: left;
+            border: 1px solid var(--border-color);
+        }
+
+        .table-example th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .table-example tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .join-visualization {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .join-type {
+            background: var(--bg-white);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .join-type:hover {
+            border-color: var(--primary-color);
+        }
+
+        .join-type h5 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .join-diagram {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 0.5rem;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .aggregation-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .aggregation-function {
+            background: var(--bg-white);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+        }
+
+        .aggregation-function h5 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .aggregation-function .icon {
+            font-size: 2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .navigation {
+            position: fixed;
+            top: 50%;
+            right: 2rem;
+            transform: translateY(-50%);
+            background: var(--bg-white);
+            border-radius: 12px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+            padding: 1rem;
+            max-height: 70vh;
+            overflow-y: auto;
+        }
+
+        .navigation h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .navigation ul {
+            list-style: none;
+        }
+
+        .navigation li {
+            margin-bottom: 0.5rem;
+        }
+
+        .navigation a {
+            color: var(--text-light);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: block;
+            padding: 0.3rem 0.5rem;
+            border-radius: 4px;
+            transition: all 0.3s ease;
+        }
+
+        .navigation a:hover {
+            color: var(--primary-color);
+            background: var(--bg-light);
+        }
+
+        @media (max-width: 1024px) {
+            .navigation {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .sql-categories,
+            .operators-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="breadcrumb">
+                <a href="index.html">🏠 Hauptseite</a> > 
+                <a href="datenbank-grundlagen.html">🗄️ Datenbanksysteme</a> > 
+                <strong>SQL - Structured Query Language</strong>
+            </div>
+            <h1>🗄️ SQL - Structured Query Language</h1>
+            <p>Die standardisierte Datenbanksprache für relationale Datenbanksysteme</p>
+        </header>
+
+        <!-- Einführung -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>📚 Was ist SQL?</h2>
+            </div>
+            <div class="section-content">
+                <div class="intro-box">
+                    <h3>🎯 SQL einfach erklärt</h3>
+                    <p><strong>SQL (Structured Query Language)</strong> ist eine standardisierte Sprache zur Verwaltung relationaler Datenbanken. Stellen Sie sich vor, Sie haben einen riesigen Aktenschrank mit unzähligen Ordnern voller Informationen - SQL ist wie ein sehr intelligenter Assistent, der genau weiß, wo alles steht und Ihnen bei jeder Anfrage sofort die richtigen Informationen liefern kann.</p>
+                    
+                    <p><strong>Warum ist SQL wichtig?</strong></p>
+                    <ul style="margin-left: 2rem; margin-top: 1rem;">
+                        <li>✅ <strong>Universell:</strong> Funktioniert mit fast allen Datenbanksystemen (MySQL, PostgreSQL, SQL Server, Oracle, etc.)</li>
+                        <li>✅ <strong>Mächtig:</strong> Von einfachen Abfragen bis zu komplexen Analysen</li>
+                        <li>✅ <strong>Standardisiert:</strong> Einmal gelernt, überall anwendbar</li>
+                        <li>✅ <strong>Praxisrelevant:</strong> In nahezu jedem IT-Bereich unverzichtbar</li>
+                    </ul>
+                </div>
+
+                <!-- SQL Kategorien -->
+                <h3>📋 Die vier Hauptbereiche von SQL</h3>
+                <div class="sql-categories">
+                    <div class="category-card">
+                        <h4>🔍 DQL - Data Query Language</h4>
+                        <p>Daten aus der Datenbank <strong>abfragen</strong> und anzeigen</p>
+                        <div class="category-commands">
+                            <span class="command-tag">SELECT</span>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <h4>🏗️ DDL - Data Definition Language</h4>
+                        <p>Datenbankstruktur <strong>definieren</strong> und ändern</p>
+                        <div class="category-commands">
+                            <span class="command-tag">CREATE</span>
+                            <span class="command-tag">ALTER</span>
+                            <span class="command-tag">DROP</span>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <h4>✏️ DML - Data Manipulation Language</h4>
+                        <p>Daten <strong>bearbeiten</strong>, hinzufügen und löschen</p>
+                        <div class="category-commands">
+                            <span class="command-tag">INSERT</span>
+                            <span class="command-tag">UPDATE</span>
+                            <span class="command-tag">DELETE</span>
+                        </div>
+                    </div>
+                    <div class="category-card">
+                        <h4>🔐 DCL - Data Control Language</h4>
+                        <p>Transaktionen und <strong>Zugriffsrechte</strong> kontrollieren</p>
+                        <div class="category-commands">
+                            <span class="command-tag">COMMIT</span>
+                            <span class="command-tag">ROLLBACK</span>
+                            <span class="command-tag">GRANT</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- SELECT Grundlagen -->
+        <section class="content-section" id="select-grundlagen">
+            <div class="section-header">
+                <h2>🔍 SELECT - Die wichtigste SQL-Anweisung</h2>
+            </div>
+            <div class="section-content">
+                <div class="sql-structure">
+                    <h3>📏 Aufbau einer SELECT-Anweisung</h3>
+                    <div class="structure-steps">
+                        <div class="structure-step">
+                            <h4>SELECT - Spalten auswählen</h4>
+                            <p>Bestimmt, welche Spalten angezeigt werden sollen</p>
+                        </div>
+                        <div class="structure-step">
+                            <h4>FROM - Tabelle angeben</h4>
+                            <p>Gibt an, aus welcher Tabelle die Daten kommen</p>
+                        </div>
+                        <div class="structure-step">
+                            <h4>WHERE - Bedingungen filtern</h4>
+                            <p>Filtert Zeilen nach bestimmten Kriterien (optional)</p>
+                        </div>
+                        <div class="structure-step">
+                            <h4>GROUP BY - Daten gruppieren</h4>
+                            <p>Fasst Zeilen nach gleichen Werten zusammen (optional)</p>
+                        </div>
+                        <div class="structure-step">
+                            <h4>HAVING - Gruppen filtern</h4>
+                            <p>Filtert die erstellten Gruppen (optional)</p>
+                        </div>
+                        <div class="structure-step">
+                            <h4>ORDER BY - Sortierung</h4>
+                            <p>Sortiert das Ergebnis aufsteigend oder absteigend (optional)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 Wichtige Reihenfolge merken!</h4>
+                    <p><strong>Abarbeitungsreihenfolge</strong> (wie SQL intern arbeitet):</p>
+                    <p>1. FROM → 2. WHERE → 3. GROUP BY → 4. HAVING → 5. SELECT → 6. ORDER BY</p>
+                    <p>Diese Reihenfolge ist wichtig zu verstehen, auch wenn Sie anders schreiben!</p>
+                </div>
+
+                <h3>🚀 Praktische SELECT-Beispiele</h3>
+
+                <div class="example-section">
+                    <h4>📝 Beispiel 1: Einfache Abfrage</h4>
+                    <p><strong>Aufgabe:</strong> Zeige alle Spalten der Tabelle "Student" an</p>
+                    <div class="code-block">
+                        <pre><code><span class="sql-keyword">SELECT</span> *
+<span class="sql-keyword">FROM</span> Student;</code></pre>
+                    </div>
+                    <p><strong>Erklärung:</strong> Das <code>*</code> bedeutet "alle Spalten"</p>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 Beispiel 2: Bestimmte Spalten auswählen</h4>
+                    <p><strong>Aufgabe:</strong> Zeige nur Name und Email aller Studenten</p>
+                    <div class="code-block">
+                        <pre><code><span class="sql-keyword">SELECT</span> Name, Email
+<span class="sql-keyword">FROM</span> Student;</code></pre>
+                    </div>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 Beispiel 3: Mit Bedingung (WHERE)</h4>
+                    <p><strong>Aufgabe:</strong> Zeige alle Studenten im 3. Semester</p>
+                    <div class="code-block">
+                        <pre><code><span class="sql-keyword">SELECT</span> Name, Email, Semester
+<span class="sql-keyword">FROM</span> Student
+<span class="sql-keyword">WHERE</span> Semester = <span class="sql-string">3</span>;</code></pre>
+                    </div>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 Beispiel 4: Sortierung</h4>
+                    <p><strong>Aufgabe:</strong> Alle Studenten alphabetisch nach Namen sortiert</p>
+                    <div class="code-block">
+                        <pre><code><span class="sql-keyword">SELECT</span> Name, Email
+<span class="sql-keyword">FROM</span> Student
+<span class="sql-keyword">ORDER BY</span> Name <span class="sql-keyword">ASC</span>;</code></pre>
+                    </div>
+                    <p><strong>ASC</strong> = aufsteigend (A-Z), <strong>DESC</strong> = absteigend (Z-A)</p>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 Beispiel 5: Duplikate entfernen</h4>
+                    <p><strong>Aufgabe:</strong> Alle verschiedenen Semester anzeigen</p>
+                    <div class="code-block">
+                        <pre><code><span class="sql-keyword">SELECT DISTINCT</span> Semester
+<span class="sql-keyword">FROM</span> Student;</code></pre>
+                    </div>
+                    <p><strong>DISTINCT</strong> entfernt doppelte Werte aus dem Ergebnis</p>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 Beispiel 6: Spalten umbenennen</h4>
+                    <p><strong>Aufgabe:</strong> Studentenname als "Vollname" anzeigen</p>
+                    <div class="code-block">
+                        <pre><code><span class="sql-keyword">SELECT</span> Name <span class="sql-keyword">AS</span> Vollname, Email <span class="sql-keyword">AS</span> E_Mail_Adresse
+<span class="sql-keyword">FROM</span> Student;</code></pre>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Operatoren -->
+        <section class="content-section" id="operatoren">
+            <div class="section-header">
+                <h2>🔧 SQL-Operatoren und Vergleiche</h2>
+            </div>
+            <div class="section-content">
+                <div class="operators-grid">
+                    <div class="operator-group">
+                        <h4>🔢 Vergleichsoperatoren</h4>
+                        <ul class="operator-list">
+                            <li class="operator-item">
+                                <span>Gleich</span>
+                                <span class="operator-symbol">=</span>
+                            </li>
+                            <li class="operator-item">
+                                <span>Ungleich</span>
+                                <span class="operator-symbol">&lt;&gt; oder !=</span>
+                            </li>
+                            <li class="operator-item">
+                                <span>Kleiner als</span>
+                                <span class="operator-symbol">&lt;</span>
+                            </li>
+                            <li class="operator-item">
+                                <span>Größer als</span>
+                                <span class="operator-symbol">&gt;</span>
+                            </li>
+                            <li class="operator-item">
+                                <span>Kleiner oder gleich</span>
+                                <span class="operator-symbol">&lt;=</span>
+                            </li>
+                            <li class="operator-item">
+                                <span>Größer oder gleich</span>
+                                <span class="operator-symbol">&gt;=</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="operator-group">
+                        <h4>🎯 Spezielle Operatoren</h4>
+                        <ul class="operator-list">
+                            <li class="operator-item">
+                                <span>Bereich (inkl. Grenzen)</span>
+                                <span class="operator-symbol">BETWEEN</span>
+                            </li>
+                            <li class="operator-item">
+                                <span>Liste von Werten</span>
+                                <span class="operator-symbol">IN</span>
+                            </li>
+                            <li class="operator-item">
+                                <span>Muster suchen</span>
+                                <span class="operator-symbol">LIKE</span>
+                            </li>
+                            <li class="operator-item">
+                                <span>Leere Werte</span>
+                                <span class="operator-symbol">IS NULL</span>
+                            </li>
+                            <li class="operator-item">
+                                <span>Nicht leere Werte</span>
+                                <span class="operator-symbol">IS NOT NULL</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="operator-group">
+                        <h4>🔗 Logische Operatoren</h4>
+                        <ul class="operator-list">
+                            <li class="operator-item">
+                                <span>Beide Bedingungen erfüllt</span>
+                                <span class="operator-symbol">AND</span>
+                            </li>
+                            <li class="operator-item">
+                                <span>Eine Bedingung erfüllt</span>
+                                <span class="operator-symbol">OR</span>
+                            </li>
+                            <li class="operator-item">
+                                <span>Bedingung nicht erfüllt</span>
+                                <span class="operator-symbol">NOT</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="operator-group">
+                        <h4>🔤 LIKE-Platzhalter</h4>
+                        <ul class="operator-list">
+                            <li class="operator-item">
+                                <span>Beliebig viele Zeichen</span>
+                                <span class="operator-symbol">%</span>
+                            </li>
+                            <li class="operator-item">
+                                <span>Genau ein Zeichen</span>
+                                <span class="operator-symbol">_</span>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>🎯 Praktische Operator-Beispiele</h3>
+
+                <div class="example-section">
+                    <h4>📝 BETWEEN - Bereich abfragen</h4>
+                    <p><strong>Aufgabe:</strong> Alle Studenten zwischen dem 2. und 4. Semester</p>
+                    <div class="code-block">
+                        <pre><code><span class="sql-keyword">SELECT</span> Name, Semester
+<span class="sql-keyword">FROM</span> Student
+<span class="sql-keyword">WHERE</span> Semester <span class="sql-keyword">BETWEEN</span> <span class="sql-string">2</span> <span class="sql-keyword">AND</span> <span class="sql-string">4</span>;</code></pre>
+                    </div>
+                    <p><strong>Entspricht:</strong> <code>WHERE Semester >= 2 AND Semester <= 4</code></p>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 IN - Liste von Werten</h4>
+                    <p><strong>Aufgabe:</strong> Studenten aus bestimmten Semestern</p>
+                    <div class="code-block">
+                        <pre><code><span class="sql-keyword">SELECT</span> Name, Semester
+<span class="sql-keyword">FROM</span> Student
+<span class="sql-keyword">WHERE</span> Semester <span class="sql-keyword">IN</span> (<span class="sql-string">1</span>, <span class="sql-string">3</span>, <span class="sql-string">5</span>);</code></pre>
+                    </div>
+                    <p><strong>Entspricht:</strong> <code>WHERE Semester = 1 OR Semester = 3 OR Semester = 5</code></p>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 LIKE - Muster suchen</h4>
+                    <div class="code-block">
+                        <pre><code><span class="sql-comment">-- Namen die mit "M" beginnen</span>
+<span class="sql-keyword">SELECT</span> Name
+<span class="sql-keyword">FROM</span> Student
+<span class="sql-keyword">WHERE</span> Name <span class="sql-keyword">LIKE</span> <span class="sql-string">'M%'</span>;
+
+<span class="sql-comment">-- Namen die mit "er" enden</span>
+<span class="sql-keyword">SELECT</span> Name
+<span class="sql-keyword">FROM</span> Student
+<span class="sql-keyword">WHERE</span> Name <span class="sql-keyword">LIKE</span> <span class="sql-string">'%er'</span>;
+
+<span class="sql-comment">-- Namen mit genau 4 Buchstaben</span>
+<span class="sql-keyword">SELECT</span> Name
+<span class="sql-keyword">FROM</span> Student
+<span class="sql-keyword">WHERE</span> Name <span class="sql-keyword">LIKE</span> <span class="sql-string">'____'</span>;</code></pre>
+                    </div>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 Komplexe Bedingungen mit AND/OR</h4>
+                    <p><strong>Aufgabe:</strong> Studenten im 1. oder 2. Semester mit Gmail-Adresse</p>
+                    <div class="code-block">
+                        <pre><code><span class="sql-keyword">SELECT</span> Name, Email, Semester
+<span class="sql-keyword">FROM</span> Student
+<span class="sql-keyword">WHERE</span> (Semester = <span class="sql-string">1</span> <span class="sql-keyword">OR</span> Semester = <span class="sql-string">2</span>)
+  <span class="sql-keyword">AND</span> Email <span class="sql-keyword">LIKE</span> <span class="sql-string">'%@gmail.com'</span>;</code></pre>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Wichtige Hinweise zu Operatoren</h4>
+                    <ul style="margin-left: 1.5rem;">
+                        <li><strong>NULL-Werte:</strong> Verwenden Sie <code>IS NULL</code>, nicht <code>= NULL</code></li>
+                        <li><strong>Klammern:</strong> Bei komplexen Bedingungen immer Klammern setzen!</li>
+                        <li><strong>Anführungszeichen:</strong> Texte in einfache Anführungszeichen: <code>'Text'</code></li>
+                        <li><strong>Groß-/Kleinschreibung:</strong> Bei LIKE oft relevant - abhängig von Datenbanksystem</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Aggregatfunktionen -->
+        <section class="content-section" id="aggregatfunktionen">
+            <div class="section-header">
+                <h2>📊 Aggregatfunktionen - Daten zusammenfassen</h2>
+            </div>
+            <div class="section-content">
+                <div class="intro-box">
+                    <h3>🎯 Was sind Aggregatfunktionen?</h3>
+                    <p>Aggregatfunktionen fassen mehrere Zeilen zu einem einzigen Wert zusammen. Stellen Sie sich vor, Sie haben eine Liste mit 1000 Verkäufen und wollen wissen: "Wie hoch war der Gesamtumsatz?" - genau dafür sind Aggregatfunktionen da!</p>
+                </div>
+
+                <div class="aggregation-grid">
+                    <div class="aggregation-function">
+                        <div class="icon">🔢</div>
+                        <h5>COUNT()</h5>
+                        <p>Zählt die Anzahl der Datensätze</p>
+                    </div>
+                    <div class="aggregation-function">
+                        <div class="icon">➕</div>
+                        <h5>SUM()</h5>
+                        <p>Addiert alle Werte einer Spalte</p>
+                    </div>
+                    <div class="aggregation-function">
+                        <div class="icon">📈</div>
+                        <h5>AVG()</h5>
+                        <p>Berechnet den Durchschnitt</p>
+                    </div>
+                    <div class="aggregation-function">
+                        <div class="icon">🏔️</div>
+                        <h5>MAX()</h5>
+                        <p>Findet den größten Wert</p>
+                    </div>
+                    <div class="aggregation-function">
+                        <div class="icon">🏗️</div>
+                        <h5>MIN()</h5>
+                        <p>Findet den kleinsten Wert</p>
+                    </div>
+                </div>
+
+                <h3>📋 Beispieltabelle "Artikel"</h3>
+                <div class="table-example">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>ArtikelID</th>
+                                <th>Name</th>
+                                <th>Kategorie</th>
+                                <th>Preis</th>
+                                <th>Lagerbestand</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Laptop Pro</td>
+                                <td>Elektronik</td>
+                                <td>1299.99</td>
+                                <td>15</td>
+                            </tr>
+                            <tr>
+                                <td>2</td>
+                                <td>Smartphone</td>
+                                <td>Elektronik</td>
+                                <td>699.99</td>
+                                <td>25</td>
+                            </tr>
+                            <tr>
+                                <td>3</td>
+                                <td>Schreibtisch</td>
+                                <td>Möbel</td>
+                                <td>199.99</td>
+                                <td>8</td>
+                            </tr>
+                            <tr>
+                                <td>4</td>
+                                <td>Stuhl</td>
+                                <td>Möbel</td>
+                                <td>89.99</td>
+                                <td>12</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <h3>🎯 Aggregatfunktionen in der Praxis</h3>
+
+                <div class="example-section">
+                    <h4>📝 COUNT - Anzahl bestimmen</h4>
+                    <div class="code-block">
+                        <pre><code><span class="sql-comment">-- Wie viele Artikel gibt es insgesamt?</span>
+<span class="sql-keyword">SELECT</span> <span class="sql-keyword">COUNT</span>(*) <span class="sql-keyword">AS</span> Anzahl_Artikel
+<span class="sql-keyword">FROM</span> Artikel;
+
+<span class="sql-comment">-- Ergebnis: 4</span>
+
+<span class="sql-comment">-- Wie viele verschiedene Kategorien gibt es?</span>
+<span class="sql-keyword">SELECT</span> <span class="sql-keyword">COUNT</span>(<span class="sql-keyword">DISTINCT</span> Kategorie) <span class="sql-keyword">AS</span> Anzahl_Kategorien
+<span class="sql-keyword">FROM</span> Artikel;
+
+<span class="sql-comment">-- Ergebnis: 2</span></code></pre>
+                    </div>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 SUM - Summe berechnen</h4>
+                    <div class="code-block">
+                        <pre><code><span class="sql-comment">-- Gesamtwert aller Artikel im Lager</span>
+<span class="sql-keyword">SELECT</span> <span class="sql-keyword">SUM</span>(Preis * Lagerbestand) <span class="sql-keyword">AS</span> Gesamtwert
+<span class="sql-keyword">FROM</span> Artikel;
+
+<span class="sql-comment">-- Gesamter Lagerbestand</span>
+<span class="sql-keyword">SELECT</span> <span class="sql-keyword">SUM</span>(Lagerbestand) <span class="sql-keyword">AS</span> Gesamt_Lagerbestand
+<span class="sql-keyword">FROM</span> Artikel;</code></pre>
+                    </div>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 AVG, MIN, MAX - Durchschnitt und Extreme</h4>
+                    <div class="code-block">
+                        <pre><code><span class="sql-comment">-- Durchschnittspreis aller Artikel</span>
+<span class="sql-keyword">SELECT</span> <span class="sql-keyword">AVG</span>(Preis) <span class="sql-keyword">AS</span> Durchschnittspreis
+<span class="sql-keyword">FROM</span> Artikel;
+
+<span class="sql-comment">-- Teuerstes und billigstes Produkt</span>
+<span class="sql-keyword">SELECT</span> 
+    <span class="sql-keyword">MAX</span>(Preis) <span class="sql-keyword">AS</span> Hoechster_Preis,
+    <span class="sql-keyword">MIN</span>(Preis) <span class="sql-keyword">AS</span> Niedrigster_Preis
+<span class="sql-keyword">FROM</span> Artikel;</code></pre>
+                    </div>
+                </div>
+
+                <h3>📊 GROUP BY - Gruppierung</h3>
+                <p>GROUP BY ist <strong>sehr wichtig</strong> bei Aggregatfunktionen! Es teilt die Daten in Gruppen auf und wendet die Aggregatfunktion auf jede Gruppe einzeln an.</p>
+
+                <div class="example-section">
+                    <h4>📝 Gruppierung nach Kategorie</h4>
+                    <div class="code-block">
+                        <pre><code><span class="sql-comment">-- Anzahl Artikel pro Kategorie</span>
+<span class="sql-keyword">SELECT</span> Kategorie, <span class="sql-keyword">COUNT</span>(*) <span class="sql-keyword">AS</span> Anzahl
+<span class="sql-keyword">FROM</span> Artikel
+<span class="sql-keyword">GROUP BY</span> Kategorie;
+
+<span class="sql-comment">-- Ergebnis:</span>
+<span class="sql-comment">-- Elektronik: 2</span>
+<span class="sql-comment">-- Möbel: 2</span>
+
+<span class="sql-comment">-- Durchschnittspreis pro Kategorie</span>
+<span class="sql-keyword">SELECT</span> Kategorie, <span class="sql-keyword">AVG</span>(Preis) <span class="sql-keyword">AS</span> Durchschnitt
+<span class="sql-keyword">FROM</span> Artikel
+<span class="sql-keyword">GROUP BY</span> Kategorie;</code></pre>
+                    </div>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 HAVING - Gruppen filtern</h4>
+                    <p><strong>HAVING</strong> ist wie WHERE, aber für Gruppen nach GROUP BY!</p>
+                    <div class="code-block">
+                        <pre><code><span class="sql-comment">-- Nur Kategorien mit mehr als 1 Artikel</span>
+<span class="sql-keyword">SELECT</span> Kategorie, <span class="sql-keyword">COUNT</span>(*) <span class="sql-keyword">AS</span> Anzahl
+<span class="sql-keyword">FROM</span> Artikel
+<span class="sql-keyword">GROUP BY</span> Kategorie
+<span class="sql-keyword">HAVING</span> <span class="sql-keyword">COUNT</span>(*) > <span class="sql-string">1</span>;
+
+<span class="sql-comment">-- Kategorien mit Durchschnittspreis über 500€</span>
+<span class="sql-keyword">SELECT</span> Kategorie, <span class="sql-keyword">AVG</span>(Preis) <span class="sql-keyword">AS</span> Durchschnitt
+<span class="sql-keyword">FROM</span> Artikel
+<span class="sql-keyword">GROUP BY</span> Kategorie
+<span class="sql-keyword">HAVING</span> <span class="sql-keyword">AVG</span>(Preis) > <span class="sql-string">500</span>;</code></pre>
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 WHERE vs. HAVING - Der wichtige Unterschied!</h4>
+                    <ul style="margin-left: 1.5rem;">
+                        <li><strong>WHERE:</strong> Filtert einzelne Zeilen <em>vor</em> der Gruppierung</li>
+                        <li><strong>HAVING:</strong> Filtert Gruppen <em>nach</em> der Gruppierung</li>
+                        <li><strong>WHERE:</strong> Kann keine Aggregatfunktionen verwenden</li>
+                        <li><strong>HAVING:</strong> Wird meist mit Aggregatfunktionen verwendet</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Häufige Fehler bei Aggregatfunktionen</h4>
+                    <ul style="margin-left: 1.5rem;">
+                        <li><strong>Fehler:</strong> Normale Spalten ohne GROUP BY bei Aggregatfunktionen</li>
+                        <li><strong>Richtig:</strong> Alle nicht-aggregierten Spalten müssen in GROUP BY stehen</li>
+                        <li><strong>Fehler:</strong> COUNT(Spaltenname) zählt nur nicht-NULL Werte</li>
+                        <li><strong>Richtig:</strong> COUNT(*) zählt alle Zeilen inklusive NULL</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- JOIN Operationen -->
+        <section class="content-section" id="joins">
+            <div class="section-header">
+                <h2>🔗 JOIN - Tabellen verknüpfen</h2>
+            </div>
+            <div class="section-content">
+                <div class="intro-box">
+                    <h3>🎯 Was ist ein JOIN?</h3>
+                    <p>Ein JOIN verknüpft Daten aus zwei oder mehr Tabellen basierend auf gemeinsamen Werten. Stellen Sie sich vor, Sie haben zwei Adressbücher - eines mit Namen und Telefonnummern, ein anderes mit Namen und E-Mail-Adressen. Ein JOIN würde diese zusammenfügen, sodass Sie alle Informationen zu einer Person an einem Ort haben.</p>
+                </div>
+
+                <h3>📋 Beispieltabellen für JOINs</h3>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 1.5rem 0;">
+                    <div>
+                        <h4>Tabelle "Student"</h4>
+                        <div class="table-example">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>StudentID</th>
+                                        <th>Name</th>
+                                        <th>Email</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>Max Müller</td>
+                                        <td>max@uni.de</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>Anna Schmidt</td>
+                                        <td>anna@uni.de</td>
+                                    </tr>
+                                    <tr>
+                                        <td>3</td>
+                                        <td>Tom Weber</td>
+                                        <td>tom@uni.de</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    
+                    <div>
+                        <h4>Tabelle "Student_Kurs"</h4>
+                        <div class="table-example">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>StudentID</th>
+                                        <th>KursID</th>
+                                        <th>Note</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>101</td>
+                                        <td>2.0</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1</td>
+                                        <td>102</td>
+                                        <td>1.5</td>
+                                    </tr>
+                                    <tr>
+                                        <td>2</td>
+                                        <td>101</td>
+                                        <td>1.8</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <div style="margin: 1.5rem 0;">
+                    <h4>Tabelle "Kurs"</h4>
+                    <div class="table-example">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>KursID</th>
+                                    <th>Kursname</th>
+                                    <th>Credits</th>
+                                    <th>Dozent</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>101</td>
+                                    <td>Mathematik I</td>
+                                    <td>6</td>
+                                    <td>Prof. Euler</td>
+                                </tr>
+                                <tr>
+                                    <td>102</td>
+                                    <td>Informatik I</td>
+                                    <td>8</td>
+                                    <td>Prof. Turing</td>
+                                </tr>
+                                <tr>
+                                    <td>103</td>
+                                    <td>Physik I</td>
+                                    <td>6</td>
+                                    <td>Prof. Newton</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <h3>🔗 JOIN-Arten im Überblick</h3>
+                <div class="join-visualization">
+                    <div class="join-type">
+                        <div class="join-diagram">INNER</div>
+                        <h5>INNER JOIN</h5>
+                        <p>Nur Datensätze, die in beiden Tabellen existieren</p>
+                    </div>
+                    <div class="join-type">
+                        <div class="join-diagram">LEFT</div>
+                        <h5>LEFT JOIN</h5>
+                        <p>Alle Datensätze der linken Tabelle + passende der rechten</p>
+                    </div>
+                    <div class="join-type">
+                        <div class="join-diagram">RIGHT</div>
+                        <h5>RIGHT JOIN</h5>
+                        <p>Alle Datensätze der rechten Tabelle + passende der linken</p>
+                    </div>
+                    <div class="join-type">
+                        <div class="join-diagram">FULL</div>
+                        <h5>FULL OUTER</h5>
+                        <p>Alle Datensätze beider Tabellen</p>
+                    </div>
+                </div>
+
+                <h3>🎯 INNER JOIN - Die wichtigste JOIN-Art</h3>
+
+                <div class="example-section">
+                    <h4>📝 Einfacher INNER JOIN</h4>
+                    <p><strong>Aufgabe:</strong> Zeige alle Studenten mit ihren Kursen und Noten</p>
+                    <div class="code-block">
+                        <pre><code><span class="sql-keyword">SELECT</span> s.Name, sk.Note
+<span class="sql-keyword">FROM</span> Student s
+<span class="sql-keyword">INNER JOIN</span> Student_Kurs sk <span class="sql-keyword">ON</span> s.StudentID = sk.StudentID;</code></pre>
+                    </div>
+                    <p><strong>Erklärung:</strong></p>
+                    <ul style="margin-left: 2rem;">
+                        <li><code>s</code> und <code>sk</code> sind <strong>Tabellen-Aliase</strong> (Abkürzungen)</li>
+                        <li><code>ON</code> definiert die <strong>JOIN-Bedingung</strong> (wie die Tabellen verknüpft werden)</li>
+                        <li>Nur Studenten, die auch Kurse haben, werden angezeigt</li>
+                    </ul>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 JOIN mit drei Tabellen</h4>
+                    <p><strong>Aufgabe:</strong> Zeige Studentenname, Kursname und Note</p>
+                    <div class="code-block">
+                        <pre><code><span class="sql-keyword">SELECT</span> s.Name, k.Kursname, sk.Note
+<span class="sql-keyword">FROM</span> Student s
+<span class="sql-keyword">INNER JOIN</span> Student_Kurs sk <span class="sql-keyword">ON</span> s.StudentID = sk.StudentID
+<span class="sql-keyword">INNER JOIN</span> Kurs k <span class="sql-keyword">ON</span> sk.KursID = k.KursID;</code></pre>
+                    </div>
+                    <p><strong>Faustregel:</strong> Für n Tabellen benötigen Sie mindestens (n-1) JOIN-Bedingungen!</p>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 Alte WHERE-Syntax (Equi-Join)</h4>
+                    <p>Früher wurde oft die WHERE-Syntax verwendet (funktioniert noch, ist aber nicht mehr empfohlen):</p>
+                    <div class="code-block">
+                        <pre><code><span class="sql-comment">-- Alte Schreibweise (nicht empfohlen)</span>
+<span class="sql-keyword">SELECT</span> s.Name, sk.Note
+<span class="sql-keyword">FROM</span> Student s, Student_Kurs sk
+<span class="sql-keyword">WHERE</span> s.StudentID = sk.StudentID;
+
+<span class="sql-comment">-- Moderne Schreibweise (empfohlen)</span>
+<span class="sql-keyword">SELECT</span> s.Name, sk.Note
+<span class="sql-keyword">FROM</span> Student s
+<span class="sql-keyword">INNER JOIN</span> Student_Kurs sk <span class="sql-keyword">ON</span> s.StudentID = sk.StudentID;</code></pre>
+                    </div>
+                </div>
+
+                <h3>🔄 Andere JOIN-Arten</h3>
+
+                <div class="example-section">
+                    <h4>📝 LEFT JOIN - Alle linken Datensätze</h4>
+                    <p><strong>Aufgabe:</strong> Alle Studenten anzeigen, auch die ohne Kurse</p>
+                    <div class="code-block">
+                        <pre><code><span class="sql-keyword">SELECT</span> s.Name, sk.Note
+<span class="sql-keyword">FROM</span> Student s
+<span class="sql-keyword">LEFT JOIN</span> Student_Kurs sk <span class="sql-keyword">ON</span> s.StudentID = sk.StudentID;</code></pre>
+                    </div>
+                    <p><strong>Ergebnis:</strong> Alle Studenten werden angezeigt. Studenten ohne Kurse haben NULL bei der Note.</p>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 JOIN-Tipps für die Praxis</h4>
+                    <ul style="margin-left: 1.5rem;">
+                        <li><strong>Aliase verwenden:</strong> Macht SQL lesbarer: <code>FROM Student s</code></li>
+                        <li><strong>INNER JOIN:</strong> Meist das, was Sie brauchen (90% der Fälle)</li>
+                        <li><strong>LEFT JOIN:</strong> Wenn Sie "alle aus Tabelle A" wollen</li>
+                        <li><strong>JOIN-Bedingung prüfen:</strong> Meist Primärschlüssel = Fremdschlüssel</li>
+                        <li><strong>Performance:</strong> JOINs sind meist schneller als mehrere separate Abfragen</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Häufige JOIN-Fehler</h4>
+                    <ul style="margin-left: 1.5rem;">
+                        <li><strong>Vergessene JOIN-Bedingung:</strong> Führt zu Kreuzprodukt (sehr viele Ergebnisse!)</li>
+                        <li><strong>Falsche JOIN-Art:</strong> INNER statt LEFT JOIN kann Daten "verschwinden" lassen</li>
+                        <li><strong>Mehrdeutige Spaltennamen:</strong> Ohne Alias unclear bei gleichnamigen Spalten</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- DML Befehle -->
+        <section class="content-section" id="dml-befehle">
+            <div class="section-header">
+                <h2>✏️ DML - Daten manipulieren (INSERT, UPDATE, DELETE)</h2>
+            </div>
+            <div class="section-content">
+                <div class="intro-box">
+                    <h3>🎯 Data Manipulation Language (DML)</h3>
+                    <p>Mit DML-Befehlen verändern Sie den <strong>Inhalt</strong> der Datenbank - im Gegensatz zu DDL, was die <strong>Struktur</strong> ändert. Die drei wichtigsten Befehle sind INSERT (hinzufügen), UPDATE (ändern) und DELETE (löschen).</p>
+                </div>
+
+                <h3>➕ INSERT - Neue Daten hinzufügen</h3>
+
+                <div class="example-section">
+                    <h4>📝 Einzelnen Datensatz einfügen</h4>
+                    <div class="code-block">
+                        <pre><code><span class="sql-comment">-- Neuen Student hinzufügen</span>
+<span class="sql-keyword">INSERT INTO</span> Student (StudentID, Name, Email, Semester)
+<span class="sql-keyword">VALUES</span> (<span class="sql-string">4</span>, <span class="sql-string">'Lisa Meyer'</span>, <span class="sql-string">'lisa@uni.de'</span>, <span class="sql-string">2</span>);
+
+<span class="sql-comment">-- Wenn alle Spalten gefüllt werden, kann man Spaltennamen weglassen</span>
+<span class="sql-keyword">INSERT INTO</span> Student
+<span class="sql-keyword">VALUES</span> (<span class="sql-string">5</span>, <span class="sql-string">'Tim Koch'</span>, <span class="sql-string">'tim@uni.de'</span>, <span class="sql-string">1</span>);</code></pre>
+                    </div>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 Mehrere Datensätze auf einmal</h4>
+                    <div class="code-block">
+                        <pre><code><span class="sql-comment">-- Mehrere Studenten gleichzeitig hinzufügen</span>
+<span class="sql-keyword">INSERT INTO</span> Student (StudentID, Name, Email, Semester)
+<span class="sql-keyword">VALUES</span> 
+    (<span class="sql-string">6</span>, <span class="sql-string">'Sarah Fischer'</span>, <span class="sql-string">'sarah@uni.de'</span>, <span class="sql-string">3</span>),
+    (<span class="sql-string">7</span>, <span class="sql-string">'Jan Hoffmann'</span>, <span class="sql-string">'jan@uni.de'</span>, <span class="sql-string">1</span>),
+    (<span class="sql-string">8</span>, <span class="sql-string">'Nina Braun'</span>, <span class="sql-string">'nina@uni.de'</span>, <span class="sql-string">4</span>);</code></pre>
+                    </div>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 Daten aus anderer Tabelle kopieren</h4>
+                    <div class="code-block">
+                        <pre><code><span class="sql-comment">-- Backup aller Studenten im höheren Semester erstellen</span>
+<span class="sql-keyword">INSERT INTO</span> StudentBackup
+<span class="sql-keyword">SELECT</span> * 
+<span class="sql-keyword">FROM</span> Student 
+<span class="sql-keyword">WHERE</span> Semester > <span class="sql-string">5</span>;</code></pre>
+                    </div>
+                </div>
+
+                <h3>🔄 UPDATE - Bestehende Daten ändern</h3>
+
+                <div class="example-section">
+                    <h4>📝 Einzelnen Datensatz aktualisieren</h4>
+                    <div class="code-block">
+                        <pre><code><span class="sql-comment">-- Email-Adresse eines bestimmten Studenten ändern</span>
+<span class="sql-keyword">UPDATE</span> Student
+<span class="sql-keyword">SET</span> Email = <span class="sql-string">'max.mueller@uni.de'</span>
+<span class="sql-keyword">WHERE</span> StudentID = <span class="sql-string">1</span>;</code></pre>
+                    </div>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 Mehrere Spalten gleichzeitig ändern</h4>
+                    <div class="code-block">
+                        <pre><code><span class="sql-comment">-- Name und Email eines Studenten aktualisieren</span>
+<span class="sql-keyword">UPDATE</span> Student
+<span class="sql-keyword">SET</span> 
+    Name = <span class="sql-string">'Maximilian Müller'</span>,
+    Email = <span class="sql-string">'maximilian.mueller@uni.de'</span>
+<span class="sql-keyword">WHERE</span> StudentID = <span class="sql-string">1</span>;</code></pre>
+                    </div>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 Mehrere Datensätze auf einmal ändern</h4>
+                    <div class="code-block">
+                        <pre><code><span class="sql-comment">-- Preiserhöhung um 5% für alle Elektronik-Artikel</span>
+<span class="sql-keyword">UPDATE</span> Artikel
+<span class="sql-keyword">SET</span> Preis = Preis * <span class="sql-string">1.05</span>
+<span class="sql-keyword">WHERE</span> Kategorie = <span class="sql-string">'Elektronik'</span>;
+
+<span class="sql-comment">-- Alle Erstsemester ins 2. Semester versetzen</span>
+<span class="sql-keyword">UPDATE</span> Student
+<span class="sql-keyword">SET</span> Semester = Semester + <span class="sql-string">1</span>
+<span class="sql-keyword">WHERE</span> Semester = <span class="sql-string">1</span>;</code></pre>
+                    </div>
+                </div>
+
+                <h3>🗑️ DELETE - Daten löschen</h3>
+
+                <div class="example-section">
+                    <h4>📝 Bestimmte Datensätze löschen</h4>
+                    <div class="code-block">
+                        <pre><code><span class="sql-comment">-- Einen bestimmten Studenten löschen</span>
+<span class="sql-keyword">DELETE FROM</span> Student
+<span class="sql-keyword">WHERE</span> StudentID = <span class="sql-string">8</span>;
+
+<span class="sql-comment">-- Alle Studenten über dem 10. Semester löschen</span>
+<span class="sql-keyword">DELETE FROM</span> Student
+<span class="sql-keyword">WHERE</span> Semester > <span class="sql-string">10</span>;</code></pre>
+                    </div>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 Alle Datensätze löschen</h4>
+                    <div class="code-block">
+                        <pre><code><span class="sql-comment">-- Alle Daten aus der Backup-Tabelle löschen (Tabelle bleibt bestehen)</span>
+<span class="sql-keyword">DELETE FROM</span> StudentBackup;
+
+<span class="sql-comment">-- Alternativ: TRUNCATE (schneller, aber weniger flexibel)</span>
+<span class="sql-keyword">TRUNCATE TABLE</span> StudentBackup;</code></pre>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ ACHTUNG: Sicherheit bei DML-Befehlen!</h4>
+                    <ul style="margin-left: 1.5rem;">
+                        <li><strong>WHERE-Klausel nicht vergessen!</strong> <code>DELETE FROM Student</code> löscht ALLE Studenten!</li>
+                        <li><strong>Erst testen:</strong> Bei UPDATE/DELETE erst mit SELECT prüfen, welche Datensätze betroffen sind</li>
+                        <li><strong>Backup machen:</strong> Vor größeren Änderungen immer ein Backup erstellen</li>
+                        <li><strong>Transaktionen nutzen:</strong> Bei kritischen Operationen (siehe nächster Abschnitt)</li>
+                    </ul>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 Profi-Tipps für DML</h4>
+                    <ul style="margin-left: 1.5rem;">
+                        <li><strong>Test-SELECT:</strong> <code>SELECT * FROM Student WHERE StudentID = 1</code> vor UPDATE/DELETE</li>
+                        <li><strong>Betroffene Zeilen prüfen:</strong> Die meisten Tools zeigen an, wie viele Zeilen geändert wurden</li>
+                        <li><strong>NULL-Werte beachten:</strong> <code>SET Spalte = NULL</code> löscht den Wert (falls erlaubt)</li>
+                        <li><strong>Berechnungen in UPDATE:</strong> <code>SET Preis = Preis * 1.1</code> ist möglich</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- DDL Befehle -->
+        <section class="content-section" id="ddl-befehle">
+            <div class="section-header">
+                <h2>🏗️ DDL - Datenbankstruktur definieren (CREATE, ALTER, DROP)</h2>
+            </div>
+            <div class="section-content">
+                <div class="intro-box">
+                    <h3>🎯 Data Definition Language (DDL)</h3>
+                    <p>DDL-Befehle verändern die <strong>Struktur</strong> der Datenbank - sie erstellen, ändern oder löschen Tabellen, Spalten und andere Datenbankobjekte. Denken Sie daran wie an das Bauen eines Hauses: Erst die Struktur (DDL), dann die Einrichtung (DML).</p>
+                </div>
+
+                <h3>🏠 CREATE TABLE - Neue Tabelle erstellen</h3>
+
+                <div class="example-section">
+                    <h4>📝 Einfache Tabelle erstellen</h4>
+                    <div class="code-block">
+                        <pre><code><span class="sql-keyword">CREATE TABLE</span> Student (
+    StudentID <span class="sql-keyword">NUMBER</span>(<span class="sql-string">4</span>) <span class="sql-keyword">PRIMARY KEY</span>,
+    Name <span class="sql-keyword">VARCHAR</span>(<span class="sql-string">50</span>) <span class="sql-keyword">NOT NULL</span>,
+    Email <span class="sql-keyword">VARCHAR</span>(<span class="sql-string">100</span>) <span class="sql-keyword">UNIQUE</span>,
+    Semester <span class="sql-keyword">NUMBER</span>(<span class="sql-string">2</span>),
+    Geburtsdatum <span class="sql-keyword">DATE</span>
+);</code></pre>
+                    </div>
+                    <p><strong>Erklärung der Constraints (Beschränkungen):</strong></p>
+                    <ul style="margin-left: 2rem;">
+                        <li><strong>PRIMARY KEY:</strong> Eindeutiger Hauptschlüssel (automatisch NOT NULL und UNIQUE)</li>
+                        <li><strong>NOT NULL:</strong> Feld muss ausgefüllt werden</li>
+                        <li><strong>UNIQUE:</strong> Wert darf nur einmal vorkommen</li>
+                        <li><strong>VARCHAR(n):</strong> Text mit maximal n Zeichen</li>
+                        <li><strong>NUMBER(n):</strong> Zahl mit maximal n Stellen</li>
+                    </ul>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 Tabelle mit Fremdschlüssel</h4>
+                    <div class="code-block">
+                        <pre><code><span class="sql-keyword">CREATE TABLE</span> Student_Kurs (
+    StudentID <span class="sql-keyword">NUMBER</span>(<span class="sql-string">4</span>),
+    KursID <span class="sql-keyword">NUMBER</span>(<span class="sql-string">4</span>),
+    Note <span class="sql-keyword">DECIMAL</span>(<span class="sql-string">2,1</span>),
+    Anmeldedatum <span class="sql-keyword">DATE</span> <span class="sql-keyword">DEFAULT</span> SYSDATE,
+    
+    <span class="sql-comment">-- Primärschlüssel aus beiden Spalten</span>
+    <span class="sql-keyword">PRIMARY KEY</span> (StudentID, KursID),
+    
+    <span class="sql-comment">-- Fremdschlüssel-Beziehungen</span>
+    <span class="sql-keyword">FOREIGN KEY</span> (StudentID) <span class="sql-keyword">REFERENCES</span> Student(StudentID),
+    <span class="sql-keyword">FOREIGN KEY</span> (KursID) <span class="sql-keyword">REFERENCES</span> Kurs(KursID)
+);</code></pre>
+                    </div>
+                </div>
+
+                <h3>🔧 ALTER TABLE - Tabelle ändern</h3>
+
+                <div class="example-section">
+                    <h4>📝 Spalte hinzufügen</h4>
+                    <div class="code-block">
+                        <pre><code><span class="sql-comment">-- Neue Spalte hinzufügen</span>
+<span class="sql-keyword">ALTER TABLE</span> Student 
+<span class="sql-keyword">ADD</span> Telefon <span class="sql-keyword">VARCHAR</span>(<span class="sql-string">20</span>);
+
+<span class="sql-comment">-- Mehrere Spalten gleichzeitig</span>
+<span class="sql-keyword">ALTER TABLE</span> Student 
+<span class="sql-keyword">ADD</span> (
+    Adresse <span class="sql-keyword">VARCHAR</span>(<span class="sql-string">100</span>),
+    PLZ <span class="sql-keyword">VARCHAR</span>(<span class="sql-string">5</span>)
+);</code></pre>
+                    </div>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 Spalte ändern</h4>
+                    <div class="code-block">
+                        <pre><code><span class="sql-comment">-- Spaltengröße ändern</span>
+<span class="sql-keyword">ALTER TABLE</span> Student 
+<span class="sql-keyword">MODIFY</span> Name <span class="sql-keyword">VARCHAR</span>(<span class="sql-string">100</span>);
+
+<span class="sql-comment">-- Spalte zu NOT NULL machen</span>
+<span class="sql-keyword">ALTER TABLE</span> Student 
+<span class="sql-keyword">MODIFY</span> Email <span class="sql-keyword">VARCHAR</span>(<span class="sql-string">100</span>) <span class="sql-keyword">NOT NULL</span>;</code></pre>
+                    </div>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 Spalte löschen</h4>
+                    <div class="code-block">
+                        <pre><code><span class="sql-comment">-- Einzelne Spalte löschen</span>
+<span class="sql-keyword">ALTER TABLE</span> Student 
+<span class="sql-keyword">DROP COLUMN</span> Telefon;
+
+<span class="sql-comment">-- Mehrere Spalten löschen</span>
+<span class="sql-keyword">ALTER TABLE</span> Student 
+<span class="sql-keyword">DROP</span> (Adresse, PLZ);</code></pre>
+                    </div>
+                </div>
+
+                <h3>🗑️ DROP TABLE - Tabelle löschen</h3>
+
+                <div class="example-section">
+                    <h4>📝 Tabelle komplett löschen</h4>
+                    <div class="code-block">
+                        <pre><code><span class="sql-comment">-- Tabelle mit allen Daten löschen</span>
+<span class="sql-keyword">DROP TABLE</span> StudentBackup;
+
+<span class="sql-comment">-- Sicher löschen (nur wenn Tabelle existiert)</span>
+<span class="sql-keyword">DROP TABLE IF EXISTS</span> StudentBackup;</code></pre>
+                    </div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ ACHTUNG: DDL ist meist nicht rückgängig zu machen!</h4>
+                    <ul style="margin-left: 1.5rem;">
+                        <li><strong>DROP TABLE:</strong> Löscht die Tabelle UND alle Daten unwiderruflich!</li>
+                        <li><strong>DROP COLUMN:</strong> Alle Daten in dieser Spalte sind weg!</li>
+                        <li><strong>ALTER TABLE:</strong> Strukturänderungen können Datentyp-Konflikte verursachen</li>
+                        <li><strong>Backup erstellen:</strong> Vor großen Strukturänderungen immer!</li>
+                    </ul>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 DDL Best Practices</h4>
+                    <ul style="margin-left: 1.5rem;">
+                        <li><strong>Naming Conventions:</strong> Einheitliche Namen für Tabellen und Spalten</li>
+                        <li><strong>Constraints definieren:</strong> PRIMARY KEY, FOREIGN KEY etc. von Anfang an</li>
+                        <li><strong>Datentypen durchdenken:</strong> VARCHAR-Größe großzügig, aber nicht übertrieben</li>
+                        <li><strong>Testumgebung nutzen:</strong> Strukturänderungen erst testen, dann produktiv</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Transaktionen -->
+        <section class="content-section" id="transaktionen">
+            <div class="section-header">
+                <h2>🔐 DCL - Transaktionen (COMMIT, ROLLBACK)</h2>
+            </div>
+            <div class="section-content">
+                <div class="intro-box">
+                    <h3>🎯 Was sind Transaktionen?</h3>
+                    <p>Eine Transaktion ist eine <strong>logische Arbeitseinheit</strong>, die entweder vollständig ausgeführt oder vollständig rückgängig gemacht wird. Stellen Sie sich vor, Sie überweisen Geld: Das Geld muss gleichzeitig von einem Konto abgebucht UND auf dem anderen gutgeschrieben werden - niemals nur eins davon!</p>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 Das klassische Banküberweisungsbeispiel</h4>
+                    <div class="code-block">
+                        <pre><code><span class="sql-comment">-- Geldüberweisung als Transaktion</span>
+<span class="sql-keyword">START TRANSACTION</span>;
+
+<span class="sql-comment">-- Schritt 1: Geld vom ersten Konto abbuchen</span>
+<span class="sql-keyword">UPDATE</span> Konto 
+<span class="sql-keyword">SET</span> Betrag = Betrag - <span class="sql-string">100</span> 
+<span class="sql-keyword">WHERE</span> KontoNr = <span class="sql-string">1</span>;
+
+<span class="sql-comment">-- Schritt 2: Geld auf zweites Konto einzahlen</span>
+<span class="sql-keyword">UPDATE</span> Konto 
+<span class="sql-keyword">SET</span> Betrag = Betrag + <span class="sql-string">100</span> 
+<span class="sql-keyword">WHERE</span> KontoNr = <span class="sql-string">2</span>;
+
+<span class="sql-comment">-- Wenn alles OK: Änderungen bestätigen</span>
+<span class="sql-keyword">COMMIT</span>;
+
+<span class="sql-comment">-- Bei Fehler: Alles rückgängig machen</span>
+<span class="sql-comment">-- ROLLBACK;</span></code></pre>
+                    </div>
+                    <p><strong>Wichtig:</strong> Entweder werden BEIDE Updates ausgeführt, oder KEINES - niemals nur eins!</p>
+                </div>
+
+                <h3>🔧 Die wichtigsten Transaktions-Befehle</h3>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
+                    <div class="category-card">
+                        <h4>✅ COMMIT</h4>
+                        <p>Bestätigt alle Änderungen und macht sie dauerhaft</p>
+                        <div class="code-block" style="margin-top: 1rem;">
+                            <pre style="margin: 0;"><code><span class="sql-keyword">COMMIT</span>;</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="category-card">
+                        <h4>↩️ ROLLBACK</h4>
+                        <p>Macht alle Änderungen seit dem letzten COMMIT rückgängig</p>
+                        <div class="code-block" style="margin-top: 1rem;">
+                            <pre style="margin: 0;"><code><span class="sql-keyword">ROLLBACK</span>;</code></pre>
+                        </div>
+                    </div>
+                    
+                    <div class="category-card">
+                        <h4>🔖 SAVEPOINT</h4>
+                        <p>Setzt einen Zwischenpunkt für teilweises Rollback</p>
+                        <div class="code-block" style="margin-top: 1rem;">
+                            <pre style="margin: 0;"><code><span class="sql-keyword">SAVEPOINT</span> punkt1;
+<span class="sql-keyword">ROLLBACK TO</span> punkt1;</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-section">
+                    <h4>📝 Praktisches Beispiel mit SAVEPOINT</h4>
+                    <div class="code-block">
+                        <pre><code><span class="sql-keyword">START TRANSACTION</span>;
+
+<span class="sql-comment">-- Erste Gruppe von Änderungen</span>
+<span class="sql-keyword">INSERT INTO</span> Student <span class="sql-keyword">VALUES</span> (<span class="sql-string">10</span>, <span class="sql-string">'Test User'</span>, <span class="sql-string">'test@uni.de'</span>, <span class="sql-string">1</span>);
+
+<span class="sql-comment">-- Zwischenpunkt setzen</span>
+<span class="sql-keyword">SAVEPOINT</span> nach_insert;
+
+<span class="sql-comment">-- Zweite Gruppe von Änderungen</span>
+<span class="sql-keyword">UPDATE</span> Student <span class="sql-keyword">SET</span> Semester = <span class="sql-string">2</span> <span class="sql-keyword">WHERE</span> StudentID = <span class="sql-string">10</span>;
+
+<span class="sql-comment">-- Ups, Fehler gemacht! Nur UPDATE rückgängig machen</span>
+<span class="sql-keyword">ROLLBACK TO</span> nach_insert;
+
+<span class="sql-comment">-- Student ist noch da, aber Semester-Update ist weg</span>
+<span class="sql-keyword">COMMIT</span>;</code></pre>
+                    </div>
+                </div>
+
+                <h3>⚗️ ACID-Prinzip</h3>
+                <p>Transaktionen folgen dem ACID-Prinzip - vier wichtige Eigenschaften:</p>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+                    <div class="category-card">
+                        <h4>🔒 Atomicity</h4>
+                        <p><strong>Atomarität:</strong> Alles oder nichts - eine Transaktion wird entweder vollständig oder gar nicht ausgeführt</p>
+                    </div>
+                    
+                    <div class="category-card">
+                        <h4>✅ Consistency</h4>
+                        <p><strong>Konsistenz:</strong> Die Datenbank bleibt in einem gültigen Zustand (alle Regeln werden befolgt)</p>
+                    </div>
+                    
+                    <div class="category-card">
+                        <h4>🏝️ Isolation</h4>
+                        <p><strong>Isolation:</strong> Parallele Transaktionen beeinflussen sich nicht gegenseitig</p>
+                    </div>
+                    
+                    <div class="category-card">
+                        <h4>💾 Durability</h4>
+                        <p><strong>Dauerhaftigkeit:</strong> Bestätigte Änderungen bleiben auch bei Systemausfall erhalten</p>
+                    </div>
+                </div>
+
+                <div class="tip-box">
+                    <h4>💡 Wann Transaktionen verwenden?</h4>
+                    <ul style="margin-left: 1.5rem;">
+                        <li><strong>Zusammengehörige Änderungen:</strong> Überweisungen, Bestellungen, etc.</li>
+                        <li><strong>Kritische Operationen:</strong> Wenn Datenkonsistenz wichtig ist</li>
+                        <li><strong>Mehrere DML-Befehle:</strong> Die logisch zusammengehören</li>
+                        <li><strong>Fehlerbehandlung:</strong> Möglichkeit zum Rückgängigmachen</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Wichtige Hinweise zu Transaktionen</h4>
+                    <ul style="margin-left: 1.5rem;">
+                        <li><strong>Autocommit:</strong> Viele Tools machen automatisch COMMIT - prüfen Sie die Einstellungen!</li>
+                        <li><strong>Lange Transaktionen:</strong> Blockieren andere Benutzer - kurz halten!</li>
+                        <li><strong>DDL-Befehle:</strong> Machen oft automatisch COMMIT (CREATE, DROP, ALTER)</li>
+                        <li><strong>Verbindungsabbruch:</strong> Macht automatisch ROLLBACK</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Abitur-relevante Tipps -->
+        <section class="content-section" id="abitur-tipps">
+            <div class="section-header">
+                <h2>🎯 Abitur-relevante Tipps & häufige Aufgaben</h2>
+            </div>
+            <div class="section-content">
+                <div class="intro-box">
+                    <h3>📋 Typische Abitur-Aufgaben zu SQL</h3>
+                    <p>Im Abitur kommen SQL-Aufgaben meist in Verbindung mit Datenbankentwurf vor. Sie bekommen oft eine Textbeschreibung und sollen dann ERM erstellen, Tabellen ableiten und SQL-Abfragen schreiben.</p>
+                </div>
+
+                <h3>🏆 Top 10 Aufgabentypen</h3>
+
+                <div style="counter-reset: task-counter;">
+                    <div class="example-section" style="counter-increment: task-counter;">
+                        <h4>Aufgabe 1: Einfache SELECT mit WHERE</h4>
+                        <p><strong>Typische Frage:</strong> "Geben Sie alle Schüler der Klasse 12a aus"</p>
+                        <div class="code-block">
+                            <pre><code><span class="sql-keyword">SELECT</span> *
+<span class="sql-keyword">FROM</span> Schüler
+<span class="sql-keyword">WHERE</span> Klasse = <span class="sql-string">'12a'</span>;</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="example-section" style="counter-increment: task-counter;">
+                        <h4>Aufgabe 2: Aggregatfunktionen mit GROUP BY</h4>
+                        <p><strong>Typische Frage:</strong> "Wie viele Schüler sind in jeder Klasse?"</p>
+                        <div class="code-block">
+                            <pre><code><span class="sql-keyword">SELECT</span> Klasse, <span class="sql-keyword">COUNT</span>(*) <span class="sql-keyword">AS</span> Anzahl_Schüler
+<span class="sql-keyword">FROM</span> Schüler
+<span class="sql-keyword">GROUP BY</span> Klasse;</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="example-section" style="counter-increment: task-counter;">
+                        <h4>Aufgabe 3: JOIN zwischen zwei Tabellen</h4>
+                        <p><strong>Typische Frage:</strong> "Zeigen Sie alle Schüler mit ihren Noten"</p>
+                        <div class="code-block">
+                            <pre><code><span class="sql-keyword">SELECT</span> s.Name, n.Fach, n.Note
+<span class="sql-keyword">FROM</span> Schüler s
+<span class="sql-keyword">INNER JOIN</span> Noten n <span class="sql-keyword">ON</span> s.SchülerID = n.SchülerID;</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="example-section" style="counter-increment: task-counter;">
+                        <h4>Aufgabe 4: Durchschnitt mit HAVING</h4>
+                        <p><strong>Typische Frage:</strong> "Welche Schüler haben einen Notendurchschnitt besser als 2.0?"</p>
+                        <div class="code-block">
+                            <pre><code><span class="sql-keyword">SELECT</span> s.Name, <span class="sql-keyword">AVG</span>(n.Note) <span class="sql-keyword">AS</span> Durchschnitt
+<span class="sql-keyword">FROM</span> Schüler s
+<span class="sql-keyword">INNER JOIN</span> Noten n <span class="sql-keyword">ON</span> s.SchülerID = n.SchülerID
+<span class="sql-keyword">GROUP BY</span> s.SchülerID, s.Name
+<span class="sql-keyword">HAVING</span> <span class="sql-keyword">AVG</span>(n.Note) < <span class="sql-string">2.0</span>;</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="example-section" style="counter-increment: task-counter;">
+                        <h4>Aufgabe 5: INSERT mit mehreren Datensätzen</h4>
+                        <p><strong>Typische Frage:</strong> "Fügen Sie drei neue Schüler hinzu"</p>
+                        <div class="code-block">
+                            <pre><code><span class="sql-keyword">INSERT INTO</span> Schüler (Name, Klasse, Geburtsdatum)
+<span class="sql-keyword">VALUES</span>
+    (<span class="sql-string">'Max Mustermann'</span>, <span class="sql-string">'12a'</span>, <span class="sql-string">'2006-05-15'</span>),
+    (<span class="sql-string">'Anna Schmidt'</span>, <span class="sql-string">'12b'</span>, <span class="sql-string">'2006-03-22'</span>),
+    (<span class="sql-string">'Tom Weber'</span>, <span class="sql-string">'12a'</span>, <span class="sql-string">'2006-08-10'</span>);</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="example-section" style="counter-increment: task-counter;">
+                        <h4>Aufgabe 6: UPDATE mit Bedingung</h4>
+                        <p><strong>Typische Frage:</strong> "Alle Schüler der Klasse 12a kommen in die Klasse 13a"</p>
+                        <div class="code-block">
+                            <pre><code><span class="sql-keyword">UPDATE</span> Schüler
+<span class="sql-keyword">SET</span> Klasse = <span class="sql-string">'13a'</span>
+<span class="sql-keyword">WHERE</span> Klasse = <span class="sql-string">'12a'</span>;</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="example-section" style="counter-increment: task-counter;">
+                        <h4>Aufgabe 7: DELETE mit komplexer Bedingung</h4>
+                        <p><strong>Typische Frage:</strong> "Löschen Sie alle Noten schlechter als 4.0 im Fach Mathematik"</p>
+                        <div class="code-block">
+                            <pre><code><span class="sql-keyword">DELETE FROM</span> Noten
+<span class="sql-keyword">WHERE</span> Fach = <span class="sql-string">'Mathematik'</span>
+  <span class="sql-keyword">AND</span> Note > <span class="sql-string">4.0</span>;</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="example-section" style="counter-increment: task-counter;">
+                        <h4>Aufgabe 8: LIKE mit Platzhaltern</h4>
+                        <p><strong>Typische Frage:</strong> "Alle Schüler deren Name mit 'M' beginnt und auf 'er' endet"</p>
+                        <div class="code-block">
+                            <pre><code><span class="sql-keyword">SELECT</span> *
+<span class="sql-keyword">FROM</span> Schüler
+<span class="sql-keyword">WHERE</span> Name <span class="sql-keyword">LIKE</span> <span class="sql-string">'M%er'</span>;</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="example-section" style="counter-increment: task-counter;">
+                        <h4>Aufgabe 9: Sortierung mit mehreren Kriterien</h4>
+                        <p><strong>Typische Frage:</strong> "Sortieren Sie nach Klasse aufsteigend, dann nach Name absteigend"</p>
+                        <div class="code-block">
+                            <pre><code><span class="sql-keyword">SELECT</span> *
+<span class="sql-keyword">FROM</span> Schüler
+<span class="sql-keyword">ORDER BY</span> Klasse <span class="sql-keyword">ASC</span>, Name <span class="sql-keyword">DESC</span>;</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="example-section" style="counter-increment: task-counter;">
+                        <h4>Aufgabe 10: Komplexer JOIN mit drei Tabellen</h4>
+                        <p><strong>Typische Frage:</strong> "Zeigen Sie Schülername, Lehrername und Fach für alle Noten"</p>
+                        <div class="code-block">
+                            <pre><code><span class="sql-keyword">SELECT</span> s.Name <span class="sql-keyword">AS</span> Schüler, l.Name <span class="sql-keyword">AS</span> Lehrer, f.Fachname, n.Note
+<span class="sql-keyword">FROM</span> Schüler s
+<span class="sql-keyword">INNER JOIN</span> Noten n <span class="sql-keyword">ON</span> s.SchülerID = n.SchülerID
+<span class="sql-keyword">INNER JOIN</span> Fach f <span class="sql-keyword">ON</span> n.FachID = f.FachID
+<span class="sql-keyword">INNER JOIN</span> Lehrer l <span class="sql-keyword">ON</span> f.LehrerID = l.LehrerID;</code></pre>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>📝 Häufige Fehler und wie man sie vermeidet</h3>
+
+                <div class="warning-box">
+                    <h4>❌ Die 10 häufigsten SQL-Fehler im Abitur</h4>
+                    <ol style="margin-left: 2rem;">
+                        <li><strong>Vergessene WHERE-Klausel:</strong> <code>DELETE FROM Schüler</code> löscht ALLE!</li>
+                        <li><strong>Fehlende JOIN-Bedingung:</strong> Führt zu Kreuzprodukt (riesige Ergebnismenge)</li>
+                        <li><strong>GROUP BY vergessen:</strong> Bei Aggregatfunktionen mit anderen Spalten</li>
+                        <li><strong>Falsche Anführungszeichen:</strong> Texte in einfache: <code>'Text'</code></li>
+                        <li><strong>NULL-Vergleiche:</strong> <code>IS NULL</code> statt <code>= NULL</code></li>
+                        <li><strong>HAVING statt WHERE:</strong> HAVING nur nach GROUP BY verwenden</li>
+                        <li><strong>Klammern bei komplexen Bedingungen:</strong> <code>(A AND B) OR C</code></li>
+                        <li><strong>Aliase bei mehrdeutigen Spalten:</strong> <code>s.Name, k.Name</code></li>
+                        <li><strong>Falsche JOIN-Art:</strong> INNER vs. LEFT JOIN beachten</li>
+                        <li><strong>Sortierung vergessen:</strong> ORDER BY für definierte Reihenfolge</li>
+                    </ol>
+                </div>
+
+                <h3>🎯 Abitur-Strategie: Schritt-für-Schritt Vorgehen</h3>
+
+                <div class="tip-box">
+                    <h4>📋 SQL-Aufgaben systematisch lösen</h4>
+                    <ol style="margin-left: 2rem;">
+                        <li><strong>Aufgabe genau lesen:</strong> Was wird gefragt? Welche Tabellen sind beteiligt?</li>
+                        <li><strong>Benötigte Tabellen identifizieren:</strong> Welche Informationen brauche ich?</li>
+                        <li><strong>JOIN-Bedingungen finden:</strong> Wie sind die Tabellen verknüpft?</li>
+                        <li><strong>WHERE-Bedingungen sammeln:</strong> Welche Filter sind nötig?</li>
+                        <li><strong>SELECT-Teil bestimmen:</strong> Welche Spalten sollen angezeigt werden?</li>
+                        <li><strong>Aggregation prüfen:</strong> Brauche ich COUNT, AVG, etc.?</li>
+                        <li><strong>Sortierung überlegen:</strong> ORDER BY nötig?</li>
+                        <li><strong>Schritt für Schritt schreiben:</strong> Erst FROM, dann JOIN, dann WHERE...</li>
+                        <li><strong>Testen (wenn möglich):</strong> Ergebnis plausibel?</li>
+                        <li><strong>Doppelt prüfen:</strong> Alle Bedingungen erfüllt?</li>
+                    </ol>
+                </div>
+
+                <h3>🧠 Merkhilfen und Eselsbrücken</h3>
+
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1.5rem; margin: 1.5rem 0;">
+                    <div class="tip-box">
+                        <h4>🔤 SQL-Reihenfolge merken</h4>
+                        <p><strong>"Susi Findet Wunderschöne Geschenke, Hat Oft"</strong></p>
+                        <p>SELECT - FROM - WHERE - GROUP BY - HAVING - ORDER BY</p>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <h4>🔗 JOIN-Arten merken</h4>
+                        <p><strong>INNER:</strong> "Nur gemeinsame Freunde"</p>
+                        <p><strong>LEFT:</strong> "Alle Freunde von links + gemeinsame"</p>
+                        <p><strong>RIGHT:</strong> "Alle Freunde von rechts + gemeinsame"</p>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <h4>📊 Aggregat-Funktionen</h4>
+                        <p><strong>COUNT:</strong> "Zähl mal!"</p>
+                        <p><strong>SUM:</strong> "Addier mal!"</p>
+                        <p><strong>AVG:</strong> "Durchschnitt bitte!"</p>
+                        <p><strong>MIN/MAX:</strong> "Kleinstes/Größtes!"</p>
+                    </div>
+                    
+                    <div class="tip-box">
+                        <h4>💡 LIKE-Platzhalter</h4>
+                        <p><strong>%:</strong> "Prozent für viele Zeichen"</p>
+                        <p><strong>_:</strong> "Unterstrich für ein Zeichen"</p>
+                        <p>Beispiel: <code>'M%er'</code> = "Müller", "Meier", "Mayer"</p>
+                    </div>
+                </div>
+
+                <h3>⏱️ Last-Minute Checkliste</h3>
+
+                <div class="example-section">
+                    <h4>📋 Vor der Klausur nochmal prüfen</h4>
+                    <ul style="margin-left: 2rem;">
+                        <li>✅ <strong>SELECT-Grundstruktur:</strong> SELECT - FROM - WHERE - GROUP BY - HAVING - ORDER BY</li>
+                        <li>✅ <strong>JOIN-Syntax:</strong> <code>FROM Tabelle1 INNER JOIN Tabelle2 ON Bedingung</code></li>
+                        <li>✅ <strong>Aggregatfunktionen:</strong> COUNT(*), SUM(), AVG(), MIN(), MAX()</li>
+                        <li>✅ <strong>DML-Befehle:</strong> INSERT INTO, UPDATE SET WHERE, DELETE FROM WHERE</li>
+                        <li>✅ <strong>Operatoren:</strong> =, <>, LIKE, BETWEEN, IN, IS NULL</li>
+                        <li>✅ <strong>Logik:</strong> AND, OR, NOT mit Klammern bei komplexen Bedingungen</li>
+                        <li>✅ <strong>Anführungszeichen:</strong> Texte in einfache Anführungszeichen: 'Text'</li>
+                        <li>✅ <strong>WHERE vs. HAVING:</strong> WHERE vor Gruppierung, HAVING nach Gruppierung</li>
+                        <li>✅ <strong>NULL-Werte:</strong> IS NULL / IS NOT NULL verwenden</li>
+                        <li>✅ <strong>Aliase:</strong> Tabellen- und Spalten-Aliase für Übersichtlichkeit</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer mit Navigation -->
+        <footer class="content-section">
+            <div class="section-content" style="text-align: center;">
+                <h3>🎓 Weiter lernen</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1.5rem;">
+                    <a href="datenbank-grundlagen.html" style="display: block; padding: 1rem; background: var(--bg-light); border-radius: 8px; text-decoration: none; color: var(--text-dark); border: 2px solid transparent; transition: all 0.3s ease;">
+                        ← Datenbank-Grundlagen
+                    </a>
+                   
+                    
+                    <a href="index.html" style="display: block; padding: 1rem; background: var(--primary-color); color: white; border-radius: 8px; text-decoration: none; transition: all 0.3s ease;">
+                        🏠 Zur Hauptseite
+                    </a>
+                </div>
+                
+                <div style="margin-top: 2rem; padding-top: 2rem; border-top: 1px solid var(--border-color);">
+                    <p style="color: var(--text-light); margin-bottom: 1rem;">
+                        <strong>SQL - Structured Query Language</strong><br>
+                        Abitur 2026 - Informationstechnik TG Baden-Württemberg
+                    </p>
+                    <p style="color: var(--text-light); font-size: 0.9rem;">
+                        📚 Basierend auf dem Bildungsplan BPE 9 "Datenbanksysteme"<br>
+                        🎯 Praxisorientierte Vorbereitung mit Beispielen aus dem Unterricht
+                    </p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Navigation Sidebar -->
+    <nav class="navigation">
+        <h4>📖 Inhaltsverzeichnis</h4>
+        <ul>
+            <li><a href="#select-grundlagen">SELECT Grundlagen</a></li>
+            <li><a href="#operatoren">Operatoren & Vergleiche</a></li>
+            <li><a href="#aggregatfunktionen">Aggregatfunktionen</a></li>
+            <li><a href="#joins">JOIN Operationen</a></li>
+            <li><a href="#dml-befehle">DML Befehle</a></li>
+            <li><a href="#ddl-befehle">DDL Befehle</a></li>
+            <li><a href="#transaktionen">Transaktionen</a></li>
+            <li><a href="#abitur-tipps">Abitur-Tipps</a></li>
+        </ul>
+    </nav>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight current section in navigation
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.navigation a');
+            
+            let currentSection = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop - 100;
+                const sectionHeight = section.offsetHeight;
+                if (window.scrollY >= sectionTop && window.scrollY < sectionTop + sectionHeight) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            navLinks.forEach(link => {
+                link.style.backgroundColor = '';
+                link.style.color = '';
+                if (link.getAttribute('href') === '#' + currentSection) {
+                    link.style.backgroundColor = 'var(--primary-color)';
+                    link.style.color = 'white';
+                }
+            });
+        });
+
+        // Add click tracking for interactive elements
+        document.querySelectorAll('.code-block').forEach(block => {
+            block.addEventListener('click', function() {
+                // Copy code to clipboard functionality could be added here
+                console.log('Code block clicked');
+            });
+        });
+
+        // Add tooltips for technical terms (could be extended)
+        const technicalTerms = {
+            'PRIMARY KEY': 'Eindeutiger Hauptschlüssel - identifiziert jeden Datensatz eindeutig',
+            'FOREIGN KEY': 'Fremdschlüssel - Verweis auf Primärschlüssel einer anderen Tabelle',
+            'NULL': 'Leerer Wert - bedeutet "unbekannt" oder "nicht vorhanden"',
+            'INNER JOIN': 'Verknüpft nur Datensätze, die in beiden Tabellen existieren'
+        };
+
+        // Simple search functionality (could be extended)
+        function searchContent(searchTerm) {
+            const content = document.querySelector('.container').textContent.toLowerCase();
+            return content.includes(searchTerm.toLowerCase());
+        }
+
+        // Add some interactivity for better learning experience
+        console.log('📚 SQL Lernzettel geladen! Viel Erfolg beim Lernen für das Abitur 2026! 🎓');
+    </script>
+</body>
+</html>

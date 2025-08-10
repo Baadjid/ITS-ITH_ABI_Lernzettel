@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vererbung & Polymorphie - Abitur 2026 Lernzettel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --code-bg: #1e293b;
+            --code-text: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .back-link {
+            display: inline-flex;
+            align-items: center;
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .back-link:hover {
+            text-decoration: underline;
+        }
+
+        .header {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .header .subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .difficulty-badge {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: linear-gradient(135deg, #fee2e2, #fecaca);
+            color: #991b1b;
+            border-radius: 20px;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .content-section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem 2rem;
+            border-bottom: none;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .intro-box {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border: 1px solid #93c5fd;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .intro-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .concept-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .concept-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Fira Code', 'Cascadia Code', 'JetBrains Mono', 'Consolas', 'Monaco', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            white-space: pre;
+            border: 2px solid #334155;
+            position: relative;
+        }
+
+        .code-block:before {
+            content: 'Java';
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .code-block .comment {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .code-block .keyword {
+            color: #60a5fa;
+            font-weight: bold;
+        }
+
+        .code-block .string {
+            color: #34d399;
+        }
+
+        .code-block .class {
+            color: #fbbf24;
+            font-weight: bold;
+        }
+
+        .code-block .method {
+            color: #a78bfa;
+        }
+
+        .code-block .number {
+            color: #fb7185;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border: 1px solid #a7f3d0;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+        }
+
+        .example-box h4 {
+            color: var(--success-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 1px solid #f59e0b;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box h4 {
+            color: var(--warning-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .key-points {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border: 1px solid var(--border-color);
+        }
+
+        .key-points h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .key-points ul, .warning-box ul, .example-box ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .key-points li, .warning-box li, .example-box li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid var(--border-color);
+            position: relative;
+            padding-left: 1.5rem;
+        }
+
+        .key-points li:before {
+            content: "✓";
+            color: var(--success-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+        }
+
+        .warning-box li:before {
+            content: "⚠️";
+            position: absolute;
+            left: 0;
+        }
+
+        .example-box li:before {
+            content: "💡";
+            position: absolute;
+            left: 0;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            gap: 1rem;
+        }
+
+        .nav-button {
+            flex: 1;
+            padding: 1rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-button.prev {
+            background: var(--text-light);
+        }
+
+        .nav-button.prev:hover {
+            background: var(--text-dark);
+        }
+
+        .indent-1 { margin-left: 2rem; }
+        .indent-2 { margin-left: 4rem; }
+        .indent-3 { margin-left: 6rem; }
+
+        @media (max-width: 768px) {
+            .concept-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .navigation {
+                flex-direction: column;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .container {
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Zurück zur Übersicht</a>
+
+        <header class="header">
+            <h1>🏗️ Vererbung & Polymorphie</h1>
+            <p class="subtitle">Objektorientierter Entwurf I - BPE 8</p>
+            <span class="difficulty-badge">Fortgeschritten</span>
+        </header>
+
+        <!-- Was ist Vererbung? -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>1. Was ist Vererbung? 🧬</h2>
+                <p>Die Grundlagen der Code-Wiederverwendung verstehen</p>
+            </div>
+            <div class="section-content">
+                <div class="intro-box">
+                    <h3>🤔 Stell dir vor...</h3>
+                    <p>Du baust verschiedene Fahrzeuge: Autos, Motorräder, LKWs. Alle haben Räder, Motor, Getriebe. Anstatt für jedes Fahrzeug alles neu zu programmieren, erstellst du einen "Bauplan Fahrzeug" mit den gemeinsamen Eigenschaften. Dann erstellst du spezialisierte Baupläne für Auto, Motorrad und LKW, die vom Grundbauplan "erben".</p>
+                </div>
+
+                <p><strong>Vererbung</strong> ist ein Mechanismus in der objektorientierten Programmierung, bei dem eine Klasse (Kindklasse/Subklasse) die Eigenschaften und Methoden einer anderen Klasse (Elternklasse/Superklasse) übernimmt.</p>
+
+                <div class="key-points">
+                    <h4>🎯 Vorteile der Vererbung</h4>
+                    <ul>
+                        <li><strong>Code-Wiederverwendung:</strong> Gleicher Code muss nicht mehrfach geschrieben werden</li>
+                        <li><strong>Hierarchische Strukturierung:</strong> Klassen werden logisch organisiert</li>
+                        <li><strong>Polymorphie möglich:</strong> Ein Interface, verschiedene Implementierungen</li>
+                        <li><strong>Wartbarkeit verbessert:</strong> Änderungen nur an einer Stelle nötig</li>
+                        <li><strong>Einheitliche Schnittstellen:</strong> Ähnliche Objekte verhalten sich ähnlich</li>
+                    </ul>
+                </div>
+
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>📋 Superklasse (Elternklasse)</h4>
+                        <p>Die Klasse, die ihre Eigenschaften und Methoden weitergibt. Enthält allgemeine, gemeinsame Funktionalitäten.</p>
+                        <strong>Beispiel:</strong> Fahrzeug
+                    </div>
+                    <div class="concept-card">
+                        <h4>👶 Subklasse (Kindklasse)</h4>
+                        <p>Die Klasse, die von der Superklasse erbt. Kann zusätzliche Eigenschaften haben oder geerbte Methoden anpassen.</p>
+                        <strong>Beispiel:</strong> Auto, Motorrad
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Vererbung in Java -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>2. Vererbung in Java implementieren ☕</h2>
+                <p>Das Schlüsselwort extends und praktische Anwendung</p>
+            </div>
+            <div class="section-content">
+                <p>In Java wird Vererbung mit dem Schlüsselwort <code><span class="keyword">extends</span></code> umgesetzt:</p>
+
+                <div class="code-block">// Superklasse - der allgemeine "Bauplan"
+<span class="keyword">public class</span> <span class="class">Fahrzeug</span> {
+    <span class="comment">// Gemeinsame Attribute</span>
+    <span class="keyword">protected</span> <span class="class">String</span> marke;
+    <span class="keyword">protected int</span> geschwindigkeit;
+    <span class="keyword">protected boolean</span> istAn;
+    
+    <span class="comment">// Konstruktor der Superklasse</span>
+    <span class="keyword">public</span> <span class="method">Fahrzeug</span>(<span class="class">String</span> marke) {
+        <span class="keyword">this</span>.marke = marke;
+        <span class="keyword">this</span>.geschwindigkeit = <span class="number">0</span>;
+        <span class="keyword">this</span>.istAn = <span class="keyword">false</span>;
+    }
+    
+    <span class="comment">// Gemeinsame Methoden</span>
+    <span class="keyword">public void</span> <span class="method">starten</span>() {
+        istAn = <span class="keyword">true</span>;
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(marke + <span class="string">" wurde gestartet"</span>);
+    }
+    
+    <span class="keyword">public void</span> <span class="method">beschleunigen</span>(<span class="keyword">int</span> kmh) {
+        <span class="keyword">if</span> (istAn) {
+            geschwindigkeit += kmh;
+            <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Neue Geschwindigkeit: "</span> + geschwindigkeit + <span class="string">" km/h"</span>);
+        }
+    }
+    
+    <span class="keyword">public void</span> <span class="method">info</span>() {
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Marke: "</span> + marke + <span class="string">", Geschwindigkeit: "</span> + geschwindigkeit);
+    }
+}
+
+// Subklasse - erbt von Fahrzeug
+<span class="keyword">public class</span> <span class="class">Auto</span> <span class="keyword">extends</span> <span class="class">Fahrzeug</span> {
+    <span class="comment">// Zusätzliche Attribute nur für Autos</span>
+    <span class="keyword">private int</span> anzahlTueren;
+    <span class="keyword">private boolean</span> hatKlimaanlage;
+    
+    <span class="comment">// Konstruktor der Subklasse</span>
+    <span class="keyword">public</span> <span class="method">Auto</span>(<span class="class">String</span> marke, <span class="keyword">int</span> tueren) {
+        <span class="keyword">super</span>(marke); <span class="comment">// Ruft Konstruktor der Superklasse auf!</span>
+        <span class="keyword">this</span>.anzahlTueren = tueren;
+        <span class="keyword">this</span>.hatKlimaanlage = <span class="keyword">false</span>;
+    }
+    
+    <span class="comment">// Zusätzliche Methoden nur für Autos</span>
+    <span class="keyword">public void</span> <span class="method">klimaanlageEinschalten</span>() {
+        hatKlimaanlage = <span class="keyword">true</span>;
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Klimaanlage ist jetzt an"</span>);
+    }
+    
+    <span class="comment">// Geerbte Methode überschreiben</span>
+    <span class="keyword">@Override</span>
+    <span class="keyword">public void</span> <span class="method">info</span>() {
+        <span class="keyword">super</span>.<span class="method">info</span>(); <span class="comment">// Erst die ursprüngliche Methode aufrufen</span>
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Türen: "</span> + anzahlTueren + <span class="string">", Klima: "</span> + hatKlimaanlage);
+    }
+}</div>
+
+                <div class="example-box">
+                    <h4>💡 Verwendung im Programm</h4>
+                    <div class="code-block"><span class="keyword">public static void</span> <span class="method">main</span>(<span class="class">String</span>[] args) {
+    <span class="comment">// Auto-Objekt erstellen</span>
+    <span class="class">Auto</span> meinAuto = <span class="keyword">new</span> <span class="class">Auto</span>(<span class="string">"BMW"</span>, <span class="number">4</span>);
+    
+    <span class="comment">// Geerbte Methoden verwenden</span>
+    meinAuto.<span class="method">starten</span>();           <span class="comment">// Von Fahrzeug geerbt</span>
+    meinAuto.<span class="method">beschleunigen</span>(<span class="number">50</span>);   <span class="comment">// Von Fahrzeug geerbt</span>
+    
+    <span class="comment">// Eigene Methoden der Auto-Klasse</span>
+    meinAuto.<span class="method">klimaanlageEinschalten</span>();
+    
+    <span class="comment">// Überschriebene Methode</span>
+    meinAuto.<span class="method">info</span>();
+}</div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Wichtige Punkte zu beachten</h4>
+                    <ul>
+                        <li><strong>super():</strong> Ruft den Konstruktor der Superklasse auf - muss erste Anweisung im Konstruktor sein!</li>
+                        <li><strong>protected:</strong> Attribute sind in Subklassen sichtbar, aber nicht von außen</li>
+                        <li><strong>private:</strong> Nicht in Subklassen sichtbar - verwende protected oder getter/setter</li>
+                        <li><strong>Konstruktoren werden nicht vererbt!</strong> Müssen in jeder Klasse definiert werden</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sichtbarkeitsmodifizierer -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>3. Sichtbarkeitsmodifizierer 👀</h2>
+                <p>Wer darf was sehen und verwenden?</p>
+            </div>
+            <div class="section-content">
+                <p>Sichtbarkeitsmodifizierer bestimmen, wer auf Attribute und Methoden zugreifen darf:</p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Modifizierer</th>
+                            <th>Symbol (UML)</th>
+                            <th>Sichtbarkeit</th>
+                            <th>Beispiel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>public</strong></td>
+                            <td>+</td>
+                            <td>Überall sichtbar</td>
+                            <td>public void starten()</td>
+                        </tr>
+                        <tr>
+                            <td><strong>protected</strong></td>
+                            <td>#</td>
+                            <td>Eigene Klasse + Subklassen</td>
+                            <td>protected String marke</td>
+                        </tr>
+                        <tr>
+                            <td><strong>package</strong></td>
+                            <td>~</td>
+                            <td>Gleiches Paket</td>
+                            <td>void interneMethode()</td>
+                        </tr>
+                        <tr>
+                            <td><strong>private</strong></td>
+                            <td>-</td>
+                            <td>Nur eigene Klasse</td>
+                            <td>private int seriennummer</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>🔓 public</h4>
+                        <p><strong>Vollständig öffentlich</strong> - Jede andere Klasse kann darauf zugreifen. Verwende für Methoden, die von außen aufgerufen werden sollen.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🔐 protected</h4>
+                        <p><strong>Familien-intern</strong> - Nur die eigene Klasse und ihre Subklassen können zugreifen. Ideal für Vererbung!</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>📦 package</h4>
+                        <p><strong>Nachbarschaftlich</strong> - Alle Klassen im gleichen Paket haben Zugriff. Standard wenn nichts angegeben wird.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🔒 private</h4>
+                        <p><strong>Streng privat</strong> - Nur innerhalb der eigenen Klasse sichtbar. Schützt interne Daten!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Polymorphie -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>4. Polymorphie - Vielgestaltigkeit 🎭</h2>
+                <p>Eine Methode, viele Formen</p>
+            </div>
+            <div class="section-content">
+                <div class="intro-box">
+                    <h3>🤔 Was bedeutet Polymorphie?</h3>
+                    <p>Stell dir vor, du sagst "Mach Lärm!" zu verschiedenen Tieren. Ein Hund bellt, eine Katze miaut, ein Vogel singt. Das gleiche "Kommando", aber jedes Tier reagiert anders - das ist Polymorphie!</p>
+                </div>
+
+                <p><strong>Polymorphie</strong> bedeutet "Vielgestaltigkeit". Eine Methode kann verschiedene Formen annehmen, je nach Objekttyp, der sie aufruft.</p>
+
+                <h3>🔄 Zwei Arten von Polymorphie</h3>
+
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>1. Überladen (Overloading)</h4>
+                        <p><strong>Compile-Zeit-Polymorphie</strong><br>
+                        Mehrere Methoden mit gleichem Namen, aber unterschiedlichen Parametern in derselben Klasse.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>2. Überschreiben (Overriding)</h4>
+                        <p><strong>Laufzeit-Polymorphie</strong><br>
+                        Subklasse stellt eigene Version einer geerbten Methode bereit.</p>
+                    </div>
+                </div>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Aspekt</th>
+                            <th>Überladen (Overloading)</th>
+                            <th>Überschreiben (Overriding)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Klasse</td>
+                            <td>Gleiche Klasse</td>
+                            <td>Verschiedene Klassen (Vererbung)</td>
+                        </tr>
+                        <tr>
+                            <td>Methodenname</td>
+                            <td>Gleich</td>
+                            <td>Gleich</td>
+                        </tr>
+                        <tr>
+                            <td>Parameter</td>
+                            <td>Unterschiedlich</td>
+                            <td>Gleich</td>
+                        </tr>
+                        <tr>
+                            <td>Rückgabetyp</td>
+                            <td>Kann unterschiedlich sein</td>
+                            <td>Muss kompatibel sein</td>
+                        </tr>
+                        <tr>
+                            <td>Zeitpunkt</td>
+                            <td>Compile-Zeit</td>
+                            <td>Laufzeit</td>
+                        </tr>
+                        <tr>
+                            <td>Annotation</td>
+                            <td>Keine</td>
+                            <td>@Override</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Überladen Beispiele -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>5. Methoden Überladen (Overloading) 🔄</h2>
+                <p>Gleicher Name, verschiedene Parameter</p>
+            </div>
+            <div class="section-content">
+                <div class="code-block"><span class="keyword">public class</span> <span class="class">Rechner</span> {
+    <span class="comment">// Überladen - verschiedene Parameter</span>
+    <span class="keyword">public int</span> <span class="method">addieren</span>(<span class="keyword">int</span> a, <span class="keyword">int</span> b) {
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Addiere zwei int-Werte"</span>);
+        <span class="keyword">return</span> a + b;
+    }
+    
+    <span class="keyword">public double</span> <span class="method">addieren</span>(<span class="keyword">double</span> a, <span class="keyword">double</span> b) {
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Addiere zwei double-Werte"</span>);
+        <span class="keyword">return</span> a + b;
+    }
+    
+    <span class="keyword">public int</span> <span class="method">addieren</span>(<span class="keyword">int</span> a, <span class="keyword">int</span> b, <span class="keyword">int</span> c) {
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Addiere drei int-Werte"</span>);
+        <span class="keyword">return</span> a + b + c;
+    }
+    
+    <span class="comment">// Überladen mit verschiedenen Typen</span>
+    <span class="keyword">public</span> <span class="class">String</span> <span class="method">addieren</span>(<span class="class">String</span> a, <span class="class">String</span> b) {
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Verbinde zwei Strings"</span>);
+        <span class="keyword">return</span> a + b;
+    }
+}
+
+<span class="comment">// Verwendung:</span>
+<span class="class">Rechner</span> r = <span class="keyword">new</span> <span class="class">Rechner</span>();
+r.<span class="method">addieren</span>(<span class="number">5</span>, <span class="number">3</span>);           <span class="comment">// Ruft int-Version auf</span>
+r.<span class="method">addieren</span>(<span class="number">5.5</span>, <span class="number">3.2</span>);       <span class="comment">// Ruft double-Version auf</span>
+r.<span class="method">addieren</span>(<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>);        <span class="comment">// Ruft 3-Parameter-Version auf</span>
+r.<span class="method">addieren</span>(<span class="string">"Hallo "</span>, <span class="string">"Welt"</span>); <span class="comment">// Ruft String-Version auf</span></div>
+
+                <div class="key-points">
+                    <h4>🎯 Regeln für Überladen</h4>
+                    <ul>
+                        <li><strong>Gleicher Methodenname</strong> in derselben Klasse</li>
+                        <li><strong>Verschiedene Parameterliste</strong> (Anzahl, Typ oder Reihenfolge)</li>
+                        <li><strong>Rückgabetyp ist egal</strong> für die Unterscheidung</li>
+                        <li><strong>Compiler entscheidet</strong> zur Compile-Zeit, welche Methode aufgerufen wird</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Überschreiben Beispiele -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>6. Methoden Überschreiben (Overriding) ✏️</h2>
+                <p>Subklassen passen geerbte Methoden an</p>
+            </div>
+            <div class="section-content">
+                <div class="code-block"><span class="comment">// Superklasse</span>
+<span class="keyword">public class</span> <span class="class">Tier</span> {
+    <span class="keyword">protected</span> <span class="class">String</span> name;
+    
+    <span class="keyword">public</span> <span class="method">Tier</span>(<span class="class">String</span> name) {
+        <span class="keyword">this</span>.name = name;
+    }
+    
+    <span class="comment">// Methode, die überschrieben werden kann</span>
+    <span class="keyword">public void</span> <span class="method">machLaerm</span>() {
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(name + <span class="string">" macht ein Geräusch"</span>);
+    }
+    
+    <span class="keyword">public void</span> <span class="method">schlafen</span>() {
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(name + <span class="string">" schläft"</span>);
+    }
+}
+
+<span class="comment">// Subklasse Hund</span>
+<span class="keyword">public class</span> <span class="class">Hund</span> <span class="keyword">extends</span> <span class="class">Tier</span> {
+    <span class="keyword">public</span> <span class="method">Hund</span>(<span class="class">String</span> name) {
+        <span class="keyword">super</span>(name);
+    }
+    
+    <span class="comment">// Überschreibt die Methode der Superklasse</span>
+    <span class="keyword">@Override</span>
+    <span class="keyword">public void</span> <span class="method">machLaerm</span>() {
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(name + <span class="string">" bellt: Wau Wau!"</span>);
+    }
+    
+    <span class="comment">// Zusätzliche Methode nur für Hunde</span>
+    <span class="keyword">public void</span> <span class="method">apportieren</span>() {
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(name + <span class="string">" bringt den Ball zurück"</span>);
+    }
+}
+
+<span class="comment">// Subklasse Katze</span>
+<span class="keyword">public class</span> <span class="class">Katze</span> <span class="keyword">extends</span> <span class="class">Tier</span> {
+    <span class="keyword">public</span> <span class="method">Katze</span>(<span class="class">String</span> name) {
+        <span class="keyword">super</span>(name);
+    }
+    
+    <span class="comment">// Überschreibt die Methode der Superklasse</span>
+    <span class="keyword">@Override</span>
+    <span class="keyword">public void</span> <span class="method">machLaerm</span>() {
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(name + <span class="string">" miaut: Miau!"</span>);
+    }
+    
+    <span class="comment">// Zusätzliche Methode nur für Katzen</span>
+    <span class="keyword">public void</span> <span class="method">schnurren</span>() {
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(name + <span class="string">" schnurrt zufrieden"</span>);
+    }
+}</div>
+
+                <div class="example-box">
+                    <h4>💡 Dynamische Polymorphie in Aktion</h4>
+                    <div class="code-block"><span class="keyword">public static void</span> <span class="method">main</span>(<span class="class">String</span>[] args) {
+    <span class="comment">// Verschiedene Tier-Objekte erstellen</span>
+    <span class="class">Tier</span> meinHund = <span class="keyword">new</span> <span class="class">Hund</span>(<span class="string">"Bello"</span>);
+    <span class="class">Tier</span> meineKatze = <span class="keyword">new</span> <span class="class">Katze</span>(<span class="string">"Mimi"</span>);
+    
+    <span class="comment">// Array von Tieren</span>
+    <span class="class">Tier</span>[] tiere = {meinHund, meineKatze, <span class="keyword">new</span> <span class="class">Hund</span>(<span class="string">"Rex"</span>)};
+    
+    <span class="comment">// Polymorphie: Gleicher Methodenaufruf, verschiedene Implementierungen</span>
+    <span class="keyword">for</span> (<span class="class">Tier</span> tier : tiere) {
+        tier.<span class="method">machLaerm</span>(); <span class="comment">// Jedes Tier macht seinen eigenen Lärm!</span>
+    }
+    
+    <span class="comment">// Ausgabe:</span>
+    <span class="comment">// Bello bellt: Wau Wau!</span>
+    <span class="comment">// Mimi miaut: Miau!</span>
+    <span class="comment">// Rex bellt: Wau Wau!</span>
+}</div>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Wichtig: @Override Annotation</h4>
+                    <ul>
+                        <li><strong>Immer verwenden!</strong> Zeigt dem Compiler, dass du absichtlich überschreibst</li>
+                        <li><strong>Fehlerprävention:</strong> Compiler warnt, wenn Methode nicht existiert</li>
+                        <li><strong>Lesbarkeit:</strong> Macht Code verständlicher für andere Entwickler</li>
+                        <li><strong>IDE-Unterstützung:</strong> Bessere Autokorrektur und Refactoring</li>
+                    </ul>
+                </div>
+
+                <div class="key-points">
+                    <h4>🎯 Regeln für Überschreiben</h4>
+                    <ul>
+                        <li><strong>Gleiche Signatur:</strong> Name, Parameter und Rückgabetyp müssen identisch sein</li>
+                        <li><strong>Sichtbarkeit nicht einschränken:</strong> Subklasse kann nicht weniger sichtbar machen</li>
+                        <li><strong>Exception-Regel:</strong> Können weniger, aber nicht mehr Exceptions werfen</li>
+                        <li><strong>super.methodenname():</strong> Kann ursprüngliche Methode aufrufen</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamische Polymorphie -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>7. Dynamische Polymorphie - Late Binding 🕰️</h2>
+                <p>Zur Laufzeit wird entschieden, welche Methode aufgerufen wird</p>
+            </div>
+            <div class="section-content">
+                <p><strong>Dynamische Polymorphie</strong> bedeutet, dass erst zur Laufzeit entschieden wird, welche Methodenversion aufgerufen wird - abhängig vom tatsächlichen Objekttyp.</p>
+
+                <div class="code-block"><span class="keyword">public class</span> <span class="class">TierShow</span> {
+    <span class="comment">// Methode akzeptiert alle Tier-Objekte</span>
+    <span class="keyword">public static void</span> <span class="method">zeigeShow</span>(<span class="class">Tier</span> tier) {
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"=== Show beginnt ==="</span>);
+        tier.<span class="method">machLaerm</span>();  <span class="comment">// Welche Implementierung? Wird zur Laufzeit entschieden!</span>
+        tier.<span class="method">schlafen</span>();   <span class="comment">// Diese Methode ist nicht überschrieben</span>
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"=== Show Ende ==="</span>);
+    }
+    
+    <span class="keyword">public static void</span> <span class="method">main</span>(<span class="class">String</span>[] args) {
+        <span class="comment">// Verschiedene Tiere zur Show bringen</span>
+        <span class="method">zeigeShow</span>(<span class="keyword">new</span> <span class="class">Hund</span>(<span class="string">"Buddy"</span>));  <span class="comment">// Hund-Implementierung</span>
+        <span class="method">zeigeShow</span>(<span class="keyword">new</span> <span class="class">Katze</span>(<span class="string">"Fluffy"</span>)); <span class="comment">// Katze-Implementierung</span>
+        
+        <span class="comment">// Polymorphie mit Arrays</span>
+        <span class="class">Tier</span>[] zoo = {
+            <span class="keyword">new</span> <span class="class">Hund</span>(<span class="string">"Max"</span>),
+            <span class="keyword">new</span> <span class="class">Katze</span>(<span class="string">"Luna"</span>),
+            <span class="keyword">new</span> <span class="class">Hund</span>(<span class="string">"Charlie"</span>)
+        };
+        
+        <span class="comment">// Eine Schleife, verschiedene Verhaltensweisen</span>
+        <span class="keyword">for</span> (<span class="class">Tier</span> tier : zoo) {
+            <span class="method">zeigeShow</span>(tier);
+        }
+    }
+}</div>
+
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>🏃‍♂️ Laufzeit-Bindung (Late Binding)</h4>
+                        <p>Die JVM schaut zur Laufzeit: "Was für ein Objekt ist das wirklich?" und ruft die entsprechende Methode auf.</p>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🔍 instanceof Operator</h4>
+                        <p>Prüft zur Laufzeit den tatsächlichen Typ eines Objekts: <code>if (tier instanceof Hund)</code></p>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>💡 Praktisches Beispiel: instanceof verwenden</h4>
+                    <div class="code-block"><span class="keyword">public static void</span> <span class="method">fuettere</span>(<span class="class">Tier</span> tier) {
+    <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Füttere "</span> + tier.name);
+    
+    <span class="comment">// Spezifisches Verhalten je nach Tiertyp</span>
+    <span class="keyword">if</span> (tier <span class="keyword">instanceof</span> <span class="class">Hund</span>) {
+        <span class="class">Hund</span> hund = (<span class="class">Hund</span>) tier; <span class="comment">// Casting nötig für spezifische Methoden</span>
+        hund.<span class="method">apportieren</span>();
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Gebe Hundefutter"</span>);
+    } <span class="keyword">else if</span> (tier <span class="keyword">instanceof</span> <span class="class">Katze</span>) {
+        <span class="class">Katze</span> katze = (<span class="class">Katze</span>) tier;
+        katze.<span class="method">schnurren</span>();
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Gebe Katzenfutter"</span>);
+    }
+}</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Abstrakte Klassen -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>8. Abstrakte Klassen 🎨</h2>
+                <p>Unvollständige Baupläne für spezialisierte Subklassen</p>
+            </div>
+            <div class="section-content">
+                <p><strong>Abstrakte Klassen</strong> sind "unvollständige" Klassen, die nicht instanziiert werden können. Sie dienen als Basis für andere Klassen und können abstrakte Methoden enthalten, die von Subklassen implementiert werden müssen.</p>
+
+                <div class="code-block"><span class="keyword">public abstract class</span> <span class="class">Form</span> {
+    <span class="keyword">protected</span> <span class="class">String</span> farbe;
+    
+    <span class="comment">// Normaler Konstruktor (kann verwendet werden)</span>
+    <span class="keyword">public</span> <span class="method">Form</span>(<span class="class">String</span> farbe) {
+        <span class="keyword">this</span>.farbe = farbe;
+    }
+    
+    <span class="comment">// Konkrete Methode (fertig implementiert)</span>
+    <span class="keyword">public void</span> <span class="method">setFarbe</span>(<span class="class">String</span> farbe) {
+        <span class="keyword">this</span>.farbe = farbe;
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Farbe geändert zu: "</span> + farbe);
+    }
+    
+    <span class="comment">// Abstrakte Methoden (MÜSSEN in Subklassen implementiert werden)</span>
+    <span class="keyword">public abstract double</span> <span class="method">berechneFlaeche</span>();
+    <span class="keyword">public abstract double</span> <span class="method">berechneUmfang</span>();
+    <span class="keyword">public abstract void</span> <span class="method">zeichne</span>();
+}
+
+<span class="comment">// Konkrete Subklasse</span>
+<span class="keyword">public class</span> <span class="class">Kreis</span> <span class="keyword">extends</span> <span class="class">Form</span> {
+    <span class="keyword">private double</span> radius;
+    
+    <span class="keyword">public</span> <span class="method">Kreis</span>(<span class="class">String</span> farbe, <span class="keyword">double</span> radius) {
+        <span class="keyword">super</span>(farbe);
+        <span class="keyword">this</span>.radius = radius;
+    }
+    
+    <span class="comment">// MUSS implementiert werden - sonst Compiler-Fehler!</span>
+    <span class="keyword">@Override</span>
+    <span class="keyword">public double</span> <span class="method">berechneFlaeche</span>() {
+        <span class="keyword">return</span> <span class="class">Math</span>.PI * radius * radius;
+    }
+    
+    <span class="keyword">@Override</span>
+    <span class="keyword">public double</span> <span class="method">berechneUmfang</span>() {
+        <span class="keyword">return</span> <span class="number">2</span> * <span class="class">Math</span>.PI * radius;
+    }
+    
+    <span class="keyword">@Override</span>
+    <span class="keyword">public void</span> <span class="method">zeichne</span>() {
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Zeichne einen "</span> + farbe + <span class="string">"-en Kreis mit Radius "</span> + radius);
+    }
+}
+
+<span class="comment">// Weitere konkrete Subklasse</span>
+<span class="keyword">public class</span> <span class="class">Rechteck</span> <span class="keyword">extends</span> <span class="class">Form</span> {
+    <span class="keyword">private double</span> breite, hoehe;
+    
+    <span class="keyword">public</span> <span class="method">Rechteck</span>(<span class="class">String</span> farbe, <span class="keyword">double</span> breite, <span class="keyword">double</span> hoehe) {
+        <span class="keyword">super</span>(farbe);
+        <span class="keyword">this</span>.breite = breite;
+        <span class="keyword">this</span>.hoehe = hoehe;
+    }
+    
+    <span class="keyword">@Override</span>
+    <span class="keyword">public double</span> <span class="method">berechneFlaeche</span>() {
+        <span class="keyword">return</span> breite * hoehe;
+    }
+    
+    <span class="keyword">@Override</span>
+    <span class="keyword">public double</span> <span class="method">berechneUmfang</span>() {
+        <span class="keyword">return</span> <span class="number">2</span> * (breite + hoehe);
+    }
+    
+    <span class="keyword">@Override</span>
+    <span class="keyword">public void</span> <span class="method">zeichne</span>() {
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Zeichne ein "</span> + farbe + <span class="string">"-es Rechteck "</span> + breite + <span class="string">"x"</span> + hoehe);
+    }
+}</div>
+
+                <div class="example-box">
+                    <h4>💡 Verwendung abstrakter Klassen</h4>
+                    <div class="code-block"><span class="keyword">public static void</span> <span class="method">main</span>(<span class="class">String</span>[] args) {
+    <span class="comment">// Form form = new Form("rot"); // FEHLER! Abstrakte Klasse kann nicht instanziiert werden</span>
+    
+    <span class="comment">// Konkrete Subklassen können instanziiert werden</span>
+    <span class="class">Form</span> kreis = <span class="keyword">new</span> <span class="class">Kreis</span>(<span class="string">"blau"</span>, <span class="number">5.0</span>);
+    <span class="class">Form</span> rechteck = <span class="keyword">new</span> <span class="class">Rechteck</span>(<span class="string">"grün"</span>, <span class="number">4.0</span>, <span class="number">6.0</span>);
+    
+    <span class="comment">// Polymorphie mit abstrakten Klassen</span>
+    <span class="class">Form</span>[] formen = {kreis, rechteck};
+    
+    <span class="keyword">for</span> (<span class="class">Form</span> form : formen) {
+        form.<span class="method">zeichne</span>();                    <span class="comment">// Verschiedene Implementierungen</span>
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Fläche: "</span> + form.<span class="method">berechneFlaeche</span>());
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>(<span class="string">"Umfang: "</span> + form.<span class="method">berechneUmfang</span>());
+        <span class="class">System</span>.<span class="method">out</span>.<span class="method">println</span>();
+    }
+}</div>
+                </div>
+
+                <div class="key-points">
+                    <h4>🎯 Wann abstrakte Klassen verwenden?</h4>
+                    <ul>
+                        <li><strong>Gemeinsame Basis:</strong> Wenn Subklassen gemeinsame Attribute/Methoden haben</li>
+                        <li><strong>Teilweise Implementation:</strong> Manche Methoden sind fertig, andere müssen implementiert werden</li>
+                        <li><strong>Template Method Pattern:</strong> Grundstruktur vorgeben, Details den Subklassen überlassen</li>
+                        <li><strong>Code-Wiederverwendung:</strong> Gemeinsamer Code nur einmal schreiben</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interfaces vs Abstrakte Klassen -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>9. Abstrakte Klassen vs. Interfaces 🤝</h2>
+                <p>Wann verwende ich was?</p>
+            </div>
+            <div class="section-content">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Aspekt</th>
+                            <th>Abstrakte Klasse</th>
+                            <th>Interface</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Instanzierung</strong></td>
+                            <td>❌ Nein</td>
+                            <td>❌ Nein</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Mehrfachvererbung</strong></td>
+                            <td>❌ Nein (nur extends)</td>
+                            <td>✅ Ja (implements)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Konstruktoren</strong></td>
+                            <td>✅ Ja</td>
+                            <td>❌ Nein</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Attribute</strong></td>
+                            <td>✅ Alle Typen</td>
+                            <td>⚠️ Nur public static final</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Methoden-Implementierung</strong></td>
+                            <td>✅ Ja (konkret + abstrakt)</td>
+                            <td>⚠️ Seit Java 8: default/static</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Sichtbarkeit</strong></td>
+                            <td>✅ private, protected, public</td>
+                            <td>⚠️ Nur public</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Zweck</strong></td>
+                            <td>🏗️ Gemeinsame Implementierung</td>
+                            <td>📋 Vertrag/Schnittstelle</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>🏗️ Abstrakte Klasse verwenden wenn:</h4>
+                        <ul>
+                            <li>Gemeinsame Implementierung teilen</li>
+                            <li>Code-Duplikation vermeiden</li>
+                            <li>Konstruktoren benötigt werden</li>
+                            <li>Private/Protected Attribute nötig</li>
+                        </ul>
+                    </div>
+                    <div class="concept-card">
+                        <h4>📋 Interface verwenden wenn:</h4>
+                        <ul>
+                            <li>Nur Verhalten definieren (Vertrag)</li>
+                            <li>Mehrfachvererbung benötigt wird</li>
+                            <li>Lose Kopplung gewünscht</li>
+                            <li>API-Design (Plugin-System)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Zusammenfassung und Tipps -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>10. Zusammenfassung & Prüfungstipps 📚</h2>
+                <p>Das Wichtigste auf einen Blick</p>
+            </div>
+            <div class="section-content">
+                <div class="key-points">
+                    <h4>🎯 Zentrale Konzepte - Das musst du wissen!</h4>
+                    <ul>
+                        <li><strong>Vererbung (extends):</strong> Subklasse erbt von Superklasse - Code-Wiederverwendung</li>
+                        <li><strong>super():</strong> Konstruktor der Superklasse aufrufen - muss erste Anweisung sein!</li>
+                        <li><strong>@Override:</strong> Methode der Superklasse in Subklasse ersetzen</li>
+                        <li><strong>Polymorphie:</strong> Eine Methode, verschiedene Implementierungen</li>
+                        <li><strong>Überladen:</strong> Gleicher Name, verschiedene Parameter</li>
+                        <li><strong>Überschreiben:</strong> Gleiche Signatur, neue Implementierung</li>
+                        <li><strong>Abstrakte Klassen:</strong> Können nicht instanziiert werden, Template für Subklassen</li>
+                        <li><strong>instanceof:</strong> Prüft tatsächlichen Objekttyp zur Laufzeit</li>
+                    </ul>
+                </div>
+
+                <div class="warning-box">
+                    <h4>⚠️ Häufige Fehler - Vermeide diese!</h4>
+                    <ul>
+                        <li><strong>super() vergessen:</strong> Ohne super() wird Standard-Konstruktor aufgerufen</li>
+                        <li><strong>@Override weglassen:</strong> Tippfehler werden nicht erkannt</li>
+                        <li><strong>private in Superklasse:</strong> Subklassen können nicht zugreifen</li>
+                        <li><strong>Abstrakte Klasse instanziieren:</strong> Geht nicht! Nur konkrete Subklassen</li>
+                        <li><strong>Casting ohne instanceof:</strong> Kann zu ClassCastException führen</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>💡 Prüfungsaufgaben - Typische Fragen</h4>
+                    <ol>
+                        <li><strong>UML zu Code:</strong> Klassendiagramm in Java-Code umwandeln</li>
+                        <li><strong>Vererbungshierarchie:</strong> Welche Methoden kann Subklasse aufrufen?</li>
+                        <li><strong>Polymorphie erklären:</strong> Was passiert bei tier.machLaerm()?</li>
+                        <li><strong>Überladen vs. Überschreiben:</strong> Unterschiede mit Beispielen</li>
+                        <li><strong>Abstrakte Klassen:</strong> Wann abstrakt, wann konkret?</li>
+                        <li><strong>Sichtbarkeitsmodifizierer:</strong> Was sieht die Subklasse?</li>
+                    </ol>
+                </div>
+
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>📝 Lerntipp: Schritt für Schritt</h4>
+                        <ol>
+                            <li>Erstelle einfache Superklasse (z.B. Person)</li>
+                            <li>Füge Subklasse hinzu (z.B. Student)</li>
+                            <li>Überschreibe eine Methode</li>
+                            <li>Teste Polymorphie mit Array</li>
+                            <li>Erweitere mit abstrakten Klassen</li>
+                        </ol>
+                    </div>
+                    <div class="concept-card">
+                        <h4>🔍 Debug-Tipps</h4>
+                        <ul>
+                            <li>System.out.println() in Methoden</li>
+                            <li>getClass().getSimpleName() für Objekttyp</li>
+                            <li>instanceof vor Casting prüfen</li>
+                            <li>@Override immer verwenden</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <div class="navigation">
+            <a href="konstruktoren.html" class="nav-button prev">← Konstruktoren & Destruktoren</a>
+            <a href="uml-diagramme.html" class="nav-button">UML-Diagramme →</a>
+        </div>
+    </div>
+
+    <script>
+        // Syntax highlighting for code blocks
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add copy functionality to code blocks
+            const codeBlocks = document.querySelectorAll('.code-block');
+            codeBlocks.forEach(block => {
+                block.addEventListener('click', function() {
+                    navigator.clipboard.writeText(this.textContent).then(function() {
+                        // Visual feedback
+                        const originalBg = block.style.backgroundColor;
+                        block.style.backgroundColor = '#10b981';
+                        setTimeout(() => {
+                            block.style.backgroundColor = originalBg;
+                        }, 200);
+                    });
+                });
+                
+                // Add hover effect
+                block.addEventListener('mouseenter', function() {
+                    this.style.cursor = 'pointer';
+                    this.title = 'Klicken zum Kopieren';
+                });
+            });
+            
+            // Smooth scrolling for internal links
+            document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+                anchor.addEventListener('click', function (e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({
+                            behavior: 'smooth',
+                            block: 'start'
+                        });
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

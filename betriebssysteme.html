@@ -1,0 +1,1155 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Betriebssysteme - Abitur 2026 Lernzettel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --code-bg: #1e293b;
+            --code-text: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .breadcrumb {
+            background: var(--bg-white);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+            margin-right: 0.5rem;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .nav-menu {
+            background: var(--bg-white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            position: sticky;
+            top: 20px;
+            z-index: 100;
+        }
+
+        .nav-menu h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .nav-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 0.5rem;
+        }
+
+        .nav-link {
+            display: block;
+            padding: 0.5rem 1rem;
+            background: var(--bg-light);
+            border-radius: 6px;
+            text-decoration: none;
+            color: var(--text-dark);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .nav-link:hover {
+            background: var(--primary-color);
+            color: white;
+            border-left-color: var(--secondary-color);
+        }
+
+        .section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .intro-box {
+            background: linear-gradient(135deg, #e0f2fe, #bae6fd);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .intro-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .concept-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-color);
+            transition: transform 0.3s ease;
+        }
+
+        .concept-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px -4px rgba(0, 0, 0, 0.1);
+        }
+
+        .concept-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .diagram {
+            background: var(--bg-white);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .diagram::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+        }
+
+        .os-layers {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .layer {
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            color: white;
+            position: relative;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .layer.user { background: linear-gradient(135deg, #10b981, #059669); }
+        .layer.applications { background: linear-gradient(135deg, #3b82f6, #2563eb); }
+        .layer.system { background: linear-gradient(135deg, #8b5cf6, #7c3aed); }
+        .layer.kernel { background: linear-gradient(135deg, #ef4444, #dc2626); }
+        .layer.hardware { background: linear-gradient(135deg, #6b7280, #4b5563); }
+
+        .process-diagram {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .process-box {
+            background: var(--accent-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            font-weight: bold;
+            position: relative;
+            transition: transform 0.3s ease;
+        }
+
+        .process-box:hover {
+            transform: scale(1.05);
+        }
+
+        .process-box.running { background: var(--success-color); }
+        .process-box.waiting { background: var(--warning-color); }
+        .process-box.terminated { background: var(--danger-color); }
+
+        .memory-diagram {
+            display: flex;
+            flex-direction: column;
+            max-width: 400px;
+            margin: 1rem auto;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .memory-block {
+            padding: 0.8rem;
+            text-align: center;
+            font-weight: bold;
+            color: white;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .memory-block:last-child { border-bottom: none; }
+        .memory-block.os { background: var(--primary-color); }
+        .memory-block.process1 { background: var(--success-color); }
+        .memory-block.process2 { background: var(--warning-color); }
+        .memory-block.free { background: var(--text-light); }
+
+        .code-block {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .important-box {
+            background: linear-gradient(135deg, #fef3c7, #fed7aa);
+            border: 2px solid var(--warning-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .important-box h4 {
+            color: #92400e;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .important-box h4::before {
+            content: "⚠️";
+            font-size: 1.2rem;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            border: 2px solid var(--success-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .example-box h4 {
+            color: #166534;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .example-box h4::before {
+            content: "💡";
+            font-size: 1.2rem;
+        }
+
+        .quiz-section {
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .quiz-section h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .quiz-question {
+            background: var(--bg-white);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.8rem;
+            border-radius: 50%;
+            text-decoration: none;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+
+        .back-to-top:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .concept-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .process-diagram {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Breadcrumb Navigation -->
+        <div class="breadcrumb">
+            <a href="index.html">🏠 Hauptseite</a> → 
+            <a href="#technische-informatik">Technische Informatik III & IV</a> → 
+            <span>Betriebssysteme</span>
+        </div>
+
+        <!-- Header -->
+        <header class="header">
+            <h1>💻 Betriebssysteme</h1>
+            <p>Das Herzstück jedes Computers - Verständlich erklärt</p>
+        </header>
+
+        <!-- Navigation Menu -->
+        <div class="nav-menu">
+            <h3>📋 Inhaltsübersicht</h3>
+            <div class="nav-links">
+                <a href="#grundlagen" class="nav-link">Was ist ein Betriebssystem?</a>
+                <a href="#aufgaben" class="nav-link">Aufgaben & Funktionen</a>
+                <a href="#architektur" class="nav-link">Architektur & Aufbau</a>
+                <a href="#prozesse" class="nav-link">Prozesse & Threads</a>
+                <a href="#scheduling" class="nav-link">Scheduling</a>
+                <a href="#speicher" class="nav-link">Speicherverwaltung</a>
+                <a href="#dateisysteme" class="nav-link">Dateisysteme</a>
+                <a href="#sicherheit" class="nav-link">Sicherheit & Rechte</a>
+            </div>
+        </div>
+
+        <!-- Grundlagen -->
+        <section id="grundlagen" class="section">
+            <div class="section-header">
+                <h2>🎯 Was ist ein Betriebssystem?</h2>
+                <p>Die Grundlagen verstehen - von Null auf Hundert</p>
+            </div>
+            <div class="section-content">
+                <div class="intro-box">
+                    <h3>🤔 Stell dir vor...</h3>
+                    <p>Du willst ein Foto bearbeiten, Musik hören und gleichzeitig im Internet surfen. Wer sorgt dafür, dass dein Computer all diese Aufgaben gleichzeitig bewältigen kann, ohne dass sich die Programme gegenseitig stören? Das ist die Aufgabe des Betriebssystems!</p>
+                </div>
+
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>📖 Definition</h4>
+                        <p>Ein <strong>Betriebssystem</strong> (OS = Operating System) ist eine Sammlung von Programmen, die als Vermittler zwischen Hardware und Anwendungssoftware fungiert. Es verwaltet alle Ressourcen des Computers und stellt anderen Programmen Dienste zur Verfügung.</p>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>🎭 Die Rolle des Betriebssystems</h4>
+                        <p>Das OS ist wie der <strong>Manager eines Hotels</strong>: Es verwaltet die Zimmer (Speicher), koordiniert das Personal (Prozesse), sorgt für Sicherheit (Zugriffsrechte) und stellt sicher, dass alle Gäste (Programme) zufrieden sind.</p>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>🌟 Bekannte Beispiele</h4>
+                        <ul style="margin-top: 0.5rem;">
+                            <li><strong>Windows</strong> (Microsoft)</li>
+                            <li><strong>macOS</strong> (Apple)</li>
+                            <li><strong>Linux</strong> (Open Source)</li>
+                            <li><strong>Android</strong> (Mobile)</li>
+                            <li><strong>iOS</strong> (Mobile)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="diagram">
+                    <h4>🏗️ Schichten-Architektur eines Betriebssystems</h4>
+                    <div class="os-layers">
+                        <div class="layer user">👤 Benutzer</div>
+                        <div class="layer applications">📱 Anwendungsprogramme (Word, Browser, Spiele)</div>
+                        <div class="layer system">⚙️ Systemdienste & API</div>
+                        <div class="layer kernel">🔧 Betriebssystem-Kern (Kernel)</div>
+                        <div class="layer hardware">🖥️ Hardware (CPU, RAM, Festplatte)</div>
+                    </div>
+                    <p style="margin-top: 1rem; font-style: italic;">Jede Schicht kommuniziert nur mit der direkt darüber- und darunterliegenden Schicht</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Aufgaben und Funktionen -->
+        <section id="aufgaben" class="section">
+            <div class="section-header">
+                <h2>⚙️ Aufgaben und Funktionen</h2>
+                <p>Was macht ein Betriebssystem eigentlich den ganzen Tag?</p>
+            </div>
+            <div class="section-content">
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>🎯 Prozessmanagement</h4>
+                        <p>Verwaltung aller laufenden Programme (Prozesse). Das OS entscheidet, welches Programm wann die CPU verwenden darf und sorgt dafür, dass Programme nicht miteinander kollidieren.</p>
+                        <div class="example-box">
+                            <h4>Beispiel</h4>
+                            <p>Du hörst Musik, während du gleichzeitig einen Text schreibst. Das OS wechselt blitzschnell zwischen beiden Programmen hin und her.</p>
+                        </div>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>🧠 Speicherverwaltung</h4>
+                        <p>Zuteilung und Verwaltung des Arbeitsspeichers (RAM). Jedes Programm bekommt seinen eigenen Speicherbereich, und das OS sorgt dafür, dass Programme nicht in fremde Bereiche zugreifen.</p>
+                        <div class="important-box">
+                            <h4>Wichtig!</h4>
+                            <p>Ohne Speicherverwaltung würden Programme sich gegenseitig überschreiben und zum Absturz bringen.</p>
+                        </div>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>📁 Dateisystem-Verwaltung</h4>
+                        <p>Organisation und Verwaltung von Dateien und Ordnern auf Speichermedien. Das OS weiß, wo jede Datei gespeichert ist und wie man sie wiederfindet.</p>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>🔌 Geräte-Verwaltung</h4>
+                        <p>Kommunikation mit Hardware-Komponenten über Gerätetreiber. Drucker, Maus, Tastatur - alles wird vom OS koordiniert.</p>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>🛡️ Sicherheit & Schutz</h4>
+                        <p>Schutz vor unbefugtem Zugriff und Isolierung von Programmen. Das OS kontrolliert, wer was darf.</p>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>👥 Benutzer-Interface</h4>
+                        <p>Bereitstellung einer Schnittstelle zwischen Mensch und Maschine (GUI oder Kommandozeile).</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Architektur und Aufbau -->
+        <section id="architektur" class="section">
+            <div class="section-header">
+                <h2>🏗️ Architektur und Aufbau</h2>
+                <p>Wie ist ein Betriebssystem intern strukturiert?</p>
+            </div>
+            <div class="section-content">
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>🔧 Der Kernel (Betriebssystem-Kern)</h4>
+                        <p>Das <strong>Herzstück</strong> des Betriebssystems. Der Kernel läuft im privilegierten Modus und hat direkten Zugriff auf die Hardware. Er ist verantwortlich für:</p>
+                        <ul style="margin-top: 0.5rem;">
+                            <li>Prozess-Scheduling</li>
+                            <li>Speicher-Management</li>
+                            <li>Hardware-Abstraction</li>
+                            <li>System-Calls</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>🏠 Betriebsarten</h4>
+                        <p><strong>User Mode vs. Kernel Mode</strong></p>
+                        <ul style="margin-top: 0.5rem;">
+                            <li><strong>User Mode:</strong> Eingeschränkte Rechte, normale Programme laufen hier</li>
+                            <li><strong>Kernel Mode:</strong> Vollzugriff auf Hardware, nur OS-Kernel läuft hier</li>
+                        </ul>
+                        <div class="important-box">
+                            <h4>Warum diese Trennung?</h4>
+                            <p>Sicherheit! Ein fehlerhaftes Programm im User Mode kann das System nicht zum Absturz bringen.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="diagram">
+                    <h4>🔄 System Call Mechanismus</h4>
+                    <div class="code-block">
+// Wenn ein Programm eine Datei öffnen möchte:
+1. Programm ruft open("datei.txt") auf
+2. System Call wird ausgelöst
+3. Wechsel vom User Mode zum Kernel Mode
+4. Kernel öffnet die Datei
+5. Rückgabe an das Programm
+6. Wechsel zurück zum User Mode</div>
+                    <p>System Calls sind die "Hotline" zwischen Anwendungen und dem Betriebssystem</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Prozesse und Threads -->
+        <section id="prozesse" class="section">
+            <div class="section-header">
+                <h2>🔄 Prozesse und Threads</h2>
+                <p>Wie Programme im System leben und arbeiten</p>
+            </div>
+            <div class="section-content">
+                <div class="intro-box">
+                    <h3>🤔 Was ist der Unterschied zwischen Programm und Prozess?</h3>
+                    <p><strong>Programm:</strong> Eine Datei auf der Festplatte (wie ein Kochrezept)<br>
+                    <strong>Prozess:</strong> Ein ausgeführtes Programm im Speicher (wie das tatsächliche Kochen)</p>
+                </div>
+
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>⚡ Prozess</h4>
+                        <p>Ein <strong>Prozess</strong> ist eine Instanz eines ausgeführten Programms. Jeder Prozess hat:</p>
+                        <ul style="margin-top: 0.5rem;">
+                            <li>Eigenen Speicherbereich</li>
+                            <li>Eindeutige Prozess-ID (PID)</li>
+                            <li>Eigene Ressourcen</li>
+                            <li>Mindestens einen Thread</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>🧵 Thread</h4>
+                        <p>Ein <strong>Thread</strong> ist ein Ausführungsstrang innerhalb eines Prozesses. Mehrere Threads teilen sich:</p>
+                        <ul style="margin-top: 0.5rem;">
+                            <li>Denselben Speicherbereich</li>
+                            <li>Dieselben Ressourcen</li>
+                            <li>Aber eigene CPU-Register</li>
+                            <li>Eigenen Stack</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="diagram">
+                    <h4>🔄 Prozess-Zustände</h4>
+                    <div class="process-diagram">
+                        <div class="process-box">Bereit<br><small>Ready</small></div>
+                        <div class="process-box running">Laufend<br><small>Running</small></div>
+                        <div class="process-box waiting">Wartend<br><small>Waiting</small></div>
+                        <div class="process-box terminated">Beendet<br><small>Terminated</small></div>
+                    </div>
+                    <div style="margin-top: 1rem;">
+                        <p><strong>Bereit:</strong> Prozess kann ausgeführt werden, wartet auf CPU</p>
+                        <p><strong>Laufend:</strong> Prozess wird gerade von der CPU ausgeführt</p>
+                        <p><strong>Wartend:</strong> Prozess wartet auf ein Ereignis (z.B. Eingabe)</p>
+                        <p><strong>Beendet:</strong> Prozess ist fertig und wird aufgeräumt</p>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>Praktisches Beispiel: Webbrowser</h4>
+                    <p>Ein moderner Webbrowser wie Chrome erstellt für jedes Tab einen eigenen Prozess. Wenn ein Tab abstürzt, bleiben die anderen Tabs funktionsfähig. Innerhalb jedes Tab-Prozesses laufen mehrere Threads für verschiedene Aufgaben (Rendering, JavaScript, Netzwerk).</p>
+                </div>
+
+                <div class="important-box">
+                    <h4>Mehrprozessbetrieb (Multitasking)</h4>
+                    <p>Moderne Betriebssysteme können scheinbar mehrere Programme gleichzeitig ausführen. In Wahrheit wechselt die CPU sehr schnell zwischen den Prozessen hin und her (Time-Sharing). Bei Multi-Core-Prozessoren können tatsächlich mehrere Prozesse parallel laufen.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Scheduling -->
+        <section id="scheduling" class="section">
+            <div class="section-header">
+                <h2>⏰ Scheduling - Wer darf wann ran?</h2>
+                <p>Wie das Betriebssystem entscheidet, welcher Prozess die CPU bekommt</p>
+            </div>
+            <div class="section-content">
+                <div class="intro-box">
+                    <h3>🎭 Der CPU-Scheduler ist wie ein Theaterdirektor</h3>
+                    <p>Stell dir vor, die CPU ist eine Bühne und die Prozesse sind Schauspieler. Der Scheduler entscheidet, wer wann auf die Bühne darf und wie lange er dort bleiben kann.</p>
+                </div>
+
+                <h3>🛠️ Scheduling-Algorithmen</h3>
+                
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Algorithmus</th>
+                            <th>Funktionsweise</th>
+                            <th>Vorteile</th>
+                            <th>Nachteile</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>FIFO/FCFS</strong><br><small>First In, First Out</small></td>
+                            <td>Prozesse werden in der Reihenfolge abgearbeitet, wie sie ankommen</td>
+                            <td>Einfach, fair</td>
+                            <td>Lange Wartezeiten möglich</td>
+                        </tr>
+                        <tr>
+                            <td><strong>SJF</strong><br><small>Shortest Job First</small></td>
+                            <td>Kürzeste Prozesse zuerst</td>
+                            <td>Minimiert Wartezeit</td>
+                            <td>Lange Prozesse können "verhungern"</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Round Robin</strong></td>
+                            <td>Jeder Prozess bekommt eine feste Zeitscheibe</td>
+                            <td>Fair, responsiv</td>
+                            <td>Overhead durch Kontextwechsel</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Priority Scheduling</strong></td>
+                            <td>Prozesse mit höchster Priorität zuerst</td>
+                            <td>Wichtige Aufgaben bevorzugt</td>
+                            <td>Prioritätsinversion möglich</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="example-box">
+                    <h4>Round Robin Beispiel</h4>
+                    <div class="code-block">
+Zeitscheibe: 100ms
+Prozesse: A (300ms), B (200ms), C (100ms)
+
+Ausführungsreihenfolge:
+A(100ms) → B(100ms) → C(100ms fertig) → A(100ms) → B(100ms fertig) → A(100ms fertig)
+                    </div>
+                    <p>Jeder Prozess bekommt 100ms CPU-Zeit, dann wird gewechselt. Das sorgt für eine faire Verteilung und responsive Systeme.</p>
+                </div>
+
+                <div class="important-box">
+                    <h4>Kontextwechsel (Context Switch)</h4>
+                    <p>Wenn die CPU von einem Prozess zum anderen wechselt, muss der aktuelle Zustand (Register, Stack-Pointer, etc.) gespeichert und der neue Zustand geladen werden. Das kostet Zeit, aber ermöglicht Multitasking!</p>
+                </div>
+
+                <div class="concept-card">
+                    <h4>🔄 Verklemmung (Deadlock)</h4>
+                    <p>Ein gefährliches Problem: Zwei oder mehr Prozesse warten ewig aufeinander.</p>
+                    <div class="code-block">
+Beispiel Deadlock:
+Prozess A hat Ressource 1, braucht Ressource 2
+Prozess B hat Ressource 2, braucht Ressource 1
+→ Beide warten ewig!
+                    </div>
+                    <p><strong>Lösungen:</strong> Deadlock-Vermeidung, -Erkennung oder -Auflösung durch das OS</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Speicherverwaltung -->
+        <section id="speicher" class="section">
+            <div class="section-header">
+                <h2>🧠 Speicherverwaltung</h2>
+                <p>Wie das OS den wertvollen Arbeitsspeicher verwaltet</p>
+            </div>
+            <div class="section-content">
+                <div class="intro-box">
+                    <h3>🏢 Der Arbeitsspeicher ist wie ein Bürogebäude</h3>
+                    <p>Jedes Programm braucht "Büroräume" (Speicherplatz). Das OS ist der Hausmeister, der entscheidet, wer welche Räume bekommt und darauf achtet, dass niemand in fremde Büros eindringt.</p>
+                </div>
+
+                <div class="diagram">
+                    <h4>🏗️ Speicher-Layout eines Prozesses</h4>
+                    <div class="memory-diagram">
+                        <div class="memory-block os">Stack (lokale Variablen, Funktionsaufrufe)</div>
+                        <div class="memory-block free">Freier Speicher</div>
+                        <div class="memory-block process1">Heap (dynamische Speicherallokation)</div>
+                        <div class="memory-block process2">Daten-Segment (globale/statische Variablen)</div>
+                        <div class="memory-block os">Code-Segment (Programmcode)</div>
+                    </div>
+                </div>
+
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>📊 Speicherarten</h4>
+                        <ul>
+                            <li><strong>Stack:</strong> Lokale Variablen, automatische Verwaltung</li>
+                            <li><strong>Heap:</strong> Dynamisch allokierter Speicher (malloc/new)</li>
+                            <li><strong>Data:</strong> Globale und statische Variablen</li>
+                            <li><strong>Code:</strong> Der eigentliche Programmcode</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>🔒 Speicherschutz</h4>
+                        <p>Jeder Prozess hat seinen eigenen virtuellen Adressraum. Das OS sorgt dafür, dass Prozesse nicht in fremden Speicher zugreifen können.</p>
+                        <div class="important-box">
+                            <h4>Warum wichtig?</h4>
+                            <p>Ohne Speicherschutz könnte ein fehlerhaftes Programm andere Programme oder sogar das OS zum Absturz bringen!</p>
+                        </div>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>💾 Virtueller Speicher</h4>
+                        <p>Jeder Prozess "denkt", er hat den ganzen Speicher für sich allein. Das OS übersetzt virtuelle in physische Adressen.</p>
+                        <div class="example-box">
+                            <h4>Praktischer Nutzen</h4>
+                            <p>Programme können größer sein als der verfügbare RAM. Nicht verwendete Teile werden auf die Festplatte ausgelagert (Swapping).</p>
+                        </div>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>📄 Paging</h4>
+                        <p>Der Speicher wird in gleich große Blöcke (Pages/Seiten) aufgeteilt. Das ermöglicht effiziente Verwaltung und Fragmentierung wird vermieden.</p>
+                        <div class="code-block">
+Page-Größe: meist 4KB
+Virtuelle Adresse: 0x12345678
+Page-Nummer: 0x12345 (obere Bits)
+Offset: 0x678 (untere Bits)
+                        </div>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>🔄 Swapping</h4>
+                        <p>Wenn der RAM voll ist, werden inaktive Pages auf die Festplatte ausgelagert. Bei Bedarf werden sie zurückgeholt.</p>
+                        <div class="important-box">
+                            <h4>Performance-Tipp</h4>
+                            <p>Zu viel Swapping (Thrashing) macht das System langsam. Mehr RAM ist oft die beste Lösung!</p>
+                        </div>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>🧩 Fragmentierung</h4>
+                        <p><strong>Interne Frag.:</strong> Verschwendung innerhalb zugeteilter Blöcke<br>
+                        <strong>Externe Frag.:</strong> Freie Speicherblöcke sind zu klein</p>
+                        <p><strong>Lösung:</strong> Paging eliminiert externe Fragmentierung!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dateisysteme -->
+        <section id="dateisysteme" class="section">
+            <div class="section-header">
+                <h2>📁 Dateisysteme</h2>
+                <p>Wie das OS Dateien und Ordner verwaltet</p>
+            </div>
+            <div class="section-content">
+                <div class="intro-box">
+                    <h3>📚 Das Dateisystem ist wie eine riesige Bibliothek</h3>
+                    <p>Millionen von "Büchern" (Dateien) müssen so organisiert werden, dass man sie schnell findet und nichts verloren geht. Das Dateisystem ist das Ordnungssystem dieser Bibliothek.</p>
+                </div>
+
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>🗂️ Aufgaben des Dateisystems</h4>
+                        <ul>
+                            <li><strong>Speicherung:</strong> Dateien auf Speichermedien ablegen</li>
+                            <li><strong>Organisation:</strong> Verzeichnisstrukturen verwalten</li>
+                            <li><strong>Zugriff:</strong> Schnelles Finden und Öffnen von Dateien</li>
+                            <li><strong>Sicherheit:</strong> Zugriffsrechte kontrollieren</li>
+                            <li><strong>Integrität:</strong> Datenverlust verhindern</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>🏗️ Dateisystem-Strukturen</h4>
+                        <p><strong>Hierarchische Struktur:</strong> Dateien sind in Verzeichnissen (Ordnern) organisiert, die wiederum Unterverzeichnisse enthalten können.</p>
+                        <div class="code-block">
+/
+├── home/
+│   └── benutzer/
+│       ├── dokumente/
+│       └── bilder/
+├── system/
+└── programme/
+                        </div>
+                    </div>
+                </div>
+
+                <h3>💾 Wichtige Dateisystem-Typen</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Dateisystem</th>
+                            <th>Betriebssystem</th>
+                            <th>Max. Dateigröße</th>
+                            <th>Besonderheiten</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>FAT32</strong></td>
+                            <td>Windows, Universal</td>
+                            <td>4 GB</td>
+                            <td>Einfach, weit verbreitet</td>
+                        </tr>
+                        <tr>
+                            <td><strong>NTFS</strong></td>
+                            <td>Windows</td>
+                            <td>16 TB</td>
+                            <td>Berechtigungen, Komprimierung</td>
+                        </tr>
+                        <tr>
+                            <td><strong>EXT4</strong></td>
+                            <td>Linux</td>
+                            <td>16 TB</td>
+                            <td>Journaling, stabil</td>
+                        </tr>
+                        <tr>
+                            <td><strong>APFS</strong></td>
+                            <td>macOS</td>
+                            <td>8 EB</td>
+                            <td>Verschlüsselung, Snapshots</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>📋 File Allocation Table (FAT)</h4>
+                        <p>Eine Tabelle, die festhält, wo auf der Festplatte die einzelnen Teile einer Datei gespeichert sind.</p>
+                        <div class="code-block">
+Datei "foto.jpg" belegt Cluster:
+FAT[100] = 101  // Cluster 100 → 101
+FAT[101] = 102  // Cluster 101 → 102  
+FAT[102] = EOF  // Ende der Datei
+                        </div>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>🔧 Partitionen</h4>
+                        <p>Eine Festplatte kann in mehrere logische Bereiche aufgeteilt werden. Jede Partition kann ein eigenes Dateisystem haben.</p>
+                        <div class="example-box">
+                            <h4>Typische Aufteilung</h4>
+                            <p>C: System (Windows)<br>
+                            D: Programme<br>
+                            E: Daten</p>
+                        </div>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>🗑️ Fragmentierung</h4>
+                        <p>Dateien werden nicht immer zusammenhängend gespeichert, sondern in Fragmenten über die Festplatte verteilt. Das verlangsamt den Zugriff.</p>
+                        <div class="important-box">
+                            <h4>Lösung</h4>
+                            <p>Defragmentierung ordnet die Dateien neu und legt sie zusammenhängend ab. Bei SSDs ist das nicht nötig!</p>
+                        </div>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>📝 Journaling</h4>
+                        <p>Moderne Dateisysteme führen ein "Tagebuch" aller Änderungen. Bei einem Systemabsturz können unvollständige Operationen rückgängig gemacht werden.</p>
+                        <div class="example-box">
+                            <h4>Ablauf</h4>
+                            <p>1. Schreibe in Journal: "Werde Datei X ändern"<br>
+                            2. Ändere Datei X<br>
+                            3. Lösche Journal-Eintrag</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sicherheit und Zugriffsrechte -->
+        <section id="sicherheit" class="section">
+            <div class="section-header">
+                <h2>🛡️ Sicherheit & Zugriffsrechte</h2>
+                <p>Wie das OS für Sicherheit und kontrollierte Zugriffe sorgt</p>
+            </div>
+            <div class="section-content">
+                <div class="intro-box">
+                    <h3>🏰 Sicherheit ist wie ein Burgensystem</h3>
+                    <p>Das Betriebssystem ist die Burg, die alle Ressourcen schützt. Es gibt verschiedene Sicherheitsebenen - von der äußeren Mauer (Login) bis zu den innersten Kammern (Kernel-Speicher).</p>
+                </div>
+
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>👤 Benutzerverwaltung</h4>
+                        <p>Das OS unterscheidet zwischen verschiedenen Benutzern und Benutzergruppen mit unterschiedlichen Rechten.</p>
+                        <ul style="margin-top: 0.5rem;">
+                            <li><strong>Administrator/Root:</strong> Vollzugriff auf das System</li>
+                            <li><strong>Normale Benutzer:</strong> Eingeschränkte Rechte</li>
+                            <li><strong>Gäste:</strong> Minimale Rechte</li>
+                            <li><strong>Systemdienste:</strong> Spezielle Service-Accounts</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>📋 Zugriffsrechte</h4>
+                        <p>Jede Datei und jedes Verzeichnis hat Zugriffsrechte, die bestimmen, wer was darf.</p>
+                        <div class="code-block">
+Unix/Linux Rechte:
+rwxrwxrwx
+├┼┼─ Owner (Besitzer)
+ ├┼─ Group (Gruppe)  
+  └─ Other (Alle anderen)
+
+r = read (lesen)
+w = write (schreiben)  
+x = execute (ausführen)
+                        </div>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>🔐 Authentifizierung</h4>
+                        <p>Wie das System überprüft, dass Benutzer wirklich die sind, für die sie sich ausgeben.</p>
+                        <ul style="margin-top: 0.5rem;">
+                            <li><strong>Passwörter:</strong> "Etwas, das du weißt"</li>
+                            <li><strong>Biometrie:</strong> "Etwas, das du bist"</li>
+                            <li><strong>Token/Cards:</strong> "Etwas, das du hast"</li>
+                            <li><strong>2FA:</strong> Kombination mehrerer Methoden</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>🛡️ Sicherheitsmechanismen</h4>
+                        <p>Verschiedene Schutzmaßnahmen des Betriebssystems:</p>
+                        <ul style="margin-top: 0.5rem;">
+                            <li><strong>Memory Protection:</strong> Prozesse können nicht in fremden Speicher</li>
+                            <li><strong>Sandbox:</strong> Programme laufen in isolierten Umgebungen</li>
+                            <li><strong>Access Control Lists:</strong> Detaillierte Rechtevergabe</li>
+                            <li><strong>Antivirus-Integration:</strong> Schutz vor Schadsoftware</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="important-box">
+                    <h4>Prinzip der minimalen Rechte</h4>
+                    <p>Jeder Benutzer und jedes Programm sollte nur die Rechte haben, die für seine Aufgabe unbedingt nötig sind. Das minimiert Sicherheitsrisiken!</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>Windows UAC (User Account Control)</h4>
+                    <p>Auch Administratoren arbeiten normalerweise mit eingeschränkten Rechten. Nur bei administrativen Aufgaben wird nachgefragt und temporär erhöhte Rechte vergeben.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Prüfungsvorbereitung -->
+        <section class="section">
+            <div class="section-header">
+                <h2>📝 Prüfungsvorbereitung</h2>
+                <p>Wichtige Konzepte und typische Prüfungsfragen</p>
+            </div>
+            <div class="section-content">
+                <div class="quiz-section">
+                    <h4>🧠 Selbsttest - Verstehst du die Grundlagen?</h4>
+                    
+                    <div class="quiz-question">
+                        <p><strong>Frage 1:</strong> Erkläre den Unterschied zwischen Programm und Prozess.</p>
+                        <div style="margin-top: 0.5rem; font-size: 0.9rem; color: var(--text-light);">
+                            <em>Tipp: Denke an das Kochrezept-Beispiel!</em>
+                        </div>
+                    </div>
+
+                    <div class="quiz-question">
+                        <p><strong>Frage 2:</strong> Warum gibt es User Mode und Kernel Mode?</p>
+                    </div>
+
+                    <div class="quiz-question">
+                        <p><strong>Frage 3:</strong> Was ist ein Deadlock und wie kann er vermieden werden?</p>
+                    </div>
+
+                    <div class="quiz-question">
+                        <p><strong>Frage 4:</strong> Erkläre das Konzept des virtuellen Speichers.</p>
+                    </div>
+
+                    <div class="quiz-question">
+                        <p><strong>Frage 5:</strong> Welche Vorteile hat Journaling in Dateisystemen?</p>
+                    </div>
+                </div>
+
+                <div class="important-box">
+                    <h4>Klausur-Tipp: Typische Aufgabentypen</h4>
+                    <ul>
+                        <li>Scheduling-Algorithmen anwenden und vergleichen</li>
+                        <li>Prozess-Zustandsdiagramme zeichnen</li>
+                        <li>Speicher-Layout von Prozessen erklären</li>
+                        <li>Dateisystem-Eigenschaften vergleichen</li>
+                        <li>Sicherheitsmechanismen beschreiben</li>
+                        <li>Vor- und Nachteile verschiedener OS-Konzepte diskutieren</li>
+                    </ul>
+                </div>
+
+                <div class="concept-grid">
+                    <div class="concept-card">
+                        <h4>📚 Wichtige Begriffe zum Lernen</h4>
+                        <ul style="font-size: 0.9rem;">
+                            <li>Kernel vs. User Mode</li>
+                            <li>System Calls</li>
+                            <li>Context Switch</li>
+                            <li>Virtual Memory</li>
+                            <li>Paging vs. Segmentation</li>
+                            <li>Thrashing</li>
+                            <li>Deadlock vs. Starvation</li>
+                            <li>FAT vs. NTFS vs. EXT4</li>
+                            <li>Journaling</li>
+                            <li>Access Control Lists</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>🎯 Lernstrategie</h4>
+                        <ol style="font-size: 0.9rem;">
+                            <li><strong>Verstehen:</strong> Konzepte mit eigenen Worten erklären können</li>
+                            <li><strong>Anwenden:</strong> Algorithmen durchrechnen üben</li>
+                            <li><strong>Vergleichen:</strong> Vor- und Nachteile gegenüberstellen</li>
+                            <li><strong>Beispiele:</strong> Konkrete Situationen durchdenken</li>
+                            <li><strong>Wiederholung:</strong> Regelmäßig wiederholen!</li>
+                        </ol>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--bg-white); border-radius: 16px; border: 1px solid var(--border-color);">
+            <p><strong>🎓 Abitur 2026 - Betriebssysteme</strong></p>
+            <p style="margin-top: 0.5rem; color: var(--text-light); font-size: 0.9rem;">
+                Technische Informatik III & IV • Baden-Württemberg Bildungsplan 2019<br>
+                <em>Systematisch aufbereitet für optimale Prüfungsvorbereitung</em>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Back to Top Button -->
+    <a href="#" class="back-to-top" onclick="window.scrollTo(0,0); return false;">↑</a>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({ behavior: 'smooth' });
+                }
+            });
+        });
+
+        // Highlight active navigation item
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('section[id]');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.style.background = '';
+                link.style.color = '';
+                if (link.getAttribute('href') === '#' + current) {
+                    link.style.background = 'var(--primary-color)';
+                    link.style.color = 'white';
+                }
+            });
+        });
+    </script>
+</body>
+</html>

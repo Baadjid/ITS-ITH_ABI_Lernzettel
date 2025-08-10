@@ -1,0 +1,1321 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Klassen & Objekte - Objektorientierte Programmierung</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --code-bg: #1e293b;
+            --code-text: #e2e8f0;
+            --highlight-bg: #fef3c7;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: var(--bg-white);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .breadcrumb span {
+            margin: 0 0.5rem;
+            color: var(--text-light);
+        }
+
+        .content-section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .intro-box {
+            background: var(--highlight-bg);
+            border: 2px solid var(--warning-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .intro-box h3 {
+            color: var(--warning-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .definition-box {
+            background: #e0f2fe;
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .definition-box .term {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+            position: relative;
+            border: 1px solid #334155;
+        }
+
+        .code-block::before {
+            content: 'Java';
+            position: absolute;
+            top: 0.5rem;
+            right: 0.5rem;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: bold;
+        }
+
+        .code-block pre {
+            margin: 0;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            white-space: pre-wrap;
+            word-wrap: break-word;
+        }
+
+        .code-block .keyword {
+            color: #f97316;
+            font-weight: bold;
+        }
+
+        .code-block .string {
+            color: #22c55e;
+        }
+
+        .code-block .comment {
+            color: #64748b;
+            font-style: italic;
+        }
+
+        .code-block .class-name {
+            color: #06b6d4;
+            font-weight: bold;
+        }
+
+        .code-block .method {
+            color: #a855f7;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: white;
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            vertical-align: top;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .example-box {
+            background: #f0fdf4;
+            border: 2px solid var(--success-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .example-box h4 {
+            color: var(--success-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .analogy-box {
+            background: #fdf4ff;
+            border: 2px solid #a855f7;
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .analogy-box h4 {
+            color: #a855f7;
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .step-list {
+            counter-reset: step-counter;
+            list-style: none;
+            margin: 1.5rem 0;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .step-list li::before {
+            content: "Schritt " counter(step-counter) ": ";
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .important-note {
+            background: #fee2e2;
+            border: 2px solid var(--danger-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .important-note h4 {
+            color: var(--danger-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            gap: 1rem;
+        }
+
+        .nav-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-button.disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .visual-diagram {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 2rem;
+            background: var(--bg-light);
+            border-radius: 12px;
+            border: 2px dashed var(--primary-color);
+        }
+
+        .class-diagram {
+            display: inline-block;
+            background: white;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            margin: 1rem;
+            padding: 1rem;
+            min-width: 200px;
+        }
+
+        .class-name {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem;
+            text-align: center;
+            font-weight: bold;
+            margin: -1rem -1rem 1rem -1rem;
+        }
+
+        .attributes, .methods {
+            text-align: left;
+            font-family: monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+        }
+
+        .separator {
+            border-top: 1px solid var(--border-color);
+            margin: 0.5rem 0;
+        }
+
+        details {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        summary {
+            cursor: pointer;
+            font-weight: bold;
+            color: var(--primary-color);
+            padding: 0.5rem;
+            border-radius: 4px;
+            background: #e9ecef;
+        }
+
+        summary:hover {
+            background: #dee2e6;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+            }
+            
+            .code-block {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">🏠 Hauptseite</a>
+            <span>→</span>
+            <a href="oop-grundlagen.html">Objektorientierter Entwurf I</a>
+            <span>→</span>
+            <strong>Klassen & Objekte</strong>
+        </div>
+
+        <header class="header">
+            <h1>🏗️ Klassen & Objekte</h1>
+            <p>Die Grundbausteine der objektorientierten Programmierung</p>
+        </header>
+
+        <div class="intro-box">
+            <h3>🎯 Was lernst du hier?</h3>
+            <p>In diesem Kapitel lernst du die wichtigsten Konzepte der objektorientierten Programmierung kennen: <strong>Klassen</strong> und <strong>Objekte</strong>. Diese sind das Fundament von Java und vielen anderen modernen Programmiersprachen. Nach diesem Kapitel verstehst du, wie man Code strukturiert organisiert und warum das so wichtig ist!</p>
+        </div>
+
+        <!-- Was sind Klassen und Objekte? -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>🤔 Was sind Klassen und Objekte?</h2>
+                <p>Die wichtigsten Begriffe einfach erklärt</p>
+            </div>
+            <div class="section-content">
+                <div class="analogy-box">
+                    <h4>🏗️ Denk an einen Bauplan für ein Haus!</h4>
+                    <p><strong>Klasse</strong> = Der <em>Bauplan</em> für ein Haus. Er zeigt, wie das Haus aussehen soll: Wie viele Zimmer, welche Farbe, wo die Türen sind...</p>
+                    <p><strong>Objekt</strong> = Ein <em>fertiges Haus</em>, das nach diesem Bauplan gebaut wurde. Du kannst viele Häuser nach dem gleichen Plan bauen, aber jedes kann unterschiedlich aussehen (andere Farbe, andere Möbel).</p>
+                </div>
+
+                <div class="definition-box">
+                    <div class="term">Klasse (Class)</div>
+                    <p>Eine <strong>Klasse</strong> ist ein Bauplan oder Template für Objekte. Sie definiert:</p>
+                    <ul>
+                        <li><strong>Attribute</strong> (Eigenschaften) - Was das Objekt "hat"</li>
+                        <li><strong>Methoden</strong> (Verhalten) - Was das Objekt "kann"</li>
+                    </ul>
+                </div>
+
+                <div class="definition-box">
+                    <div class="term">Objekt (Object)</div>
+                    <p>Ein <strong>Objekt</strong> ist eine konkrete Instanz einer Klasse mit spezifischen Werten für die Attribute. Aus einer Klasse können viele verschiedene Objekte erstellt werden.</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>🚗 Beispiel: Auto</h4>
+                    <p><strong>Klasse "Auto"</strong> könnte definieren:</p>
+                    <ul>
+                        <li><strong>Attribute:</strong> Marke, Farbe, Baujahr, Kilometerstand</li>
+                        <li><strong>Methoden:</strong> fahren(), bremsen(), hupen()</li>
+                    </ul>
+                    
+                    <p><strong>Objekte</strong> wären dann konkrete Autos:</p>
+                    <ul>
+                        <li>Auto1: BMW, rot, 2020, 15.000 km</li>
+                        <li>Auto2: Mercedes, blau, 2019, 25.000 km</li>
+                        <li>Auto3: VW, weiß, 2021, 8.000 km</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Grundbegriffe -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>📚 Wichtige Grundbegriffe</h2>
+                <p>Diese Begriffe musst du unbedingt verstehen</p>
+            </div>
+            <div class="section-content">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Begriff</th>
+                            <th>Erklärung</th>
+                            <th>Beispiel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Attribut</strong></td>
+                            <td>Beschreibt den Zustand eines Objekts - die "Eigenschaften" oder "Daten"</td>
+                            <td>name, alter, farbe</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Methode</strong></td>
+                            <td>Beschreibt das Verhalten eines Objekts - was es "tun kann"</td>
+                            <td>fahren(), sprechen(), berechnen()</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Konstruktor</strong></td>
+                            <td>Spezielle Methode, die beim Erstellen eines Objekts aufgerufen wird</td>
+                            <td>new Auto("BMW", 2020)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kapselung</strong></td>
+                            <td>Interne Eigenschaften werden versteckt, Zugriff nur über bestimmte Methoden</td>
+                            <td>private Attribute + get/set-Methoden</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Identität</strong></td>
+                            <td>Jedes Objekt ist einzigartig, auch wenn es gleiche Werte hat</td>
+                            <td>Zwei identische Autos sind trotzdem verschiedene Objekte</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- Praktisches Beispiel -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>💻 Deine erste Klasse in Java</h2>
+                <p>Schritt für Schritt erklärt</p>
+            </div>
+            <div class="section-content">
+                <p>Lass uns zusammen eine einfache Klasse "Person" erstellen:</p>
+
+                <div class="code-block">
+<pre><span class="keyword">public class</span> <span class="class-name">Person</span> {
+    <span class="comment">// Attribute (private = von außen nicht direkt zugreifbar)</span>
+    <span class="keyword">private</span> String name;
+    <span class="keyword">private</span> <span class="keyword">int</span> alter;
+    <span class="keyword">private</span> String email;
+    
+    <span class="comment">// Konstruktor - wird beim Erstellen eines Objekts aufgerufen</span>
+    <span class="keyword">public</span> <span class="method">Person</span>(String name, <span class="keyword">int</span> alter, String email) {
+        <span class="keyword">this</span>.name = name;      <span class="comment">// "this" bezieht sich auf das aktuelle Objekt</span>
+        <span class="keyword">this</span>.alter = alter;
+        <span class="keyword">this</span>.email = email;
+    }
+    
+    <span class="comment">// Standard-Konstruktor (ohne Parameter)</span>
+    <span class="keyword">public</span> <span class="method">Person</span>() {
+        <span class="keyword">this</span>.name = <span class="string">"Unbekannt"</span>;
+        <span class="keyword">this</span>.alter = 0;
+        <span class="keyword">this</span>.email = <span class="string">"keine@email.de"</span>;
+    }
+    
+    <span class="comment">// Methoden - was die Person "kann"</span>
+    <span class="keyword">public</span> <span class="keyword">void</span> <span class="method">vorstellen</span>() {
+        System.out.println(<span class="string">"Hallo, ich bin "</span> + name + <span class="string">" und bin "</span> + alter + <span class="string">" Jahre alt."</span>);
+    }
+    
+    <span class="keyword">public</span> <span class="keyword">void</span> <span class="method">geburtstaghaben</span>() {
+        alter = alter + 1;
+        System.out.println(<span class="string">"Happy Birthday! Jetzt bin ich "</span> + alter + <span class="string">" Jahre alt."</span>);
+    }
+    
+    <span class="comment">// Getter-Methoden (um private Attribute zu lesen)</span>
+    <span class="keyword">public</span> String <span class="method">getName</span>() {
+        <span class="keyword">return</span> name;
+    }
+    
+    <span class="keyword">public</span> <span class="keyword">int</span> <span class="method">getAlter</span>() {
+        <span class="keyword">return</span> alter;
+    }
+    
+    <span class="keyword">public</span> String <span class="method">getEmail</span>() {
+        <span class="keyword">return</span> email;
+    }
+    
+    <span class="comment">// Setter-Methoden (um private Attribute zu ändern)</span>
+    <span class="keyword">public</span> <span class="keyword">void</span> <span class="method">setName</span>(String neuerName) {
+        <span class="keyword">this</span>.name = neuerName;
+    }
+    
+    <span class="keyword">public</span> <span class="keyword">void</span> <span class="method">setAlter</span>(<span class="keyword">int</span> neuesAlter) {
+        <span class="keyword">if</span> (neuesAlter >= 0) {  <span class="comment">// Validierung: Alter darf nicht negativ sein</span>
+            <span class="keyword">this</span>.alter = neuesAlter;
+        } <span class="keyword">else</span> {
+            System.out.println(<span class="string">"Fehler: Alter darf nicht negativ sein!"</span>);
+        }
+    }
+    
+    <span class="keyword">public</span> <span class="keyword">void</span> <span class="method">setEmail</span>(String neueEmail) {
+        <span class="keyword">this</span>.email = neueEmail;
+    }
+}</pre>
+                </div>
+
+                <div class="step-list">
+                    <li><strong>Klassendeklaration:</strong> <code>public class Person</code> - Hier wird die Klasse definiert</li>
+                    <li><strong>Attribute:</strong> <code>private String name;</code> - Die Eigenschaften der Person (private = geschützt)</li>
+                    <li><strong>Konstruktor:</strong> <code>public Person(...)</code> - Wird beim Erstellen aufgerufen, initialisiert die Werte</li>
+                    <li><strong>Methoden:</strong> <code>public void vorstellen()</code> - Was die Person tun kann</li>
+                    <li><strong>Getter/Setter:</strong> Sichere Zugriffe auf private Attribute</li>
+                </div>
+            </div>
+        </div>
+
+        <!-- Objekte erstellen -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>🎭 Objekte erstellen und verwenden</h2>
+                <p>Aus der Klasse werden konkrete Objekte</p>
+            </div>
+            <div class="section-content">
+                <p>Jetzt können wir aus unserer Klasse "Person" konkrete Personen-Objekte erstellen:</p>
+
+                <div class="code-block">
+<pre><span class="keyword">public class</span> <span class="class-name">PersonTest</span> {
+    <span class="keyword">public static void</span> <span class="method">main</span>(String[] args) {
+        <span class="comment">// Objekte erstellen (Instanziierung)</span>
+        <span class="class-name">Person</span> person1 = <span class="keyword">new</span> <span class="class-name">Person</span>(<span class="string">"Anna"</span>, 25, <span class="string">"anna@example.com"</span>);
+        <span class="class-name">Person</span> person2 = <span class="keyword">new</span> <span class="class-name">Person</span>(<span class="string">"Max"</span>, 30, <span class="string">"max@example.com"</span>);
+        <span class="class-name">Person</span> person3 = <span class="keyword">new</span> <span class="class-name">Person</span>(); <span class="comment">// Standard-Konstruktor</span>
+        
+        <span class="comment">// Methoden aufrufen</span>
+        person1.<span class="method">vorstellen</span>();  <span class="comment">// Ausgabe: Hallo, ich bin Anna und bin 25 Jahre alt.</span>
+        person2.<span class="method">vorstellen</span>();  <span class="comment">// Ausgabe: Hallo, ich bin Max und bin 30 Jahre alt.</span>
+        
+        <span class="comment">// Geburtstag feiern</span>
+        person1.<span class="method">geburtstaghaben</span>(); <span class="comment">// Anna wird 26</span>
+        
+        <span class="comment">// Attribute über Getter lesen</span>
+        System.out.println(<span class="string">"Name von Person 1: "</span> + person1.<span class="method">getName</span>());
+        System.out.println(<span class="string">"Alter von Person 2: "</span> + person2.<span class="method">getAlter</span>());
+        
+        <span class="comment">// Attribute über Setter ändern</span>
+        person3.<span class="method">setName</span>(<span class="string">"Lisa"</span>);
+        person3.<span class="method">setAlter</span>(22);
+        person3.<span class="method">setEmail</span>(<span class="string">"lisa@example.com"</span>);
+        person3.<span class="method">vorstellen</span>(); <span class="comment">// Ausgabe: Hallo, ich bin Lisa und bin 22 Jahre alt.</span>
+        
+        <span class="comment">// Fehlerhafte Eingabe testen</span>
+        person1.<span class="method">setAlter</span>(-5); <span class="comment">// Ausgabe: Fehler: Alter darf nicht negativ sein!</span>
+    }
+}</pre>
+                </div>
+
+                <div class="example-box">
+                    <h4>🔍 Was passiert hier?</h4>
+                    <ol>
+                        <li><strong>Objekterstellung:</strong> <code>new Person(...)</code> erstellt ein neues Objekt</li>
+                        <li><strong>Konstruktor-Aufruf:</strong> Die Werte werden automatisch gesetzt</li>
+                        <li><strong>Methoden-Aufrufe:</strong> <code>person1.vorstellen()</code> führt die Methode aus</li>
+                        <li><strong>Daten-Zugriff:</strong> Über Getter/Setter sicher auf Attribute zugreifen</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Konstruktoren im Detail -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>🔧 Konstruktoren im Detail</h2>
+                <p>Wie Objekte richtig initialisiert werden</p>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <div class="term">Was ist ein Konstruktor?</div>
+                    <p>Ein Konstruktor ist eine spezielle Methode, die automatisch aufgerufen wird, wenn ein neues Objekt erstellt wird. Er sorgt dafür, dass das Objekt in einen sinnvollen Anfangszustand versetzt wird.</p>
+                </div>
+
+                <div class="important-note">
+                    <h4>⚠️ Wichtige Regeln für Konstruktoren:</h4>
+                    <ul>
+                        <li>Hat <strong>denselben Namen</strong> wie die Klasse</li>
+                        <li>Hat <strong>keinen Rückgabetyp</strong> (auch nicht void!)</li>
+                        <li>Wird mit <code>new</code> aufgerufen</li>
+                        <li>Kann <strong>überladen</strong> werden (mehrere Versionen)</li>
+                        <li>Initialisiert die <strong>Attribute</strong> des Objekts</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+<pre><span class="keyword">public class</span> <span class="class-name">Auto</span> {
+    <span class="keyword">private</span> String marke;
+    <span class="keyword">private</span> String farbe;
+    <span class="keyword">private int</span> baujahr;
+    <span class="keyword">private double</span> preis;
+    
+    <span class="comment">// 1. Standard-Konstruktor (keine Parameter)</span>
+    <span class="keyword">public</span> <span class="method">Auto</span>() {
+        <span class="keyword">this</span>.marke = <span class="string">"Unbekannt"</span>;
+        <span class="keyword">this</span>.farbe = <span class="string">"weiß"</span>;
+        <span class="keyword">this</span>.baujahr = 2020;
+        <span class="keyword">this</span>.preis = 20000.0;
+    }
+    
+    <span class="comment">// 2. Konstruktor mit allen Parametern</span>
+    <span class="keyword">public</span> <span class="method">Auto</span>(String marke, String farbe, <span class="keyword">int</span> baujahr, <span class="keyword">double</span> preis) {
+        <span class="keyword">this</span>.marke = marke;
+        <span class="keyword">this</span>.farbe = farbe;
+        <span class="keyword">this</span>.baujahr = baujahr;
+        <span class="keyword">this</span>.preis = preis;
+    }
+    
+    <span class="comment">// 3. Konstruktor nur mit Marke und Baujahr</span>
+    <span class="keyword">public</span> <span class="method">Auto</span>(String marke, <span class="keyword">int</span> baujahr) {
+        <span class="keyword">this</span>.marke = marke;
+        <span class="keyword">this</span>.baujahr = baujahr;
+        <span class="keyword">this</span>.farbe = <span class="string">"weiß"</span>;      <span class="comment">// Standardwert</span>
+        <span class="keyword">this</span>.preis = 25000.0;     <span class="comment">// Standardwert</span>
+    }
+    
+    <span class="comment">// 4. Konstruktor mit Validierung</span>
+    <span class="keyword">public</span> <span class="method">Auto</span>(String marke, String farbe, <span class="keyword">int</span> baujahr, <span class="keyword">double</span> preis, <span class="keyword">boolean</span> validate) {
+        <span class="comment">// Eingaben prüfen</span>
+        <span class="keyword">if</span> (baujahr < 1886) {  <span class="comment">// Erstes Auto wurde 1886 gebaut</span>
+            <span class="keyword">throw new</span> IllegalArgumentException(<span class="string">"Baujahr zu alt!"</span>);
+        }
+        <span class="keyword">if</span> (preis < 0) {
+            <span class="keyword">throw new</span> IllegalArgumentException(<span class="string">"Preis darf nicht negativ sein!"</span>);
+        }
+        
+        <span class="keyword">this</span>.marke = marke;
+        <span class="keyword">this</span>.farbe = farbe;
+        <span class="keyword">this</span>.baujahr = baujahr;
+        <span class="keyword">this</span>.preis = preis;
+    }
+    
+    <span class="keyword">public</span> <span class="keyword">void</span> <span class="method">info</span>() {
+        System.out.println(marke + <span class="string">", "</span> + farbe + <span class="string">", "</span> + baujahr + <span class="string">", "</span> + preis + <span class="string">"€"</span>);
+    }
+}</pre>
+                </div>
+
+                <div class="code-block">
+<pre><span class="comment">// Verschiedene Arten, Objekte zu erstellen:</span>
+<span class="keyword">public class</span> <span class="class-name">AutoTest</span> {
+    <span class="keyword">public static void</span> <span class="method">main</span>(String[] args) {
+        <span class="comment">// Verschiedene Konstruktoren verwenden</span>
+        <span class="class-name">Auto</span> auto1 = <span class="keyword">new</span> <span class="class-name">Auto</span>();                           <span class="comment">// Standard-Konstruktor</span>
+        <span class="class-name">Auto</span> auto2 = <span class="keyword">new</span> <span class="class-name">Auto</span>(<span class="string">"BMW"</span>, <span class="string">"rot"</span>, 2021, 35000); <span class="comment">// Alle Parameter</span>
+        <span class="class-name">Auto</span> auto3 = <span class="keyword">new</span> <span class="class-name">Auto</span>(<span class="string">"Mercedes"</span>, 2020);           <span class="comment">// Nur Marke + Jahr</span>
+        
+        <span class="comment">// Ausgabe der Informationen</span>
+        auto1.<span class="method">info</span>(); <span class="comment">// Ausgabe: Unbekannt, weiß, 2020, 20000.0€</span>
+        auto2.<span class="method">info</span>(); <span class="comment">// Ausgabe: BMW, rot, 2021, 35000.0€</span>
+        auto3.<span class="method">info</span>(); <span class="comment">// Ausgabe: Mercedes, weiß, 2020, 25000.0€</span>
+    }
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Getter und Setter -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>🔐 Getter und Setter - Sichere Datenkapselung</h2>
+                <p>Warum private Attribute wichtig sind</p>
+            </div>
+            <div class="section-content">
+                <div class="analogy-box">
+                    <h4>🏠 Denk an dein Zuhause!</h4>
+                    <p>Du würdest nicht wollen, dass fremde Menschen einfach in dein Haus gehen und deine Sachen verändern können. Deshalb hast du Türen mit Schlössern. Nur du entscheidest, wer reinkommt und was verändert wird.</p>
+                    <p>Genauso ist es mit <code>private</code> Attributen - sie sind "verschlossen" und nur über spezielle "Türen" (Getter/Setter) zugänglich!</p>
+                </div>
+
+                <div class="definition-box">
+                    <div class="term">Warum private Attribute?</div>
+                    <ul>
+                        <li><strong>Schutz:</strong> Verhindert unkontrollierte Änderungen</li>
+                        <li><strong>Validierung:</strong> Eingaben können geprüft werden</li>
+                        <li><strong>Flexibilität:</strong> Interne Struktur kann geändert werden</li>
+                        <li><strong>Debugging:</strong> Fehlerquellen sind leichter zu finden</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+<pre><span class="keyword">public class</span> <span class="class-name">BankKonto</span> {
+    <span class="keyword">private</span> String inhaber;
+    <span class="keyword">private double</span> kontostand;
+    <span class="keyword">private</span> String kontonummer;
+    
+    <span class="keyword">public</span> <span class="method">BankKonto</span>(String inhaber, String kontonummer) {
+        <span class="keyword">this</span>.inhaber = inhaber;
+        <span class="keyword">this</span>.kontonummer = kontonummer;
+        <span class="keyword">this</span>.kontostand = 0.0;  <span class="comment">// Startet mit 0€</span>
+    }
+    
+    <span class="comment">// GETTER - Attribute sicher lesen</span>
+    <span class="keyword">public</span> String <span class="method">getInhaber</span>() {
+        <span class="keyword">return</span> inhaber;
+    }
+    
+    <span class="keyword">public double</span> <span class="method">getKontostand</span>() {
+        <span class="keyword">return</span> kontostand;
+    }
+    
+    <span class="keyword">public</span> String <span class="method">getKontonummer</span>() {
+        <span class="comment">// Aus Sicherheitsgründen nur teilweise anzeigen</span>
+        <span class="keyword">return</span> <span class="string">"****"</span> + kontonummer.substring(kontonummer.length() - 4);
+    }
+    
+    <span class="comment">// SETTER - Attribute sicher ändern (mit Validierung!)</span>
+    <span class="keyword">public void</span> <span class="method">setInhaber</span>(String neuerInhaber) {
+        <span class="keyword">if</span> (neuerInhaber != <span class="keyword">null</span> && !neuerInhaber.trim().isEmpty()) {
+            <span class="keyword">this</span>.inhaber = neuerInhaber;
+        } <span class="keyword">else</span> {
+            System.out.println(<span class="string">"Fehler: Inhaber-Name darf nicht leer sein!"</span>);
+        }
+    }
+    
+    <span class="comment">// Spezielle Methoden für Kontostand (nicht einfacher Setter!)</span>
+    <span class="keyword">public boolean</span> <span class="method">einzahlen</span>(<span class="keyword">double</span> betrag) {
+        <span class="keyword">if</span> (betrag > 0) {
+            kontostand += betrag;
+            System.out.println(<span class="string">"Eingezahlt: "</span> + betrag + <span class="string">"€. Neuer Kontostand: "</span> + kontostand + <span class="string">"€"</span>);
+            <span class="keyword">return true</span>;
+        } <span class="keyword">else</span> {
+            System.out.println(<span class="string">"Fehler: Betrag muss positiv sein!"</span>);
+            <span class="keyword">return false</span>;
+        }
+    }
+    
+    <span class="keyword">public boolean</span> <span class="method">abheben</span>(<span class="keyword">double</span> betrag) {
+        <span class="keyword">if</span> (betrag > 0 && betrag <= kontostand) {
+            kontostand -= betrag;
+            System.out.println(<span class="string">"Abgehoben: "</span> + betrag + <span class="string">"€. Neuer Kontostand: "</span> + kontostand + <span class="string">"€"</span>);
+            <span class="keyword">return true</span>;
+        } <span class="keyword">else if</span> (betrag <= 0) {
+            System.out.println(<span class="string">"Fehler: Betrag muss positiv sein!"</span>);
+            <span class="keyword">return false</span>;
+        } <span class="keyword">else</span> {
+            System.out.println(<span class="string">"Fehler: Nicht genug Geld auf dem Konto!"</span>);
+            <span class="keyword">return false</span>;
+        }
+    }
+}</pre>
+                </div>
+
+                <div class="example-box">
+                    <h4>✅ Vorteile von Getter/Setter:</h4>
+                    <ul>
+                        <li><strong>Kontrolle:</strong> Du entscheidest, wie auf Daten zugegriffen wird</li>
+                        <li><strong>Validierung:</strong> Falsche Eingaben werden abgefangen</li>
+                        <li><strong>Sicherheit:</strong> Sensible Daten können teilweise versteckt werden</li>
+                        <li><strong>Flexibilität:</strong> Verhalten kann später geändert werden</li>
+                    </ul>
+                </div>
+
+                <div class="code-block">
+<pre><span class="comment">// Verwendung des BankKonto:</span>
+<span class="keyword">public class</span> <span class="class-name">BankTest</span> {
+    <span class="keyword">public static void</span> <span class="method">main</span>(String[] args) {
+        <span class="class-name">BankKonto</span> meinKonto = <span class="keyword">new</span> <span class="class-name">BankKonto</span>(<span class="string">"Max Mustermann"</span>, <span class="string">"1234567890"</span>);
+        
+        <span class="comment">// Geld einzahlen</span>
+        meinKonto.<span class="method">einzahlen</span>(100.0);    <span class="comment">// Erfolgreich</span>
+        meinKonto.<span class="method">einzahlen</span>(-50.0);    <span class="comment">// Fehler: Betrag muss positiv sein!</span>
+        
+        <span class="comment">// Geld abheben</span>
+        meinKonto.<span class="method">abheben</span>(30.0);       <span class="comment">// Erfolgreich</span>
+        meinKonto.<span class="method">abheben</span>(200.0);      <span class="comment">// Fehler: Nicht genug Geld!</span>
+        
+        <span class="comment">// Daten sicher lesen</span>
+        System.out.println(<span class="string">"Inhaber: "</span> + meinKonto.<span class="method">getInhaber</span>());
+        System.out.println(<span class="string">"Kontostand: "</span> + meinKonto.<span class="method">getKontostand</span>() + <span class="string">"€"</span>);
+        System.out.println(<span class="string">"Kontonummer: "</span> + meinKonto.<span class="method">getKontonummer</span>());
+        
+        <span class="comment">// Direkter Zugriff nicht möglich (wäre ein Fehler):</span>
+        <span class="comment">// meinKonto.kontostand = 1000000; // FEHLER! private Attribute</span>
+    }
+}</pre>
+                </div>
+            </div>
+        </div>
+
+        <!-- Klassendiagramm -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>📊 Klassendiagramme - Klassen visualisieren</h2>
+                <p>Wie man Klassen grafisch darstellt</p>
+            </div>
+            <div class="section-content">
+                <p>Ein <strong>Klassendiagramm</strong> ist eine grafische Darstellung einer Klasse. Es zeigt die Struktur übersichtlich an:</p>
+
+                <div class="visual-diagram">
+                    <div class="class-diagram">
+                        <div class="class-name">Person</div>
+                        <div class="attributes">
+                            - name: String<br>
+                            - alter: int<br>
+                            - email: String
+                        </div>
+                        <div class="separator"></div>
+                        <div class="methods">
+                            + Person(name, alter, email)<br>
+                            + Person()<br>
+                            + vorstellen(): void<br>
+                            + geburtstaghaben(): void<br>
+                            + getName(): String<br>
+                            + setName(name): void<br>
+                            + getAlter(): int<br>
+                            + setAlter(alter): void
+                        </div>
+                    </div>
+                </div>
+
+                <div class="definition-box">
+                    <div class="term">Aufbau eines Klassendiagramms:</div>
+                    <ul>
+                        <li><strong>Oben:</strong> Klassenname (fett geschrieben)</li>
+                        <li><strong>Mitte:</strong> Attribute mit Datentypen</li>
+                        <li><strong>Unten:</strong> Methoden mit Parametern und Rückgabetypen</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>🔍 Symbole verstehen:</h4>
+                    <ul>
+                        <li><strong>-</strong> (Minus) = <code>private</code> (nur innerhalb der Klasse sichtbar)</li>
+                        <li><strong>+</strong> (Plus) = <code>public</code> (von überall sichtbar)</li>
+                        <li><strong>#</strong> (Hash) = <code>protected</code> (in Vererbung sichtbar)</li>
+                        <li><strong>~</strong> (Tilde) = package-private (im gleichen Paket sichtbar)</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Objektdiagramm -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>🎭 Objektdiagramme - Konkrete Objekte zeigen</h2>
+                <p>Momentaufnahmen von erstellten Objekten</p>
+            </div>
+            <div class="section-content">
+                <p>Ein <strong>Objektdiagramm</strong> zeigt konkrete Objekte mit ihren aktuellen Werten zu einem bestimmten Zeitpunkt:</p>
+
+                <div class="visual-diagram">
+                    <div class="class-diagram">
+                        <div class="class-name">person1: Person</div>
+                        <div class="attributes">
+                            name = "Anna"<br>
+                            alter = 25<br>
+                            email = "anna@example.com"
+                        </div>
+                    </div>
+                    <div class="class-diagram">
+                        <div class="class-name">person2: Person</div>
+                        <div class="attributes">
+                            name = "Max"<br>
+                            alter = 30<br>
+                            email = "max@example.com"
+                        </div>
+                    </div>
+                </div>
+
+                <div class="definition-box">
+                    <div class="term">Unterschied Klassen- vs. Objektdiagramm:</div>
+                    <ul>
+                        <li><strong>Klassendiagramm:</strong> Zeigt die Struktur (Bauplan)</li>
+                        <li><strong>Objektdiagramm:</strong> Zeigt konkrete Instanzen mit Werten</li>
+                        <li><strong>Objektname:</strong> <code>objektname : Klassenname</code> (alles unterstrichen)</li>
+                        <li><strong>Werte:</strong> Konkrete Attributwerte werden angezeigt</li>
+                        <li><strong>Keine Methoden:</strong> Nur Daten, da Verhalten gleich bleibt</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Praktische Übung -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>💪 Praktische Übung</h2>
+                <p>Jetzt bist du dran!</p>
+            </div>
+            <div class="section-content">
+                <div class="example-box">
+                    <h4>🎯 Aufgabe: Erstelle eine Klasse "Handy"</h4>
+                    <p><strong>Deine Aufgabe:</strong> Erstelle eine Klasse für ein Handy mit folgenden Anforderungen:</p>
+                    
+                    <div class="step-list">
+                        <li><strong>Attribute:</strong> marke (String), modell (String), speicher (int), batteriestand (int)</li>
+                        <li><strong>Konstruktor:</strong> Erstelle einen Konstruktor, der alle Werte setzt (Batteriestand startet bei 100%)</li>
+                        <li><strong>Methoden:</strong> 
+                            <ul>
+                                <li><code>telefonieren(int minuten)</code> - verbraucht 2% Batterie pro Minute</li>
+                                <li><code>aufladen()</code> - setzt Batteriestand auf 100%</li>
+                                <li><code>info()</code> - gibt alle Handy-Informationen aus</li>
+                            </ul>
+                        </li>
+                        <li><strong>Getter/Setter:</strong> Für alle Attribute (mit Validierung bei Batteriestand: 0-100%)</li>
+                    </div>
+                </div>
+
+                <div class="code-block">
+<pre><span class="comment">// Hier ist der Rahmen - vervollständige die Klasse:</span>
+<span class="keyword">public class</span> <span class="class-name">Handy</span> {
+    <span class="comment">// TODO: Attribute definieren</span>
+    
+    <span class="comment">// TODO: Konstruktor erstellen</span>
+    
+    <span class="comment">// TODO: Methode telefonieren() implementieren</span>
+    
+    <span class="comment">// TODO: Methode aufladen() implementieren</span>
+    
+    <span class="comment">// TODO: Methode info() implementieren</span>
+    
+    <span class="comment">// TODO: Getter und Setter für alle Attribute</span>
+}
+
+<span class="comment">// Test-Klasse:</span>
+<span class="keyword">public class</span> <span class="class-name">HandyTest</span> {
+    <span class="keyword">public static void</span> <span class="method">main</span>(String[] args) {
+        <span class="class-name">Handy</span> meinHandy = <span class="keyword">new</span> <span class="class-name">Handy</span>(<span class="string">"Samsung"</span>, <span class="string">"Galaxy S21"</span>, 128);
+        
+        meinHandy.<span class="method">info</span>();
+        meinHandy.<span class="method">telefonieren</span>(30); <span class="comment">// 30 Minuten telefonieren</span>
+        meinHandy.<span class="method">info</span>();
+        meinHandy.<span class="method">aufladen</span>();
+        meinHandy.<span class="method">info</span>();
+    }
+}</pre>
+                </div>
+
+                <div class="important-note">
+                    <h4>💡 Lösung (erst selbst versuchen!):</h4>
+                    <details>
+                        <summary>Klick hier für die Lösung</summary>
+                        <div class="code-block">
+<pre><span class="keyword">public class</span> <span class="class-name">Handy</span> {
+    <span class="keyword">private</span> String marke;
+    <span class="keyword">private</span> String modell;
+    <span class="keyword">private int</span> speicher;
+    <span class="keyword">private int</span> batteriestand;
+    
+    <span class="keyword">public</span> <span class="method">Handy</span>(String marke, String modell, <span class="keyword">int</span> speicher) {
+        <span class="keyword">this</span>.marke = marke;
+        <span class="keyword">this</span>.modell = modell;
+        <span class="keyword">this</span>.speicher = speicher;
+        <span class="keyword">this</span>.batteriestand = 100; <span class="comment">// Startet voll aufgeladen</span>
+    }
+    
+    <span class="keyword">public void</span> <span class="method">telefonieren</span>(<span class="keyword">int</span> minuten) {
+        <span class="keyword">int</span> verbrauch = minuten * 2;
+        <span class="keyword">if</span> (batteriestand >= verbrauch) {
+            batteriestand -= verbrauch;
+            System.out.println(<span class="string">"Telefoniert für "</span> + minuten + <span class="string">" Minuten. Batterie: "</span> + batteriestand + <span class="string">"%"</span>);
+        } <span class="keyword">else</span> {
+            System.out.println(<span class="string">"Nicht genug Batterie! Nur noch "</span> + batteriestand + <span class="string">"%"</span>);
+        }
+    }
+    
+    <span class="keyword">public void</span> <span class="method">aufladen</span>() {
+        batteriestand = 100;
+        System.out.println(<span class="string">"Handy aufgeladen! Batterie: 100%"</span>);
+    }
+    
+    <span class="keyword">public void</span> <span class="method">info</span>() {
+        System.out.println(<span class="string">"Handy: "</span> + marke + <span class="string">" "</span> + modell + <span class="string">", Speicher: "</span> + speicher + <span class="string">"GB, Batterie: "</span> + batteriestand + <span class="string">"%"</span>);
+    }
+    
+    <span class="comment">// Getter</span>
+    <span class="keyword">public</span> String <span class="method">getMarke</span>() { <span class="keyword">return</span> marke; }
+    <span class="keyword">public</span> String <span class="method">getModell</span>() { <span class="keyword">return</span> modell; }
+    <span class="keyword">public int</span> <span class="method">getSpeicher</span>() { <span class="keyword">return</span> speicher; }
+    <span class="keyword">public int</span> <span class="method">getBatteriestand</span>() { <span class="keyword">return</span> batteriestand; }
+    
+    <span class="comment">// Setter</span>
+    <span class="keyword">public void</span> <span class="method">setMarke</span>(String marke) { <span class="keyword">this</span>.marke = marke; }
+    <span class="keyword">public void</span> <span class="method">setModell</span>(String modell) { <span class="keyword">this</span>.modell = modell; }
+    <span class="keyword">public void</span> <span class="method">setSpeicher</span>(<span class="keyword">int</span> speicher) { <span class="keyword">this</span>.speicher = speicher; }
+    
+    <span class="keyword">public void</span> <span class="method">setBatteriestand</span>(<span class="keyword">int</span> batteriestand) {
+        <span class="keyword">if</span> (batteriestand >= 0 && batteriestand <= 100) {
+            <span class="keyword">this</span>.batteriestand = batteriestand;
+        } <span class="keyword">else</span> {
+            System.out.println(<span class="string">"Fehler: Batteriestand muss zwischen 0 und 100% liegen!"</span>);
+        }
+    }
+}</pre>
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+
+        <!-- Zusammenfassung -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>📝 Zusammenfassung</h2>
+                <p>Das Wichtigste auf einen Blick</p>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <div class="term">Das hast du gelernt:</div>
+                    <ul>
+                        <li>✅ <strong>Klassen</strong> sind Baupläne für Objekte</li>
+                        <li>✅ <strong>Objekte</strong> sind konkrete Instanzen von Klassen</li>
+                        <li>✅ <strong>Attribute</strong> beschreiben Eigenschaften (Was hat das Objekt?)</li>
+                        <li>✅ <strong>Methoden</strong> beschreiben Verhalten (Was kann das Objekt?)</li>
+                        <li>✅ <strong>Konstruktoren</strong> initialisieren Objekte beim Erstellen</li>
+                        <li>✅ <strong>Kapselung</strong> schützt Daten durch private Attribute</li>
+                        <li>✅ <strong>Getter/Setter</strong> ermöglichen sicheren Zugriff auf Attribute</li>
+                        <li>✅ <strong>Klassendiagramme</strong> visualisieren die Struktur</li>
+                        <li>✅ <strong>Objektdiagramme</strong> zeigen konkrete Instanzen</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>🎯 Wichtige Prüfungsthemen:</h4>
+                    <ul>
+                        <li><strong>Klassenaufbau:</strong> Attribute, Methoden, Konstruktoren</li>
+                        <li><strong>Objekt-Erstellung:</strong> <code>new Klassenname(parameter)</code></li>
+                        <li><strong>Zugriffssichtbarkeiten:</strong> private, public, protected</li>
+                        <li><strong>this-Referenz:</strong> Bezug auf aktuelles Objekt</li>
+                        <li><strong>Datenkapselung:</strong> Warum private Attribute wichtig sind</li>
+                        <li><strong>Konstruktor-Überladung:</strong> Mehrere Konstruktoren</li>
+                        <li><strong>UML-Diagramme:</strong> Klassen- und Objektdiagramme lesen und erstellen</li>
+                    </ul>
+                </div>
+
+                <div class="analogy-box">
+                    <h4>🧠 Merkhilfe:</h4>
+                    <p><strong>Klasse = Kuchenrezept, Objekt = gebackener Kuchen</strong></p>
+                    <p>Das Rezept (Klasse) beschreibt, wie der Kuchen gemacht wird. Der fertige Kuchen (Objekt) ist das konkrete Ergebnis. Du kannst mit einem Rezept viele verschiedene Kuchen backen!</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="oop-grundlagen.html" class="nav-button">← Zurück: OOP Grundlagen</a>
+	    <a href="index.html"class="nav-button">🏠 Hauptseite</a> 
+            <a href="konstruktoren.html" class="nav-button">Weiter: Konstruktoren →</a>
+        </div>
+    </div>
+
+    <script>
+        // Interactive elements
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add hover effects to code blocks
+            const codeBlocks = document.querySelectorAll('.code-block');
+            codeBlocks.forEach(block => {
+                block.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.01)';
+                    this.style.transition = 'transform 0.2s ease';
+                });
+                
+                block.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+            });
+
+
+
+            // Add copy functionality to code blocks
+            codeBlocks.forEach(block => {
+                const copyButton = document.createElement('button');
+                copyButton.textContent = '📋 Kopieren';
+                copyButton.style.cssText = `
+                    position: absolute;
+                    top: 0.5rem;
+                    left: 0.5rem;
+                    background: var(--primary-color);
+                    color: white;
+                    border: none;
+                    padding: 0.25rem 0.5rem;
+                    border-radius: 4px;
+                    font-size: 0.75rem;
+                    cursor: pointer;
+                    opacity: 0;
+                    transition: opacity 0.3s ease;
+                    z-index: 10;
+                `;
+                
+                block.style.position = 'relative';
+                block.appendChild(copyButton);
+                
+                block.addEventListener('mouseenter', () => {
+                    copyButton.style.opacity = '1';
+                });
+                
+                block.addEventListener('mouseleave', () => {
+                    copyButton.style.opacity = '0';
+                });
+                
+                copyButton.addEventListener('click', () => {
+                    const code = block.querySelector('pre').textContent;
+                    navigator.clipboard.writeText(code).then(() => {
+                        copyButton.textContent = '✅ Kopiert!';
+                        setTimeout(() => {
+                            copyButton.textContent = '📋 Kopieren';
+                        }, 2000);
+                    }).catch(() => {
+                        // Fallback für ältere Browser
+                        const textArea = document.createElement('textarea');
+                        textArea.value = code;
+                        document.body.appendChild(textArea);
+                        textArea.select();
+                        document.execCommand('copy');
+                        document.body.removeChild(textArea);
+                        copyButton.textContent = '✅ Kopiert!';
+                        setTimeout(() => {
+                            copyButton.textContent = '📋 Kopieren';
+                        }, 2000);
+                    });
+                });
+            });
+
+            // Add smooth scroll to sections
+            const sectionHeaders = document.querySelectorAll('.section-header');
+            sectionHeaders.forEach(header => {
+                header.style.cursor = 'pointer';
+                header.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    if (content.style.display === 'none') {
+                        content.style.display = 'block';
+                        content.style.animation = 'fadeIn 0.3s ease-in';
+                    } else {
+                        content.style.display = 'none';
+                    }
+                });
+            });
+
+            // Add progress indicator
+            const progressBar = document.createElement('div');
+            progressBar.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 0%;
+                height: 4px;
+                background: var(--primary-color);
+                z-index: 1000;
+                transition: width 0.3s ease;
+            `;
+            document.body.appendChild(progressBar);
+
+            window.addEventListener('scroll', () => {
+                const totalHeight = document.body.scrollHeight - window.innerHeight;
+                const progress = (window.scrollY / totalHeight) * 100;
+                progressBar.style.width = progress + '%';
+            });
+
+            // Add keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                // Ctrl + K: Focus search (if search exists)
+                if (e.ctrlKey && e.key === 'k') {
+                    e.preventDefault();
+                    const searchInput = document.querySelector('input[type="search"]');
+                    if (searchInput) searchInput.focus();
+                }
+                
+                // Escape: Close any open modals or details
+                if (e.key === 'Escape') {
+                    const openDetails = document.querySelectorAll('details[open]');
+                    openDetails.forEach(detail => detail.open = false);
+                }
+            });
+
+            // Add print-friendly styling
+            const printStyles = document.createElement('style');
+            printStyles.textContent = `
+                @media print {
+                    .nav-buttons, .breadcrumb {
+                        display: none;
+                    }
+                    .code-block {
+                        page-break-inside: avoid;
+                        border: 1px solid #000 !important;
+                        background: #f8f9fa !important;
+                        color: #000 !important;
+                    }
+                    .content-section {
+                        page-break-inside: avoid;
+                        margin-bottom: 2rem;
+                        box-shadow: none;
+                    }
+                    body {
+                        background: white !important;
+                    }
+                }
+            `;
+            document.head.appendChild(printStyles);
+
+            // Add dark mode toggle (optional feature)
+            const darkModeToggle = document.createElement('button');
+            darkModeToggle.innerHTML = '🌙';
+            darkModeToggle.title = 'Dark Mode umschalten';
+            darkModeToggle.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: var(--primary-color);
+                color: white;
+                border: none;
+                border-radius: 50%;
+                width: 50px;
+                height: 50px;
+                font-size: 1.2rem;
+                cursor: pointer;
+                z-index: 1000;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                transition: all 0.3s ease;
+            `;
+            
+
+
+            // Add CSS for dark mode
+            const darkModeStyles = document.createElement('style');
+            darkModeStyles.textContent = `
+                .dark-mode {
+                    --bg-light: #1a1a1a;
+                    --bg-white: #2d2d2d;
+                    --text-dark: #e2e8f0;
+                    --text-light: #94a3b8;
+                    --border-color: #404040;
+                    --code-bg: #0f172a;
+                }
+                
+                .dark-mode .comparison-table tr:nth-child(even) {
+                    background: #404040;
+                }
+                
+                .dark-mode .class-diagram {
+                    background: #2d2d2d;
+                    border-color: var(--primary-color);
+                }
+            `;
+            document.head.appendChild(darkModeStyles);
+        });
+    </script>
+</body>
+</html>

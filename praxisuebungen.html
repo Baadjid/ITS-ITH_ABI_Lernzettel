@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔧 Praxisübungen - Informatik TG Abitur 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --code-bg: #1e293b;
+            --code-text: #e2e8f0;
+            --shadow-light: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-medium: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+            scroll-behavior: smooth;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: var(--shadow-light);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 1rem;
+            padding: 0.5rem 1rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .back-link:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            cursor: pointer;
+            position: relative;
+            user-select: none;
+            transition: all 0.3s ease;
+        }
+
+        .section-header:hover {
+            background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header .level {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .section-header::after {
+            content: '▼';
+            position: absolute;
+            right: 1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            transition: transform 0.3s ease;
+        }
+
+        .section-header.active::after {
+            transform: translateY(-50%) rotate(180deg);
+        }
+
+        .section-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease;
+            padding: 0 2rem;
+        }
+
+        .section-content.active {
+            max-height: none;
+            padding: 2rem;
+        }
+
+        .exercise {
+            background: var(--bg-light);
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+        }
+
+        .exercise:hover {
+            box-shadow: var(--shadow-medium);
+        }
+
+        .exercise-header {
+            background: var(--bg-white);
+            padding: 1rem 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .exercise-header h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .difficulty-badge {
+            display: inline-block;
+            padding: 0.25rem 0.75rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-left: 0.5rem;
+        }
+
+        .difficulty-badge.basic {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .difficulty-badge.intermediate {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .difficulty-badge.advanced {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .exercise-content {
+            padding: 1.5rem;
+        }
+
+        .explanation {
+            background: #eff6ff;
+            border: 1px solid #93c5fd;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .explanation h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1rem;
+        }
+
+        /* Verbesserte Code-Blöcke */
+        .code-block {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.5rem;
+            border-radius: 8px;
+            overflow-x: auto;
+            margin: 1rem 0;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.6;
+            position: relative;
+            box-shadow: var(--shadow-light);
+        }
+
+        .code-block::before {
+            content: "Code";
+            position: absolute;
+            top: 0.5rem;
+            right: 1rem;
+            font-size: 0.7rem;
+            color: var(--text-light);
+            opacity: 0.7;
+        }
+
+        /* Code-Syntax-Highlighting */
+        .code-block .comment {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .code-block .keyword {
+            color: #60a5fa;
+            font-weight: bold;
+        }
+
+        .code-block .string {
+            color: #34d399;
+        }
+
+        .code-block .number {
+            color: #fbbf24;
+        }
+
+        .truth-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: var(--shadow-light);
+        }
+
+        .truth-table th,
+        .truth-table td {
+            padding: 0.75rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .truth-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .truth-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .truth-table tr:hover {
+            background: #e0e7ff;
+        }
+
+        .step-by-step {
+            background: #f0fdf4;
+            border: 1px solid #86efac;
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 1rem 0;
+        }
+
+        .step-by-step h4 {
+            color: #166534;
+            margin-bottom: 0.5rem;
+        }
+
+        .step-by-step ol {
+            margin-left: 1.5rem;
+        }
+
+        .step-by-step li {
+            margin-bottom: 0.5rem;
+        }
+
+        .interactive-demo {
+            background: var(--bg-white);
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            text-align: center;
+        }
+
+        .toggle-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+            border-radius: 8px;
+            cursor: pointer;
+            margin: 0.5rem;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .toggle-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .toggle-button.active {
+            background: var(--success-color);
+        }
+
+        .output-display {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-top: 1rem;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            min-height: 50px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.2rem;
+        }
+
+        .solution {
+            background: #fefce8;
+            border: 1px solid #fcd34d;
+            border-radius: 8px;
+            padding: 1rem;
+            margin-top: 1rem;
+        }
+
+        .solution h4 {
+            color: #92400e;
+            margin-bottom: 0.5rem;
+        }
+
+        /* Scroll-to-top Button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: var(--shadow-medium);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        /* Footer Button */
+        .footer-navigation {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            margin-top: 3rem;
+            text-align: center;
+            box-shadow: var(--shadow-light);
+        }
+
+        .footer-navigation h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .footer-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            text-decoration: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            margin-top: 1rem;
+        }
+
+        .footer-button:hover {
+            transform: translateY(-3px);
+            box-shadow: var(--shadow-medium);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .section-content.active {
+                padding: 1rem;
+            }
+
+            .scroll-to-top {
+                bottom: 10px;
+                right: 10px;
+                width: 45px;
+                height: 45px;
+                font-size: 18px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <a href="index.html" class="back-link">← Zurück zur Übersicht</a>
+        
+        <header class="header">
+            <h1>🔧 Praxisübungen</h1>
+            <p>Schritt-für-Schritt Anleitungen für alle wichtigen Informatik-Themen</p>
+            <div style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                <strong>Lernziel:</strong> Praktische Anwendung der theoretischen Konzepte durch interaktive Übungen und detaillierte Erklärungen
+            </div>
+        </header>
+
+        <!-- 1. Digitaltechnik Grundlagen -->
+        <div class="section">
+            <div class="section-header">
+                <h2>🔌 1. Digitaltechnik Grundlagen</h2>
+                <div class="level">Level: Einsteiger bis Fortgeschritten | Zeitaufwand: 4-6 Stunden</div>
+            </div>
+            <div class="section-content">
+                
+                <!-- Übung 1.1: Logikgatter verstehen -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h3>Übung 1.1: Logikgatter verstehen und anwenden</h3>
+                        <span class="difficulty-badge basic">Grundlagen</span>
+                    </div>
+                    <div class="exercise-content">
+                        <div class="explanation">
+                            <h4>💡 Was sind Logikgatter?</h4>
+                            <p><strong>Logikgatter sind die Grundbausteine der Digitaltechnik.</strong> Sie verarbeiten binäre Eingangssignale (0 oder 1) und erzeugen ein binäres Ausgangssignal nach einer bestimmten logischen Regel.</p>
+                            <p><strong>Warum sind sie wichtig?</strong> Alle digitalen Geräte - von Taschenrechnern bis zu Smartphones - basieren auf Millionen von Logikgattern, die zusammenarbeiten.</p>
+                        </div>
+
+                        <h4>🎯 Aufgabe: Grundlegende Gatter kennenlernen</h4>
+                        <p>Vervollständigen Sie die Wahrheitstabellen für die wichtigsten Logikgatter:</p>
+
+                        <h5>AND-Gatter (UND-Gatter):</h5>
+                        <table class="truth-table">
+                            <thead>
+                                <tr>
+                                    <th>Eingang A</th>
+                                    <th>Eingang B</th>
+                                    <th>Ausgang Y</th>
+                                    <th>Erklärung</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>Beide Eingänge sind AUS → Ausgang ist AUS</td>
+                                </tr>
+                                <tr>
+                                    <td>0</td>
+                                    <td>1</td>
+                                    <td>0</td>
+                                    <td>Ein Eingang ist AUS → Ausgang ist AUS</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>Ein Eingang ist AUS → Ausgang ist AUS</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>Beide Eingänge sind AN → Ausgang ist AN</td>
+                                </tr>
+                            </tbody>
+                        </table>
+
+                        <div class="interactive-demo">
+                            <h4>🎮 Interaktive Simulation: AND-Gatter</h4>
+                            <p>Klicken Sie auf die Eingänge um sie zu aktivieren:</p>
+                            <button class="toggle-button" id="inputA" onclick="toggleInput('A')">Eingang A: AUS</button>
+                            <button class="toggle-button" id="inputB" onclick="toggleInput('B')">Eingang B: AUS</button>
+                            <div class="output-display" id="andOutput">Ausgang: 0</div>
+                        </div>
+
+                        <div class="step-by-step">
+                            <h4>🔍 Schritt-für-Schritt Analyse:</h4>
+                            <ol>
+                                <li><strong>Regel verstehen:</strong> Ein AND-Gatter gibt nur dann eine 1 aus, wenn ALLE Eingänge 1 sind</li>
+                                <li><strong>Alltagsvergleich:</strong> Wie eine Serienschaltung - alle Schalter müssen AN sein, damit das Licht leuchtet</li>
+                                <li><strong>Symbol:</strong> Ein bogenförmiges Gatter mit geradem Ende</li>
+                                <li><strong>Mathematisch:</strong> Y = A ∧ B (A UND B)</li>
+                            </ol>
+                        </div>
+
+                        <h4>🎯 Prüfungsaufgabe: Komplexe Gatterschaltungen (Abitur-Niveau)</h4>
+                        <p><strong>Gegeben ist folgende Schaltung:</strong></p>
+                        <div class="code-block">Eingänge: A, B, C
+Schaltung:
+- Z1 = A NAND B
+- Z2 = B OR C  
+- Y = Z1 AND Z2
+
+Erstellen Sie die vollständige Wahrheitstabelle!</div>
+
+                        <table class="truth-table">
+                            <thead>
+                                <tr>
+                                    <th>A</th>
+                                    <th>B</th>
+                                    <th>C</th>
+                                    <th>Z1 = A NAND B</th>
+                                    <th>Z2 = B OR C</th>
+                                    <th>Y = Z1 AND Z2</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>0</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+                                <tr><td>0</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+                                <tr><td>0</td><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+                                <tr><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+                                <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td><td>0</td></tr>
+                                <tr><td>1</td><td>0</td><td>1</td><td>1</td><td>1</td><td>1</td></tr>
+                                <tr><td>1</td><td>1</td><td>0</td><td>0</td><td>1</td><td>0</td></tr>
+                                <tr><td>1</td><td>1</td><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+                            </tbody>
+                        </table>
+
+                        <div class="solution">
+                            <h4>💡 Analyseschritt für Schritt:</h4>
+                            <p><strong>1. NAND-Gatter:</strong> Ausgabe ist 0 nur wenn beide Eingänge 1 sind</p>
+                            <p><strong>2. OR-Gatter:</strong> Ausgabe ist 1 wenn mindestens ein Eingang 1 ist</p>
+                            <p><strong>3. AND-Verknüpfung:</strong> Finale Ausgabe nur wenn beide Zwischenergebnisse 1 sind</p>
+                            <p><strong>Vereinfachung:</strong> Y = (A NAND B) AND (B OR C) = (Ā∨B̄)∧(B∨C)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Übung 1.2: FlipFlop -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h3>Übung 1.2: RS-FlipFlop verstehen</h3>
+                        <span class="difficulty-badge intermediate">Mittelstufe</span>
+                    </div>
+                    <div class="exercise-content">
+                        <div class="explanation">
+                            <h4>💡 Was ist ein FlipFlop?</h4>
+                            <p><strong>Ein FlipFlop ist ein digitaler Speicher,</strong> der einen Bit (0 oder 1) dauerhaft speichern kann, bis er überschrieben wird.</p>
+                            <p><strong>RS-FlipFlop hat zwei Eingänge:</strong></p>
+                            <ul>
+                                <li><strong>S (Set):</strong> Setzt den Ausgang Q auf 1</li>
+                                <li><strong>R (Reset):</strong> Setzt den Ausgang Q auf 0</li>
+                            </ul>
+                        </div>
+
+                        <div class="interactive-demo">
+                            <h4>🎮 RS-FlipFlop Simulator:</h4>
+                            <p>Testen Sie verschiedene Eingangskombinationen:</p>
+                            <button class="toggle-button" id="resetInput" onclick="toggleRS('R')">R (Reset): 0</button>
+                            <button class="toggle-button" id="setInput" onclick="toggleRS('S')">S (Set): 0</button>
+                            <div class="output-display" id="rsOutput">Q = gespeicherter Wert</div>
+                            <p><small>Aktueller Zustand wird zwischen den Operationen gespeichert!</small></p>
+                        </div>
+
+                        <div class="step-by-step">
+                            <h4>🔍 RS-FlipFlop Schritt für Schritt:</h4>
+                            <ol>
+                                <li><strong>R=0, S=0:</strong> Nichts passiert, der alte Wert bleibt gespeichert</li>
+                                <li><strong>R=0, S=1:</strong> SET - Der Ausgang Q wird auf 1 gesetzt</li>
+                                <li><strong>R=1, S=0:</strong> RESET - Der Ausgang Q wird auf 0 zurückgesetzt</li>
+                                <li><strong>R=1, S=1:</strong> VERBOTEN - Führt zu undefined Zustand!</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. Java Grundlagen -->
+        <div class="section">
+            <div class="section-header">
+                <h2>☕ 2. Java Grundlagen</h2>
+                <div class="level">Level: Einsteiger bis Fortgeschritten | Zeitaufwand: 6-8 Stunden</div>
+            </div>
+            <div class="section-content">
+                
+                <!-- Übung 2.1: Java Basics -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h3>Übung 2.1: "Hello World" und Grundstruktur</h3>
+                        <span class="difficulty-badge basic">Grundlagen</span>
+                    </div>
+                    <div class="exercise-content">
+                        <div class="explanation">
+                            <h4>💡 Warum Java?</h4>
+                            <p><strong>Java ist eine der wichtigsten Programmiersprachen:</strong></p>
+                            <ul>
+                                <li><strong>Plattformunabhängig:</strong> "Write once, run anywhere"</li>
+                                <li><strong>Objektorientiert:</strong> Strukturiert große Programme</li>
+                                <li><strong>Typsicher:</strong> Verhindert viele Programmierfehler</li>
+                            </ul>
+                        </div>
+
+                        <h4>🎯 Aufgabe: Erstes Java-Programm verstehen</h4>
+
+                        <div class="code-block">// HelloWorld.java
+<span class="keyword">public class</span> HelloWorld {
+    <span class="keyword">public static void</span> main(String[] args) {
+        System.out.println(<span class="string">"Hello, World!"</span>);
+        System.out.println(<span class="string">"Willkommen zur Informatik!"</span>);
+        
+        <span class="comment">// Variablen deklarieren und verwenden</span>
+        String name = <span class="string">"Max Mustermann"</span>;
+        <span class="keyword">int</span> alter = <span class="number">17</span>;
+        <span class="keyword">double</span> note = <span class="number">1.5</span>;
+        
+        System.out.println(<span class="string">"Name: "</span> + name);
+        System.out.println(<span class="string">"Alter: "</span> + alter);
+        System.out.println(<span class="string">"Note: "</span> + note);
+    }
+}</div>
+
+                        <div class="step-by-step">
+                            <h4>🔍 Java-Struktur verstehen:</h4>
+                            <ol>
+                                <li><strong>public class HelloWorld:</strong> Jede Java-Datei enthält eine Klasse</li>
+                                <li><strong>public static void main:</strong> Einstiegspunkt des Programms</li>
+                                <li><strong>System.out.println():</strong> Ausgabe auf die Konsole</li>
+                                <li><strong>Semikolon (;):</strong> Beendet jede Anweisung</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Übung 2.2: Kontrollstrukturen -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h3>Übung 2.2: Verzweigungen und Schleifen</h3>
+                        <span class="difficulty-badge intermediate">Mittelstufe</span>
+                    </div>
+                    <div class="exercise-content">
+                        <div class="explanation">
+                            <h4>💡 Kontrollstrukturen steuern den Programmablauf</h4>
+                            <p><strong>Verzweigungen (if-else):</strong> Programm trifft Entscheidungen</p>
+                            <p><strong>Schleifen:</strong> Code wird wiederholt ausgeführt</p>
+                        </div>
+
+                        <h4>🎯 Aufgabe: Zahlenraten mit verschiedenen Schwierigkeitsgraden</h4>
+
+                        <div class="code-block"><span class="keyword">import</span> java.util.Scanner;
+<span class="keyword">import</span> java.util.Random;
+
+<span class="keyword">public class</span> Zahlenraten {
+    <span class="keyword">public static void</span> main(String[] args) {
+        Scanner scanner = <span class="keyword">new</span> Scanner(System.in);
+        Random random = <span class="keyword">new</span> Random();
+        
+        System.out.println(<span class="string">"=== ZAHLENRATEN ==="</span>);
+        System.out.println(<span class="string">"1 = Einfach (1-10)"</span>);
+        System.out.println(<span class="string">"2 = Mittel (1-50)"</span>);
+        System.out.println(<span class="string">"3 = Schwer (1-100)"</span>);
+        
+        <span class="keyword">int</span> schwierigkeit = scanner.nextInt();
+        <span class="keyword">int</span> maxZahl, maxVersuche;
+        
+        <span class="keyword">switch</span> (schwierigkeit) {
+            <span class="keyword">case</span> <span class="number">1</span>:
+                maxZahl = <span class="number">10</span>;
+                maxVersuche = <span class="number">5</span>;
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> <span class="number">2</span>:
+                maxZahl = <span class="number">50</span>;
+                maxVersuche = <span class="number">7</span>;
+                <span class="keyword">break</span>;
+            <span class="keyword">case</span> <span class="number">3</span>:
+                maxZahl = <span class="number">100</span>;
+                maxVersuche = <span class="number">10</span>;
+                <span class="keyword">break</span>;
+            <span class="keyword">default</span>:
+                maxZahl = <span class="number">10</span>;
+                maxVersuche = <span class="number">5</span>;
+        }
+        
+        <span class="keyword">int</span> zufallsZahl = random.nextInt(maxZahl) + <span class="number">1</span>;
+        <span class="keyword">int</span> versuche = <span class="number">0</span>;
+        <span class="keyword">boolean</span> erraten = <span class="keyword">false</span>;
+        
+        <span class="keyword">while</span> (versuche < maxVersuche && !erraten) {
+            versuche++;
+            System.out.print(<span class="string">"Versuch "</span> + versuche + <span class="string">": "</span>);
+            <span class="keyword">int</span> tipp = scanner.nextInt();
+            
+            <span class="keyword">if</span> (tipp == zufallsZahl) {
+                erraten = <span class="keyword">true</span>;
+                System.out.println(<span class="string">"🎉 Richtig!"</span>);
+            } <span class="keyword">else if</span> (tipp < zufallsZahl) {
+                System.out.println(<span class="string">"📈 Zu niedrig!"</span>);
+            } <span class="keyword">else</span> {
+                System.out.println(<span class="string">"📉 Zu hoch!"</span>);
+            }
+        }
+        
+        <span class="keyword">if</span> (!erraten) {
+            System.out.println(<span class="string">"💔 Die Zahl war: "</span> + zufallsZahl);
+        }
+        
+        scanner.close();
+    }
+}</div>
+
+                        <div class="step-by-step">
+                            <h4>🔍 Kontrollstrukturen im Detail:</h4>
+                            <ol>
+                                <li><strong>switch-case:</strong> Mehrfachverzweigung für sauberen Code</li>
+                                <li><strong>while-Schleife:</strong> Wiederholt Code solange Bedingung wahr ist</li>
+                                <li><strong>if-else-if:</strong> Mehrere Bedingungen nacheinander prüfen</li>
+                                <li><strong>boolean-Variablen:</strong> Steuern den Programmfluss</li>
+                            </ol>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3. SQL und Datenbanken -->
+        <div class="section">
+            <div class="section-header">
+                <h2>🗄️ 3. SQL und Datenbanken</h2>
+                <div class="level">Level: Mittelstufe bis Fortgeschritten | Zeitaufwand: 5-7 Stunden</div>
+            </div>
+            <div class="section-content">
+                
+                <!-- Übung 3.1: SQL Grundlagen -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h3>Übung 3.1: Erste SQL-Abfragen</h3>
+                        <span class="difficulty-badge basic">Grundlagen</span>
+                    </div>
+                    <div class="exercise-content">
+                        <div class="explanation">
+                            <h4>💡 Was sind relationale Datenbanken?</h4>
+                            <p><strong>Datenbanken speichern große Mengen strukturierter Daten effizient.</strong></p>
+                            <ul>
+                                <li><strong>Tabellen:</strong> Sammlung verwandter Daten</li>
+                                <li><strong>SQL:</strong> Structured Query Language</li>
+                                <li><strong>Relationen:</strong> Beziehungen zwischen Tabellen</li>
+                            </ul>
+                        </div>
+
+                        <h4>🎯 Beispiel-Datenbank: Schulverwaltung</h4>
+                        <div class="code-block"><span class="comment">-- Tabelle erstellen</span>
+<span class="keyword">CREATE TABLE</span> schueler (
+    s_id <span class="keyword">INT PRIMARY KEY</span> AUTO_INCREMENT,
+    vorname <span class="keyword">VARCHAR</span>(<span class="number">50</span>) <span class="keyword">NOT NULL</span>,
+    nachname <span class="keyword">VARCHAR</span>(<span class="number">50</span>) <span class="keyword">NOT NULL</span>,
+    geburtsdatum <span class="keyword">DATE</span>,
+    klasse_id <span class="keyword">INT</span>
+);
+
+<span class="comment">-- Daten einfügen</span>
+<span class="keyword">INSERT INTO</span> schueler <span class="keyword">VALUES</span>
+(<span class="number">1</span>, <span class="string">'Anna'</span>, <span class="string">'Schmidt'</span>, <span class="string">'2007-03-15'</span>, <span class="number">1</span>),
+(<span class="number">2</span>, <span class="string">'Max'</span>, <span class="string">'Müller'</span>, <span class="string">'2006-08-22'</span>, <span class="number">1</span>),
+(<span class="number">3</span>, <span class="string">'Lisa'</span>, <span class="string">'Weber'</span>, <span class="string">'2007-01-10'</span>, <span class="number">2</span>);</div>
+
+                        <h4>🎯 Grundlegende SELECT-Abfragen</h4>
+                        <div class="code-block"><span class="comment">-- Alle Schüler anzeigen</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> schueler;
+
+<span class="comment">-- Nur Namen anzeigen</span>
+<span class="keyword">SELECT</span> vorname, nachname <span class="keyword">FROM</span> schueler;
+
+<span class="comment">-- Mit Bedingung filtern</span>
+<span class="keyword">SELECT</span> * <span class="keyword">FROM</span> schueler 
+<span class="keyword">WHERE</span> klasse_id = <span class="number">1</span>;
+
+<span class="comment">-- Sortiert ausgeben</span>
+<span class="keyword">SELECT</span> vorname, nachname <span class="keyword">FROM</span> schueler 
+<span class="keyword">ORDER BY</span> nachname;</div>
+                    </div>
+                </div>
+
+                <!-- Übung 3.2: JOINs -->
+                <div class="exercise">
+                    <div class="exercise-header">
+                        <h3>Übung 3.2: JOIN-Operationen</h3>
+                        <span class="difficulty-badge intermediate">Mittelstufe</span>
+                    </div>
+                    <div class="exercise-content">
+                        <div class="explanation">
+                            <h4>💡 Was sind JOINs?</h4>
+                            <p><strong>JOINs verknüpfen Daten aus mehreren Tabellen.</strong> Sie sind der Kern relationaler Datenbanken.</p>
+                        </div>
+
+                        <h4>🎯 INNER JOIN - Schüler mit Klassendaten</h4>
+                        <div class="code-block"><span class="comment">-- Schüler mit Klasseninformationen</span>
+<span class="keyword">SELECT</span> s.vorname, s.nachname, k.klassenname
+<span class="keyword">FROM</span> schueler s
+<span class="keyword">INNER JOIN</span> klassen k <span class="keyword">ON</span> s.klasse_id = k.k_id
+<span class="keyword">ORDER BY</span> k.klassenname, s.nachname;
+
+<span class="comment">-- Notendurchschnitt pro Schüler</span>
+<span class="keyword">SELECT</span> s.vorname, s.nachname, 
+       <span class="keyword">ROUND</span>(<span class="keyword">AVG</span>(n.note), <span class="number">2</span>) <span class="keyword">as</span> durchschnitt
+<span class="keyword">FROM</span> schueler s
+<span class="keyword">INNER JOIN</span> noten n <span class="keyword">ON</span> s.s_id = n.schueler_id
+<span class="keyword">GROUP BY</span> s.s_id, s.vorname, s.nachname
+<span class="keyword">ORDER BY</span> durchschnitt;</div>
+
+                        <table class="truth-table">
+                            <thead>
+                                <tr>
+                                    <th>JOIN-Typ</th>
+                                    <th>Beschreibung</th>
+                                    <th>Ergebnis</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr><td>INNER JOIN</td><td>Nur Übereinstimmungen</td><td>Schnittmenge</td></tr>
+                                <tr><td>LEFT JOIN</td><td>Alle der linken Tabelle</td><td>Linke + Matches</td></tr>
+                                <tr><td>RIGHT JOIN</td><td>Alle der rechten Tabelle</td><td>Rechte + Matches</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Footer Navigation -->
+        <div class="footer-navigation">
+            <h3>🎓 Erfolgreich gelernt!</h3>
+            <p>Sie haben die wichtigsten Grundlagen der Informatik praktisch erarbeitet.</p>
+            <p>Bereit für weitere Herausforderungen? Erkunden Sie weitere Übungen und Themen.</p>
+            <a href="index.html" class="footer-button">← Zurück zur Hauptübersicht</a>
+        </div>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scrollToTop" onclick="scrollToTop()">↑</button>
+
+    <script>
+        // Globale Variablen für Simulationen
+        let inputAState = false;
+        let inputBState = false;
+        let rsState = 0;
+        let rState = false;
+        let sState = false;
+
+        // Kollapsible Sections
+        document.addEventListener('DOMContentLoaded', function() {
+            const sectionHeaders = document.querySelectorAll('.section-header');
+            
+            sectionHeaders.forEach(header => {
+                header.addEventListener('click', function() {
+                    const content = this.nextElementSibling;
+                    const isActive = this.classList.contains('active');
+                    
+                    // Alle anderen Sections schließen
+                    sectionHeaders.forEach(otherHeader => {
+                        otherHeader.classList.remove('active');
+                        otherHeader.nextElementSibling.classList.remove('active');
+                    });
+                    
+                    // Aktuelle Section umschalten
+                    if (!isActive) {
+                        this.classList.add('active');
+                        content.classList.add('active');
+                    }
+                });
+            });
+
+            // Erste Section automatisch öffnen
+            if (sectionHeaders.length > 0) {
+                sectionHeaders[0].classList.add('active');
+                sectionHeaders[0].nextElementSibling.classList.add('active');
+            }
+
+            // Scroll to Top Button Sichtbarkeit
+            window.addEventListener('scroll', function() {
+                const scrollToTopBtn = document.getElementById('scrollToTop');
+                if (window.pageYOffset > 300) {
+                    scrollToTopBtn.classList.add('visible');
+                } else {
+                    scrollToTopBtn.classList.remove('visible');
+                }
+            });
+        });
+
+        // AND-Gatter Simulation
+        function toggleInput(input) {
+            if (input === 'A') {
+                inputAState = !inputAState;
+                document.getElementById('inputA').textContent = `Eingang A: ${inputAState ? 'AN' : 'AUS'}`;
+                document.getElementById('inputA').classList.toggle('active', inputAState);
+            } else if (input === 'B') {
+                inputBState = !inputBState;
+                document.getElementById('inputB').textContent = `Eingang B: ${inputBState ? 'AN' : 'AUS'}`;
+                document.getElementById('inputB').classList.toggle('active', inputBState);
+            }
+            
+            const result = inputAState && inputBState;
+            document.getElementById('andOutput').textContent = `Ausgang: ${result ? '1' : '0'}`;
+            document.getElementById('andOutput').style.backgroundColor = result ? 'var(--success-color)' : 'var(--code-bg)';
+        }
+
+        // RS-FlipFlop Simulation
+        function toggleRS(input) {
+            if (input === 'R') {
+                rState = !rState;
+                document.getElementById('resetInput').textContent = `R (Reset): ${rState ? '1' : '0'}`;
+                document.getElementById('resetInput').classList.toggle('active', rState);
+            } else if (input === 'S') {
+                sState = !sState;
+                document.getElementById('setInput').textContent = `S (Set): ${sState ? '1' : '0'}`;
+                document.getElementById('setInput').classList.toggle('active', sState);
+            }
+            
+            let outputText = '';
+            let bgColor = 'var(--code-bg)';
+            
+            if (rState && sState) {
+                outputText = 'Q = ❌ VERBOTEN!';
+                bgColor = 'var(--danger-color)';
+            } else if (rState && !sState) {
+                rsState = 0;
+                outputText = 'Q = 0 (Reset)';
+                bgColor = 'var(--warning-color)';
+            } else if (!rState && sState) {
+                rsState = 1;
+                outputText = 'Q = 1 (Set)';
+                bgColor = 'var(--success-color)';
+            } else {
+                outputText = `Q = ${rsState} (Speichern)`;
+                bgColor = 'var(--primary-color)';
+            }
+            
+            document.getElementById('rsOutput').textContent = outputText;
+            document.getElementById('rsOutput').style.backgroundColor = bgColor;
+        }
+
+        // Scroll to Top Funktion
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Smooth Scrolling für alle internen Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

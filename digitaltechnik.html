@@ -1,0 +1,1205 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Digitaltechnik & Logikgatter - Abitur 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --code-bg: #f1f5f9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .breadcrumb {
+            background: var(--bg-white);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .info-banner {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .content-section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .subsection {
+            margin-bottom: 3rem;
+        }
+
+        .subsection h3 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .logic-gate {
+            background: var(--code-bg);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 2rem;
+            align-items: center;
+        }
+
+        .gate-symbol {
+            text-align: center;
+            padding: 1rem;
+            background: var(--bg-white);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .gate-symbol svg {
+            width: 120px;
+            height: 80px;
+        }
+
+        .gate-name {
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .gate-formula {
+            font-family: 'Courier New', monospace;
+            background: var(--bg-white);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .gate-formula .main-formula {
+            font-size: 1.2rem;
+            font-weight: bold;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .gate-formula .alt-formulas {
+            font-size: 0.9rem;
+            color: var(--text-light);
+        }
+
+        .truth-table {
+            border-collapse: collapse;
+            width: 100%;
+            background: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .truth-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.8rem;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .truth-table td {
+            padding: 0.8rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        .truth-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .explanation-box {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .explanation-box h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .practical-example {
+            background: linear-gradient(135deg, #d1fae5, #a7f3d0);
+            border: 2px solid var(--success-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .practical-example h4 {
+            color: var(--success-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .important-note {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border: 2px solid var(--warning-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .important-note h4 {
+            color: var(--warning-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: var(--bg-white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-top: 3rem;
+        }
+
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-button.disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        .interactive-demo {
+            background: var(--bg-white);
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .input-control {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.5rem 1rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .input-control input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+        }
+
+        .demo-result {
+            text-align: center;
+            padding: 1rem;
+            background: var(--code-bg);
+            border-radius: 8px;
+            font-size: 1.2rem;
+            font-weight: bold;
+        }
+
+        .result-true {
+            color: var(--success-color);
+        }
+
+        .result-false {
+            color: var(--danger-color);
+        }
+
+        @media (max-width: 768px) {
+            .logic-gate {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="index.html">🏠 Hauptmenü</a> > 
+            <a href="#technische-informatik-i">Technische Informatik I</a> > 
+            <strong>Digitaltechnik & Logikgatter</strong>
+        </nav>
+
+        <header class="header">
+            <h1>🔧 Digitaltechnik & Logikgatter</h1>
+            <p>Grundlagen der digitalen Schaltungstechnik</p>
+            <div class="info-banner">
+                <strong>BPE 1 - Technische Informatik I</strong><br>
+                Die Basis aller digitalen Systeme verstehen
+            </div>
+        </header>
+
+        <!-- Einführung -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>📚 Was ist Digitaltechnik?</h2>
+                <p>Von analogen zu digitalen Signalen</p>
+            </div>
+            <div class="section-content">
+                <div class="explanation-box">
+                    <h4>🌍 Analog vs. Digital - Der fundamentale Unterschied</h4>
+                    <p><strong>Analoge Signale:</strong> Haben theoretisch unendlich viele verschiedene Werte. Wie ein Wasserhahn, der stufenlos von "zu" bis "voll auf" gedreht werden kann.</p>
+                    <p><strong>Digitale Signale:</strong> Haben nur eine begrenzte, abzählbare Anzahl von Zuständen. In der Digitaltechnik meist nur zwei: "0" und "1" (Binärsystem).</p>
+                </div>
+
+                <div class="practical-example">
+                    <h4>💡 Praktisches Beispiel: Lichtschalter</h4>
+                    <p><strong>Analog:</strong> Ein Dimmer kann das Licht stufenlos von 0% bis 100% regeln.</p>
+                    <p><strong>Digital:</strong> Ein normaler Lichtschalter hat nur zwei Zustände: "AN" (1) oder "AUS" (0).</p>
+                </div>
+
+                <div class="important-note">
+                    <h4>⚡ Warum Digitaltechnik?</h4>
+                    <ul>
+                        <li><strong>Störungsresistenz:</strong> Digitale Signale sind weniger anfällig für Störungen</li>
+                        <li><strong>Eindeutigkeit:</strong> Nur zwei klar definierte Zustände</li>
+                        <li><strong>Reproduzierbarkeit:</strong> Digitale Informationen können verlustfrei kopiert werden</li>
+                        <li><strong>Verarbeitbarkeit:</strong> Computer können nur mit digitalen Signalen rechnen</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Logikgatter Grundlagen -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🔗 Die drei Grundfunktionen</h2>
+                <p>Alle digitalen Schaltungen basieren auf diesen drei Grundbausteinen</p>
+            </div>
+            <div class="section-content">
+                
+                <!-- NOT Gatter -->
+                <div class="subsection">
+                    <h3>🔄 NOT-Gatter (Inverter/Negation)</h3>
+                    
+                    <div class="logic-gate">
+                        <div class="gate-symbol">
+                            <div class="gate-name">NOT</div>
+                            <svg viewBox="0 0 120 80">
+                                <polygon points="20,15 80,40 20,65" fill="none" stroke="black" stroke-width="2"/>
+                                <circle cx="85" cy="40" r="5" fill="none" stroke="black" stroke-width="2"/>
+                                <line x1="10" y1="40" x2="20" y2="40" stroke="black" stroke-width="2"/>
+                                <line x1="90" y1="40" x2="110" y2="40" stroke="black" stroke-width="2"/>
+                                <text x="5" y="35" font-size="12">A</text>
+                                <text x="100" y="35" font-size="12">Y</text>
+                            </svg>
+                        </div>
+                        
+                        <div class="gate-formula">
+                            <div class="main-formula">Y = Ā</div>
+                            <div class="alt-formulas">
+                                Y = !A<br>
+                                Y = ¬A
+                            </div>
+                        </div>
+                        
+                        <table class="truth-table">
+                            <thead>
+                                <tr>
+                                    <th>A</th>
+                                    <th>Y</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>0</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="explanation-box">
+                        <h4>📝 Funktionsweise des NOT-Gatters</h4>
+                        <p>Das NOT-Gatter <strong>invertiert</strong> das Eingangssignal:</p>
+                        <ul>
+                            <li>Wenn der Eingang A = 0 ist, dann ist der Ausgang Y = 1</li>
+                            <li>Wenn der Eingang A = 1 ist, dann ist der Ausgang Y = 0</li>
+                        </ul>
+                        <p><strong>Wichtig:</strong> Das NOT-Gatter hat nur <em>einen</em> Eingang! Der kleine Kreis am Ausgang symbolisiert die Invertierung.</p>
+                    </div>
+                    
+                    <div class="practical-example">
+                        <h4>🏠 Alltags-Beispiel: Automatisches Nachtlicht</h4>
+                        <p>Ein Nachtlicht soll nur leuchten, wenn es dunkel ist:</p>
+                        <ul>
+                            <li><strong>Lichtsensor:</strong> 1 = hell, 0 = dunkel</li>
+                            <li><strong>NOT-Gatter:</strong> Invertiert das Signal</li>
+                            <li><strong>Nachtlicht:</strong> 1 = an, 0 = aus</li>
+                        </ul>
+                        <p><strong>Ergebnis:</strong> Bei Helligkeit (1) → NOT → Licht aus (0), Bei Dunkelheit (0) → NOT → Licht an (1)</p>
+                    </div>
+                </div>
+
+                <!-- AND Gatter -->
+                <div class="subsection">
+                    <h3>🤝 AND-Gatter (Konjunktion)</h3>
+                    
+                    <div class="logic-gate">
+                        <div class="gate-symbol">
+                            <div class="gate-name">AND</div>
+                            <svg viewBox="0 0 120 80">
+                                <path d="M20,15 L60,15 A25,25 0 0,1 60,65 L20,65 Z" fill="none" stroke="black" stroke-width="2"/>
+                                <line x1="10" y1="25" x2="20" y2="25" stroke="black" stroke-width="2"/>
+                                <line x1="10" y1="55" x2="20" y2="55" stroke="black" stroke-width="2"/>
+                                <line x1="85" y1="40" x2="110" y2="40" stroke="black" stroke-width="2"/>
+                                <text x="5" y="20" font-size="12">A</text>
+                                <text x="5" y="60" font-size="12">B</text>
+                                <text x="100" y="35" font-size="12">Y</text>
+                                <text x="40" y="45" font-size="12">&</text>
+                            </svg>
+                        </div>
+                        
+                        <div class="gate-formula">
+                            <div class="main-formula">Y = A ∧ B</div>
+                            <div class="alt-formulas">
+                                Y = A & B<br>
+                                Y = A · B
+                            </div>
+                        </div>
+                        
+                        <table class="truth-table">
+                            <thead>
+                                <tr>
+                                    <th>A</th>
+                                    <th>B</th>
+                                    <th>Y</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>0</td>
+                                    <td>1</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="explanation-box">
+                        <h4>📝 Funktionsweise des AND-Gatters</h4>
+                        <p>Das AND-Gatter gibt nur dann eine "1" aus, wenn <strong>alle</strong> Eingänge "1" sind:</p>
+                        <ul>
+                            <li>Nur wenn A = 1 <strong>UND</strong> B = 1, dann ist Y = 1</li>
+                            <li>In allen anderen Fällen ist Y = 0</li>
+                        </ul>
+                        <p><strong>Merkhilfe:</strong> "Alle müssen mitmachen!"</p>
+                    </div>
+                    
+                    <div class="practical-example">
+                        <h4>🏭 Alltags-Beispiel: Zweihandschalter an einer Maschine</h4>
+                        <p>Eine gefährliche Maschine soll nur starten, wenn beide Hände des Bedieners die Sicherheitstaster drücken:</p>
+                        <ul>
+                            <li><strong>Taster A:</strong> Linke Hand (1 = gedrückt, 0 = nicht gedrückt)</li>
+                            <li><strong>Taster B:</strong> Rechte Hand (1 = gedrückt, 0 = nicht gedrückt)</li>
+                            <li><strong>Maschine:</strong> Startet nur bei Y = 1</li>
+                        </ul>
+                        <p><strong>Sicherheit:</strong> Die Maschine kann nur starten, wenn beide Hände gleichzeitig die Taster drücken!</p>
+                    </div>
+                </div>
+
+                <!-- OR Gatter -->
+                <div class="subsection">
+                    <h3>🤲 OR-Gatter (Disjunktion)</h3>
+                    
+                    <div class="logic-gate">
+                        <div class="gate-symbol">
+                            <div class="gate-name">OR</div>
+                            <svg viewBox="0 0 120 80">
+                                <path d="M20,15 Q30,40 20,65 Q60,15 85,40 Q60,65 20,65" fill="none" stroke="black" stroke-width="2"/>
+                                <line x1="10" y1="25" x2="22" y2="25" stroke="black" stroke-width="2"/>
+                                <line x1="10" y1="55" x2="22" y2="55" stroke="black" stroke-width="2"/>
+                                <line x1="85" y1="40" x2="110" y2="40" stroke="black" stroke-width="2"/>
+                                <text x="5" y="20" font-size="12">A</text>
+                                <text x="5" y="60" font-size="12">B</text>
+                                <text x="100" y="35" font-size="12">Y</text>
+                                <text x="45" y="45" font-size="12">≥1</text>
+                            </svg>
+                        </div>
+                        
+                        <div class="gate-formula">
+                            <div class="main-formula">Y = A ∨ B</div>
+                            <div class="alt-formulas">
+                                Y = A | B<br>
+                                Y = A + B
+                            </div>
+                        </div>
+                        
+                        <table class="truth-table">
+                            <thead>
+                                <tr>
+                                    <th>A</th>
+                                    <th>B</th>
+                                    <th>Y</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>0</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>0</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="explanation-box">
+                        <h4>📝 Funktionsweise des OR-Gatters</h4>
+                        <p>Das OR-Gatter gibt eine "1" aus, wenn <strong>mindestens ein</strong> Eingang "1" ist:</p>
+                        <ul>
+                            <li>Wenn A = 1 <strong>ODER</strong> B = 1 (oder beide), dann ist Y = 1</li>
+                            <li>Nur wenn beide Eingänge 0 sind, ist Y = 0</li>
+                        </ul>
+                        <p><strong>Merkhilfe:</strong> "Mindestens einer muss mitmachen!"</p>
+                    </div>
+                    
+                    <div class="practical-example">
+                        <h4>🚪 Alltags-Beispiel: Mehrere Lichtschalter für eine Lampe</h4>
+                        <p>Eine Flurlampe kann von zwei verschiedenen Schaltern eingeschaltet werden:</p>
+                        <ul>
+                            <li><strong>Schalter A:</strong> Am Eingang (1 = an, 0 = aus)</li>
+                            <li><strong>Schalter B:</strong> Am Ende des Flurs (1 = an, 0 = aus)</li>
+                            <li><strong>Lampe:</strong> Leuchtet bei Y = 1</li>
+                        </ul>
+                        <p><strong>Komfort:</strong> Die Lampe leuchtet, wenn einer der beiden Schalter (oder beide) eingeschaltet ist!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Erweiterte Logikgatter -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>⚡ Erweiterte Logikgatter</h2>
+                <p>Kombinationen der Grundfunktionen</p>
+            </div>
+            <div class="section-content">
+                
+                <!-- NAND Gatter -->
+                <div class="subsection">
+                    <h3>🚫 NAND-Gatter (NOT-AND)</h3>
+                    
+                    <div class="logic-gate">
+                        <div class="gate-symbol">
+                            <div class="gate-name">NAND</div>
+                            <svg viewBox="0 0 120 80">
+                                <path d="M20,15 L60,15 A25,25 0 0,1 60,65 L20,65 Z" fill="none" stroke="black" stroke-width="2"/>
+                                <circle cx="90" cy="40" r="5" fill="none" stroke="black" stroke-width="2"/>
+                                <line x1="10" y1="25" x2="20" y2="25" stroke="black" stroke-width="2"/>
+                                <line x1="10" y1="55" x2="20" y2="55" stroke="black" stroke-width="2"/>
+                                <line x1="95" y1="40" x2="110" y2="40" stroke="black" stroke-width="2"/>
+                                <text x="5" y="20" font-size="12">A</text>
+                                <text x="5" y="60" font-size="12">B</text>
+                                <text x="100" y="35" font-size="12">Y</text>
+                                <text x="40" y="45" font-size="12">&</text>
+                            </svg>
+                        </div>
+                        
+                        <div class="gate-formula">
+                            <div class="main-formula">Y = A̅∧̅B̅</div>
+                            <div class="alt-formulas">
+                                Y = !(A & B)<br>
+                                Y = Ā ∨ B̄
+                            </div>
+                        </div>
+                        
+                        <table class="truth-table">
+                            <thead>
+                                <tr>
+                                    <th>A</th>
+                                    <th>B</th>
+                                    <th>Y</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>0</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>0</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="explanation-box">
+                        <h4>📝 Funktionsweise des NAND-Gatters</h4>
+                        <p>NAND = NOT + AND. Das NAND-Gatter ist ein AND-Gatter mit nachgeschaltetem NOT-Gatter:</p>
+                        <ul>
+                            <li>Es gibt nur dann eine "0" aus, wenn <strong>beide</strong> Eingänge "1" sind</li>
+                            <li>In allen anderen Fällen ist der Ausgang "1"</li>
+                            <li>Das NAND-Gatter ist das <strong>Gegenteil</strong> des AND-Gatters</li>
+                        </ul>
+                        <p><strong>Merkhilfe:</strong> "Nicht alle dürfen mitmachen!"</p>
+                    </div>
+                    
+                    <div class="important-note">
+                        <h4>⭐ NAND - Das universelle Gatter!</h4>
+                        <p>Das NAND-Gatter ist besonders wichtig, weil man aus NAND-Gattern <strong>alle anderen Logikgatter</strong> bauen kann:</p>
+                        <ul>
+                            <li><strong>NOT:</strong> Beide Eingänge des NAND verbinden</li>
+                            <li><strong>AND:</strong> NAND + NOT am Ausgang</li>
+                            <li><strong>OR:</strong> Drei NAND-Gatter geschickt kombiniert</li>
+                        </ul>
+                        <p>Deshalb werden in der Praxis oft nur NAND-Gatter verwendet!</p>
+                    </div>
+                </div>
+
+                <!-- NOR Gatter -->
+                <div class="subsection">
+                    <h3>🚫 NOR-Gatter (NOT-OR)</h3>
+                    
+                    <div class="logic-gate">
+                        <div class="gate-symbol">
+                            <div class="gate-name">NOR</div>
+                            <svg viewBox="0 0 120 80">
+                                <path d="M20,15 Q30,40 20,65 Q60,15 85,40 Q60,65 20,65" fill="none" stroke="black" stroke-width="2"/>
+                                <circle cx="90" cy="40" r="5" fill="none" stroke="black" stroke-width="2"/>
+                                <line x1="10" y1="25" x2="22" y2="25" stroke="black" stroke-width="2"/>
+                                <line x1="10" y1="55" x2="22" y2="55" stroke="black" stroke-width="2"/>
+                                <line x1="95" y1="40" x2="110" y2="40" stroke="black" stroke-width="2"/>
+                                <text x="5" y="20" font-size="12">A</text>
+                                <text x="5" y="60" font-size="12">B</text>
+                                <text x="100" y="35" font-size="12">Y</text>
+                                <text x="45" y="45" font-size="12">≥1</text>
+                            </svg>
+                        </div>
+                        
+                        <div class="gate-formula">
+                            <div class="main-formula">Y = A̅∨̅B̅</div>
+                            <div class="alt-formulas">
+                                Y = !(A | B)<br>
+                                Y = Ā ∧ B̄
+                            </div>
+                        </div>
+                        
+                        <table class="truth-table">
+                            <thead>
+                                <tr>
+                                    <th>A</th>
+                                    <th>B</th>
+                                    <th>Y</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>0</td>
+                                    <td>1</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="explanation-box">
+                        <h4>📝 Funktionsweise des NOR-Gatters</h4>
+                        <p>NOR = NOT + OR. Das NOR-Gatter ist ein OR-Gatter mit nachgeschaltetem NOT-Gatter:</p>
+                        <ul>
+                            <li>Es gibt nur dann eine "1" aus, wenn <strong>beide</strong> Eingänge "0" sind</li>
+                            <li>Sobald mindestens ein Eingang "1" ist, wird der Ausgang "0"</li>
+                            <li>Das NOR-Gatter ist das <strong>Gegenteil</strong> des OR-Gatters</li>
+                        </ul>
+                        <p><strong>Merkhilfe:</strong> "Niemand darf mitmachen!"</p>
+                    </div>
+                </div>
+
+                <!-- XOR Gatter -->
+                <div class="subsection">
+                    <h3>⚖️ XOR-Gatter (Exklusiv-ODER)</h3>
+                    
+                    <div class="logic-gate">
+                        <div class="gate-symbol">
+                            <div class="gate-name">XOR</div>
+                            <svg viewBox="0 0 120 80">
+                                <path d="M15,15 Q25,40 15,65" fill="none" stroke="black" stroke-width="2"/>
+                                <path d="M20,15 Q30,40 20,65 Q60,15 85,40 Q60,65 20,65" fill="none" stroke="black" stroke-width="2"/>
+                                <line x1="10" y1="25" x2="17" y2="25" stroke="black" stroke-width="2"/>
+                                <line x1="10" y1="55" x2="17" y2="55" stroke="black" stroke-width="2"/>
+                                <line x1="85" y1="40" x2="110" y2="40" stroke="black" stroke-width="2"/>
+                                <text x="5" y="20" font-size="12">A</text>
+                                <text x="5" y="60" font-size="12">B</text>
+                                <text x="100" y="35" font-size="12">Y</text>
+                                <text x="45" y="45" font-size="12">=1</text>
+                            </svg>
+                        </div>
+                        
+                        <div class="gate-formula">
+                            <div class="main-formula">Y = A ⊕ B</div>
+                            <div class="alt-formulas">
+                                Y = (A ∧ B̄) ∨ (Ā ∧ B)<br>
+                                Y = (!A&B) + (A&!B)
+                            </div>
+                        </div>
+                        
+                        <table class="truth-table">
+                            <thead>
+                                <tr>
+                                    <th>A</th>
+                                    <th>B</th>
+                                    <th>Y</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>0</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>0</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>0</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="explanation-box">
+                        <h4>📝 Funktionsweise des XOR-Gatters</h4>
+                        <p>XOR = Exklusiv-ODER (Antivalenz). Das XOR-Gatter gibt nur dann eine "1" aus, wenn die Eingänge <strong>unterschiedlich</strong> sind:</p>
+                        <ul>
+                            <li>A = 0 und B = 1 → Y = 1</li>
+                            <li>A = 1 und B = 0 → Y = 1</li>
+                            <li>A = A (beide gleich) → Y = 0</li>
+                        </ul>
+                        <p><strong>Merkhilfe:</strong> "Genau einer muss mitmachen!"</p>
+                    </div>
+                    
+                    <div class="practical-example">
+                        <h4>💡 Alltags-Beispiel: Wechselschaltung</h4>
+                        <p>Treppenbeleuchtung mit zwei Wechselschaltern:</p>
+                        <ul>
+                            <li>Schalter am Erdgeschoss und im Obergeschoss</li>
+                            <li>Das Licht geht an/aus, wenn <strong>einer</strong> der Schalter betätigt wird</li>
+                            <li>Egal in welchem Zustand - jeder Schalter kann das Licht umschalten</li>
+                        </ul>
+                        <p><strong>Praktisch:</strong> Von jedem Stockwerk kann man das Licht ein- oder ausschalten!</p>
+                    </div>
+                </div>
+
+                <!-- XNOR Gatter -->
+                <div class="subsection">
+                    <h3>⚖️ XNOR-Gatter (Äquivalenz)</h3>
+                    
+                    <div class="logic-gate">
+                        <div class="gate-symbol">
+                            <div class="gate-name">XNOR</div>
+                            <svg viewBox="0 0 120 80">
+                                <path d="M15,15 Q25,40 15,65" fill="none" stroke="black" stroke-width="2"/>
+                                <path d="M20,15 Q30,40 20,65 Q60,15 85,40 Q60,65 20,65" fill="none" stroke="black" stroke-width="2"/>
+                                <circle cx="90" cy="40" r="5" fill="none" stroke="black" stroke-width="2"/>
+                                <line x1="10" y1="25" x2="17" y2="25" stroke="black" stroke-width="2"/>
+                                <line x1="10" y1="55" x2="17" y2="55" stroke="black" stroke-width="2"/>
+                                <line x1="95" y1="40" x2="110" y2="40" stroke="black" stroke-width="2"/>
+                                <text x="5" y="20" font-size="12">A</text>
+                                <text x="5" y="60" font-size="12">B</text>
+                                <text x="100" y="35" font-size="12">Y</text>
+                                <text x="45" y="45" font-size="12">=</text>
+                            </svg>
+                        </div>
+                        
+                        <div class="gate-formula">
+                            <div class="main-formula">Y = A ⊙ B</div>
+                            <div class="alt-formulas">
+                                Y = (A ∧ B) ∨ (Ā ∧ B̄)<br>
+                                Y = !(A ⊕ B)
+                            </div>
+                        </div>
+                        
+                        <table class="truth-table">
+                            <thead>
+                                <tr>
+                                    <th>A</th>
+                                    <th>B</th>
+                                    <th>Y</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>0</td>
+                                    <td>0</td>
+                                    <td>1</td>
+                                </tr>
+                                <tr>
+                                    <td>0</td>
+                                    <td>1</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>0</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td>1</td>
+                                    <td>1</td>
+                                    <td>1</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                    
+                    <div class="explanation-box">
+                        <h4>📝 Funktionsweise des XNOR-Gatters</h4>
+                        <p>XNOR = NOT + XOR (Äquivalenz). Das XNOR-Gatter gibt nur dann eine "1" aus, wenn die Eingänge <strong>gleich</strong> sind:</p>
+                        <ul>
+                            <li>A = 0 und B = 0 → Y = 1</li>
+                            <li>A = 1 und B = 1 → Y = 1</li>
+                            <li>A ≠ B (unterschiedlich) → Y = 0</li>
+                        </ul>
+                        <p><strong>Merkhilfe:</strong> "Entweder alle oder keiner!"</p>
+                    </div>
+                    
+                    <div class="practical-example">
+                        <h4>🔐 Alltags-Beispiel: Vergleichsschaltung</h4>
+                        <p>Digitales Türschloss mit zwei Eingaben:</p>
+                        <ul>
+                            <li>Zwei Personen müssen gleichzeitig den gleichen Code eingeben</li>
+                            <li>Tür öffnet sich nur, wenn beide Codes <strong>identisch</strong> sind</li>
+                            <li>Bei unterschiedlichen Codes bleibt die Tür verschlossen</li>
+                        </ul>
+                        <p><strong>Sicherheit:</strong> Nur bei übereinstimmender Eingabe wird die Tür freigeschaltet!</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Interaktive Demonstration -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🎮 Interaktive Logikgatter</h2>
+                <p>Teste die Gatter selbst!</p>
+            </div>
+            <div class="section-content">
+                <div class="interactive-demo">
+                    <h3>Logikgatter-Simulator</h3>
+                    <p>Wähle die Eingänge A und B und sieh dir die Ausgänge aller Gatter an:</p>
+                    
+                    <div class="demo-controls">
+                        <div class="input-control">
+                            <label for="inputA">Eingang A:</label>
+                            <input type="checkbox" id="inputA" onchange="updateResults()">
+                            <span id="valueA">0</span>
+                        </div>
+                        <div class="input-control">
+                            <label for="inputB">Eingang B:</label>
+                            <input type="checkbox" id="inputB" onchange="updateResults()">
+                            <span id="valueB">0</span>
+                        </div>
+                    </div>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                        <div class="demo-result">
+                            <strong>NOT A:</strong><br>
+                            <span id="resultNOT" class="result-true">1</span>
+                        </div>
+                        <div class="demo-result">
+                            <strong>AND:</strong><br>
+                            <span id="resultAND" class="result-false">0</span>
+                        </div>
+                        <div class="demo-result">
+                            <strong>OR:</strong><br>
+                            <span id="resultOR" class="result-false">0</span>
+                        </div>
+                        <div class="demo-result">
+                            <strong>NAND:</strong><br>
+                            <span id="resultNAND" class="result-true">1</span>
+                        </div>
+                        <div class="demo-result">
+                            <strong>NOR:</strong><br>
+                            <span id="resultNOR" class="result-true">1</span>
+                        </div>
+                        <div class="demo-result">
+                            <strong>XOR:</strong><br>
+                            <span id="resultXOR" class="result-false">0</span>
+                        </div>
+                        <div class="demo-result">
+                            <strong>XNOR:</strong><br>
+                            <span id="resultXNOR" class="result-true">1</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Wahrheitstabellen verstehen -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>📊 Wahrheitstabellen verstehen</h2>
+                <p>Systematische Darstellung aller möglichen Kombinationen</p>
+            </div>
+            <div class="section-content">
+                <div class="explanation-box">
+                    <h4>📝 Was ist eine Wahrheitstabelle?</h4>
+                    <p>Eine Wahrheitstabelle zeigt <strong>alle möglichen Kombinationen</strong> der Eingangswerte und die dazugehörigen Ausgangswerte:</p>
+                    <ul>
+                        <li><strong>Systematisch:</strong> Alle Kombinationen werden durchprobiert</li>
+                        <li><strong>Vollständig:</strong> Keine Kombination wird vergessen</li>
+                        <li><strong>Eindeutig:</strong> Jede Kombination hat genau einen Ausgang</li>
+                    </ul>
+                </div>
+
+                <div class="practical-example">
+                    <h4>🔢 Anzahl der Kombinationen berechnen</h4>
+                    <p>Die Anzahl der möglichen Kombinationen berechnet sich mit der Formel:</p>
+                    <div class="code-block">
+                        <strong>Anzahl Kombinationen = 2^n</strong><br>
+                        n = Anzahl der Eingänge
+                    </div>
+                    <ul>
+                        <li><strong>1 Eingang (NOT):</strong> 2¹ = 2 Kombinationen</li>
+                        <li><strong>2 Eingänge (AND, OR, etc.):</strong> 2² = 4 Kombinationen</li>
+                        <li><strong>3 Eingänge:</strong> 2³ = 8 Kombinationen</li>
+                        <li><strong>4 Eingänge:</strong> 2⁴ = 16 Kombinationen</li>
+                    </ul>
+                </div>
+
+                <div class="important-note">
+                    <h4>📚 Reihenfolge in Wahrheitstabellen</h4>
+                    <p>Die Eingangskombinationen werden systematisch von 0 bis zur höchsten Zahl durchnummeriert:</p>
+                    <div class="code-block">
+                        Für 2 Eingänge (A, B):<br>
+                        0: A=0, B=0<br>
+                        1: A=0, B=1<br>
+                        2: A=1, B=0<br>
+                        3: A=1, B=1
+                    </div>
+                    <p>Diese Reihenfolge entspricht dem <strong>Binärzahlensystem</strong>: 00, 01, 10, 11</p>
+                </div>
+
+                <div class="subsection">
+                    <h3>🎯 Übungsaufgabe: Vollständige Wahrheitstabelle</h3>
+                    <p>Erstelle eine Wahrheitstabelle für eine Schaltung mit 3 Eingängen (A, B, C):</p>
+                    
+                    <table class="truth-table" style="max-width: 400px; margin: 1rem auto;">
+                        <thead>
+                            <tr>
+                                <th>Nr.</th>
+                                <th>A</th>
+                                <th>B</th>
+                                <th>C</th>
+                                <th>Ausgänge...</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr><td>0</td><td>0</td><td>0</td><td>0</td><td>→ Berechnen!</td></tr>
+                            <tr><td>1</td><td>0</td><td>0</td><td>1</td><td>→ Berechnen!</td></tr>
+                            <tr><td>2</td><td>0</td><td>1</td><td>0</td><td>→ Berechnen!</td></tr>
+                            <tr><td>3</td><td>0</td><td>1</td><td>1</td><td>→ Berechnen!</td></tr>
+                            <tr><td>4</td><td>1</td><td>0</td><td>0</td><td>→ Berechnen!</td></tr>
+                            <tr><td>5</td><td>1</td><td>0</td><td>1</td><td>→ Berechnen!</td></tr>
+                            <tr><td>6</td><td>1</td><td>1</td><td>0</td><td>→ Berechnen!</td></tr>
+                            <tr><td>7</td><td>1</td><td>1</td><td>1</td><td>→ Berechnen!</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </section>
+
+        <!-- Zusammenfassung -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>📝 Zusammenfassung</h2>
+                <p>Das Wichtigste im Überblick</p>
+            </div>
+            <div class="section-content">
+                <div class="important-note">
+                    <h4>🎯 Prüfungsrelevante Punkte</h4>
+                    <ul>
+                        <li><strong>Grundgatter kennen:</strong> NOT, AND, OR und ihre Wahrheitstabellen</li>
+                        <li><strong>Erweiterte Gatter:</strong> NAND, NOR, XOR, XNOR verstehen</li>
+                        <li><strong>Schaltsymbole:</strong> Alle Gattersymbole zeichnen können</li>
+                        <li><strong>Formeln:</strong> Logische Gleichungen lesen und schreiben</li>
+                        <li><strong>Wahrheitstabellen:</strong> Erstellen und interpretieren</li>
+                        <li><strong>NAND-Universalität:</strong> Alle Gatter aus NAND-Gattern bauen</li>
+                    </ul>
+                </div>
+
+                <div class="practical-example">
+                    <h4>💡 Lernstrategie</h4>
+                    <ol>
+                        <li><strong>Grundlagen verinnerlichen:</strong> NOT, AND, OR perfekt beherrschen</li>
+                        <li><strong>Praktische Beispiele:</strong> Alltagssituationen mit Gattern verknüpfen</li>
+                        <li><strong>Systematisch üben:</strong> Wahrheitstabellen für verschiedene Kombinationen erstellen</li>
+                        <li><strong>Interaktiv lernen:</strong> Mit dem Simulator experimentieren</li>
+                        <li><strong>Formeln üben:</strong> Zwischen verschiedenen Schreibweisen wechseln</li>
+                    </ol>
+                </div>
+
+                <div class="explanation-box">
+                    <h4>🔗 Verbindung zu anderen Themen</h4>
+                    <p>Logikgatter sind die Grundlage für:</p>
+                    <ul>
+                        <li><strong>Schaltnetze:</strong> Kombinationen mehrerer Gatter</li>
+                        <li><strong>Schaltwerke:</strong> Gatter mit Speicherfunktion (FlipFlops)</li>
+                        <li><strong>Mikrocontroller:</strong> Digitale Verarbeitung in CPUs</li>
+                        <li><strong>Programmierung:</strong> Logische Operatoren in Software</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <nav class="navigation">
+            <a href="index.html" class="nav-button">← Zurück zum Hauptmenü</a>
+            <span style="color: var(--text-light);">Nächstes Thema:</span>
+            <a href="zahlensysteme.html" class="nav-button">Zahlensysteme & Codierung →</a>
+        </nav>
+    </div>
+
+    <script>
+        function updateResults() {
+            const inputA = document.getElementById('inputA');
+            const inputB = document.getElementById('inputB');
+            
+            const a = inputA.checked ? 1 : 0;
+            const b = inputB.checked ? 1 : 0;
+            
+            // Update display values
+            document.getElementById('valueA').textContent = a;
+            document.getElementById('valueB').textContent = b;
+            
+            // Calculate results
+            const resultNOT = a === 0 ? 1 : 0;
+            const resultAND = a && b ? 1 : 0;
+            const resultOR = a || b ? 1 : 0;
+            const resultNAND = !(a && b) ? 1 : 0;
+            const resultNOR = !(a || b) ? 1 : 0;
+            const resultXOR = (a && !b) || (!a && b) ? 1 : 0;
+            const resultXNOR = (a && b) || (!a && !b) ? 1 : 0;
+            
+            // Update result displays
+            updateResultDisplay('resultNOT', resultNOT);
+            updateResultDisplay('resultAND', resultAND);
+            updateResultDisplay('resultOR', resultOR);
+            updateResultDisplay('resultNAND', resultNAND);
+            updateResultDisplay('resultNOR', resultNOR);
+            updateResultDisplay('resultXOR', resultXOR);
+            updateResultDisplay('resultXNOR', resultXNOR);
+        }
+        
+        function updateResultDisplay(elementId, value) {
+            const element = document.getElementById(elementId);
+            element.textContent = value;
+            element.className = value === 1 ? 'result-true' : 'result-false';
+        }
+        
+        // Initialize on page load
+        updateResults();
+    </script>
+</body>
+</html>

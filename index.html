@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Abitur 2026 - Informatik TG Lernzettel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .info-banner {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .info-banner strong {
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-section {
+            background: var(--bg-white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .progress-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .progress-bar {
+            background: var(--bg-light);
+            border-radius: 10px;
+            overflow: hidden;
+            height: 8px;
+            margin-bottom: 0.5rem;
+        }
+
+        .progress-fill {
+            background: linear-gradient(90deg, var(--success-color), var(--primary-color));
+            height: 100%;
+            width: 15%;
+            border-radius: 10px;
+            transition: width 0.3s ease;
+        }
+
+        .subjects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin-bottom: 3rem;
+        }
+
+        .subject-card {
+            background: var(--bg-white);
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .subject-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        .subject-header {
+            padding: 1.5rem;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+        }
+
+        .subject-header h2 {
+            font-size: 1.4rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .subject-header .duration {
+            font-size: 0.9rem;
+            opacity: 0.9;
+        }
+
+        .subject-content {
+            padding: 1.5rem;
+        }
+
+        .topic-list {
+            list-style: none;
+        }
+
+        .topic-item {
+            margin-bottom: 0.8rem;
+            padding: 0.5rem;
+            border-radius: 6px;
+            transition: background-color 0.2s ease;
+            border-left: 3px solid transparent;
+        }
+
+        .topic-item:hover {
+            background-color: var(--bg-light);
+            border-left-color: var(--primary-color);
+        }
+
+        .topic-link {
+            text-decoration: none;
+            color: var(--text-dark);
+            font-weight: 500;
+            display: block;
+        }
+
+        .topic-link:hover {
+            color: var(--primary-color);
+        }
+
+        .difficulty {
+            display: inline-block;
+            padding: 0.2rem 0.5rem;
+            border-radius: 12px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-left: 0.5rem;
+        }
+
+        .difficulty.basic {
+            background-color: #dcfce7;
+            color: #166534;
+        }
+
+        .difficulty.intermediate {
+            background-color: #fef3c7;
+            color: #92400e;
+        }
+
+        .difficulty.advanced {
+            background-color: #fee2e2;
+            color: #991b1b;
+        }
+
+        .quick-access {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .quick-access h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .quick-links {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 1rem;
+        }
+
+        .quick-link {
+            display: block;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-dark);
+            text-align: center;
+            border: 2px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .quick-link:hover {
+            background: var(--primary-color);
+            color: white;
+            border-color: var(--secondary-color);
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--bg-white);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .footer p {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .status-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--warning-color);
+        }
+
+        .status-indicator.completed {
+            background: var(--success-color);
+        }
+
+        @media (max-width: 768px) {
+            .subjects-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>🎓 Abitur 2026 - Informatik TG</h1>
+            <p>ITS & ITH Lernzettel-Sammlung</p>
+            <div class="info-banner">
+                <strong>Baden-Württemberg Bildungsplan 2019</strong>
+                Berufliches Gymnasium - Technische Richtung (TG)<br>
+                Profilfach: Informationstechnik
+            </div>
+        </header>
+
+        <div class="progress-section">
+            <h3>📊 Lernfortschritt</h3>
+            <div class="progress-bar">
+                <div class="progress-fill"></div>
+            </div>
+            <p><strong>Status:</strong> Lernzettel in Erstellung - Systematische Aufarbeitung aller Bildungsplaneinheiten</p>
+        </div>
+
+        <div class="quick-access">
+            <h3>🚀 Schnellzugriff</h3>
+            <div class="quick-links">
+                <a href="formelsammlung.html" class="quick-link">📋 Formelsammlung</a>
+                <a href="praxisuebungen.html" class="quick-link">🔧 Praxisübungen</a>
+                <a href="loesungsstrategien.html" class="quick-link">💡 Lösungsstrategien</a>
+            </div>
+        </div>
+
+        <div class="subjects-grid">
+            <!-- Technische Informatik I -->
+            <div class="subject-card">
+                <div class="status-indicator"></div>
+                <div class="subject-header">
+                    <h2>🔧 Technische Informatik I</h2>
+                    <div class="duration">BPE 1 • 36 Stunden (21 praktisch)</div>
+                </div>
+                <div class="subject-content">
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="digitaltechnik.html" class="topic-link">
+                                Digitaltechnik & Logikgatter <span class="difficulty basic">Basis</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="zahlensysteme.html" class="topic-link">
+                                Zahlensysteme & Codierung <span class="difficulty basic">Basis</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="schaltnetze.html" class="topic-link">
+                                Kombinatorische Schaltnetze <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="schaltwerke.html" class="topic-link">
+                                Schaltwerke & FlipFlops <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="zustandsdiagramme.html" class="topic-link">
+                                Zustandsdiagramme <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Technische Informatik II -->
+            <div class="subject-card">
+                <div class="status-indicator"></div>
+                <div class="subject-header">
+                    <h2>⚙️ Technische Informatik II</h2>
+                    <div class="duration">BPE 2 • 39 Stunden (24 praktisch)</div>
+                </div>
+                <div class="subject-content">
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="mikrocontroller.html" class="topic-link">
+                                Mikrocontroller-Systeme <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="arduino.html" class="topic-link">
+                                Arduino Programming <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="speicher.html" class="topic-link">
+                                Speicherarchitekturen <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="interfaces.html" class="topic-link">
+                                Hardware-Interfaces <span class="difficulty advanced">Fortgeschritten</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Grundlagen der Programmentwicklung -->
+            <div class="subject-card">
+                <div class="status-indicator"></div>
+                <div class="subject-header">
+                    <h2>💻 Grundlagen der Programmentwicklung</h2>
+                    <div class="duration">BPE 3 • 39 Stunden (39 praktisch)</div>
+                </div>
+                <div class="subject-content">
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="programmiersprachen.html" class="topic-link">
+                                Programmiersprachen-Grundlagen <span class="difficulty basic">Basis</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="java-basics.html" class="topic-link">
+                                Java Grundlagen <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="algorithmen.html" class="topic-link">
+                                Algorithmen & Datenstrukturen <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="programmierung-praxis.html" class="topic-link">
+                                Praktische Programmierung <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Objektorientierter Entwurf I -->
+            <div class="subject-card">
+                <div class="status-indicator"></div>
+                <div class="subject-header">
+                    <h2>🏗️ Objektorientierter Entwurf I</h2>
+                    <div class="duration">BPE 8 • 45 Stunden</div>
+                </div>
+                <div class="subject-content">
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="oop-grundlagen.html" class="topic-link">
+                                OOP Prinzipien <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="klassen-objekte.html" class="topic-link">
+                                Klassen & Objekte <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="konstruktoren.html" class="topic-link">
+                                Konstruktoren & Destruktoren <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="vererbung.html" class="topic-link">
+                                Vererbung & Polymorphie <span class="difficulty advanced">Fortgeschritten</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="uml-diagramme.html" class="topic-link">
+                                UML-Diagramme <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Datenbanksysteme -->
+            <div class="subject-card">
+                <div class="status-indicator"></div>
+                <div class="subject-header">
+                    <h2>🗄️ Datenbanksysteme</h2>
+                    <div class="duration">BPE 9 • 30 Stunden</div>
+                </div>
+                <div class="subject-content">
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="datenbank-grundlagen.html" class="topic-link">
+                                Datenbank-Grundlagen <span class="difficulty basic">Basis</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="sql.html" class="topic-link">
+                                SQL - Structured Query Language <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="er-modell.html" class="topic-link">
+                                Entity-Relationship-Modell <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="normalisierung.html" class="topic-link">
+                                Normalisierung <span class="difficulty advanced">Fortgeschritten</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="datenbankentwicklung.html" class="topic-link">
+                                Datenbankentwicklung <span class="difficulty advanced">Fortgeschritten</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Vernetzte Systeme & Internet -->
+            <div class="subject-card">
+                <div class="status-indicator"></div>
+                <div class="subject-header">
+                    <h2>🌐 Vernetzte Systeme & Internet</h2>
+                    <div class="duration">BPE 11 & 12 • 60+ Stunden</div>
+                </div>
+                <div class="subject-content">
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="netzwerk-grundlagen.html" class="topic-link">
+                                Netzwerk-Grundlagen <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="osi-modell.html" class="topic-link">
+                                OSI-7-Schichtenmodell <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="internet-protokolle.html" class="topic-link">
+                                Internet-Protokolle <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="ip-adressierung.html" class="topic-link">
+                                IP-Adressierung & Routing <span class="difficulty advanced">Fortgeschritten</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="ethernet.html" class="topic-link">
+                                Ethernet & LAN-Technik <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="datenschutz.html" class="topic-link">
+                                Datenschutz & Sicherheit <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Technische Informatik III & IV -->
+            <div class="subject-card">
+                <div class="status-indicator"></div>
+                <div class="subject-header">
+                    <h2>🔬 Technische Informatik III & IV</h2>
+                    <div class="duration">BPE 6 & 7 • 75 Stunden</div>
+                </div>
+                <div class="subject-content">
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="betriebssysteme.html" class="topic-link">
+                                Betriebssysteme <span class="difficulty advanced">Fortgeschritten</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="prozesse-scheduling.html" class="topic-link">
+                                Prozesse & Scheduling <span class="difficulty advanced">Fortgeschritten</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="speicherverwaltung.html" class="topic-link">
+                                Speicherverwaltung <span class="difficulty advanced">Fortgeschritten</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="dateisysteme.html" class="topic-link">
+                                Dateisysteme <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="system-integration.html" class="topic-link">
+                                Systemintegration <span class="difficulty advanced">Fortgeschritten</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Systemgestaltung & Projektarbeit -->
+            <div class="subject-card">
+                <div class="status-indicator"></div>
+                <div class="subject-header">
+                    <h2>📋 Systemgestaltung & Projektarbeit</h2>
+                    <div class="duration">BPE 4 & 5 • Projektbezogen</div>
+                </div>
+                <div class="subject-content">
+                    <ul class="topic-list">
+                        <li class="topic-item">
+                            <a href="projektmanagement.html" class="topic-link">
+                                Projektmanagement <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="systemanalyse.html" class="topic-link">
+                                Systemanalyse & Design <span class="difficulty advanced">Fortgeschritten</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="dokumentation.html" class="topic-link">
+                                Dokumentation & Präsentation <span class="difficulty intermediate">Mittel</span>
+                            </a>
+                        </li>
+                        <li class="topic-item">
+                            <a href="qualitaetssicherung.html" class="topic-link">
+                                Qualitätssicherung <span class="difficulty advanced">Fortgeschritten</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <footer class="footer">
+            <p>
+                <strong>Lernzettel für das Abitur 2026 - Informationstechnik TG</strong><br>
+                Basierend auf dem Bildungsplan Baden-Württemberg 2019<br>
+                <em>Systematische Aufbereitung aller Bildungsplaneinheiten für optimale Prüfungsvorbereitung</em><br>			Erstellt im Rahmen der Abiturvorbereitung 2026 von Kirill Heldt</br>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Simple progress animation
+        window.addEventListener('load', function() {
+            const progressFill = document.querySelector('.progress-fill');
+            setTimeout(() => {
+                progressFill.style.width = '25%';
+            }, 500);
+        });
+
+        
+    </script>
+</body>
+</html>

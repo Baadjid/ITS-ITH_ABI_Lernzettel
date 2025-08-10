@@ -1,0 +1,1165 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speicherverwaltung - Technische Informatik III & IV</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #06b6d4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb a {
+            color: #e0e7ff;
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: white;
+            text-decoration: underline;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 2rem;
+            gap: 1rem;
+        }
+
+        .nav-btn {
+            padding: 0.75rem 1.5rem;
+            background: var(--bg-white);
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            color: var(--primary-color);
+            text-decoration: none;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .nav-btn:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .content-section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .info-box {
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+            border-left: 4px solid;
+        }
+
+        .info-box.definition {
+            background: #eff6ff;
+            border-left-color: var(--info-color);
+        }
+
+        .info-box.important {
+            background: #fef3c7;
+            border-left-color: var(--warning-color);
+        }
+
+        .info-box.example {
+            background: #f0fdf4;
+            border-left-color: var(--success-color);
+        }
+
+        .info-box.warning {
+            background: #fef2f2;
+            border-left-color: var(--danger-color);
+        }
+
+        .info-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .memory-diagram {
+            background: var(--bg-light);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+        }
+
+        .memory-block {
+            display: inline-block;
+            width: 80px;
+            height: 40px;
+            border: 2px solid var(--primary-color);
+            margin: 2px;
+            line-height: 36px;
+            font-size: 0.8rem;
+            background: white;
+            text-align: center;
+        }
+
+        .memory-block.allocated {
+            background: #dcfce7;
+            border-color: var(--success-color);
+        }
+
+        .memory-block.free {
+            background: #fee2e2;
+            border-color: var(--danger-color);
+        }
+
+        .memory-block.swapped {
+            background: #fef3c7;
+            border-color: var(--warning-color);
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 0.75rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            background: var(--bg-light);
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .comparison-table tr:hover {
+            background: var(--bg-light);
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .code-block .comment {
+            color: #94a3b8;
+        }
+
+        .code-block .keyword {
+            color: #3b82f6;
+        }
+
+        .process-flow {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .process-step {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            min-width: 150px;
+            position: relative;
+        }
+
+        .process-step::after {
+            content: "→";
+            position: absolute;
+            right: -1.5rem;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .process-step:last-child::after {
+            display: none;
+        }
+
+        .quiz-section {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 2px solid var(--info-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .quiz-section h3 {
+            color: var(--info-color);
+            margin-bottom: 1rem;
+        }
+
+        .quiz-question {
+            margin-bottom: 1rem;
+            padding: 1rem;
+            background: white;
+            border-radius: 8px;
+            border-left: 4px solid var(--info-color);
+        }
+
+        .quiz-options {
+            list-style: none;
+            margin-top: 0.5rem;
+        }
+
+        .quiz-options li {
+            margin: 0.5rem 0;
+            padding: 0.5rem;
+            background: var(--bg-light);
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .quiz-options li:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .summary-box {
+            background: linear-gradient(135deg, var(--success-color), #059669);
+            color: white;
+            padding: 2rem;
+            border-radius: 16px;
+            margin: 2rem 0;
+        }
+
+        .summary-box h3 {
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .summary-points {
+            list-style: none;
+        }
+
+        .summary-points li {
+            margin: 0.5rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .summary-points li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            top: 0;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .navigation {
+                flex-direction: column;
+            }
+            
+            .process-flow {
+                flex-direction: column;
+            }
+            
+            .process-step::after {
+                display: none;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <strong>Navigation:</strong> <a href="index.html">🏠 Hauptseite</a> → <a href="#betriebssysteme">🔧 Technische Informatik III & IV</a> → 💾 Speicherverwaltung
+        </div>
+
+        <header class="header">
+            <h1>💾 Speicherverwaltung</h1>
+            <div class="subtitle">Wie das Betriebssystem den Hauptspeicher verwaltet</div>
+        </header>
+
+        <nav class="navigation">
+            <a href="betriebssysteme.html" class="nav-btn">← Betriebssysteme</a>
+            <a href="prozesse-scheduling.html" class="nav-btn">Prozesse & Scheduling →</a>
+        </nav>
+
+        <!-- Grundlagen -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🎯 Was ist Speicherverwaltung?</h2>
+                <p>Die Grundlagen verstehen - von null an erklärt</p>
+            </div>
+            <div class="section-content">
+                <div class="info-box definition">
+                    <h3>💡 Definition: Speicherverwaltung</h3>
+                    <p>Die <strong>Speicherverwaltung</strong> ist ein zentraler Bestandteil des Betriebssystems, der dafür sorgt, dass der verfügbare Hauptspeicher (RAM) optimal zwischen allen laufenden Programmen aufgeteilt wird.</p>
+                </div>
+
+                <p>Stell dir vor, der Hauptspeicher deines Computers ist wie ein großes Regal mit vielen Fächern. Jedes Programm, das du startest, braucht Platz in diesem Regal. Die Speicherverwaltung ist wie ein Bibliothekar, der entscheidet:</p>
+
+                <ul style="margin: 1rem 0; padding-left: 2rem;">
+                    <li>Welches Programm welchen Platz bekommt</li>
+                    <li>Wie viel Platz jedes Programm braucht</li>
+                    <li>Was passiert, wenn das Regal voll ist</li>
+                    <li>Wie man den Platz wieder freiräumt</li>
+                </ul>
+
+                <div class="info-box important">
+                    <h3>⚠️ Warum ist das wichtig?</h3>
+                    <p>Ohne Speicherverwaltung würden Programme sich gegenseitig überschreiben oder der Computer hätte keinen freien Speicher mehr. Das Betriebssystem muss daher intelligent verwalten, wer wann welchen Speicher bekommt.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Speicherarten -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🗂️ Verschiedene Arten von Speicher</h2>
+                <p>Die Speicherhierarchie verstehen</p>
+            </div>
+            <div class="section-content">
+                <p>Bevor wir verstehen, wie Speicher verwaltet wird, müssen wir wissen, welche Arten von Speicher es gibt:</p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Speichertyp</th>
+                            <th>Geschwindigkeit</th>
+                            <th>Größe</th>
+                            <th>Kosten</th>
+                            <th>Verwendung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>CPU-Register</strong></td>
+                            <td>Sehr schnell</td>
+                            <td>Sehr klein (Bytes)</td>
+                            <td>Sehr teuer</td>
+                            <td>Aktuelle Berechnungen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Cache</strong></td>
+                            <td>Schnell</td>
+                            <td>Klein (MB)</td>
+                            <td>Teuer</td>
+                            <td>Häufig genutzte Daten</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hauptspeicher (RAM)</strong></td>
+                            <td>Mittel</td>
+                            <td>Mittel (GB)</td>
+                            <td>Mittel</td>
+                            <td>Laufende Programme</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Festplatte/SSD</strong></td>
+                            <td>Langsam</td>
+                            <td>Groß (TB)</td>
+                            <td>Günstig</td>
+                            <td>Langzeitspeicherung</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box example">
+                    <h3>🏠 Vergleich mit einem Haus</h3>
+                    <p><strong>Register:</strong> Deine Hände (sehr schnell, aber nur wenig Platz)<br>
+                    <strong>Cache:</strong> Dein Schreibtisch (schnell erreichbar, aber begrenzt)<br>
+                    <strong>RAM:</strong> Dein Arbeitszimmer (guter Kompromiss)<br>
+                    <strong>Festplatte:</strong> Dein Keller (viel Platz, aber dauert länger)</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Direkte Speicherverwaltung -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>📝 Direkte Speicherverwaltung</h2>
+                <p>Das einfachste Verfahren - aber mit Problemen</p>
+            </div>
+            <div class="section-content">
+                <p>Bei der <strong>direkten Speicherverwaltung</strong> bekommt jedes Programm einen festen Bereich im Hauptspeicher zugewiesen.</p>
+
+                <div class="memory-diagram">
+                    <h4>Direkte Speicherverwaltung - Beispiel</h4>
+                    <div style="margin: 1rem 0;">
+                        <div class="memory-block allocated">OS</div>
+                        <div class="memory-block allocated">Prog A</div>
+                        <div class="memory-block allocated">Prog B</div>
+                        <div class="memory-block free">Frei</div>
+                        <div class="memory-block free">Frei</div>
+                        <div class="memory-block allocated">Prog C</div>
+                        <div class="memory-block free">Frei</div>
+                        <div class="memory-block free">Frei</div>
+                    </div>
+                    <p style="font-size: 0.9rem; margin-top: 1rem;">
+                        Grün = Belegt | Rot = Frei | Gelb = Betriebssystem
+                    </p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+                    <div class="info-box example">
+                        <h3>✅ Vorteile</h3>
+                        <ul>
+                            <li>Einfach zu verstehen</li>
+                            <li>Schnelle Speicherzugriffe</li>
+                            <li>Keine komplexe Verwaltung nötig</li>
+                            <li>Programme können sich nicht überschreiben</li>
+                        </ul>
+                    </div>
+                    <div class="info-box warning">
+                        <h3>❌ Nachteile</h3>
+                        <ul>
+                            <li>Verschwendung von Speicher</li>
+                            <li>Fragmentierung</li>
+                            <li>Begrenzte Programmgröße</li>
+                            <li>Ineffiziente Nutzung</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-box important">
+                    <h3>🔍 Problem: Fragmentierung</h3>
+                    <p>Wenn Programme beendet werden, entstehen "Löcher" im Speicher. Neue Programme passen vielleicht nicht in diese Löcher, obwohl insgesamt genug Speicher frei ist. Das nennt man <strong>externe Fragmentierung</strong>.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Swapping -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🔄 Swapping (Auslagerung)</h2>
+                <p>Mehr Programme als Speicher? Kein Problem!</p>
+            </div>
+            <div class="section-content">
+                <p><strong>Swapping</strong> löst das Problem, wenn mehr Programme laufen sollen, als in den Hauptspeicher passen.</p>
+
+                <div class="process-flow">
+                    <div class="process-step">Programm läuft im RAM</div>
+                    <div class="process-step">RAM wird voll</div>
+                    <div class="process-step">Programm auf Festplatte auslagern</div>
+                    <div class="process-step">Platz für neues Programm</div>
+                    <div class="process-step">Bei Bedarf zurückladen</div>
+                </div>
+
+                <div class="memory-diagram">
+                    <h4>Swapping in Aktion</h4>
+                    <div style="margin: 1rem 0;">
+                        <strong>Vorher:</strong><br>
+                        <div class="memory-block allocated">OS</div>
+                        <div class="memory-block allocated">Prog A</div>
+                        <div class="memory-block allocated">Prog B</div>
+                        <div class="memory-block allocated">Prog C</div>
+                        <div class="memory-block allocated">Prog D</div>
+                        <div class="memory-block allocated">Prog E</div>
+                        <div class="memory-block allocated">Prog F</div>
+                        <div class="memory-block allocated">Prog G</div>
+                    </div>
+                    <div style="margin: 1rem 0;">
+                        <strong>Nachher (Prog B und E ausgelagert):</strong><br>
+                        <div class="memory-block allocated">OS</div>
+                        <div class="memory-block swapped">→ HDD</div>
+                        <div class="memory-block allocated">Prog H</div>
+                        <div class="memory-block allocated">Prog C</div>
+                        <div class="memory-block allocated">Prog D</div>
+                        <div class="memory-block swapped">→ HDD</div>
+                        <div class="memory-block allocated">Prog I</div>
+                        <div class="memory-block allocated">Prog G</div>
+                    </div>
+                </div>
+
+                <div class="info-box definition">
+                    <h3>🔧 Wie funktioniert Swapping?</h3>
+                    <p>Das Betriebssystem kopiert ganze Programme oder Teile davon auf die Festplatte (Swap-Datei oder Swap-Partition). Wenn das Programm wieder gebraucht wird, wird es zurück in den RAM geladen.</p>
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+                    <div class="info-box example">
+                        <h3>✅ Vorteile von Swapping</h3>
+                        <ul>
+                            <li>Mehr Programme können "gleichzeitig" laufen</li>
+                            <li>Bessere Speicherausnutzung</li>
+                            <li>Programme können größer als der RAM sein</li>
+                            <li>Flexiblere Ressourcenverteilung</li>
+                        </ul>
+                    </div>
+                    <div class="info-box warning">
+                        <h3>❌ Nachteile von Swapping</h3>
+                        <ul>
+                            <li>Sehr langsam (Festplattenzugriff)</li>
+                            <li>Komplexere Verwaltung</li>
+                            <li>Zusätzlicher Speicherplatz nötig</li>
+                            <li>Kann zu "Thrashing" führen</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="info-box important">
+                    <h3>⚠️ Thrashing - Der Alptraum</h3>
+                    <p>Wenn das System ständig zwischen RAM und Festplatte hin- und herkopiert, spricht man von <strong>Thrashing</strong>. Der Computer wird extrem langsam, weil er mehr Zeit mit Auslagern als mit echter Arbeit verbringt.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Virtueller Speicher -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🌐 Virtueller Speicher</h2>
+                <p>Die elegante Lösung für moderne Betriebssysteme</p>
+            </div>
+            <div class="section-content">
+                <p><strong>Virtueller Speicher</strong> ist eine clevere Technik, die jedem Programm vorgaukelt, es hätte den ganzen Speicher für sich allein.</p>
+
+                <div class="info-box definition">
+                    <h3>💡 Grundprinzip</h3>
+                    <p>Jedes Programm bekommt einen <strong>virtuellen Adressraum</strong>. Das Betriebssystem übersetzt diese virtuellen Adressen in echte physikalische Adressen im RAM. Programme denken, sie haben z.B. 4GB Speicher, auch wenn nur 2GB RAM vorhanden sind.</p>
+                </div>
+
+                <div class="code-block">
+<span class="comment">// Programm denkt, es arbeitet mit diesen Adressen:</span>
+<span class="keyword">Virtuelle Adresse:</span> 0x00401000
+<span class="keyword">Virtuelle Adresse:</span> 0x00401004
+<span class="keyword">Virtuelle Adresse:</span> 0x00401008
+
+<span class="comment">// Betriebssystem übersetzt zu:</span>
+<span class="keyword">Physikalische Adresse:</span> 0x12345000
+<span class="keyword">Physikalische Adresse:</span> 0x12345004
+<span class="keyword">Physikalische Adresse:</span> 0x12345008
+                </div>
+
+                <div class="info-box example">
+                    <h3>🎭 Vergleich mit einem Hotel</h3>
+                    <p>Stell dir vor, du buchst Zimmer 101-110 in einem Hotel. Das Hotel hat aber nur 5 echte Zimmer. Der Portier (= Betriebssystem) sorgt dafür, dass du immer in ein echtes Zimmer kommst, auch wenn er dafür andere Gäste in den Nebenflügel (= Festplatte) umquartieren muss. Du merkst nichts davon!</p>
+                </div>
+
+                <h3>🔧 Zwei Hauptverfahren:</h3>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+                    <div class="info-box">
+                        <h3>📑 Segmentierung</h3>
+                        <p><strong>Idee:</strong> Programme werden in logische Bereiche (Segmente) aufgeteilt</p>
+                        <ul>
+                            <li>Code-Segment (Programmbefehle)</li>
+                            <li>Daten-Segment (Variablen)</li>
+                            <li>Stack-Segment (Aufrufstapel)</li>
+                            <li>Heap-Segment (dynamischer Speicher)</li>
+                        </ul>
+                    </div>
+                    <div class="info-box">
+                        <h3>📄 Paging (Seitenaufteilung)</h3>
+                        <p><strong>Idee:</strong> Speicher wird in gleichgroße "Seiten" aufgeteilt</p>
+                        <ul>
+                            <li>Typisch: 4KB pro Seite</li>
+                            <li>Einfache Verwaltung</li>
+                            <li>Keine externe Fragmentierung</li>
+                            <li>Standard in modernen OS</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Segmentorientierter Speicher -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>📑 Segmentorientierter Speicher</h2>
+                <p>Logische Aufteilung nach Programmstruktur</p>
+            </div>
+            <div class="section-content">
+                <p>Bei der <strong>Segmentierung</strong> wird der Speicher entsprechend der logischen Struktur des Programms aufgeteilt.</p>
+
+                <div class="memory-diagram">
+                    <h4>Programm-Segmente</h4>
+                    <div style="text-align: left; margin: 1rem 0;">
+                        <div style="background: #dbeafe; padding: 1rem; margin: 0.5rem 0; border-radius: 4px;">
+                            <strong>Code-Segment</strong> - Nur lesen, ausführbar<br>
+                            <code>0x1000 - 0x2000 (4KB)</code>
+                        </div>
+                        <div style="background: #dcfce7; padding: 1rem; margin: 0.5rem 0; border-radius: 4px;">
+                            <strong>Daten-Segment</strong> - Lesen/Schreiben<br>
+                            <code>0x2000 - 0x3000 (4KB)</code>
+                        </div>
+                        <div style="background: #fef3c7; padding: 1rem; margin: 0.5rem 0; border-radius: 4px;">
+                            <strong>Stack-Segment</strong> - Lesen/Schreiben, wächst nach unten<br>
+                            <code>0x7000 - 0x8000 (4KB)</code>
+                        </div>
+                        <div style="background: #fee2e2; padding: 1rem; margin: 0.5rem 0; border-radius: 4px;">
+                            <strong>Heap-Segment</strong> - Dynamisch, wächst nach oben<br>
+                            <code>0x3000 - 0x6000 (12KB)</code>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="info-box definition">
+                    <h3>🔍 Segmenttabelle</h3>
+                    <p>Das Betriebssystem führt für jedes Programm eine <strong>Segmenttabelle</strong>, die für jedes Segment enthält:</p>
+                    <ul>
+                        <li><strong>Basisadresse:</strong> Wo das Segment im RAM beginnt</li>
+                        <li><strong>Länge:</strong> Wie groß das Segment ist</li>
+                        <li><strong>Zugriffsrechte:</strong> Lesen/Schreiben/Ausführen erlaubt?</li>
+                        <li><strong>Gültigkeitsbit:</strong> Ist das Segment im RAM oder ausgelagert?</li>
+                    </ul>
+                </div>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Segment</th>
+                            <th>Basisadresse</th>
+                            <th>Länge</th>
+                            <th>Zugriffsrechte</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Code</td>
+                            <td>0x1000</td>
+                            <td>4KB</td>
+                            <td>R + X (Lesen + Ausführen)</td>
+                            <td>Im RAM</td>
+                        </tr>
+                        <tr>
+                            <td>Daten</td>
+                            <td>0x2000</td>
+                            <td>4KB</td>
+                            <td>R + W (Lesen + Schreiben)</td>
+                            <td>Im RAM</td>
+                        </tr>
+                        <tr>
+                            <td>Stack</td>
+                            <td>0x7000</td>
+                            <td>4KB</td>
+                            <td>R + W</td>
+                            <td>Ausgelagert</td>
+                        </tr>
+                        <tr>
+                            <td>Heap</td>
+                            <td>0x3000</td>
+                            <td>12KB</td>
+                            <td>R + W</td>
+                            <td>Im RAM</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+                    <div class="info-box example">
+                        <h3>✅ Vorteile der Segmentierung</h3>
+                        <ul>
+                            <li>Logische Trennung der Programmteile</li>
+                            <li>Verschiedene Zugriffsrechte möglich</li>
+                            <li>Segmente können unterschiedlich groß sein</li>
+                            <li>Einfacher Schutz zwischen Programmen</li>
+                            <li>Code-Sharing zwischen Programmen möglich</li>
+                        </ul>
+                    </div>
+                    <div class="info-box warning">
+                        <h3>❌ Nachteile der Segmentierung</h3>
+                        <ul>
+                            <li>Externe Fragmentierung möglich</li>
+                            <li>Komplexe Speicherallokation</li>
+                            <li>Segmente können sehr groß werden</li>
+                            <li>Schwierige Speicheroptimierung</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Seitenorientierter Speicher -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>📄 Seitenorientierter Speicher (Paging)</h2>
+                <p>Die moderne Standardlösung</p>
+            </div>
+            <div class="section-content">
+                <p><strong>Paging</strong> ist heute das Standard-Verfahren für Speicherverwaltung. Der gesamte Speicher wird in gleichgroße "Seiten" aufgeteilt.</p>
+
+                <div class="info-box definition">
+                    <h3>💡 Grundprinzip des Paging</h3>
+                    <p><strong>Seiten (Pages):</strong> Virtueller Speicher wird in gleichgroße Blöcke (typisch 4KB) aufgeteilt<br>
+                    <strong>Rahmen (Frames):</strong> Physikalischer RAM wird in gleichgroße Blöcke aufgeteilt<br>
+                    <strong>Seitentabelle:</strong> Übersetzt virtuelle Seiten in physikalische Rahmen</p>
+                </div>
+
+                <div class="memory-diagram">
+                    <h4>Paging-Beispiel (4KB Seiten)</h4>
+                    <div style="margin: 1rem 0;">
+                        <strong>Virtueller Speicher (Programmsicht):</strong><br>
+                        <div class="memory-block" style="background: #dbeafe;">Seite 0</div>
+                        <div class="memory-block" style="background: #dbeafe;">Seite 1</div>
+                        <div class="memory-block" style="background: #dbeafe;">Seite 2</div>
+                        <div class="memory-block" style="background: #dbeafe;">Seite 3</div>
+                        <div class="memory-block" style="background: #dbeafe;">Seite 4</div>
+                        <div class="memory-block" style="background: #dbeafe;">Seite 5</div>
+                        <div class="memory-block" style="background: #dbeafe;">Seite 6</div>
+                        <div class="memory-block" style="background: #dbeafe;">Seite 7</div>
+                    </div>
+                    <div style="margin: 2rem 0; font-size: 1.5rem;">⬇️ Seitentabelle übersetzt ⬇️</div>
+                    <div style="margin: 1rem 0;">
+                        <strong>Physikalischer RAM:</strong><br>
+                        <div class="memory-block allocated">Rahmen 0</div>
+                        <div class="memory-block allocated">Rahmen 1</div>
+                        <div class="memory-block free">Rahmen 2</div>
+                        <div class="memory-block allocated">Rahmen 3</div>
+                        <div class="memory-block free">Rahmen 4</div>
+                        <div class="memory-block allocated">Rahmen 5</div>
+                        <div class="memory-block allocated">Rahmen 6</div>
+                        <div class="memory-block free">Rahmen 7</div>
+                    </div>
+                </div>
+
+                <h3>🗂️ Die Seitentabelle im Detail</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Virtuelle Seite</th>
+                            <th>Physikalischer Rahmen</th>
+                            <th>Present-Bit</th>
+                            <th>Dirty-Bit</th>
+                            <th>Access-Bit</th>
+                            <th>Zugriffsrechte</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>0</td>
+                            <td>3</td>
+                            <td>1 (im RAM)</td>
+                            <td>0 (unverändert)</td>
+                            <td>1 (kürzlich genutzt)</td>
+                            <td>R + X</td>
+                        </tr>
+                        <tr>
+                            <td>1</td>
+                            <td>0</td>
+                            <td>1 (im RAM)</td>
+                            <td>1 (verändert)</td>
+                            <td>1 (kürzlich genutzt)</td>
+                            <td>R + W</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>-</td>
+                            <td>0 (ausgelagert)</td>
+                            <td>0</td>
+                            <td>0 (lange nicht genutzt)</td>
+                            <td>R + W</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>5</td>
+                            <td>1 (im RAM)</td>
+                            <td>0 (unverändert)</td>
+                            <td>0 (lange nicht genutzt)</td>
+                            <td>R + W</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="info-box important">
+                    <h3>🔍 Wichtige Bits in der Seitentabelle</h3>
+                    <p><strong>Present-Bit:</strong> Ist die Seite gerade im RAM?<br>
+                    <strong>Dirty-Bit:</strong> Wurde die Seite verändert? (wichtig beim Auslagern)<br>
+                    <strong>Access-Bit:</strong> Wurde auf die Seite kürzlich zugegriffen?<br>
+                    <strong>Protection-Bits:</strong> Welche Zugriffe sind erlaubt?</p>
+                </div>
+
+                <h3>⚡ Page Fault - Was passiert bei einem Seitenfehler?</h3>
+                <div class="process-flow">
+                    <div class="process-step">Programm greift auf Seite zu</div>
+                    <div class="process-step">Present-Bit = 0</div>
+                    <div class="process-step">Page Fault Exception</div>
+                    <div class="process-step">OS lädt Seite von Festplatte</div>
+                    <div class="process-step">Seitentabelle aktualisieren</div>
+                    <div class="process-step">Programm fortsetzen</div>
+                </div>
+
+                <div class="code-block">
+<span class="comment">// Beispiel eines Page Fault</span>
+<span class="keyword">1.</span> Programm: "Lade Daten von Adresse 0x2000"
+<span class="keyword">2.</span> MMU: "Seite 2 ist nicht im RAM (Present-Bit = 0)"
+<span class="keyword">3.</span> CPU: "Page Fault Exception!"
+<span class="keyword">4.</span> OS: "Lade Seite 2 von Festplatte in Rahmen 4"
+<span class="keyword">5.</span> OS: "Setze Present-Bit = 1, Rahmen = 4"
+<span class="keyword">6.</span> OS: "Programm kann weitermachen"
+                </div>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+                    <div class="info-box example">
+                        <h3>✅ Vorteile von Paging</h3>
+                        <ul>
+                            <li>Keine externe Fragmentierung</li>
+                            <li>Einfache Speicherverwaltung</li>
+                            <li>Flexible Allokation</li>
+                            <li>Efficient virtueller Speicher</li>
+                            <li>Copy-on-Write möglich</li>
+                            <li>Memory-Mapped Files</li>
+                        </ul>
+                    </div>
+                    <div class="info-box warning">
+                        <h3>❌ Nachteile von Paging</h3>
+                        <ul>
+                            <li>Interne Fragmentierung möglich</li>
+                            <li>Overhead durch Seitentabellen</li>
+                            <li>Translation Lookaside Buffer nötig</li>
+                            <li>Komplexere Hardware erforderlich</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Speicher-Strategien -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🎯 Speicher-Ersetzungsstrategien</h2>
+                <p>Welche Seite soll ausgelagert werden?</p>
+            </div>
+            <div class="section-content">
+                <p>Wenn der RAM voll ist und eine neue Seite geladen werden muss, muss das Betriebssystem entscheiden, welche Seite ausgelagert wird.</p>
+
+                <h3>🔄 Verschiedene Strategien:</h3>
+
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; margin: 2rem 0;">
+                    <div class="info-box">
+                        <h3>📅 FIFO (First In, First Out)</h3>
+                        <p><strong>Prinzip:</strong> Die älteste Seite wird ausgelagert</p>
+                        <p><strong>Vorteil:</strong> Einfach zu implementieren</p>
+                        <p><strong>Nachteil:</strong> Häufig genutzte Seiten können ausgelagert werden</p>
+                    </div>
+                    <div class="info-box">
+                        <h3>🎯 LRU (Least Recently Used)</h3>
+                        <p><strong>Prinzip:</strong> Die am längsten nicht genutzte Seite wird ausgelagert</p>
+                        <p><strong>Vorteil:</strong> Sehr gute Performance</p>
+                        <p><strong>Nachteil:</strong> Aufwendige Implementierung</p>
+                    </div>
+                    <div class="info-box">
+                        <h3>🎲 Optimal (theoretisch)</h3>
+                        <p><strong>Prinzip:</strong> Die Seite, die am spätesten wieder gebraucht wird</p>
+                        <p><strong>Vorteil:</strong> Beste theoretische Performance</p>
+                        <p><strong>Nachteil:</strong> Unmöglich zu implementieren (Zukunft unbekannt)</p>
+                    </div>
+                    <div class="info-box">
+                        <h3>⏰ Clock-Algorithmus</h3>
+                        <p><strong>Prinzip:</strong> Approximation von LRU mit Access-Bits</p>
+                        <p><strong>Vorteil:</strong> Guter Kompromiss</p>
+                        <p><strong>Nachteil:</strong> Nicht so gut wie echtes LRU</p>
+                    </div>
+                </div>
+
+                <div class="info-box example">
+                    <h3>🔍 LRU-Beispiel</h3>
+                    <p>Seitenreihenfolge: A, B, C, D, B, E, B, C, D, E<br>
+                    RAM-Größe: 3 Seiten</p>
+                    
+                    <div class="code-block">
+Schritt 1: A → RAM: [A, -, -]
+Schritt 2: B → RAM: [A, B, -]
+Schritt 3: C → RAM: [A, B, C]
+Schritt 4: D → RAM voll! LRU = A → RAM: [D, B, C]
+Schritt 5: B → bereits im RAM → RAM: [D, B, C]
+Schritt 6: E → RAM voll! LRU = D → RAM: [E, B, C]
+...
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Praktische Implementierung -->
+        <section class="content-section">
+            <div class="section-header">
+                <h2>⚙️ Praktische Implementierung</h2>
+                <p>Wie moderne Betriebssysteme es wirklich machen</p>
+            </div>
+            <div class="section-content">
+                <h3>🖥️ Memory Management Unit (MMU)</h3>
+                <p>Die <strong>MMU</strong> ist ein Hardware-Baustein, der die Adressübersetzung übernimmt:</p>
+
+                <div class="memory-diagram">
+                    <h4>MMU in Aktion</h4>
+                    <div style="text-align: left; margin: 1rem 0;">
+                        <div style="display: flex; align-items: center; justify-content: space-between; margin: 1rem 0;">
+                            <div style="background: #dbeafe; padding: 1rem; border-radius: 4px;">CPU<br><code>Virtuelle Adresse</code></div>
+                            <div style="font-size: 1.5rem;">→</div>
+                            <div style="background: #dcfce7; padding: 1rem; border-radius: 4px;">MMU<br><code>Übersetzung</code></div>
+                            <div style="font-size: 1.5rem;">→</div>
+                            <div style="background: #fef3c7; padding: 1rem; border-radius: 4px;">RAM<br><code>Physikalische Adresse</code></div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>🚀 Translation Lookaside Buffer (TLB)</h3>
+                <div class="info-box definition">
+                    <h3>💡 Was ist der TLB?</h3>
+                    <p>Der <strong>TLB</strong> ist ein sehr schneller Cache in der MMU, der die häufigsten Adressübersetzungen speichert. Ohne TLB wäre jeder Speicherzugriff viel zu langsam!</p>
+                </div>
+
+                <div class="code-block">
+<span class="comment">// TLB-Lookup Beispiel</span>
+<span class="keyword">1.</span> CPU möchte auf virtuelle Adresse 0x2000 zugreifen
+<span class="keyword">2.</span> MMU schaut im TLB nach → TLB Hit! 
+<span class="keyword">3.</span> TLB: "0x2000 → Physikalisch 0x5000"
+<span class="keyword">4.</span> Zugriff auf 0x5000 (sehr schnell!)
+
+<span class="comment">// Bei TLB Miss:</span>
+<span class="keyword">1.</span> TLB Miss → Seitentabelle durchsuchen
+<span class="keyword">2.</span> Übersetzung gefunden → TLB aktualisieren
+<span class="keyword">3.</span> Nächster Zugriff ist wieder schnell
+                </div>
+
+                <h3>📊 Moderne Optimierungen</h3>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Technik</th>
+                            <th>Zweck</th>
+                            <th>Beispiel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Copy-on-Write</strong></td>
+                            <td>Speicher sparen bei Prozess-Kopien</td>
+                            <td>Fork() in Unix</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Memory-Mapped Files</strong></td>
+                            <td>Dateien wie Speicher behandeln</td>
+                            <td>Große Datenbank-Dateien</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Huge Pages</strong></td>
+                            <td>Weniger TLB-Misses bei großen Programmen</td>
+                            <td>2MB oder 1GB Seiten</td>
+                        </tr>
+                        <tr>
+                            <td><strong>NUMA-Awareness</strong></td>
+                            <td>Lokaler Speicher in Mehrkern-Systemen</td>
+                            <td>Server mit mehreren CPUs</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+
+        <!-- Quiz -->
+        <section class="quiz-section">
+            <h3>🧠 Verständnis-Check</h3>
+            
+            <div class="quiz-question">
+                <strong>Frage 1:</strong> Was passiert bei einem Page Fault?
+                <ul class="quiz-options">
+                    <li>A) Das Programm stürzt ab</li>
+                    <li>B) Die gewünschte Seite wird von der Festplatte geladen</li>
+                    <li>C) Der Computer wird neu gestartet</li>
+                    <li>D) Der Speicher wird geleert</li>
+                </ul>
+            </div>
+
+            <div class="quiz-question">
+                <strong>Frage 2:</strong> Was ist der Hauptvorteil von Paging gegenüber Segmentierung?
+                <ul class="quiz-options">
+                    <li>A) Paging ist schneller</li>
+                    <li>B) Paging verhindert externe Fragmentierung</li>
+                    <li>C) Paging braucht weniger Speicher</li>
+                    <li>D) Paging ist einfacher zu programmieren</li>
+                </ul>
+            </div>
+
+            <div class="quiz-question">
+                <strong>Frage 3:</strong> Wofür steht das Dirty-Bit in der Seitentabelle?
+                <ul class="quiz-options">
+                    <li>A) Die Seite ist defekt</li>
+                    <li>B) Die Seite wurde verändert</li>
+                    <li>C) Die Seite ist verschmutzt</li>
+                    <li>D) Die Seite ist alt</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Zusammenfassung -->
+        <section class="summary-box">
+            <h3>📋 Zusammenfassung: Speicherverwaltung</h3>
+            <ul class="summary-points">
+                <li><strong>Speicherverwaltung</strong> teilt den RAM optimal zwischen Programmen auf</li>
+                <li><strong>Direkte Verwaltung</strong> ist einfach, aber ineffizient (Fragmentierung)</li>
+                <li><strong>Swapping</strong> ermöglicht mehr Programme als RAM vorhanden ist</li>
+                <li><strong>Virtueller Speicher</strong> gibt jedem Programm einen eigenen Adressraum</li>
+                <li><strong>Segmentierung</strong> teilt nach logischen Programmteilen auf</li>
+                <li><strong>Paging</strong> teilt in gleichgroße Seiten auf (Standard heute)</li>
+                <li><strong>Page Faults</strong> laden ausgelagerte Seiten nach Bedarf</li>
+                <li><strong>TLB</strong> beschleunigt die Adressübersetzung dramatisch</li>
+                <li><strong>LRU-Strategie</strong> entscheidet intelligent über Auslagerung</li>
+                <li><strong>Moderne Optimierungen</strong> wie Copy-on-Write sparen Ressourcen</li>
+            </ul>
+        </section>
+
+        <nav class="navigation">
+            <a href="betriebssysteme.html" class="nav-btn">← Betriebssysteme</a>
+            <a href="prozesse-scheduling.html" class="nav-btn">Prozesse & Scheduling →</a>
+        </nav>
+    </div>
+
+    <script>
+        // Quiz-Funktionalität
+        document.querySelectorAll('.quiz-options li').forEach(option => {
+            option.addEventListener('click', function() {
+                // Reset alle Optionen in dieser Frage
+                const siblings = this.parentElement.children;
+                for (let sibling of siblings) {
+                    sibling.style.backgroundColor = '';
+                    sibling.style.color = '';
+                }
+                
+                // Markiere ausgewählte Antwort
+                this.style.backgroundColor = 'var(--primary-color)';
+                this.style.color = 'white';
+                
+                // Zeige richtige Antworten nach kurzer Verzögerung
+                setTimeout(() => {
+                    const questionNumber = Array.from(document.querySelectorAll('.quiz-question')).indexOf(this.closest('.quiz-question')) + 1;
+                    const correctAnswers = ['B', 'B', 'B']; // Richtige Antworten
+                    const selectedAnswer = this.textContent.charAt(0);
+                    
+                    if (selectedAnswer === correctAnswers[questionNumber - 1]) {
+                        this.style.backgroundColor = 'var(--success-color)';
+                        this.innerHTML += ' ✓ Richtig!';
+                    } else {
+                        this.style.backgroundColor = 'var(--danger-color)';
+                        this.innerHTML += ' ✗ Falsch';
+                        
+                        // Zeige richtige Antwort
+                        for (let sibling of siblings) {
+                            if (sibling.textContent.charAt(0) === correctAnswers[questionNumber - 1]) {
+                                sibling.style.backgroundColor = 'var(--success-color)';
+                                sibling.style.color = 'white';
+                                sibling.innerHTML += ' ← Richtige Antwort';
+                            }
+                        }
+                    }
+                }, 500);
+            });
+        });
+
+        // Navigation zu anderen Seiten (Platzhalter)
+        document.querySelectorAll('.nav-btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Diese Seite wird als nächstes erstellt!');
+            });
+        });
+
+        // Smooth Scrolling für Anker-Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>

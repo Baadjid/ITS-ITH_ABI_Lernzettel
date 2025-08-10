@@ -1,0 +1,1012 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kombinatorische Schaltnetze - Abitur 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #06b6d4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .header h1 {
+            color: var(--primary-color);
+            font-size: 2.2rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .breadcrumb {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .intro-box {
+            background: linear-gradient(135deg, var(--info-color), var(--primary-color));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .intro-box h2 {
+            margin-bottom: 1rem;
+        }
+
+        .section {
+            background: var(--bg-white);
+            border-radius: 16px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .section h3 {
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .logic-gates-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .gate-card {
+            background: var(--bg-light);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .gate-card:hover {
+            border-color: var(--primary-color);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 15px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .gate-card h4 {
+            color: var(--primary-color);
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .gate-symbol {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 80px;
+            margin: 1rem 0;
+            font-size: 2rem;
+            background: var(--bg-white);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .truth-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+        }
+
+        .truth-table th,
+        .truth-table td {
+            border: 1px solid var(--border-color);
+            padding: 0.8rem;
+            text-align: center;
+        }
+
+        .truth-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .truth-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .formula-box {
+            background: linear-gradient(135deg, #fef3c7, #fbbf24);
+            border: 2px solid var(--warning-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .formula-box .formula {
+            font-size: 1.3rem;
+            font-weight: bold;
+            text-align: center;
+            font-family: 'Courier New', monospace;
+            color: var(--text-dark);
+        }
+
+        .example-box {
+            background: #f0fdf4;
+            border: 2px solid var(--success-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .example-box h4 {
+            color: var(--success-color);
+            margin-bottom: 1rem;
+        }
+
+        .warning-box {
+            background: #fef2f2;
+            border: 2px solid var(--danger-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box h4 {
+            color: var(--danger-color);
+            margin-bottom: 1rem;
+        }
+
+        .info-box {
+            background: #f0f9ff;
+            border: 2px solid var(--info-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .info-box h4 {
+            color: var(--info-color);
+            margin-bottom: 1rem;
+        }
+
+        .step-by-step {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            padding-bottom: 1.5rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .step:last-child {
+            border-bottom: none;
+            margin-bottom: 0;
+            padding-bottom: 0;
+        }
+
+        .step-number {
+            background: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 1rem;
+            flex-shrink: 0;
+        }
+
+        .step-content h5 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .kv-diagram {
+            display: inline-block;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            margin: 1rem;
+        }
+
+        .kv-diagram table {
+            border-collapse: collapse;
+        }
+
+        .kv-diagram td {
+            width: 40px;
+            height: 40px;
+            border: 1px solid var(--border-color);
+            text-align: center;
+            vertical-align: middle;
+            background: var(--bg-white);
+        }
+
+        .kv-diagram .header-cell {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .kv-diagram .one-cell {
+            background: #dcfce7;
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .interactive-demo {
+            background: var(--bg-white);
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .demo-controls {
+            display: flex;
+            gap: 1rem;
+            margin-bottom: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .switch {
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .switch input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+        }
+
+        .output-display {
+            background: var(--bg-light);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-top: 1rem;
+        }
+
+        .output-display.high {
+            background: #dcfce7;
+            color: var(--success-color);
+        }
+
+        .output-display.low {
+            background: #fee2e2;
+            color: var(--danger-color);
+        }
+
+        .summary-points {
+            background: var(--bg-light);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .summary-points ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .summary-points li {
+            background: var(--bg-white);
+            margin-bottom: 0.8rem;
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+        }
+
+        .nav-button {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem 2rem;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-button.disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .logic-gates-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .demo-controls {
+                flex-direction: column;
+            }
+            
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <header class="header">
+            <div class="breadcrumb">
+                <a href="index.html">🏠 Abitur 2026</a>
+                <span>→</span>
+                <a href="index.html">Technische Informatik I</a>
+                <span>→</span>
+                <span>Kombinatorische Schaltnetze</span>
+            </div>
+            <h1>🔧 Kombinatorische Schaltnetze</h1>
+        </header>
+
+        <!-- Einführung -->
+        <div class="intro-box">
+            <h2>📖 Was sind kombinatorische Schaltnetze?</h2>
+            <p><strong>Kombinatorische Schaltnetze</strong> sind digitale Schaltungen, bei denen der Ausgang <em>nur</em> von den aktuellen Eingangswerten abhängt - nicht von vorherigen Zuständen oder der Zeit. Sie haben kein "Gedächtnis" und reagieren sofort auf Änderungen der Eingänge.</p>
+            <p><strong>Wichtig:</strong> Im Gegensatz zu Schaltwerken (die wir später lernen) haben Schaltnetze keine Rückkopplung und keine Speicherelemente!</p>
+        </div>
+
+        <!-- Grundlagen der Logikgatter -->
+        <section class="section">
+            <h2>🔍 Die Grundbausteine: Logikgatter</h2>
+            <p>Bevor wir komplexe Schaltnetze verstehen, müssen wir die <strong>Grundbausteine</strong> kennen - die Logikgatter. Diese sind wie die "Atome" der Digitaltechnik.</p>
+
+            <div class="logic-gates-grid">
+                <!-- AND Gate -->
+                <div class="gate-card">
+                    <h4>AND-Gatter (UND)</h4>
+                    <div class="gate-symbol">🔗 &</div>
+                    <p><strong>Funktion:</strong> Ausgang ist nur dann 1, wenn <em>alle</em> Eingänge 1 sind.</p>
+                    <div class="formula-box">
+                        <div class="formula">Y = A ∧ B<br>Y = A & B</div>
+                    </div>
+                    <table class="truth-table">
+                        <tr><th>A</th><th>B</th><th>Y</th></tr>
+                        <tr><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>0</td><td>1</td><td>0</td></tr>
+                        <tr><td>1</td><td>0</td><td>0</td></tr>
+                        <tr><td>1</td><td>1</td><td>1</td></tr>
+                    </table>
+                    <p><em>Wie ein Zweihandschalter: Nur wenn beide Schalter an sind, leuchtet die Lampe!</em></p>
+                </div>
+
+                <!-- OR Gate -->
+                <div class="gate-card">
+                    <h4>OR-Gatter (ODER)</h4>
+                    <div class="gate-symbol">🔀 ≥1</div>
+                    <p><strong>Funktion:</strong> Ausgang ist 1, wenn <em>mindestens ein</em> Eingang 1 ist.</p>
+                    <div class="formula-box">
+                        <div class="formula">Y = A ∨ B<br>Y = A # B</div>
+                    </div>
+                    <table class="truth-table">
+                        <tr><th>A</th><th>B</th><th>Y</th></tr>
+                        <tr><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>0</td><td>1</td><td>1</td></tr>
+                        <tr><td>1</td><td>0</td><td>1</td></tr>
+                        <tr><td>1</td><td>1</td><td>1</td></tr>
+                    </table>
+                    <p><em>Wie parallel geschaltete Schalter: Einer reicht, damit die Lampe leuchtet!</em></p>
+                </div>
+
+                <!-- NOT Gate -->
+                <div class="gate-card">
+                    <h4>NOT-Gatter (NICHT)</h4>
+                    <div class="gate-symbol">🔄 1</div>
+                    <p><strong>Funktion:</strong> Kehrt den Eingangswert um (invertiert).</p>
+                    <div class="formula-box">
+                        <div class="formula">Y = ¬A<br>Y = !A<br>Y = Ā</div>
+                    </div>
+                    <table class="truth-table">
+                        <tr><th>A</th><th>Y</th></tr>
+                        <tr><td>0</td><td>1</td></tr>
+                        <tr><td>1</td><td>0</td></tr>
+                    </table>
+                    <p><em>Hat nur einen Eingang! Ausgang ist das Gegenteil vom Eingang.</em></p>
+                </div>
+
+                <!-- NAND Gate -->
+                <div class="gate-card">
+                    <h4>NAND-Gatter (NICHT-UND)</h4>
+                    <div class="gate-symbol">🔗○ &</div>
+                    <p><strong>Funktion:</strong> Invertiertes AND - Ausgang ist 0, nur wenn alle Eingänge 1 sind.</p>
+                    <div class="formula-box">
+                        <div class="formula">Y = ¬(A ∧ B)<br>Y = !(A & B)</div>
+                    </div>
+                    <table class="truth-table">
+                        <tr><th>A</th><th>B</th><th>Y</th></tr>
+                        <tr><td>0</td><td>0</td><td>1</td></tr>
+                        <tr><td>0</td><td>1</td><td>1</td></tr>
+                        <tr><td>1</td><td>0</td><td>1</td></tr>
+                        <tr><td>1</td><td>1</td><td>0</td></tr>
+                    </table>
+                    <p><em>Das Gegenteil von AND - der kleine Kreis zeigt die Invertierung!</em></p>
+                </div>
+
+                <!-- NOR Gate -->
+                <div class="gate-card">
+                    <h4>NOR-Gatter (NICHT-ODER)</h4>
+                    <div class="gate-symbol">🔀○ ≥1</div>
+                    <p><strong>Funktion:</strong> Invertiertes OR - Ausgang ist 1, nur wenn alle Eingänge 0 sind.</p>
+                    <div class="formula-box">
+                        <div class="formula">Y = ¬(A ∨ B)<br>Y = !(A # B)</div>
+                    </div>
+                    <table class="truth-table">
+                        <tr><th>A</th><th>B</th><th>Y</th></tr>
+                        <tr><td>0</td><td>0</td><td>1</td></tr>
+                        <tr><td>0</td><td>1</td><td>0</td></tr>
+                        <tr><td>1</td><td>0</td><td>0</td></tr>
+                        <tr><td>1</td><td>1</td><td>0</td></tr>
+                    </table>
+                    <p><em>Das Gegenteil von OR - nur wenn beide Eingänge aus sind, ist der Ausgang an!</em></p>
+                </div>
+
+                <!-- XOR Gate -->
+                <div class="gate-card">
+                    <h4>XOR-Gatter (Exklusiv-ODER)</h4>
+                    <div class="gate-symbol">⊕ =1</div>
+                    <p><strong>Funktion:</strong> Ausgang ist 1, wenn die Eingänge <em>unterschiedlich</em> sind.</p>
+                    <div class="formula-box">
+                        <div class="formula">Y = A ⊕ B<br>Y = (!A & B) # (A & !B)</div>
+                    </div>
+                    <table class="truth-table">
+                        <tr><th>A</th><th>B</th><th>Y</th></tr>
+                        <tr><td>0</td><td>0</td><td>0</td></tr>
+                        <tr><td>0</td><td>1</td><td>1</td></tr>
+                        <tr><td>1</td><td>0</td><td>1</td></tr>
+                        <tr><td>1</td><td>1</td><td>0</td></tr>
+                    </table>
+                    <p><em>Entweder A oder B, aber nicht beide gleichzeitig!</em></p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>💡 Wichtiger Merksatz</h4>
+                <p><strong>Alle digitalen Schaltungen lassen sich mit nur drei Grundfunktionen realisieren: AND, OR und NOT!</strong></p>
+                <p>Noch besser: Mit nur NAND-Gattern kann man alle anderen Gatter nachbauen - deshalb nennt man NAND ein "universelles Gatter".</p>
+            </div>
+        </section>
+
+        <!-- Interaktive Demo -->
+        <section class="section">
+            <h2>🎮 Interaktive Demo: Logikgatter ausprobieren</h2>
+            <div class="interactive-demo">
+                <h4>Teste verschiedene Gatter!</h4>
+                <div class="demo-controls">
+                    <div class="switch">
+                        <label>Eingang A:</label>
+                        <input type="checkbox" id="inputA" onchange="updateDemo()">
+                        <span id="valueA">0</span>
+                    </div>
+                    <div class="switch">
+                        <label>Eingang B:</label>
+                        <input type="checkbox" id="inputB" onchange="updateDemo()">
+                        <span id="valueB">0</span>
+                    </div>
+                    <div class="switch">
+                        <label>Gatter-Typ:</label>
+                        <select id="gateType" onchange="updateDemo()">
+                            <option value="and">AND</option>
+                            <option value="or">OR</option>
+                            <option value="nand">NAND</option>
+                            <option value="nor">NOR</option>
+                            <option value="xor">XOR</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="output-display" id="output">Ausgang: 0</div>
+            </div>
+        </section>
+
+        <!-- Von der Wahrheitstabelle zur Schaltung -->
+        <section class="section">
+            <h2>🔄 Von der Wahrheitstabelle zur Schaltung</h2>
+            <p>Jetzt lernen wir, wie man aus einer <strong>Problemstellung</strong> eine digitale Schaltung entwickelt. Das ist das Herzstück der Digitaltechnik!</p>
+
+            <div class="step-by-step">
+                <h3>📋 Schritt-für-Schritt Anleitung</h3>
+                
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h5>Problemanalyse</h5>
+                        <p>Verstehe das Problem und identifiziere alle Eingänge und Ausgänge. Definiere klar, wann der Ausgang 1 oder 0 sein soll.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h5>Wahrheitstabelle erstellen</h5>
+                        <p>Liste alle möglichen Eingangskombinationen auf und bestimme für jede den gewünschten Ausgang. Bei n Eingängen gibt es 2ⁿ Kombinationen!</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h5>Disjunktive Normalform (DNF) aufstellen</h5>
+                        <p>Für jede Zeile mit Ausgang=1 schreibst du einen "Minterm" (alle Eingänge mit UND verknüpft). Alle Minterme werden mit ODER verknüpft.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h5>Vereinfachung (optional aber wichtig!)</h5>
+                        <p>Die DNF funktioniert immer, ist aber oft sehr aufwendig. Mit KV-Diagrammen oder Algebra kann man die Schaltung vereinfachen.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h5>Schaltung zeichnen</h5>
+                        <p>Setze die vereinfachte Formel in Logikgatter um. Jedes UND wird zu einem AND-Gatter, jedes ODER zu einem OR-Gatter.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📝 Beispiel: XOR-Schaltung selbst entwickeln</h4>
+                <p><strong>Problem:</strong> Wir wollen eine Schaltung, die nur dann 1 ausgibt, wenn die Eingänge A und B unterschiedlich sind.</p>
+                
+                <h5>Schritt 2: Wahrheitstabelle</h5>
+                <table class="truth-table" style="width: 300px; margin: 1rem auto;">
+                    <tr><th>A</th><th>B</th><th>X (gewünscht)</th></tr>
+                    <tr><td>0</td><td>0</td><td>0</td></tr>
+                    <tr><td>0</td><td>1</td><td>1</td></tr>
+                    <tr><td>1</td><td>0</td><td>1</td></tr>
+                    <tr><td>1</td><td>1</td><td>0</td></tr>
+                </table>
+
+                <h5>Schritt 3: DNF aufstellen</h5>
+                <p>Wir suchen alle Zeilen mit X=1:</p>
+                <ul>
+                    <li>Zeile 2: A=0, B=1 → Minterm: !A ∧ B</li>
+                    <li>Zeile 3: A=1, B=0 → Minterm: A ∧ !B</li>
+                </ul>
+                <div class="formula-box">
+                    <div class="formula">X = (!A ∧ B) ∨ (A ∧ !B)</div>
+                </div>
+
+                <h5>Schritt 5: Schaltung</h5>
+                <p>Diese Formel braucht: 2 NOT-Gatter, 2 AND-Gatter, 1 OR-Gatter</p>
+                <p><em>Interessant: Das ist genau die Definition des XOR-Gatters!</em></p>
+            </div>
+        </section>
+
+        <!-- KV-Diagramme -->
+        <section class="section">
+            <h2>🎯 KV-Diagramme (Karnaugh-Veitch)</h2>
+            <p>KV-Diagramme sind ein <strong>grafisches Verfahren</strong> zur Vereinfachung von Schaltnetzen. Sie helfen dabei, redundante Gatter zu eliminieren und die Schaltung zu optimieren.</p>
+
+            <div class="info-box">
+                <h4>🤔 Warum sind KV-Diagramme wichtig?</h4>
+                <p>Die DNF (Schritt 3 oben) funktioniert immer, aber sie ist oft <em>viel zu kompliziert</em>. Eine Schaltung mit 20 Gattern kann oft auf 3 Gatter reduziert werden!</p>
+                <p><strong>Beispiel:</strong> Statt 6 IC-Chips braucht man nur noch 1 Chip → billiger, weniger Strom, weniger Platz, zuverlässiger!</p>
+            </div>
+
+            <h3>📐 Grundlagen der KV-Diagramme</h3>
+            <div class="step-by-step">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h5>KV-Diagramm aufstellen</h5>
+                        <p>Übertrage die Wahrheitstabelle in eine Matrix. Bei 2 Variablen: 2×2-Matrix, bei 3 Variablen: 2×4-Matrix, bei 4 Variablen: 4×4-Matrix.</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h5>Einsen gruppieren</h5>
+                        <p>Suche nach benachbarten Einsen und fasse sie zu Gruppen zusammen. Gruppengröße muss immer eine Zweierpotenz sein (1, 2, 4, 8, ...)!</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h5>Vereinfachte Formel ablesen</h5>
+                        <p>Für jede Gruppe: Die Variablen, die sich <em>nicht ändern</em>, bleiben stehen. Die Variablen, die sich ändern, fallen weg!</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📝 KV-Diagramm Beispiel</h4>
+                <p><strong>Gegeben:</strong> Wahrheitstabelle mit 3 Eingängen A, B, C</p>
+                
+                <div style="display: flex; gap: 2rem; align-items: flex-start; flex-wrap: wrap;">
+                    <div>
+                        <h5>Wahrheitstabelle:</h5>
+                        <table class="truth-table">
+                            <tr><th>A</th><th>B</th><th>C</th><th>X</th></tr>
+                            <tr><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                            <tr><td>0</td><td>0</td><td>1</td><td>1</td></tr>
+                            <tr><td>0</td><td>1</td><td>0</td><td>1</td></tr>
+                            <tr><td>0</td><td>1</td><td>1</td><td>1</td></tr>
+                            <tr><td>1</td><td>0</td><td>0</td><td>1</td></tr>
+                            <tr><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+                            <tr><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+                            <tr><td>1</td><td>1</td><td>1</td><td>0</td></tr>
+                        </table>
+                    </div>
+                    
+                    <div>
+                        <h5>KV-Diagramm:</h5>
+                        <div class="kv-diagram">
+                            <table>
+                                <tr>
+                                    <td class="header-cell">AB\C</td>
+                                    <td class="header-cell">0</td>
+                                    <td class="header-cell">1</td>
+                                </tr>
+                                <tr>
+                                    <td class="header-cell">00</td>
+                                    <td>0</td>
+                                    <td class="one-cell">1</td>
+                                </tr>
+                                <tr>
+                                    <td class="header-cell">01</td>
+                                    <td class="one-cell">1</td>
+                                    <td class="one-cell">1</td>
+                                </tr>
+                                <tr>
+                                    <td class="header-cell">11</td>
+                                    <td class="one-cell">1</td>
+                                    <td>0</td>
+                                </tr>
+                                <tr>
+                                    <td class="header-cell">10</td>
+                                    <td class="one-cell">1</td>
+                                    <td>0</td>
+                                </tr>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+
+                <h5>Gruppierung und Vereinfachung:</h5>
+                <p><strong>Gruppe 1:</strong> Die beiden Einsen in der Zeile "01" → B=1, C ändert sich → Term: B</p>
+                <p><strong>Gruppe 2:</strong> Die Einsen bei C=0 (außer "00") → A=1 und C=0, B ändert sich → Term: A ∧ !C</p>
+                <p><strong>Gruppe 3:</strong> Die Eins bei "00,1" → !A ∧ !B ∧ C</p>
+
+                <div class="formula-box">
+                    <div class="formula">
+                        DNF (unvereinf.): X = (!A∧!B∧C) ∨ (!A∧B∧!C) ∨ (!A∧B∧C) ∨ (A∧!B∧!C) ∨ (A∧B∧!C)<br>
+                        <strong>KV vereinfacht: X = B ∨ (A∧!C) ∨ (!A∧!B∧C)</strong><br>
+                        <em>Viel einfacher!</em>
+                    </div>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ KV-Diagramm Regeln (unbedingt beachten!)</h4>
+                <ul>
+                    <li><strong>Möglichst große Gruppen</strong> bilden (reduziert die Anzahl der Terme)</li>
+                    <li><strong>Nur Zweierpotenzen</strong> als Gruppengröße (1, 2, 4, 8, 16, ...)</li>
+                    <li><strong>Jede Eins</strong> muss mindestens einmal in einer Gruppe sein</li>
+                    <li><strong>Gegenüberliegende Kanten</strong> sind benachbart (das Diagramm ist wie ein Zylinder!)</li>
+                    <li><strong>Nachbarn unterscheiden sich</strong> nur in genau einer Variable</li>
+                    <li><strong>Die sich ändernde Variable</strong> fällt aus dem Term heraus</li>
+                </ul>
+            </div>
+        </section>
+
+        <!-- Gesetz von De Morgan -->
+        <section class="section">
+            <h2>🔄 Gesetz von De Morgan</h2>
+            <p>Das <strong>Gesetz von De Morgan</strong> ist ein mächtiges Werkzeug zur Umwandlung und Vereinfachung logischer Ausdrücke. Es zeigt, wie AND und OR durch Invertierung ineinander umgewandelt werden können.</p>
+
+            <div class="formula-box">
+                <div class="formula">
+                    <strong>De Morgan'sche Gesetze:</strong><br>
+                    !(A ∧ B) = !A ∨ !B<br>
+                    !(A ∨ B) = !A ∧ !B
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>🧠 Einfache Merkregel</h4>
+                <p><strong>"Invertiere alle Eingänge/Ausgänge und vertausche UND mit ODER"</strong></p>
+                <p>Aus NAND wird NOR, aus NOR wird NAND - wenn man De Morgan anwendet!</p>
+            </div>
+
+            <div class="example-box">
+                <h4>📝 Praktisches Beispiel</h4>
+                <p><strong>Gegeben:</strong> !(A ∧ B ∧ !C ∧ !D)</p>
+                <p><strong>De Morgan anwenden:</strong></p>
+                <div class="step-by-step">
+                    <div class="step">
+                        <div class="step-number">1</div>
+                        <div class="step-content">
+                            <p>Große Klammer öffnen: !(A ∧ B ∧ !C ∧ !D) = !A ∨ !B ∨ !!C ∨ !!D</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">2</div>
+                        <div class="step-content">
+                            <p>Doppelte Negation auflösen: !!C = C, !!D = D</p>
+                        </div>
+                    </div>
+                    <div class="step">
+                        <div class="step-number">3</div>
+                        <div class="step-content">
+                            <p><strong>Ergebnis:</strong> !A ∨ !B ∨ C ∨ D</p>
+                        </div>
+                    </div>
+                </div>
+                <p><em>Das ist viel einfacher zu implementieren!</em></p>
+            </div>
+
+            <div class="warning-box">
+                <h4>💡 Profi-Tipp: Der "Große Trick"</h4>
+                <p>Wenn du 15 von 16 möglichen Mintermen hast, ist es oft einfacher, den <em>einen fehlenden</em> Minterm zu nehmen, zu invertieren und dann De Morgan anzuwenden!</p>
+                <p><strong>Beispiel:</strong> Statt 15 komplizierte Terme → 1 einfacher invertierter Term!</p>
+            </div>
+        </section>
+
+        <!-- Komplexe Schaltnetze -->
+        <section class="section">
+            <h2>🏗️ Komplexe Schaltnetze in der Praxis</h2>
+            <p>In der Realität werden Schaltnetze für viele praktische Anwendungen verwendet. Hier lernst du die wichtigsten Typen kennen!</p>
+
+            <div class="logic-gates-grid">
+                <div class="gate-card">
+                    <h4>🔢 Codeumsetzer</h4>
+                    <p><strong>Zweck:</strong> Wandelt eine Codierung in eine andere um (z.B. BCD zu 7-Segment-Anzeige)</p>
+                    <p><strong>Beispiel:</strong> Dezimalzahl 7 → Ansteuerung für "7" auf LED-Display</p>
+                    <p><strong>Eingänge:</strong> 4 Bit (BCD-Code)</p>
+                    <p><strong>Ausgänge:</strong> 7 Bit (für a,b,c,d,e,f,g Segmente)</p>
+                </div>
+
+                <div class="gate-card">
+                    <h4>🔀 Multiplexer (MUX)</h4>
+                    <p><strong>Zweck:</strong> Wählt einen von mehreren Eingängen aus und leitet ihn zum Ausgang</p>
+                    <p><strong>Beispiel:</strong> 4:1 MUX - wählt 1 von 4 Dateneingängen aus</p>
+                    <p><strong>Steuersignale:</strong> 2 Bit (für 4 Eingänge)</p>
+                    <p><em>Wie ein Kanalumschalter am TV!</em></p>
+                </div>
+
+                <div class="gate-card">
+                    <h4>🔄 Demultiplexer (DEMUX)</h4>
+                    <p><strong>Zweck:</strong> Leitet einen Eingang zu einem von mehreren Ausgängen</p>
+                    <p><strong>Beispiel:</strong> 1:4 DEMUX - verteilt 1 Signal auf 4 mögliche Ausgänge</p>
+                    <p><strong>Steuersignale:</strong> 2 Bit (für 4 Ausgänge)</p>
+                    <p><em>Das Gegenteil vom Multiplexer!</em></p>
+                </div>
+
+                <div class="gate-card">
+                    <h4>⚖️ Digitaler Vergleicher</h4>
+                    <p><strong>Zweck:</strong> Vergleicht zwei Binärzahlen miteinander</p>
+                    <p><strong>Ausgänge:</strong> A>B, A=B, A<B</p>
+                    <p><strong>Beispiel:</strong> 4-Bit Vergleicher für Zahlen 0-15</p>
+                    <p><em>Grundlage für alle Vergleichsoperationen in CPUs!</em></p>
+                </div>
+
+                <div class="gate-card">
+                    <h4>➕ Arithmetische Schaltnetze</h4>
+                    <p><strong>Zweck:</strong> Führt mathematische Operationen durch</p>
+                    <p><strong>Halbaddierer:</strong> Addiert 2 Bits (Summe + Übertrag)</p>
+                    <p><strong>Volladdierer:</strong> Addiert 2 Bits + Übertrag vom vorherigen</p>
+                    <p><em>Basis aller Rechenoperationen!</em></p>
+                </div>
+
+                <div class="gate-card">
+                    <h4>💾 ROM-basierte Schaltnetze</h4>
+                    <p><strong>Zweck:</strong> Komplexe Schaltnetze durch Lookup-Tabellen</p>
+                    <p><strong>Vorteil:</strong> Sehr flexibel, einfach zu ändern</p>
+                    <p><strong>Nachteil:</strong> Braucht viel Speicher bei vielen Eingängen</p>
+                    <p><em>Modern: FPGA-Chips funktionieren ähnlich!</em></p>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📝 Beispiel: Halbaddierer entwickeln</h4>
+                <p><strong>Problem:</strong> Addiere zwei Bits A und B. Ergebnis: Summe S und Übertrag C (Carry)</p>
+                
+                <table class="truth-table" style="width: 400px; margin: 1rem auto;">
+                    <tr><th>A</th><th>B</th><th>Summe (S)</th><th>Übertrag (C)</th></tr>
+                    <tr><td>0</td><td>0</td><td>0</td><td>0</td></tr>
+                    <tr><td>0</td><td>1</td><td>1</td><td>0</td></tr>
+                    <tr><td>1</td><td>0</td><td>1</td><td>0</td></tr>
+                    <tr><td>1</td><td>1</td><td>0</td><td>1</td></tr>
+                </table>
+
+                <div class="formula-box">
+                    <div class="formula">
+                        <strong>Summe S = A ⊕ B</strong> (XOR-Gatter)<br>
+                        <strong>Übertrag C = A ∧ B</strong> (AND-Gatter)
+                    </div>
+                </div>
+
+                <p><em>Interessant: Die Summe ist genau XOR, der Übertrag ist AND!</em></p>
+                <p><strong>Schaltung:</strong> 1 XOR-Gatter + 1 AND-Gatter = Halbaddierer</p>
+            </div>
+        </section>
+
+        <!-- Zusammenfassung -->
+        <section class="section">
+            <h2>📚 Zusammenfassung: Das Wichtigste im Überblick</h2>
+            
+            <div class="summary-points">
+                <ul>
+                    <li><strong>Kombinatorische Schaltnetze</strong> haben keinen Speicher - Ausgang hängt nur von aktuellen Eingängen ab</li>
+                    <li><strong>Grundgatter:</strong> AND, OR, NOT sind die Basis. NAND und NOR sind "universelle Gatter"</li>
+                    <li><strong>Entwicklungsprozess:</strong> Problem → Wahrheitstabelle → DNF → Vereinfachung → Schaltung</li>
+                    <li><strong>DNF (Disjunktive Normalform):</strong> Alle "1"-Zeilen als Minterme mit OR verknüpfen</li>
+                    <li><strong>KV-Diagramme:</strong> Grafische Methode zur Minimierung - spart Gatter und Kosten!</li>
+                    <li><strong>De Morgan:</strong> Invertierung wandelt AND↔OR um - wichtig für Optimierung</li>
+                    <li><strong>Praxisanwendungen:</strong> Codeumsetzer, Multiplexer, Addierer, Vergleicher</li>
+                    <li><strong>Merke:</strong> Jede digitale Funktion lässt sich als Schaltnetz realisieren!</li>
+                </ul>
+            </div>
+
+            <div class="info-box">
+                <h4>🎯 Für die Abiturprüfung besonders wichtig:</h4>
+                <p>✅ Wahrheitstabellen lesen und erstellen<br>
+                ✅ DNF aufstellen können<br>
+                ✅ KV-Diagramme zur Minimierung verwenden<br>
+                ✅ Schaltungen aus Formeln zeichnen<br>
+                ✅ De Morgan'sche Gesetze anwenden<br>
+                ✅ Praktische Schaltnetze (Addierer, MUX) verstehen</p>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <a href="digitaltechnik.html" class="nav-button">← Digitaltechnik & Logikgatter</a>
+            <a href="schaltwerke.html" class="nav-button">Schaltwerke & FlipFlops →</a>
+        </div>
+    </div>
+
+    <script>
+        // Interaktive Demo-Funktionalität
+        function updateDemo() {
+            const inputA = document.getElementById('inputA').checked;
+            const inputB = document.getElementById('inputB').checked;
+            const gateType = document.getElementById('gateType').value;
+            
+            document.getElementById('valueA').textContent = inputA ? '1' : '0';
+            document.getElementById('valueB').textContent = inputB ? '1' : '0';
+            
+            let result = false;
+            
+            switch(gateType) {
+                case 'and':
+                    result = inputA && inputB;
+                    break;
+                case 'or':
+                    result = inputA || inputB;
+                    break;
+                case 'nand':
+                    result = !(inputA && inputB);
+                    break;
+                case 'nor':
+                    result = !(inputA || inputB);
+                    break;
+                case 'xor':
+                    result = inputA !== inputB;
+                    break;
+            }
+            
+            const output = document.getElementById('output');
+            output.textContent = `Ausgang: ${result ? '1' : '0'}`;
+            output.className = `output-display ${result ? 'high' : 'low'}`;
+        }
+        
+        // Initiale Demo-Aktualisierung
+        updateDemo();
+        
+        // Smooth Scrolling für interne Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+        
+        // Navigation Button Behavior
+        document.querySelectorAll('.nav-button').forEach(button => {
+            button.addEventListener('click', function(e) {
+                if (this.classList.contains('disabled')) {
+                    e.preventDefault();
+                    alert('Diese Seite wird noch erstellt!');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

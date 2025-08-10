@@ -1,0 +1,1993 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zustandsdiagramme - Abitur 2026 Informatik TG</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #06b6d4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .breadcrumb {
+            background: var(--bg-white);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .learning-objectives {
+            background: linear-gradient(135deg, var(--info-color), #0891b2);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1.5rem;
+        }
+
+        .learning-objectives h3 {
+            margin-bottom: 1rem;
+        }
+
+        .learning-objectives ul {
+            list-style: none;
+        }
+
+        .learning-objectives li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .learning-objectives li::before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .content-section {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.4rem;
+        }
+
+        .content-section h4 {
+            color: var(--text-dark);
+            margin: 1rem 0 0.5rem 0;
+            font-size: 1.2rem;
+        }
+
+        .definition-box {
+            background: linear-gradient(135deg, #e0f2fe, #b3e5fc);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--info-color);
+        }
+
+        .definition-box .definition-title {
+            font-weight: bold;
+            color: var(--secondary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--success-color);
+        }
+
+        .example-box .example-title {
+            font-weight: bold;
+            color: var(--success-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fefce8, #fef3c7);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .warning-box .warning-title {
+            font-weight: bold;
+            color: var(--warning-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .danger-box {
+            background: linear-gradient(135deg, #fef2f2, #fecaca);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .danger-box .danger-title {
+            font-weight: bold;
+            color: var(--danger-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .diagram-container {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--bg-light);
+            border-radius: 12px;
+            border: 2px dashed var(--border-color);
+        }
+
+        .state-diagram {
+            display: inline-block;
+            position: relative;
+            margin: 20px;
+        }
+
+        .state {
+            width: 100px;
+            height: 60px;
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            background: var(--bg-white);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            color: var(--primary-color);
+            position: relative;
+            margin: 20px;
+        }
+
+        .state.initial {
+            background: linear-gradient(135deg, var(--success-color), #059669);
+            color: white;
+            border-color: var(--success-color);
+        }
+
+        .state.final {
+            background: linear-gradient(135deg, var(--danger-color), #dc2626);
+            color: white;
+            border-color: var(--danger-color);
+        }
+
+        .transition {
+            position: absolute;
+            font-size: 0.9rem;
+            background: var(--warning-color);
+            color: white;
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            white-space: nowrap;
+        }
+
+        .truth-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .truth-table th,
+        .truth-table td {
+            border: 1px solid var(--border-color);
+            padding: 0.8rem;
+            text-align: center;
+        }
+
+        .truth-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .truth-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .truth-table tr:hover {
+            background: #e0f2fe;
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Consolas', 'Monaco', 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border: 1px solid #334155;
+            position: relative;
+        }
+
+        .code-block::before {
+            content: "📋 Klicken zum Kopieren";
+            position: absolute;
+            top: 10px;
+            right: 15px;
+            font-size: 0.8rem;
+            color: #94a3b8;
+            font-family: 'Segoe UI', sans-serif;
+        }
+
+        .code-block .comment {
+            color: #94a3b8;
+            font-style: italic;
+        }
+
+        .code-block .keyword {
+            color: #60a5fa;
+            font-weight: bold;
+        }
+
+        .code-block .string {
+            color: #34d399;
+        }
+
+        .code-block .number {
+            color: #fbbf24;
+        }
+
+        .code-block .function {
+            color: #a78bfa;
+        }
+
+        .code-block .type {
+            color: #fb7185;
+        }
+
+        .code-title {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            margin: 1.5rem 0 0 0;
+            border-radius: 8px 8px 0 0;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .code-block.with-title {
+            margin-top: 0;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .interactive-section {
+            background: linear-gradient(135deg, var(--bg-white), #f1f5f9);
+            padding: 2rem;
+            border-radius: 16px;
+            margin: 2rem 0;
+            border: 2px solid var(--primary-color);
+        }
+
+        .interactive-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .flipflop-types {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .flipflop-card {
+            background: var(--bg-white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 2px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s ease;
+        }
+
+        .flipflop-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border-color: var(--primary-color);
+        }
+
+        .flipflop-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .timeline {
+            position: relative;
+            margin: 2rem 0;
+            padding-left: 2rem;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--primary-color);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 2rem;
+            padding-left: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -2rem;
+            top: 0.5rem;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: var(--primary-color);
+            transform: translateX(-4px);
+        }
+
+        .timeline-item h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding: 2rem;
+            background: var(--bg-white);
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .nav-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-button.disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .flipflop-types {
+                grid-template-columns: 1fr;
+            }
+
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">🏠 Abitur 2026 Informatik TG</a> > 
+            <a href="#technische-informatik-1">🔧 Technische Informatik I</a> > 
+            <strong>📊 Zustandsdiagramme</strong>
+        </div>
+
+        <header class="header">
+            <h1>📊 Zustandsdiagramme</h1>
+            <div class="subtitle">Von FlipFlops zu komplexen Automaten</div>
+            <div class="learning-objectives">
+                <h3>🎯 Lernziele dieser Lektion:</h3>
+                <ul>
+                    <li>Verstehen, was Zustandsdiagramme sind und wofür sie verwendet werden</li>
+                    <li>Den Unterschied zwischen Schaltnetzen und Schaltwerken erklären können</li>
+                    <li>FlipFlops als Grundbausteine von Schaltwerken verstehen</li>
+                    <li>Zustandsdiagramme lesen und selbst erstellen können</li>
+                    <li>UML-Zustandsdiagramme für Mikrocontroller-Programmierung verwenden</li>
+                    <li>Verschiedene Arten von Transitionen unterscheiden können</li>
+                </ul>
+            </div>
+        </header>
+
+        <div class="content-section">
+            <h2>🎬 Einführung: Was sind Zustandsdiagramme?</h2>
+            
+            <p>Stell dir vor, du möchtest eine automatische Ampelschaltung programmieren oder einen Bahnübergang steuern. Wie würdest du das machen? Diese Systeme haben verschiedene <strong>Zustände</strong> (z.B. "Rot", "Gelb", "Grün") und wechseln zwischen diesen Zuständen basierend auf bestimmten <strong>Ereignissen</strong> (z.B. Timer abgelaufen, Knopf gedrückt).</p>
+
+            <div class="definition-box">
+                <div class="definition-title">📝 Definition: Zustandsdiagramm</div>
+                Ein <strong>Zustandsdiagramm</strong> ist eine grafische Darstellung, die zeigt:
+                <ul>
+                    <li><strong>Zustände</strong> - verschiedene Situationen, in denen sich ein System befinden kann</li>
+                    <li><strong>Übergänge (Transitionen)</strong> - Wechsel zwischen den Zuständen</li>
+                    <li><strong>Ereignisse</strong> - was einen Zustandswechsel auslöst</li>
+                    <li><strong>Aktionen</strong> - was beim Zustandswechsel passiert</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">💡 Alltags-Beispiel: Handy</div>
+                Dein Handy hat verschiedene Zustände:
+                <ul>
+                    <li><strong>Ausgeschaltet</strong> → (Ein-Knopf drücken) → <strong>Hochfahren</strong></li>
+                    <li><strong>Hochfahren</strong> → (Bootvorgang fertig) → <strong>Standby</strong></li>
+                    <li><strong>Standby</strong> → (Display berühren) → <strong>Aktiv</strong></li>
+                    <li><strong>Aktiv</strong> → (5 Min. keine Eingabe) → <strong>Standby</strong></li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>⚡ Von Schaltnetzen zu Schaltwerken</h2>
+            
+            <p>Bevor wir uns Zustandsdiagramme genauer ansehen, müssen wir verstehen, warum wir sie überhaupt brauchen.</p>
+
+            <h3>🔧 Schaltnetze (Kombinatorische Logik)</h3>
+            <p>Bisher haben wir hauptsächlich mit <strong>Schaltnetzen</strong> gearbeitet:</p>
+            
+            <div class="definition-box">
+                <div class="definition-title">📝 Schaltnetz</div>
+                <ul>
+                    <li>Ausgänge hängen <strong>nur</strong> von aktuellen Eingängen ab</li>
+                    <li><strong>Kein Gedächtnis</strong> - keine Speicherung von Zuständen</li>
+                    <li>Gleiche Eingabe → Immer gleiche Ausgabe</li>
+                    <li>Beispiele: AND, OR, NOT-Gatter, Multiplexer, Addierer</li>
+                </ul>
+            </div>
+
+            <h3>⚙️ Schaltwerke (Sequenzielle Logik)</h3>
+            <p>Viele reale Systeme brauchen aber ein <strong>Gedächtnis</strong>:</p>
+
+            <div class="definition-box">
+                <div class="definition-title">📝 Schaltwerk</div>
+                <ul>
+                    <li>Ausgänge hängen von Eingängen <strong>UND</strong> vom aktuellen Zustand ab</li>
+                    <li><strong>Hat Gedächtnis</strong> - kann Zustände speichern</li>
+                    <li>Gleiche Eingabe → Möglicherweise verschiedene Ausgaben</li>
+                    <li><strong>Zeit spielt eine Rolle!</strong></li>
+                    <li>Beispiele: FlipFlops, Zähler, Speicher, Steuerungen</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <div class="warning-title">⚠️ Wichtiger Unterschied</div>
+                <p><strong>Schaltnetze:</strong> "Was kommt rein, kommt sofort entsprechend raus"</p>
+                <p><strong>Schaltwerke:</strong> "Was rauskommt, hängt davon ab, was vorher passiert ist"</p>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔄 FlipFlops - Die Grundbausteine</h2>
+            
+            <p>FlipFlops sind die elementaren Speicherelemente in digitalen Schaltungen. Sie können <strong>1 Bit</strong> speichern.</p>
+
+            <div class="flipflop-types">
+                <div class="flipflop-card">
+                    <h4>RS-FlipFlop (Set-Reset)</h4>
+                    <p><strong>Eingänge:</strong> S (Set), R (Reset)</p>
+                    <p><strong>Problem:</strong> Verbotener Zustand bei S=1, R=1</p>
+                    
+                    <table class="truth-table">
+                        <thead>
+                            <tr>
+                                <th>S</th>
+                                <th>R</th>
+                                <th>Q(n+1)</th>
+                                <th>Bedeutung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>Q(n)</td>
+                                <td>Speichern</td>
+                            </tr>
+                            <tr>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>Reset</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>Set</td>
+                            </tr>
+                            <tr style="background: var(--danger-color); color: white;">
+                                <td>1</td>
+                                <td>1</td>
+                                <td>?</td>
+                                <td>Verboten!</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="flipflop-card">
+                    <h4>D-FlipFlop (Delay/Data)</h4>
+                    <p><strong>Eingänge:</strong> D (Data), T (Takt)</p>
+                    <p><strong>Vorteil:</strong> Kein verbotener Zustand!</p>
+                    
+                    <table class="truth-table">
+                        <thead>
+                            <tr>
+                                <th>Takt</th>
+                                <th>D</th>
+                                <th>Q(n+1)</th>
+                                <th>Bedeutung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>↑</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>Übernehme 0</td>
+                            </tr>
+                            <tr>
+                                <td>↑</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>Übernehme 1</td>
+                            </tr>
+                            <tr>
+                                <td>0/1</td>
+                                <td>X</td>
+                                <td>Q(n)</td>
+                                <td>Speichere</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="flipflop-card">
+                    <h4>JK-FlipFlop (Jump-Kill)</h4>
+                    <p><strong>Eingänge:</strong> J (Jump/Set), K (Kill/Reset)</p>
+                    <p><strong>Besonderheit:</strong> Toggle-Funktion bei J=1, K=1</p>
+                    
+                    <table class="truth-table">
+                        <thead>
+                            <tr>
+                                <th>J</th>
+                                <th>K</th>
+                                <th>Q(n+1)</th>
+                                <th>Bedeutung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>Q(n)</td>
+                                <td>Speichern</td>
+                            </tr>
+                            <tr>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>Reset</td>
+                            </tr>
+                            <tr>
+                                <td>1</td>
+                                <td>0</td>
+                                <td>1</td>
+                                <td>Set</td>
+                            </tr>
+                            <tr style="background: var(--success-color); color: white;">
+                                <td>1</td>
+                                <td>1</td>
+                                <td>!Q(n)</td>
+                                <td>Toggle</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <div class="warning-title">⚠️ Taktsignale sind wichtig!</div>
+                <p>Moderne FlipFlops sind <strong>taktgesteuert</strong>:</p>
+                <ul>
+                    <li><strong>Taktflankengesteuert:</strong> Reagieren nur auf steigende (↑) oder fallende (↓) Flanke</li>
+                    <li><strong>Taktzustandsgesteuert:</strong> Reagieren während Takt=1 oder Takt=0</li>
+                    <li><strong>Warum?</strong> Ohne Takt wären die Reaktionszeiten unvorhersagbar!</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>📊 Zustandsdiagramme verstehen</h2>
+            
+            <h3>🔄 D-FlipFlop als Zustandsdiagramm</h3>
+            <div class="diagram-container">
+                <div style="display: flex; justify-content: center; align-items: center; gap: 100px;">
+                    <div class="state">Q = 0</div>
+                    <div class="state">Q = 1</div>
+                </div>
+                <div style="margin-top: 20px;">
+                    <strong>Übergänge:</strong><br>
+                    Q=0 → Q=1: bei D=1 und Taktflanke ↑<br>
+                    Q=1 → Q=0: bei D=0 und Taktflanke ↑
+                </div>
+            </div>
+
+            <h3>📐 Aufbau von Zustandsdiagrammen</h3>
+            
+            <div class="definition-box">
+                <div class="definition-title">📝 Elemente eines Zustandsdiagramms</div>
+                <ul>
+                    <li><strong>Zustände:</strong> Kreise oder Rechtecke mit Namen</li>
+                    <li><strong>Startzustand:</strong> Markiert mit gefülltem Kreis ●</li>
+                    <li><strong>Endzustand:</strong> Doppelter Kreis (bei endlichen Automaten)</li>
+                    <li><strong>Transitionen:</strong> Pfeile zwischen Zuständen</li>
+                    <li><strong>Ereignisse:</strong> Text an den Pfeilen</li>
+                    <li><strong>Aktionen:</strong> Was beim Übergang passiert</li>
+                </ul>
+            </div>
+
+            <h3>🏗️ UML-Zustandsdiagramme</h3>
+            <p>In der Informatik verwenden wir oft <strong>UML-Zustandsdiagramme</strong> (Unified Modeling Language):</p>
+
+            <div class="example-box">
+                <div class="example-title">💡 UML-Notation</div>
+                <strong>Zustandsname</strong><br>
+                <code>entry/ Aktion beim Betreten</code><br>
+                <code>do/ Aktivität im Zustand</code><br>
+                <code>exit/ Aktion beim Verlassen</code><br><br>
+                
+                <strong>Übergang:</strong><br>
+                <code>Ereignis [Bedingung] / Aktion</code>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🚦 Praxisbeispiel: Ampelsteuerung</h2>
+            
+            <p>Lass uns eine einfache Ampelsteuerung als Zustandsdiagramm modellieren:</p>
+
+            <div class="diagram-container">
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center;">
+                    <div>
+                        <div class="state initial">Rot</div>
+                        <div style="margin-top: 10px; font-size: 0.9rem;">
+                            entry/ RotAn=1<br>
+                            entry/ GelbAus=0<br>
+                            entry/ GruenAus=0
+                        </div>
+                    </div>
+                    <div>
+                        <div class="state">RotGelb</div>
+                        <div style="margin-top: 10px; font-size: 0.9rem;">
+                            entry/ RotAn=1<br>
+                            entry/ GelbAn=1<br>
+                            entry/ GruenAus=0
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 50px; margin-top: 30px;">
+                    <div>
+                        <div class="state">Gruen</div>
+                        <div style="margin-top: 10px; font-size: 0.9rem;">
+                            entry/ RotAus=0<br>
+                            entry/ GelbAus=0<br>
+                            entry/ GruenAn=1
+                        </div>
+                    </div>
+                    <div>
+                        <div class="state">Gelb</div>
+                        <div style="margin-top: 10px; font-size: 0.9rem;">
+                            entry/ RotAus=0<br>
+                            entry/ GelbAn=1<br>
+                            entry/ GruenAus=0
+                        </div>
+                    </div>
+                </div>
+                
+                <div style="margin-top: 30px;">
+                    <strong>Übergänge:</strong><br>
+                    Rot → RotGelb: Timer1 abgelaufen (nach 30s)<br>
+                    RotGelb → Gruen: Timer2 abgelaufen (nach 3s)<br>
+                    Gruen → Gelb: Timer3 abgelaufen (nach 25s)<br>
+                    Gelb → Rot: Timer4 abgelaufen (nach 3s)
+                </div>
+            </div>
+
+            <div class="code-title">🚦 C-Code für Ampelsteuerung</div>
+            <div class="code-block with-title">
+<span class="comment">// Zustandsdefinitionen für die Ampel</span>
+<span class="keyword">#define</span> <span class="type">ROT</span>     <span class="number">0</span>
+<span class="keyword">#define</span> <span class="type">ROTGELB</span> <span class="number">1</span>
+<span class="keyword">#define</span> <span class="type">GRUEN</span>   <span class="number">2</span>
+<span class="keyword">#define</span> <span class="type">GELB</span>    <span class="number">3</span>
+
+<span class="comment">// Globale Zustandsvariablen</span>
+<span class="keyword">int</span> zustand = <span class="type">ROT</span>;
+<span class="keyword">int</span> timer = <span class="number">0</span>;
+
+<span class="comment">// Hauptfunktion der Ampelsteuerung</span>
+<span class="keyword">void</span> <span class="function">ampelSteuerung</span>() {
+    <span class="keyword">switch</span>(zustand) {
+        <span class="keyword">case</span> <span class="type">ROT</span>:
+            <span class="comment">// Zustand: Rot - warten auf Timer</span>
+            <span class="keyword">if</span>(timer >= <span class="number">30</span>) {
+                zustand = <span class="type">ROTGELB</span>;
+                timer = <span class="number">0</span>;
+                <span class="function">Serial.println</span>(<span class="string">"Wechsel: Rot -> RotGelb"</span>);
+            }
+            <span class="keyword">break</span>;
+            
+        <span class="keyword">case</span> <span class="type">ROTGELB</span>:
+            <span class="comment">// Zustand: Rot+Gelb - Vorbereitung auf Grün</span>
+            <span class="keyword">if</span>(timer >= <span class="number">3</span>) {
+                zustand = <span class="type">GRUEN</span>;
+                timer = <span class="number">0</span>;
+                <span class="function">Serial.println</span>(<span class="string">"Wechsel: RotGelb -> Gruen"</span>);
+            }
+            <span class="keyword">break</span>;
+            
+        <span class="keyword">case</span> <span class="type">GRUEN</span>:
+            <span class="comment">// Zustand: Grün - Verkehr kann fahren</span>
+            <span class="keyword">if</span>(timer >= <span class="number">25</span>) {
+                zustand = <span class="type">GELB</span>;
+                timer = <span class="number">0</span>;
+                <span class="function">Serial.println</span>(<span class="string">"Wechsel: Gruen -> Gelb"</span>);
+            }
+            <span class="keyword">break</span>;
+            
+        <span class="keyword">case</span> <span class="type">GELB</span>:
+            <span class="comment">// Zustand: Gelb - Achtung, gleich Rot</span>
+            <span class="keyword">if</span>(timer >= <span class="number">3</span>) {
+                zustand = <span class="type">ROT</span>;
+                timer = <span class="number">0</span>;
+                <span class="function">Serial.println</span>(<span class="string">"Wechsel: Gelb -> Rot"</span>);
+            }
+            <span class="keyword">break</span>;
+    }
+    timer++;  <span class="comment">// Timer hochzählen</span>
+}
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🚧 Arduino-Beispiel: LED-Blinker mit Modi</h2>
+            
+            <p>Hier ist das vollständige Arduino-Beispiel aus der ursprünglichen Datei, strukturiert und gut lesbar formatiert:</p>
+
+            <div class="code-title">💡 Arduino LED-Blinker: Vollständiges Beispiel</div>
+            <div class="code-block with-title">
+<span class="comment">// ==========================================</span>
+<span class="comment">// Arduino-Code: LED-Blinker mit verschiedenen Modi</span>
+<span class="comment">// Demonstriert Zustandsautomaten in der Praxis</span>
+<span class="comment">// ==========================================</span>
+
+<span class="comment">// 1. ZUSTANDSDEFINITIONEN</span>
+<span class="comment">// ------------------------</span>
+<span class="keyword">enum</span> led_zustaende {
+    <span class="type">AUS</span>,                <span class="comment">// LED ist komplett aus</span>
+    <span class="type">LANGSAM_BLINKEN</span>,    <span class="comment">// LED blinkt alle 500ms</span>
+    <span class="type">SCHNELL_BLINKEN</span>,    <span class="comment">// LED blinkt alle 100ms</span>
+    <span class="type">DAUERLICHT</span>          <span class="comment">// LED ist permanent an</span>
+};
+
+<span class="comment">// 2. PIN-DEFINITIONEN</span>
+<span class="comment">// -------------------</span>
+<span class="keyword">#define</span> <span class="type">LED_PIN</span>     <span class="number">13</span>    <span class="comment">// Interne LED des Arduino</span>
+<span class="keyword">#define</span> <span class="type">BUTTON_PIN</span>  <span class="number">2</span>     <span class="comment">// Taster für Zustandswechsel</span>
+
+<span class="comment">// 3. TIMING-KONSTANTEN (in Millisekunden)</span>
+<span class="comment">// ----------------------------------------</span>
+<span class="keyword">#define</span> <span class="type">LANGSAM_INTERVALL</span>  <span class="number">500</span>   <span class="comment">// 0,5 Sekunden</span>
+<span class="keyword">#define</span> <span class="type">SCHNELL_INTERVALL</span>  <span class="number">100</span>   <span class="comment">// 0,1 Sekunden</span>
+<span class="keyword">#define</span> <span class="type">ENTPRELL_ZEIT</span>      <span class="number">50</span>    <span class="comment">// Button-Entprellung</span>
+
+<span class="comment">// 4. GLOBALE VARIABLEN</span>
+<span class="comment">// --------------------</span>
+led_zustaende aktueller_zustand = <span class="type">AUS</span>;  <span class="comment">// Startzustand</span>
+
+<span class="comment">// Timing-Variablen für nicht-blockierenden Code</span>
+<span class="keyword">unsigned long</span> letzter_blink_zeitpunkt = <span class="number">0</span>;
+<span class="keyword">unsigned long</span> letzter_button_zeitpunkt = <span class="number">0</span>;
+
+<span class="comment">// Status-Variablen</span>
+<span class="keyword">bool</span> led_ist_an = <span class="keyword">false</span>;
+<span class="keyword">bool</span> letzter_button_zustand = <span class="keyword">HIGH</span>;      <span class="comment">// INPUT_PULLUP: HIGH = nicht gedrückt</span>
+<span class="keyword">bool</span> button_wurde_gedrueckt = <span class="keyword">false</span>;
+
+<span class="comment">// ==========================================</span>
+<span class="comment">// SETUP-FUNKTION (wird einmal beim Start ausgeführt)</span>
+<span class="comment">// ==========================================</span>
+<span class="keyword">void</span> <span class="function">setup</span>() {
+    <span class="comment">// Pin-Konfiguration</span>
+    <span class="function">pinMode</span>(<span class="type">LED_PIN</span>, <span class="type">OUTPUT</span>);          <span class="comment">// LED als Ausgang</span>
+    <span class="function">pinMode</span>(<span class="type">BUTTON_PIN</span>, <span class="type">INPUT_PULLUP</span>);  <span class="comment">// Button mit internem Pull-up</span>
+    
+    <span class="comment">// LED initial ausschalten</span>
+    <span class="function">digitalWrite</span>(<span class="type">LED_PIN</span>, <span class="keyword">LOW</span>);
+    led_ist_an = <span class="keyword">false</span>;
+    
+    <span class="comment">// Serielle Kommunikation für Debug-Ausgaben</span>
+    <span class="function">Serial.begin</span>(<span class="number">9600</span>);
+    <span class="function">Serial.println</span>(<span class="string">"🔴 LED-Blinker gestartet"</span>);
+    <span class="function">Serial.println</span>(<span class="string">"📋 Taster drücken um zwischen Modi zu wechseln:"</span>);
+    <span class="function">Serial.println</span>(<span class="string">"   AUS -> LANGSAM -> SCHNELL -> DAUERLICHT -> AUS"</span>);
+    <span class="function">Serial.println</span>(<span class="string">"==========================================\\n"</span>);
+}
+
+<span class="comment">// ==========================================</span>
+<span class="comment">// MAIN LOOP (wird kontinuierlich ausgeführt)</span>
+<span class="comment">// ==========================================</span>
+<span class="keyword">void</span> <span class="function">loop</span>() {
+    <span class="comment">// 1. Button-Eingaben verarbeiten (mit Entprellung)</span>
+    <span class="function">verarbeite_button_input</span>();
+    
+    <span class="comment">// 2. Hauptsteuerung des Zustandsautomaten</span>
+    <span class="function">led_zustandsautomat</span>();
+    
+    <span class="comment">// 3. Kurze Pause für Systemstabilität</span>
+    <span class="function">delay</span>(<span class="number">10</span>);  <span class="comment">// 10ms Zykluszeit</span>
+}
+            </div>
+
+            <div class="code-title">🔘 Button-Eingabe mit Entprellung</div>
+            <div class="code-block with-title">
+<span class="comment">// ==========================================</span>
+<span class="comment">// BUTTON-VERARBEITUNG MIT ENTPRELLUNG</span>
+<span class="comment">// ==========================================</span>
+<span class="keyword">void</span> <span class="function">verarbeite_button_input</span>() {
+    <span class="keyword">unsigned long</span> aktuelle_zeit = <span class="function">millis</span>();
+    <span class="keyword">bool</span> aktueller_button_zustand = <span class="function">digitalRead</span>(<span class="type">BUTTON_PIN</span>);
+    
+    <span class="comment">// Entprellung: nur reagieren wenn genug Zeit vergangen ist</span>
+    <span class="keyword">if</span>(aktuelle_zeit - letzter_button_zeitpunkt > <span class="type">ENTPRELL_ZEIT</span>) {
+        
+        <span class="comment">// Fallende Flanke erkennen (Button wurde gedrückt)</span>
+        <span class="comment">// INPUT_PULLUP: HIGH = nicht gedrückt, LOW = gedrückt</span>
+        <span class="keyword">if</span>(letzter_button_zustand == <span class="keyword">HIGH</span> && aktueller_button_zustand == <span class="keyword">LOW</span>) {
+            button_wurde_gedrueckt = <span class="keyword">true</span>;
+            letzter_button_zeitpunkt = aktuelle_zeit;
+            
+            <span class="comment">// Debug-Ausgabe</span>
+            <span class="function">Serial.println</span>(<span class="string">"🔘 Button gedrückt!"</span>);
+        }
+        
+        <span class="comment">// Aktuellen Zustand für nächsten Vergleich speichern</span>
+        letzter_button_zustand = aktueller_button_zustand;
+    }
+}
+            </div>
+
+            <div class="code-title">🤖 Hauptsteuerung: Der Zustandsautomat</div>
+            <div class="code-block with-title">
+<span class="comment">// ==========================================</span>
+<span class="comment">// HAUPTSTEUERUNG: ZUSTANDSAUTOMAT</span>
+<span class="comment">// ==========================================</span>
+<span class="keyword">void</span> <span class="function">led_zustandsautomat</span>() {
+    <span class="keyword">unsigned long</span> aktuelle_zeit = <span class="function">millis</span>();
+    
+    <span class="keyword">switch</span>(aktueller_zustand) {
+        
+        <span class="comment">// ----------------</span>
+        <span class="comment">// ZUSTAND: AUS</span>
+        <span class="comment">// ----------------</span>
+        <span class="keyword">case</span> <span class="type">AUS</span>:
+            <span class="comment">// Entry-Aktion: LED ausschalten (nur beim ersten Mal)</span>
+            <span class="keyword">if</span>(led_ist_an) {
+                <span class="function">digitalWrite</span>(<span class="type">LED_PIN</span>, <span class="keyword">LOW</span>);
+                led_ist_an = <span class="keyword">false</span>;
+                <span class="function">Serial.println</span>(<span class="string">"🔴 Zustand: AUS - LED ausgeschaltet"</span>);
+            }
+            
+            <span class="comment">// Übergangs-Bedingung prüfen</span>
+            <span class="keyword">if</span>(button_wurde_gedrueckt) {
+                aktueller_zustand = <span class="type">LANGSAM_BLINKEN</span>;
+                letzter_blink_zeitpunkt = aktuelle_zeit;  <span class="comment">// Timer zurücksetzen</span>
+                button_wurde_gedrueckt = <span class="keyword">false</span>;       <span class="comment">// Event verbraucht</span>
+                <span class="function">Serial.println</span>(<span class="string">"➡️  Wechsel zu: LANGSAM BLINKEN"</span>);
+            }
+            <span class="keyword">break</span>;
+            
+        <span class="comment">// ----------------</span>
+        <span class="comment">// ZUSTAND: LANGSAM BLINKEN</span>
+        <span class="comment">// ----------------</span>
+        <span class="keyword">case</span> <span class="type">LANGSAM_BLINKEN</span>:
+            <span class="comment">// Do-Aktivität: Langsam blinken (alle 500ms)</span>
+            <span class="keyword">if</span>(aktuelle_zeit - letzter_blink_zeitpunkt >= <span class="type">LANGSAM_INTERVALL</span>) {
+                <span class="comment">// LED-Zustand umschalten (Toggle)</span>
+                led_ist_an = !led_ist_an;
+                <span class="function">digitalWrite</span>(<span class="type">LED_PIN</span>, led_ist_an ? <span class="keyword">HIGH</span> : <span class="keyword">LOW</span>);
+                letzter_blink_zeitpunkt = aktuelle_zeit;
+                
+                <span class="comment">// Debug-Ausgabe</span>
+                <span class="function">Serial.print</span>(<span class="string">"🟡 Langsam blinken: LED "</span>);
+                <span class="function">Serial.println</span>(led_ist_an ? <span class="string">"AN"</span> : <span class="string">"AUS"</span>);
+            }
+            
+            <span class="comment">// Übergangs-Bedingung prüfen</span>
+            <span class="keyword">if</span>(button_wurde_gedrueckt) {
+                aktueller_zustand = <span class="type">SCHNELL_BLINKEN</span>;
+                letzter_blink_zeitpunkt = aktuelle_zeit;
+                button_wurde_gedrueckt = <span class="keyword">false</span>;
+                <span class="function">Serial.println</span>(<span class="string">"➡️  Wechsel zu: SCHNELL BLINKEN"</span>);
+            }
+            <span class="keyword">break</span>;
+            
+        <span class="comment">// ----------------</span>
+        <span class="comment">// ZUSTAND: SCHNELL BLINKEN</span>
+        <span class="comment">// ----------------</span>
+        <span class="keyword">case</span> <span class="type">SCHNELL_BLINKEN</span>:
+            <span class="comment">// Do-Aktivität: Schnell blinken (alle 100ms)</span>
+            <span class="keyword">if</span>(aktuelle_zeit - letzter_blink_zeitpunkt >= <span class="type">SCHNELL_INTERVALL</span>) {
+                <span class="comment">// LED-Zustand umschalten</span>
+                led_ist_an = !led_ist_an;
+                <span class="function">digitalWrite</span>(<span class="type">LED_PIN</span>, led_ist_an ? <span class="keyword">HIGH</span> : <span class="keyword">LOW</span>);
+                letzter_blink_zeitpunkt = aktuelle_zeit;
+                
+                <span class="comment">// Debug-Ausgabe (weniger häufig, um Serial Monitor nicht zu überlasten)</span>
+                <span class="keyword">static int</span> blink_counter = <span class="number">0</span>;
+                <span class="keyword">if</span>(++blink_counter % <span class="number">10</span> == <span class="number">0</span>) {  <span class="comment">// Nur jeden 10. Blink ausgeben</span>
+                    <span class="function">Serial.print</span>(<span class="string">"🔴 Schnell blinken: LED "</span>);
+                    <span class="function">Serial.println</span>(led_ist_an ? <span class="string">"AN"</span> : <span class="string">"AUS"</span>);
+                }
+            }
+            
+            <span class="comment">// Übergangs-Bedingung prüfen</span>
+            <span class="keyword">if</span>(button_wurde_gedrueckt) {
+                aktueller_zustand = <span class="type">DAUERLICHT</span>;
+                button_wurde_gedrueckt = <span class="keyword">false</span>;
+                <span class="function">Serial.println</span>(<span class="string">"➡️  Wechsel zu: DAUERLICHT"</span>);
+            }
+            <span class="keyword">break</span>;
+            
+        <span class="comment">// ----------------</span>
+        <span class="comment">// ZUSTAND: DAUERLICHT</span>
+        <span class="comment">// ----------------</span>
+        <span class="keyword">case</span> <span class="type">DAUERLICHT</span>:
+            <span class="comment">// Entry-Aktion: LED permanent einschalten</span>
+            <span class="keyword">if</span>(!led_ist_an) {
+                <span class="function">digitalWrite</span>(<span class="type">LED_PIN</span>, <span class="keyword">HIGH</span>);
+                led_ist_an = <span class="keyword">true</span>;
+                <span class="function">Serial.println</span>(<span class="string">"🟢 Zustand: DAUERLICHT - LED permanent an"</span>);
+            }
+            
+            <span class="comment">// Übergangs-Bedingung: Zurück zum Anfang (Zyklus schließen)</span>
+            <span class="keyword">if</span>(button_wurde_gedrueckt) {
+                aktueller_zustand = <span class="type">AUS</span>;
+                button_wurde_gedrueckt = <span class="keyword">false</span>;
+                <span class="function">Serial.println</span>(<span class="string">"➡️  Wechsel zu: AUS (Zyklus beendet)"</span>);
+                <span class="function">Serial.println</span>(<span class="string">"==========================================\\n"</span>);
+            }
+            <span class="keyword">break</span>;
+            
+        <span class="comment">// ----------------</span>
+        <span class="comment">// FEHLERBEHANDLUNG</span>
+        <span class="comment">// ----------------</span>
+        <span class="keyword">default</span>:
+            <span class="comment">// Unbekannter Zustand - zurück zum sicheren Zustand</span>
+            <span class="function">Serial.println</span>(<span class="string">"❌ FEHLER: Unbekannter Zustand! Zurück zu AUS"</span>);
+            aktueller_zustand = <span class="type">AUS</span>;
+            <span class="function">digitalWrite</span>(<span class="type">LED_PIN</span>, <span class="keyword">LOW</span>);
+            led_ist_an = <span class="keyword">false</span>;
+            <span class="keyword">break</span>;
+    }
+}
+            </div>
+
+            <div class="code-title">🔍 Hilfsfunktion für Debug-Ausgaben</div>
+            <div class="code-block with-title">
+<span class="comment">// ==========================================</span>
+<span class="comment">// HILFSFUNKTION: STATUS-AUSGABE</span>
+<span class="comment">// ==========================================</span>
+<span class="keyword">void</span> <span class="function">gib_aktuellen_status_aus</span>() {
+    <span class="function">Serial.print</span>(<span class="string">"📊 Aktueller Zustand: "</span>);
+    
+    <span class="keyword">switch</span>(aktueller_zustand) {
+        <span class="keyword">case</span> <span class="type">AUS</span>:            
+            <span class="function">Serial.println</span>(<span class="string">"AUS"</span>); 
+            <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="type">LANGSAM_BLINKEN</span>: 
+            <span class="function">Serial.println</span>(<span class="string">"LANGSAM_BLINKEN"</span>); 
+            <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="type">SCHNELL_BLINKEN</span>: 
+            <span class="function">Serial.println</span>(<span class="string">"SCHNELL_BLINKEN"</span>); 
+            <span class="keyword">break</span>;
+        <span class="keyword">case</span> <span class="type">DAUERLICHT</span>:     
+            <span class="function">Serial.println</span>(<span class="string">"DAUERLICHT"</span>); 
+            <span class="keyword">break</span>;
+    }
+    
+    <span class="function">Serial.print</span>(<span class="string">"💡 LED Status: "</span>);
+    <span class="function">Serial.println</span>(led_ist_an ? <span class="string">"AN"</span> : <span class="string">"AUS"</span>);
+    <span class="function">Serial.println</span>(<span class="string">"------------------------------------------"</span>);
+}
+
+<span class="comment">// Optional: Funktion aufrufen wenn gewünscht</span>
+<span class="comment">// gib_aktuellen_status_aus(); // Kann in loop() eingefügt werden</span>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🚧 Komplexeres Beispiel: Bahnübergang</h2>
+            
+            <p>Schauen wir uns ein realistischeres Beispiel an - einen automatisierten Bahnübergang mit Lichtschranken:</p>
+
+            <div class="example-box">
+                <div class="example-title">💡 System-Beschreibung</div>
+                <strong>Komponenten:</strong>
+                <ul>
+                    <li>2 Lichtschranken (vor und nach dem Übergang)</li>
+                    <li>Schranke (heben/senken)</li>
+                    <li>Ampel (rot/grün)</li>
+                </ul>
+                <strong>Ablauf:</strong>
+                <ol>
+                    <li>Zug nähert sich → Lichtschranke 1 ausgelöst</li>
+                    <li>Ampel auf Rot, Schranke senken</li>
+                    <li>Zug fährt über Übergang</li>
+                    <li>Zug verlässt Bereich → Lichtschranke 2 nicht mehr blockiert</li>
+                    <li>Schranke heben, Ampel auf Grün</li>
+                </ol>
+            </div>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>Zustand: Offen</h4>
+                    <p><strong>Verhalten:</strong> Schranke oben, Ampel grün</p>
+                    <p><strong>Übergang:</strong> Lichtschranke1 aktiviert → Schließen1</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>Zustand: Schließen1</h4>
+                    <p><strong>Verhalten:</strong> Schranke senken, Ampel rot</p>
+                    <p><strong>Übergang:</strong> Schranke unten → Zu1</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>Zustand: Zu1</h4>
+                    <p><strong>Verhalten:</strong> Warten auf Zug</p>
+                    <p><strong>Übergang:</strong> Lichtschranke2 inaktiv → Öffnen1</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>Zustand: Öffnen1</h4>
+                    <p><strong>Verhalten:</strong> Schranke heben</p>
+                    <p><strong>Übergang:</strong> Schranke oben → Offen</p>
+                </div>
+            </div>
+
+            <div class="code-title">🚂 Arduino-Code für Bahnübergang-Steuerung</div>
+            <div class="code-block with-title">
+<span class="comment">// ==========================================</span>
+<span class="comment">// BAHNÜBERGANG-STEUERUNG</span>
+<span class="comment">// Komplexes Beispiel für Zustandsautomaten</span>
+<span class="comment">// ==========================================</span>
+
+<span class="comment">// Zustandsdefinitionen</span>
+<span class="keyword">#define</span> <span class="type">INITIALISIERUNG</span>  <span class="number">0</span>
+<span class="keyword">#define</span> <span class="type">OFFEN</span>           <span class="number">1</span>
+<span class="keyword">#define</span> <span class="type">SCHLIESSEN1</span>     <span class="number">2</span>
+<span class="keyword">#define</span> <span class="type">ZU1</span>             <span class="number">3</span>
+<span class="keyword">#define</span> <span class="type">OEFFNEN1</span>        <span class="number">4</span>
+
+<span class="comment">// Pin-Definitionen</span>
+<span class="keyword">#define</span> <span class="type">LICHTSCHRANKE1_PIN</span>  <span class="number">2</span>   <span class="comment">// Zug-Erkennung Anfahrt</span>
+<span class="keyword">#define</span> <span class="type">LICHTSCHRANKE2_PIN</span>  <span class="number">3</span>   <span class="comment">// Zug-Erkennung Abfahrt</span>
+<span class="keyword">#define</span> <span class="type">SCHRANKE_OBEN_PIN</span>   <span class="number">4</span>   <span class="comment">// Endschalter: Schranke oben</span>
+<span class="keyword">#define</span> <span class="type">SCHRANKE_UNTEN_PIN</span>  <span class="number">5</span>   <span class="comment">// Endschalter: Schranke unten</span>
+<span class="keyword">#define</span> <span class="type">AMPEL_ROT_PIN</span>       <span class="number">6</span>   <span class="comment">// Rote Ampel</span>
+<span class="keyword">#define</span> <span class="type">AMPEL_GRUEN_PIN</span>     <span class="number">7</span>   <span class="comment">// Grüne Ampel</span>
+<span class="keyword">#define</span> <span class="type">SCHRANKE_HEBEN_PIN</span>  <span class="number">8</span>   <span class="comment">// Motor: Schranke heben</span>
+<span class="keyword">#define</span> <span class="type">SCHRANKE_SENKEN_PIN</span> <span class="number">9</span>   <span class="comment">// Motor: Schranke senken</span>
+
+<span class="comment">// Globale Zustandsvariable</span>
+<span class="keyword">int</span> aktueller_zustand = <span class="type">INITIALISIERUNG</span>;
+
+<span class="comment">// Sensorwerte (werden kontinuierlich aktualisiert)</span>
+<span class="keyword">bool</span> lichtschranke1_aktiv = <span class="keyword">false</span>;
+<span class="keyword">bool</span> lichtschranke2_aktiv = <span class="keyword">false</span>;
+<span class="keyword">bool</span> schranke_ist_oben = <span class="keyword">true</span>;
+<span class="keyword">bool</span> schranke_ist_unten = <span class="keyword">false</span>;
+
+<span class="comment">// ==========================================</span>
+<span class="comment">// SETUP-FUNKTION</span>
+<span class="comment">// ==========================================</span>
+<span class="keyword">void</span> <span class="function">setup</span>() {
+    <span class="comment">// Eingänge konfigurieren (Sensoren)</span>
+    <span class="function">pinMode</span>(<span class="type">LICHTSCHRANKE1_PIN</span>, <span class="type">INPUT_PULLUP</span>);
+    <span class="function">pinMode</span>(<span class="type">LICHTSCHRANKE2_PIN</span>, <span class="type">INPUT_PULLUP</span>);
+    <span class="function">pinMode</span>(<span class="type">SCHRANKE_OBEN_PIN</span>, <span class="type">INPUT_PULLUP</span>);
+    <span class="function">pinMode</span>(<span class="type">SCHRANKE_UNTEN_PIN</span>, <span class="type">INPUT_PULLUP</span>);
+    
+    <span class="comment">// Ausgänge konfigurieren (Aktoren)</span>
+    <span class="function">pinMode</span>(<span class="type">AMPEL_ROT_PIN</span>, <span class="type">OUTPUT</span>);
+    <span class="function">pinMode</span>(<span class="type">AMPEL_GRUEN_PIN</span>, <span class="type">OUTPUT</span>);
+    <span class="function">pinMode</span>(<span class="type">SCHRANKE_HEBEN_PIN</span>, <span class="type">OUTPUT</span>);
+    <span class="function">pinMode</span>(<span class="type">SCHRANKE_SENKEN_PIN</span>, <span class="type">OUTPUT</span>);
+    
+    <span class="comment">// Initialer sicherer Zustand</span>
+    <span class="function">digitalWrite</span>(<span class="type">AMPEL_GRUEN_PIN</span>, <span class="keyword">HIGH</span>);    <span class="comment">// Ampel auf Grün</span>
+    <span class="function">digitalWrite</span>(<span class="type">AMPEL_ROT_PIN</span>, <span class="keyword">LOW</span>);      <span class="comment">// Rot aus</span>
+    <span class="function">digitalWrite</span>(<span class="type">SCHRANKE_HEBEN_PIN</span>, <span class="keyword">LOW</span>);   <span class="comment">// Motoren aus</span>
+    <span class="function">digitalWrite</span>(<span class="type">SCHRANKE_SENKEN_PIN</span>, <span class="keyword">LOW</span>);
+    
+    <span class="comment">// Serielle Kommunikation</span>
+    <span class="function">Serial.begin</span>(<span class="number">9600</span>);
+    <span class="function">Serial.println</span>(<span class="string">"🚂 Bahnübergang-Steuerung gestartet"</span>);
+    <span class="function">Serial.println</span>(<span class="string">"🔧 System wird initialisiert..."</span>);
+}
+
+<span class="comment">// ==========================================</span>
+<span class="comment">// MAIN LOOP</span>
+<span class="comment">// ==========================================</span>
+<span class="keyword">void</span> <span class="function">loop</span>() {
+    <span class="comment">// 1. Alle Sensoren einlesen</span>
+    <span class="function">lese_sensoren</span>();
+    
+    <span class="comment">// 2. Hauptsteuerung ausführen</span>
+    <span class="function">bahnuebergang_steuerung</span>();
+    
+    <span class="comment">// 3. Debug-Ausgabe (nicht zu häufig)</span>
+    <span class="function">debug_ausgabe</span>();
+    
+    <span class="comment">// 4. Zykluszeit</span>
+    <span class="function">delay</span>(<span class="number">100</span>);  <span class="comment">// 100ms Zykluszeit</span>
+}
+
+<span class="comment">// ==========================================</span>
+<span class="comment">// SENSOREN EINLESEN</span>
+<span class="comment">// ==========================================</span>
+<span class="keyword">void</span> <span class="function">lese_sensoren</span>() {
+    <span class="comment">// Lichtschranken (LOW = blockiert, HIGH = frei)</span>
+    lichtschranke1_aktiv = (<span class="function">digitalRead</span>(<span class="type">LICHTSCHRANKE1_PIN</span>) == <span class="keyword">LOW</span>);
+    lichtschranke2_aktiv = (<span class="function">digitalRead</span>(<span class="type">LICHTSCHRANKE2_PIN</span>) == <span class="keyword">LOW</span>);
+    
+    <span class="comment">// Schranken-Endschalter (LOW = aktiviert)</span>
+    schranke_ist_oben = (<span class="function">digitalRead</span>(<span class="type">SCHRANKE_OBEN_PIN</span>) == <span class="keyword">LOW</span>);
+    schranke_ist_unten = (<span class="function">digitalRead</span>(<span class="type">SCHRANKE_UNTEN_PIN</span>) == <span class="keyword">LOW</span>);
+}
+            </div>
+
+            <div class="code-title">🚦 Hauptsteuerung des Bahnübergangs</div>
+            <div class="code-block with-title">
+<span class="comment">// ==========================================</span>
+<span class="comment">// HAUPTSTEUERUNG: BAHNÜBERGANG-AUTOMAT</span>
+<span class="comment">// ==========================================</span>
+<span class="keyword">void</span> <span class="function">bahnuebergang_steuerung</span>() {
+    <span class="keyword">switch</span>(aktueller_zustand) {
+        
+        <span class="comment">// ----------------</span>
+        <span class="comment">// ZUSTAND: INITIALISIERUNG</span>
+        <span class="comment">// ----------------</span>
+        <span class="keyword">case</span> <span class="type">INITIALISIERUNG</span>:
+            <span class="function">Serial.println</span>(<span class="string">"🔧 Zustand: INITIALISIERUNG"</span>);
+            
+            <span class="comment">// Sichere Grundstellung herstellen</span>
+            <span class="function">digitalWrite</span>(<span class="type">AMPEL_GRUEN_PIN</span>, <span class="keyword">HIGH</span>);     <span class="comment">// Ampel auf Grün</span>
+            <span class="function">digitalWrite</span>(<span class="type">AMPEL_ROT_PIN</span>, <span class="keyword">LOW</span>);       <span class="comment">// Rot aus</span>
+            <span class="function">digitalWrite</span>(<span class="type">SCHRANKE_HEBEN_PIN</span>, <span class="keyword">HIGH</span>);   <span class="comment">// Schranke nach oben</span>
+            <span class="function">digitalWrite</span>(<span class="type">SCHRANKE_SENKEN_PIN</span>, <span class="keyword">LOW</span>);
+            
+            <span class="comment">// Übergang zu OFFEN wenn Schranke oben ist</span>
+            <span class="keyword">if</span>(schranke_ist_oben) {
+                aktueller_zustand = <span class="type">OFFEN</span>;
+                <span class="function">digitalWrite</span>(<span class="type">SCHRANKE_HEBEN_PIN</span>, <span class="keyword">LOW</span>);  <span class="comment">// Motor ausschalten</span>
+                <span class="function">Serial.println</span>(<span class="string">"✅ Initialisierung abgeschlossen"</span>);
+            }
+            <span class="keyword">break</span>;
+            
+        <span class="comment">// ----------------</span>
+        <span class="comment">// ZUSTAND: OFFEN (Normalbetrieb)</span>
+        <span class="comment">// ----------------</span>
+        <span class="keyword">case</span> <span class="type">OFFEN</span>:
+            <span class="comment">// Entry-Aktionen (Zustand beibehalten)</span>
+            <span class="function">digitalWrite</span>(<span class="type">AMPEL_GRUEN_PIN</span>, <span class="keyword">HIGH</span>);    <span class="comment">// Grün an</span>
+            <span class="function">digitalWrite</span>(<span class="type">AMPEL_ROT_PIN</span>, <span class="keyword">LOW</span>);      <span class="comment">// Rot aus</span>
+            <span class="function">digitalWrite</span>(<span class="type">SCHRANKE_HEBEN_PIN</span>, <span class="keyword">LOW</span>);   <span class="comment">// Motoren aus</span>
+            <span class="function">digitalWrite</span>(<span class="type">SCHRANKE_SENKEN_PIN</span>, <span class="keyword">LOW</span>);
+            
+            <span class="comment">// Übergang: Zug nähert sich</span>
+            <span class="keyword">if</span>(lichtschranke1_aktiv) {
+                <span class="function">Serial.println</span>(<span class="string">"🚨 ZUG ERKANNT! Schließe Bahnübergang"</span>);
+                aktueller_zustand = <span class="type">SCHLIESSEN1</span>;
+            }
+            <span class="keyword">break</span>;
+            
+        <span class="comment">// ----------------</span>
+        <span class="comment">// ZUSTAND: SCHLIESSEN (Bahnübergang sperren)</span>
+        <span class="comment">// ----------------</span>
+        <span class="keyword">case</span> <span class="type">SCHLIESSEN1</span>:
+            <span class="function">Serial.println</span>(<span class="string">"🔴 Zustand: SCHLIESSEN - Bahnübergang wird gesperrt"</span>);
+            
+            <span class="comment">// Entry-Aktionen</span>
+            <span class="function">digitalWrite</span>(<span class="type">AMPEL_ROT_PIN</span>, <span class="keyword">HIGH</span>);      <span class="comment">// Ampel auf Rot</span>
+            <span class="function">digitalWrite</span>(<span class="type">AMPEL_GRUEN_PIN</span>, <span class="keyword">LOW</span>);     <span class="comment">// Grün aus</span>
+            <span class="function">digitalWrite</span>(<span class="type">SCHRANKE_SENKEN_PIN</span>, <span class="keyword">HIGH</span>);  <span class="comment">// Schranke senken</span>
+            <span class="function">digitalWrite</span>(<span class="type">SCHRANKE_HEBEN_PIN</span>, <span class="keyword">LOW</span>);
+            
+            <span class="comment">// Übergang: Schranke ist unten</span>
+            <span class="keyword">if</span>(schranke_ist_unten) {
+                <span class="function">Serial.println</span>(<span class="string">"⬇️  Schranke geschlossen - warte auf Zug"</span>);
+                aktueller_zustand = <span class="type">ZU1</span>;
+                <span class="function">digitalWrite</span>(<span class="type">SCHRANKE_SENKEN_PIN</span>, <span class="keyword">LOW</span>);  <span class="comment">// Motor ausschalten</span>
+            }
+            <span class="keyword">break</span>;
+            
+        <span class="comment">// ----------------</span>
+        <span class="comment">// ZUSTAND: ZU (Warten auf Zugdurchfahrt)</span>
+        <span class="comment">// ----------------</span>
+        <span class="keyword">case</span> <span class="type">ZU1</span>:
+            <span class="comment">// Zustand halten - keine besonderen Aktionen</span>
+            <span class="function">digitalWrite</span>(<span class="type">AMPEL_ROT_PIN</span>, <span class="keyword">HIGH</span>);      <span class="comment">// Rot bleibt an</span>
+            <span class="function">digitalWrite</span>(<span class="type">AMPEL_GRUEN_PIN</span>, <span class="keyword">LOW</span>);      <span class="comment">// Grün bleibt aus</span>
+            <span class="function">digitalWrite</span>(<span class="type">SCHRANKE_HEBEN_PIN</span>, <span class="keyword">LOW</span>);    <span class="comment">// Motoren aus</span>
+            <span class="function">digitalWrite</span>(<span class="type">SCHRANKE_SENKEN_PIN</span>, <span class="keyword">LOW</span>);
+            
+            <span class="comment">// Übergang: Zug hat Bereich komplett verlassen</span>
+            <span class="comment">// (beide Lichtschranken müssen frei sein)</span>
+            <span class="keyword">if</span>(!lichtschranke2_aktiv && !lichtschranke1_aktiv) {
+                <span class="function">Serial.println</span>(<span class="string">"🚂 Zug ist durch - öffne Bahnübergang"</span>);
+                aktueller_zustand = <span class="type">OEFFNEN1</span>;
+            }
+            <span class="keyword">break</span>;
+            
+        <span class="comment">// ----------------</span>
+        <span class="comment">// ZUSTAND: ÖFFNEN (Bahnübergang freigeben)</span>
+        <span class="comment">// ----------------</span>
+        <span class="keyword">case</span> <span class="type">OEFFNEN1</span>:
+            <span class="function">Serial.println</span>(<span class="string">"🟢 Zustand: ÖFFNEN - Bahnübergang wird freigegeben"</span>);
+            
+            <span class="comment">// Schranke heben (Ampel bleibt noch rot für Sicherheit)</span>
+            <span class="function">digitalWrite</span>(<span class="type">SCHRANKE_HEBEN_PIN</span>, <span class="keyword">HIGH</span>);
+            <span class="function">digitalWrite</span>(<span class="type">SCHRANKE_SENKEN_PIN</span>, <span class="keyword">LOW</span>);
+            
+            <span class="comment">// Übergang: Schranke ist oben</span>
+            <span class="keyword">if</span>(schranke_ist_oben) {
+                <span class="function">Serial.println</span>(<span class="string">"⬆️  Bahnübergang wieder frei - Normalbetrieb"</span>);
+                aktueller_zustand = <span class="type">OFFEN</span>;
+                <span class="function">digitalWrite</span>(<span class="type">SCHRANKE_HEBEN_PIN</span>, <span class="keyword">LOW</span>);  <span class="comment">// Motor ausschalten</span>
+            }
+            <span class="keyword">break</span>;
+            
+        <span class="comment">// ----------------</span>
+        <span class="comment">// FEHLERBEHANDLUNG</span>
+        <span class="comment">// ----------------</span>
+        <span class="keyword">default</span>:
+            <span class="comment">// Unbekannter Zustand - Sicherheitszustand</span>
+            <span class="function">Serial.println</span>(<span class="string">"❌ FEHLER: Unbekannter Zustand - gehe zu INITIALISIERUNG"</span>);
+            aktueller_zustand = <span class="type">INITIALISIERUNG</span>;
+            <span class="keyword">break</span>;
+    }
+}
+
+<span class="comment">// ==========================================</span>
+<span class="comment">// DEBUG-AUSGABE (nicht zu häufig)</span>
+<span class="comment">// ==========================================</span>
+<span class="keyword">void</span> <span class="function">debug_ausgabe</span>() {
+    <span class="comment">// Debug-Informationen alle 2 Sekunden</span>
+    <span class="keyword">static unsigned long</span> letzte_ausgabe = <span class="number">0</span>;
+    <span class="keyword">if</span>(<span class="function">millis</span>() - letzte_ausgabe > <span class="number">2000</span>) {
+        <span class="function">Serial.print</span>(<span class="string">"📊 Sensoren - LS1: "</span>);
+        <span class="function">Serial.print</span>(lichtschranke1_aktiv ? <span class="string">"🔴AKTIV"</span> : <span class="string">"🟢frei"</span>);
+        <span class="function">Serial.print</span>(<span class="string">", LS2: "</span>);
+        <span class="function">Serial.print</span>(lichtschranke2_aktiv ? <span class="string">"🔴AKTIV"</span> : <span class="string">"🟢frei"</span>);
+        <span class="function">Serial.print</span>(<span class="string">", Schranke: "</span>);
+        
+        <span class="keyword">if</span>(schranke_ist_oben) 
+            <span class="function">Serial.print</span>(<span class="string">"⬆️OBEN"</span>);
+        <span class="keyword">else if</span>(schranke_ist_unten) 
+            <span class="function">Serial.print</span>(<span class="string">"⬇️UNTEN"</span>);
+        <span class="keyword">else</span> 
+            <span class="function">Serial.print</span>(<span class="string">"🔄bewegt sich"</span>);
+            
+        <span class="function">Serial.println</span>();
+        letzte_ausgabe = <span class="function">millis</span>();
+    }
+}
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>⚡ Arten von Transitionen</h2>
+            
+            <p>Es gibt verschiedene Arten von Übergängen in Zustandsdiagrammen:</p>
+
+            <div class="flipflop-types">
+                <div class="flipflop-card">
+                    <h4>🎯 Einfache Transition</h4>
+                    <p><strong>Format:</strong> <code>Ereignis</code></p>
+                    <p><strong>Beispiel:</strong> <code>TasteGedrückt</code></p>
+                    <p>Der Übergang erfolgt, sobald das Ereignis eintritt.</p>
+                </div>
+
+                <div class="flipflop-card">
+                    <h4>🔒 Transition mit Wächterbedingung</h4>
+                    <p><strong>Format:</strong> <code>[Bedingung]</code></p>
+                    <p><strong>Beispiel:</strong> <code>[Temperatur > 50°C]</code></p>
+                    <p>Der Übergang erfolgt nur, wenn die Bedingung erfüllt ist.</p>
+                </div>
+
+                <div class="flipflop-card">
+                    <h4>⚡ Transition mit Ereignis und Bedingung</h4>
+                    <p><strong>Format:</strong> <code>Ereignis [Bedingung]</code></p>
+                    <p><strong>Beispiel:</strong> <code>Timer [Zähler >= 10]</code></p>
+                    <p>Sowohl Ereignis als auch Bedingung müssen erfüllt sein.</p>
+                </div>
+
+                <div class="flipflop-card">
+                    <h4>🔄 Selbsttransition</h4>
+                    <p><strong>Format:</strong> Pfeil vom Zustand zu sich selbst</p>
+                    <p><strong>Beispiel:</strong> <code>Blinken [counter++]</code></p>
+                    <p>Zustand bleibt gleich, aber Aktion wird ausgeführt.</p>
+                </div>
+
+                <div class="flipflop-card">
+                    <h4>⚙️ Transition mit Aktion</h4>
+                    <p><strong>Format:</strong> <code>Ereignis / Aktion</code></p>
+                    <p><strong>Beispiel:</strong> <code>Start / Motor_Ein()</code></p>
+                    <p>Beim Übergang wird zusätzlich eine Aktion ausgeführt.</p>
+                </div>
+
+                <div class="flipflop-card">
+                    <h4>🎮 Komplette Transition</h4>
+                    <p><strong>Format:</strong> <code>Ereignis [Bedingung] / Aktion</code></p>
+                    <p><strong>Beispiel:</strong> <code>ButtonPress [batteryOK] / startSystem()</code></p>
+                    <p>Alle Elemente kombiniert für maximale Kontrolle.</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🎯 Mikrocontroller-Programmierung</h2>
+            
+            <p>In der Praxis verwenden wir Zustandsdiagramme oft für die Mikrocontroller-Programmierung:</p>
+
+            <h3>📝 Implementierungsschritte</h3>
+            <div class="timeline">
+                <div class="timeline-item">
+                    <h4>1. Zustände definieren</h4>
+                    <p>Mit <code>#define</code> oder <code>enum</code> alle Zustände benennen</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>2. Zustandsvariable erstellen</h4>
+                    <p>Variable, die den aktuellen Zustand speichert</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>3. Switch-Case-Struktur</h4>
+                    <p>Für jeden Zustand einen <code>case</code></p>
+                </div>
+                <div class="timeline-item">
+                    <h4>4. Übergangsbedingungen prüfen</h4>
+                    <p>In jedem <code>case</code> die Bedingungen für Übergänge testen</p>
+                </div>
+                <div class="timeline-item">
+                    <h4>5. Aktionen ausführen</h4>
+                    <p>Entry-, Do- und Exit-Aktionen implementieren</p>
+                </div>
+            </div>
+
+            <div class="code-title">🎮 Template für Zustandsautomaten</div>
+            <div class="code-block with-title">
+<span class="comment">// ==========================================</span>
+<span class="comment">// TEMPLATE FÜR ZUSTANDSAUTOMATEN</span>
+<span class="comment">// ==========================================</span>
+
+<span class="comment">// 1. Zustände definieren</span>
+<span class="keyword">enum</span> SystemZustaende {
+    <span class="type">ZUSTAND_1</span>,
+    <span class="type">ZUSTAND_2</span>,
+    <span class="type">ZUSTAND_3</span>,
+    <span class="comment">// ... weitere Zustände</span>
+} aktueller_zustand = <span class="type">ZUSTAND_1</span>;  <span class="comment">// Startzustand</span>
+
+<span class="comment">// 2. Variablen für Zustandslogik</span>
+<span class="keyword">bool</span> ereignis_aufgetreten = <span class="keyword">false</span>;
+<span class="keyword">int</span> zaehler = <span class="number">0</span>;
+<span class="keyword">unsigned long</span> letzter_zeitpunkt = <span class="number">0</span>;
+
+<span class="comment">// 3. Hauptsteuerung</span>
+<span class="keyword">void</span> <span class="function">zustandsautomat</span>() {
+    <span class="keyword">switch</span>(aktueller_zustand) {
+        
+        <span class="keyword">case</span> <span class="type">ZUSTAND_1</span>:
+            <span class="comment">// Entry-Aktionen (einmalig beim Betreten)</span>
+            <span class="keyword">static bool</span> entry_ausgefuehrt = <span class="keyword">false</span>;
+            <span class="keyword">if</span>(!entry_ausgefuehrt) {
+                <span class="comment">// Entry-Code hier</span>
+                entry_ausgefuehrt = <span class="keyword">true</span>;
+            }
+            
+            <span class="comment">// Do-Aktivitäten (kontinuierlich im Zustand)</span>
+            <span class="comment">// Regelmäßige Aktionen hier</span>
+            
+            <span class="comment">// Übergangsbedingungen prüfen</span>
+            <span class="keyword">if</span>(ereignis_aufgetreten) {
+                <span class="comment">// Exit-Aktionen</span>
+                entry_ausgefuehrt = <span class="keyword">false</span>;  <span class="comment">// Für nächsten Entry</span>
+                
+                <span class="comment">// Zustandswechsel</span>
+                aktueller_zustand = <span class="type">ZUSTAND_2</span>;
+                ereignis_aufgetreten = <span class="keyword">false</span>;  <span class="comment">// Event verbrauchen</span>
+            }
+            <span class="keyword">break</span>;
+            
+        <span class="keyword">case</span> <span class="type">ZUSTAND_2</span>:
+            <span class="comment">// Analog zu ZUSTAND_1...</span>
+            <span class="keyword">break</span>;
+            
+        <span class="keyword">default</span>:
+            <span class="comment">// Fehlerbehandlung</span>
+            aktueller_zustand = <span class="type">ZUSTAND_1</span>;  <span class="comment">// Sicherer Zustand</span>
+            <span class="keyword">break</span>;
+    }
+}
+            </div>
+        </div>
+
+        <div class="interactive-section">
+            <h3>🧠 Übungen zum Selbsttest</h3>
+            
+            <div class="example-box">
+                <div class="example-title">📝 Übung 1: Zustandsdiagramm lesen</div>
+                <p><strong>Gegeben:</strong> Ein Getränkeautomat mit den Zuständen "Bereit", "Münze eingeworfen", "Auswahl getroffen", "Ausgabe"</p>
+                <p><strong>Aufgabe:</strong> Beschreibe die möglichen Übergänge und notiere dir, welche Ereignisse diese auslösen könnten.</p>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">📝 Übung 2: FlipFlop-Verhalten</div>
+                <p><strong>Gegeben:</strong> Ein JK-FlipFlop mit J=1, K=1 (Toggle-Modus)</p>
+                <p><strong>Aufgabe:</strong> Zeichne das Zustandsdiagramm und erkläre, was bei jeder Taktflanke passiert.</p>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">📝 Übung 3: Code-Implementierung</div>
+                <p><strong>Aufgabe:</strong> Implementiere eine einfache Waschmaschinen-Steuerung mit den Zuständen:</p>
+                <ul>
+                    <li>Bereit → (Start) → Waschen</li>
+                    <li>Waschen → (Timer) → Spülen</li>
+                    <li>Spülen → (Timer) → Schleudern</li>
+                    <li>Schleudern → (Timer) → Fertig</li>
+                    <li>Fertig → (Tür öffnen) → Bereit</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">📝 Übung 4: Erweiterte Ampelsteuerung</div>
+                <p><strong>Aufgabe:</strong> Erweitere die Ampelsteuerung um eine Fußgängerampel mit Anforderungstaster:</p>
+                <ul>
+                    <li>Normale Ampelschaltung läuft</li>
+                    <li>Fußgänger drückt Taster</li>
+                    <li>Nach aktueller Grünphase: verlängerte Rotphase für Fußgänger</li>
+                    <li>Fußgängerampel wird grün</li>
+                    <li>Dann wieder normale Schaltung</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>💡 Tipps für die Praxis</h2>
+
+            <div class="warning-box">
+                <div class="warning-title">⚠️ Häufige Fehler vermeiden</div>
+                <ul>
+                    <li><strong>Vergessene Zustände:</strong> Alle möglichen Systemzustände berücksichtigen</li>
+                    <li><strong>Unvollständige Übergänge:</strong> Für jeden Zustand alle möglichen Ereignisse behandeln</li>
+                    <li><strong>Race Conditions:</strong> Bei mehreren Ereignissen gleichzeitig Prioritäten festlegen</li>
+                    <li><strong>Endlos-Schleifen:</strong> Immer Ausstiegsmöglichkeiten vorsehen</li>
+                    <li><strong>Blockierender Code:</strong> Verwende <code>millis()</code> statt <code>delay()</code> für Timer</li>
+                    <li><strong>Fehlende Entprellung:</strong> Buttons und Sensoren können "prellen"</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">✅ Best Practices</div>
+                <ul>
+                    <li><strong>Sprechende Namen:</strong> Zustände und Ereignisse verständlich benennen</li>
+                    <li><strong>Modularer Aufbau:</strong> Komplexe Systeme in Teilautomaten aufteilen</li>
+                    <li><strong>Dokumentation:</strong> Zustandsdiagramm als Kommentar in den Code einbinden</li>
+                    <li><strong>Testen:</strong> Alle möglichen Zustandsübergänge systematisch testen</li>
+                    <li><strong>Reset-Zustand:</strong> Immer einen definierten Startzustand haben</li>
+                    <li><strong>Fehlerbehandlung:</strong> Default-Case für unbekannte Zustände</li>
+                    <li><strong>Debug-Ausgaben:</strong> Zustandswechsel protokollieren</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <div class="warning-title">🐛 Debugging von Zustandsautomaten</div>
+                <p><strong>Typische Probleme und Lösungen:</strong></p>
+                <ul>
+                    <li><strong>System "hängt" in einem Zustand:</strong> Prüfe Übergangsbedingungen</li>
+                    <li><strong>Unerwartete Zustandswechsel:</strong> Events werden mehrfach ausgelöst</li>
+                    <li><strong>Timing-Probleme:</strong> millis() Overflow nach 49 Tagen beachten</li>
+                    <li><strong>Speicher-Probleme:</strong> Statische Variablen sparsam verwenden</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🎓 Erweiterte Konzepte</h2>
+            
+            <h3>🔄 Hierarchische Zustandsautomaten</h3>
+            <p>Bei komplexen Systemen können Zustandsautomaten verschachtelt werden:</p>
+            
+            <div class="definition-box">
+                <div class="definition-title">📝 Beispiel: Waschmaschine mit Unterzuständen</div>
+                <strong>Hauptzustand "Waschen" hat Unterzustände:</strong>
+                <ul>
+                    <li>Waschen → Einweichen (2 Min)</li>
+                    <li>Waschen → Hauptwäsche (15 Min)</li>
+                    <li>Waschen → Nachspülen (3 Min)</li>
+                </ul>
+                <p>Erst wenn alle Unterzustände durchlaufen sind, wechselt der Hauptzustand zu "Spülen".</p>
+            </div>
+
+            <h3>🔄 Parallele Zustandsautomaten</h3>
+            <p>Verschiedene Teilsysteme können unabhängig voneinander laufen:</p>
+            
+            <div class="example-box">
+                <div class="example-title">💡 Beispiel: Smart Home System</div>
+                <ul>
+                    <li><strong>Automat 1:</strong> Beleuchtungssteuerung (Tag/Nacht/Gedimmt)</li>
+                    <li><strong>Automat 2:</strong> Heizungssteuerung (Heizen/Standby/Aus)</li>
+                    <li><strong>Automat 3:</strong> Sicherheitssystem (Scharf/Unscharf/Alarm)</li>
+                </ul>
+                <p>Alle drei laufen parallel und beeinflussen sich nur bei bestimmten Ereignissen.</p>
+            </div>
+
+            <h3>⏰ Zeit-basierte Automaten</h3>
+            <div class="code-title">⏱️ Timer-basierte Zustandsübergänge</div>
+            <div class="code-block with-title">
+<span class="comment">// Beispiel: Automatische Beleuchtung mit Zeitsteuerung</span>
+<span class="keyword">enum</span> BeleuchtungZustand {
+    <span class="type">AUS</span>, <span class="type">DAEMMERUNG</span>, <span class="type">NACHT</span>, <span class="type">MORGEN</span>
+};
+
+<span class="keyword">void</span> <span class="function">beleuchtung_automat</span>() {
+    <span class="keyword">int</span> stunde = <span class="function">aktuelle_stunde</span>();  <span class="comment">// Von RTC oder NTP</span>
+    
+    <span class="keyword">switch</span>(beleuchtung_zustand) {
+        <span class="keyword">case</span> <span class="type">AUS</span>:
+            <span class="keyword">if</span>(stunde >= <span class="number">18</span>) {  <span class="comment">// 18:00 Uhr</span>
+                beleuchtung_zustand = <span class="type">DAEMMERUNG</span>;
+                <span class="function">setze_helligkeit</span>(<span class="number">30</span>);  <span class="comment">// 30% Helligkeit</span>
+            }
+            <span class="keyword">break</span>;
+            
+        <span class="keyword">case</span> <span class="type">DAEMMERUNG</span>:
+            <span class="keyword">if</span>(stunde >= <span class="number">22</span>) {  <span class="comment">// 22:00 Uhr</span>
+                beleuchtung_zustand = <span class="type">NACHT</span>;
+                <span class="function">setze_helligkeit</span>(<span class="number">10</span>);  <span class="comment">// 10% Helligkeit</span>
+            }
+            <span class="keyword">break</span>;
+            
+        <span class="keyword">case</span> <span class="type">NACHT</span>:
+            <span class="keyword">if</span>(stunde >= <span class="number">6</span>) {   <span class="comment">// 06:00 Uhr</span>
+                beleuchtung_zustand = <span class="type">MORGEN</span>;
+                <span class="function">setze_helligkeit</span>(<span class="number">80</span>);  <span class="comment">// 80% Helligkeit</span>
+            }
+            <span class="keyword">break</span>;
+            
+        <span class="keyword">case</span> <span class="type">MORGEN</span>:
+            <span class="keyword">if</span>(stunde >= <span class="number">8</span>) {   <span class="comment">// 08:00 Uhr</span>
+                beleuchtung_zustand = <span class="type">AUS</span>;
+                <span class="function">setze_helligkeit</span>(<span class="number">0</span>);   <span class="comment">// Aus</span>
+            }
+            <span class="keyword">break</span>;
+    }
+}
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🔗 Zusammenfassung</h2>
+            
+            <p>Zustandsdiagramme sind ein mächtiges Werkzeug zur Beschreibung und Implementierung komplexer Systeme:</p>
+
+            <div class="definition-box">
+                <div class="definition-title">🎯 Das Wichtigste in Kürze</div>
+                <ul>
+                    <li><strong>Schaltwerke</strong> haben im Gegensatz zu Schaltnetzen ein Gedächtnis</li>
+                    <li><strong>FlipFlops</strong> sind die Grundbausteine für Speicher in digitalen Systemen</li>
+                    <li><strong>Zustandsdiagramme</strong> visualisieren das Verhalten von Systemen über die Zeit</li>
+                    <li><strong>UML-Notation</strong> bietet eine standardisierte Darstellungsform</li>
+                    <li><strong>Implementierung</strong> erfolgt typischerweise mit Switch-Case-Strukturen</li>
+                    <li><strong>Praktische Anwendung</strong> in Steuerungen, Protokollen und Benutzeroberflächen</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <div class="example-title">🎓 Prüfungsrelevant für das Abitur 2026</div>
+                <p>Für das Abitur solltest du können:</p>
+                <ul>
+                    <li>✅ <strong>Zustandsdiagramme lesen und interpretieren</strong></li>
+                    <li>✅ <strong>Einfache Zustandsdiagramme selbst erstellen</strong></li>
+                    <li>✅ <strong>FlipFlop-Verhalten in Zustandsdiagrammen darstellen</strong></li>
+                    <li>✅ <strong>Code-Implementierung von Zustandsautomaten verstehen</strong></li>
+                    <li>✅ <strong>Unterschiede zwischen verschiedenen Transitionsarten erklären</strong></li>
+                    <li>✅ <strong>Praktische Anwendungen in der Mikrocontroller-Programmierung</strong></li>
+                    <li>✅ <strong>Debugging und Fehlerbehandlung bei Automaten</strong></li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <div class="warning-title">📚 Weiterführende Themen</div>
+                <p>Nach dem Abitur könntest du dich mit folgenden Themen beschäftigen:</p>
+                <ul>
+                    <li><strong>Petri-Netze</strong> - Für parallele und verteilte Systeme</li>
+                    <li><strong>Automatentheorie</strong> - Mathematische Grundlagen</li>
+                    <li><strong>Model Checking</strong> - Formale Verifikation von Systemen</li>
+                    <li><strong>SCXML</strong> - XML-basierte Zustandsautomaten</li>
+                    <li><strong>Reactive Programming</strong> - Ereignisgesteuerte Programmierung</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="content-section">
+            <h2>🎮 Interaktive Lernhilfen</h2>
+            
+            <div class="example-box">
+                <div class="example-title">🔍 Selbst-Check: Verstehe ich es wirklich?</div>
+                <p><strong>Teste dich selbst mit diesen Fragen:</strong></p>
+                <ol>
+                    <li>Erkläre den Unterschied zwischen Schaltnetzen und Schaltwerken in eigenen Worten</li>
+                    <li>Warum ist die Rückkopplung bei FlipFlops so wichtig?</li>
+                    <li>Wie würdest du ein Ampelsystem mit Fußgängerübergang modellieren?</li>
+                    <li>Was passiert, wenn du in einem Arduino-Code <code>delay()</code> in einem Zustand verwendest?</li>
+                    <li>Wie kann man Race Conditions bei mehreren gleichzeitigen Ereignissen vermeiden?</li>
+                </ol>
+            </div>
+
+            <div class="warning-box">
+                <div class="warning-title">🎯 Abitur-Tipps</div>
+                <ul>
+                    <li><strong>Zeichne sauber:</strong> Klare, beschriftete Zustandsdiagramme</li>
+                    <li><strong>Vollständigkeit:</strong> Alle möglichen Übergänge bedenken</li>
+                    <li><strong>Konsistenz:</strong> Einheitliche Notation verwenden</li>
+                    <li><strong>Realitätsbezug:</strong> Beispiele aus dem Alltag helfen beim Verständnis</li>
+                    <li><strong>Code-Verständnis:</strong> Switch-Case-Struktur beherrschen</li>
+                    <li><strong>Fehlerbehandlung:</strong> Immer an Default-Fälle denken</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="navigation">
+            <a href="index.html" class="nav-button">←🏠 Übersicht</a>
+        </div>
+    </div>
+
+    <script>
+        // Interaktive Funktionen für besseres Lernerlebnis
+        document.addEventListener('DOMContentLoaded', function() {
+            console.log('🎓 Zustandsdiagramme - Interaktives Lernsystem geladen');
+            
+            // 1. Navigation mit Hinweisen
+            document.querySelectorAll('.nav-button').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    if (!this.href.includes('index.html')) {
+                        e.preventDefault();
+                        showNotification('📚 Diese Seite wird noch erstellt! Freue dich auf weitere spannende Themen!', 'info');
+                    }
+                });
+            });
+
+            // 2. Hover-Effekte für Zustandsdiagramme
+            document.querySelectorAll('.state').forEach(state => {
+                state.addEventListener('mouseenter', function() {
+                    this.style.transform = 'scale(1.05)';
+                    this.style.transition = 'transform 0.2s ease';
+                    this.style.cursor = 'pointer';
+                });
+                
+                state.addEventListener('mouseleave', function() {
+                    this.style.transform = 'scale(1)';
+                });
+
+                state.addEventListener('click', function() {
+                    const stateName = this.textContent;
+                    showNotification(`🔄 Zustand "${stateName}" ausgewählt! In echten Systemen würde hier die entsprechende Logik ausgeführt.`, 'success');
+                });
+            });
+
+            // 3. FlipFlop-Karten Interaktivität
+            document.querySelectorAll('.flipflop-card').forEach(card => {
+                card.addEventListener('click', function() {
+                    const title = this.querySelector('h4').textContent;
+                    const info = {
+                        'RS-FlipFlop (Set-Reset)': 'Das RS-FlipFlop ist das einfachste Speicherelement. Achtung vor dem verbotenen Zustand S=1, R=1!',
+                        'D-FlipFlop (Delay/Data)': 'Das D-FlipFlop ist sehr praktisch: Der Ausgang Q folgt dem Eingang D bei jedem Taktsignal.',
+                        'JK-FlipFlop (Jump-Kill)': 'Das JK-FlipFlop ist das vielseitigste: Es kann Set, Reset und Toggle (Umschalten)!'
+                    };
+                    showNotification(`💡 ${title}: ${info[title] || 'Ein wichtiger Baustein für Schaltwerke!'}`, 'info');
+                });
+            });
+
+            // 4. Code-Block Funktionalität
+            document.querySelectorAll('.code-block').forEach((block, index) => {
+                // Kopier-Funktionalität simulieren
+                block.addEventListener('click', function() {
+                    const codeTitle = this.previousElementSibling?.textContent || 'Code-Beispiel';
+                    showNotification(`📋 ${codeTitle} - Analysiere die Struktur des Zustandsautomaten!`, 'success');
+                    
+                    // Kurzes Highlight-Effekt
+                    this.style.boxShadow = '0 0 20px rgba(37, 99, 235, 0.5)';
+                    setTimeout(() => {
+                        this.style.boxShadow = '';
+                    }, 1000);
+                });
+
+                // Code-Syntax hervorheben beim Hovern
+                block.addEventListener('mouseenter', function() {
+                    this.style.transform = 'translateY(-2px)';
+                    this.style.transition = 'transform 0.2s ease';
+                });
+
+                block.addEventListener('mouseleave', function() {
+                    this.style.transform = 'translateY(0)';
+                });
+            });
+
+            // 5. Lernfortschritt verfolgen
+            let sectionsRead = new Set();
+            const totalSections = document.querySelectorAll('.content-section').length;
+            
+            const progressObserver = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const sectionTitle = entry.target.querySelector('h2')?.textContent || 'Abschnitt';
+                        sectionsRead.add(sectionTitle);
+                        
+                        const progress = Math.round((sectionsRead.size / totalSections) * 100);
+                        
+                        // Meilensteine
+                        if (progress === 25) {
+                            showNotification('🎉 25% geschafft! Du machst gute Fortschritte mit den Zustandsdiagrammen!', 'success');
+                        } else if (progress === 50) {
+                            showNotification('🔥 Halbzeit! FlipFlops und Automaten werden immer klarer!', 'success');
+                        } else if (progress === 75) {
+                            showNotification('🚀 75% durch! Du bist fast ein Experte für Zustandsautomaten!', 'success');
+                        } else if (progress === 100) {
+                            showNotification('🎓 Glückwunsch! Du hast alle Abschnitte zu Zustandsdiagrammen durchgearbeitet!', 'success');
+                        }
+                        
+                        // Fortschritt in Konsole
+                        console.log(`📊 Lernfortschritt: ${progress}% (${sectionsRead.size}/${totalSections} Abschnitte)`);
+                    }
+                });
+            }, { threshold: 0.6 });
+
+            document.querySelectorAll('.content-section').forEach(section => {
+                progressObserver.observe(section);
+            });
+
+            // 6. Übungsaufgaben interaktiv
+            document.querySelectorAll('.example-box').forEach(box => {
+                if (box.querySelector('.example-title').textContent.includes('Übung')) {
+                    box.style.cursor = 'pointer';
+                    box.addEventListener('click', function() {
+                        const exerciseTitle = this.querySelector('.example-title').textContent;
+                        showNotification(`🧠 ${exerciseTitle}: Nimm dir Zeit zum Nachdenken! Skizziere deine Lösung auf Papier.`, 'info');
+                    });
+                }
+            });
+
+            // 7. Truth Table Interaktivität
+            document.querySelectorAll('.truth-table tr').forEach(row => {
+                if (!row.querySelector('th')) { // Nicht Header-Zeilen
+                    row.addEventListener('click', function() {
+                        const cells = Array.from(this.querySelectorAll('td')).map(cell => cell.textContent);
+                        if (cells.length >= 4) {
+                            showNotification(`🔍 Zeile analysiert: Bei Eingabe "${cells[0]}, ${cells[1]}" wird Ausgang "${cells[2]}" (${cells[3]})`, 'info');
+                        }
+                    });
+                    
+                    row.style.cursor = 'pointer';
+                }
+            });
+
+            // 8. Tipps und Tricks einblenden
+            const tipButton = document.createElement('div');
+            tipButton.innerHTML = '💡 Tipp';
+            tipButton.style.cssText = `
+                position: fixed;
+                bottom: 20px;
+                right: 20px;
+                background: var(--primary-color);
+                color: white;
+                padding: 10px 20px;
+                border-radius: 25px;
+                cursor: pointer;
+                font-weight: bold;
+                z-index: 1000;
+                box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+                transition: all 0.3s ease;
+            `;
+            
+            const tips = [
+                "💡 Tipp: Zeichne Zustandsdiagramme immer von links nach rechts!",
+                "🔄 Tipp: Jeder Zustand sollte mindestens einen Ausgang haben!",
+                "⚠️ Tipp: Vergiss nie den Default-Case in Switch-Statements!",
+                "🎯 Tipp: Verwende millis() statt delay() für nicht-blockierenden Code!",
+                "🔍 Tipp: Debug-Ausgaben helfen beim Verstehen der Zustandswechsel!",
+                "📝 Tipp: Sprechende Zustandsnamen machen Code lesbarer!",
+                "🚫 Tipp: Vermeide zu viele Zustände - teile komplexe Automaten auf!"
+            ];
+            
+            let currentTip = 0;
+            tipButton.addEventListener('click', function() {
+                showNotification(tips[currentTip], 'info');
+                currentTip = (currentTip + 1) % tips.length;
+            });
+            
+            document.body.appendChild(tipButton);
+
+            // Hilfsfunktion für Notifications
+            function showNotification(message, type = 'info') {
+                const notification = document.createElement('div');
+                const colors = {
+                    info: 'var(--info-color)',
+                    success: 'var(--success-color)',
+                    warning: 'var(--warning-color)',
+                    error: 'var(--danger-color)'
+                };
+                
+                notification.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    right: 20px;
+                    background: ${colors[type]};
+                    color: white;
+                    padding: 1rem 1.5rem;
+                    border-radius: 8px;
+                    z-index: 2000;
+                    max-width: 400px;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+                    font-weight: 500;
+                    animation: slideIn 0.3s ease;
+                `;
+                
+                notification.textContent = message;
+                document.body.appendChild(notification);
+                
+                // CSS Animation hinzufügen
+                if (!document.getElementById('notification-styles')) {
+                    const style = document.createElement('style');
+                    style.id = 'notification-styles';
+                    style.textContent = `
+                        @keyframes slideIn {
+                            from { transform: translateX(100%); opacity: 0; }
+                            to { transform: translateX(0); opacity: 1; }
+                        }
+                        @keyframes slideOut {
+                            from { transform: translateX(0); opacity: 1; }
+                            to { transform: translateX(100%); opacity: 0; }
+                        }
+                    `;
+                    document.head.appendChild(style);
+                }
+                
+                // Nach 4 Sekunden entfernen
+                setTimeout(() => {
+                    notification.style.animation = 'slideOut 0.3s ease';
+                    setTimeout(() => {
+                        if (document.body.contains(notification)) {
+                            document.body.removeChild(notification);
+                        }
+                    }, 300);
+                }, 4000);
+            }
+
+            // Willkommensnachricht
+            setTimeout(() => {
+                showNotification('🎓 Willkommen zu den Zustandsdiagrammen! Klicke auf Elemente für mehr Informationen.', 'success');
+            }, 1000);
+        });
+    </script>
+</body>
+</html>

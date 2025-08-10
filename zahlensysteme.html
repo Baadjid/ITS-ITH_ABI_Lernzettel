@@ -1,0 +1,1568 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zahlensysteme & Codierung - Abitur 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #06b6d4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .breadcrumb {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .header .subtitle {
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .toc {
+            background: var(--bg-white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .toc h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc a {
+            text-decoration: none;
+            color: var(--text-dark);
+            padding: 0.5rem;
+            border-radius: 4px;
+            display: block;
+            transition: background-color 0.2s ease;
+        }
+
+        .toc a:hover {
+            background-color: var(--bg-light);
+            color: var(--primary-color);
+        }
+
+        .content-section {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--primary-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.3rem;
+        }
+
+        .content-section h4 {
+            color: var(--text-dark);
+            margin: 1rem 0 0.5rem 0;
+            font-size: 1.1rem;
+            font-weight: 600;
+        }
+
+        .example-box {
+            background: var(--bg-light);
+            border-left: 4px solid var(--success-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-box {
+            background: #fef3c7;
+            border-left: 4px solid var(--warning-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box-content {
+            background: #e0f2fe;
+            border-left: 4px solid var(--info-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .formula-box {
+            background: #f3f4f6;
+            border: 2px solid var(--border-color);
+            padding: 1rem;
+            margin: 1rem 0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+
+        .conversion-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .conversion-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: center;
+            font-weight: 600;
+        }
+
+        .conversion-table td {
+            padding: 0.8rem;
+            text-align: center;
+            border-bottom: 1px solid var(--border-color);
+            font-family: 'Courier New', monospace;
+        }
+
+        .conversion-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .conversion-table tr:hover {
+            background: #e0e7ff;
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, #fbbf24 0%, #f59e0b 100%);
+            padding: 2px 6px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+        }
+
+        .binary {
+            color: #059669;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        .decimal {
+            color: var(--primary-color);
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        .hex {
+            color: #dc2626;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        .step-by-step {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .step {
+            margin-bottom: 1rem;
+            padding: 0.5rem;
+            border-left: 3px solid var(--primary-color);
+            padding-left: 1rem;
+        }
+
+        .step-number {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            text-align: center;
+            line-height: 24px;
+            font-size: 0.8rem;
+            margin-right: 0.5rem;
+        }
+
+        .calculator {
+            background: var(--bg-white);
+            border: 2px solid var(--primary-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+
+        .calculator input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid var(--border-color);
+            border-radius: 6px;
+            margin: 0.5rem 0;
+            font-size: 1rem;
+            font-family: 'Courier New', monospace;
+        }
+
+        .calculator button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.8rem 1.5rem;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 1rem;
+            margin: 0.5rem 0.5rem 0.5rem 0;
+            transition: background-color 0.2s ease;
+        }
+
+        .calculator button:hover {
+            background: var(--secondary-color);
+        }
+
+        .back-link {
+            display: inline-block;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            text-decoration: none;
+            border-radius: 6px;
+            margin-top: 2rem;
+            transition: background-color 0.2s ease;
+        }
+
+        .back-link:hover {
+            background: var(--secondary-color);
+        }
+
+        .nibble-explanation {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 0.5rem;
+            margin: 1rem 0;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+        }
+
+        .nibble-bit {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem;
+            text-align: center;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-weight: bold;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            
+            .conversion-table {
+                font-size: 0.9rem;
+            }
+            
+            .conversion-table th,
+            .conversion-table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <nav class="breadcrumb">
+                <a href="index.html">🏠 Abitur 2026 Informatik TG</a> > 
+                <a href="index.html#technische-informatik-i">Technische Informatik I</a> > 
+                Zahlensysteme & Codierung
+            </nav>
+            <h1>📊 Zahlensysteme & Codierung</h1>
+            <p class="subtitle">Grundlagen der digitalen Informationsdarstellung</p>
+            <div class="info-box">
+                <strong>BPE 1 - Technische Informatik I</strong><br>
+                Digitale Informationsverarbeitung • Zahlensysteme • Codierung und Code
+            </div>
+        </header>
+
+        <nav class="toc">
+            <h3>📋 Inhaltsverzeichnis</h3>
+            <ul>
+                <li><a href="#grundlagen">1. Grundlagen der Zahlensysteme</a></li>
+                <li><a href="#dezimalsystem">2. Das Dezimalsystem (Basis 10)</a></li>
+                <li><a href="#dualsystem">3. Das Dualsystem/Binärsystem (Basis 2)</a></li>
+                <li><a href="#hexadezimalsystem">4. Das Hexadezimalsystem (Basis 16)</a></li>
+                <li><a href="#umwandlung">5. Umwandlung zwischen Zahlensystemen</a></li>
+                <li><a href="#codierung">6. Codierung und Informationsdarstellung</a></li>
+                <li><a href="#bcd-code">7. BCD-Code</a></li>
+                <li><a href="#ascii">8. ASCII-Code</a></li>
+                <li><a href="#gray-code">9. Gray-Code</a></li>
+                <li><a href="#aufgaben">10. Übungsaufgaben</a></li>
+            </ul>
+        </nav>
+
+        <section class="content-section" id="grundlagen">
+            <h2>1. Grundlagen der Zahlensysteme</h2>
+            
+            <h3>Was ist ein Zahlensystem?</h3>
+            <p>Ein <strong>Zahlensystem</strong> ist eine systematische Art, Zahlen darzustellen. Es gibt verschiedene Arten von Zahlensystemen:</p>
+
+            <h4>Additionssysteme (z.B. Römische Zahlen)</h4>
+            <div class="warning-box">
+                <strong>⚠️ Nachteile von Additionssystemen:</strong>
+                <ul>
+                    <li>Unendlich viele verschiedene Zeichen nötig</li>
+                    <li>Keine Null vorhanden</li>
+                    <li>Keine negativen Zahlen darstellbar</li>
+                    <li>Keine Brüche möglich</li>
+                    <li><strong>Für maschinelle Verarbeitung nicht geeignet!</strong></li>
+                </ul>
+            </div>
+
+            <h4>Stellenwertsysteme (Positionssysteme)</h4>
+            <div class="example-box">
+                <strong>✅ Vorteile von Stellenwertsystemen:</strong>
+                <ul>
+                    <li><strong>Begrenzter Zeichenvorrat</strong> - nur wenige Grundzeichen nötig</li>
+                    <li><strong>Stellenwert entscheidet</strong> - der Wert eines Zeichens hängt von seiner Position ab</li>
+                    <li><strong>Maschinell verarbeitbar</strong> - ideal für Computer</li>
+                    <li><strong>Mathematische Operationen</strong> sind einfach durchführbar</li>
+                </ul>
+            </div>
+
+            <h3>Das Prinzip des Stellenwertsystems</h3>
+            <p>In einem Stellenwertsystem wird jede Zahl als <strong>Potenzsumme</strong> dargestellt:</p>
+            
+            <div class="formula-box">
+                Zahl = a<sub>n</sub> × Basis<sup>n</sup> + a<sub>n-1</sub> × Basis<sup>n-1</sup> + ... + a<sub>1</sub> × Basis<sup>1</sup> + a<sub>0</sub> × Basis<sup>0</sup>
+            </div>
+
+            <div class="example-box">
+                <strong>Beispiel:</strong> Die Dezimalzahl <span class="decimal">12345</span><br>
+                <strong>Kurzschreibweise:</strong> 12345<br>
+                <strong>Normalschreibweise:</strong> 1×10<sup>4</sup> + 2×10<sup>3</sup> + 3×10<sup>2</sup> + 4×10<sup>1</sup> + 5×10<sup>0</sup><br>
+                = 1×10000 + 2×1000 + 3×100 + 4×10 + 5×1 = 12345
+            </div>
+        </section>
+
+        <section class="content-section" id="dezimalsystem">
+            <h2>2. Das Dezimalsystem (Basis 10)</h2>
+            
+            <h3>Eigenschaften des Dezimalsystems</h3>
+            <ul>
+                <li><strong>Basis:</strong> 10</li>
+                <li><strong>Zeichenvorrat:</strong> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9}</li>
+                <li><strong>Stellenwerte:</strong> ..., 10³, 10², 10¹, 10⁰</li>
+                <li><strong>Verwendung:</strong> Alltägliche Darstellung von Zahlen</li>
+            </ul>
+
+            <div class="info-box-content">
+                <strong>💡 Wichtig:</strong> Das Dezimalsystem ist unser gewohntes Zahlensystem. Ohne Kennzeichnung wird eine Zahl immer als Dezimalzahl interpretiert.
+            </div>
+
+            <h3>Stellenwerte im Dezimalsystem</h3>
+            <table class="conversion-table">
+                <tr>
+                    <th>10⁴</th>
+                    <th>10³</th>
+                    <th>10²</th>
+                    <th>10¹</th>
+                    <th>10⁰</th>
+                    <th>Wert</th>
+                </tr>
+                <tr>
+                    <td>10000er</td>
+                    <td>1000er</td>
+                    <td>100er</td>
+                    <td>10er</td>
+                    <td>1er</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td class="decimal">12345</td>
+                </tr>
+            </table>
+        </section>
+
+        <section class="content-section" id="dualsystem">
+            <h2>3. Das Dualsystem/Binärsystem (Basis 2)</h2>
+            
+            <h3>Eigenschaften des Dualsystems</h3>
+            <ul>
+                <li><strong>Basis:</strong> 2</li>
+                <li><strong>Zeichenvorrat:</strong> {0, 1}</li>
+                <li><strong>Stellenwerte:</strong> ..., 2³, 2², 2¹, 2⁰</li>
+                <li><strong>Kennzeichnung:</strong> <code>₂</code> oder <code>b</code></li>
+                <li><strong>Verwendung:</strong> Digitale Systeme, Computer</li>
+            </ul>
+
+            <div class="example-box">
+                <strong>Beispiel:</strong> Die Binärzahl <span class="binary">1011₂</span><br>
+                <strong>Berechnung:</strong> 1×2³ + 0×2² + 1×2¹ + 1×2⁰<br>
+                = 1×8 + 0×4 + 1×2 + 1×1 = 8 + 0 + 2 + 1 = <span class="decimal">11₁₀</span>
+            </div>
+
+            <h3>Stellenwerte im Dualsystem</h3>
+            <table class="conversion-table">
+                <tr>
+                    <th>2⁷</th>
+                    <th>2⁶</th>
+                    <th>2⁵</th>
+                    <th>2⁴</th>
+                    <th>2³</th>
+                    <th>2²</th>
+                    <th>2¹</th>
+                    <th>2⁰</th>
+                </tr>
+                <tr>
+                    <td>128</td>
+                    <td>64</td>
+                    <td>32</td>
+                    <td>16</td>
+                    <td>8</td>
+                    <td>4</td>
+                    <td>2</td>
+                    <td>1</td>
+                </tr>
+            </table>
+
+            <div class="warning-box">
+                <strong>⚠️ Achtung:</strong> Binärzahlen werden sehr schnell sehr lang! Die Zahl 255₁₀ entspricht 11111111₂ (8 Bit).
+            </div>
+
+            <h3>Warum Binärsystem in der Informatik?</h3>
+            <ul>
+                <li><strong>Technische Einfachheit:</strong> Nur zwei Zustände (0 = Aus, 1 = Ein)</li>
+                <li><strong>Störungssicherheit:</strong> Eindeutige Unterscheidung zwischen den Zuständen</li>
+                <li><strong>Logische Operationen:</strong> Direkte Umsetzung der Booleschen Algebra</li>
+                <li><strong>Elektronische Darstellung:</strong> Spannung/keine Spannung</li>
+            </ul>
+        </section>
+
+        <section class="content-section" id="hexadezimalsystem">
+            <h2>4. Das Hexadezimalsystem (Basis 16)</h2>
+            
+            <h3>Eigenschaften des Hexadezimalsystems</h3>
+            <ul>
+                <li><strong>Basis:</strong> 16</li>
+                <li><strong>Zeichenvorrat:</strong> {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, A, B, C, D, E, F}</li>
+                <li><strong>Stellenwerte:</strong> ..., 16³, 16², 16¹, 16⁰</li>
+                <li><strong>Kennzeichnung:</strong> <code>₁₆</code>, <code>h</code> oder <code>0x</code></li>
+                <li><strong>Verwendung:</strong> Kompakte Darstellung von Binärdaten</li>
+            </ul>
+
+            <h3>Hexadezimale Ziffern</h3>
+            <table class="conversion-table">
+                <tr>
+                    <th>Hex</th>
+                    <th>0</th>
+                    <th>1</th>
+                    <th>2</th>
+                    <th>3</th>
+                    <th>4</th>
+                    <th>5</th>
+                    <th>6</th>
+                    <th>7</th>
+                    <th>8</th>
+                    <th>9</th>
+                    <th>A</th>
+                    <th>B</th>
+                    <th>C</th>
+                    <th>D</th>
+                    <th>E</th>
+                    <th>F</th>
+                </tr>
+                <tr>
+                    <th>Dezimal</th>
+                    <td>0</td>
+                    <td>1</td>
+                    <td>2</td>
+                    <td>3</td>
+                    <td>4</td>
+                    <td>5</td>
+                    <td>6</td>
+                    <td>7</td>
+                    <td>8</td>
+                    <td>9</td>
+                    <td>10</td>
+                    <td>11</td>
+                    <td>12</td>
+                    <td>13</td>
+                    <td>14</td>
+                    <td>15</td>
+                </tr>
+                <tr>
+                    <th>Binär</th>
+                    <td>0000</td>
+                    <td>0001</td>
+                    <td>0010</td>
+                    <td>0011</td>
+                    <td>0100</td>
+                    <td>0101</td>
+                    <td>0110</td>
+                    <td>0111</td>
+                    <td>1000</td>
+                    <td>1001</td>
+                    <td>1010</td>
+                    <td>1011</td>
+                    <td>1100</td>
+                    <td>1101</td>
+                    <td>1110</td>
+                    <td>1111</td>
+                </tr>
+            </table>
+
+            <div class="example-box">
+                <strong>Beispiel:</strong> Die Hexadezimalzahl <span class="hex">2A3F₁₆</span><br>
+                <strong>Berechnung:</strong> 2×16³ + A×16² + 3×16¹ + F×16⁰<br>
+                = 2×4096 + 10×256 + 3×16 + 15×1<br>
+                = 8192 + 2560 + 48 + 15 = <span class="decimal">10815₁₀</span>
+            </div>
+
+            <h3>Warum Hexadezimalsystem?</h3>
+            <ul>
+                <li><strong>Kompakte Darstellung:</strong> Eine Hex-Ziffer = 4 Bit (Nibble)</li>
+                <li><strong>Einfache Umwandlung:</strong> Direkte Übersetzung zu/von Binär</li>
+                <li><strong>Programmierung:</strong> Speicheradressen, Farbcodes, etc.</li>
+            </ul>
+
+            <div class="info-box-content">
+                <strong>💡 Merksatz:</strong> Die drei Zahlensysteme sind gleich wichtig: <br>
+                <span class="decimal">Dezimal</span>, <span class="binary">Binär</span>, <span class="hex">Hexadezimal</span>
+            </div>
+        </section>
+
+        <section class="content-section" id="umwandlung">
+            <h2>5. Umwandlung zwischen Zahlensystemen</h2>
+            
+            <h3>5.1 Dezimal → Binär (Divisionsrestverfahren)</h3>
+            <div class="step-by-step">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Teile die Dezimalzahl durch 2</strong>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Notiere den Rest</strong> (0 oder 1)
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Wiederhole</strong> mit dem Ergebnis, bis 0 erreicht ist
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <strong>Lese die Reste von unten nach oben</strong>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <strong>Beispiel:</strong> <span class="decimal">35₁₀</span> → <span class="binary">?₂</span><br><br>
+                35 ÷ 2 = 17 Rest <strong>1</strong><br>
+                17 ÷ 2 = 8 Rest <strong>1</strong><br>
+                8 ÷ 2 = 4 Rest <strong>0</strong><br>
+                4 ÷ 2 = 2 Rest <strong>0</strong><br>
+                2 ÷ 2 = 1 Rest <strong>0</strong><br>
+                1 ÷ 2 = 0 Rest <strong>1</strong><br><br>
+                <strong>Ergebnis:</strong> <span class="binary">100011₂</span>
+            </div>
+
+            <h3>5.2 Binär → Dezimal (Stellenwertverfahren)</h3>
+            <div class="example-box">
+                <strong>Beispiel:</strong> <span class="binary">1011001₂</span> → <span class="decimal">?₁₀</span><br><br>
+                1×2⁶ + 0×2⁵ + 1×2⁴ + 1×2³ + 0×2² + 0×2¹ + 1×2⁰<br>
+                = 64 + 0 + 16 + 8 + 0 + 0 + 1<br>
+                = <span class="decimal">89₁₀</span>
+            </div>
+
+            <h3>5.3 Binär ↔ Hexadezimal (Nibble-Verfahren)</h3>
+            <div class="info-box-content">
+                <strong>💡 Ein Nibble hat 4 Bits</strong><br>
+                Jede Hex-Ziffer entspricht genau einem Nibble (4 Bit)
+            </div>
+
+            <h4>Binär → Hexadezimal</h4>
+            <div class="step-by-step">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Teile die Binärzahl</strong> von rechts nach links in 4er-Gruppen (Nibbles)
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Ergänze links</strong> mit Nullen, falls nötig
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Übersetze jedes Nibble</strong> einzeln mit der Tabelle
+                </div>
+            </div>
+
+            <div class="example-box">
+                <strong>Beispiel:</strong> <span class="binary">0111100010001111₂</span> → <span class="hex">?₁₆</span><br><br>
+                <div class="nibble-explanation">
+                    <div class="nibble-bit">0111</div>
+                    <div class="nibble-bit">1000</div>
+                    <div class="nibble-bit">1000</div>
+                    <div class="nibble-bit">1111</div>
+                </div>
+                0111₂ = 7₁₆ | 1000₂ = 8₁₆ | 1000₂ = 8₁₆ | 1111₂ = F₁₆<br>
+                <strong>Ergebnis:</strong> <span class="hex">788F₁₆</span>
+            </div>
+
+            <h4>Hexadezimal → Binär</h4>
+            <div class="example-box">
+                <strong>Beispiel:</strong> <span class="hex">3CB7₁₆</span> → <span class="binary">?₂</span><br><br>
+                3₁₆ = 0011₂ | C₁₆ = 1100₂ | B₁₆ = 1011₂ | 7₁₆ = 0111₂<br>
+                <strong>Ergebnis:</strong> <span class="binary">0011110010110111₂</span>
+            </div>
+
+            <h3>5.4 Dezimal → Hexadezimal (Divisionsrestverfahren)</h3>
+            <div class="step-by-step">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Teile die Dezimalzahl durch 16</strong>
+                </div>
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Notiere den Rest</strong> (0-15, wobei 10-15 = A-F)
+                </div>
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Wiederhole</strong> mit dem Ergebnis, bis 0 erreicht ist
+                </div>
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <strong>Lese die Reste von unten nach oben</strong>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <strong>Beispiel:</strong> <span class="decimal">2799₁₀</span> → <span class="hex">?₁₆</span><br><br>
+                2799 ÷ 16 = 174 Rest <strong>15</strong> → <strong>F</strong><br>
+                174 ÷ 16 = 10 Rest <strong>14</strong> → <strong>E</strong><br>
+                10 ÷ 16 = 0 Rest <strong>10</strong> → <strong>A</strong><br><br>
+                <strong>Ergebnis:</strong> <span class="hex">AEF₁₆</span><br>
+                <strong>Kontrolle:</strong> A×16² + E×16¹ + F×16⁰ = 10×256 + 14×16 + 15×1 = 2560 + 224 + 15 = 2799 ✓
+            </div>
+
+            <h3>5.5 Übersichtstabelle: Die ersten 16 Zahlen</h3>
+            <table class="conversion-table">
+                <tr>
+                    <th>Dezimal</th>
+                    <th>Binär</th>
+                    <th>Hexadezimal</th>
+                    <th>BCD</th>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td class="binary">0000</td>
+                    <td class="hex">0</td>
+                    <td class="binary">0000</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td class="binary">0001</td>
+                    <td class="hex">1</td>
+                    <td class="binary">0001</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td class="binary">0010</td>
+                    <td class="hex">2</td>
+                    <td class="binary">0010</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td class="binary">0011</td>
+                    <td class="hex">3</td>
+                    <td class="binary">0011</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td class="binary">0100</td>
+                    <td class="hex">4</td>
+                    <td class="binary">0100</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td class="binary">0101</td>
+                    <td class="hex">5</td>
+                    <td class="binary">0101</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td class="binary">0110</td>
+                    <td class="hex">6</td>
+                    <td class="binary">0110</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td class="binary">0111</td>
+                    <td class="hex">7</td>
+                    <td class="binary">0111</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td class="binary">1000</td>
+                    <td class="hex">8</td>
+                    <td class="binary">1000</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td class="binary">1001</td>
+                    <td class="hex">9</td>
+                    <td class="binary">1001</td>
+                </tr>
+                <tr>
+                    <td>10</td>
+                    <td class="binary">1010</td>
+                    <td class="hex">A</td>
+                    <td class="binary">0001 0000</td>
+                </tr>
+                <tr>
+                    <td>11</td>
+                    <td class="binary">1011</td>
+                    <td class="hex">B</td>
+                    <td class="binary">0001 0001</td>
+                </tr>
+                <tr>
+                    <td>12</td>
+                    <td class="binary">1100</td>
+                    <td class="hex">C</td>
+                    <td class="binary">0001 0010</td>
+                </tr>
+                <tr>
+                    <td>13</td>
+                    <td class="binary">1101</td>
+                    <td class="hex">D</td>
+                    <td class="binary">0001 0011</td>
+                </tr>
+                <tr>
+                    <td>14</td>
+                    <td class="binary">1110</td>
+                    <td class="hex">E</td>
+                    <td class="binary">0001 0100</td>
+                </tr>
+                <tr>
+                    <td>15</td>
+                    <td class="binary">1111</td>
+                    <td class="hex">F</td>
+                    <td class="binary">0001 0101</td>
+                </tr>
+            </table>
+
+            <div class="info-box-content">
+                <strong>💡 Wichtige Beobachtung:</strong> Bei den Zahlen 0-9 sind Binär, Hexadezimal und BCD identisch! 
+                Der Unterschied zeigt sich erst ab der Zahl 10.
+            </div>
+
+            <h3>5.6 Interaktiver Zahlenumrechner</h3>
+            <div class="calculator">
+                <h4>🔢 Zahlenumrechner</h4>
+                <label>Dezimal:</label>
+                <input type="number" id="decimal" placeholder="Dezimalzahl eingeben">
+                
+                <label>Binär:</label>
+                <input type="text" id="binary" placeholder="Binärzahl eingeben (nur 0 und 1)">
+                
+                <label>Hexadezimal:</label>
+                <input type="text" id="hex" placeholder="Hexadezimalzahl eingeben">
+                
+                <button onclick="convertFromDecimal()">Von Dezimal umrechnen</button>
+                <button onclick="convertFromBinary()">Von Binär umrechnen</button>
+                <button onclick="convertFromHex()">Von Hexadezimal umrechnen</button>
+                <button onclick="clearAll()">Löschen</button>
+            </div>
+        </section>
+
+        <section class="content-section" id="codierung">
+            <h2>6. Codierung und Informationsdarstellung</h2>
+            
+            <h3>Was ist Codierung?</h3>
+            <p><strong>Codierung</strong> ist die Umwandlung von Information in eine andere Darstellungsform. In der Informatik werden alle Daten (Zahlen, Texte, Bilder, Sounds) als Binärcodes gespeichert.</p>
+
+            <h3>Grundbegriffe der Informationstheorie</h3>
+            
+            <h4>Entscheidungsgehalt</h4>
+            <div class="formula-box">
+                Entscheidungsgehalt = log₂(Anzahl der Möglichkeiten)
+            </div>
+            
+            <div class="example-box">
+                <strong>Beispiel:</strong> Bei 8 gleichwahrscheinlichen Möglichkeiten:<br>
+                Entscheidungsgehalt = log₂(8) = 3 Bit<br>
+                → Man benötigt 3 Bit, um zwischen 8 Möglichkeiten zu unterscheiden
+            </div>
+
+            <h4>Informationsgehalt und Redundanz</h4>
+            <ul>
+                <li><strong>Informationsgehalt:</strong> Nutzdaten, die tatsächlich Information enthalten</li>
+                <li><strong>Redundanz:</strong> Zusätzliche Daten zur Fehlererkennung/Fehlerkorrektur</li>
+            </ul>
+
+            <div class="info-box-content">
+                <strong>💡 Wichtig:</strong> Redundanz reduziert die Effizienz, erhöht aber die Sicherheit!
+            </div>
+        </section>
+
+        <section class="content-section" id="bcd-code">
+            <h2>7. BCD-Code (Binary Coded Decimal)</h2>
+            
+            <h3>Was ist BCD-Code?</h3>
+            <p>Der <strong>BCD-Code</strong> (8-4-2-1-Code) codiert jede Dezimalziffer einzeln in 4 Bit. Dabei wird jede Ziffer von 0-9 durch ihre binäre Darstellung ersetzt.</p>
+
+            <h3>BCD-Codetabelle</h3>
+            <table class="conversion-table">
+                <tr>
+                    <th>Dezimal</th>
+                    <th>BCD (8-4-2-1)</th>
+                    <th>Dezimal</th>
+                    <th>BCD (8-4-2-1)</th>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td class="binary">0000</td>
+                    <td>5</td>
+                    <td class="binary">0101</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td class="binary">0001</td>
+                    <td>6</td>
+                    <td class="binary">0110</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td class="binary">0010</td>
+                    <td>7</td>
+                    <td class="binary">0111</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td class="binary">0011</td>
+                    <td>8</td>
+                    <td class="binary">1000</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td class="binary">0100</td>
+                    <td>9</td>
+                    <td class="binary">1001</td>
+                </tr>
+            </table>
+
+            <div class="example-box">
+                <strong>Beispiel:</strong> Die Dezimalzahl <span class="decimal">379</span> in BCD<br><br>
+                3 → 0011<br>
+                7 → 0111<br>
+                9 → 1001<br><br>
+                <strong>BCD-Code:</strong> <span class="binary">001101111001</span>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Wichtig:</strong> BCD ist <strong>nicht</strong> dasselbe wie reines Binär!<br>
+                379₁₀ = 101111011₂ (reines Binär)<br>
+                379₁₀ = 001101111001 (BCD)
+            </div>
+
+            <h3>Vor- und Nachteile von BCD</h3>
+            <div class="example-box">
+                <strong>✅ Vorteile:</strong>
+                <ul>
+                    <li>Einfache Umwandlung Dezimal ↔ BCD</li>
+                    <li>Gut für Anzeigen (7-Segment-Displays)</li>
+                    <li>Keine Rundungsfehler bei Dezimalzahlen</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>❌ Nachteile:</strong>
+                <ul>
+                    <li>Ineffizient: benötigt mehr Speicher</li>
+                    <li>Komplexere Arithmetik</li>
+                    <li>Codes 1010-1111 sind nicht verwendet</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="content-section" id="ascii">
+            <h2>8. ASCII-Code (American Standard Code for Information Interchange)</h2>
+            
+            <h3>Was ist ASCII?</h3>
+            <p><strong>ASCII</strong> ist ein 7-Bit-Code zur Darstellung von Schriftzeichen, Ziffern und Steuerzeichen. Mit 7 Bit können 2⁷ = 128 verschiedene Zeichen codiert werden.</p>
+
+            <h3>ASCII-Bereiche</h3>
+            <table class="conversion-table">
+                <tr>
+                    <th>Bereich</th>
+                    <th>Dezimal</th>
+                    <th>Binär</th>
+                    <th>Inhalt</th>
+                </tr>
+                <tr>
+                    <td>0-31</td>
+                    <td>0-31</td>
+                    <td>0000000-0011111</td>
+                    <td>Steuerzeichen</td>
+                </tr>
+                <tr>
+                    <td>32-47</td>
+                    <td>32-47</td>
+                    <td>0100000-0101111</td>
+                    <td>Sonderzeichen und Leerzeichen</td>
+                </tr>
+                <tr>
+                    <td>48-57</td>
+                    <td>48-57</td>
+                    <td>0110000-0111001</td>
+                    <td>Ziffern 0-9</td>
+                </tr>
+                <tr>
+                    <td>58-64</td>
+                    <td>58-64</td>
+                    <td>0111010-1000000</td>
+                    <td>Sonderzeichen</td>
+                </tr>
+                <tr>
+                    <td>65-90</td>
+                    <td>65-90</td>
+                    <td>1000001-1011010</td>
+                    <td>Großbuchstaben A-Z</td>
+                </tr>
+                <tr>
+                    <td>91-96</td>
+                    <td>91-96</td>
+                    <td>1011011-1100000</td>
+                    <td>Sonderzeichen</td>
+                </tr>
+                <tr>
+                    <td>97-122</td>
+                    <td>97-122</td>
+                    <td>1100001-1111010</td>
+                    <td>Kleinbuchstaben a-z</td>
+                </tr>
+                <tr>
+                    <td>123-127</td>
+                    <td>123-127</td>
+                    <td>1111011-1111111</td>
+                    <td>Sonderzeichen</td>
+                </tr>
+            </table>
+
+            <div class="example-box">
+                <strong>Beispiele:</strong><br>
+                'A' = 65₁₀ = <span class="binary">1000001₂</span><br>
+                'a' = 97₁₀ = <span class="binary">1100001₂</span><br>
+                '0' = 48₁₀ = <span class="binary">0110000₂</span><br>
+                ' ' (Leerzeichen) = 32₁₀ = <span class="binary">0100000₂</span>
+            </div>
+
+            <div class="info-box-content">
+                <strong>💡 Merksatz:</strong> Der Unterschied zwischen Groß- und Kleinbuchstaben beträgt immer 32 (= 2⁵)!<br>
+                'A' = 65, 'a' = 97 → 97 - 65 = 32
+            </div>
+
+            <h3>Erweiterungen von ASCII</h3>
+            <ul>
+                <li><strong>Extended ASCII (8-Bit):</strong> 256 Zeichen, länderspezifische Erweiterungen</li>
+                <li><strong>Unicode (UTF-8, UTF-16):</strong> Internationale Zeichen, Emojis, etc.</li>
+            </ul>
+        </section>
+
+        <section class="content-section" id="gray-code">
+            <h2>9. Gray-Code (Einschrittcode)</h2>
+            
+            <h3>Was ist Gray-Code?</h3>
+            <p>Der <strong>Gray-Code</strong> ist ein binärer Code, bei dem sich benachbarte Codewörter nur in <strong>genau einem Bit</strong> unterscheiden. Dies verhindert Fehler beim Übergang zwischen Zuständen.</p>
+
+            <h3>Gray-Code Tabelle (4-Bit)</h3>
+            <table class="conversion-table">
+                <tr>
+                    <th>Dezimal</th>
+                    <th>Binär</th>
+                    <th>Gray-Code</th>
+                    <th>Unterschied</th>
+                </tr>
+                <tr>
+                    <td>0</td>
+                    <td>0000</td>
+                    <td class="binary">0000</td>
+                    <td>-</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>0001</td>
+                    <td class="binary">0001</td>
+                    <td>1 Bit</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>0010</td>
+                    <td class="binary">0011</td>
+                    <td>1 Bit</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>0011</td>
+                    <td class="binary">0010</td>
+                    <td>1 Bit</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>0100</td>
+                    <td class="binary">0110</td>
+                    <td>1 Bit</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>0101</td>
+                    <td class="binary">0111</td>
+                    <td>1 Bit</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>0110</td>
+                    <td class="binary">0101</td>
+                    <td>1 Bit</td>
+                </tr>
+                <tr>
+                    <td>7</td>
+                    <td>0111</td>
+                    <td class="binary">0100</td>
+                    <td>1 Bit</td>
+                </tr>
+                <tr>
+                    <td>8</td>
+                    <td>1000</td>
+                    <td class="binary">1100</td>
+                    <td>1 Bit</td>
+                </tr>
+                <tr>
+                    <td>9</td>
+                    <td>1001</td>
+                    <td class="binary">1101</td>
+                    <td>1 Bit</td>
+                </tr>
+            </table>
+
+            <div class="example-box">
+                <strong>Beispiel für das Problem beim normalen Binärcode:</strong><br>
+                Übergang von 3₁₀ zu 4₁₀:<br>
+                0011₂ → 0100₂ (3 Bits ändern sich gleichzeitig!)<br><br>
+                <strong>Im Gray-Code:</strong><br>
+                0010 → 0110 (nur 1 Bit ändert sich)
+            </div>
+
+            <h3>Anwendungen des Gray-Codes</h3>
+            <ul>
+                <li><strong>Drehgeber (Encoder):</strong> Verhindert Fehlmessungen bei Drehung</li>
+                <li><strong>A/D-Wandler:</strong> Reduziert Quantisierungsfehler</li>
+                <li><strong>Karnaugh-Veitch-Diagramme:</strong> Vereinfachung logischer Schaltungen</li>
+                <li><strong>Genetische Algorithmen:</strong> Optimierung durch minimale Änderungen</li>
+            </ul>
+
+            <div class="info-box-content">
+                <strong>💡 Vorteil:</strong> Gray-Code ist <strong>einschritttig</strong> - nur ein Bit ändert sich pro Schritt. Das vermeidet Übergangs-Fehler in der Praxis!
+            </div>  <div class="info-box-content">
+                <strong>💡 Vorteil:</strong> Gray-Code ist <strong>einschritttig</strong> - nur ein Bit ändert sich pro Schritt. Das vermeidet Übergangs-Fehler in der Praxis!
+            </div>
+        </section>
+
+        <section class="content-section" id="aufgaben">
+            <h2>10. Übungsaufgaben</h2>
+            
+            <h3>10.1 Grundlegende Umwandlungen</h3>
+            
+            <h4>Aufgabe 1: Dezimal → Binär</h4>
+            <div class="example-box">
+                <strong>Wandle folgende Dezimalzahlen in Binärzahlen um:</strong><br>
+                a) 25₁₀ = ?₂<br>
+                b) 73₁₀ = ?₂<br>
+                c) 156₁₀ = ?₂<br>
+                d) 200₁₀ = ?₂
+            </div>
+
+            <div class="warning-box">
+                <strong>Lösung zu Aufgabe 1:</strong><br>
+                a) 25₁₀ = <span class="binary">11001₂</span><br>
+                b) 73₁₀ = <span class="binary">1001001₂</span><br>
+                c) 156₁₀ = <span class="binary">10011100₂</span><br>
+                d) 200₁₀ = <span class="binary">11001000₂</span>
+            </div>
+
+            <h4>Aufgabe 2: Binär → Dezimal</h4>
+            <div class="example-box">
+                <strong>Wandle folgende Binärzahlen in Dezimalzahlen um:</strong><br>
+                a) 1101₂ = ?₁₀<br>
+                b) 101110₂ = ?₁₀<br>
+                c) 11100011₂ = ?₁₀<br>
+                d) 10101010₂ = ?₁₀
+            </div>
+
+            <div class="warning-box">
+                <strong>Lösung zu Aufgabe 2:</strong><br>
+                a) 1101₂ = <span class="decimal">13₁₀</span><br>
+                b) 101110₂ = <span class="decimal">46₁₀</span><br>
+                c) 11100011₂ = <span class="decimal">227₁₀</span><br>
+                d) 10101010₂ = <span class="decimal">170₁₀</span>
+            </div>
+
+            <h4>Aufgabe 3: Hexadezimal-Umwandlungen</h4>
+            <div class="example-box">
+                <strong>Führe folgende Umwandlungen durch:</strong><br>
+                a) 2F7₁₆ = ?₁₀<br>
+                b) 145₁₀ = ?₁₆<br>
+                c) 1010111100₂ = ?₁₆<br>
+                d) A3C₁₆ = ?₂
+            </div>
+
+            <div class="warning-box">
+                <strong>Lösung zu Aufgabe 3:</strong><br>
+                a) 2F7₁₆ = <span class="decimal">759₁₀</span><br>
+                b) 145₁₀ = <span class="hex">91₁₆</span><br>
+                c) 1010111100₂ = <span class="hex">2BC₁₆</span><br>
+                d) A3C₁₆ = <span class="binary">101000111100₂</span>
+            </div>
+
+            <h3>10.2 Codierung</h3>
+
+            <h4>Aufgabe 4: BCD-Code</h4>
+            <div class="example-box">
+                <strong>Codiere folgende Dezimalzahlen im BCD-Code:</strong><br>
+                a) 68₁₀ = ? (BCD)<br>
+                b) 147₁₀ = ? (BCD)<br>
+                c) 2023₁₀ = ? (BCD)<br><br>
+                <strong>Decodiere folgende BCD-Zahlen:</strong><br>
+                d) 0100 1001 0101 (BCD) = ?₁₀<br>
+                e) 1001 0000 0110 0011 (BCD) = ?₁₀
+            </div>
+
+            <div class="warning-box">
+                <strong>Lösung zu Aufgabe 4:</strong><br>
+                a) 68₁₀ = <span class="binary">0110 1000</span> (BCD)<br>
+                b) 147₁₀ = <span class="binary">0001 0100 0111</span> (BCD)<br>
+                c) 2023₁₀ = <span class="binary">0010 0000 0010 0011</span> (BCD)<br>
+                d) 0100 1001 0101 (BCD) = <span class="decimal">495₁₀</span><br>
+                e) 1001 0000 0110 0011 (BCD) = <span class="decimal">9063₁₀</span>
+            </div>
+
+            <h4>Aufgabe 5: ASCII-Code</h4>
+            <div class="example-box">
+                <strong>Bestimme die ASCII-Codes:</strong><br>
+                a) 'M' = ?₁₀ = ?₂<br>
+                b) 'x' = ?₁₀ = ?₂<br>
+                c) '7' = ?₁₀ = ?₂<br><br>
+                <strong>Decodiere folgende ASCII-Codes:</strong><br>
+                d) 72₁₀ = '?'<br>
+                e) 1000101₂ = '?'<br>
+                f) Was ergibt die Bytefolge: 73 110 102 111 114 109 97 116 105 107 ?
+            </div>
+
+            <div class="warning-box">
+                <strong>Lösung zu Aufgabe 5:</strong><br>
+                a) 'M' = <span class="decimal">77₁₀</span> = <span class="binary">1001101₂</span><br>
+                b) 'x' = <span class="decimal">120₁₀</span> = <span class="binary">1111000₂</span><br>
+                c) '7' = <span class="decimal">55₁₀</span> = <span class="binary">0110111₂</span><br>
+                d) 72₁₀ = 'H'<br>
+                e) 1000101₂ = 69₁₀ = 'E'<br>
+                f) 73 110 102 111 114 109 97 116 105 107 = "Informatik"
+            </div>
+
+            <h3>10.3 Komplexe Aufgaben</h3>
+
+            <h4>Aufgabe 6: Gemischte Zahlensysteme</h4>
+            <div class="example-box">
+                <strong>Gegeben ist die Tabelle mit verschiedenen Darstellungen derselben Zahlen. Ergänze die fehlenden Werte:</strong>
+                
+                <table class="conversion-table" style="margin-top: 1rem;">
+                    <tr>
+                        <th>Dezimal</th>
+                        <th>Binär</th>
+                        <th>Hexadezimal</th>
+                        <th>BCD</th>
+                    </tr>
+                    <tr>
+                        <td>47</td>
+                        <td>?</td>
+                        <td>?</td>
+                        <td>?</td>
+                    </tr>
+                    <tr>
+                        <td>?</td>
+                        <td>10110011</td>
+                        <td>?</td>
+                        <td>?</td>
+                    </tr>
+                    <tr>
+                        <td>?</td>
+                        <td>?</td>
+                        <td>1A5</td>
+                        <td>?</td>
+                    </tr>
+                    <tr>
+                        <td>?</td>
+                        <td>?</td>
+                        <td>?</td>
+                        <td>0001 0010 0101</td>
+                    </tr>
+                </table>
+            </div>
+
+            <div class="warning-box">
+                <strong>Lösung zu Aufgabe 6:</strong>
+                
+                <table class="conversion-table" style="margin-top: 1rem;">
+                    <tr>
+                        <th>Dezimal</th>
+                        <th>Binär</th>
+                        <th>Hexadezimal</th>
+                        <th>BCD</th>
+                    </tr>
+                    <tr>
+                        <td>47</td>
+                        <td class="binary">0101111</td>
+                        <td class="hex">2F</td>
+                        <td class="binary">0100 0111</td>
+                    </tr>
+                    <tr>
+                        <td>179</td>
+                        <td class="binary">10110011</td>
+                        <td class="hex">B3</td>
+                        <td class="binary">0001 0111 1001</td>
+                    </tr>
+                    <tr>
+                        <td>421</td>
+                        <td class="binary">110100101</td>
+                        <td class="hex">1A5</td>
+                        <td class="binary">0100 0010 0001</td>
+                    </tr>
+                    <tr>
+                        <td>125</td>
+                        <td class="binary">1111101</td>
+                        <td class="hex">7D</td>
+                        <td class="binary">0001 0010 0101</td>
+                    </tr>
+                </table>
+            </div>
+
+            <h4>Aufgabe 7: Anwendungsaufgabe Gray-Code</h4>
+            <div class="example-box">
+                <strong>Ein Drehgeber hat 16 Positionen (0-15). Er verwendet Gray-Code zur Positionscodierung.</strong><br><br>
+                a) Erstelle die Gray-Code-Tabelle für die Positionen 0-15<br>
+                b) Der Sensor liest aktuell 1110. Welche Position entspricht das?<br>
+                c) Welche Gray-Code-Werte sind direkt benachbart zu Position 1110?<br>
+                d) Warum ist Gray-Code hier besser als normaler Binärcode?
+            </div>
+
+            <div class="warning-box">
+                <strong>Lösung zu Aufgabe 7:</strong><br>
+                a) Gray-Code-Tabelle (auszugsweise):<br>
+                0: 0000, 1: 0001, 2: 0011, 3: 0010, 4: 0110, 5: 0111,<br>
+                6: 0101, 7: 0100, 8: 1100, 9: 1101, 10: 1111, 11: 1110,<br>
+                12: 1010, 13: 1011, 14: 1001, 15: 1000<br><br>
+                b) 1110 entspricht Position <strong>11</strong><br>
+                c) Benachbarte Positionen: 1111 (Position 10) und 1010 (Position 12)<br>
+                d) Bei Gray-Code ändert sich nur 1 Bit pro Schritt → keine Fehlmessungen bei schneller Drehung
+            </div>
+
+            <h3>10.4 Abitur-ähnliche Aufgaben</h3>
+
+            <h4>Aufgabe 8: Informationsgehalt</h4>
+            <div class="example-box">
+                <strong>Ein Automat hat 64 verschiedene Zustände.</strong><br>
+                a) Wie viele Bit werden mindestens benötigt, um alle Zustände eindeutig zu codieren?<br>
+                b) Mit wie vielen Bit könnte man maximal 1024 Zustände unterscheiden?<br>
+                c) Ein System kann 256 gleichwahrscheinliche Nachrichten senden. Berechne den Informationsgehalt einer Nachricht.
+            </div>
+
+            <div class="warning-box">
+                <strong>Lösung zu Aufgabe 8:</strong><br>
+                a) log₂(64) = log₂(2⁶) = 6 Bit<br>
+                b) log₂(1024) = log₂(2¹⁰) = 10 Bit<br>
+                c) log₂(256) = log₂(2⁸) = 8 Bit pro Nachricht
+            </div>
+
+            <h4>Aufgabe 9: Praktische Anwendung</h4>
+            <div class="example-box">
+                <strong>Ein 8-Bit-Mikrocontroller verarbeitet Sensordaten.</strong><br>
+                a) Welche Dezimalwerte kann ein 8-Bit-Register speichern? (Bereich angeben)<br>
+                b) Der Sensor liefert die Binärwerte 11010110₂. Interpretiere diesen Wert als:<br>
+                   - Dezimalzahl<br>
+                   - Hexadezimalzahl<br>
+                   - BCD-Zahl (falls möglich)<br>
+                c) Warum ist BCD-Code für Anzeigen (z.B. 7-Segment) praktischer als reiner Binärcode?
+            </div>
+
+            <div class="warning-box">
+                <strong>Lösung zu Aufgabe 9:</strong><br>
+                a) 8-Bit-Register: 0₁₀ bis 255₁₀ (2⁸ - 1 = 255)<br>
+                b) 11010110₂:<br>
+                   - Als Dezimal: <span class="decimal">214₁₀</span><br>
+                   - Als Hexadezimal: <span class="hex">D6₁₆</span><br>
+                   - Als BCD: <strong>Nicht möglich!</strong> (1101 > 1001 ist ungültig)<br>
+                c) BCD: Jede Dezimalziffer wird direkt angezeigt, keine Umrechnung nötig
+            </div>
+        </section>
+
+        <section class="content-section" id="zusammenfassung">
+            <h2>11. Zusammenfassung</h2>
+            
+            <h3>🎯 Die wichtigsten Konzepte</h3>
+            
+            <div class="step-by-step">
+                <div class="step">
+                    <span class="step-number">1</span>
+                    <strong>Stellenwertsysteme</strong><br>
+                    Jedes Zahlensystem basiert auf einer Basis und dem Stellenwertprinzip:<br>
+                    Zahl = Σ(Ziffer × Basis<sup>Position</sup>)
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">2</span>
+                    <strong>Die drei wichtigsten Zahlensysteme</strong><br>
+                    • <span class="decimal">Dezimal (Basis 10)</span>: Alltag, 10 Ziffern (0-9)<br>
+                    • <span class="binary">Binär (Basis 2)</span>: Computer, 2 Ziffern (0,1)<br>
+                    • <span class="hex">Hexadezimal (Basis 16)</span>: Kompakte Darstellung, 16 Zeichen (0-9,A-F)
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">3</span>
+                    <strong>Umwandlungsverfahren</strong><br>
+                    • Zu Dezimal: <strong>Stellenwertverfahren</strong><br>
+                    • Von Dezimal: <strong>Divisionsrestverfahren</strong><br>
+                    • Binär ↔ Hex: <strong>Nibble-Verfahren</strong> (4 Bit = 1 Hex-Ziffer)
+                </div>
+                
+                <div class="step">
+                    <span class="step-number">4</span>
+                    <strong>Wichtige Codes</strong><br>
+                    • <strong>BCD-Code:</strong> Jede Dezimalziffer einzeln in 4 Bit<br>
+                    • <strong>ASCII-Code:</strong> 7-Bit-Code für Zeichen (128 Zeichen)<br>
+                    • <strong>Gray-Code:</strong> Einschrittcode (nur 1 Bit ändert sich)
+                </div>
+            </div>
+
+            <h3>📊 Übersichtstabelle der Zahlensysteme</h3>
+            <table class="conversion-table">
+                <tr>
+                    <th>System</th>
+                    <th>Basis</th>
+                    <th>Zeichen</th>
+                    <th>Kennzeichnung</th>
+                    <th>Anwendung</th>
+                </tr>
+                <tr>
+                    <td><strong>Dezimal</strong></td>
+                    <td>10</td>
+                    <td>0-9</td>
+                    <td>₁₀ (meist weggelassen)</td>
+                    <td>Alltag, Mathematik</td>
+                </tr>
+                <tr>
+                    <td><strong>Binär</strong></td>
+                    <td>2</td>
+                    <td>0,1</td>
+                    <td>₂, b</td>
+                    <td>Digitaltechnik, Computer</td>
+                </tr>
+                <tr>
+                    <td><strong>Hexadezimal</strong></td>
+                    <td>16</td>
+                    <td>0-9,A-F</td>
+                    <td>₁₆, h, 0x</td>
+                    <td>Programmierung, Speicher</td>
+                </tr>
+            </table>
+
+            <h3>🔢 Wichtige Umrechnungsregeln</h3>
+            
+            <div class="formula-box">
+                <strong>Merksätze für schnelle Umrechnung:</strong><br><br>
+                • 1 Hex-Ziffer = 4 Bit (Nibble)<br>
+                • 1 Byte = 8 Bit = 2 Hex-Ziffern<br>
+                • 2ⁿ Möglichkeiten benötigen n Bit<br>
+                • ASCII: A=65, a=97, '0'=48, Unterschied Groß/Klein = 32
+            </div>
+
+            <h3>💡 Praxistipps für die Klausur</h3>
+            
+            <div class="example-box">
+                <strong>✅ Das solltest du auswendig können:</strong>
+                <ul>
+                    <li>Zweierpotenzen: 2⁰=1, 2¹=2, 2²=4, 2³=8, 2⁴=16, 2⁵=32, 2⁶=64, 2⁷=128, 2⁸=256</li>
+                    <li>Hex-Tabelle: A=10, B=11, C=12, D=13, E=14, F=15</li>
+                    <li>ASCII-Bereiche: 0-9 = 48-57, A-Z = 65-90, a-z = 97-122</li>
+                    <li>BCD: Nur 0000-1001 gültig, 1010-1111 ungültig</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Häufige Fehlerquellen:</strong>
+                <ul>
+                    <li><strong>BCD ≠ Binär:</strong> 10₁₀ = 1010₂ aber 0001 0000 (BCD)</li>
+                    <li><strong>Basis vergessen:</strong> Immer Kennzeichnung verwenden (₂, ₁₀, ₁₆)</li>
+                    <li><strong>ASCII vs. Zahlenwert:</strong> '5' = 53₁₀, nicht 5₁₀</li>
+                    <li><strong>Gray-Code-Reihenfolge:</strong> Nicht aufsteigend wie Binär!</li>
+                </ul>
+            </div>
+
+            <h3>🎓 Abiturrelevante Kompetenzen</h3>
+            
+            <div class="info-box-content">
+                <strong>Du kannst nach diesem Kapitel:</strong>
+                <ul>
+                    <li>✓ Zahlen zwischen Dezimal-, Binär- und Hexadezimalsystem umwandeln</li>
+                    <li>✓ BCD-Code anwenden und seine Vor-/Nachteile erklären</li>
+                    <li>✓ ASCII-Code für Zeichen bestimmen und umgekehrt</li>
+                    <li>✓ Gray-Code verstehen und seine Anwendungen nennen</li>
+                    <li>✓ Informationsgehalt und benötigte Bit-Anzahl berechnen</li>
+                    <li>✓ Die Bedeutung verschiedener Codes in der Praxis erklären</li>
+                </ul>
+            </div>
+
+            <h3>📚 Weiterführende Themen</h3>
+            <p>Aufbauend auf diesem Kapitel behandeln wir später:</p>
+            <ul>
+                <li><strong>Logische Schaltungen:</strong> Umsetzung binärer Operationen in Hardware</li>
+                <li><strong>Computerarithmetik:</strong> Addition, Subtraktion im Binärsystem</li>
+                <li><strong>Datenkompression:</strong> Huffman-Code, verlustfreie/verlustbehaftete Kompression</li>
+                <li><strong>Fehlerkorrektur:</strong> Paritätsbits, Hamming-Code</li>
+            </ul>
+        </section>
+
+        <a href="index.html" class="back-link">← Zurück zur Übersicht</a>
+    </div>
+
+    <script>
+        function convertFromDecimal() {
+            const decimal = parseInt(document.getElementById('decimal').value);
+            if (isNaN(decimal) || decimal < 0) {
+                alert('Bitte geben Sie eine gültige positive Dezimalzahl ein.');
+                return;
+            }
+            
+            document.getElementById('binary').value = decimal.toString(2);
+            document.getElementById('hex').value = decimal.toString(16).toUpperCase();
+        }
+
+        function convertFromBinary() {
+            const binary = document.getElementById('binary').value;
+            if (!/^[01]+$/.test(binary)) {
+                alert('Bitte geben Sie eine gültige Binärzahl ein (nur 0 und 1).');
+                return;
+            }
+            
+            const decimal = parseInt(binary, 2);
+            document.getElementById('decimal').value = decimal;
+            document.getElementById('hex').value = decimal.toString(16).toUpperCase();
+        }
+
+        function convertFromHex() {
+            const hex = document.getElementById('hex').value;
+            if (!/^[0-9A-Fa-f]+$/.test(hex)) {
+                alert('Bitte geben Sie eine gültige Hexadezimalzahl ein (0-9, A-F).');
+                return;
+            }
+            
+            const decimal = parseInt(hex, 16);
+            document.getElementById('decimal').value = decimal;
+            document.getElementById('binary').value = decimal.toString(2);
+        }
+
+        function clearAll() {
+            document.getElementById('decimal').value = '';
+            document.getElementById('binary').value = '';
+            document.getElementById('hex').value = '';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,1852 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Systemintegration - Technische Informatik III & IV</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #0ea5e9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+        }
+
+        .breadcrumb a:hover {
+            opacity: 1;
+            text-decoration: underline;
+        }
+
+        .content-section {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .content-section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .content-section h3 {
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.4rem;
+        }
+
+        .content-section h4 {
+            color: var(--text-dark);
+            margin: 1rem 0 0.5rem 0;
+            font-size: 1.2rem;
+            font-weight: 600;
+        }
+
+        .definition-box {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .definition-box h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border-left: 4px solid var(--success-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .example-box h4 {
+            color: var(--success-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-left: 4px solid var(--warning-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .warning-box h4 {
+            color: var(--warning-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #e0f2fe, #b3e5fc);
+            border-left: 4px solid var(--info-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .info-box h4 {
+            color: var(--info-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .diagram {
+            background: var(--bg-light);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 1.5rem 0;
+            text-align: center;
+            font-family: monospace;
+            font-size: 0.9rem;
+        }
+
+        .component-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .component-card {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .component-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .component-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .list-styled {
+            margin: 1rem 0;
+            padding-left: 1.5rem;
+        }
+
+        .list-styled li {
+            margin-bottom: 0.5rem;
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            position: relative;
+        }
+
+        .code-inline {
+            background: var(--bg-light);
+            color: var(--text-dark);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+        }
+
+        .table-responsive {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        th, td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        tr:hover {
+            background: var(--bg-light);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            gap: 1rem;
+        }
+
+        .nav-button {
+            display: inline-block;
+            padding: 1rem 2rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-button.secondary {
+            background: var(--text-light);
+        }
+
+        .nav-button.secondary:hover {
+            background: var(--text-dark);
+        }
+
+        .tooltip {
+            border-bottom: 1px dotted var(--primary-color);
+            cursor: help;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .component-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navigation {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">🏠 Hauptseite</a> › 
+            <a href="#technische-informatik">🔬 Technische Informatik III & IV</a> › 
+            <strong>🔗 Systemintegration</strong>
+        </div>
+
+        <header class="header">
+            <h1>🔗 Systemintegration</h1>
+            <p>Technische Informatik III & IV - BPE 6 & 7</p>
+            <div class="info-box">
+                <strong>Bildungsplan-Ziel:</strong> "Die Schülerinnen und Schüler nutzen den Mikrocontroller für hardwarenahe Anwendungen. Zielgerichtet setzen sie Peripheriebaugruppen zur Erweiterung des Mikrocontrollers ein und steuern diese über gängige Schnittstellen an."
+            </div>
+        </header>
+
+        <!-- 1. Was ist Systemintegration? -->
+        <div class="content-section">
+            <h2>🎯 1. Was ist Systemintegration?</h2>
+            
+            <div class="definition-box">
+                <h4>📚 Definition Systemintegration</h4>
+                <p><strong>Systemintegration</strong> ist der Prozess des Zusammenfügens verschiedener Hardware- und Software-Komponenten zu einem funktionsfähigen Gesamtsystem. Dabei müssen die einzelnen Teilsysteme miteinander kommunizieren und als Einheit arbeiten können.</p>
+            </div>
+
+            <h3>🔧 Warum ist Systemintegration wichtig?</h3>
+            
+            <p>In der modernen Informatik arbeiten selten einzelne, isolierte Systeme. Stattdessen bestehen komplexe Anwendungen aus vielen Teilsystemen:</p>
+            
+            <ul class="list-styled">
+                <li><strong>Hardware-Integration:</strong> Verschiedene Geräte müssen zusammenarbeiten</li>
+                <li><strong>Software-Integration:</strong> Programme müssen Daten austauschen</li>
+                <li><strong>Netzwerk-Integration:</strong> Systeme müssen über Netzwerke kommunizieren</li>
+                <li><strong>Datenbank-Integration:</strong> Verschiedene Datenquellen müssen verbunden werden</li>
+            </ul>
+
+            <div class="example-box">
+                <h4>🏠 Alltagsbeispiel: Smart Home</h4>
+                <p>Ein Smart Home System integriert:</p>
+                <ul>
+                    <li>Beleuchtungssteuerung (Philips Hue)</li>
+                    <li>Heizungssteuerung (Thermostat)</li>
+                    <li>Sicherheitssystem (Kameras, Sensoren)</li>
+                    <li>Sprachassistent (Alexa, Google Home)</li>
+                    <li>Smartphone-App zur Steuerung</li>
+                </ul>
+                <p>Alle diese Komponenten müssen nahtlos zusammenarbeiten!</p>
+            </div>
+        </div>
+
+        <!-- 2. Grundlagen der Systemintegration -->
+        <div class="content-section">
+            <h2>⚡ 2. Grundlagen der Systemintegration</h2>
+
+            <h3>🏗️ Systemarchitektur</h3>
+            <p>Bevor Systeme integriert werden können, muss die Gesamtarchitektur geplant werden:</p>
+
+            <div class="component-grid">
+                <div class="component-card">
+                    <h4>🎯 Schichtenmodell</h4>
+                    <p>Systeme werden in logische Schichten unterteilt:</p>
+                    <ul>
+                        <li>Präsentationsschicht (UI)</li>
+                        <li>Anwendungsschicht (Logik)</li>
+                        <li>Datenschicht (Datenbank)</li>
+                        <li>Hardware-Schicht</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>🔄 Client-Server-Modell</h4>
+                    <p>Verteilung von Aufgaben:</p>
+                    <ul>
+                        <li>Client: Benutzeroberfläche</li>
+                        <li>Server: Verarbeitung & Daten</li>
+                        <li>Kommunikation über Netzwerk</li>
+                        <li>Skalierbarkeit durch Lastverteilung</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>☁️ Service-orientierte Architektur</h4>
+                    <p>Moderne Ansätze:</p>
+                    <ul>
+                        <li>Mikroservices</li>
+                        <li>RESTful APIs</li>
+                        <li>Cloud-Services</li>
+                        <li>Container-Technologien</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>🔌 Schnittstellen und Protokolle</h3>
+            
+            <div class="info-box">
+                <h4>💡 Wichtig zu verstehen</h4>
+                <p>Schnittstellen (Interfaces) sind wie "Übersetzungsdienste" zwischen verschiedenen Systemen. Sie definieren, wie Systeme miteinander "sprechen" können.</p>
+            </div>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Schnittstellen-Typ</th>
+                            <th>Beschreibung</th>
+                            <th>Beispiele</th>
+                            <th>Verwendung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Hardware-Schnittstellen</strong></td>
+                            <td>Physische Verbindungen zwischen Geräten</td>
+                            <td>USB, HDMI, Ethernet, GPIO</td>
+                            <td>Mikrocontroller, Sensoren, Displays</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Software-Schnittstellen</strong></td>
+                            <td>Programmierschnittstellen für Software</td>
+                            <td>APIs, DLLs, Frameworks</td>
+                            <td>Web-Services, App-Integration</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Netzwerk-Schnittstellen</strong></td>
+                            <td>Kommunikation über Netzwerke</td>
+                            <td>HTTP, TCP/IP, WebSocket</td>
+                            <td>Internet-Dienste, IoT-Geräte</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Daten-Schnittstellen</strong></td>
+                            <td>Austausch und Format von Daten</td>
+                            <td>JSON, XML, CSV, Datenbanken</td>
+                            <td>Datenimport/-export, APIs</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+
+        <!-- 3. Hardware-Integration -->
+        <div class="content-section">
+            <h2>🔧 3. Hardware-Integration</h2>
+
+            <h3>🤖 Mikrocontroller als Integrationszentrale</h3>
+            
+            <p>Mikrocontroller (wie Arduino, Raspberry Pi) sind ideal für Hardware-Integration, weil sie:</p>
+            
+            <ul class="list-styled">
+                <li>Viele verschiedene Schnittstellen haben</li>
+                <li>Echtzeitverarbeitung ermöglichen</li>
+                <li>Kostengünstig und energieeffizient sind</li>
+                <li>Einfach programmierbar sind</li>
+            </ul>
+
+            <div class="diagram">
+                <h4>Arduino UNO Integration Schema</h4>
+                <pre>
+    [Sensor 1] ─── Digital Pin 2 ───┐
+    [Sensor 2] ─── Digital Pin 3 ───┤
+    [LED-Array] ── Digital Pin 4 ───┤
+                                   │
+    [Temperatur] ── Analog A0 ──────┤    [Arduino UNO]    ─── USB ─── [Computer]
+    [Lichtsensor] ─ Analog A1 ──────┤                      │
+    [Potentiometer] Analog A2 ──────┤                      │
+                                   │                      ├─ WiFi ─ [Internet]
+    [LCD Display] ── I2C (A4/A5) ───┤                      │
+    [RTC Modul] ──── I2C (A4/A5) ───┤                      └─ Bluetooth ─ [Handy]
+    [Motor] ──────── PWM Pin 9 ──────┘
+                </pre>
+            </div>
+
+            <h3>📡 Wichtige Hardware-Schnittstellen</h3>
+
+            <div class="component-grid">
+                <div class="component-card">
+                    <h4>🔌 GPIO (General Purpose Input/Output)</h4>
+                    <p><strong>Was ist das?</strong> Universelle digitale Ein-/Ausgänge</p>
+                    <p><strong>Verwendung:</strong></p>
+                    <ul>
+                        <li>LEDs ansteuern (Ausgang)</li>
+                        <li>Schalter/Buttons lesen (Eingang)</li>
+                        <li>Relais schalten</li>
+                        <li>Sensoren mit digitalen Signalen</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>🌊 PWM (Pulse Width Modulation)</h4>
+                    <p><strong>Was ist das?</strong> Digitale Simulation analoger Ausgänge</p>
+                    <p><strong>Verwendung:</strong></p>
+                    <ul>
+                        <li>LED-Helligkeit steuern</li>
+                        <li>Motordrehzahl regulieren</li>
+                        <li>Servo-Motoren positionieren</li>
+                        <li>Analog-Signale erzeugen</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>📊 ADC (Analog-Digital-Converter)</h4>
+                    <p><strong>Was ist das?</strong> Wandelt analoge in digitale Signale</p>
+                    <p><strong>Verwendung:</strong></p>
+                    <ul>
+                        <li>Temperatursensoren lesen</li>
+                        <li>Lichtstärke messen</li>
+                        <li>Spannungen überwachen</li>
+                        <li>Potentiometer auswerten</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>🚌 I2C (Inter-Integrated Circuit)</h4>
+                    <p><strong>Was ist das?</strong> Serieller Bus für mehrere Geräte</p>
+                    <p><strong>Verwendung:</strong></p>
+                    <ul>
+                        <li>LCD-Displays anschließen</li>
+                        <li>Sensoren verketten</li>
+                        <li>EEPROM-Speicher</li>
+                        <li>RTC-Module (Echtzeituhren)</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>⚡ SPI (Serial Peripheral Interface)</h4>
+                    <p><strong>Was ist das?</strong> Schneller serieller Bus</p>
+                    <p><strong>Verwendung:</strong></p>
+                    <ul>
+                        <li>SD-Karten ansprechen</li>
+                        <li>TFT-Displays steuern</li>
+                        <li>WiFi-Module</li>
+                        <li>Hochgeschwindigkeits-Sensoren</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>📨 UART (Universal Asynchronous Receiver Transmitter)</h4>
+                    <p><strong>Was ist das?</strong> Serielle Kommunikation</p>
+                    <p><strong>Verwendung:</strong></p>
+                    <ul>
+                        <li>Computer-Verbindung (USB)</li>
+                        <li>GPS-Module</li>
+                        <li>Bluetooth-Module</li>
+                        <li>GSM-Module</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>🚗 Praxisbeispiel: Autonomes Fahrzeug (vereinfacht)</h4>
+                <p>Integration verschiedener Sensoren und Aktoren:</p>
+                <div class="code-block">
+// Arduino Code für Fahrzeug-Integration
+#include &lt;Wire.h&gt;        // I2C Library
+#include &lt;SPI.h&gt;         // SPI Library
+#include &lt;WiFi.h&gt;        // WiFi Library
+
+// Hardware-Integration
+void setup() {
+    // Serielle Kommunikation
+    Serial.begin(9600);
+    
+    // I2C für Sensoren
+    Wire.begin();
+    
+    // GPIO für Motoren
+    pinMode(9, OUTPUT);   // Motor links PWM
+    pinMode(10, OUTPUT);  // Motor rechts PWM
+    
+    // Ultraschall-Sensor
+    pinMode(2, OUTPUT);   // Trigger
+    pinMode(3, INPUT);    // Echo
+    
+    // WiFi für Remote-Control
+    WiFi.begin("SSID", "Password");
+}
+
+void loop() {
+    // 1. Sensordaten lesen
+    int distance = readUltrasonic();
+    int lightLevel = analogRead(A0);
+    
+    // 2. Verarbeitung & Entscheidung
+    if (distance < 20) {
+        stopMotors();
+        turnRight();
+    } else {
+        moveForward();
+    }
+    
+    // 3. Status über WiFi senden
+    sendStatus(distance, lightLevel);
+    
+    delay(100);
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- 4. Software-Integration -->
+        <div class="content-section">
+            <h2>💻 4. Software-Integration</h2>
+
+            <h3>🔗 APIs (Application Programming Interfaces)</h3>
+            
+            <div class="definition-box">
+                <h4>🎯 Was sind APIs?</h4>
+                <p>APIs sind wie "Verträge" zwischen verschiedenen Software-Programmen. Sie definieren, wie Programme miteinander kommunizieren können, ohne dass jedes Programm wissen muss, wie das andere intern funktioniert.</p>
+            </div>
+
+            <h4>🌐 Typen von APIs</h4>
+
+            <div class="component-grid">
+                <div class="component-card">
+                    <h4>🌍 REST APIs</h4>
+                    <p><strong>Funktionsweise:</strong> HTTP-basierte Webdienste</p>
+                    <ul>
+                        <li>GET: Daten abrufen</li>
+                        <li>POST: Daten senden</li>
+                        <li>PUT: Daten aktualisieren</li>
+                        <li>DELETE: Daten löschen</li>
+                    </ul>
+                    <p><strong>Beispiel:</strong> Weather API, Social Media APIs</p>
+                </div>
+
+                <div class="component-card">
+                    <h4>🗄️ Datenbank APIs</h4>
+                    <p><strong>Funktionsweise:</strong> Direkte Datenbankzugriffe</p>
+                    <ul>
+                        <li>JDBC (Java)</li>
+                        <li>ODBC (allgemein)</li>
+                        <li>SQLAlchemy (Python)</li>
+                        <li>Entity Framework (.NET)</li>
+                    </ul>
+                    <p><strong>Beispiel:</strong> MySQL Connector, PostgreSQL Driver</p>
+                </div>
+
+                <div class="component-card">
+                    <h4>🖥️ System APIs</h4>
+                    <p><strong>Funktionsweise:</strong> Betriebssystem-Funktionen</p>
+                    <ul>
+                        <li>Dateisystem-Zugriff</li>
+                        <li>Netzwerk-Kommunikation</li>
+                        <li>Hardware-Steuerung</li>
+                        <li>Prozess-Management</li>
+                    </ul>
+                    <p><strong>Beispiel:</strong> Windows API, POSIX API</p>
+                </div>
+
+                <div class="component-card">
+                    <h4>📱 Mobile APIs</h4>
+                    <p><strong>Funktionsweise:</strong> App-Integration</p>
+                    <ul>
+                        <li>Kamera-Zugriff</li>
+                        <li>GPS-Lokalisierung</li>
+                        <li>Push-Benachrichtigungen</li>
+                        <li>In-App-Käufe</li>
+                    </ul>
+                    <p><strong>Beispiel:</strong> Android API, iOS API</p>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>🌤️ Praktisches Beispiel: Wetter-App Integration</h4>
+                <p>Eine Wetter-App integriert verschiedene Services:</p>
+                <div class="code-block">
+// Java Code für Wetter-App Integration
+public class WeatherIntegration {
+    
+    // 1. Wetterdaten von API abrufen
+    public WeatherData getWeatherData(String city) {
+        String apiUrl = "https://api.openweathermap.org/data/2.5/weather?q=" + city;
+        
+        // HTTP Request senden
+        HttpResponse response = sendGetRequest(apiUrl);
+        
+        // JSON Response verarbeiten
+        return parseWeatherJson(response.getBody());
+    }
+    
+    // 2. GPS-Position ermitteln
+    public Location getCurrentLocation() {
+        LocationManager locationManager = getSystemService(LOCATION_SERVICE);
+        return locationManager.getLastKnownLocation(GPS_PROVIDER);
+    }
+    
+    // 3. Daten in lokaler Datenbank speichern
+    public void saveWeatherHistory(WeatherData data) {
+        SQLiteDatabase db = weatherDbHelper.getWritableDatabase();
+        
+        ContentValues values = new ContentValues();
+        values.put("city", data.getCity());
+        values.put("temperature", data.getTemperature());
+        values.put("timestamp", System.currentTimeMillis());
+        
+        db.insert("weather_history", null, values);
+    }
+    
+    // 4. Push-Benachrichtigung senden
+    public void sendWeatherAlert(String message) {
+        NotificationManager notificationManager = 
+            getSystemService(NOTIFICATION_SERVICE);
+        
+        Notification notification = new NotificationCompat.Builder(this)
+            .setContentTitle("Wetterwarnung")
+            .setContentText(message)
+            .setSmallIcon(R.drawable.weather_icon)
+            .build();
+            
+        notificationManager.notify(1, notification);
+    }
+}
+                </div>
+            </div>
+
+            <h3>📊 Datenformat-Integration</h3>
+
+            <p>Verschiedene Systeme verwenden unterschiedliche Datenformate. Die Integration erfordert oft Konvertierung:</p>
+
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Format</th>
+                            <th>Beschreibung</th>
+                            <th>Vorteile</th>
+                            <th>Verwendung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>JSON</strong></td>
+                            <td>JavaScript Object Notation</td>
+                            <td>Leichtgewichtig, lesbar, weit verbreitet</td>
+                            <td>REST APIs, Web-Services, Konfigurationsdateien</td>
+                        </tr>
+                        <tr>
+                            <td><strong>XML</strong></td>
+                            <td>Extensible Markup Language</td>
+                            <td>Strukturiert, validierbar, selbstbeschreibend</td>
+                            <td>SOAP-Services, Konfiguration, Dokumentenaustausch</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CSV</strong></td>
+                            <td>Comma Separated Values</td>
+                            <td>Einfach, Excel-kompatibel, kompakt</td>
+                            <td>Datenexport/-import, Tabellendaten</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Protocol Buffers</strong></td>
+                            <td>Google's Serialisierungsformat</td>
+                            <td>Sehr effizient, typsicher, versionierbar</td>
+                            <td>Microservices, High-Performance-Anwendungen</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Herausforderungen bei der Software-Integration</h4>
+                <ul>
+                    <li><strong>Versionskonflikte:</strong> Verschiedene API-Versionen sind nicht kompatibel</li>
+                    <li><strong>Dateninkonsistenz:</strong> Unterschiedliche Datenformate und -strukturen</li>
+                    <li><strong>Performance:</strong> Netzwerklatenz und Datenvolumen</li>
+                    <li><strong>Sicherheit:</strong> Authentifizierung und Autorisierung zwischen Systemen</li>
+                    <li><strong>Error Handling:</strong> Umgang mit Ausfällen anderer Systeme</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 5. Netzwerk-Integration -->
+        <div class="content-section">
+            <h2>🌐 5. Netzwerk-Integration</h2>
+
+            <h3>🔌 Grundlagen der Netzwerk-Integration</h3>
+            
+            <p>In der modernen IT sind die meisten Systeme vernetzt. Netzwerk-Integration ermöglicht:</p>
+
+            <ul class="list-styled">
+                <li><strong>Ressourcen-Sharing:</strong> Gemeinsame Nutzung von Druckern, Speicher, etc.</li>
+                <li><strong>Daten-Synchronisation:</strong> Konsistente Daten über mehrere Standorte</li>
+                <li><strong>Load Balancing:</strong> Lastverteilung auf mehrere Server</li>
+                <li><strong>Remote Access:</strong> Zugriff auf Systeme von überall</li>
+            </ul>
+
+            <h3>📡 Wichtige Netzwerk-Protokolle</h3>
+
+            <div class="component-grid">
+                <div class="component-card">
+                    <h4>🌐 TCP/IP</h4>
+                    <p><strong>Zweck:</strong> Grundlage des Internets</p>
+                    <ul>
+                        <li>Zuverlässige Datenübertragung</li>
+                        <li>Packet-basierte Kommunikation</li>
+                        <li>Routing zwischen Netzwerken</li>
+                        <li>Port-basierte Services</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>🔒 HTTP/HTTPS</h4>
+                    <p><strong>Zweck:</strong> Web-Kommunikation</p>
+                    <ul>
+                        <li>Request-Response-Muster</li>
+                        <li>REST API-Kommunikation</li>
+                        <li>Verschlüsselte Übertragung (HTTPS)</li>
+                        <li>Status-Codes für Fehlerbehandlung</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>📨 MQTT</h4>
+                    <p><strong>Zweck:</strong> IoT-Kommunikation</p>
+                    <ul>
+                        <li>Lightweight Messaging</li>
+                        <li>Publish-Subscribe-Muster</li>
+                        <li>Ideal für Sensornetzwerke</li>
+                        <li>Geringe Bandbreite nötig</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>⚡ WebSocket</h4>
+                    <p><strong>Zweck:</strong> Echtzeit-Kommunikation</p>
+                    <ul>
+                        <li>Bidirektionale Kommunikation</li>
+                        <li>Real-time Updates</li>
+                        <li>Chat-Anwendungen</li>
+                        <li>Live-Dashboards</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>🏭 Industrie 4.0 Beispiel: Smart Factory</h4>
+                <p>Integration verschiedener Produktionssysteme:</p>
+                <div class="diagram">
+                    <pre>
+    [Produktionsmaschine 1] ──┐
+    [Produktionsmaschine 2] ──┤
+    [Qualitätsprüfung] ───────┤── MQTT Broker ──┬── [Zentrale Steuerung]
+    [Lager-Roboter] ──────────┤                  │
+    [Verpackungsanlage] ──────┘                  ├── [ERP-System]
+                                                │
+    [Mitarbeiter-Tablets] ── WiFi ──────────────┤
+    [Wartungs-Sensoren] ──── LoRaWAN ───────────┤
+                                                │
+    [Cloud-Analytics] ─── Internet ─────────────┘
+                    </pre>
+                </div>
+                <p><strong>Integration ermöglicht:</strong></p>
+                <ul>
+                    <li>Echtzeitüberwachung der Produktion</li>
+                    <li>Automatische Qualitätskontrolle</li>
+                    <li>Predictive Maintenance</li>
+                    <li>Optimierung der Lieferkette</li>
+                </ul>
+            </div>
+
+            <h3>☁️ Cloud-Integration</h3>
+
+            <p>Cloud-Services haben die Systemintegration revolutioniert:</p>
+
+            <div class="component-grid">
+                <div class="component-card">
+                    <h4>📊 SaaS (Software as a Service)</h4>
+                    <p><strong>Beispiele:</strong> Office 365, Salesforce, Google Workspace</p>
+                    <p><strong>Integration über:</strong></p>
+                    <ul>
+                        <li>REST APIs</li>
+                        <li>OAuth-Authentifizierung</li>
+                        <li>Webhooks für Events</li>
+                        <li>SDK/Libraries</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>🏗️ PaaS (Platform as a Service)</h4>
+                    <p><strong>Beispiele:</strong> AWS Lambda, Google App Engine, Azure Functions</p>
+                    <p><strong>Integration über:</strong></p>
+                    <ul>
+                        <li>Serverless Functions</li>
+                        <li>Managed Databases</li>
+                        <li>Message Queues</li>
+                        <li>Container Orchestration</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>🖥️ IaaS (Infrastructure as a Service)</h4>
+                    <p><strong>Beispiele:</strong> AWS EC2, Google Compute Engine, Azure VMs</p>
+                    <p><strong>Integration über:</strong></p>
+                    <ul>
+                        <li>Virtual Private Networks</li>
+                        <li>Load Balancers</li>
+                        <li>CDN (Content Delivery Network)</li>
+                        <li>Auto-Scaling Groups</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- 6. Datenbank-Integration -->
+        <div class="content-section">
+            <h2>🗄️ 6. Datenbank-Integration</h2>
+
+            <h3>🔗 Warum Datenbank-Integration?</h3>
+
+            <p>Moderne Anwendungen verwenden oft mehrere Datenbanken gleichzeitig:</p>
+
+            <ul class="list-styled">
+                <li><strong>Legacy-Systeme:</strong> Alte Datenbanken müssen erhalten bleiben</li>
+                <li><strong>Spezialisierung:</strong> Verschiedene DB-Typen für verschiedene Aufgaben</li>
+                <li><strong>Skalierung:</strong> Aufteilung der Last auf mehrere Datenbanken</li>
+                <li><strong>Backup & Recovery:</strong> Redundante Datenhaltung</li>
+            </ul>
+
+            <h3>🏗️ Datenbank-Integrationsstrategien</h3>
+
+            <div class="component-grid">
+                <div class="component-card">
+                    <h4>🔄 ETL (Extract, Transform, Load)</h4>
+                    <p><strong>Prozess:</strong></p>
+                    <ul>
+                        <li><strong>Extract:</strong> Daten aus Quelle lesen</li>
+                        <li><strong>Transform:</strong> Daten anpassen/bereinigen</li>
+                        <li><strong>Load:</strong> In Ziel-DB schreiben</li>
+                    </ul>
+                    <p><strong>Verwendung:</strong> Data Warehousing, Migration</p>
+                </div>
+
+                <div class="component-card">
+                    <h4>🪞 Database Replication</h4>
+                    <p><strong>Typen:</strong></p>
+                    <ul>
+                        <li><strong>Master-Slave:</strong> Ein Schreiber, mehrere Leser</li>
+                        <li><strong>Master-Master:</strong> Mehrere Schreiber</li>
+                        <li><strong>Asynchron:</strong> Verzögerte Synchronisation</li>
+                        <li><strong>Synchron:</strong> Sofortige Synchronisation</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>🌉 Database Federation</h4>
+                    <p><strong>Konzept:</strong> Virtuelle Einheitssicht auf mehrere DBs</p>
+                    <ul>
+                        <li>Transparenter Zugriff</li>
+                        <li>Join über DB-Grenzen hinweg</li>
+                        <li>Verteilte Transaktionen</li>
+                        <li>Schema-Mapping</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>📨 Message Queues</h4>
+                    <p><strong>Prinzip:</strong> Asynchrone Datenübertragung</p>
+                    <ul>
+                        <li>Event-driven Architecture</li>
+                        <li>Entkopplung der Systeme</li>
+                        <li>Garantierte Zustellung</li>
+                        <li>Fehlerbehandlung</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>🛒 E-Commerce Integration Beispiel</h4>
+                <p>Ein Online-Shop integriert verschiedene Datenquellen:</p>
+                <div class="code-block">
+-- SQL Query über mehrere Datenbanken
+-- Kunde aus CRM-System
+SELECT c.customer_id, c.name, c.email
+FROM crm_database.customers c
+
+-- Bestellungen aus E-Commerce-DB
+JOIN ecommerce_database.orders o ON c.customer_id = o.customer_id
+
+-- Produktinformationen aus Produktkatalog
+JOIN product_database.products p ON o.product_id = p.product_id
+
+-- Lagerbestand aus Warehouse-System
+JOIN warehouse_database.inventory i ON p.product_id = i.product_id
+
+WHERE o.order_date >= '2024-01-01'
+AND i.quantity > 0
+ORDER BY o.order_date DESC;
+                </div>
+                <p><strong>Herausforderungen:</strong></p>
+                <ul>
+                    <li>Konsistente Customer-IDs über alle Systeme</li>
+                    <li>Synchronisation bei Änderungen</li>
+                    <li>Performance bei großen Datenmengen</li>
+                    <li>Transaktionale Integrität</li>
+                </ul>
+            </div>
+
+            <h3>🔧 Praktische Implementierung</h3>
+
+            <div class="code-block">
+// Java Beispiel für Multi-Database Integration
+public class DatabaseIntegrationService {
+    
+    private DataSource customerDb;
+    private DataSource orderDb;
+    private DataSource inventoryDb;
+    
+    // 1. Connection Pool für verschiedene Datenbanken
+    @PostConstruct
+    public void initializeDatabases() {
+        // Customer Database (PostgreSQL)
+        customerDb = createDataSource("jdbc:postgresql://customer-db:5432/crm", 
+                                     "user", "password");
+        
+        // Order Database (MySQL)
+        orderDb = createDataSource("jdbc:mysql://order-db:3306/ecommerce", 
+                                  "user", "password");
+        
+        // Inventory Database (MongoDB via JDBC wrapper)
+        inventoryDb = createDataSource("jdbc:mongodb://inventory-db:27017/warehouse", 
+                                      "user", "password");
+    }
+    
+    // 2. Koordinierte Transaktion über mehrere DBs
+    @Transactional
+    public OrderResult processOrder(OrderRequest request) {
+        try {
+            // Customer validation
+            Customer customer = validateCustomer(request.getCustomerId());
+            
+            // Inventory check
+            boolean inStock = checkInventory(request.getProductId(), 
+                                           request.getQuantity());
+            
+            if (!inStock) {
+                throw new OutOfStockException("Product not available");
+            }
+            
+            // Create order
+            Order order = createOrder(request);
+            
+            // Update inventory
+            updateInventory(request.getProductId(), request.getQuantity());
+            
+            // Send confirmation
+            sendOrderConfirmation(customer, order);
+            
+            return new OrderResult(order.getOrderId(), "SUCCESS");
+            
+        } catch (Exception e) {
+            // Rollback all changes
+            handleTransactionRollback(e);
+            throw new OrderProcessingException("Order failed", e);
+        }
+    }
+    
+    // 3. Asynchrone Daten-Synchronisation
+    @Scheduled(fixedDelay = 60000) // Jede Minute
+    public void synchronizeData() {
+        // Customer data sync
+        List<Customer> updatedCustomers = getUpdatedCustomers();
+        for (Customer customer : updatedCustomers) {
+            syncCustomerToOrderDB(customer);
+            syncCustomerToInventoryDB(customer);
+        }
+        
+        // Product data sync
+        List<Product> updatedProducts = getUpdatedProducts();
+        for (Product product : updatedProducts) {
+            syncProductToOrderDB(product);
+        }
+    }
+}
+            </div>
+        </div>
+
+        <!-- 7. Integration Patterns -->
+        <div class="content-section">
+            <h2>🎨 7. Integration Patterns (Designmuster)</h2>
+
+            <h3>🏗️ Bewährte Integrationsmuster</h3>
+
+            <p>Diese Muster haben sich in der Praxis bewährt und lösen häufige Integrationsprobleme:</p>
+
+            <div class="component-grid">
+                <div class="component-card">
+                    <h4>🔄 Request-Response Pattern</h4>
+                    <p><strong>Anwendung:</strong> Synchrone Kommunikation</p>
+                    <ul>
+                        <li>Client sendet Request</li>
+                        <li>Server verarbeitet und antwortet</li>
+                        <li>Client wartet auf Response</li>
+                        <li>Timeout-Behandlung wichtig</li>
+                    </ul>
+                    <p><strong>Beispiel:</strong> REST API Calls, Database Queries</p>
+                </div>
+
+                <div class="component-card">
+                    <h4>📡 Publish-Subscribe Pattern</h4>
+                    <p><strong>Anwendung:</strong> Event-basierte Architektur</p>
+                    <ul>
+                        <li>Publisher senden Events</li>
+                        <li>Subscriber empfangen Events</li>
+                        <li>Loose Kopplung der Systeme</li>
+                        <li>Skalierbare Architektur</li>
+                    </ul>
+                    <p><strong>Beispiel:</strong> Microservices, IoT-Systeme</p>
+                </div>
+
+                <div class="component-card">
+                    <h4>🚌 Message Queue Pattern</h4>
+                    <p><strong>Anwendung:</strong> Asynchrone Verarbeitung</p>
+                    <ul>
+                        <li>Producer erzeugen Messages</li>
+                        <li>Queue puffert Messages</li>
+                        <li>Consumer verarbeiten Messages</li>
+                        <li>Garantierte Zustellung</li>
+                    </ul>
+                    <p><strong>Beispiel:</strong> Email-Versand, Batch-Processing</p>
+                </div>
+
+                <div class="component-card">
+                    <h4>🔌 Adapter Pattern</h4>
+                    <p><strong>Anwendung:</strong> Legacy-System-Integration</p>
+                    <ul>
+                        <li>Adapter übersetzt zwischen Systemen</li>
+                        <li>Keine Änderung bestehender Systeme</li>
+                        <li>Einheitliche Schnittstelle</li>
+                        <li>Schrittweise Migration möglich</li>
+                    </ul>
+                    <p><strong>Beispiel:</strong> Mainframe-Integration, API-Wrapper</p>
+                </div>
+
+                <div class="component-card">
+                    <h4>🌉 Gateway Pattern</h4>
+                    <p><strong>Anwendung:</strong> Einheitlicher Zugangspunkt</p>
+                    <ul>
+                        <li>Zentraler Entry Point</li>
+                        <li>Routing zu Backend-Services</li>
+                        <li>Authentifizierung & Autorisierung</li>
+                        <li>Load Balancing</li>
+                    </ul>
+                    <p><strong>Beispiel:</strong> API Gateway, Reverse Proxy</p>
+                </div>
+
+                <div class="component-card">
+                    <h4>⚡ Circuit Breaker Pattern</h4>
+                    <p><strong>Anwendung:</strong> Fehlerbehandlung</p>
+                    <ul>
+                        <li>Schutz vor Systemausfällen</li>
+                        <li>Automatic Retry mit Backoff</li>
+                        <li>Fallback-Mechanismen</li>
+                        <li>Monitoring & Alerting</li>
+                    </ul>
+                    <p><strong>Beispiel:</strong> Netflix Hystrix, AWS Circuit Breaker</p>
+                </div>
+            </div>
+
+            <div class="info-box">
+                <h4>💡 Pattern-Auswahl Leitfaden</h4>
+                <ul>
+                    <li><strong>Echtzeitanforderungen?</strong> → Request-Response oder WebSocket</li>
+                    <li><strong>Lose Kopplung gewünscht?</strong> → Publish-Subscribe oder Message Queue</li>
+                    <li><strong>Legacy-System vorhanden?</strong> → Adapter Pattern</li>
+                    <li><strong>Viele Microservices?</strong> → Gateway Pattern</li>
+                    <li><strong>Hohe Verfügbarkeit nötig?</strong> → Circuit Breaker Pattern</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 8. Praktische Herausforderungen -->
+        <div class="content-section">
+            <h2>⚡ 8. Praktische Herausforderungen</h2>
+
+            <h3>🚨 Häufige Probleme und Lösungsansätze</h3>
+
+            <div class="warning-box">
+                <h4>⚠️ Problem 1: Performance-Bottlenecks</h4>
+                <p><strong>Symptome:</strong></p>
+                <ul>
+                    <li>Langsame Response-Zeiten</li>
+                    <li>Timeouts bei API-Calls</li>
+                    <li>Hohe CPU/Memory-Nutzung</li>
+                </ul>
+                <p><strong>Lösungsansätze:</strong></p>
+                <ul>
+                    <li><strong>Caching:</strong> Redis, Memcached für häufige Anfragen</li>
+                    <li><strong>Load Balancing:</strong> Lastverteilung auf mehrere Server</li>
+                    <li><strong>Asynchrone Verarbeitung:</strong> Background Jobs</li>
+                    <li><strong>Database Optimization:</strong> Indizes, Query-Optimierung</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Problem 2: Dateninkonsistenz</h4>
+                <p><strong>Symptome:</strong></p>
+                <ul>
+                    <li>Unterschiedliche Daten in verschiedenen Systemen</li>
+                    <li>Verlorene Updates</li>
+                    <li>Race Conditions</li>
+                </ul>
+                <p><strong>Lösungsansätze:</strong></p>
+                <ul>
+                    <li><strong>ACID-Transaktionen:</strong> Atomare Operationen</li>
+                    <li><strong>Event Sourcing:</strong> Unveränderliche Event-Historie</li>
+                    <li><strong>Eventual Consistency:</strong> Akzeptierte Verzögerung</li>
+                    <li><strong>Conflict Resolution:</strong> Strategien für Konflikte</li>
+                </ul>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Problem 3: Sicherheitslücken</h4>
+                <p><strong>Risiken:</strong></p>
+                <ul>
+                    <li>Unautorisierter Datenzugriff</li>
+                    <li>Man-in-the-Middle-Attacks</li>
+                    <li>Injection-Angriffe</li>
+                </ul>
+                <p><strong>Schutzmaßnahmen:</strong></p>
+                <ul>
+                    <li><strong>Verschlüsselung:</strong> TLS/SSL für Datenübertragung</li>
+                    <li><strong>Authentifizierung:</strong> OAuth, JWT-Tokens</li>
+                    <li><strong>Input Validation:</strong> Schutz vor SQL-Injection</li>
+                    <li><strong>Rate Limiting:</strong> Schutz vor DDoS-Angriffen</li>
+                </ul>
+            </div>
+
+            <h3>🔧 Monitoring und Debugging</h3>
+
+            <p>Integrierte Systeme sind komplex - gutes Monitoring ist essentiell:</p>
+
+            <div class="component-grid">
+                <div class="component-card">
+                    <h4>📊 Application Monitoring</h4>
+                    <ul>
+                        <li><strong>Metrics:</strong> Response Times, Error Rates</li>
+                        <li><strong>Logging:</strong> Structured Logs (ELK Stack)</li>
+                        <li><strong>Tracing:</strong> Request-Verfolgung über Services</li>
+                        <li><strong>Alerts:</strong> Proaktive Benachrichtigungen</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>🖥️ Infrastructure Monitoring</h4>
+                    <ul>
+                        <li><strong>Server Metrics:</strong> CPU, RAM, Disk, Network</li>
+                        <li><strong>Database Performance:</strong> Query Times, Connections</li>
+                        <li><strong>Network Latency:</strong> Verbindungszeiten</li>
+                        <li><strong>Container Health:</strong> Docker, Kubernetes</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>👥 Business Monitoring</h4>
+                    <ul>
+                        <li><strong>User Experience:</strong> Conversion Rates</li>
+                        <li><strong>System Usage:</strong> Active Users, Transactions</li>
+                        <li><strong>Business KPIs:</strong> Revenue, Growth</li>
+                        <li><strong>Error Impact:</strong> Business-kritische Fehler</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>📈 Monitoring-Setup Beispiel</h4>
+                <div class="code-block">
+// Spring Boot + Micrometer für Monitoring
+@RestController
+public class OrderController {
+    
+    private final MeterRegistry meterRegistry;
+    private final Timer.Sample orderProcessingTimer;
+    
+    @PostMapping("/orders")
+    public ResponseEntity&lt;Order&gt; createOrder(@RequestBody OrderRequest request) {
+        Timer.Sample sample = Timer.start(meterRegistry);
+        
+        try {
+            // Business Logic
+            Order order = orderService.processOrder(request);
+            
+            // Success Metrics
+            meterRegistry.counter("orders.created", "status", "success").increment();
+            
+            return ResponseEntity.ok(order);
+            
+        } catch (OutOfStockException e) {
+            // Business Error Metrics
+            meterRegistry.counter("orders.failed", "reason", "out_of_stock").increment();
+            throw e;
+            
+        } catch (Exception e) {
+            // System Error Metrics
+            meterRegistry.counter("orders.failed", "reason", "system_error").increment();
+            throw e;
+            
+        } finally {
+            // Performance Metrics
+            sample.stop(Timer.builder("orders.processing.time")
+                      .description("Order processing time")
+                      .register(meterRegistry));
+        }
+    }
+}
+                </div>
+            </div>
+        </div>
+
+        <!-- 9. Zukunft der Systemintegration -->
+        <div class="content-section">
+            <h2>🚀 9. Zukunft der Systemintegration</h2>
+
+            <h3>🔮 Emerging Trends</h3>
+
+            <div class="component-grid">
+                <div class="component-card">
+                    <h4>🤖 AI-Powered Integration</h4>
+                    <ul>
+                        <li><strong>Intelligent Data Mapping:</strong> KI erkennt Datenstrukturen</li>
+                        <li><strong>Anomaly Detection:</strong> Automatische Fehlererkennung</li>
+                        <li><strong>Predictive Scaling:</strong> KI-basierte Ressourcenplanung</li>
+                        <li><strong>Self-Healing Systems:</strong> Automatische Problemlösung</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>📱 Edge Computing</h4>
+                    <ul>
+                        <li><strong>Local Processing:</strong> Verarbeitung näher am User</li>
+                        <li><strong>Reduced Latency:</strong> Schnellere Response-Zeiten</li>
+                        <li><strong>Offline Capability:</strong> Funktioniert ohne Internet</li>
+                        <li><strong>IoT Integration:</strong> Millionen von Sensoren</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>🔗 Blockchain Integration</h4>
+                    <ul>
+                        <li><strong>Trusted Data Exchange:</strong> Vertrauenswürdige Datenübertragung</li>
+                        <li><strong>Smart Contracts:</strong> Automatische Vertragsausführung</li>
+                        <li><strong>Decentralized Identity:</strong> Sichere Authentifizierung</li>
+                        <li><strong>Supply Chain:</strong> Nachverfolgbare Lieferketten</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>🌐 Serverless Architecture</h4>
+                    <ul>
+                        <li><strong>Function as a Service:</strong> Event-driven Computing</li>
+                        <li><strong>Auto-Scaling:</strong> Automatische Ressourcenanpassung</li>
+                        <li><strong>Pay-per-Use:</strong> Kostenoptimierung</li>
+                        <li><strong>Microservices:</strong> Feingranuläre Services</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>🎯 Ausblick für Informatik-Studenten</h3>
+
+            <div class="info-box">
+                <h4>💼 Karriere-relevante Fähigkeiten</h4>
+                <ul>
+                    <li><strong>Cloud-Native Development:</strong> AWS, Azure, Google Cloud</li>
+                    <li><strong>Container-Technologien:</strong> Docker, Kubernetes</li>
+                    <li><strong>API-Design:</strong> REST, GraphQL, gRPC</li>
+                    <li><strong>Message Broker:</strong> Apache Kafka, RabbitMQ</li>
+                    <li><strong>Monitoring Tools:</strong> Prometheus, Grafana, ELK Stack</li>
+                    <li><strong>Infrastructure as Code:</strong> Terraform, Ansible</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 10. Prüfungsvorbereitung -->
+        <div class="content-section">
+            <h2>📝 10. Prüfungsvorbereitung Abitur</h2>
+
+            <h3>🎯 Wichtige Prüfungsthemen</h3>
+
+            <div class="component-grid">
+                <div class="component-card">
+                    <h4>📋 Grundlagen (Basis-Niveau)</h4>
+                    <ul>
+                        <li>Definition von Systemintegration</li>
+                        <li>Unterschied Hardware/Software-Integration</li>
+                        <li>Schnittstellen-Typen erkennen</li>
+                        <li>API-Grundlagen verstehen</li>
+                        <li>Netzwerk-Protokolle benennen</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>🔧 Anwendung (Mittel-Niveau)</h4>
+                    <ul>
+                        <li>Integrationsarchitekturen skizzieren</li>
+                        <li>Schnittstellen-Probleme analysieren</li>
+                        <li>Datenformat-Konvertierung</li>
+                        <li>Einfache Integration programmieren</li>
+                        <li>Fehlerursachen identifizieren</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>🚀 Bewertung (Fortgeschritten)</h4>
+                    <ul>
+                        <li>Integrationsmuster bewerten</li>
+                        <li>Performance-Optimierung vorschlagen</li>
+                        <li>Sicherheitsrisiken einschätzen</li>
+                        <li>Systemarchitekturen entwerfen</li>
+                        <li>Zukunftstrends diskutieren</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>💡 Typische Prüfungsfragen</h3>
+
+            <div class="example-box">
+                <h4>📝 Beispiel-Aufgabe 1: Grundlagen</h4>
+                <p><strong>Aufgabe:</strong> Erklären Sie den Unterschied zwischen Hardware- und Software-Integration. Nennen Sie je zwei konkrete Beispiele.</p>
+                
+                <p><strong>Musterlösung:</strong></p>
+                <ul>
+                    <li><strong>Hardware-Integration:</strong> Physische Verbindung von Geräten
+                        <ul>
+                            <li>Beispiel 1: Arduino mit Temperatursensor über I2C-Bus</li>
+                            <li>Beispiel 2: Computer mit Drucker über USB-Schnittstelle</li>
+                        </ul>
+                    </li>
+                    <li><strong>Software-Integration:</strong> Kommunikation zwischen Programmen
+                        <ul>
+                            <li>Beispiel 1: Webshop ruft Zahlungs-API (PayPal) auf</li>
+                            <li>Beispiel 2: CRM-System synchronisiert mit E-Mail-Programm</li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h4>📝 Beispiel-Aufgabe 2: Anwendung</h4>
+                <p><strong>Aufgabe:</strong> Eine Schule möchte ein digitales Klassenbuch einführen, das mit dem bestehenden Schülerverwaltungssystem und dem Stundenplan-System kommuniziert. Skizzieren Sie die Systemarchitektur und erläutern Sie mögliche Integrationsprobleme.</p>
+                
+                <p><strong>Musterlösung:</strong></p>
+                <div class="diagram">
+                    <pre>
+    [Schülerverwaltung] ──── REST API ────┐
+    [Stundenplan-System] ─── REST API ────┤
+    [Lehrerportal] ────────── Web UI ─────┤── [Digitales Klassenbuch] ─── [Datenbank]
+    [Elternportal] ────────── Mobile App ─┤        (Integration Layer)
+    [Notensystem] ─────────── SOAP API ───┘
+                    </pre>
+                </div>
+                <p><strong>Mögliche Probleme:</strong></p>
+                <ul>
+                    <li>Unterschiedliche API-Versionen der Legacy-Systeme</li>
+                    <li>Inkonsistente Schüler-IDs zwischen Systemen</li>
+                    <li>Performance bei gleichzeitigen Zugriffen vieler Lehrer</li>
+                    <li>Datenschutz-Compliance (DSGVO) bei Elternzugang</li>
+                </ul>
+            </div>
+
+            <div class="example-box">
+                <h4>📝 Beispiel-Aufgabe 3: Bewertung</h4>
+                <p><strong>Aufgabe:</strong> Bewerten Sie die Vor- und Nachteile von Microservices-Architektur gegenüber monolithischen Systemen im Kontext der Systemintegration. Berücksichtigen Sie dabei Performance, Wartbarkeit und Komplexität.</p>
+                
+                <p><strong>Musterlösung:</strong></p>
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Aspekt</th>
+                                <th>Microservices</th>
+                                <th>Monolith</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Integration</strong></td>
+                                <td>+ Flexible APIs<br>- Komplexe Orchestrierung</td>
+                                <td>+ Einfache interne Kommunikation<br>- Schwierige externe Integration</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Performance</strong></td>
+                                <td>- Network Latency<br>+ Individuelle Skalierung</td>
+                                <td>+ Schnelle interne Aufrufe<br>- Skalierung nur als Ganzes</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Wartbarkeit</strong></td>
+                                <td>+ Unabhängige Entwicklung<br>+ Technologie-Diversität</td>
+                                <td>- Abhängigkeiten<br>+ Einfaches Debugging</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Komplexität</strong></td>
+                                <td>- Distributed System Complexity<br>- Service Discovery</td>
+                                <td>+ Einfache Deployment<br>+ Einfaches Monitoring</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <h3>🎓 Lernstrategie für die Prüfung</h3>
+
+            <div class="info-box">
+                <h4>📚 Empfohlenes Vorgehen</h4>
+                <ol>
+                    <li><strong>Grundlagen festigen:</strong> Definitionen und Begriffe lernen</li>
+                    <li><strong>Praktische Beispiele sammeln:</strong> Eigene Projekte dokumentieren</li>
+                    <li><strong>Diagramme üben:</strong> Systemarchitekturen zeichnen können</li>
+                    <li><strong>Problemanalyse trainieren:</strong> Häufige Integrationsprobleme verstehen</li>
+                    <li><strong>Aktuelle Trends verfolgen:</strong> Cloud, IoT, KI-Integration</li>
+                </ol>
+            </div>
+
+            <div class="warning-box">
+                <h4>⚠️ Häufige Prüfungsfehler vermeiden</h4>
+                <ul>
+                    <li><strong>Zu oberflächlich:</strong> Konkrete Beispiele und Details nennen</li>
+                    <li><strong>Nur Theorie:</strong> Praktische Anwendungsfälle einbauen</li>
+                    <li><strong>Begriffe verwechseln:</strong> API vs. Protokoll vs. Schnittstelle</li>
+                    <li><strong>Sicherheit vergessen:</strong> Immer auch Sicherheitsaspekte erwähnen</li>
+                    <li><strong>Performance ignorieren:</strong> Skalierbarkeit und Effizienz beachten</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- 11. Zusammenfassung -->
+        <div class="content-section">
+            <h2>📋 11. Zusammenfassung</h2>
+
+            <div class="definition-box">
+                <h4>🎯 Kernaussagen Systemintegration</h4>
+                <ul>
+                    <li><strong>Definition:</strong> Systemintegration verbindet verschiedene Hardware- und Software-Komponenten zu funktionsfähigen Gesamtsystemen</li>
+                    <li><strong>Ziel:</strong> Nahtlose Kommunikation und Datenaustausch zwischen allen Systemteilen</li>
+                    <li><strong>Methoden:</strong> APIs, Protokolle, Schnittstellen und Integrationsmuster</li>
+                    <li><strong>Herausforderungen:</strong> Performance, Sicherheit, Konsistenz und Komplexität</li>
+                </ul>
+            </div>
+
+            <h3>🗂️ Wichtige Konzepte im Überblick</h3>
+
+            <div class="component-grid">
+                <div class="component-card">
+                    <h4>🔧 Hardware-Integration</h4>
+                    <ul>
+                        <li>GPIO, PWM, ADC</li>
+                        <li>I2C, SPI, UART</li>
+                        <li>Mikrocontroller als Zentrale</li>
+                        <li>Sensor-Aktor-Netzwerke</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>💻 Software-Integration</h4>
+                    <ul>
+                        <li>REST APIs, SOAP Services</li>
+                        <li>JSON, XML Datenformate</li>
+                        <li>Authentifizierung & Autorisierung</li>
+                        <li>Error Handling & Retry Logic</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>🌐 Netzwerk-Integration</h4>
+                    <ul>
+                        <li>TCP/IP, HTTP/HTTPS</li>
+                        <li>MQTT für IoT</li>
+                        <li>WebSockets für Echtzeit</li>
+                        <li>Cloud-Services Integration</li>
+                    </ul>
+                </div>
+
+                <div class="component-card">
+                    <h4>🗄️ Datenbank-Integration</h4>
+                    <ul>
+                        <li>ETL-Prozesse</li>
+                        <li>Database Replication</li>
+                        <li>Federation & Virtualization</li>
+                        <li>Transaction Management</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>🔮 Zukunftsausblick</h3>
+            
+            <p>Systemintegration wird immer wichtiger durch:</p>
+            <ul class="list-styled">
+                <li><strong>IoT-Explosion:</strong> Milliarden vernetzte Geräte</li>
+                <li><strong>Cloud-Native Applications:</strong> Microservices und Container</li>
+                <li><strong>KI-Integration:</strong> Machine Learning in allen Bereichen</li>
+                <li><strong>Edge Computing:</strong> Verarbeitung näher am Nutzer</li>
+                <li><strong>5G-Netzwerke:</strong> Neue Möglichkeiten für Echtzeitanwendungen</li>
+            </ul>
+
+            <div class="example-box">
+                <h4>🎓 Für das Abitur merken</h4>
+                <p><strong>Die wichtigsten Punkte für die Prüfung:</strong></p>
+                <ol>
+                    <li>Systemintegration ermöglicht die Zusammenarbeit verschiedener IT-Systeme</li>
+                    <li>Hardware-, Software-, Netzwerk- und Datenbank-Integration sind die vier Hauptbereiche</li>
+                    <li>APIs und Protokolle sind die "Sprachen" der Systemintegration</li>
+                    <li>Bewährte Patterns lösen häufige Integrationsprobleme</li>
+                    <li>Monitoring und Fehlerbehandlung sind essentiell für stabile Systeme</li>
+                    <li>Moderne Trends wie Cloud, IoT und KI prägen die Zukunft</li>
+                </ol>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <a href="index.html" class="nav-button secondary">🏠 Zurück zur Hauptseite</a>
+            <a href="betriebssysteme.html" class="nav-button">⚙️ Nächstes Thema: Betriebssysteme</a>
+        </div>
+
+        <!-- Footer -->
+        <footer style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--bg-white); border-radius: 16px; border: 1px solid var(--border-color);">
+            <p style="color: var(--text-light); font-size: 0.9rem;">
+                <strong>Systemintegration - Technische Informatik III & IV</strong><br>
+                Teil der Abitur-Vorbereitung 2026 - Informationstechnik TG<br>
+                <em>Basierend auf dem Bildungsplan Baden-Württemberg 2019</em>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add copy functionality to code blocks
+        document.querySelectorAll('.code-block').forEach(block => {
+            const copyBtn = document.createElement('button');
+            copyBtn.innerHTML = '📋';
+            copyBtn.title = 'Code kopieren';
+            copyBtn.style.cssText = `
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: var(--primary-color);
+                color: white;
+                border: none;
+                padding: 0.5rem;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 1rem;
+                opacity: 0.7;
+                transition: opacity 0.3s ease;
+            `;
+            
+            block.style.position = 'relative';
+            block.appendChild(copyBtn);
+            
+            copyBtn.addEventListener('mouseenter', () => {
+                copyBtn.style.opacity = '1';
+            });
+            
+            copyBtn.addEventListener('mouseleave', () => {
+                copyBtn.style.opacity = '0.7';
+            });
+            
+            copyBtn.addEventListener('click', () => {
+                const text = block.textContent.replace('📋', '').trim();
+                navigator.clipboard.writeText(text).then(() => {
+                    copyBtn.innerHTML = '✅';
+                    setTimeout(() => {
+                        copyBtn.innerHTML = '📋';
+                    }, 2000);
+                });
+            });
+        });
+
+        // Interactive elements hover effects
+        document.querySelectorAll('.component-card, .example-box, .definition-box, .info-box, .warning-box').forEach(element => {
+            element.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-2px)';
+                this.style.transition = 'all 0.3s ease';
+            });
+            
+            element.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(0)';
+            });
+        });
+
+        // Progress indication for reading
+        function updateReadingProgress() {
+            const winScroll = document.body.scrollTop || document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            
+            let progressBar = document.getElementById('reading-progress');
+            if (!progressBar) {
+                progressBar = document.createElement('div');
+                progressBar.id = 'reading-progress';
+                progressBar.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    width: 0%;
+                    height: 4px;
+                    background: linear-gradient(90deg, var(--primary-color), var(--accent-color));
+                    z-index: 1000;
+                    transition: width 0.1s ease;
+                `;
+                document.body.appendChild(progressBar);
+            }
+            progressBar.style.width = scrolled + '%';
+        }
+
+        window.addEventListener('scroll', updateReadingProgress);
+        window.addEventListener('resize', updateReadingProgress);
+
+        // Enhanced table interactions
+        document.querySelectorAll('table tr').forEach((row, index) => {
+            if (index === 0) return; // Skip header row
+            
+            row.addEventListener('click', function() {
+                // Remove previous highlights
+                document.querySelectorAll('table tr.highlighted').forEach(tr => {
+                    tr.classList.remove('highlighted');
+                    tr.style.background = '';
+                });
+                
+                // Highlight clicked row
+                this.classList.add('highlighted');
+                this.style.background = 'linear-gradient(90deg, var(--bg-light), var(--border-color))';
+                this.style.transition = 'background 0.3s ease';
+            });
+        });
+
+        // Add tooltips for technical terms
+        const technicalTerms = {
+            'API': 'Application Programming Interface - Schnittstelle für die Kommunikation zwischen Software-Komponenten',
+            'REST': 'Representational State Transfer - Architekturstil für Web-Services',
+            'JSON': 'JavaScript Object Notation - Leichtgewichtiges Datenformat',
+            'TCP/IP': 'Transmission Control Protocol/Internet Protocol - Grundlage des Internets',
+            'MQTT': 'Message Queuing Telemetry Transport - Leichtgewichtiges Messaging-Protokoll',
+            'IoT': 'Internet of Things - Vernetzung von Alltagsgegenständen',
+            'GPIO': 'General Purpose Input/Output - Universelle digitale Schnittstelle',
+            'PWM': 'Pulse Width Modulation - Technik zur Simulation analoger Signale',
+            'I2C': 'Inter-Integrated Circuit - Serieller Bus für kurze Distanzen',
+            'SPI': 'Serial Peripheral Interface - Schneller serieller Bus',
+            'UART': 'Universal Asynchronous Receiver Transmitter - Serielle Schnittstelle',
+            'HTTP': 'HyperText Transfer Protocol - Protokoll für Webkommunikation',
+            'HTTPS': 'HTTP Secure - Verschlüsselte Version von HTTP',
+            'SQL': 'Structured Query Language - Sprache für Datenbankabfragen',
+            'ETL': 'Extract, Transform, Load - Prozess der Datenintegration',
+            'XML': 'Extensible Markup Language - Strukturiertes Datenformat',
+            'CSV': 'Comma Separated Values - Einfaches Tabellenformat'
+        };
+
+        // Create tooltips
+        function createTooltips() {
+            Object.keys(technicalTerms).forEach(term => {
+                const regex = new RegExp(`\\b${term}\\b`, 'g');
+                const walker = document.createTreeWalker(
+                    document.body,
+                    NodeFilter.SHOW_TEXT,
+                    null,
+                    false
+                );
+
+                const textNodes = [];
+                let node;
+                while (node = walker.nextNode()) {
+                    if (node.parentElement.tagName !== 'SCRIPT' && 
+                        node.parentElement.tagName !== 'STYLE' &&
+                        !node.parentElement.classList.contains('tooltip')) {
+                        textNodes.push(node);
+                    }
+                }
+
+                textNodes.forEach(textNode => {
+                    if (regex.test(textNode.textContent)) {
+                        const span = document.createElement('span');
+                        span.innerHTML = textNode.textContent.replace(regex, 
+                            `<span class="tooltip" title="${technicalTerms[term]}">${term}</span>`
+                        );
+                        textNode.parentNode.replaceChild(span, textNode);
+                    }
+                });
+            });
+        }
+
+        // Initialize tooltips after page load
+        document.addEventListener('DOMContentLoaded', function() {
+            setTimeout(createTooltips, 1000);
+        });
+
+        // Section highlighting on scroll
+        function highlightCurrentSection() {
+            const sections = document.querySelectorAll('.content-section');
+            const scrollPos = window.scrollY + 100;
+
+            sections.forEach(section => {
+                const top = section.offsetTop;
+                const height = section.offsetHeight;
+                
+                if (scrollPos >= top && scrollPos < top + height) {
+                    section.style.borderLeft = '4px solid var(--primary-color)';
+                    section.style.transition = 'border-left 0.3s ease';
+                } else {
+                    section.style.borderLeft = '1px solid var(--border-color)';
+                }
+            });
+        }
+
+        window.addEventListener('scroll', highlightCurrentSection);
+
+        // Print optimization
+        window.addEventListener('beforeprint', function() {
+            document.querySelectorAll('.code-block button').forEach(btn => {
+                btn.style.display = 'none';
+            });
+        });
+
+        window.addEventListener('afterprint', function() {
+            document.querySelectorAll('.code-block button').forEach(btn => {
+                btn.style.display = 'block';
+            });
+        });
+
+        // Analytics (simple page view tracking)
+        console.log('🎓 Systemintegration Lernzettel geladen!');
+        console.log('💡 Tipp: Verwende Strg+F um nach bestimmten Begriffen zu suchen');
+        console.log('📱 Diese Seite ist responsive und funktioniert auf allen Geräten');
+        console.log('🖨️ Du kannst diese Seite auch ausdrucken (Strg+P)');
+    </script>
+</body>
+</html>

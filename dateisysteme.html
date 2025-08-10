@@ -1,0 +1,1079 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dateisysteme - Technische Informatik III & IV</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --code-bg: #1e293b;
+            --code-text: #e2e8f0;
+            --arduino-blue: #00979d;
+            --arduino-orange: #ff6d1b;
+            --arduino-green: #00a78b;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .navigation {
+            background: var(--bg-white);
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .breadcrumb {
+            color: var(--text-light);
+            font-size: 0.9rem;
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .bpe-info {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+            text-align: left;
+        }
+
+        .main-content {
+            display: grid;
+            grid-template-columns: 300px 1fr;
+            gap: 2rem;
+            margin-bottom: 3rem;
+            align-items: start;
+        }
+
+        .sidebar {
+            background: var(--bg-white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            height: fit-content;
+            position: sticky;
+            top: 20px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .sidebar h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .sidebar ul {
+            list-style: none;
+        }
+
+        .sidebar li {
+            margin-bottom: 0.5rem;
+        }
+
+        .sidebar a {
+            color: var(--text-dark);
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-radius: 6px;
+            transition: all 0.2s ease;
+            font-size: 0.9rem;
+        }
+
+        .sidebar a:hover {
+            background: var(--bg-light);
+            color: var(--primary-color);
+        }
+
+        .content {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+            font-size: 1.8rem;
+            border-bottom: 2px solid var(--border-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .section h3 {
+            color: var(--secondary-color);
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+            font-size: 1.3rem;
+        }
+
+        .section h4 {
+            color: var(--text-dark);
+            margin-bottom: 0.8rem;
+            margin-top: 1.5rem;
+            font-size: 1.1rem;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .info-box h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-left: 4px solid var(--warning-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .warning-box h4 {
+            color: var(--warning-color);
+            margin-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            border-left: 4px solid var(--success-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .example-box h4 {
+            color: var(--success-color);
+            margin-bottom: 0.5rem;
+            margin-top: 0;
+        }
+
+        .filesystem-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .filesystem-table th,
+        .filesystem-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .filesystem-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .filesystem-table tr:hover {
+            background: var(--bg-light);
+        }
+
+        /* Arduino-Style Code Blocks */
+        .code-block {
+            background: #263238;
+            color: #e0e7ff;
+            padding: 1.5rem;
+            border-radius: 12px;
+            font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border: 2px solid var(--arduino-blue);
+            position: relative;
+        }
+
+        .code-block::before {
+            content: "💻 Terminal / Console";
+            position: absolute;
+            top: -10px;
+            left: 15px;
+            background: var(--arduino-blue);
+            color: white;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: bold;
+        }
+
+        .code-block .comment {
+            color: #81c784;
+            font-style: italic;
+        }
+
+        .code-block .command {
+            color: #64b5f6;
+            font-weight: bold;
+        }
+
+        .code-block .output {
+            color: #a5d6a7;
+        }
+
+        .code-block .path {
+            color: #ffb74d;
+        }
+
+        .code-block .flag {
+            color: #f48fb1;
+        }
+
+        .visual-diagram {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+            border: 2px dashed var(--border-color);
+        }
+
+        .visual-diagram h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .disk-structure {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .partition {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            min-width: 120px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .partition.ntfs {
+            background: var(--success-color);
+        }
+
+        .partition.fat {
+            background: var(--warning-color);
+        }
+
+        .partition.ext {
+            background: var(--danger-color);
+        }
+
+        /* Scroll-to-top button */
+        .scroll-to-top {
+            position: fixed;
+            bottom: 20px;
+            left: 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            transition: all 0.3s ease;
+            opacity: 0;
+            visibility: hidden;
+        }
+
+        .scroll-to-top.visible {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .scroll-to-top:hover {
+            background: var(--secondary-color);
+            transform: scale(1.1);
+        }
+
+        /* Back to index button */
+        .back-to-index {
+            text-align: center;
+            margin: 2rem 0;
+        }
+
+        .back-to-index button {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 12px;
+            font-size: 1.1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+        }
+
+        .back-to-index button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.3);
+        }
+
+        @media (max-width: 768px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+
+            .sidebar {
+                order: 2;
+                position: static;
+            }
+
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .disk-structure {
+                flex-direction: column;
+            }
+
+            .scroll-to-top {
+                bottom: 80px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="navigation">
+            <div class="breadcrumb">
+                <a href="index.html">🏠 Hauptseite</a> → 
+                <a href="#technische-informatik">Technische Informatik III & IV</a> → 
+                <strong>Dateisysteme</strong>
+            </div>
+        </nav>
+
+        <header class="header">
+            <h1>📁 Dateisysteme</h1>
+            <p>Technische Informatik III & IV - Betriebssysteme</p>
+            <div class="bpe-info">
+                <strong>BPE 6/7: Technische Informatik III & IV</strong><br>
+                Kapitel 10.3: Dateisysteme | Massenspeicher, Partitionen, FAT, NTFS, EXT, Zugriffsrechte
+            </div>
+        </header>
+
+        <div class="main-content">
+            <aside class="sidebar">
+                <h3>📑 Inhaltsverzeichnis</h3>
+                <ul>
+                    <li><a href="#einfuehrung">Was sind Dateisysteme?</a></li>
+                    <li><a href="#massenspeicher">Massenspeicher Festplatte</a></li>
+                    <li><a href="#partitionen">Partitionen</a></li>
+                    <li><a href="#fat">File Allocation Table (FAT)</a></li>
+                    <li><a href="#fragmentierung">Fragmentierung</a></li>
+                    <li><a href="#ntfs">NTFS</a></li>
+                    <li><a href="#ext">EXT-Dateisysteme</a></li>
+                    <li><a href="#zugriffsrechte">Zugriffsrechte</a></li>
+                    <li><a href="#praxis">Praxis & Befehle</a></li>
+                </ul>
+            </aside>
+
+            <main class="content">
+                <section id="einfuehrung" class="section">
+                    <h2>🎯 Was sind Dateisysteme?</h2>
+                    
+                    <p>Stell dir vor, du hast einen riesigen Schrank und möchtest darin tausende von Dokumenten ordentlich aufbewahren. Du brauchst ein System, um zu wissen, wo welches Dokument liegt, wie du schnell darauf zugreifen kannst und wie du sicherstellst, dass nichts verloren geht.</p>
+
+                    <p><strong>Genau das macht ein Dateisystem für deinen Computer!</strong></p>
+
+                    <div class="info-box">
+                        <h4>💡 Definition: Dateisystem</h4>
+                        <p>Ein Dateisystem ist die Art und Weise, wie ein Betriebssystem Dateien auf einem Speichermedium (wie einer Festplatte) organisiert, speichert und verwaltet. Es bestimmt:</p>
+                        <ul>
+                            <li>Wie Dateien benannt werden</li>
+                            <li>Wo sie gespeichert werden</li>
+                            <li>Wie auf sie zugegriffen wird</li>
+                            <li>Welche Sicherheits- und Zugriffsrechte gelten</li>
+                        </ul>
+                    </div>
+
+                    <h3>🔍 Warum brauchen wir Dateisysteme?</h3>
+                    <p>Ohne Dateisystem wäre eine Festplatte nur ein riesiger Berg von Nullen und Einsen ohne jede Struktur. Das Dateisystem sorgt dafür, dass:</p>
+                    <ul>
+                        <li><strong>Ordnung herrscht:</strong> Dateien haben Namen und befinden sich in Ordnern</li>
+                        <li><strong>Schneller Zugriff möglich ist:</strong> Das System weiß, wo jede Datei liegt</li>
+                        <li><strong>Sicherheit gewährleistet ist:</strong> Zugriffsrechte schützen Dateien</li>
+                        <li><strong>Effizienz erreicht wird:</strong> Speicherplatz wird optimal genutzt</li>
+                    </ul>
+                </section>
+
+                <section id="massenspeicher" class="section">
+                    <h2>💽 Massenspeicher Festplatte</h2>
+                    
+                    <p>Bevor wir Dateisysteme verstehen, müssen wir wissen, wie eine Festplatte funktioniert.</p>
+
+                    <h3>🔧 Aufbau einer Festplatte</h3>
+                    
+                    <div class="visual-diagram">
+                        <h4>Festplatten-Struktur</h4>
+                        <div style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; margin-top: 1rem;">
+                            <div style="background: var(--primary-color); color: white; padding: 1rem; border-radius: 8px;">
+                                <strong>Platter</strong><br>
+                                Magnetische Scheiben
+                            </div>
+                            <div style="background: var(--success-color); color: white; padding: 1rem; border-radius: 8px;">
+                                <strong>Spuren</strong><br>
+                                Konzentrische Kreise
+                            </div>
+                            <div style="background: var(--warning-color); color: white; padding: 1rem; border-radius: 8px;">
+                                <strong>Sektoren</strong><br>
+                                Kleinste Speichereinheit
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>📐 Grundbegriffe</h4>
+                        <ul>
+                            <li><strong>Sektor:</strong> Kleinste adressierbare Einheit (meist 512 Bytes oder 4 KB)</li>
+                            <li><strong>Cluster/Block:</strong> Gruppe von Sektoren, die als Einheit behandelt werden</li>
+                            <li><strong>Spur:</strong> Kreisförmiger Bereich auf einer Festplatte</li>
+                            <li><strong>Zylinder:</strong> Alle Spuren mit gleicher Position übereinander</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="partitionen" class="section">
+                    <h2>🗂️ Partitionen</h2>
+                    
+                    <p>Eine Partition ist wie ein separater Bereich auf deiner Festplatte. Stell dir vor, du teilst dein Zimmer in verschiedene Bereiche auf: einen für Kleidung, einen für Bücher, einen für Elektronik.</p>
+
+                    <div class="visual-diagram">
+                        <h4>Beispiel: Festplatte mit mehreren Partitionen</h4>
+                        <div class="disk-structure">
+                            <div class="partition ntfs">
+                                C: (NTFS)<br>
+                                System<br>
+                                100 GB
+                            </div>
+                            <div class="partition fat">
+                                D: (FAT32)<br>
+                                Daten<br>
+                                200 GB
+                            </div>
+                            <div class="partition ext">
+                                E: (EXT4)<br>
+                                Linux<br>
+                                150 GB
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>✅ Vorteile von Partitionen</h3>
+                    <ul>
+                        <li><strong>Organisation:</strong> Trennung von System- und Benutzerdateien</li>
+                        <li><strong>Sicherheit:</strong> Probleme in einer Partition betreffen nicht die anderen</li>
+                        <li><strong>Performance:</strong> Verschiedene Dateisysteme für verschiedene Zwecke</li>
+                        <li><strong>Dual-Boot:</strong> Mehrere Betriebssysteme auf einer Festplatte</li>
+                    </ul>
+                </section>
+
+                <section id="fat" class="section">
+                    <h2>📋 File Allocation Table (FAT)</h2>
+                    
+                    <p>FAT ist eines der ältesten und einfachsten Dateisysteme. Der Name bedeutet "Datei-Zuordnungs-Tabelle" - und genau das ist es auch!</p>
+
+                    <div class="visual-diagram">
+                        <h4>FAT-Tabelle (vereinfacht)</h4>
+                        <table class="filesystem-table">
+                            <thead>
+                                <tr>
+                                    <th>Cluster</th>
+                                    <th>Nächster Cluster</th>
+                                    <th>Inhalt</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>1</td>
+                                    <td>2</td>
+                                    <td>Anfang von "Brief.txt"</td>
+                                </tr>
+                                <tr>
+                                    <td>2</td>
+                                    <td>5</td>
+                                    <td>Fortsetzung "Brief.txt"</td>
+                                </tr>
+                                <tr>
+                                    <td>3</td>
+                                    <td>EOF</td>
+                                    <td>"Foto.jpg" (komplette Datei)</td>
+                                </tr>
+                                <tr>
+                                    <td>4</td>
+                                    <td>FREI</td>
+                                    <td>Nicht belegt</td>
+                                </tr>
+                                <tr>
+                                    <td>5</td>
+                                    <td>EOF</td>
+                                    <td>Ende von "Brief.txt"</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>📊 FAT-Varianten</h3>
+                    <table class="filesystem-table">
+                        <thead>
+                            <tr>
+                                <th>Version</th>
+                                <th>Max. Dateigröße</th>
+                                <th>Max. Partitionsgröße</th>
+                                <th>Besonderheiten</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>FAT16</strong></td>
+                                <td>2 GB</td>
+                                <td>2 GB</td>
+                                <td>Alt, nur für kleine Medien</td>
+                            </tr>
+                            <tr>
+                                <td><strong>FAT32</strong></td>
+                                <td>4 GB</td>
+                                <td>2 TB</td>
+                                <td>Weit verbreitet, USB-Sticks</td>
+                            </tr>
+                            <tr>
+                                <td><strong>exFAT</strong></td>
+                                <td>16 EB</td>
+                                <td>128 PB</td>
+                                <td>Modern, große Dateien</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="warning-box">
+                        <h4>⚠️ FAT32-Limitierung</h4>
+                        <p>FAT32 kann keine Dateien größer als 4 GB speichern! Das ist ein Problem bei:</p>
+                        <ul>
+                            <li>HD-Videos (oft > 4 GB)</li>
+                            <li>ISO-Dateien von DVDs</li>
+                            <li>Großen Backup-Dateien</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="fragmentierung" class="section">
+                    <h2>🧩 Fragmentierung</h2>
+                    
+                    <p>Fragmentierung ist wie ein Puzzle, bei dem die Teile über den ganzen Tisch verstreut sind. Die Datei ist vollständig, aber ihre Teile liegen nicht zusammen.</p>
+
+                    <div class="info-box">
+                        <h4>💡 Definition: Fragmentierung</h4>
+                        <p>Fragmentierung tritt auf, wenn eine Datei nicht in aufeinanderfolgenden Clustern gespeichert wird, sondern über verschiedene Bereiche der Festplatte verteilt ist.</p>
+                    </div>
+
+                    <div class="warning-box">
+                        <h4>⚠️ Wichtig bei SSDs</h4>
+                        <p>SSDs (Solid State Drives) sollten <strong>NICHT</strong> defragmentiert werden, da:</p>
+                        <ul>
+                            <li>Kein mechanischer Kopf existiert (kein Performance-Gewinn)</li>
+                            <li>Unnötige Schreibvorgänge die Lebensdauer verkürzen</li>
+                            <li>SSD-Controller optimieren automatisch</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="ntfs" class="section">
+                    <h2>🏢 NTFS (New Technology File System)</h2>
+                    
+                    <p>NTFS ist das moderne Dateisystem von Windows. Es ist wie ein hochmodernes Lagersystem mit vielen Sicherheitsfeatures und erweiterten Funktionen.</p>
+
+                    <div class="info-box">
+                        <h4>💡 NTFS-Features</h4>
+                        <ul>
+                            <li><strong>Journaling:</strong> Protokolliert alle Änderungen für Crash-Sicherheit</li>
+                            <li><strong>Zugriffsrechte:</strong> Detaillierte Benutzer- und Gruppenrechte</li>
+                            <li><strong>Kompression:</strong> Automatische Dateikompression</li>
+                            <li><strong>Verschlüsselung:</strong> EFS (Encrypting File System)</li>
+                            <li><strong>Große Dateien:</strong> Bis zu 16 TB pro Datei</li>
+                            <li><strong>Quotas:</strong> Speicherplatz-Beschränkungen pro Benutzer</li>
+                        </ul>
+                    </div>
+
+                    <h3>📊 NTFS vs. FAT32 Vergleich</h3>
+                    <table class="filesystem-table">
+                        <thead>
+                            <tr>
+                                <th>Merkmal</th>
+                                <th>NTFS</th>
+                                <th>FAT32</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Max. Dateigröße</strong></td>
+                                <td>16 TB</td>
+                                <td>4 GB</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Max. Partition</strong></td>
+                                <td>256 TB</td>
+                                <td>2 TB</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Zugriffsrechte</strong></td>
+                                <td>✅ Ja</td>
+                                <td>❌ Nein</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Journaling</strong></td>
+                                <td>✅ Ja</td>
+                                <td>❌ Nein</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </section>
+
+                <section id="ext" class="section">
+                    <h2>🐧 EXT-Dateisysteme (Linux)</h2>
+                    
+                    <p>EXT (Extended File System) ist die Dateisystem-Familie von Linux. Es ist wie ein modulares Baukastensystem, das über die Jahre immer weiter verbessert wurde.</p>
+
+                    <h3>📈 EXT-Evolution</h3>
+                    <table class="filesystem-table">
+                        <thead>
+                            <tr>
+                                <th>Version</th>
+                                <th>Jahr</th>
+                                <th>Max. Dateigröße</th>
+                                <th>Max. Partition</th>
+                                <th>Besonderheiten</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>EXT2</strong></td>
+                                <td>1993</td>
+                                <td>2 TB</td>
+                                <td>4 TB</td>
+                                <td>Kein Journaling</td>
+                            </tr>
+                            <tr>
+                                <td><strong>EXT3</strong></td>
+                                <td>2001</td>
+                                <td>2 TB</td>
+                                <td>4 TB</td>
+                                <td>+ Journaling</td>
+                            </tr>
+                            <tr>
+                                <td><strong>EXT4</strong></td>
+                                <td>2008</td>
+                                <td>16 TB</td>
+                                <td>1 EB</td>
+                                <td>+ Extents, bessere Performance</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="info-box">
+                        <h4>💡 Was macht EXT4 besonders?</h4>
+                        <ul>
+                            <li><strong>Extents:</strong> Effizientere Speicherung großer Dateien</li>
+                            <li><strong>Delayed Allocation:</strong> Optimiert Schreibvorgänge</li>
+                            <li><strong>Online Defragmentation:</strong> Defragmentierung im laufenden Betrieb</li>
+                            <li><strong>Flexible Blockgrößen:</strong> 1KB bis 64KB</li>
+                            <li><strong>Schnelle fsck:</strong> Schnellere Dateisystem-Prüfung</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>🔍 Was ist eine Inode?</h4>
+                        <p>Eine Inode (Index Node) ist wie eine Karteikarte für jede Datei:</p>
+                        <ul>
+                            <li>Datei-Größe und Typ</li>
+                            <li>Zugriffsrechte</li>
+                            <li>Zeitstempel (erstellt, geändert, zugegriffen)</li>
+                            <li>Verweise auf die Datenblöcke</li>
+                            <li>Anzahl der Hard Links</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="zugriffsrechte" class="section">
+                    <h2>🔐 Zugriffsrechte</h2>
+                    
+                    <p>Zugriffsrechte sind wie Schlüssel zu verschiedenen Türen. Sie bestimmen, wer was mit Dateien und Ordnern machen darf.</p>
+
+                    <h3>🐧 Unix/Linux-Zugriffsrechte</h3>
+                    <p>Linux verwendet ein einfaches aber mächtiges System mit drei Arten von Benutzern und drei Arten von Rechten:</p>
+
+                    <div class="visual-diagram">
+                        <h4>Zugriffsrechte-Schema</h4>
+                        <div style="font-family: 'Monaco', 'Menlo', 'Ubuntu Mono', monospace; font-size: 1.2rem; background: var(--code-bg); color: var(--code-text); padding: 1rem; border-radius: 8px;">
+                            <span style="color: #ef4444;">-</span><span style="color: #3b82f6;">rwx</span><span style="color: #10b981;">rwx</span><span style="color: #f59e0b;">rwx</span>
+                        </div>
+                        <div style="display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-top: 1rem;">
+                            <div style="background: var(--danger-color); color: white; padding: 1rem; text-align: center;">
+                                <strong>Dateityp</strong><br>
+                                - = Datei<br>
+                                d = Ordner
+                            </div>
+                            <div style="background: var(--primary-color); color: white; padding: 1rem; text-align: center;">
+                                <strong>Owner</strong><br>
+                                Besitzer der Datei
+                            </div>
+                            <div style="background: var(--success-color); color: white; padding: 1rem; text-align: center;">
+                                <strong>Group</strong><br>
+                                Benutzergruppe
+                            </div>
+                            <div style="background: var(--warning-color); color: white; padding: 1rem; text-align: center;">
+                                <strong>Others</strong><br>
+                                Alle anderen
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>🔤 Rechte-Bedeutung</h3>
+                    <table class="filesystem-table">
+                        <thead>
+                            <tr>
+                                <th>Recht</th>
+                                <th>Symbol</th>
+                                <th>Oktal</th>
+                                <th>Datei</th>
+                                <th>Ordner</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Read</strong></td>
+                                <td>r</td>
+                                <td>4</td>
+                                <td>Datei lesen</td>
+                                <td>Inhalt auflisten</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Write</strong></td>
+                                <td>w</td>
+                                <td>2</td>
+                                <td>Datei ändern</td>
+                                <td>Dateien erstellen/löschen</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Execute</strong></td>
+                                <td>x</td>
+                                <td>1</td>
+                                <td>Datei ausführen</td>
+                                <td>Ordner betreten</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="example-box">
+                        <h4>🔍 Beispiele für Zugriffsrechte</h4>
+                        <div class="code-block">
+<span class="command">-rw-r--r--</span>  <span class="path">dokument.txt</span>     <span class="comment"># (644)</span>
+<span class="comment"># Owner: lesen + schreiben</span>
+<span class="comment"># Group: nur lesen</span>
+<span class="comment"># Others: nur lesen</span>
+
+<span class="command">-rwxr-xr-x</span>  <span class="path">programm.exe</span>     <span class="comment"># (755)</span>
+<span class="comment"># Owner: alles (lesen + schreiben + ausführen)</span>
+<span class="comment"># Group: lesen + ausführen</span>
+<span class="comment"># Others: lesen + ausführen</span>
+
+<span class="command">drwxrwx---</span>  <span class="path">projekt/</span>         <span class="comment"># (770)</span>
+<span class="comment"># Owner: alles</span>
+<span class="comment"># Group: alles</span>
+<span class="comment"># Others: nichts</span>
+                        </div>
+                    </div>
+
+                    <h3>🏢 Windows-Zugriffsrechte (NTFS)</h3>
+                    <p>Windows verwendet Access Control Lists (ACLs) - viel detaillierter als Unix:</p>
+
+                    <div class="info-box">
+                        <h4>💡 NTFS-Berechtigungen</h4>
+                        <ul>
+                            <li><strong>Full Control:</strong> Vollzugriff (wie root)</li>
+                            <li><strong>Modify:</strong> Ändern (lesen + schreiben + löschen)</li>
+                            <li><strong>Read & Execute:</strong> Lesen und Ausführen</li>
+                            <li><strong>Read:</strong> Nur lesen</li>
+                            <li><strong>Write:</strong> Nur schreiben</li>
+                            <li><strong>Special Permissions:</strong> Individuelle Feineinstellungen</li>
+                        </ul>
+                    </div>
+                </section>
+
+                <section id="praxis" class="section">
+                    <h2>💻 Praxis & Befehle</h2>
+                    
+                    <h3>🐧 Linux-Befehle</h3>
+                    <div class="code-block">
+<span class="command">ls <span class="flag">-la</span></span>
+<span class="comment"># Zeigt alle Dateien mit Rechten</span>
+<span class="output">-rw-r--r-- 1 user group 1024 Jan 15 10:30 datei.txt</span>
+
+<span class="command">df <span class="flag">-h</span></span>
+<span class="comment"># Zeigt Festplatten-Belegung in menschenlesbarer Form</span>
+<span class="output">Filesystem      Size  Used Avail Use% Mounted on</span>
+<span class="output">/dev/sda1        20G   15G  4.2G  79% /</span>
+
+<span class="command">chmod <span class="flag">755</span> <span class="path">datei.txt</span></span>
+<span class="comment"># Setzt Rechte auf rwxr-xr-x</span>
+
+<span class="command">chown <span class="path">benutzer:gruppe datei.txt</span></span>
+<span class="comment"># Ändert Besitzer und Gruppe</span>
+
+<span class="command">mount</span>
+<span class="comment"># Zeigt alle gemounteten Dateisysteme</span>
+
+<span class="command">umount <span class="path">/dev/sda1</span></span>
+<span class="comment"># Hängt Dateisystem aus</span>
+
+<span class="command">fsck <span class="flag">-f</span> <span class="path">/dev/sda1</span></span>
+<span class="comment"># Prüft Dateisystem auf Fehler (force)</span>
+
+<span class="command">du <span class="flag">-sh</span> <span class="path">/home/user</span></span>
+<span class="comment"># Zeigt Verzeichnisgröße</span>
+                    </div>
+
+                    <h3>🏢 Windows-Befehle</h3>
+                    <div class="code-block">
+<span class="command">dir</span>
+<span class="comment"># Zeigt Ordnerinhalt</span>
+
+<span class="command">chkdsk <span class="path">C:</span> <span class="flag">/f</span></span>
+<span class="comment"># Prüft und repariert Laufwerk C: (fix)</span>
+
+<span class="command">defrag <span class="path">C:</span> <span class="flag">/O</span></span>
+<span class="comment"># Defragmentiert Laufwerk C: (optimize)</span>
+
+<span class="command">icacls <span class="path">datei.txt</span> <span class="flag">/grant</span> benutzer:F</span>
+<span class="comment"># Gibt vollzugriff (Full Control)</span>
+
+<span class="command">fsutil fsinfo volumeinfo <span class="path">C:</span></span>
+<span class="comment"># Zeigt Dateisystem-Informationen</span>
+
+<span class="command">diskpart</span>
+<span class="comment"># Erweiterte Festplatten-Verwaltung</span>
+
+<span class="command">sfc <span class="flag">/scannow</span></span>
+<span class="comment"># System File Checker - repariert Systemdateien</span>
+                    </div>
+
+                    <h3>🛠️ Praktische Tipps</h3>
+                    
+                    <div class="warning-box">
+                        <h4>⚠️ Vorsicht bei Dateisystem-Operationen</h4>
+                        <ul>
+                            <li><strong>Backup erstellen</strong> vor Partitionierung oder Formatierung</li>
+                            <li><strong>Niemals fsck auf gemounteten Systemen</strong> ausführen</li>
+                            <li><strong>Defragmentierung nur bei HDDs</strong>, nicht bei SSDs</li>
+                            <li><strong>Zugriffsrechte sorgfältig</strong> setzen (Sicherheit geht vor!)</li>
+                            <li><strong>Root-Rechte sparsam</strong> verwenden</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-box">
+                        <h4>🔍 Dateisystem wählen - Entscheidungshilfe</h4>
+                        <ul>
+                            <li><strong>FAT32:</strong> USB-Sticks, maximale Kompatibilität wichtig</li>
+                            <li><strong>exFAT:</strong> Große USB-Sticks/SD-Karten, große Dateien (>4GB)</li>
+                            <li><strong>NTFS:</strong> Windows-Systeme, Sicherheit und erweiterte Features</li>
+                            <li><strong>EXT4:</strong> Linux-Systeme, beste Performance und Stabilität</li>
+                            <li><strong>APFS:</strong> macOS (nicht behandelt, aber erwähnenswert)</li>
+                        </ul>
+                    </div>
+
+                    <h3>🎯 Zusammenfassung</h3>
+                    <div class="info-box">
+                        <h4>💡 Das Wichtigste in Kürze</h4>
+                        <ul>
+                            <li><strong>Dateisysteme</strong> organisieren und verwalten Dateien auf Speichermedien</li>
+                            <li><strong>Partitionen</strong> teilen Festplatten in logische, getrennte Bereiche</li>
+                            <li><strong>FAT</strong> ist einfach und universell kompatibel, aber funktional limitiert</li>
+                            <li><strong>NTFS</strong> bietet erweiterte Sicherheit und Features für Windows</li>
+                            <li><strong>EXT4</strong> ist das moderne, optimierte Dateisystem für Linux</li>
+                            <li><strong>Zugriffsrechte</strong> schützen Dateien vor unbefugtem Zugriff</li>
+                            <li><strong>Fragmentierung</strong> verlangsamt nur HDDs, nicht SSDs</li>
+                            <li><strong>Regelmäßige Wartung</strong> hält Dateisysteme gesund und schnell</li>
+                        </ul>
+                    </div>
+                </section>
+            </main>
+        </div>
+
+        <!-- Back to Index Button -->
+        <div class="back-to-index">
+            <button onclick="window.location.href='index.html'">
+                🏠 Zurück zur Hauptseite
+            </button>
+        </div>
+
+        <footer style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--bg-white); border-radius: 16px; border: 1px solid var(--border-color);">
+            <p style="color: var(--text-light); font-size: 0.9rem;">
+                <strong>Lernzettel Dateisysteme - Technische Informatik III & IV</strong><br>
+                Abitur 2026 - Informationstechnik TG Baden-Württemberg<br>
+                <em>Basierend auf Bildungsplan 2019 | BPE 6/7 - Kapitel 10.3</em>
+            </p>
+        </footer>
+    </div>
+
+    <!-- Scroll to Top Button -->
+    <button class="scroll-to-top" id="scrollToTop" onclick="scrollToTop()">
+        ↑
+    </button>
+
+    <script>
+        // Smooth scrolling for sidebar links
+        document.querySelectorAll('.sidebar a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight current section in sidebar
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.section');
+            const sidebarLinks = document.querySelectorAll('.sidebar a');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.pageYOffset >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            sidebarLinks.forEach(link => {
+                link.style.backgroundColor = '';
+                link.style.color = '';
+                if (link.getAttribute('href') === '#' + current) {
+                    link.style.backgroundColor = 'var(--primary-color)';
+                    link.style.color = 'white';
+                }
+            });
+        });
+
+        // Scroll to top button functionality
+        const scrollToTopBtn = document.getElementById('scrollToTop');
+
+        window.addEventListener('scroll', function() {
+            if (window.pageYOffset > 300) {
+                scrollToTopBtn.classList.add('visible');
+            } else {
+                scrollToTopBtn.classList.remove('visible');
+            }
+        });
+
+        function scrollToTop() {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        }
+
+        // Add some interactive effects
+        document.querySelectorAll('.code-block').forEach(block => {
+            block.addEventListener('click', function() {
+                // Copy to clipboard functionality could be added here
+                this.style.borderColor = 'var(--arduino-green)';
+                setTimeout(() => {
+                    this.style.borderColor = 'var(--arduino-blue)';
+                }, 200);
+            });
+        });
+    </script>
+</body>
+</html>

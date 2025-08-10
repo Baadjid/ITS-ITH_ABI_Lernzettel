@@ -1,0 +1,2038 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arduino Programming - Abitur 2026 Lernzettel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --code-bg: #1e293b;
+            --code-text: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .breadcrumb {
+            background: var(--bg-white);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            font-size: 1.4rem;
+            font-weight: bold;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .subsection {
+            margin-bottom: 2rem;
+        }
+
+        .subsection h3 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .subsection h4 {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            margin: 1.5rem 0 0.8rem 0;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            position: relative;
+        }
+
+        .code-title {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px 4px 0 0;
+            font-size: 0.9rem;
+            font-weight: bold;
+            margin: 1rem 0 0 0;
+        }
+
+        .code-block + .code-block {
+            margin-top: 0;
+            border-radius: 0 0 8px 8px;
+        }
+
+        .highlight {
+            background: linear-gradient(135deg, #fef3c7, #fbbf24);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #dbeafe, #3b82f6);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fee2e2, #ef4444);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #dcfce7, #10b981);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+        }
+
+        .pin-diagram {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2rem;
+            margin: 1rem 0;
+        }
+
+        .pin-section {
+            background: var(--bg-light);
+            padding: 1rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .pin-section h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .pin-list {
+            list-style: none;
+            padding: 0;
+        }
+
+        .pin-list li {
+            padding: 0.3rem 0;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .pin-list li:last-child {
+            border-bottom: none;
+        }
+
+        .function-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            background: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .function-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .function-table td {
+            padding: 0.8rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .function-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .example-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .example-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .example-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            gap: 1rem;
+        }
+
+        .nav-button {
+            padding: 1rem 2rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-button.prev {
+            background: var(--text-light);
+        }
+
+        .nav-button.prev:hover {
+            background: var(--text-dark);
+        }
+
+        .keyword {
+            background: var(--warning-color);
+            color: white;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        .datatype {
+            background: var(--success-color);
+            color: white;
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-weight: bold;
+            font-size: 0.9em;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+                flex-direction: column;
+            }
+            
+            .pin-diagram {
+                grid-template-columns: 1fr;
+            }
+            
+            .example-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-buttons {
+                flex-direction: column;
+            }
+        }
+    </style>
+</head>
+<body>
+<header class="header">
+            <div class="breadcrumb">
+                <a href="index.html">🏠 Hauptseite</a> > 
+                <a href="#technische-informatik-ii">⚙️ Technische Informatik II</a> > 
+                Arduino Programming
+            </div>
+            <h1>Arduino Programming</h1>
+            <p class="subtitle">Technische Informatik II - BPE 2</p>
+        </header>
+    <div class="container">
+        <div class="section">
+            <div class="section-header">🎓 Abitur-relevante Konzepte</div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Zustandsdiagramme in Arduino implementieren</h3>
+                    <p>Ein wichtiges Konzept für das Abitur ist die Umsetzung von Zustandsdiagrammen in Code.</p>
+                    
+                    <div class="code-title">Zustandsmaschine: Automatische Türsteuerung</div>
+                    <div class="code-block">// Zustände definieren
+enum TuerZustand {
+  GESCHLOSSEN,
+  OEFFNET,
+  OFFEN,
+  SCHLIESST
+};
+
+// Zustandsvariable
+TuerZustand aktuellerZustand = GESCHLOSSEN;
+
+// Timer für Zustandswechsel
+unsigned long zustandStartZeit = 0;
+const unsigned long OEFFNUNGSZEIT = 3000;  // 3 Sekunden öffnen
+const unsigned long OFFENZEIT = 5000;      // 5 Sekunden offen bleiben
+
+// Pins
+const int SENSOR_PIN = 2;    // Näherungssensor
+const int MOTOR_OEFFNEN = 3; // Motor öffnen
+const int MOTOR_SCHLIESSEN = 4; // Motor schließen
+const int STATUS_LED = 13;   // Status-LED
+
+void setup() {
+  pinMode(SENSOR_PIN, INPUT_PULLUP);
+  pinMode(MOTOR_OEFFNEN, OUTPUT);
+  pinMode(MOTOR_SCHLIESSEN, OUTPUT);
+  pinMode(STATUS_LED, OUTPUT);
+  
+  Serial.begin(9600);
+  Serial.println("Türsteuerung gestartet");
+}
+
+void loop() {
+  bool personErkannt = (digitalRead(SENSOR_PIN) == LOW);
+  unsigned long aktuelleZeit = millis();
+  
+  // Zustandsmaschine
+  switch (aktuellerZustand) {
+    case GESCHLOSSEN:
+      digitalWrite(STATUS_LED, LOW);
+      stoppeMotoren();
+      
+      if (personErkannt) {
+        Serial.println("Person erkannt - Tür öffnet");
+        aktuellerZustand = OEFFNET;
+        zustandStartZeit = aktuelleZeit;
+      }
+      break;
+      
+    case OEFFNET:
+      digitalWrite(STATUS_LED, HIGH);
+      digitalWrite(MOTOR_OEFFNEN, HIGH);
+      digitalWrite(MOTOR_SCHLIESSEN, LOW);
+      
+      if (aktuelleZeit - zustandStartZeit >= OEFFNUNGSZEIT) {
+        Serial.println("Tür ist offen");
+        aktuellerZustand = OFFEN;
+        zustandStartZeit = aktuelleZeit;
+      }
+      break;
+      
+    case OFFEN:
+      blinkeLED(STATUS_LED, 100);  // LED blinkt
+      stoppeMotoren();
+      
+      if (aktuelleZeit - zustandStartZeit >= OFFENZEIT) {
+        Serial.println("Tür schließt automatisch");
+        aktuellerZustand = SCHLIESST;
+        zustandStartZeit = aktuelleZeit;
+      }
+      break;
+      
+    case SCHLIESST:
+      digitalWrite(STATUS_LED, HIGH);
+      digitalWrite(MOTOR_OEFFNEN, LOW);
+      digitalWrite(MOTOR_SCHLIESSEN, HIGH);
+      
+      if (aktuelleZeit - zustandStartZeit >= OEFFNUNGSZEIT) {
+        Serial.println("Tür ist geschlossen");
+        aktuellerZustand = GESCHLOSSEN;
+      }
+      break;
+  }
+  
+  delay(100);
+}
+
+void stoppeMotoren() {
+  digitalWrite(MOTOR_OEFFNEN, LOW);
+  digitalWrite(MOTOR_SCHLIESSEN, LOW);
+}
+
+void blinkeLED(int pin, int intervall) {
+  static unsigned long letztesBlinken = 0;
+  static bool ledZustand = false;
+  
+  if (millis() - letztesBlinken >= intervall) {
+    ledZustand = !ledZustand;
+    digitalWrite(pin, ledZustand);
+    letztesBlinken = millis();
+  }
+}</div>
+
+                    <div class="info-box">
+                        <strong>🎯 Abitur-Wissen:</strong> Zustandsdiagramme werden oft in Klausuren abgefragt. Du musst verstehen, wie Zustände, Übergänge und Ereignisse in Code umgesetzt werden.
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Interrupts verstehen und anwenden</h3>
+                    <p>Interrupts sind ein wichtiges Konzept für zeitkritische Anwendungen.</p>
+                    
+                    <div class="code-title">Externe Interrupts für schnelle Reaktionen</div>
+                    <div class="code-block">// Globale Variablen für Interrupt
+volatile bool tasterGedrueckt = false;
+volatile unsigned long letzterInterrupt = 0;
+const unsigned long ENTPRELL_ZEIT = 200;  // 200ms Entprellung
+
+// Zähler für Ereignisse
+volatile int impulsZaehler = 0;
+
+void setup() {
+  Serial.begin(9600);
+  
+  // Pin 2 und 3 können Interrupts auf Arduino Uno
+  pinMode(2, INPUT_PULLUP);  // Taster
+  pinMode(3, INPUT_PULLUP);  // Impulsgeber (z.B. Drehencoder)
+  pinMode(13, OUTPUT);       // Status-LED
+  
+  // Interrupt-Funktionen zuweisen
+  attachInterrupt(digitalPinToInterrupt(2), tasterISR, FALLING);
+  attachInterrupt(digitalPinToInterrupt(3), impulsISR, RISING);
+  
+  Serial.println("Interrupt-System bereit");
+}
+
+void loop() {
+  // Hauptprogramm läuft normal weiter
+  static unsigned long letzteAusgabe = 0;
+  
+  // Taster-Ereignis verarbeiten
+  if (tasterGedrueckt) {
+    tasterGedrueckt = false;  // Flag zurücksetzen
+    Serial.println("Taster wurde gedrückt!");
+    
+    // LED umschalten
+    digitalWrite(13, !digitalRead(13));
+  }
+  
+  // Impulse alle Sekunde ausgeben
+  if (millis() - letzteAusgabe >= 1000) {
+    Serial.print("Impulse pro Sekunde: ");
+    Serial.println(impulsZaehler);
+    impulsZaehler = 0;  // Zähler zurücksetzen
+    letzteAusgabe = millis();
+  }
+  
+  // Andere Aufgaben können hier weiterlaufen
+  delay(100);
+}
+
+// Interrupt Service Routine für Taster
+void tasterISR() {
+  unsigned long jetzt = millis();
+  
+  // Entprellung: Ignore Interrupts zu schnell aufeinander
+  if (jetzt - letzterInterrupt > ENTPRELL_ZEIT) {
+    tasterGedrueckt = true;
+    letzterInterrupt = jetzt;
+  }
+}
+
+// Interrupt Service Routine für Impulszählung
+void impulsISR() {
+  impulsZaehler++;
+}</div>
+
+                    <div class="warning-box">
+                        <strong>⚠️ Interrupt-Regeln:</strong><br>
+                        • ISR-Funktionen kurz halten!<br>
+                        • Nur volatile Variablen in ISR verwenden<br>
+                        • Keine delay(), Serial.print() in ISR<br>
+                        • Nur Flags setzen, Verarbeitung in loop()
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>PWM (Pulsweitenmodulation) verstehen</h3>
+                    <p>PWM ist essentiell für die Steuerung von Motoren, LEDs und anderen analogen Ausgaben.</p>
+                    
+                    <div class="code-title">Motor-Steuerung mit PWM</div>
+                    <div class="code-block">// PWM-fähige Pins für Motorsteuerung
+const int MOTOR_PWM_PIN = 9;     // Geschwindigkeit (PWM)
+const int MOTOR_DIR_PIN1 = 7;    // Richtung 1
+const int MOTOR_DIR_PIN2 = 8;    // Richtung 2
+const int POTI_PIN = A0;         // Potentiometer für Geschwindigkeit
+
+void setup() {
+  pinMode(MOTOR_PWM_PIN, OUTPUT);
+  pinMode(MOTOR_DIR_PIN1, OUTPUT);
+  pinMode(MOTOR_DIR_PIN2, OUTPUT);
+  
+  Serial.begin(9600);
+  Serial.println("Motor-Steuerung gestartet");
+  Serial.println("Poti links = rückwärts, rechts = vorwärts");
+}
+
+void loop() {
+  // Potentiometer lesen (0-1023)
+  int potiWert = analogRead(POTI_PIN);
+  
+  // In Motor-Parameter umrechnen
+  int geschwindigkeit;
+  bool richtungVorwaerts;
+  
+  if (potiWert < 462) {  // Untere Hälfte = rückwärts
+    geschwindigkeit = map(potiWert, 0, 461, 255, 0);
+    richtungVorwaerts = false;
+  } else if (potiWert > 561) {  // Obere Hälfte = vorwärts
+    geschwindigkeit = map(potiWert, 562, 1023, 0, 255);
+    richtungVorwaerts = true;
+  } else {  // Mitte = Stop (Totbereich)
+    geschwindigkeit = 0;
+    richtungVorwaerts = true;
+  }
+  
+  // Motor entsprechend ansteuern
+  steuerMotor(geschwindigkeit, richtungVorwaerts);
+  
+  // Status ausgeben
+  Serial.print("Poti: ");
+  Serial.print(potiWert);
+  Serial.print(" -> Geschw: ");
+  Serial.print(geschwindigkeit);
+  Serial.print(" Richtung: ");
+  Serial.println(richtungVorwaerts ? "vorwärts" : "rückwärts");
+  
+  delay(100);
+}
+
+void steuerMotor(int geschwindigkeit, bool vorwaerts) {
+  // Richtung setzen
+  if (vorwaerts) {
+    digitalWrite(MOTOR_DIR_PIN1, HIGH);
+    digitalWrite(MOTOR_DIR_PIN2, LOW);
+  } else {
+    digitalWrite(MOTOR_DIR_PIN1, LOW);
+    digitalWrite(MOTOR_DIR_PIN2, HIGH);
+  }
+  
+  // Geschwindigkeit setzen (PWM)
+  analogWrite(MOTOR_PWM_PIN, geschwindigkeit);
+}
+
+// Sanftes Anhalten des Motors
+void motorStopp() {
+  // Sanft abbremsen
+  int aktuelleGeschw = 255;  // Annahme: Motor läuft mit voller Geschw.
+  
+  for (int geschw = aktuelleGeschw; geschw >= 0; geschw -= 5) {
+    analogWrite(MOTOR_PWM_PIN, geschw);
+    delay(50);
+  }
+  
+  // Motor komplett stoppen
+  digitalWrite(MOTOR_DIR_PIN1, LOW);
+  digitalWrite(MOTOR_DIR_PIN2, LOW);
+  analogWrite(MOTOR_PWM_PIN, 0);
+}</div>
+
+                    <div class="highlight">
+                        <strong>🎯 PWM verstehen:</strong><br>
+                        • PWM = schnelles Ein/Aus-Schalten<br>
+                        • Duty Cycle = Verhältnis Ein-Zeit zu Gesamt-Zeit<br>
+                        • 0 = immer aus, 255 = immer an, 127 = 50% ein<br>
+                        • Nur bestimmte Pins sind PWM-fähig (markiert mit ~)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">📚 Zusammenfassung und Klausurvorbereitung</div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Wichtige Konzepte für die Klausur</h3>
+                    
+                    <div class="example-grid">
+                        <div class="example-card">
+                            <h4>🔧 Hardware-Grundlagen</h4>
+                            <ul>
+                                <li>Pin-Modi: INPUT, OUTPUT, INPUT_PULLUP</li>
+                                <li>Digitale vs. analoge Pins</li>
+                                <li>PWM-Pins erkennen (~)</li>
+                                <li>Pull-Up/Pull-Down Widerstände</li>
+                                <li>Logikpegel: HIGH/LOW, 5V/0V</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="example-card">
+                            <h4>💻 Software-Grundlagen</h4>
+                            <ul>
+                                <li>setup() vs. loop() Funktion</li>
+                                <li>Datentypen: int, float, bool, byte</li>
+                                <li>Variablen: global vs. lokal</li>
+                                <li>Funktionen schreiben und aufrufen</li>
+                                <li>Arrays verwenden</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="example-card">
+                            <h4>🔄 Kontrollstrukturen</h4>
+                            <ul>
+                                <li>if-else Bedingungen</li>
+                                <li>for-, while-, do-while Schleifen</li>
+                                <li>switch-case Strukturen</li>
+                                <li>Logische Operatoren: &&, ||, !</li>
+                                <li>Vergleichsoperatoren: ==, !=, <, ></li>
+                            </ul>
+                        </div>
+                        
+                        <div class="example-card">
+                            <h4>⏰ Timing und Interrupts</h4>
+                            <ul>
+                                <li>delay() vs. millis()</li>
+                                <li>Non-blocking Programming</li>
+                                <li>Externe Interrupts</li>
+                                <li>Timer-basierte Programmierung</li>
+                                <li>Entprellung von Tastern</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="example-card">
+                            <h4>🔌 Input/Output</h4>
+                            <ul>
+                                <li>digitalRead(), digitalWrite()</li>
+                                <li>analogRead(), analogWrite()</li>
+                                <li>PWM verstehen und anwenden</li>
+                                <li>Sensoren auslesen</li>
+                                <li>Aktoren ansteuern</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="example-card">
+                            <h4>📡 Kommunikation</h4>
+                            <ul>
+                                <li>Serielle Kommunikation (UART)</li>
+                                <li>Serial.begin(), print(), println()</li>
+                                <li>Serial Monitor für Debugging</li>
+                                <li>Daten senden und empfangen</li>
+                                <li>Protokolle: SPI, I2C (Grundlagen)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Typische Klausuraufgaben</h3>
+                    
+                    <div class="warning-box">
+                        <strong>📋 Häufige Aufgabentypen:</strong><br>
+                        • Code-Analyse: "Was macht dieser Code?"<br>
+                        • Fehlersuche: "Finde und korrigiere die Fehler"<br>
+                        • Implementierung: "Schreibe Code für folgende Aufgabe"<br>
+                        • Zustandsdiagramm → Code umsetzen<br>
+                        • Hardware-Schaltung → Software schreiben
+                    </div>
+
+                    <div class="code-title">Beispiel-Klausuraufgabe: Automatische Bewässerung</div>
+                    <div class="code-block">/*
+AUFGABE: Implementiere eine automatische Bewässerungsanlage
+- Bodenfeuchtesensor an Pin A0 (0-1023, niedrig = trocken)
+- Wasserpumpe an Pin 8 (HIGH = an, LOW = aus)
+- Status-LED an Pin 13 (blinkt bei Bewässerung)
+- Schwellwert: Bewässerung bei Werten unter 300
+- Bewässerungsdauer: 5 Sekunden
+- Pause zwischen Messungen: 10 Sekunden
+
+ZUSATZ: Verwende non-blocking Programming!
+*/
+
+// LÖSUNG:
+const int SENSOR_PIN = A0;
+const int PUMPE_PIN = 8;
+const int LED_PIN = 13;
+
+const int TROCKEN_GRENZE = 300;
+const unsigned long BEWAESSERUNG_DAUER = 5000;  // 5s
+const unsigned long MESS_INTERVALL = 10000;     // 10s
+
+bool bewaessert = false;
+unsigned long startZeitBewaesserung = 0;
+unsigned long startZeitMessung = 0;
+
+void setup() {
+  pinMode(SENSOR_PIN, INPUT);
+  pinMode(PUMPE_PIN, OUTPUT);
+  pinMode(LED_PIN, OUTPUT);
+  
+  Serial.begin(9600);
+  startZeitMessung = millis();  // Erste Messung sofort
+}
+
+void loop() {
+  unsigned long jetzt = millis();
+  
+  // Bewässerung läuft gerade?
+  if (bewaessert) {
+    // LED blinken lassen während Bewässerung
+    blinkeLED();
+    
+    // Bewässerung beenden nach BEWAESSERUNG_DAUER
+    if (jetzt - startZeitBewaesserung >= BEWAESSERUNG_DAUER) {
+      digitalWrite(PUMPE_PIN, LOW);
+      digitalWrite(LED_PIN, LOW);
+      bewaessert = false;
+      Serial.println("Bewässerung beendet");
+      
+      // Nächste Messung in MESS_INTERVALL
+      startZeitMessung = jetzt;
+    }
+  } else {
+    // Zeit für neue Messung?
+    if (jetzt - startZeitMessung >= MESS_INTERVALL) {
+      int feuchtigkeit = analogRead(SENSOR_PIN);
+      Serial.print("Bodenfeuchtigkeit: ");
+      Serial.println(feuchtigkeit);
+      
+      // Zu trocken? Bewässerung starten
+      if (feuchtigkeit < TROCKEN_GRENZE) {
+        digitalWrite(PUMPE_PIN, HIGH);
+        bewaessert = true;
+        startZeitBewaesserung = jetzt;
+        Serial.println("Bewässerung gestartet - Boden zu trocken");
+      }
+      
+      // Nächste Messung planen
+      startZeitMessung = jetzt;
+    }
+  }
+}
+
+void blinkeLED() {
+  static unsigned long letztesBlinken = 0;
+  static bool ledAn = false;
+  
+  if (millis() - letztesBlinken >= 500) {  // Alle 500ms umschalten
+    ledAn = !ledAn;
+    digitalWrite(LED_PIN, ledAn);
+    letztesBlinken = millis();
+  }
+}</div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Lernstrategien für Arduino-Klausuren</h3>
+                    
+                    <div class="success-box">
+                        <strong>🎯 Erfolgsstrategie:</strong><br>
+                        <strong>1. Verstehen vor Auswendiglernen:</strong> Verstehe warum Code funktioniert<br>
+                        <strong>2. Viel praktisch üben:</strong> Schreibe selbst Code, nicht nur lesen<br>
+                        <strong>3. Fehler machen und analysieren:</strong> Aus Fehlern lernt man am meisten<br>
+                        <strong>4. Hardware verstehen:</strong> Kenne die Unterschiede zwischen Pin-Typen<br>
+                        <strong>5. Systematisch debuggen:</strong> Serial.print() ist dein bester Freund
+                    </div>
+
+                    <div class="highlight">
+                        <strong>🔧 Praktische Übungen:</strong><br>
+                        • Baue die Beispiele mit echter Hardware nach<br>
+                        • Verwende <a href="https://www.wokwi.com" target="_blank">Wokwi.com</a> für Online-Simulation<br>
+                        • Ändere Parameter und beobachte die Auswirkungen<br>
+                        • Schreibe zu jedem Konzept ein eigenes kleines Programm
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="nav-buttons">
+            <a href="mikrocontroller.html" class="nav-button prev">← Mikrocontroller-Systeme</a>
+            <a href="index.html" class="nav-button">🏠 Hauptmenü</a>
+            <a href="speicher.html" class="nav-button">Speicherarchitekturen →</a>
+        </div>
+    </div>
+
+    <script>
+        // Syntax-Highlighting für Code-Blöcke
+        document.addEventListener('DOMContentLoaded', function() {
+            const codeBlocks = document.querySelectorAll('.code-block');
+            codeBlocks.forEach(block => {
+                let html = block.innerHTML;
+                
+                // Arduino-spezifische Keywords hervorheben
+                html = html.replace(/\b(void|int|float|bool|byte|char|const|unsigned|long)\b/g, 
+                    '<span style="color: #4ade80; font-weight: bold;">$1</span>');
+                
+                html = html.replace(/\b(setup|loop|pinMode|digitalWrite|digitalRead|analogWrite|analogRead|Serial|delay|millis|HIGH|LOW|INPUT|OUTPUT|INPUT_PULLUP|true|false)\b/g, 
+                    '<span style="color: #60a5fa; font-weight: bold;">$1</span>');
+                
+                html = html.replace(/\b(if|else|for|while|do|switch|case|break|default|return)\b/g, 
+                    '<span style="color: #f59e0b; font-weight: bold;">$1</span>');
+                
+                // Kommentare hervorheben
+                html = html.replace(/(\/\/.*$)/gm, 
+                    '<span style="color: #9ca3af; font-style: italic;">$1</span>');
+                
+                html = html.replace(/(\/\*[\s\S]*?\*\/)/g, 
+                    '<span style="color: #9ca3af; font-style: italic;">$1</span>');
+                
+                // Strings hervorheben
+                html = html.replace(/(".*?")/g, 
+                    '<span style="color: #34d399;">$1</span>');
+                
+                // Zahlen hervorheben
+                html = html.replace(/\b(\d+\.?\d*)\b/g, 
+                    '<span style="color: #fbbf24;">$1</span>');
+                
+                block.innerHTML = html;
+            });
+        });
+
+        // Smooth scrolling für Ankerlinks
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Copy-to-clipboard für Code-Blöcke
+        document.querySelectorAll('.code-block').forEach(block => {
+            block.addEventListener('dblclick', function() {
+                const text = this.textContent;
+                navigator.clipboard.writeText(text).then(() => {
+                    // Feedback geben
+                    const originalBg = this.style.backgroundColor;
+                    this.style.backgroundColor = '#10b981';
+                    setTimeout(() => {
+                        this.style.backgroundColor = originalBg;
+                    }, 200);
+                });
+            });
+        });
+    </script>
+</body>
+</html>breadcrumb">
+            <a href="index.html">🏠 Hauptmenü</a> > 
+            <a href="index.html#tech-informatik-2">⚙️ Technische Informatik II</a> > 
+            <strong>💻 Arduino Programming</strong>
+        </div>
+
+        <header class="header">
+            <h1>💻 Arduino Programming</h1>
+            <p>Mikrocontroller-Programmierung mit C++ - Von den Grundlagen bis zur Praxis</p>
+        </header>
+
+        <div class="section">
+            <div class="section-header">🎯 Was ist Arduino?</div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Grundlagen verstehen</h3>
+                    <p><strong>Arduino</strong> ist eine Plattform für Mikrocontroller-Programmierung, die aus zwei Hauptkomponenten besteht:</p>
+                    
+                    <div class="example-grid">
+                        <div class="example-card">
+                            <h4>🔧 Hardware (Arduino Board)</h4>
+                            <ul>
+                                <li><strong>Mikrocontroller:</strong> ATmega328P (bei Arduino Uno)</li>
+                                <li><strong>Digitale Pins:</strong> D0-D13 (14 Stück)</li>
+                                <li><strong>Analoge Pins:</strong> A0-A5 (6 Stück)</li>
+                                <li><strong>Stromversorgung:</strong> 5V oder 3.3V</li>
+                                <li><strong>USB-Anschluss:</strong> Für Programmierung und Stromversorgung</li>
+                            </ul>
+                        </div>
+                        <div class="example-card">
+                            <h4>💾 Software (Arduino IDE)</h4>
+                            <ul>
+                                <li><strong>Entwicklungsumgebung:</strong> Zum Schreiben von Code</li>
+                                <li><strong>Compiler:</strong> Wandelt C++-Code in Maschinencode um</li>
+                                <li><strong>Upload-Funktion:</strong> Überträgt Programm auf Arduino</li>
+                                <li><strong>Serieller Monitor:</strong> Für Debugging und Ausgaben</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>💡 Wichtig zu wissen:</strong> Arduino verwendet eine vereinfachte Version von C++. Die Programmiersprache heißt "Arduino C++" und macht die Mikrocontroller-Programmierung für Anfänger zugänglich.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">🏗️ Grundstruktur eines Arduino-Programms</div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Die zwei Hauptfunktionen</h3>
+                    <p>Jedes Arduino-Programm (genannt "Sketch") hat <strong>immer</strong> diese zwei Funktionen:</p>
+
+                    <div class="code-title">Grundstruktur - Jedes Arduino-Programm</div>
+                    <div class="code-block">void setup() {
+  // Dieser Code läuft EINMAL beim Start
+  // Hier konfigurieren wir Pins, starten Kommunikation, etc.
+}
+
+void loop() {
+  // Dieser Code läuft ENDLOS in einer Schleife
+  // Hier steht die Hauptlogik des Programms
+}</div>
+
+                    <div class="example-grid">
+                        <div class="example-card">
+                            <h4>🚀 setup() Funktion</h4>
+                            <ul>
+                                <li>Läuft <strong>nur einmal</strong> beim Programmstart</li>
+                                <li>Dient zur <strong>Initialisierung</strong></li>
+                                <li>Konfiguration von Pin-Modi</li>
+                                <li>Starten der seriellen Kommunikation</li>
+                                <li>Setzen von Startwerten für Variablen</li>
+                            </ul>
+                        </div>
+                        <div class="example-card">
+                            <h4>🔄 loop() Funktion</h4>
+                            <ul>
+                                <li>Läuft <strong>endlos</strong> nach setup()</li>
+                                <li>Enthält die <strong>Hauptlogik</strong></li>
+                                <li>Lesen von Sensoren</li>
+                                <li>Schalten von Ausgängen</li>
+                                <li>Verarbeitung von Daten</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="highlight">
+                        <strong>🎯 Merksatz:</strong> setup() = Einmalige Vorbereitung, loop() = Endlose Wiederholung
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">📋 Arduino Pin-System verstehen</div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Pin-Arten und ihre Funktionen</h3>
+                    
+                    <div class="pin-diagram">
+                        <div class="pin-section">
+                            <h4>🔢 Digitale Pins (D0-D13)</h4>
+                            <ul class="pin-list">
+                                <li><strong>D0, D1:</strong> UART (Serial) - RX/TX</li>
+                                <li><strong>D2, D3:</strong> Externe Interrupts</li>
+                                <li><strong>D3, D5, D6, D9, D10, D11:</strong> PWM-fähig (~)</li>
+                                <li><strong>D13:</strong> Eingebaute LED</li>
+                                <li><strong>Alle:</strong> INPUT oder OUTPUT möglich</li>
+                            </ul>
+                        </div>
+                        <div class="pin-section">
+                            <h4>📊 Analoge Pins (A0-A5)</h4>
+                            <ul class="pin-list">
+                                <li><strong>A0-A5:</strong> Analogeingänge (0-1023)</li>
+                                <li><strong>Auflösung:</strong> 10 Bit (0-5V → 0-1023)</li>
+                                <li><strong>Auch digital nutzbar:</strong> Als D14-D19</li>
+                                <li><strong>Referenzspannung:</strong> 5V (änderbar)</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>🔍 Wichtige Pin-Konzepte:</strong><br>
+                        • <strong>HIGH/LOW:</strong> Digitale Zustände (5V/0V)<br>
+                        • <strong>INPUT/OUTPUT:</strong> Pin-Modi für Richtung<br>
+                        • <strong>INPUT_PULLUP:</strong> Interner Pull-Up-Widerstand aktiviert<br>
+                        • <strong>PWM (~):</strong> Pulsweitenmodulation für "analoge" Ausgabe
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">📝 Datentypen und Variablen</div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Die wichtigsten Arduino-Datentypen</h3>
+                    
+                    <table class="function-table">
+                        <thead>
+                            <tr>
+                                <th>Datentyp</th>
+                                <th>Größe</th>
+                                <th>Wertebereich</th>
+                                <th>Verwendung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="datatype">bool</span></td>
+                                <td>1 Bit</td>
+                                <td>true / false</td>
+                                <td>Logische Werte, Flags</td>
+                            </tr>
+                            <tr>
+                                <td><span class="datatype">byte</span></td>
+                                <td>8 Bit</td>
+                                <td>0 - 255</td>
+                                <td>Kleine positive Zahlen</td>
+                            </tr>
+                            <tr>
+                                <td><span class="datatype">int</span></td>
+                                <td>16 Bit</td>
+                                <td>-32.768 - 32.767</td>
+                                <td>Standard-Ganzzahlen</td>
+                            </tr>
+                            <tr>
+                                <td><span class="datatype">unsigned int</span></td>
+                                <td>16 Bit</td>
+                                <td>0 - 65.535</td>
+                                <td>Positive Ganzzahlen</td>
+                            </tr>
+                            <tr>
+                                <td><span class="datatype">long</span></td>
+                                <td>32 Bit</td>
+                                <td>-2.147.483.648 - 2.147.483.647</td>
+                                <td>Große Ganzzahlen</td>
+                            </tr>
+                            <tr>
+                                <td><span class="datatype">float</span></td>
+                                <td>32 Bit</td>
+                                <td>±3.4 × 10³⁸</td>
+                                <td>Kommazahlen</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>Variable deklarieren und verwenden</h4>
+                    <div class="code-title">Variablen-Beispiele</div>
+                    <div class="code-block">// Globale Variablen (vor setup() deklariert)
+int ledPin = 13;           // Pin für LED
+bool ledZustand = false;   // Aktueller LED-Zustand
+float temperatur = 23.5;   // Temperaturwert
+byte helligkeitswert = 0;  // PWM-Wert (0-255)
+
+// Lokale Variablen (in Funktionen)
+void setup() {
+  int startWert = 100;     // Nur in setup() verfügbar
+}
+
+void loop() {
+  unsigned long zeit = millis();  // Aktuelle Zeit in ms
+}</div>
+
+                    <div class="warning-box">
+                        <strong>⚠️ Wichtige Regeln:</strong><br>
+                        • Variablennamen dürfen keine Leerzeichen enthalten<br>
+                        • Groß-/Kleinschreibung wird unterschieden<br>
+                        • Globale Variablen vor setup() deklarieren<br>
+                        • Aussagekräftige Namen verwenden (ledPin statt x)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">🔧 Grundlegende Arduino-Funktionen</div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Digital Input/Output</h3>
+                    
+                    <table class="function-table">
+                        <thead>
+                            <tr>
+                                <th>Funktion</th>
+                                <th>Beschreibung</th>
+                                <th>Beispiel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="keyword">pinMode(pin, mode)</span></td>
+                                <td>Konfiguriert Pin als INPUT oder OUTPUT</td>
+                                <td>pinMode(13, OUTPUT);</td>
+                            </tr>
+                            <tr>
+                                <td><span class="keyword">digitalWrite(pin, value)</span></td>
+                                <td>Setzt digitalen Ausgang auf HIGH oder LOW</td>
+                                <td>digitalWrite(13, HIGH);</td>
+                            </tr>
+                            <tr>
+                                <td><span class="keyword">digitalRead(pin)</span></td>
+                                <td>Liest digitalen Eingang (HIGH oder LOW)</td>
+                                <td>bool status = digitalRead(2);</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="code-title">Komplettes Beispiel: LED mit Taster steuern</div>
+                    <div class="code-block">// Pin-Definitionen
+int ledPin = 13;        // LED an Pin 13
+int tasterPin = 2;      // Taster an Pin 2
+
+void setup() {
+  // Pins konfigurieren
+  pinMode(ledPin, OUTPUT);           // LED als Ausgang
+  pinMode(tasterPin, INPUT_PULLUP);  // Taster als Eingang mit Pull-Up
+}
+
+void loop() {
+  // Taster lesen
+  bool tasterGedrueckt = digitalRead(tasterPin);
+  
+  // LED entsprechend schalten
+  if (tasterGedrueckt == LOW) {  // Pull-Up macht gedrückt = LOW
+    digitalWrite(ledPin, HIGH);  // LED einschalten
+  } else {
+    digitalWrite(ledPin, LOW);   // LED ausschalten
+  }
+}</div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Analog Input/Output</h3>
+                    
+                    <table class="function-table">
+                        <thead>
+                            <tr>
+                                <th>Funktion</th>
+                                <th>Beschreibung</th>
+                                <th>Beispiel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="keyword">analogRead(pin)</span></td>
+                                <td>Liest analogen Wert (0-1023)</td>
+                                <td>int wert = analogRead(A0);</td>
+                            </tr>
+                            <tr>
+                                <td><span class="keyword">analogWrite(pin, value)</span></td>
+                                <td>PWM-Ausgabe (0-255), nur PWM-Pins</td>
+                                <td>analogWrite(9, 128);</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="code-title">Beispiel: Potentiometer steuert LED-Helligkeit</div>
+                    <div class="code-block">int potPin = A0;    // Potentiometer an A0
+int ledPin = 9;     // LED an PWM-Pin 9
+
+void setup() {
+  pinMode(ledPin, OUTPUT);
+  Serial.begin(9600);  // Für Debug-Ausgaben
+}
+
+void loop() {
+  // Potentiometer lesen (0-1023)
+  int potWert = analogRead(potPin);
+  
+  // Auf PWM-Bereich umrechnen (0-255)
+  int ledHelligkeit = map(potWert, 0, 1023, 0, 255);
+  
+  // LED-Helligkeit setzen
+  analogWrite(ledPin, ledHelligkeit);
+  
+  // Debug-Ausgabe
+  Serial.print("Potentiometer: ");
+  Serial.print(potWert);
+  Serial.print(" -> LED: ");
+  Serial.println(ledHelligkeit);
+  
+  delay(100);  // Kurze Pause
+}</div>
+
+                    <div class="highlight">
+                        <strong>🎯 map()-Funktion verstehen:</strong><br>
+                        <code>map(wert, von_min, von_max, zu_min, zu_max)</code><br>
+                        Rechnet einen Wert von einem Bereich in einen anderen um.<br>
+                        Beispiel: 512 (Mitte von 0-1023) wird zu 127 (Mitte von 0-255)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">⏰ Zeit und Timing</div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Zeit-Funktionen</h3>
+                    
+                    <table class="function-table">
+                        <thead>
+                            <tr>
+                                <th>Funktion</th>
+                                <th>Beschreibung</th>
+                                <th>Beispiel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="keyword">delay(ms)</span></td>
+                                <td>Pausiert Programm für x Millisekunden</td>
+                                <td>delay(1000); // 1 Sekunde</td>
+                            </tr>
+                            <tr>
+                                <td><span class="keyword">delayMicroseconds(us)</span></td>
+                                <td>Pausiert für x Mikrosekunden</td>
+                                <td>delayMicroseconds(500);</td>
+                            </tr>
+                            <tr>
+                                <td><span class="keyword">millis()</span></td>
+                                <td>Zeit seit Programmstart in ms</td>
+                                <td>unsigned long zeit = millis();</td>
+                            </tr>
+                            <tr>
+                                <td><span class="keyword">micros()</span></td>
+                                <td>Zeit seit Programmstart in μs</td>
+                                <td>unsigned long zeit = micros();</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="warning-box">
+                        <strong>⚠️ Problem mit delay():</strong><br>
+                        delay() blockiert das gesamte Programm! Während der Pause kann nichts anderes passieren. Für professionelle Programme verwenden wir "non-blocking timing" mit millis().
+                    </div>
+
+                    <div class="code-title">Bessere Alternative: Non-blocking Timing</div>
+                    <div class="code-block">unsigned long letzteZeit = 0;    // Letzte Ausführungszeit
+const long intervall = 1000;        // Intervall in ms
+
+void setup() {
+  pinMode(13, OUTPUT);
+}
+
+void loop() {
+  unsigned long aktuelleZeit = millis();
+  
+  // Prüfen ob Intervall abgelaufen ist
+  if (aktuelleZeit - letzteZeit >= intervall) {
+    letzteZeit = aktuelleZeit;  // Zeit aktualisieren
+    
+    // Hier passiert alle 1000ms etwas
+    digitalWrite(13, !digitalRead(13));  // LED umschalten
+  }
+  
+  // Hier kann anderer Code laufen, ohne blockiert zu werden
+}</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">🔄 Kontrollstrukturen</div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>If-Else Bedingungen</h3>
+                    
+                    <div class="code-title">Grundsyntax und Beispiele</div>
+                    <div class="code-block">// Einfache if-Bedingung
+if (bedingung) {
+  // Code wenn bedingung wahr ist
+}
+
+// if-else
+if (temperatur > 25) {
+  digitalWrite(luefterPin, HIGH);  // Lüfter an
+} else {
+  digitalWrite(luefterPin, LOW);   // Lüfter aus
+}
+
+// if-else if-else
+if (helligkeit < 200) {
+  Serial.println("Dunkel");
+} else if (helligkeit < 600) {
+  Serial.println("Dämmrig");
+} else {
+  Serial.println("Hell");
+}</div>
+
+                    <h4>Vergleichsoperatoren</h4>
+                    <div class="example-grid">
+                        <div class="example-card">
+                            <h4>Mathematische Vergleiche</h4>
+                            <ul>
+                                <li><code>==</code> - gleich</li>
+                                <li><code>!=</code> - ungleich</li>
+                                <li><code>&lt;</code> - kleiner</li>
+                                <li><code>&gt;</code> - größer</li>
+                                <li><code>&lt;=</code> - kleiner oder gleich</li>
+                                <li><code>&gt;=</code> - größer oder gleich</li>
+                            </ul>
+                        </div>
+                        <div class="example-card">
+                            <h4>Logische Operatoren</h4>
+                            <ul>
+                                <li><code>&&</code> - UND (AND)</li>
+                                <li><code>||</code> - ODER (OR)</li>
+                                <li><code>!</code> - NICHT (NOT)</li>
+                            </ul>
+                            <div class="code-block" style="margin-top: 1rem; font-size: 0.9em;">if (temp > 20 && humidity < 60) {
+  // Beide Bedingungen müssen wahr sein
+}</div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Schleifen (Loops)</h3>
+                    
+                    <h4>For-Schleife</h4>
+                    <div class="code-title">For-Schleife: Bestimmte Anzahl Wiederholungen</div>
+                    <div class="code-block">// Grundsyntax: for(start; bedingung; schritt)
+for (int i = 0; i < 10; i++) {
+  Serial.println(i);  // Gibt 0 bis 9 aus
+}
+
+// Praktisches Beispiel: LEDs durchschalten
+int ledPins[] = {2, 3, 4, 5, 6};  // Array mit LED-Pins
+
+void laufLicht() {
+  for (int i = 0; i < 5; i++) {
+    digitalWrite(ledPins[i], HIGH);  // LED an
+    delay(200);
+    digitalWrite(ledPins[i], LOW);   // LED aus
+  }
+}</div>
+
+                    <h4>While-Schleife</h4>
+                    <div class="code-title">While-Schleife: Wiederholung solange Bedingung wahr</div>
+                    <div class="code-block">// Solange Taster gedrückt ist
+while (digitalRead(tasterPin) == LOW) {
+  digitalWrite(ledPin, HIGH);
+  delay(100);
+  digitalWrite(ledPin, LOW);
+  delay(100);
+}
+
+// Warten bis Sensor bestimmten Wert erreicht
+while (analogRead(sensorPin) < 500) {
+  Serial.println("Warte auf Sensor...");
+  delay(100);
+}</div>
+
+                    <h4>Do-While-Schleife</h4>
+                    <div class="code-title">Do-While: Mindestens einmal ausführen</div>
+                    <div class="code-block">int versuch = 0;
+do {
+  Serial.println("Versuche Verbindung...");
+  versuch++;
+  delay(1000);
+} while (versuch < 5 && !verbindungOK);</div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Switch-Case Struktur</h3>
+                    
+                    <div class="code-title">Switch-Case: Mehrere Alternativen elegant handhaben</div>
+                    <div class="code-block">int modus = 1;
+
+switch (modus) {
+  case 0:
+    Serial.println("Standby-Modus");
+    digitalWrite(statusLED, LOW);
+    break;
+    
+  case 1:
+    Serial.println("Normal-Modus");
+    digitalWrite(statusLED, HIGH);
+    break;
+    
+  case 2:
+    Serial.println("Turbo-Modus");
+    // LED blinken lassen
+    for (int i = 0; i < 5; i++) {
+      digitalWrite(statusLED, HIGH);
+      delay(100);
+      digitalWrite(statusLED, LOW);
+      delay(100);
+    }
+    break;
+    
+  default:
+    Serial.println("Unbekannter Modus");
+    break;
+}</div>
+
+                    <div class="warning-box">
+                        <strong>⚠️ break; nicht vergessen!</strong><br>
+                        Ohne <code>break;</code> wird der nächste case ebenfalls ausgeführt (Fall-Through-Verhalten).
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">📡 Serielle Kommunikation</div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Serial Monitor verwenden</h3>
+                    <p>Der Serial Monitor ist ein mächtiges Werkzeug zum Debuggen und zur Kommunikation mit dem Arduino.</p>
+                    
+                    <table class="function-table">
+                        <thead>
+                            <tr>
+                                <th>Funktion</th>
+                                <th>Beschreibung</th>
+                                <th>Beispiel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><span class="keyword">Serial.begin(baudrate)</span></td>
+                                <td>Startet serielle Kommunikation</td>
+                                <td>Serial.begin(9600);</td>
+                            </tr>
+                            <tr>
+                                <td><span class="keyword">Serial.print()</span></td>
+                                <td>Gibt Text/Zahl aus (ohne Zeilenwechsel)</td>
+                                <td>Serial.print("Wert: ");</td>
+                            </tr>
+                            <tr>
+                                <td><span class="keyword">Serial.println()</span></td>
+                                <td>Gibt Text/Zahl aus (mit Zeilenwechsel)</td>
+                                <td>Serial.println(sensorWert);</td>
+                            </tr>
+                            <tr>
+                                <td><span class="keyword">Serial.available()</span></td>
+                                <td>Prüft ob Daten empfangen wurden</td>
+                                <td>if (Serial.available() > 0)</td>
+                            </tr>
+                            <tr>
+                                <td><span class="keyword">Serial.read()</span></td>
+                                <td>Liest ein empfangenes Zeichen</td>
+                                <td>char zeichen = Serial.read();</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="code-title">Vollständiges Serial-Beispiel mit Eingabe und Ausgabe</div>
+                    <div class="code-block">void setup() {
+  Serial.begin(9600);  // Baudrate: 9600 bits/second
+  pinMode(13, OUTPUT);
+  
+  Serial.println("Arduino gestartet!");
+  Serial.println("Sende 'a' um LED anzuschalten");
+  Serial.println("Sende 'z' um LED auszuschalten");
+}
+
+void loop() {
+  // Sensordaten ausgeben
+  int sensorWert = analogRead(A0);
+  Serial.print("Sensor A0: ");
+  Serial.print(sensorWert);
+  Serial.print(" (");
+  Serial.print(map(sensorWert, 0, 1023, 0, 500));  // Umrechnung in %
+  Serial.println("%)");
+  
+  // Auf Eingabe vom Computer warten
+  if (Serial.available() > 0) {
+    char eingabe = Serial.read();
+    
+    switch (eingabe) {
+      case 'a':
+      case 'A':
+        digitalWrite(13, HIGH);
+        Serial.println("LED AN");
+        break;
+        
+      case 'z':
+      case 'Z':
+        digitalWrite(13, LOW);
+        Serial.println("LED AUS");
+        break;
+        
+      default:
+        Serial.print("Unbekannter Befehl: ");
+        Serial.println(eingabe);
+        break;
+    }
+  }
+  
+  delay(1000);  // 1 Sekunde warten
+}</div>
+
+                    <div class="success-box">
+                        <strong>💡 Profi-Tipp:</strong> Verwende aussagekräftige Serial.print() Nachrichten für Debugging. So findest du Fehler schneller und verstehst, was dein Programm gerade macht.
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">🔧 Eigene Funktionen schreiben</div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Warum eigene Funktionen?</h3>
+                    <ul>
+                        <li><strong>Code-Wiederverwendung:</strong> Einmal schreiben, mehrfach nutzen</li>
+                        <li><strong>Übersichtlichkeit:</strong> Komplexe Aufgaben in kleine Teile zerlegen</li>
+                        <li><strong>Fehlersuche:</strong> Probleme schneller isolieren und lösen</li>
+                        <li><strong>Teamarbeit:</strong> Andere verstehen den Code besser</li>
+                    </ul>
+
+                    <h4>Funktionen ohne Rückgabewert (void)</h4>
+                    <div class="code-title">Einfache Funktionen für häufige Aufgaben</div>
+                    <div class="code-block">// Funktion zum Blinken einer LED
+void blinkeLED(int pin, int anzahl, int pause) {
+  for (int i = 0; i < anzahl; i++) {
+    digitalWrite(pin, HIGH);
+    delay(pause);
+    digitalWrite(pin, LOW);
+    delay(pause);
+  }
+}
+
+// Funktion zum Ausgeben von Sensorwerten
+void zeigeSensorWerte() {
+  Serial.print("Temperatur: ");
+  Serial.print(analogRead(A0));
+  Serial.print(" | Licht: ");
+  Serial.println(analogRead(A1));
+}
+
+// Funktionen in loop() verwenden
+void loop() {
+  blinkeLED(13, 3, 200);     // LED 13, 3x blinken, 200ms Pause
+  zeigeSensorWerte();         // Sensordaten anzeigen
+  delay(1000);
+}</div>
+
+                    <h4>Funktionen mit Rückgabewert</h4>
+                    <div class="code-title">Funktionen die Werte berechnen und zurückgeben</div>
+                    <div class="code-block">// Temperatur aus Analogwert berechnen
+float berechneTemperatur(int analogWert) {
+  float spannung = analogWert * (5.0 / 1023.0);  // Umrechnung in Volt
+  float temperatur = (spannung - 0.5) * 100;     // LM35 Formel
+  return temperatur;
+}
+
+// Prüfen ob Wert in Bereich liegt
+bool istInBereich(int wert, int minimum, int maximum) {
+  return (wert >= minimum && wert <= maximum);
+}
+
+// Verwendung in loop()
+void loop() {
+  int tempSensor = analogRead(A0);
+  float temp = berechneTemperatur(tempSensor);
+  
+  Serial.print("Temperatur: ");
+  Serial.print(temp);
+  Serial.println("°C");
+  
+  // Warnung bei extremen Temperaturen
+  if (!istInBereich(temp, 15, 30)) {
+    Serial.println("WARNUNG: Temperatur außerhalb Normalbereich!");
+    blinkeLED(13, 5, 100);  // Schnell blinken als Warnung
+  }
+  
+  delay(2000);
+}</div>
+
+                    <div class="highlight">
+                        <strong>🎯 Funktion vs. Prozedur:</strong><br>
+                        • <strong>void</strong> Funktionen = Prozeduren (machen etwas, geben nichts zurück)<br>
+                        • <strong>int/float/bool</strong> Funktionen = echte Funktionen (berechnen und geben Wert zurück)
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">🔌 Praktische Anwendungsbeispiele</div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Projekt 1: Intelligente Haussteuerung</h3>
+                    
+                    <div class="code-title">Automatisches Licht mit Bewegungsmelder und Helligkeitssensor</div>
+                    <div class="code-block">// Pin-Definitionen
+const int PIR_PIN = 2;        // Bewegungsmelder
+const int LDR_PIN = A0;       // Helligkeitssensor (LDR)
+const int LED_PIN = 9;        // LED (PWM für Dimmen)
+const int BUZZER_PIN = 8;     // Buzzer für Alarm
+
+// Schwellwerte
+const int DUNKEL_SCHWELLE = 300;    // Unter diesem Wert ist es "dunkel"
+const int MAX_HELLIGKEIT = 255;     // Maximale LED-Helligkeit
+const unsigned long LICHT_DAUER = 30000;  // Licht 30s an lassen
+
+// Variablen
+bool bewegungErkannt = false;
+unsigned long lichtStartZeit = 0;
+bool lichtAn = false;
+
+void setup() {
+  pinMode(PIR_PIN, INPUT);
+  pinMode(LED_PIN, OUTPUT);
+  pinMode(BUZZER_PIN, OUTPUT);
+  
+  Serial.begin(9600);
+  Serial.println("Intelligente Haussteuerung gestartet");
+}
+
+void loop() {
+  // Sensoren lesen
+  bewegungErkannt = digitalRead(PIR_PIN);
+  int helligkeit = analogRead(LDR_PIN);
+  
+  // Status ausgeben
+  Serial.print("Helligkeit: ");
+  Serial.print(helligkeit);
+  Serial.print(" | Bewegung: ");
+  Serial.println(bewegungErkannt ? "JA" : "NEIN");
+  
+  // Logik: Licht nur anschalten wenn dunkel UND Bewegung
+  if (bewegungErkannt && helligkeit < DUNKEL_SCHWELLE) {
+    if (!lichtAn) {  // Licht war aus
+      lichtAnschalten();
+      lichtStartZeit = millis();
+      lichtAn = true;
+      Serial.println("Licht automatisch eingeschaltet");
+    }
+  }
+  
+  // Licht nach bestimmter Zeit wieder ausschalten
+  if (lichtAn && (millis() - lichtStartZeit > LICHT_DAUER)) {
+    lichtAusschalten();
+    lichtAn = false;
+    Serial.println("Licht automatisch ausgeschaltet");
+  }
+  
+  delay(500);  // Halbsekündlich prüfen
+}
+
+void lichtAnschalten() {
+  // Sanft einblenden
+  for (int helligkeit = 0; helligkeit <= MAX_HELLIGKEIT; helligkeit += 5) {
+    analogWrite(LED_PIN, helligkeit);
+    delay(50);
+  }
+  
+  // Kurzer Bestätigungston
+  tone(BUZZER_PIN, 1000, 200);
+}
+
+void lichtAusschalten() {
+  // Sanft ausblenden
+  for (int helligkeit = MAX_HELLIGKEIT; helligkeit >= 0; helligkeit -= 5) {
+    analogWrite(LED_PIN, helligkeit);
+    delay(50);
+  }
+  
+  // Kurzer Bestätigungston (tiefer)
+  tone(BUZZER_PIN, 500, 200);
+}</div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Projekt 2: Digitaler Temperatur-Monitor</h3>
+                    
+                    <div class="code-title">Temperaturüberwachung mit Alarmsystem</div>
+                    <div class="code-block">// Includes für erweiterte Funktionen
+#include <EEPROM.h>  // Für dauerhaften Speicher
+
+// Pin-Definitionen
+const int TEMP_PIN = A0;      // Temperatursensor (z.B. LM35)
+const int WARN_LED = 12;      // Gelbe Warn-LED
+const int ALARM_LED = 13;     // Rote Alarm-LED
+const int BUZZER_PIN = 8;     // Alarm-Buzzer
+
+// Temperatur-Grenzwerte
+const float WARN_TEMP = 28.0;    // Warnung ab 28°C
+const float ALARM_TEMP = 35.0;   // Alarm ab 35°C
+const float HYSTERESE = 2.0;     // 2°C Hysterese gegen Flackern
+
+// EEPROM-Adressen für Statistiken
+const int EEPROM_MIN_TEMP = 0;   // Minimum-Temperatur
+const int EEPROM_MAX_TEMP = 4;   // Maximum-Temperatur
+const int EEPROM_ALARM_COUNT = 8; // Anzahl Alarme
+
+// Zustandsvariablen
+bool warnZustand = false;
+bool alarmZustand = false;
+float minTemp = 100.0;  // Startwert hoch
+float maxTemp = -100.0; // Startwert niedrig
+int alarmAnzahl = 0;
+
+void setup() {
+  pinMode(WARN_LED, OUTPUT);
+  pinMode(ALARM_LED, OUTPUT);
+  pinMode(BUZZER_PIN, OUTPUT);
+  
+  Serial.begin(9600);
+  
+  // Gespeicherte Werte aus EEPROM laden
+  ladeStatistiken();
+  
+  Serial.println("=== TEMPERATUR-MONITOR ===");
+  Serial.print("Minimale Temperatur: ");
+  Serial.println(minTemp);
+  Serial.print("Maximale Temperatur: ");
+  Serial.println(maxTemp);
+  Serial.print("Bisherige Alarme: ");
+  Serial.println(alarmAnzahl);
+  Serial.println("==========================");
+}
+
+void loop() {
+  float temperatur = leseTemperatur();
+  
+  // Statistiken aktualisieren
+  aktualisiereStatistiken(temperatur);
+  
+  // Temperatur-Zustände prüfen
+  pruefeTemperaturZustaende(temperatur);
+  
+  // Status ausgeben
+  gebeStatusAus(temperatur);
+  
+  delay(2000);  // Alle 2 Sekunden
+}
+
+float leseTemperatur() {
+  int analogWert = analogRead(TEMP_PIN);
+  float spannung = analogWert * (5.0 / 1023.0);
+  float temperatur = (spannung - 0.5) * 100.0;  // LM35-Formel
+  return temperatur;
+}
+
+void pruefeTemperaturZustaende(float temp) {
+  // Alarm-Zustand prüfen
+  if (temp >= ALARM_TEMP && !alarmZustand) {
+    alarmZustand = true;
+    warnZustand = false;  // Alarm überschreibt Warnung
+    alarmAnzahl++;
+    speichereStatistiken();
+    
+    Serial.println("!!! ALARM: KRITISCHE TEMPERATUR !!!");
+    starteAlarm();
+  } 
+  else if (temp < ALARM_TEMP - HYSTERESE && alarmZustand) {
+    alarmZustand = false;
+    stoppeAlarm();
+    Serial.println("Alarm beendet - Temperatur normalisiert");
+  }
+  
+  // Warn-Zustand prüfen (nur wenn kein Alarm)
+  if (!alarmZustand) {
+    if (temp >= WARN_TEMP && !warnZustand) {
+      warnZustand = true;
+      Serial.println("WARNUNG: Erhöhte Temperatur");
+      starteWarnung();
+    }
+    else if (temp < WARN_TEMP - HYSTERESE && warnZustand) {
+      warnZustand = false;
+      stoppeWarnung();
+      Serial.println("Warnung beendet");
+    }
+  }
+  
+  // LEDs entsprechend setzen
+  digitalWrite(WARN_LED, warnZustand);
+  digitalWrite(ALARM_LED, alarmZustand);
+}
+
+void starteAlarm() {
+  // Schnelle Tonfolge für Alarm
+  for (int i = 0; i < 3; i++) {
+    tone(BUZZER_PIN, 2000, 200);
+    delay(250);
+    tone(BUZZER_PIN, 1500, 200);
+    delay(250);
+  }
+}
+
+void starteWarnung() {
+  // Sanfter Warnton
+  tone(BUZZER_PIN, 1000, 500);
+}
+
+void stoppeAlarm() {
+  noTone(BUZZER_PIN);
+}
+
+void stoppeWarnung() {
+  noTone(BUZZER_PIN);
+}
+
+void aktualisiereStatistiken(float temp) {
+  bool geaendert = false;
+  
+  if (temp < minTemp) {
+    minTemp = temp;
+    geaendert = true;
+  }
+  
+  if (temp > maxTemp) {
+    maxTemp = temp;
+    geaendert = true;
+  }
+  
+  if (geaendert) {
+    speichereStatistiken();
+  }
+}
+
+void gebeStatusAus(float temp) {
+  Serial.print("Temperatur: ");
+  Serial.print(temp, 1);
+  Serial.print("°C | Status: ");
+  
+  if (alarmZustand) {
+    Serial.print("ALARM");
+  } else if (warnZustand) {
+    Serial.print("WARNUNG");
+  } else {
+    Serial.print("NORMAL");
+  }
+  
+  Serial.print(" | Min: ");
+  Serial.print(minTemp, 1);
+  Serial.print("°C | Max: ");
+  Serial.print(maxTemp, 1);
+  Serial.println("°C");
+}
+
+void ladeStatistiken() {
+  EEPROM.get(EEPROM_MIN_TEMP, minTemp);
+  EEPROM.get(EEPROM_MAX_TEMP, maxTemp);
+  EEPROM.get(EEPROM_ALARM_COUNT, alarmAnzahl);
+  
+  // Plausibilitätsprüfung
+  if (minTemp < -50 || minTemp > 100) minTemp = 100.0;
+  if (maxTemp < -50 || maxTemp > 100) maxTemp = -100.0;
+  if (alarmAnzahl < 0 || alarmAnzahl > 10000) alarmAnzahl = 0;
+}
+
+void speichereStatistiken() {
+  EEPROM.put(EEPROM_MIN_TEMP, minTemp);
+  EEPROM.put(EEPROM_MAX_TEMP, maxTemp);
+  EEPROM.put(EEPROM_ALARM_COUNT, alarmAnzahl);
+}</div>
+
+                    <div class="success-box">
+                        <strong>🎓 Was du hier lernst:</strong><br>
+                        • Komplexe Zustandslogik mit Hysterese<br>
+                        • Dauerhaften Speicher (EEPROM) verwenden<br>
+                        • Statistiken führen und aktualisieren<br>
+                        • Professionelle Fehlerbehandlung<br>
+                        • Modularer Programmaufbau
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="section">
+            <div class="section-header">⚠️ Häufige Fehler und Lösungen</div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Die 10 häufigsten Arduino-Anfängerfehler</h3>
+                    
+                    <div class="example-grid">
+                        <div class="example-card">
+                            <h4>❌ Fehler 1: Pin-Modi vergessen</h4>
+                            <div class="code-block" style="font-size: 0.8em;">// FALSCH:
+void setup() {
+  // pinMode vergessen!
+}
+void loop() {
+  digitalWrite(13, HIGH);  // Funktioniert nicht!
+}</div>
+                            <div class="success-box" style="margin-top: 0.5rem;">
+                                <strong>✅ Lösung:</strong> Immer pinMode() in setup() verwenden!
+                            </div>
+                        </div>
+
+                        <div class="example-card">
+                            <h4>❌ Fehler 2: delay() blockiert alles</h4>
+                            <div class="code-block" style="font-size: 0.8em;">// PROBLEMATISCH:
+void loop() {
+  digitalWrite(13, HIGH);
+  delay(5000);  // 5s blockiert!
+  // Kann in dieser Zeit nichts anderes tun
+}</div>
+                            <div class="success-box" style="margin-top: 0.5rem;">
+                                <strong>✅ Lösung:</strong> millis() für non-blocking timing verwenden!
+                            </div>
+                        </div>
+
+                        <div class="example-card">
+                            <h4>❌ Fehler 3: = statt == verwenden</h4>
+                            <div class="code-block" style="font-size: 0.8em;">// FALSCH:
+if (sensorWert = 100) {  // Zuweisung statt Vergleich!
+  // Code wird immer ausgeführt
+}</div>
+                            <div class="success-box" style="margin-top: 0.5rem;">
+                                <strong>✅ Lösung:</strong> Für Vergleiche immer == verwenden!
+                            </div>
+                        </div>
+
+                        <div class="example-card">
+                            <h4>❌ Fehler 4: Floating Point Probleme</h4>
+                            <div class="code-block" style="font-size: 0.8em;">// PROBLEMATISCH:
+float temp = 25.0;
+if (temp == 25.0) {  // Könnte fehlschlagen!
+  // Floating Point Ungenauigkeit
+}</div>
+                            <div class="success-box" style="margin-top: 0.5rem;">
+                                <strong>✅ Lösung:</strong> Bereiche verwenden: if (temp > 24.9 && temp < 25.1)
+                            </div>
+                        </div>
+
+                        <div class="example-card">
+                            <h4>❌ Fehler 5: Pull-Up/Pull-Down ignorieren</h4>
+                            <div class="code-block" style="font-size: 0.8em;">// PROBLEMATISCH:
+pinMode(2, INPUT);  // Pin "schwebt"
+if (digitalRead(2)) {  // Unzuverlässig!
+  // Zufällige Werte durch Rauschen
+}</div>
+                            <div class="success-box" style="margin-top: 0.5rem;">
+                                <strong>✅ Lösung:</strong> INPUT_PULLUP verwenden oder externe Widerstände!
+                            </div>
+                        </div>
+
+                        <div class="example-card">
+                            <h4>❌ Fehler 6: Semikolon nach if/for</h4>
+                            <div class="code-block" style="font-size: 0.8em;">// FALSCH:
+if (bedingung);  // Leere Anweisung!
+{
+  // Wird immer ausgeführt
+}</div>
+                            <div class="success-box" style="margin-top: 0.5rem;">
+                                <strong>✅ Lösung:</strong> Keine Semikolons nach Kontrollstrukturen!
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Debug-Strategien</h3>
+                    
+                    <div class="code-title">Systematisches Debuggen mit Serial</div>
+                    <div class="code-block">void setup() {
+  Serial.begin(9600);
+  Serial.println("=== PROGRAMM GESTARTET ===");
+  
+  // Debug-Info über Pin-Konfiguration
+  Serial.println("Konfiguriere Pins...");
+  pinMode(13, OUTPUT);
+  Serial.println("Pin 13 als OUTPUT konfiguriert");
+}
+
+void loop() {
+  // Eingangswerte debuggen
+  int sensorWert = analogRead(A0);
+  Serial.print("DEBUG: Raw Sensor = ");
+  Serial.println(sensorWert);
+  
+  // Berechnungen debuggen
+  float spannung = sensorWert * (5.0 / 1023.0);
+  Serial.print("DEBUG: Spannung = ");
+  Serial.println(spannung, 3);  // 3 Nachkommastellen
+  
+  // Entscheidungslogik debuggen
+  if (spannung > 2.5) {
+    Serial.println("DEBUG: Bedingung wahr - LED an");
+    digitalWrite(13, HIGH);
+  } else {
+    Serial.println("DEBUG: Bedingung falsch - LED aus");
+    digitalWrite(13, LOW);
+  }
+  
+  Serial.println("--- Ende Durchlauf ---");
+  delay(2000);
+}</div>
+
+                    <div class="highlight">
+                        <strong>🔍 Profi Debug-Tipps:</strong><br>
+                        • Verwende aussagekräftige Serial.print() Nachrichten<br>
+                        • Gib Zwischenergebnisse aus, nicht nur Endergebnisse<br>
+                        • Verwende eindeutige Markierungen wie "DEBUG:", "ERROR:", "INFO:"<br>
+                        • Strukturiere die Ausgabe mit Linien oder Einrückungen
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="

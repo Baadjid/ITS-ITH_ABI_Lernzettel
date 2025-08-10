@@ -1,0 +1,1570 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Speicherarchitekturen - Technische Informatik II</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #06b6d4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb {
+            color: var(--text-light);
+            font-size: 0.9rem;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        h1 {
+            color: var(--primary-color);
+            font-size: 2.5rem;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .subtitle {
+            color: var(--text-light);
+            font-size: 1.1rem;
+            margin-bottom: 1rem;
+        }
+
+        .learning-objectives {
+            background: linear-gradient(135deg, var(--info-color), #0891b2);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .learning-objectives h3 {
+            margin-bottom: 1rem;
+        }
+
+        .learning-objectives ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .learning-objectives li {
+            padding: 0.3rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .learning-objectives li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .subsection {
+            margin-bottom: 2rem;
+        }
+
+        .subsection h3 {
+            color: var(--primary-color);
+            font-size: 1.3rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .subsection h4 {
+            color: var(--secondary-color);
+            font-size: 1.1rem;
+            margin: 1.5rem 0 0.8rem 0;
+        }
+
+        p {
+            margin-bottom: 1rem;
+            text-align: justify;
+        }
+
+        .highlight-box {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-color);
+            margin: 1.5rem 0;
+        }
+
+        .info-box {
+            background: #eff6ff;
+            border-left: 4px solid var(--info-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .warning-box {
+            background: #fffbeb;
+            border-left: 4px solid var(--warning-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            font-size: 0.9rem;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            border: 1px solid var(--border-color);
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .comparison-table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: bold;
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .memory-diagram {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .architecture-diagram {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .arch-block {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 0.5rem;
+            min-width: 120px;
+            text-align: center;
+            font-weight: bold;
+        }
+
+        .bus-line {
+            height: 3px;
+            background: var(--accent-color);
+            flex-grow: 1;
+            margin: 0 1rem;
+            border-radius: 2px;
+        }
+
+        .memory-types-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .memory-type-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .memory-type-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .pros, .cons {
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .pros {
+            background: #f0fdf4;
+            border-left: 4px solid var(--success-color);
+        }
+
+        .cons {
+            background: #fef2f2;
+            border-left: 4px solid var(--danger-color);
+        }
+
+        .pros h5, .cons h5 {
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .pros h5 {
+            color: var(--success-color);
+        }
+
+        .cons h5 {
+            color: var(--danger-color);
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+        }
+
+        .formula {
+            background: #fef9c3;
+            padding: 1rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            font-weight: bold;
+            margin: 1rem 0;
+            border: 1px solid #eab308;
+        }
+
+        .code-example {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            margin: 1.5rem 0;
+            overflow-x: auto;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: var(--bg-white);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .nav-button {
+            background: var(--primary-color);
+            color: white;
+            padding: 0.8rem 1.5rem;
+            border: none;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+        }
+
+        .nav-button.disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .architecture-diagram {
+                flex-direction: column;
+            }
+            
+            .bus-line {
+                width: 3px;
+                height: 30px;
+                margin: 1rem 0;
+            }
+            
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="breadcrumb">
+                <a href="index.html">🏠 Hauptseite</a> > 
+                <a href="#technische-informatik-ii">⚙️ Technische Informatik II</a> > 
+                🗄️ Speicherarchitekturen
+            </div>
+            <h1>🗄️ Speicherarchitekturen</h1>
+            <p class="subtitle">Technische Informatik II - BPE 2 | Mikrocontroller-Systeme</p>
+        </header>
+
+        <div class="learning-objectives">
+            <h3>🎯 Lernziele dieses Kapitels</h3>
+            <ul>
+                <li>Verstehen der grundlegenden Speichertypen (RAM, ROM, EEPROM, Flash)</li>
+                <li>Unterscheidung zwischen flüchtigen und nicht-flüchtigen Speichern</li>
+                <li>Vergleich von SRAM und DRAM</li>
+                <li>Kennenlernen der Harvard- und Von-Neumann-Architektur</li>
+                <li>Speicheradressierung in Mikrocontroller-Systemen</li>
+                <li>Praktische Anwendungen verschiedener Speichertypen</li>
+            </ul>
+        </div>
+
+        <section class="section">
+            <div class="section-header">
+                <h2>📚 Grundlagen der Speicherarchitekturen</h2>
+                <p>Was ist Speicher und warum brauchen wir verschiedene Typen?</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Was ist Speicher?</h3>
+                    <p>
+                        Stell dir vor, dein Computer wäre wie eine große Bibliothek. In einer Bibliothek gibt es verschiedene Arten von "Speicher":
+                    </p>
+                    <ul>
+                        <li><strong>Dein Gehirn:</strong> Hier merkst du dir kurzfristig Informationen (wie RAM)</li>
+                        <li><strong>Ein Notizblock:</strong> Hier schreibst du Dinge auf, die du später löschen kannst (wie RAM)</li>
+                        <li><strong>Ein Buch:</strong> Hier stehen Informationen permanent drin (wie ROM)</li>
+                        <li><strong>Ein Notizbuch:</strong> Du kannst reinschreiben und ändern (wie EEPROM/Flash)</li>
+                    </ul>
+
+                    <div class="highlight-box">
+                        <strong>💡 Merke:</strong> Computer brauchen verschiedene Speichertypen, weil jeder Typ andere Vorteile hat:
+                        <ul>
+                            <li>Manche sind schnell, aber vergessen alles beim Ausschalten</li>
+                            <li>Andere behalten alles, sind aber langsamer</li>
+                            <li>Wieder andere können verändert werden, andere nicht</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Die zwei großen Kategorien</h3>
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h5>🔄 Flüchtige Speicher (Volatile)</h5>
+                            <p><strong>Beispiel:</strong> RAM (Random Access Memory)</p>
+                            <ul>
+                                <li>Brauchen Strom zum Funktionieren</li>
+                                <li>Sehr schnell</li>
+                                <li>Vergessen alles beim Ausschalten</li>
+                                <li>Können beliebig oft beschrieben werden</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h5>💾 Nicht-flüchtige Speicher (Non-Volatile)</h5>
+                            <p><strong>Beispiele:</strong> ROM, EEPROM, Flash</p>
+                            <ul>
+                                <li>Behalten Daten auch ohne Strom</li>
+                                <li>Meist langsamer als RAM</li>
+                                <li>Perfekt für Programme und wichtige Daten</li>
+                                <li>Begrenzte Schreibzyklen bei manchen Typen</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2>🔄 RAM - Der Arbeitsspeicher</h2>
+                <p>Random Access Memory - Dein digitaler Notizblock</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Was ist RAM?</h3>
+                    <p>
+                        <strong>RAM (Random Access Memory)</strong> ist wie ein riesiger Notizblock mit nummerierten Seiten. 
+                        "Random Access" bedeutet, dass du zu jeder beliebigen Seite (Adresse) springen kannst, ohne die anderen durchblättern zu müssen.
+                    </p>
+                    
+                    <div class="info-box">
+                        <strong>🎯 Hauptaufgaben von RAM:</strong>
+                        <ol>
+                            <li><strong>Programmdaten speichern:</strong> Variablen, die dein Programm gerade benutzt</li>
+                            <li><strong>Zwischenergebnisse:</strong> Berechnungen, die später gebraucht werden</li>
+                            <li><strong>Stack:</strong> Für Funktionsaufrufe und lokale Variablen</li>
+                            <li><strong>Heap:</strong> Für dynamisch erstellte Objekte</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Die zwei RAM-Typen</h3>
+                    <div class="memory-types-grid">
+                        <div class="memory-type-card">
+                            <h4>📱 SRAM (Static RAM)</h4>
+                            <p><strong>Prinzip:</strong> Speichert Daten mit FlipFlops (wie digitale Schalter)</p>
+                            
+                            <div class="pros-cons">
+                                <div class="pros">
+                                    <h5>✅ Vorteile</h5>
+                                    <ul>
+                                        <li>Sehr schnell</li>
+                                        <li>Kein Refresh nötig</li>
+                                        <li>Niediger Stromverbrauch im Ruhezustand</li>
+                                        <li>Einfach zu verwenden</li>
+                                    </ul>
+                                </div>
+                                <div class="cons">
+                                    <h5>❌ Nachteile</h5>
+                                    <ul>
+                                        <li>Teuer</li>
+                                        <li>Großer Platzbedarf auf dem Chip</li>
+                                        <li>Niedrige Speicherkapazität</li>
+                                        <li>Mehr Transistoren pro Bit</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="warning-box">
+                                <strong>💡 Verwendung:</strong> Cache-Speicher in Prozessoren, kleine aber sehr schnelle Speicher in Mikrocontrollern
+                            </div>
+                        </div>
+
+                        <div class="memory-type-card">
+                            <h4>🔋 DRAM (Dynamic RAM)</h4>
+                            <p><strong>Prinzip:</strong> Speichert Daten mit Kondensatoren (wie winzige Batterien)</p>
+                            
+                            <div class="pros-cons">
+                                <div class="pros">
+                                    <h5>✅ Vorteile</h5>
+                                    <ul>
+                                        <li>Günstig</li>
+                                        <li>Kleiner Platzbedarf</li>
+                                        <li>Hohe Speicherkapazität</li>
+                                        <li>Weniger Transistoren pro Bit</li>
+                                    </ul>
+                                </div>
+                                <div class="cons">
+                                    <h5>❌ Nachteile</h5>
+                                    <ul>
+                                        <li>Langsamer als SRAM</li>
+                                        <li>Braucht Refresh-Zyklen</li>
+                                        <li>Komplexere Steuerung</li>
+                                        <li>Höherer Stromverbrauch</li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                            <div class="warning-box">
+                                <strong>⚠️ Refresh-Problem:</strong> DRAM-Kondensatoren verlieren ihre Ladung! Deshalb muss alle paar Millisekunden der Inhalt "aufgefrischt" werden. Während des Refresh kann nicht auf den Speicher zugegriffen werden.
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>RAM in der Praxis - Beispiel aus der Formelsammlung</h3>
+                    <p>Schauen wir uns ein konkretes Beispiel an:</p>
+                    
+                    <div class="memory-diagram">
+                        <h4>RAM 64x4 - Speicherbaustein</h4>
+                        <p><strong>Bedeutung:</strong> 64 Speicherzellen × 4 Bit pro Zelle = 256 Bit Gesamtkapazität</p>
+                        
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Anschluss</th>
+                                <th>Funktion</th>
+                                <th>Erklärung</th>
+                            </tr>
+                            <tr>
+                                <td>A0-A5</td>
+                                <td>Adresseingänge</td>
+                                <td>6 Bit = 64 verschiedene Adressen (2⁶ = 64)</td>
+                            </tr>
+                            <tr>
+                                <td>D0-D3</td>
+                                <td>Datenleitungen</td>
+                                <td>4 Bit Datenbreite (Ein- und Ausgang)</td>
+                            </tr>
+                            <tr>
+                                <td>!WR</td>
+                                <td>Write Enable</td>
+                                <td>0 = Schreiben erlaubt, 1 = Nur Lesen</td>
+                            </tr>
+                            <tr>
+                                <td>!OE</td>
+                                <td>Output Enable</td>
+                                <td>0 = Ausgang aktiv, 1 = Ausgang hochohmig</td>
+                            </tr>
+                            <tr>
+                                <td>!EN</td>
+                                <td>Chip Enable</td>
+                                <td>0 = Baustein aktiviert, 1 = Baustein deaktiviert</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="code-example">
+Beispiel-Zugriff auf RAM:
+1. Adresse 42 auswählen: A0-A5 = 101010 (binär)
+2. Baustein aktivieren: !EN = 0
+3. Schreibmodus: !WR = 0, !OE = 1
+4. Daten anlegen: D0-D3 = 1011 (entspricht 11 dezimal)
+5. Daten werden in Adresse 42 gespeichert
+
+Lesen von Adresse 42:
+1. Adresse 42 auswählen: A0-A5 = 101010
+2. Baustein aktivieren: !EN = 0  
+3. Lesemodus: !WR = 1, !OE = 0
+4. Daten erscheinen auf D0-D3: 1011
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2>📖 ROM - Der Festspeicher</h2>
+                <p>Read-Only Memory - Das unveränderliche Gedächtnis</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Was ist ROM?</h3>
+                    <p>
+                        <strong>ROM (Read-Only Memory)</strong> ist wie ein gedrucktes Buch - einmal erstellt, kann der Inhalt nicht mehr verändert werden (zumindest bei klassischem ROM). ROM speichert wichtige Daten und Programme, die auch ohne Strom erhalten bleiben müssen.
+                    </p>
+                    
+                    <div class="highlight-box">
+                        <strong>🎯 Typische ROM-Inhalte:</strong>
+                        <ul>
+                            <li><strong>Bootloader:</strong> Das erste Programm, das beim Einschalten läuft</li>
+                            <li><strong>BIOS/UEFI:</strong> Grundlegende Systemfunktionen</li>
+                            <li><strong>Firmware:</strong> Betriebssystem für Mikrocontroller</li>
+                            <li><strong>Konstante Daten:</strong> Lookup-Tabellen, Konfigurationsdaten</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Die ROM-Familie</h3>
+                    <div class="memory-types-grid">
+                        <div class="memory-type-card">
+                            <h4>🔒 Statischer ROM (Mask ROM)</h4>
+                            <p><strong>Programmierung:</strong> Bei der Herstellung in der Fabrik</p>
+                            <ul>
+                                <li>Einmalig programmiert</li>
+                                <li>Nicht veränderbar</li>
+                                <li>Sehr günstig bei großen Stückzahlen</li>
+                                <li>Höchste Datensicherheit</li>
+                            </ul>
+                        </div>
+
+                        <div class="memory-type-card">
+                            <h4>🔧 PROM (Programmable ROM)</h4>
+                            <p><strong>Programmierung:</strong> Einmalig durch den Benutzer</p>
+                            <ul>
+                                <li>Einmalig vom Benutzer programmierbar</li>
+                                <li>Danach nicht mehr veränderbar</li>
+                                <li>Spezielle Programmiergeräte nötig</li>
+                                <li>Auch "OTP" (One-Time Programmable) genannt</li>
+                            </ul>
+                        </div>
+
+                        <div class="memory-type-card">
+                            <h4>☀️ EPROM (Erasable PROM)</h4>
+                            <p><strong>Löschen:</strong> Durch UV-Licht</p>
+                            <ul>
+                                <li>Mit UV-Licht löschbar (ca. 20-30 Min.)</li>
+                                <li>Mehrfach programmierbar</li>
+                                <li>Erkennbar am Glasfenster im Gehäuse</li>
+                                <li>Heute meist nur noch historisch interessant</li>
+                            </ul>
+                            <div class="warning-box">
+                                <strong>⚠️ Achtung:</strong> Das Glasfenster muss während des Betriebs abgeklebt werden, da bereits normales Licht langfristig die Daten löschen kann!
+                            </div>
+                        </div>
+
+                        <div class="memory-type-card">
+                            <h4>⚡ EEPROM (Electrically Erasable PROM)</h4>
+                            <p><strong>Löschen:</strong> Elektrisch</p>
+                            <ul>
+                                <li>Elektrisch löschbar und programmierbar</li>
+                                <li>Byteweise Änderung möglich</li>
+                                <li>Langsamere Schreibvorgänge</li>
+                                <li>Ideal für Konfigurationsdaten</li>
+                            </ul>
+                            <div class="info-box">
+                                <strong>💡 Anwendung:</strong> Speichern von Einstellungen, Kalibrierungsdaten, kleinen Datenmengen die selten geändert werden
+                            </div>
+                        </div>
+
+                        <div class="memory-type-card">
+                            <h4>⚡ Flash-ROM</h4>
+                            <p><strong>Löschen:</strong> Elektrisch, blockweise</p>
+                            <ul>
+                                <li>Schnell und blockweise programmierbar</li>
+                                <li>Sehr häufig in modernen Geräten</li>
+                                <li>Hohe Speicherdichte</li>
+                                <li>Begrenzte Anzahl Schreibzyklen (typ. 10.000-100.000)</li>
+                            </ul>
+                            <div class="info-box">
+                                <strong>💡 Anwendung:</strong> USB-Sticks, SSDs, Smartphone-Speicher, Mikrocontroller-Programme
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>ROM in der Praxis - Beispiel aus der Formelsammlung</h3>
+                    <div class="memory-diagram">
+                        <h4>ROM 1k×4 - Festwertspeicher</h4>
+                        <p><strong>Bedeutung:</strong> 1024 Speicherzellen × 4 Bit pro Zelle = 4096 Bit = 4 KiBit Gesamtkapazität</p>
+                        
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Anschluss</th>
+                                <th>Funktion</th>
+                                <th>Erklärung</th>
+                            </tr>
+                            <tr>
+                                <td>A0-A9</td>
+                                <td>Adresseingänge</td>
+                                <td>10 Bit = 1024 verschiedene Adressen (2¹⁰ = 1024)</td>
+                            </tr>
+                            <tr>
+                                <td>Q0-Q3</td>
+                                <td>Datenausgänge</td>
+                                <td>4 Bit Datenbreite (nur Ausgang!)</td>
+                            </tr>
+                            <tr>
+                                <td>!OE</td>
+                                <td>Output Enable</td>
+                                <td>0 = Ausgang aktiv, 1 = Ausgang hochohmig</td>
+                            </tr>
+                            <tr>
+                                <td>!EN</td>
+                                <td>Chip Enable</td>
+                                <td>0 = Baustein aktiviert, 1 = Baustein deaktiviert</td>
+                            </tr>
+                        </table>
+                        
+                        <div class="info-box">
+                            <strong>🔍 Wichtiger Unterschied zu RAM:</strong> ROM hat nur Datenausgänge (Q0-Q3), keine bidirektionalen Datenleitungen, da nur gelesen werden kann!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2>🏛️ Prozessorarchitekturen</h2>
+                <p>Harvard vs. Von-Neumann - Zwei grundlegende Konzepte</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Das Problem: Wie organisiert man Speicher?</h3>
+                    <p>
+                        Stell dir vor, du bist in einer Bibliothek und suchst gleichzeitig nach einem Buch und einem Notizblock. 
+                        Es gibt zwei Möglichkeiten, wie die Bibliothek organisiert sein kann:
+                    </p>
+                    <ol>
+                        <li><strong>Alles an einem Ort:</strong> Bücher und Notizblöcke im selben Regal (Von-Neumann)</li>
+                        <li><strong>Getrennte Bereiche:</strong> Bücher in einem Raum, Notizblöcke in einem anderen (Harvard)</li>
+                    </ol>
+                </div>
+
+                <div class="subsection">
+                    <h3>Von-Neumann-Architektur</h3>
+                    <div class="architecture-diagram">
+                        <div class="arch-block">CPU</div>
+                        <div class="bus-line"></div>
+                        <div class="arch-block">Gemeinsamer<br>Speicher<br>(Code + Daten)</div>
+                    </div>
+                    
+                    <p><strong>Konzept:</strong> Programme (Code) und Daten werden im selben Speicher gespeichert und über denselben Bus übertragen.</p>
+                    
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h5>✅ Vorteile</h5>
+                            <ul>
+                                <li><strong>Flexibel:</strong> Speicher kann dynamisch zwischen Code und Daten aufgeteilt werden</li>
+                                <li><strong>Günstiger:</strong> Nur ein Speicher und ein Bus nötig</li>
+                                <li><strong>Einfacher:</strong> Weniger Komponenten</li>
+                                <li><strong>Self-modifying Code:</strong> Programme können sich selbst ändern</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h5>❌ Nachteile</h5>
+                            <ul>
+                                <li><strong>Von-Neumann-Flaschenhals:</strong> CPU muss warten, wenn Bus belegt</li>
+                                <li><strong>Sequenziell:</strong> Code und Daten können nicht gleichzeitig übertragen werden</li>
+                                <li><strong>Langsamer:</strong> Bei komplexen Operationen</li>
+                                <li><strong>Sicherheitsrisiko:</strong> Daten könnten als Code ausgeführt werden</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="warning-box">
+                        <strong>⚠️ Der Von-Neumann-Flaschenhals:</strong><br>
+                        Stell dir vor, du hast eine Straße zwischen zwei Stadtteilen. Wenn alle Autos (Daten UND Programme) über dieselbe Straße fahren müssen, gibt es Staus. So ähnlich ist es beim Von-Neumann-Konzept - CPU und Speicher können nur nacheinander kommunizieren.
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Harvard-Architektur</h3>
+                    <div class="architecture-diagram">
+                        <div class="arch-block">CPU</div>
+                        <div style="display: flex; flex-direction: column; align-items: center;">
+                            <div style="display: flex; align-items: center; margin: 0.5rem 0;">
+                                <div class="bus-line" style="width: 100px;"></div>
+                                <div class="arch-block">Code-Speicher<br>(Programme)</div>
+                            </div>
+                            <div style="display: flex; align-items: center; margin: 0.5rem 0;">
+                                <div class="bus-line" style="width: 100px;"></div>
+                                <div class="arch-block">Daten-Speicher<br>(Variablen)</div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <p><strong>Konzept:</strong> Programme und Daten werden in getrennten Speichern gespeichert und haben separate Busse.</p>
+                    
+                    <div class="pros-cons">
+                        <div class="pros">
+                            <h5>✅ Vorteile</h5>
+                            <ul>
+                                <li><strong>Parallel:</strong> Code und Daten können gleichzeitig abgerufen werden</li>
+                                <li><strong>Schneller:</strong> Kein Wartezeiten durch Bus-Konflikte</li>
+                                <li><strong>Sicherer:</strong> Code kann nicht versehentlich überschrieben werden</li>
+                                <li><strong>Optimierte Speicher:</strong> Jeder Speicher kann für seinen Zweck optimiert werden</li>
+                            </ul>
+                        </div>
+                        <div class="cons">
+                            <h5>❌ Nachteile</h5>
+                            <ul>
+                                <li><strong>Komplexer:</strong> Zwei getrennte Speichersysteme</li>
+                                <li><strong>Teurer:</strong> Mehr Hardware erforderlich</li>
+                                <li><strong>Weniger flexibel:</strong> Speicheraufteilung ist fest</li>
+                                <li><strong>Kein self-modifying Code:</strong> Programme können sich nicht selbst ändern</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>🚀 Warum Harvard für Mikrocontroller?</strong><br>
+                        Mikrocontroller führen oft einfache, sich wiederholende Aufgaben aus. Die Harvard-Architektur ist perfekt, weil:
+                        <ul>
+                            <li>Programme ändern sich selten (fest im Flash-Speicher)</li>
+                            <li>Daten ändern sich häufig (schneller RAM)</li>
+                            <li>Gleichzeitiger Zugriff macht den µC schneller</li>
+                            <li>Sicherheit ist wichtig (Code geschützt)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Praktisches Beispiel: STM32-Mikrocontroller</h3>
+                    <p>Der STM32 verwendet eine <strong>modifizierte Harvard-Architektur</strong>:</p>
+                    
+                    <div class="memory-diagram">
+                        <h4>STM32 Speicher-Layout</h4>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Speichertyp</th>
+                                <th>Verwendung</th>
+                                <th>Eigenschaften</th>
+                                <th>Größe (typisch)</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Flash-ROM</strong></td>
+                                <td>Programmspeicher</td>
+                                <td>Nicht-flüchtig, nur lesen</td>
+                                <td>32KB - 2MB</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SRAM</strong></td>
+                                <td>Arbeitsspeicher</td>
+                                <td>Flüchtig, schnell</td>
+                                <td>2KB - 640KB</td>
+                            </tr>
+                            <tr>
+                                <td><strong>EEPROM</strong></td>
+                                <td>Konfigurationsdaten</td>
+                                <td>Nicht-flüchtig, langsam</td>
+                                <td>1KB - 16KB</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="code-example">
+Beispiel: Wie der STM32 gleichzeitig arbeitet
+
+Takt 1: CPU holt nächsten Befehl aus Flash-ROM
+        ↓
+Takt 2: CPU führt aktuellen Befehl aus UND holt bereits den nächsten
+        ↓
+Takt 3: CPU kann gleichzeitig:
+        - Daten aus SRAM lesen/schreiben  
+        - Nächsten Befehl aus Flash holen
+        - GPIO-Ports ansteuern
+
+→ Das ist der Vorteil der Harvard-Architektur!
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2>📍 Speicheradressierung</h2>
+                <p>Wie findet der Prozessor die richtigen Daten?</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Das Konzept der Adressierung</h3>
+                    <p>
+                        Stell dir den Speicher wie ein riesiges Hochhaus vor. Jede Wohnung (Speicherzelle) hat eine eindeutige Adresse. 
+                        Um an bestimmte Daten zu kommen, muss der Prozessor die richtige Adresse "anfahren".
+                    </p>
+
+                    <div class="formula">
+                        Anzahl adressierbare Speicherzellen = 2^(Anzahl Adressleitungen)
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>💡 Beispiele:</strong>
+                        <ul>
+                            <li><strong>8 Adressleitungen:</strong> 2⁸ = 256 verschiedene Adressen</li>
+                            <li><strong>16 Adressleitungen:</strong> 2¹⁶ = 65.536 Adressen (64K)</li>
+                            <li><strong>32 Adressleitungen:</strong> 2³² = 4.294.967.296 Adressen (4GB)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Praktische Adressierung am RAM-Beispiel</h3>
+                    <p>Schauen wir uns das RAM 64×4 Beispiel nochmal genauer an:</p>
+
+                    <div class="memory-diagram">
+                        <h4>Adressierung bei RAM 64×4</h4>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Adresse (A5-A0)</th>
+                                <th>Binär</th>
+                                <th>Dezimal</th>
+                                <th>Gespeicherte Daten (D3-D0)</th>
+                            </tr>
+                            <tr>
+                                <td>000000</td>
+                                <td>0</td>
+                                <td>0</td>
+                                <td>z.B. 1010 (= 10 dezimal)</td>
+                            </tr>
+                            <tr>
+                                <td>000001</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>z.B. 0011 (= 3 dezimal)</td>
+                            </tr>
+                            <tr>
+                                <td>101010</td>
+                                <td>42</td>
+                                <td>42</td>
+                                <td>z.B. 1111 (= 15 dezimal)</td>
+                            </tr>
+                            <tr>
+                                <td>111111</td>
+                                <td>63</td>
+                                <td>63</td>
+                                <td>z.B. 0000 (= 0 dezimal)</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="code-example">
+Schritt-für-Schritt: Daten in Adresse 42 schreiben
+
+1. Adresse berechnen: 42 dezimal = 101010 binär
+2. Adressleitungen setzen: A5=1, A4=0, A3=1, A2=0, A1=1, A0=0  
+3. Chip aktivieren: !EN = 0 (Low)
+4. Schreibmodus aktivieren: !WR = 0 (Low), !OE = 1 (High)
+5. Daten anlegen: D3=1, D2=0, D1=1, D0=1 (entspricht 11 dezimal)
+6. Warten bis Daten gespeichert sind (wenige Nanosekunden)
+7. Fertig! Die Zahl 11 ist nun in Adresse 42 gespeichert
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Speicher-Mapping im Mikrocontroller</h3>
+                    <p>
+                        Moderne Mikrocontroller verwenden <strong>Memory Mapping</strong> - verschiedene Speicherbereiche und sogar Hardware-Register werden in einen gemeinsamen Adressraum eingeblendet.
+                    </p>
+
+                    <div class="memory-diagram">
+                        <h4>Typisches Memory-Map eines Mikrocontrollers</h4>
+                        <table class="comparison-table">
+                            <tr>
+                                <th>Adressbereich</th>
+                                <th>Inhalt</th>
+                                <th>Zugriff</th>
+                            </tr>
+                            <tr>
+                                <td>0x0000 0000 - 0x0007 FFFF</td>
+                                <td>Flash-ROM (Code)</td>
+                                <td>Nur lesen</td>
+                            </tr>
+                            <tr>
+                                <td>0x2000 0000 - 0x2000 FFFF</td>
+                                <td>SRAM (Daten)</td>
+                                <td>Lesen/Schreiben</td>
+                            </tr>
+                            <tr>
+                                <td>0x4000 0000 - 0x5FFF FFFF</td>
+                                <td>Peripherie-Register (GPIO, Timer, etc.)</td>
+                                <td>Lesen/Schreiben</td>
+                            </tr>
+                            <tr>
+                                <td>0x0808 0000 - 0x0808 0FFF</td>
+                                <td>EEPROM</td>
+                                <td>Lesen/Schreiben (langsam)</td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <div class="info-box">
+                        <strong>🎯 Warum Memory-Mapping?</strong>
+                        <ul>
+                            <li><strong>Einheitlich:</strong> Hardware-Register wie normaler Speicher ansprechen</li>
+                            <li><strong>Einfach:</strong> Dieselben Befehle für Speicher und Hardware</li>
+                            <li><strong>Flexibel:</strong> Verschiedene Speichertypen transparent nutzen</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2>🔄 Speicherverwaltung in der Praxis</h2>
+                <p>Wie organisiert man Speicher effizient?</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Stack und Heap</h3>
+                    <p>In jedem Programm gibt es verschiedene Arten von Daten, die unterschiedlich gespeichert werden müssen:</p>
+                    
+                    <div class="memory-types-grid">
+                        <div class="memory-type-card">
+                            <h4>📚 Stack (Stapelspeicher)</h4>
+                            <p><strong>Prinzip:</strong> "Last In, First Out" (LIFO) - wie ein Stapel Teller</p>
+                            
+                            <div class="highlight-box">
+                                <strong>Was wird hier gespeichert?</strong>
+                                <ul>
+                                    <li>Lokale Variablen von Funktionen</li>
+                                    <li>Rücksprungadressen bei Funktionsaufrufen</li>
+                                    <li>Parameter für Funktionen</li>
+                                    <li>Temporäre Werte bei Berechnungen</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="pros-cons">
+                                <div class="pros">
+                                    <h5>✅ Vorteile</h5>
+                                    <ul>
+                                        <li>Sehr schnell</li>
+                                        <li>Automatische Speicherverwaltung</li>
+                                        <li>Kein Speicherleck möglich</li>
+                                    </ul>
+                                </div>
+                                <div class="cons">
+                                    <h5>❌ Nachteile</h5>
+                                    <ul>
+                                        <li>Begrenzte Größe</li>
+                                        <li>Daten nur temporär verfügbar</li>
+                                        <li>Stack-Overflow möglich</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="memory-type-card">
+                            <h4>🏗️ Heap (Haldenspeicher)</h4>
+                            <p><strong>Prinzip:</strong> Freie Speicherverwaltung - wie ein Baumarkt</p>
+                            
+                            <div class="highlight-box">
+                                <strong>Was wird hier gespeichert?</strong>
+                                <ul>
+                                    <li>Dynamisch erzeugte Objekte</li>
+                                    <li>Arrays mit unbekannter Größe</li>
+                                    <li>Große Datenstrukturen</li>
+                                    <li>Daten, die länger leben als die erzeugende Funktion</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="pros-cons">
+                                <div class="pros">
+                                    <h5>✅ Vorteile</h5>
+                                    <ul>
+                                        <li>Flexible Größe</li>
+                                        <li>Daten leben länger</li>
+                                        <li>Große Datenmengen möglich</li>
+                                    </ul>
+                                </div>
+                                <div class="cons">
+                                    <h5>❌ Nachteile</h5>
+                                    <ul>
+                                        <li>Langsamere Zugriffe</li>
+                                        <li>Manuelle Speicherverwaltung</li>
+                                        <li>Speicherlecks möglich</li>
+                                        <li>Fragmentierung</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Speicherlayout eines typischen Programms</h3>
+                    <div class="memory-diagram">
+                        <h4>Speicherorganisation im RAM</h4>
+                        <div style="display: flex; justify-content: center; margin: 2rem 0;">
+                            <div style="border: 2px solid var(--primary-color); width: 200px;">
+                                <div style="background: var(--danger-color); color: white; padding: 0.5rem; text-align: center;">
+                                    Stack<br><small>(wächst nach unten)</small>
+                                </div>
+                                <div style="height: 40px; border-bottom: 1px dashed var(--text-light);"></div>
+                                <div style="background: var(--success-color); color: white; padding: 0.5rem; text-align: center;">
+                                    Heap<br><small>(wächst nach oben)</small>
+                                </div>
+                                <div style="background: var(--info-color); color: white; padding: 0.5rem; text-align: center;">
+                                    Globale Variablen<br><small>(nicht initialisiert)</small>
+                                </div>
+                                <div style="background: var(--warning-color); color: white; padding: 0.5rem; text-align: center;">
+                                    Globale Variablen<br><small>(initialisiert)</small>
+                                </div>
+                                <div style="background: var(--primary-color); color: white; padding: 0.5rem; text-align: center;">
+                                    Programm-Code<br><small>(aus Flash kopiert)</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Praktisches Beispiel: Stack-Overflow</h3>
+                    <div class="warning-box">
+                        <strong>⚠️ Stack-Overflow - Ein häufiges Problem</strong><br>
+                        Was passiert, wenn der Stack zu groß wird?
+                    </div>
+
+                    <div class="code-example">
+// Gefährlicher Code - Stack-Overflow!
+void gefaehrlicheFunktion() {
+    int riesigersArray[10000];  // 40.000 Bytes auf dem Stack!
+    // ... mehr Code ...
+    gefaehrlicheFunktion();     // Rekursion ohne Ende!
+}
+
+// Besser - Heap verwenden:
+void bessereFunktion() {
+    int* array = malloc(10000 * sizeof(int)); // Heap-Speicher
+    if(array != NULL) {
+        // ... mit array arbeiten ...
+        free(array); // Speicher wieder freigeben!
+    }
+}
+                    </div>
+
+                    <div class="info-box">
+                        <strong>💡 Stack-Overflow vermeiden:</strong>
+                        <ul>
+                            <li>Große Arrays im Heap statt auf Stack anlegen</li>
+                            <li>Rekursionstiefe begrenzen</li>
+                            <li>Stack-Größe in Mikrocontroller-Settings erhöhen</li>
+                            <li>Lokale Variablen sparsam verwenden</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <div class="section-header">
+                <h2>🎯 Zusammenfassung und Prüfungstipps</h2>
+                <p>Das Wichtigste auf einen Blick</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>🔑 Die wichtigsten Merksätze</h3>
+                    <div class="highlight-box">
+                        <strong>RAM vs. ROM:</strong>
+                        <ul>
+                            <li><strong>RAM:</strong> Schnell, flüchtig, beliebig beschreibbar → Arbeitsspeicher</li>
+                            <li><strong>ROM:</strong> Dauerhaft, nicht-flüchtig, meist nur lesbar → Programmspeicher</li>
+                        </ul>
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>SRAM vs. DRAM:</strong>
+                        <ul>
+                            <li><strong>SRAM:</strong> Static RAM mit FlipFlops → schnell, teuer, klein</li>
+                            <li><strong>DRAM:</strong> Dynamic RAM mit Kondensatoren → langsamer, günstig, groß, braucht Refresh</li>
+                        </ul>
+                    </div>
+
+                    <div class="highlight-box">
+                        <strong>Harvard vs. Von-Neumann:</strong>
+                        <ul>
+                            <li><strong>Harvard:</strong> Getrennte Speicher für Code/Daten → schnell, parallel, sicher</li>
+                            <li><strong>Von-Neumann:</strong> Gemeinsamer Speicher → flexibel, günstig, aber Flaschenhals</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>📝 Typische Prüfungsfragen</h3>
+                    <div class="memory-types-grid">
+                        <div class="memory-type-card">
+                            <h4>🔢 Rechenaufgaben</h4>
+                            <ul>
+                                <li>Speicherkapazität berechnen (Adressen × Wortbreite)</li>
+                                <li>Anzahl Adressleitungen bestimmen (2^n = Speicherzellen)</li>
+                                <li>Zugriffszeiten vergleichen</li>
+                                <li>Speicherbedarf von Programmen abschätzen</li>
+                            </ul>
+                        </div>
+
+                        <div class="memory-type-card">
+                            <h4>🔍 Verständnisfragen</h4>
+                            <ul>
+                                <li>Unterschiede zwischen Speichertypen erklären</li>
+                                <li>Vor-/Nachteile von Architekturen bewerten</li>
+                                <li>Anwendungsgebiete verschiedener Speicher</li>
+                                <li>Speicherhierarchie verstehen</li>
+                            </ul>
+                        </div>
+
+                        <div class="memory-type-card">
+                            <h4>⚙️ Praktische Aufgaben</h4>
+                            <ul>
+                                <li>Speicher-Timing-Diagramme lesen</li>
+                                <li>Adressierungsschemas entwickeln</li>
+                                <li>Mikrocontroller-Speicher konfigurieren</li>
+                                <li>Memory-Maps interpretieren</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>💡 Lernstrategien</h3>
+                    <div class="info-box">
+                        <strong>So lernst du Speicherarchitekturen effektiv:</strong>
+                        <ol>
+                            <li><strong>Analogien nutzen:</strong> Bibliothek, Hochhaus, Straßennetz</li>
+                            <li><strong>Tabellen erstellen:</strong> Speichertypen systematisch vergleichen</li>
+                            <li><strong>Rechnen üben:</strong> Adressierung und Kapazität berechnen</li>
+                            <li><strong>Praxis probieren:</strong> Mit echten Mikrocontrollern experimentieren</li>
+                            <li><strong>Diagramme zeichnen:</strong> Architekturen visualisieren</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🔗 Verbindung zu anderen Themen</h3>
+                    <p>Speicherarchitekturen hängen eng zusammen mit:</p>
+                    <ul>
+                        <li><strong>Mikrocontroller-Programmierung:</strong> Stack/Heap-Management</li>
+                        <li><strong>Digitaltechnik:</strong> FlipFlops als SRAM-Grundlage</li>
+                        <li><strong>Betriebssysteme:</strong> Speicherverwaltung und virtueller Speicher</li>
+                        <li><strong>Programmierung:</strong> Pointer, Arrays, dynamische Speicherverwaltung</li>
+                        <li><strong>Embedded Systems:</strong> Speicher-optimierte Programmierung</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <div class="navigation">
+            <a href="index.html" class="nav-button">⬅️ Zurück zur Übersicht</a>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Interactive memory calculation
+        function calculateMemorySize() {
+            const addresses = document.getElementById('address-bits');
+            const wordWidth = document.getElementById('word-width');
+            const result = document.getElementById('calc-result');
+            
+            if (addresses && wordWidth && result) {
+                const addressBits = parseInt(addresses.value) || 0;
+                const width = parseInt(wordWidth.value) || 0;
+                
+                if (addressBits > 0 && width > 0) {
+                    const cells = Math.pow(2, addressBits);
+                    const totalBits = cells * width;
+                    const bytes = totalBits / 8;
+                    
+                    result.innerHTML = `
+                        <strong>Ergebnis:</strong><br>
+                        • Anzahl Speicherzellen: ${cells.toLocaleString()}<br>
+                        • Gesamtkapazität: ${totalBits.toLocaleString()} Bit<br>
+                        • Das entspricht: ${bytes.toLocaleString()} Bytes
+                    `;
+                }
+            }
+        }
+
+        // Add interactive calculator if elements exist
+        if (document.getElementById('address-bits')) {
+            document.getElementById('address-bits').addEventListener('input', calculateMemorySize);
+            document.getElementById('word-width').addEventListener('input', calculateMemorySize);
+        }
+
+        // Highlight code examples on scroll
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.transform = 'scale(1.02)';
+                    entry.target.style.transition = 'transform 0.3s ease';
+                } else {
+                    entry.target.style.transform = 'scale(1)';
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.code-example, .memory-diagram').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add copy functionality to code blocks
+        document.querySelectorAll('.code-example').forEach(codeBlock => {
+            const copyButton = document.createElement('button');
+            copyButton.innerHTML = '📋 Kopieren';
+            copyButton.style.cssText = `
+                position: absolute;
+                top: 10px;
+                right: 10px;
+                background: var(--primary-color);
+                color: white;
+                border: none;
+                padding: 0.5rem;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 0.8rem;
+            `;
+            
+            codeBlock.style.position = 'relative';
+            codeBlock.appendChild(copyButton);
+            
+            copyButton.addEventListener('click', () => {
+                const text = codeBlock.textContent.replace('📋 Kopieren', '');
+                navigator.clipboard.writeText(text).then(() => {
+                    copyButton.innerHTML = '✅ Kopiert!';
+                    setTimeout(() => {
+                        copyButton.innerHTML = '📋 Kopieren';
+                    }, 2000);
+                });
+            });
+        });
+
+        // Progress tracking
+        let readSections = new Set();
+        
+        const sectionObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting && entry.intersectionRatio > 0.3) {
+                    const sectionId = entry.target.id || entry.target.querySelector('h2')?.textContent;
+                    if (sectionId) {
+                        readSections.add(sectionId);
+                        updateProgress();
+                    }
+                }
+            });
+        }, { threshold: 0.3 });
+
+        document.querySelectorAll('.section').forEach(section => {
+            sectionObserver.observe(section);
+        });
+
+        function updateProgress() {
+            const totalSections = document.querySelectorAll('.section').length;
+            const progress = Math.min(100, (readSections.size / totalSections) * 100);
+            
+            // Create progress indicator if it doesn't exist
+            let progressBar = document.getElementById('reading-progress');
+            if (!progressBar) {
+                progressBar = document.createElement('div');
+                progressBar.id = 'reading-progress';
+                progressBar.style.cssText = `
+                    position: fixed;
+                    top: 0;
+                    left: 0;
+                    height: 4px;
+                    background: linear-gradient(90deg, var(--success-color), var(--primary-color));
+                    transition: width 0.3s ease;
+                    z-index: 1000;
+                `;
+                document.body.appendChild(progressBar);
+            }
+            
+            progressBar.style.width = progress + '%';
+        }
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.ctrlKey || e.metaKey) {
+                switch(e.key) {
+                    case 'Home':
+                        window.location.href = 'index.html';
+                        break;
+                    case 'ArrowLeft':
+                        window.location.href = 'index.html';
+                        break;
+                    case 'ArrowRight':
+                        window.location.href = 'mikrocontroller.html';
+                        break;
+                }
+            }
+        });
+
+        // Add search functionality
+        function addSearchBox() {
+            const searchContainer = document.createElement('div');
+            searchContainer.innerHTML = `
+                <div style="position: fixed; top: 20px; right: 20px; z-index: 1000;">
+                    <input type="text" id="search-box" placeholder="🔍 Im Text suchen..." 
+                           style="padding: 0.5rem; border-radius: 8px; border: 2px solid var(--primary-color); width: 200px;">
+                    <div id="search-results" style="background: white; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-top: 5px; display: none;"></div>
+                </div>
+            `;
+            document.body.appendChild(searchContainer);
+
+            const searchBox = document.getElementById('search-box');
+            const searchResults = document.getElementById('search-results');
+
+            searchBox.addEventListener('input', (e) => {
+                const query = e.target.value.toLowerCase();
+                if (query.length < 2) {
+                    searchResults.style.display = 'none';
+                    return;
+                }
+
+                const results = [];
+                document.querySelectorAll('p, h1, h2, h3, h4, li').forEach(element => {
+                    if (element.textContent.toLowerCase().includes(query)) {
+                        results.push({
+                            text: element.textContent.substring(0, 100) + '...',
+                            element: element
+                        });
+                    }
+                });
+
+                if (results.length > 0) {
+                    searchResults.innerHTML = results.slice(0, 5).map(result => 
+                        `<div style="padding: 0.5rem; cursor: pointer; border-bottom: 1px solid #eee;" 
+                              onclick="document.querySelector('h1').scrollIntoView({behavior: 'smooth'})">
+                            ${result.text}
+                         </div>`
+                    ).join('');
+                    searchResults.style.display = 'block';
+                } else {
+                    searchResults.innerHTML = '<div style="padding: 0.5rem; color: #666;">Keine Ergebnisse gefunden</div>';
+                    searchResults.style.display = 'block';
+                }
+            });
+
+            // Hide search results when clicking outside
+            document.addEventListener('click', (e) => {
+                if (!searchContainer.contains(e.target)) {
+                    searchResults.style.display = 'none';
+                }
+            });
+        }
+
+        // Add interactive elements after page load
+        window.addEventListener('load', () => {
+            addSearchBox();
+            
+            // Add interactive memory calculator
+            const calculatorHTML = `
+                <div class="section" style="margin-top: 2rem;">
+                    <div class="section-header">
+                        <h2>🧮 Interaktiver Speicherrechner</h2>
+                        <p>Berechne Speicherkapazitäten selbst!</p>
+                    </div>
+                    <div class="section-content">
+                        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 2rem 0;">
+                            <div>
+                                <label for="address-bits"><strong>Anzahl Adressleitungen:</strong></label>
+                                <input type="number" id="address-bits" min="1" max="32" value="6" 
+                                       style="width: 100%; padding: 0.5rem; margin: 0.5rem 0; border: 2px solid var(--border-color); border-radius: 4px;">
+                                
+                                <label for="word-width"><strong>Wortbreite (Bit):</strong></label>
+                                <input type="number" id="word-width" min="1" max="64" value="4" 
+                                       style="width: 100%; padding: 0.5rem; margin: 0.5rem 0; border: 2px solid var(--border-color); border-radius: 4px;">
+                            </div>
+                            <div>
+                                <div id="calc-result" class="highlight-box">
+                                    <strong>Ergebnis:</strong><br>
+                                    • Anzahl Speicherzellen: 64<br>
+                                    • Gesamtkapazität: 256 Bit<br>
+                                    • Das entspricht: 32 Bytes
+                                </div>
+                            </div>
+                        </div>
+                        <div class="info-box">
+                            <strong>💡 Probiere verschiedene Werte aus:</strong>
+                            <ul>
+                                <li><strong>RAM 64×4:</strong> 6 Adressleitungen, 4 Bit Wortbreite</li>
+                                <li><strong>ROM 1k×4:</strong> 10 Adressleitungen, 4 Bit Wortbreite</li>
+                                <li><strong>Moderner PC (4GB):</strong> 32 Adressleitungen, 8 Bit Wortbreite</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            `;
+            
+            // Insert calculator before the navigation
+            const navigation = document.querySelector('.navigation');
+            navigation.insertAdjacentHTML('beforebegin', calculatorHTML);
+            
+            // Initialize calculator functionality
+            calculateMemorySize();
+            document.getElementById('address-bits').addEventListener('input', calculateMemorySize);
+            document.getElementById('word-width').addEventListener('input', calculateMemorySize);
+        });
+
+        // Add tooltips for technical terms
+        const technicalTerms = {
+            'FlipFlop': 'Ein bistabiles elektronisches Schaltelement, das zwei stabile Zustände hat und Information speichern kann.',
+            'Harvard-Architektur': 'Computerarchitektur mit getrennten Speichern und Bussen für Programme und Daten.',
+            'Von-Neumann-Architektur': 'Computerarchitektur mit gemeinsamem Speicher für Programme und Daten.',
+            'Stack-Overflow': 'Fehler, der auftritt, wenn der Stack-Speicher erschöpft ist.',
+            'Memory-Mapping': 'Technik, bei der verschiedene Speicherbereiche und Hardware-Register in einen gemeinsamen Adressraum eingeblendet werden.',
+            'Refresh-Zyklus': 'Regelmäßige Auffrischung des DRAM-Speichers, da Kondensatoren ihre Ladung verlieren.'
+        };
+
+  Object.keys(technicalTerms).forEach(term => {
+    const regex = new RegExp(`\\b${term}\\b`, 'gi');
+    document.querySelectorAll('p, li').forEach(element => {
+        // Überspringe Elemente, die bereits HTML-Tags oder Tooltips enthalten
+        if (element.innerHTML.match(regex) && 
+            !element.querySelector('span[title]') && 
+            !element.innerHTML.includes('<a') && 
+            !element.innerHTML.includes('<strong')) {
+            element.innerHTML = element.innerHTML.replace(regex, 
+                `<span title="${technicalTerms[term]}" style="border-bottom: 1px dotted var(--primary-color); cursor: help;">${term}</span>`
+            );
+        }
+    });
+});
+        });
+    </script>
+</body>
+</html>

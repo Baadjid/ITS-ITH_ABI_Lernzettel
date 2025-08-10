@@ -1,0 +1,1183 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prozesse & Scheduling - Abitur 2026 Informatik TG</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #0ea5e9;
+            --purple-color: #8b5cf6;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb a {
+            color: white;
+            text-decoration: none;
+            opacity: 0.8;
+        }
+
+        .breadcrumb a:hover {
+            opacity: 1;
+        }
+
+        .content-section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            overflow: hidden;
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .intro-box {
+            background: linear-gradient(135deg, var(--info-color), var(--primary-color));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .intro-box h3 {
+            margin-bottom: 1rem;
+        }
+
+        .definition-box {
+            background: linear-gradient(135deg, var(--success-color), #059669);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+
+        .definition-box h4 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .example-box {
+            background: #fef3c7;
+            border: 2px solid var(--warning-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+
+        .example-box h4 {
+            color: var(--warning-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1rem 0;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+            background: var(--bg-white);
+        }
+
+        .comparison-table tr:nth-child(even) td {
+            background: var(--bg-light);
+        }
+
+        .process-states {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .state-card {
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .state-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 12px -3px rgba(0, 0, 0, 0.1);
+        }
+
+        .state-card.new { border-color: var(--info-color); background: #e0f2fe; }
+        .state-card.ready { border-color: var(--success-color); background: #dcfce7; }
+        .state-card.running { border-color: var(--warning-color); background: #fef3c7; }
+        .state-card.waiting { border-color: var(--purple-color); background: #f3e8ff; }
+        .state-card.terminated { border-color: var(--danger-color); background: #fee2e2; }
+
+        .state-card h4 {
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .scheduling-timeline {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+            overflow-x: auto;
+        }
+
+        .timeline-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 1rem;
+            gap: 0.5rem;
+        }
+
+        .process-label {
+            min-width: 80px;
+            font-weight: bold;
+            text-align: right;
+        }
+
+        .timeline-block {
+            height: 30px;
+            min-width: 40px;
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 0.8rem;
+            font-weight: bold;
+            margin: 1px;
+        }
+
+        .timeline-block.p1 { background: var(--info-color); color: white; }
+        .timeline-block.p2 { background: var(--success-color); color: white; }
+        .timeline-block.p3 { background: var(--warning-color); color: white; }
+        .timeline-block.idle { background: var(--border-color); color: var(--text-light); }
+
+        .algorithm-comparison {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .algorithm-card {
+            background: var(--bg-white);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .algorithm-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 8px 16px -4px rgba(0, 0, 0, 0.1);
+        }
+
+        .algorithm-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .pros-cons {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin: 1rem 0;
+        }
+
+        .pros, .cons {
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .pros {
+            background: #dcfce7;
+            border: 2px solid var(--success-color);
+        }
+
+        .cons {
+            background: #fee2e2;
+            border: 2px solid var(--danger-color);
+        }
+
+        .pros h5, .cons h5 {
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .pros h5 { color: var(--success-color); }
+        .cons h5 { color: var(--danger-color); }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .code-block .comment {
+            color: #94a3b8;
+        }
+
+        .code-block .keyword {
+            color: #60a5fa;
+        }
+
+        .code-block .string {
+            color: #34d399;
+        }
+
+        .interactive-demo {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .demo-controls {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin-bottom: 1rem;
+        }
+
+        .demo-button {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .demo-button:hover {
+            background: var(--secondary-color);
+        }
+
+        .demo-button:disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+        }
+
+        .key-points {
+            background: #eff6ff;
+            border: 2px solid var(--info-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1rem 0;
+        }
+
+        .key-points h4 {
+            color: var(--info-color);
+            margin-bottom: 1rem;
+        }
+
+        .key-points ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .key-points li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .key-points li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: var(--success-color);
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding: 1rem 0;
+        }
+
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+        }
+
+        .nav-button.disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+        }
+
+        @media (max-width: 768px) {
+            .algorithm-comparison {
+                grid-template-columns: 1fr;
+            }
+            
+            .pros-cons {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .scheduling-timeline {
+                padding: 1rem;
+            }
+
+            .timeline-row {
+                flex-wrap: wrap;
+            }
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, transparent 0%, var(--warning-color) 0%, var(--warning-color) 100%);
+            background-size: 100% 20%;
+            background-repeat: no-repeat;
+            background-position: 0 90%;
+            padding: 0 2px;
+        }
+
+        .formula {
+            background: var(--bg-light);
+            border: 2px solid var(--primary-color);
+            padding: 1rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            text-align: center;
+            font-size: 1.1rem;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div class="breadcrumb">
+                <a href="index.html">🏠 Hauptseite</a> → 
+                <a href="betriebssysteme.html">🖥️ Technische Informatik III & IV</a> → 
+                <strong>⚙️ Prozesse & Scheduling</strong>
+            </div>
+            <h1>⚙️ Prozesse & Scheduling</h1>
+            <p>Wie ein Betriebssystem mehrere Programme gleichzeitig verwaltet</p>
+        </header>
+
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🎯 Was sind Prozesse?</h2>
+            </div>
+            <div class="section-content">
+                <div class="intro-box">
+                    <h3>🤔 Stell dir vor...</h3>
+                    <p>Du hast einen Computer mit nur einem Prozessor, aber möchtest gleichzeitig Musik hören, im Internet surfen und ein Textdokument schreiben. Wie schafft es der Computer, all diese Aufgaben "gleichzeitig" zu erledigen? Das ist die Magie der <strong>Prozesse</strong> und des <strong>Schedulings</strong>!</p>
+                </div>
+
+                <div class="definition-box">
+                    <h4>📚 Definition: Prozess</h4>
+                    <p>Ein <strong>Prozess</strong> ist ein Programm, das gerade ausgeführt wird. Jeder Prozess hat:</p>
+                    <ul style="margin-top: 0.5rem;">
+                        <li>• Eigenen Speicherbereich</li>
+                        <li>• Eigene Variablen und Daten</li>
+                        <li>• Aktuellen Ausführungszustand</li>
+                        <li>• Eindeutige Prozess-ID (PID)</li>
+                    </ul>
+                </div>
+
+                <h3>🔄 Die 5 Prozesszustände</h3>
+                <p>Jeder Prozess durchläuft verschiedene Zustände während seiner Lebenszeit:</p>
+
+                <div class="process-states">
+                    <div class="state-card new">
+                        <h4>🆕 NEW (Neu)</h4>
+                        <p><strong>Was passiert:</strong> Der Prozess wird gerade erstellt</p>
+                        <p><strong>Beispiel:</strong> Du doppelklickst auf ein Programmsymbol</p>
+                    </div>
+
+                    <div class="state-card ready">
+                        <h4>⏳ READY (Bereit)</h4>
+                        <p><strong>Was passiert:</strong> Der Prozess wartet darauf, vom Prozessor bearbeitet zu werden</p>
+                        <p><strong>Beispiel:</strong> Dein Musikplayer ist geladen und wartet auf CPU-Zeit</p>
+                    </div>
+
+                    <div class="state-card running">
+                        <h4>▶️ RUNNING (Laufend)</h4>
+                        <p><strong>Was passiert:</strong> Der Prozess wird gerade vom Prozessor ausgeführt</p>
+                        <p><strong>Beispiel:</strong> Das Textverarbeitungsprogramm bearbeitet gerade deine Eingabe</p>
+                    </div>
+
+                    <div class="state-card waiting">
+                        <h4>⏸️ WAITING (Wartend)</h4>
+                        <p><strong>Was passiert:</strong> Der Prozess wartet auf ein Ereignis (z.B. Eingabe, Datei)</p>
+                        <p><strong>Beispiel:</strong> Der Browser wartet auf Antwort vom Server</p>
+                    </div>
+
+                    <div class="state-card terminated">
+                        <h4>❌ TERMINATED (Beendet)</h4>
+                        <p><strong>Was passiert:</strong> Der Prozess ist fertig und wird aus dem Speicher entfernt</p>
+                        <p><strong>Beispiel:</strong> Du schließt das Programm</p>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>💡 Alltagsbeispiel: Restaurant-Küche</h4>
+                    <p>Stell dir eine Restaurant-Küche vor:</p>
+                    <ul>
+                        <li><strong>NEW:</strong> Ein neuer Auftrag kommt in die Küche</li>
+                        <li><strong>READY:</strong> Der Auftrag liegt bereit und wartet auf einen freien Koch</li>
+                        <li><strong>RUNNING:</strong> Ein Koch bereitet das Gericht zu</li>
+                        <li><strong>WAITING:</strong> Das Gericht wartet im Ofen oder auf eine Zutat</li>
+                        <li><strong>TERMINATED:</strong> Das fertige Gericht wird serviert</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🎛️ Was ist Scheduling?</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <h4>📚 Definition: Scheduling</h4>
+                    <p><strong>Scheduling</strong> ist der Prozess, bei dem das Betriebssystem entscheidet, welcher Prozess als nächstes die CPU verwenden darf. Es ist wie ein <span class="highlight">intelligenter Verkehrspolizist</span>, der den Verkehr (Prozesse) regelt.</p>
+                </div>
+
+                <h3>🎯 Ziele des Schedulings</h3>
+                <div class="key-points">
+                    <h4>Wichtige Scheduling-Ziele:</h4>
+                    <ul>
+                        <li><strong>Fairness:</strong> Jeder Prozess soll eine faire Chance bekommen</li>
+                        <li><strong>Effizienz:</strong> Die CPU soll möglichst nicht untätig sein</li>
+                        <li><strong>Reaktionsfähigkeit:</strong> Schnelle Antwort auf Benutzereingaben</li>
+                        <li><strong>Durchsatz:</strong> Möglichst viele Prozesse pro Zeit abarbeiten</li>
+                    </ul>
+                </div>
+
+                <h3>📊 Scheduling-Algorithmen im Detail</h3>
+
+                <div class="algorithm-comparison">
+                    <div class="algorithm-card">
+                        <h4>1. FCFS (First Come, First Served)</h4>
+                        <p><strong>Prinzip:</strong> "Wer zuerst kommt, mahlt zuerst"</p>
+                        <p><strong>Wie es funktioniert:</strong> Prozesse werden in der Reihenfolge abgearbeitet, in der sie ankommen.</p>
+
+                        <div class="example-box">
+                            <h4>Beispiel:</h4>
+                            <p>Prozess A kommt um 10:00, Prozess B um 10:01, Prozess C um 10:02</p>
+                            <p>→ Reihenfolge: A → B → C</p>
+                        </div>
+
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <h5>✅ Vorteile</h5>
+                                <ul>
+                                    <li>Sehr einfach zu verstehen</li>
+                                    <li>Kein Verhungern (Starvation)</li>
+                                    <li>Geringer Aufwand</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h5>❌ Nachteile</h5>
+                                <ul>
+                                    <li>Lange Prozesse blockieren kurze</li>
+                                    <li>Schlechte Reaktionszeiten</li>
+                                    <li>Convoy-Effekt möglich</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="algorithm-card">
+                        <h4>2. SJF (Shortest Job First)</h4>
+                        <p><strong>Prinzip:</strong> "Der kürzeste Job zuerst"</p>
+                        <p><strong>Wie es funktioniert:</strong> Der Prozess mit der kürzesten erwarteten Laufzeit wird zuerst ausgeführt.</p>
+
+                        <div class="example-box">
+                            <h4>Beispiel:</h4>
+                            <p>Prozess A: 10 Minuten, Prozess B: 2 Minuten, Prozess C: 5 Minuten</p>
+                            <p>→ Reihenfolge: B (2min) → C (5min) → A (10min)</p>
+                        </div>
+
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <h5>✅ Vorteile</h5>
+                                <ul>
+                                    <li>Optimale durchschnittliche Wartezeit</li>
+                                    <li>Hoher Durchsatz</li>
+                                    <li>Effiziente CPU-Nutzung</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h5>❌ Nachteile</h5>
+                                <ul>
+                                    <li>Lange Prozesse können verhungern</li>
+                                    <li>Laufzeiten schwer vorhersagbar</li>
+                                    <li>Nicht präemptiv (unterbrechend)</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="algorithm-card">
+                        <h4>3. Round Robin (RR)</h4>
+                        <p><strong>Prinzip:</strong> "Jeder bekommt ein festes Zeitfenster"</p>
+                        <p><strong>Wie es funktioniert:</strong> Jeder Prozess bekommt eine feste Zeit (Quantum), dann wird gewechselt.</p>
+
+                        <div class="example-box">
+                            <h4>Beispiel (Quantum = 2 Sekunden):</h4>
+                            <p>A läuft 2s → B läuft 2s → C läuft 2s → A läuft 2s → ...</p>
+                        </div>
+
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <h5>✅ Vorteile</h5>
+                                <ul>
+                                    <li>Fairness für alle Prozesse</li>
+                                    <li>Gute Reaktionszeiten</li>
+                                    <li>Kein Verhungern</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h5>❌ Nachteile</h5>
+                                <ul>
+                                    <li>Overhead durch Kontextwechsel</li>
+                                    <li>Quantum-Größe kritisch</li>
+                                    <li>Längere Durchlaufzeiten</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="algorithm-card">
+                        <h4>4. Prioritäts-Scheduling</h4>
+                        <p><strong>Prinzip:</strong> "Wichtige Aufgaben zuerst"</p>
+                        <p><strong>Wie es funktioniert:</strong> Jeder Prozess bekommt eine Priorität, höhere Priorität = frühere Ausführung.</p>
+
+                        <div class="example-box">
+                            <h4>Beispiel:</h4>
+                            <p>Prozess A: Priorität 1, Prozess B: Priorität 3, Prozess C: Priorität 2</p>
+                            <p>→ Reihenfolge: B (3) → C (2) → A (1)</p>
+                        </div>
+
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <h5>✅ Vorteile</h5>
+                                <ul>
+                                    <li>Wichtige Prozesse bevorzugt</li>
+                                    <li>Flexibel anpassbar</li>
+                                    <li>Realitätsnah</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h5>❌ Nachteile</h5>
+                                <ul>
+                                    <li>Niederpriorige können verhungern</li>
+                                    <li>Prioritätsinversion möglich</li>
+                                    <li>Komplexe Verwaltung</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>📈 Scheduling-Timeline Beispiel</h3>
+                <p>So könnte eine Round-Robin Ausführung mit Quantum=2 aussehen:</p>
+                
+                <div class="scheduling-timeline">
+                    <div class="timeline-row">
+                        <div class="process-label">Zeit:</div>
+                        <div class="timeline-block idle">0</div>
+                        <div class="timeline-block idle">1</div>
+                        <div class="timeline-block idle">2</div>
+                        <div class="timeline-block idle">3</div>
+                        <div class="timeline-block idle">4</div>
+                        <div class="timeline-block idle">5</div>
+                        <div class="timeline-block idle">6</div>
+                        <div class="timeline-block idle">7</div>
+                        <div class="timeline-block idle">8</div>
+                        <div class="timeline-block idle">9</div>
+                    </div>
+                    <div class="timeline-row">
+                        <div class="process-label">CPU:</div>
+                        <div class="timeline-block p1">A</div>
+                        <div class="timeline-block p1">A</div>
+                        <div class="timeline-block p2">B</div>
+                        <div class="timeline-block p2">B</div>
+                        <div class="timeline-block p3">C</div>
+                        <div class="timeline-block p3">C</div>
+                        <div class="timeline-block p1">A</div>
+                        <div class="timeline-block p1">A</div>
+                        <div class="timeline-block p2">B</div>
+                        <div class="timeline-block idle">-</div>
+                    </div>
+                </div>
+
+                <p><strong>Erklärung:</strong> Prozess A, B und C wechseln sich alle 2 Zeiteinheiten ab, bis sie fertig sind.</p>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🧮 Scheduling-Metriken</h2>
+            </div>
+            <div class="section-content">
+                <p>Um zu bewerten, wie gut ein Scheduling-Algorithmus ist, verwenden wir verschiedene Kennzahlen:</p>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Metrik</th>
+                            <th>Was es bedeutet</th>
+                            <th>Formel</th>
+                            <th>Beispiel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Turnaround Time</strong></td>
+                            <td>Gesamtzeit von Ankunft bis Fertigstellung</td>
+                            <td>Endzeit - Ankunftszeit</td>
+                            <td>Prozess kommt um 10:00, fertig um 10:15 → 15 Min</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Waiting Time</strong></td>
+                            <td>Zeit, die im Ready-Zustand gewartet wird</td>
+                            <td>Turnaround Time - Burst Time</td>
+                            <td>15 Min Turnaround - 5 Min Ausführung = 10 Min Warten</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Response Time</strong></td>
+                            <td>Zeit bis zur ersten Reaktion</td>
+                            <td>Erste Ausführung - Ankunftszeit</td>
+                            <td>Prozess kommt um 10:00, startet um 10:03 → 3 Min</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Throughput</strong></td>
+                            <td>Anzahl fertiggestellter Prozesse pro Zeit</td>
+                            <td>Anzahl Prozesse / Gesamtzeit</td>
+                            <td>10 Prozesse in 20 Minuten = 0,5 Prozesse/Min</td>
+                        </tr>
+                        <tr>
+                            <td><strong>CPU Utilization</strong></td>
+                            <td>Prozentsatz der CPU-Auslastung</td>
+                            <td>(Busy Time / Total Time) × 100%</td>
+                            <td>18 Min aktiv von 20 Min = 90% Auslastung</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="example-box">
+                    <h4>🧮 Rechenbeispiel</h4>
+                    <p><strong>Gegeben:</strong> 3 Prozesse mit FCFS-Scheduling</p>
+                    <ul>
+                        <li>Prozess A: Ankunft 0, Burst Time 8</li>
+                        <li>Prozess B: Ankunft 1, Burst Time 4</li>
+                        <li>Prozess C: Ankunft 2, Burst Time 2</li>
+                    </ul>
+                    
+                    <div class="formula">
+                        Ausführungsreihenfolge: A (0-8) → B (8-12) → C (12-14)
+                    </div>
+                    
+                    <p><strong>Berechnungen:</strong></p>
+                    <ul>
+                        <li><strong>Turnaround Time:</strong> A=8, B=11, C=12 → Durchschnitt: 10,33</li>
+                        <li><strong>Waiting Time:</strong> A=0, B=7, C=10 → Durchschnitt: 5,67</li>
+                        <li><strong>Response Time:</strong> A=0, B=7, C=10 → Durchschnitt: 5,67</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🔀 Threads vs. Prozesse</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <h4>📚 Was sind Threads?</h4>
+                    <p>Ein <strong>Thread</strong> (Faden) ist ein leichtgewichtiger Prozess. Mehrere Threads können innerhalb eines Prozesses existieren und teilen sich den Speicher.</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>🏠 Analogie: Wohngemeinschaft</h4>
+                    <p><strong>Prozess = Wohnung:</strong> Jede Wohnung hat eigene Adresse, eigene Möbel, eigene Kosten</p>
+                    <p><strong>Thread = Mitbewohner:</strong> Mehrere Mitbewohner teilen sich Küche, Bad, Wohnzimmer, aber haben eigene Zimmer</p>
+                </div>
+
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Aspekt</th>
+                            <th>Prozess</th>
+                            <th>Thread</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Speicher</strong></td>
+                            <td>Eigener, isolierter Speicherbereich</td>
+                            <td>Teilt Speicher mit anderen Threads</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Erstellung</strong></td>
+                            <td>Langsam und aufwendig</td>
+                            <td>Schnell und effizient</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kommunikation</strong></td>
+                            <td>Kompliziert (IPC - Inter Process Communication)</td>
+                            <td>Einfach (gemeinsamer Speicher)</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Stabilität</strong></td>
+                            <td>Crash eines Prozesses betrifft andere nicht</td>
+                            <td>Crash eines Threads kann alle betreffen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Ressourcenverbrauch</strong></td>
+                            <td>Hoch</td>
+                            <td>Niedrig</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="code-block">
+<span class="comment">// Beispiel Thread-Erstellung in C++</span>
+<span class="keyword">#include</span> <span class="string">&lt;thread&gt;</span>
+
+<span class="keyword">void</span> worker_function() {
+    <span class="comment">// Thread-Aufgabe hier</span>
+    std::cout << <span class="string">"Thread arbeitet..."</span> << std::endl;
+}
+
+<span class="keyword">int</span> main() {
+    <span class="comment">// Neuen Thread erstellen</span>
+    std::thread worker(worker_function);
+    
+    <span class="comment">// Auf Thread-Beendigung warten</span>
+    worker.join();
+    
+    <span class="keyword">return</span> 0;
+}
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="section-header">
+                <h2>⚠️ Verklemmungen (Deadlocks)</h2>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <h4>📚 Was ist eine Verklemmung?</h4>
+                    <p>Eine <strong>Verklemmung</strong> tritt auf, wenn zwei oder mehr Prozesse sich gegenseitig blockieren und keiner mehr fortfahren kann.</p>
+                </div>
+
+                <div class="example-box">
+                    <h4>🚗 Alltagsbeispiel: Kreuzung ohne Ampel</h4>
+                    <p>Stell dir vor, vier Autos erreichen gleichzeitig eine Kreuzung ohne Ampel:</p>
+                    <ul>
+                        <li>Auto A wartet auf Auto B</li>
+                        <li>Auto B wartet auf Auto C</li>
+                        <li>Auto C wartet auf Auto D</li>
+                        <li>Auto D wartet auf Auto A</li>
+                    </ul>
+                    <p><strong>Ergebnis:</strong> Niemand kann fahren - Verklemmung!</p>
+                </div>
+
+                <h3>🔄 Die 4 Bedingungen für Deadlocks</h3>
+                <p>Alle vier Bedingungen müssen gleichzeitig erfüllt sein:</p>
+
+                <div class="process-states">
+                    <div class="state-card waiting">
+                        <h4>1. Mutual Exclusion</h4>
+                        <p><strong>Gegenseitiger Ausschluss:</strong> Eine Ressource kann nur von einem Prozess genutzt werden</p>
+                        <p><em>Beispiel: Drucker kann nur einen Auftrag gleichzeitig drucken</em></p>
+                    </div>
+
+                    <div class="state-card running">
+                        <h4>2. Hold and Wait</h4>
+                        <p><strong>Halten und Warten:</strong> Prozess hält Ressourcen und wartet auf weitere</p>
+                        <p><em>Beispiel: Prozess hat Drucker und wartet auf Scanner</em></p>
+                    </div>
+
+                    <div class="state-card new">
+                        <h4>3. No Preemption</h4>
+                        <p><strong>Kein Entzug:</strong> Ressourcen können nicht gewaltsam entzogen werden</p>
+                        <p><em>Beispiel: Drucker kann nicht mitten im Druckvorgang entzogen werden</em></p>
+                    </div>
+
+                    <div class="state-card terminated">
+                        <h4>4. Circular Wait</h4>
+                        <p><strong>Zirkuläres Warten:</strong> Kreisförmige Wartekette entsteht</p>
+                        <p><em>Beispiel: A wartet auf B, B auf C, C auf A</em></p>
+                    </div>
+                </div>
+
+                <h3>💡 Deadlock-Vermeidung</h3>
+                <div class="key-points">
+                    <h4>Strategien zur Deadlock-Vermeidung:</h4>
+                    <ul>
+                        <li><strong>Banker's Algorithm:</strong> Prüft, ob Ressourcenzuteilung sicher ist</li>
+                        <li><strong>Ressourcen-Ordering:</strong> Definierte Reihenfolge bei Ressourcenanfragen</li>
+                        <li><strong>Timeout:</strong> Prozesse geben nach bestimmter Zeit auf</li>
+                        <li><strong>Deadlock Detection:</strong> System erkennt und löst Verklemmungen</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="section-header">
+                <h2>💻 Polling vs. Interrupts</h2>
+            </div>
+            <div class="section-content">
+                <p>Basierend auf dem Projektwissen gibt es zwei wichtige Methoden, wie ein System auf Ereignisse reagiert:</p>
+
+                <div class="algorithm-comparison">
+                    <div class="algorithm-card">
+                        <h4>🔄 Polling (Abfrage)</h4>
+                        <p><strong>Prinzip:</strong> Die CPU überprüft ständig, ob ein Ereignis aufgetreten ist</p>
+
+                        <div class="code-block">
+<span class="comment">// Polling-Beispiel</span>
+<span class="keyword">while</span>(true) {
+    <span class="keyword">if</span>(taste_gedrueckt()) {
+        verarbeite_eingabe();
+    }
+    <span class="comment">// CPU ist permanent beschäftigt</span>
+}
+                        </div>
+
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <h5>✅ Vorteile</h5>
+                                <ul>
+                                    <li>Einfach zu programmieren</li>
+                                    <li>Vorhersehbarer Ablauf</li>
+                                    <li>Konstante Kontrolle</li>
+                                    <li>Stabile Implementierung</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h5>❌ Nachteile</h5>
+                                <ul>
+                                    <li>Ineffizienter Ressourceneinsatz</li>
+                                    <li>Langsame Reaktionszeit</li>
+                                    <li>Hoher Energieverbrauch</li>
+                                    <li>CPU-Verschwendung</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="algorithm-card">
+                        <h4>⚡ Interrupts (Unterbrechungen)</h4>
+                        <p><strong>Prinzip:</strong> Das Ereignis meldet sich selbst bei der CPU</p>
+
+                        <div class="code-block">
+<span class="comment">// Interrupt-Beispiel</span>
+<span class="keyword">void</span> taste_interrupt() {
+    <span class="comment">// Wird automatisch aufgerufen</span>
+    verarbeite_eingabe();
+}
+
+<span class="keyword">int</span> main() {
+    aktiviere_interrupt(TASTE_PIN, taste_interrupt);
+    <span class="comment">// CPU kann andere Aufgaben erledigen</span>
+    <span class="keyword">while</span>(true) {
+        andere_aufgaben();
+    }
+}
+                        </div>
+
+                        <div class="pros-cons">
+                            <div class="pros">
+                                <h5>✅ Vorteile</h5>
+                                <ul>
+                                    <li>Hohe Effizienz</li>
+                                    <li>Schnelle Reaktion</li>
+                                    <li>Ressourcenschonend</li>
+                                    <li>Niedrigerer Energieverbrauch</li>
+                                </ul>
+                            </div>
+                            <div class="cons">
+                                <h5>❌ Nachteile</h5>
+                                <ul>
+                                    <li>Komplexere Implementierung</li>
+                                    <li>Overhead bei häufigen Interrupts</li>
+                                    <li>Prioritätsprobleme</li>
+                                    <li>Potentielle Instabilität</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>🎮 Praktisches Beispiel: Computerspiel</h4>
+                    <p><strong>Polling:</strong> Das Spiel fragt 60x pro Sekunde ab: "Wurde eine Taste gedrückt?"</p>
+                    <p><strong>Interrupt:</strong> Die Tastatur sagt dem Spiel: "Hey, hier wurde gerade eine Taste gedrückt!"</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🎯 Prüfungsrelevante Aufgaben</h2>
+            </div>
+            <div class="section-content">
+                <h3>📝 Typische Klausurfragen</h3>
+
+                <div class="example-box">
+                    <h4>Aufgabe 1: Scheduling-Vergleich</h4>
+                    <p><strong>Gegeben:</strong> Drei Prozesse mit folgenden Eigenschaften:</p>
+                    <ul>
+                        <li>P1: Ankunft=0, Burst=10</li>
+                        <li>P2: Ankunft=2, Burst=3</li>
+                        <li>P3: Ankunft=4, Burst=1</li>
+                    </ul>
+                    <p><strong>Aufgabe:</strong> Berechnen Sie für FCFS und SJF:</p>
+                    <ul>
+                        <li>Average Turnaround Time</li>
+                        <li>Average Waiting Time</li>
+                        <li>Zeichnen Sie die Gantt-Charts</li>
+                    </ul>
+                </div>
+
+                <div class="key-points">
+                    <h4>🎓 Lösungsschritte:</h4>
+                    <ul>
+                        <li><strong>Schritt 1:</strong> Gantt-Chart zeichnen (Zeitachse mit Prozessen)</li>
+                        <li><strong>Schritt 2:</strong> Completion Time für jeden Prozess bestimmen</li>
+                        <li><strong>Schritt 3:</strong> Turnaround Time = Completion Time - Arrival Time</li>
+                        <li><strong>Schritt 4:</strong> Waiting Time = Turnaround Time - Burst Time</li>
+                        <li><strong>Schritt 5:</strong> Durchschnitte berechnen</li>
+                    </ul>
+                </div>
+
+                <div class="formula">
+                    <strong>Wichtige Formeln:</strong><br>
+                    Turnaround Time = Completion Time - Arrival Time<br>
+                    Waiting Time = Turnaround Time - Burst Time<br>
+                    Response Time = First Start Time - Arrival Time
+                </div>
+            </div>
+        </section>
+
+        <section class="content-section">
+            <div class="section-header">
+                <h2>🔗 Zusammenfassung & Ausblick</h2>
+            </div>
+            <div class="section-content">
+                <div class="key-points">
+                    <h4>🎯 Das Wichtigste auf einen Blick:</h4>
+                    <ul>
+                        <li><strong>Prozesse</strong> sind Programme in Ausführung mit 5 Zuständen</li>
+                        <li><strong>Scheduling</strong> verteilt CPU-Zeit fair und effizient</li>
+                        <li><strong>FCFS</strong> ist einfach, aber kann ineffizient sein</li>
+                        <li><strong>SJF</strong> minimiert Wartezeiten, kann aber zu Starvation führen</li>
+                        <li><strong>Round Robin</strong> sorgt für Fairness bei interaktiven Systemen</li>
+                        <li><strong>Threads</strong> sind leichtgewichtig und teilen Speicher</li>
+                        <li><strong>Deadlocks</strong> entstehen bei 4 gleichzeitigen Bedingungen</li>
+                        <li><strong>Interrupts</strong> sind effizienter als Polling</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>🔄 Verbindung zu anderen Themen:</h4>
+                    <p><strong>Speicherverwaltung:</strong> Wie Prozesse Speicher zugeteilt bekommen</p>
+                    <p><strong>Dateisysteme:</strong> Wie Prozesse auf Dateien zugreifen</p>
+                    <p><strong>Netzwerke:</strong> Wie Prozesse über Netzwerk kommunizieren</p>
+                    <p><strong>Mikrocontroller:</strong> Scheduling in eingebetteten Systemen</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="navigation">
+            <a href="betriebssysteme.html" class="nav-button">
+                ← Zurück zu Betriebssysteme
+            </a>
+            <a href="speicherverwaltung.html" class="nav-button">
+                Speicherverwaltung →
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // Interactive Demo for Round Robin Scheduling
+        let currentDemo = 0;
+        const demos = [
+            { process: 'A', time: 2, color: 'p1' },
+            { process: 'B', time: 2, color: 'p2' },
+            { process: 'C', time: 2, color: 'p3' },
+            { process: 'A', time: 2, color: 'p1' }
+        ];
+
+        function nextStep() {
+            if (currentDemo < demos.length) {
+                const demo = demos[currentDemo];
+                console.log(`Prozess ${demo.process} läuft für ${demo.time} Zeiteinheiten`);
+                currentDemo++;
+            }
+        }
+
+        function resetDemo() {
+            currentDemo = 0;
+            console.log('Demo zurückgesetzt');
+        }
+
+        // Add some interactivity to tables
+        document.querySelectorAll('.comparison-table tr').forEach(row => {
+            row.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = '#f0f9ff';
+            });
+            
+            row.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = '';
+            });
+        });
+
+        // Highlight important terms on hover
+        document.querySelectorAll('.highlight').forEach(term => {
+            term.addEventListener('mouseenter', function() {
+                this.style.backgroundColor = '#fef3c7';
+                this.style.transform = 'scale(1.05)';
+                this.style.transition = 'all 0.2s ease';
+            });
+            
+            term.addEventListener('mouseleave', function() {
+                this.style.backgroundColor = '';
+                this.style.transform = 'scale(1)';
+            });
+        });
+
+        // Add click-to-copy functionality for code blocks
+        document.querySelectorAll('.code-block').forEach(block => {
+            block.style.cursor = 'pointer';
+            block.title = 'Klicken zum Kopieren';
+            
+            block.addEventListener('click', function() {
+                const text = this.textContent;
+                navigator.clipboard.writeText(text).then(() => {
+                    const originalBg = this.style.backgroundColor;
+                    this.style.backgroundColor = '#22c55e';
+                    setTimeout(() => {
+                        this.style.backgroundColor = originalBg;
+                    }, 500);
+                });
+            });
+        });
+    </script>
+</body>
+</html>

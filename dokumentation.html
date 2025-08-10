@@ -1,0 +1,1654 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dokumentation & Präsentation - Informatik TG</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #0ea5e9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            margin: 0;
+            padding: 20px 0;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .breadcrumb {
+            margin-bottom: 2rem;
+            padding: 1rem;
+            background: var(--bg-white);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--bg-white);
+            padding: 3rem 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.8rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem 2rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.6rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .subsection {
+            margin-bottom: 2.5rem;
+        }
+
+        .subsection:last-child {
+            margin-bottom: 0;
+        }
+
+        .subsection h3 {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--accent-color);
+        }
+
+        .subsection h4 {
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .subsection p {
+            margin-bottom: 1rem;
+            font-size: 1rem;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #eff6ff, #dbeafe);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-left: 4px solid var(--warning-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-box h4 {
+            color: var(--warning-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #ecfdf5, #d1fae5);
+            border-left: 4px solid var(--success-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .success-box h4 {
+            color: var(--success-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-left: 4px solid var(--info-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box h4 {
+            color: var(--info-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .list {
+            padding-left: 0;
+            margin-bottom: 1.5rem;
+        }
+
+        .list li {
+            margin-bottom: 0.8rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .list li::before {
+            content: "▶";
+            color: var(--primary-color);
+            position: absolute;
+            left: 0;
+            font-size: 0.8rem;
+        }
+
+        .numbered-list {
+            counter-reset: item;
+            padding-left: 0;
+        }
+
+        .numbered-list li {
+            counter-increment: item;
+            margin-bottom: 1rem;
+            padding-left: 2rem;
+            position: relative;
+        }
+
+        .numbered-list li::before {
+            content: counter(item);
+            background: var(--primary-color);
+            color: white;
+            border-radius: 50%;
+            width: 1.5rem;
+            height: 1.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: absolute;
+            left: 0;
+            top: 0.1rem;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .card h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.8rem;
+        }
+
+        .example {
+            background: #f8fafc;
+            border: 1px solid #e2e8f0;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .example h4 {
+            color: var(--text-dark);
+            margin-bottom: 1rem;
+        }
+
+        .code-block {
+            background: #1e293b;
+            color: #e2e8f0;
+            padding: 1rem;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 0.9rem;
+            overflow-x: auto;
+            margin: 1rem 0;
+        }
+
+        .table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .table th,
+        .table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .table th {
+            background: var(--primary-color);
+            color: white;
+            font-weight: 600;
+        }
+
+        .table tbody tr:hover {
+            background: var(--bg-light);
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding: 1.5rem;
+            background: var(--bg-white);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            padding: 0.8rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+            font-weight: 500;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-button.disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+        }
+
+        .nav-button.disabled:hover {
+            transform: none;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2.2rem;
+            }
+            
+            .grid {
+                grid-template-columns: 1fr;
+            }
+
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+
+        /* Smooth scroll behavior */
+        html {
+            scroll-behavior: smooth;
+        }
+
+        /* Table of Contents Styling */
+        .toc {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .toc h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .toc ul ul {
+            padding-left: 1.5rem;
+            margin-top: 0.5rem;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-weight: 500;
+        }
+
+        .toc a:hover {
+            color: var(--primary-color);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Breadcrumb Navigation -->
+        <nav class="breadcrumb">
+            <a href="index.html">🏠 Abitur 2026 Übersicht</a> > 
+            <a href="#systemgestaltung">Systemgestaltung & Projektarbeit</a> > 
+            <strong>Dokumentation & Präsentation</strong>
+        </nav>
+
+        <!-- Page Header -->
+        <header class="header">
+            <h1>📋 Dokumentation & Präsentation</h1>
+            <p>
+                Professionelle Dokumentation und wirkungsvolle Präsentation von IT-Projekten - 
+                Von der systematischen Erfassung bis zur überzeugenden Darstellung der Ergebnisse
+            </p>
+        </header>
+
+        <!-- Inhaltsverzeichnis -->
+        <div class="toc">
+            <h3>📑 Inhaltsverzeichnis</h3>
+            <ul>
+                <li><a href="#grundlagen">1. Grundlagen der Projektdokumentation</a></li>
+                <li><a href="#dokumentationsarten">2. Arten der Dokumentation</a>
+                    <ul>
+                        <li><a href="#technische-doku">2.1 Technische Dokumentation</a></li>
+                        <li><a href="#prozess-doku">2.2 Prozessdokumentation</a></li>
+                        <li><a href="#benutzer-doku">2.3 Benutzerdokumentation</a></li>
+                    </ul>
+                </li>
+                <li><a href="#dokumentationsstandards">3. Dokumentationsstandards & Best Practices</a></li>
+                <li><a href="#praesentationsgrundlagen">4. Grundlagen der Präsentation</a></li>
+                <li><a href="#praesentationstechnik">5. Präsentationstechnik</a>
+                    <ul>
+                        <li><a href="#praesentation-planen">5.1 Präsentation planen</a></li>
+                        <li><a href="#medien-tools">5.2 Medien und Tools</a></li>
+                        <li><a href="#vortragstechnik">5.3 Vortragstechnik</a></li>
+                    </ul>
+                </li>
+                <li><a href="#projektabschluss">6. Projektabschluss und Nachbereitung</a></li>
+            </ul>
+        </div>
+
+        <!-- Grundlagen der Projektdokumentation -->
+        <section id="grundlagen" class="section">
+            <div class="section-header">
+                <h2>1. Grundlagen der Projektdokumentation</h2>
+                <p>Warum Dokumentation essentiell für erfolgreiche IT-Projekte ist</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Was ist Projektdokumentation?</h3>
+                    <p>
+                        Projektdokumentation ist die <strong>systematische Erfassung, Strukturierung und Aufbereitung</strong> 
+                        aller wichtigen Informationen, Entscheidungen, Prozesse und Ergebnisse während der 
+                        gesamten Projektlaufzeit. Sie dient als <em>Gedächtnis des Projekts</em> und stellt sicher, 
+                        dass Wissen nicht verloren geht.
+                    </p>
+
+                    <div class="highlight-box">
+                        <h4>💡 Warum ist Dokumentation wichtig?</h4>
+                        <p>Stellen Sie sich vor, Sie arbeiten an einem komplexen Programmierprojekt und nach 
+                        3 Monaten fragen Sie sich: "Warum habe ich diese Funktion so programmiert?" oder 
+                        "Wie funktionierte nochmal dieser Algorithmus?" - Ohne Dokumentation sind Sie verloren!</p>
+                    </div>
+
+                    <h4>Hauptziele der Projektdokumentation:</h4>
+                    <ul class="list">
+                        <li><strong>Wissenserhaltung:</strong> Wichtige Informationen gehen nicht verloren</li>
+                        <li><strong>Kommunikation:</strong> Alle Beteiligten haben Zugang zu aktuellen Informationen</li>
+                        <li><strong>Qualitätssicherung:</strong> Nachvollziehbarkeit von Entscheidungen und Prozessen</li>
+                        <li><strong>Wartung & Weiterentwicklung:</strong> Zukünftige Änderungen werden vereinfacht</li>
+                        <li><strong>Rechtliche Absicherung:</strong> Nachweis der ordnungsgemäßen Projektdurchführung</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3>Dokumentation im agilen Projektmanagement (Scrum)</h3>
+                    
+                    <div class="info-box">
+                        <h4>🔄 Agiles Manifest und Dokumentation</h4>
+                        <p>
+                            Das Agile Manifest besagt: <em>"Funktionierende Software ist wichtiger als 
+                            umfassende Dokumentation"</em>. Das bedeutet <strong>nicht</strong>, dass 
+                            keine Dokumentation erstellt wird, sondern dass sie <strong>zielgerichtet 
+                            und wertstiftend</strong> sein soll.
+                        </p>
+                    </div>
+
+                    <p>
+                        In agilen Projekten wird Dokumentation <strong>kontinuierlich und iterativ</strong> erstellt:
+                    </p>
+
+                    <div class="grid">
+                        <div class="card">
+                            <h4>📋 Product Backlog</h4>
+                            <p>Sammlung aller Anforderungen und Features, die das Produkt haben soll. 
+                            Wird ständig aktualisiert und priorisiert.</p>
+                        </div>
+                        <div class="card">
+                            <h4>📈 Sprint Backlog</h4>
+                            <p>Aufgaben für den aktuellen Sprint mit detaillierten Beschreibungen 
+                            und Akzeptanzkriterien.</p>
+                        </div>
+                        <div class="card">
+                            <h4>📊 Burndown Charts</h4>
+                            <p>Grafische Darstellung des Fortschritts - zeigt, wie viel Arbeit 
+                            noch zu erledigen ist.</p>
+                        </div>
+                        <div class="card">
+                            <h4>📝 Definition of Done</h4>
+                            <p>Klare Kriterien, wann eine Aufgabe als "fertig" betrachtet wird. 
+                            Sorgt für einheitliche Qualitätsstandards.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Arten der Dokumentation -->
+        <section id="dokumentationsarten" class="section">
+            <div class="section-header">
+                <h2>2. Arten der Dokumentation</h2>
+                <p>Verschiedene Dokumentationstypen für unterschiedliche Zwecke und Zielgruppen</p>
+            </div>
+            <div class="section-content">
+                <div id="technische-doku" class="subsection">
+                    <h3>2.1 Technische Dokumentation</h3>
+                    <p>
+                        Die technische Dokumentation richtet sich primär an <strong>Entwickler und IT-Fachkräfte</strong>. 
+                        Sie beschreibt, <em>wie</em> das System funktioniert und <em>wie</em> es aufgebaut ist.
+                    </p>
+
+                    <h4>🔧 Bestandteile der technischen Dokumentation:</h4>
+                    <ul class="numbered-list">
+                        <li><strong>Systemarchitektur:</strong> Übersicht über die gesamte Systemstruktur, Komponenten und deren Zusammenspiel</li>
+                        <li><strong>API-Dokumentation:</strong> Beschreibung aller Schnittstellen, Parameter und Rückgabewerte</li>
+                        <li><strong>Datenbankschema:</strong> ER-Diagramme, Tabellenstrukturen, Beziehungen</li>
+                        <li><strong>Code-Kommentare:</strong> Inline-Dokumentation im Quellcode</li>
+                        <li><strong>Deployment-Guide:</strong> Anleitung zur Installation und Konfiguration</li>
+                    </ul>
+
+                    <div class="example">
+                        <h4>📝 Beispiel: API-Dokumentation</h4>
+                        <div class="code-block">
+/**
+ * Benutzer-Login-Funktion
+ * @param {string} username - Benutzername des Anwenders
+ * @param {string} password - Passwort (wird gehasht übertragen)
+ * @returns {object} Benutzerobject mit Token oder Error-Message
+ * @throws {AuthenticationError} Wenn Login-Daten ungültig sind
+ */
+function loginUser(username, password) {
+    // Implementierung...
+}
+                        </div>
+                    </div>
+                </div>
+
+                <div id="prozess-doku" class="subsection">
+                    <h3>2.2 Prozessdokumentation</h3>
+                    <p>
+                        Beschreibt die <strong>Arbeitsweise und Vorgehensweisen</strong> im Projekt. 
+                        Besonders wichtig für die Qualitätssicherung und Nachvollziehbarkeit.
+                    </p>
+
+                    <div class="grid">
+                        <div class="card">
+                            <h4>📅 Projektplanung</h4>
+                            <ul class="list">
+                                <li>Meilenstein-Pläne</li>
+                                <li>Sprint-Planungen</li>
+                                <li>Ressourcenplanung</li>
+                                <li>Risikomanagement</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>🔄 Entwicklungsprozess</h4>
+                            <ul class="list">
+                                <li>Coding-Standards</li>
+                                <li>Review-Prozesse</li>
+                                <li>Testing-Strategien</li>
+                                <li>Deployment-Prozeduren</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>📊 Qualitätssicherung</h4>
+                            <ul class="list">
+                                <li>Test-Protokolle</li>
+                                <li>Bug-Reports</li>
+                                <li>Performance-Analysen</li>
+                                <li>Sicherheitsprüfungen</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>🎯 Projektsteuerung</h4>
+                            <ul class="list">
+                                <li>Status-Reports</li>
+                                <li>Meeting-Protokolle</li>
+                                <li>Änderungsanträge</li>
+                                <li>Lessons Learned</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="benutzer-doku" class="subsection">
+                    <h3>2.3 Benutzerdokumentation</h3>
+                    <p>
+                        Richtet sich an die <strong>Endbenutzer</strong> des Systems. Muss verständlich, 
+                        vollständig und benutzerfreundlich sein.
+                    </p>
+
+                    <h4>👥 Arten der Benutzerdokumentation:</h4>
+                    
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Dokumenttyp</th>
+                                <th>Zielgruppe</th>
+                                <th>Inhalt</th>
+                                <th>Beispiele</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Benutzerhandbuch</strong></td>
+                                <td>Endbenutzer</td>
+                                <td>Komplette Anleitung zur Verwendung</td>
+                                <td>PDF-Manual, Online-Hilfe</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Quick-Start-Guide</strong></td>
+                                <td>Neue Benutzer</td>
+                                <td>Schneller Einstieg in die wichtigsten Funktionen</td>
+                                <td>Erste Schritte, Setup-Wizard</td>
+                            </tr>
+                            <tr>
+                                <td><strong>FAQ</strong></td>
+                                <td>Alle Benutzer</td>
+                                <td>Häufig gestellte Fragen und Antworten</td>
+                                <td>Troubleshooting, Problemlösungen</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Tutorial/Schulung</strong></td>
+                                <td>Lernende</td>
+                                <td>Schritt-für-Schritt Anleitungen</td>
+                                <td>Video-Tutorials, interaktive Guides</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="warning-box">
+                        <h4>⚠️ Häufige Fehler bei der Benutzerdokumentation</h4>
+                        <ul class="list">
+                            <li>Zu technische Sprache verwenden</li>
+                            <li>Voraussetzen von Fachwissen</li>
+                            <li>Unvollständige oder veraltete Screenshots</li>
+                            <li>Fehlende Struktur und Navigation</li>
+                            <li>Keine Berücksichtigung verschiedener Benutzertypen</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dokumentationsstandards & Best Practices -->
+        <section id="dokumentationsstandards" class="section">
+            <div class="section-header">
+                <h2>3. Dokumentationsstandards & Best Practices</h2>
+                <p>Bewährte Methoden für professionelle und nachhaltige Dokumentation</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>📏 SMART-Prinzip für Dokumentation</h3>
+                    <p>
+                        Gute Dokumentation sollte <strong>SMART</strong> sein - ein Prinzip, das ursprünglich 
+                        für Ziele entwickelt wurde, aber auch hervorragend für Dokumentation funktioniert:
+                    </p>
+
+                    <div class="grid">
+                        <div class="card">
+                            <h4><strong>S</strong>pezifisch</h4>
+                            <p>Konkrete, eindeutige Beschreibungen statt vager Aussagen. 
+                            "Das System ist schnell" → "Das System antwortet in unter 200ms"</p>
+                        </div>
+                        <div class="card">
+                            <h4><strong>M</strong>essbar</h4>
+                            <p>Quantifizierbare Aussagen verwenden. Zahlen, Metriken und 
+                            messbare Kriterien angeben.</p>
+                        </div>
+                        <div class="card">
+                            <h4><strong>A</strong>ktuell</h4>
+                            <p>Dokumentation muss regelmäßig aktualisiert werden und 
+                            den aktuellen Zustand widerspiegeln.</p>
+                        </div>
+                        <div class="card">
+                            <h4><strong>R</strong>elevant</h4>
+                            <p>Nur wichtige Informationen dokumentieren. Unwichtiges 
+                            weglassen, um Übersichtlichkeit zu bewahren.</p>
+                        </div>
+                        <div class="card">
+                            <h4><strong>T</strong>erminiert</h4>
+                            <p>Zeitbezug herstellen: Wann wurde dokumentiert? 
+                            Bis wann ist die Information gültig?</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🏗️ Strukturierung von Dokumentation</h3>
+                    
+                    <h4>Die klassische Dokumentationsstruktur:</h4>
+                    <ol class="numbered-list">
+                        <li><strong>Titel und Metadaten:</strong> Was, wer, wann, Version</li>
+                        <li><strong>Executive Summary:</strong> Kurze Zusammenfassung für Führungskräfte</li>
+                        <li><strong>Inhaltsverzeichnis:</strong> Navigation durch das Dokument</li>
+                        <li><strong>Einleitung:</strong> Zweck, Umfang und Zielgruppe</li>
+                        <li><strong>Hauptteil:</strong> Strukturiert nach Themen oder Komponenten</li>
+                        <li><strong>Anhänge:</strong> Zusätzliche Details, Diagramme, Code</li>
+                        <li><strong>Glossar:</strong> Erklärung wichtiger Begriffe</li>
+                    </ol>
+
+                    <div class="success-box">
+                        <h4>✅ Best Practice: Das 3-Ebenen-Prinzip</h4>
+                        <p>Strukturieren Sie Ihre Dokumentation in drei Detailebenen:</p>
+                        <ul class="list">
+                            <li><strong>Ebene 1:</strong> Überblick (Executive Summary, Architekturdiagramm)</li>
+                            <li><strong>Ebene 2:</strong> Detailbeschreibung (Funktionsweise, Prozesse)</li>
+                            <li><strong>Ebene 3:</strong> Implementierungsdetails (Code, Konfiguration)</li>
+                        </ul>
+                        <p>So können Leser je nach Bedarf in die gewünschte Tiefe einsteigen.</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🛠️ Tools und Formate für die Dokumentation</h3>
+                    
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Tool/Format</th>
+                                <th>Vorteile</th>
+                                <th>Nachteile</th>
+                                <th>Einsatzgebiet</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Markdown</strong></td>
+                                <td>Einfach, versionierbar, plattformunabhängig</td>
+                                <td>Begrenzte Formatierung</td>
+                                <td>README-Files, technische Dokumentation</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Wiki (Confluence, GitLab)</strong></td>
+                                <td>Kollaborativ, verlinkbar, durchsuchbar</td>
+                                <td>Braucht Server, kann unstrukturiert werden</td>
+                                <td>Wissensdatenbank, Prozessdokumentation</td>
+                            </tr>
+                            <tr>
+                                <td><strong>MS Word/Google Docs</strong></td>
+                                <td>Bekannt, umfangreiche Formatierung</td>
+                                <td>Versionsprobleme, nicht gut für Code</td>
+                                <td>Benutzerhandbücher, Berichte</td>
+                            </tr>
+                            <tr>
+                                <td><strong>LaTeX</strong></td>
+                                <td>Professionelles Layout, mathematische Formeln</td>
+                                <td>Steile Lernkurve, zeitaufwendig</td>
+                                <td>Wissenschaftliche Arbeiten, technische Spezifikationen</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="highlight-box">
+                        <h4>💡 Tipp: "Documentation as Code"</h4>
+                        <p>
+                            Behandeln Sie Dokumentation wie Code: Verwenden Sie Versionsverwaltung (Git), 
+                            schreiben Sie in einfachen Textformaten (Markdown), und integrieren Sie 
+                            die Dokumentation in den Entwicklungsworkflow. So bleibt sie immer aktuell!
+                        </p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🔄 Continuous Documentation</h3>
+                    <p>
+                        In der modernen Softwareentwicklung wird Dokumentation <strong>kontinuierlich</strong> 
+                        erstellt und aktualisiert, nicht erst am Ende des Projekts.
+                    </p>
+
+                    <h4>Prinzipien der kontinuierlichen Dokumentation:</h4>
+                    <ul class="numbered-list">
+                        <li><strong>Just-in-Time-Dokumentation:</strong> Dokumentieren Sie, wenn es gebraucht wird</li>
+                        <li><strong>Automatisierung:</strong> Generieren Sie Dokumentation automatisch aus Code-Kommentaren</li>
+                        <li><strong>Living Documentation:</strong> Halten Sie Dokumentation durch Tests und Code aktuell</li>
+                        <li><strong>Feedback-Loops:</strong> Holen Sie regelmäßig Feedback von Nutzern ein</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Grundlagen der Präsentation -->
+        <section id="praesentationsgrundlagen" class="section">
+            <div class="section-header">
+                <h2>4. Grundlagen der Präsentation</h2>
+                <p>Erfolgreiche Kommunikation von Projektergebnissen und technischen Inhalten</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>🎯 Was macht eine gute Präsentation aus?</h3>
+                    <p>
+                        Eine erfolgreiche Präsentation ist <strong>mehr als nur das Vorlesen von Folien</strong>. 
+                        Sie ist ein Kommunikationsmittel, das komplexe Informationen verständlich und 
+                        überzeugend vermittelt.
+                    </p>
+
+                    <div class="grid">
+                        <div class="card">
+                            <h4>🎯 Zielgruppen-orientiert</h4>
+                            <p>Passen Sie Inhalt, Sprache und Detail-Level an Ihr Publikum an. 
+                            CEOs brauchen andere Informationen als Entwickler.</p>
+                        </div>
+                        <div class="card">
+                            <h4>📖 Storytelling</h4>
+                            <p>Erzählen Sie eine Geschichte: Problem → Lösung → Ergebnis. 
+                            Menschen merken sich Geschichten besser als Fakten.</p>
+                        </div>
+                        <div class="card">
+                            <h4>🎨 Visuell ansprechend</h4>
+                            <p>Nutzen Sie Bilder, Diagramme und Grafiken statt Textwüsten. 
+                            Ein Bild sagt mehr als tausend Worte.</p>
+                        </div>
+                        <div class="card">
+                            <h4>⚡ Interaktiv</h4>
+                            <p>Beziehen Sie das Publikum ein: Fragen stellen, 
+                            Demos zeigen, Diskussionen anregen.</p>
+                        </div>
+                    </div>
+
+                    <div class="warning-box">
+                        <h4>⚠️ Häufige Präsentationsfehler</h4>
+                        <ul class="list">
+                            <li><strong>Zu viel Text auf Folien:</strong> Slides sind visuelle Unterstützung, kein Skript</li>
+                            <li><strong>Monotone Vortragsweise:</strong> Variation in Tempo, Lautstärke und Betonung</li>
+                            <li><strong>Keine klare Struktur:</strong> Publikum verliert den roten Faden</li>
+                            <li><strong>Technische Probleme:</strong> Immer einen Plan B haben</li>
+                            <li><strong>Zu lang oder zu kurz:</strong> Zeit einhalten und üben</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🏗️ Die 3-Akt-Struktur für IT-Präsentationen</h3>
+                    
+                    <div class="example">
+                        <h4>🎬 Akt 1: Setup (25% der Zeit)</h4>
+                        <ul class="list">
+                            <li><strong>Hook:</strong> Aufmerksamkeit wecken (Problem, Statistik, Frage)</li>
+                            <li><strong>Context:</strong> Situation und Herausforderung beschreiben</li>
+                            <li><strong>Agenda:</strong> Was werden Sie zeigen/besprechen?</li>
+                        </ul>
+                        
+                        <h4>⚔️ Akt 2: Konflikt & Lösung (50% der Zeit)</h4>
+                        <ul class="list">
+                            <li><strong>Problem vertiefen:</strong> Warum ist das wichtig?</li>
+                            <li><strong>Lösungsansatz:</strong> Ihre Idee/Implementierung</li>
+                            <li><strong>Technical Deep-Dive:</strong> Wie funktioniert es?</li>
+                            <li><strong>Demonstration:</strong> Live-Demo oder Screenshots</li>
+                        </ul>
+                        
+                        <h4>🎉 Akt 3: Resolution (25% der Zeit)</h4>
+                        <ul class="list">
+                            <li><strong>Ergebnisse:</strong> Was wurde erreicht?</li>
+                            <li><strong>Lessons Learned:</strong> Was haben Sie gelernt?</li>
+                            <li><strong>Next Steps:</strong> Wie geht es weiter?</li>
+                            <li><strong>Q&A:</strong> Fragen und Diskussion</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🧠 Psychologie der Aufmerksamkeit</h3>
+                    <p>
+                        Das menschliche Gehirn kann nur begrenzt Aufmerksamkeit aufrechterhalten. 
+                        Nutzen Sie dieses Wissen für bessere Präsentationen.
+                    </p>
+
+                    <div class="info-box">
+                        <h4>📊 Die 10-20-30 Regel (Guy Kawasaki)</h4>
+                        <ul class="list">
+                            <li><strong>10 Folien:</strong> Maximal 10 Hauptpunkte pro Präsentation</li>
+                            <li><strong>20 Minuten:</strong> Präsentation sollte nicht länger als 20 Minuten dauern</li>
+                            <li><strong>30 Punkt Schrift:</strong> Mindestgröße für Text auf Folien</li>
+                        </ul>
+                        <p>Diese Regel zwingt Sie, sich auf das Wesentliche zu konzentrieren.</p>
+                    </div>
+
+                    <h4>🎯 Aufmerksamkeits-Techniken:</h4>
+                    <ul class="numbered-list">
+                        <li><strong>Pattern Interrupt:</strong> Unterbrechen Sie Routine durch unerwartete Elemente</li>
+                        <li><strong>Chunking:</strong> Teilen Sie komplexe Informationen in 3-5 Hauptpunkte</li>
+                        <li><strong>Primacy/Recency:</strong> Wichtigste Punkte am Anfang und Ende platzieren</li>
+                        <li><strong>Multimodale Präsentation:</strong> Sprechen, Sehen, Hören kombinieren</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Präsentationstechnik -->
+        <section id="praesentationstechnik" class="section">
+            <div class="section-header">
+                <h2>5. Präsentationstechnik</h2>
+                <p>Praktische Fähigkeiten für überzeugende und professionelle Präsentationen</p>
+            </div>
+            <div class="section-content">
+                <div id="praesentation-planen" class="subsection">
+                    <h3>5.1 Präsentation planen</h3>
+                    <p>
+                        Eine gut geplante Präsentation ist bereits zur Hälfte erfolgreich. 
+                        Die Planungsphase ist entscheidend für den späteren Erfolg.
+                    </p>
+
+                    <h4>📋 Planungs-Checkliste (7W-Methode):</h4>
+                    <div class="grid">
+                        <div class="card">
+                            <h4>👥 WER?</h4>
+                            <ul class="list">
+                                <li>Wer ist meine Zielgruppe?</li>
+                                <li>Welches Vorwissen haben sie?</li>
+                                <li>Was interessiert sie?</li>
+                                <li>Welche Erwartungen haben sie?</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>🎯 WAS?</h4>
+                            <ul class="list">
+                                <li>Was ist die Kernbotschaft?</li>
+                                <li>Was sollen die Zuhörer lernen?</li>
+                                <li>Was sollen sie danach tun?</li>
+                                <li>Was ist das gewünschte Ergebnis?</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>❓ WARUM?</h4>
+                            <ul class="list">
+                                <li>Warum ist das Thema wichtig?</li>
+                                <li>Warum sollten sie zuhören?</li>
+                                <li>Was ist der Nutzen für sie?</li>
+                                <li>Warum bin ich der richtige Sprecher?</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>📍 WO?</h4>
+                            <ul class="list">
+                                <li>Wie groß ist der Raum?</li>
+                                <li>Welche Technik ist verfügbar?</li>
+                                <li>Wie ist die Sitzordnung?</li>
+                                <li>Gibt es einen Backup-Plan?</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>⏰ WANN?</h4>
+                            <ul class="list">
+                                <li>Wie lange soll die Präsentation dauern?</li>
+                                <li>Wann ist die beste Zeit?</li>
+                                <li>Wie viel Zeit für Q&A?</li>
+                                <li>Gibt es Zeitdruck/Deadlines?</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>🔧 WIE?</h4>
+                            <ul class="list">
+                                <li>Welche Präsentationsform?</li>
+                                <li>Welche Medien nutzen?</li>
+                                <li>Wie interaktiv gestalten?</li>
+                                <li>Wie den Erfolg messen?</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="success-box">
+                        <h4>✅ SMART-Ziele für Präsentationen</h4>
+                        <p>Definieren Sie klare Ziele für Ihre Präsentation:</p>
+                        <ul class="list">
+                            <li><strong>Spezifisch:</strong> "Die Zuhörer verstehen die Vorteile unserer neuen API"</li>
+                            <li><strong>Messbar:</strong> "80% können die 3 Hauptfunktionen nennen"</li>
+                            <li><strong>Attraktiv:</strong> "Sie sehen den konkreten Nutzen für ihre Arbeit"</li>
+                            <li><strong>Realistisch:</strong> "Machbar in der gegebenen Zeit"</li>
+                            <li><strong>Terminiert:</strong> "Am Ende der Präsentation erreicht"</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="medien-tools" class="subsection">
+                    <h3>5.2 Medien und Tools</h3>
+                    <p>
+                        Die richtige Auswahl und professionelle Nutzung von Präsentationsmedien 
+                        kann den Unterschied zwischen einer guten und einer herausragenden Präsentation ausmachen.
+                    </p>
+
+                    <h4>🖼️ Foliengestaltung - Best Practices:</h4>
+                    
+                    <div class="example">
+                        <h4>✅ Gute Folie vs. ❌ Schlechte Folie</h4>
+                        <div class="grid">
+                            <div class="card">
+                                <h4>✅ Gut</h4>
+                                <ul class="list">
+                                    <li>Eine Kernaussage pro Folie</li>
+                                    <li>Große, gut lesbare Schrift (min. 24pt)</li>
+                                    <li>Viel Weißraum</li>
+                                    <li>Konsistente Farben und Schriften</li>
+                                    <li>Aussagekräftige Bilder/Diagramme</li>
+                                    <li>Maximal 6 Stichpunkte pro Folie</li>
+                                </ul>
+                            </div>
+                            <div class="card">
+                                <h4>❌ Schlecht</h4>
+                                <ul class="list">
+                                    <li>Zu viele Informationen auf einer Folie</li>
+                                    <li>Kleine Schrift (unter 20pt)</li>
+                                    <li>Vollgepackte Folien</li>
+                                    <li>Inkonsistente Formatierung</li>
+                                    <li>Stockphotos oder irrelevante Bilder</li>
+                                    <li>Vollständige Sätze statt Stichpunkte</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4>🎨 Farbpsychologie in Präsentationen:</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Farbe</th>
+                                <th>Bedeutung</th>
+                                <th>Einsatz in IT-Präsentationen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Blau</strong></td>
+                                <td>Vertrauen, Stabilität, Technologie</td>
+                                <td>Hauptfarbe für Corporate Designs, Diagramme</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Grün</strong></td>
+                                <td>Erfolg, Wachstum, Sicherheit</td>
+                                <td>Positive Ergebnisse, Erfolgsmetriken</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Rot</strong></td>
+                                <td>Aufmerksamkeit, Warnung, Dringlichkeit</td>
+                                <td>Probleme, Fehler, wichtige Hinweise</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Grau</strong></td>
+                                <td>Neutral, professionell, sachlich</td>
+                                <td>Hintergründe, sekundäre Informationen</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <h4>📊 Diagramm-Typen und ihre Einsatzgebiete:</h4>
+                    <div class="grid">
+                        <div class="card">
+                            <h4>📈 Liniendiagramm</h4>
+                            <p><strong>Wofür:</strong> Trends über Zeit zeigen</p>
+                            <p><strong>Beispiel:</strong> Performance-Verbesserungen, Nutzerwachstum</p>
+                        </div>
+                        <div class="card">
+                            <h4>📊 Balkendiagramm</h4>
+                            <p><strong>Wofür:</strong> Vergleiche zwischen Kategorien</p>
+                            <p><strong>Beispiel:</strong> Feature-Vergleiche, Testergebnisse</p>
+                        </div>
+                        <div class="card">
+                            <h4>🥧 Tortendiagramm</h4>
+                            <p><strong>Wofür:</strong> Anteile eines Ganzen</p>
+                            <p><strong>Beispiel:</strong> Ressourcenverteilung, Marktanteile</p>
+                        </div>
+                        <div class="card">
+                            <h4>🏗️ Flussdiagramm</h4>
+                            <p><strong>Wofür:</strong> Prozesse und Abläufe</p>
+                            <p><strong>Beispiel:</strong> Algorithmen, Workflows</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="vortragstechnik" class="subsection">
+                    <h3>5.3 Vortragstechnik</h3>
+                    <p>
+                        Ihre Körpersprache, Stimme und Präsenz sind genauso wichtig wie der Inhalt. 
+                        Hier lernen Sie, wie Sie souverän und überzeugend auftreten.
+                    </p>
+
+                    <h4>🗣️ Stimm- und Sprechtechnik:</h4>
+                    <div class="grid">
+                        <div class="card">
+                            <h4>🔊 Lautstärke</h4>
+                            <ul class="list">
+                                <li>Laut genug für den hintersten Zuhörer</li>
+                                <li>Variation für Betonung</li>
+                                <li>Leiser bei vertraulichen Informationen</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>⏱️ Tempo</h4>
+                            <ul class="list">
+                                <li>Normales Sprechtempo: 150-200 Wörter/Minute</li>
+                                <li>Langsamer bei komplexen Themen</li>
+                                <li>Pausen für Wirkung einsetzen</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>🎵 Betonung</h4>
+                            <ul class="list">
+                                <li>Schlüsselwörter hervorheben</li>
+                                <li>Emotionen in die Stimme legen</li>
+                                <li>Fragen anders betonen als Aussagen</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>⏸️ Pausen</h4>
+                            <ul class="list">
+                                <li>Nach wichtigen Aussagen pausieren</li>
+                                <li>"Äh" und "Ehm" vermeiden</li>
+                                <li>Stille ist kraftvoller als Füllwörter</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <h4>👤 Körpersprache und Präsenz:</h4>
+                    
+                    <div class="success-box">
+                        <h4>✅ Positive Körpersprache</h4>
+                        <ul class="list">
+                            <li><strong>Aufrechte Haltung:</strong> Signalisiert Selbstvertrauen und Kompetenz</li>
+                            <li><strong>Offene Gestik:</strong> Handflächen zeigen, keine verschränkten Arme</li>
+                            <li><strong>Blickkontakt:</strong> Mit allen Bereichen des Publikums</li>
+                            <li><strong>Bewegung:</strong> Gezielt einsetzen, nicht nervös hin und her laufen</li>
+                            <li><strong>Lächeln:</strong> Schafft Verbindung und positive Atmosphäre</li>
+                        </ul>
+                    </div>
+
+                    <div class="warning-box">
+                        <h4>❌ Körpersprache-Fallen vermeiden</h4>
+                        <ul class="list">
+                            <li><strong>Rücken zum Publikum:</strong> Beim Zeigen auf die Leinwand</li>
+                            <li><strong>Hands in Pockets:</strong> Wirkt desinteressiert</li>
+                            <li><strong>Starrer Blick:</strong> Nur eine Person oder nur den Bildschirm ansehen</li>
+                            <li><strong>Nervöse Ticks:</strong> Mit Stift spielen, Münzen klimpern</li>
+                            <li><strong>Zu viele Gesten:</strong> Übertreibung lenkt vom Inhalt ab</li>
+                        </ul>
+                    </div>
+
+                    <h4>💭 Umgang mit Lampenfieber:</h4>
+                    <ol class="numbered-list">
+                        <li><strong>Vorbereitung ist alles:</strong> Je besser Sie vorbereitet sind, desto sicherer fühlen Sie sich</li>
+                        <li><strong>Positive Visualisierung:</strong> Stellen Sie sich den erfolgreichen Vortrag vor</li>
+                        <li><strong>Atemtechnik:</strong> Tiefe Bauchatmung beruhigt das Nervensystem</li>
+                        <li><strong>Früh da sein:</strong> Technik testen, Raum kennenlernen</li>
+                        <li><strong>Mit Bekannten beginnen:</strong> Erst Blickkontakt mit freundlichen Gesichtern</li>
+                        <li><strong>Bewegung:</strong> Leichte körperliche Aktivität vor dem Vortrag</li>
+                    </ol>
+                </div>
+            </div>
+        </section>
+
+        <!-- Projektabschluss -->
+        <section id="projektabschluss" class="section">
+            <div class="section-header">
+                <h2>6. Projektabschluss und Nachbereitung</h2>
+                <p>Erfolgreicher Projektabschluss durch systematische Aufarbeitung und Lessons Learned</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>🏁 Der Projektabschluss-Prozess</h3>
+                    <p>
+                        Ein professioneller Projektabschluss ist mehr als nur "wir sind fertig". 
+                        Er sorgt dafür, dass Wissen erhalten bleibt und zukünftige Projekte davon profitieren.
+                    </p>
+
+                    <h4>📋 Projektabschluss-Checkliste:</h4>
+                    <div class="grid">
+                        <div class="card">
+                            <h4>📝 Dokumentation finalisieren</h4>
+                            <ul class="list">
+                                <li>Alle Dokumente aktualisieren</li>
+                                <li>Abschlussbericht erstellen</li>
+                                <li>Übergabedokumentation</li>
+                                <li>Archive organisieren</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>📊 Ergebnisse bewerten</h4>
+                            <ul class="list">
+                                <li>Ziele vs. Ergebnisse vergleichen</li>
+                                <li>KPIs analysieren</li>
+                                <li>Stakeholder-Feedback sammeln</li>
+                                <li>ROI berechnen</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>🎯 Lessons Learned</h4>
+                            <ul class="list">
+                                <li>Was lief gut?</li>
+                                <li>Was kann verbessert werden?</li>
+                                <li>Welche Tools/Methoden bewährt?</li>
+                                <li>Empfehlungen für zukünftige Projekte</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>👥 Team & Stakeholder</h4>
+                            <ul class="list">
+                                <li>Team-Feedback-Runde</li>
+                                <li>Danksagung und Anerkennung</li>
+                                <li>Übergabe an Betriebsteam</li>
+                                <li>Projektabschlussfest/Retrospektive</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>📈 Projekt-Retrospektive (Lessons Learned)</h3>
+                    <p>
+                        Die Retrospektive ist eines der wichtigsten Instrumente für kontinuierliche Verbesserung. 
+                        Sie hilft dabei, aus Erfolgen und Fehlern zu lernen.
+                    </p>
+
+                    <h4>🔄 Die "Start-Stop-Continue" Methode:</h4>
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>🟢 Start</th>
+                                <th>🔴 Stop</th>
+                                <th>🟡 Continue</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Was sollten wir in zukünftigen Projekten <strong>anfangen</strong> zu tun?</td>
+                                <td>Was sollten wir <strong>nicht mehr</strong> tun oder anders machen?</td>
+                                <td>Was lief gut und sollten wir <strong>beibehalten</strong>?</td>
+                            </tr>
+                            <tr>
+                                <td>Neue Tools, Methoden, Prozesse</td>
+                                <td>Ineffiziente Prozesse, schlechte Gewohnheiten</td>
+                                <td>Bewährte Praktiken, erfolgreiche Ansätze</td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="example">
+                        <h4>💡 Beispiel einer IT-Projekt Retrospektive</h4>
+                        <div class="grid">
+                            <div class="card">
+                                <h4>🟢 Start</h4>
+                                <ul class="list">
+                                    <li>Automatisierte Tests früher einführen</li>
+                                    <li>Code-Reviews verpflichtend machen</li>
+                                    <li>Tägliche Stand-ups einführen</li>
+                                    <li>Continuous Integration/Deployment</li>
+                                </ul>
+                            </div>
+                            <div class="card">
+                                <h4>🔴 Stop</h4>
+                                <ul class="list">
+                                    <li>Lange E-Mail-Diskussionen</li>
+                                    <li>Meetings ohne Agenda</li>
+                                    <li>Manuelles Deployment</li>
+                                    <li>Dokumentation am Projektende</li>
+                                </ul>
+                            </div>
+                            <div class="card">
+                                <h4>🟡 Continue</h4>
+                                <ul class="list">
+                                    <li>Sprint-Retrospektiven</li>
+                                    <li>Pair Programming bei komplexen Features</li>
+                                    <li>Direkte Kommunikation mit Stakeholdern</li>
+                                    <li>Regelmäßige Demo-Sessions</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h4>📊 Quantitative Bewertung:</h4>
+                    <p>Neben qualitativen Bewertungen sollten Sie auch messbare Kennzahlen analysieren:</p>
+                    
+                    <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Kennzahl</th>
+                                <th>Geplant</th>
+                                <th>Tatsächlich</th>
+                                <th>Abweichung</th>
+                                <th>Grund/Maßnahme</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Projektdauer</strong></td>
+                                <td>12 Wochen</td>
+                                <td>14 Wochen</td>
+                                <td>+16%</td>
+                                <td>Zusätzliche Features gewünscht</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Budget</strong></td>
+                                <td>50.000 €</td>
+                                <td>48.000 €</td>
+                                <td>-4%</td>
+                                <td>Keine externen Berater benötigt</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Teammitglieder</strong></td>
+                                <td>5</td>
+                                <td>6</td>
+                                <td>+20%</td>
+                                <td>UI/UX Designer hinzugeholt</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Bug-Rate</strong></td>
+                                <td>&lt; 2%</td>
+                                <td>1.3%</td>
+                                <td>-35%</td>
+                                <td>Intensive Code-Reviews</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h3>📦 Übergabe und Archivierung</h3>
+                    <p>
+                        Ein ordnungsgemäßer Projektabschluss beinhaltet die strukturierte Übergabe 
+                        aller Projektergebnisse und die Archivierung für zukünftige Referenz.
+                    </p>
+
+                    <h4>📋 Übergabe-Checkliste:</h4>
+                    <ol class="numbered-list">
+                        <li><strong>Technische Übergabe:</strong>
+                            <ul class="list">
+                                <li>Vollständiger Quellcode mit Dokumentation</li>
+                                <li>Datenbankschemata und Migrationsscripts</li>
+                                <li>Deployment-Anleitungen und Scripts</li>
+                                <li>Monitoring und Logging-Konfiguration</li>
+                            </ul>
+                        </li>
+                        <li><strong>Betriebsübergabe:</strong>
+                            <ul class="list">
+                                <li>Benutzerhandbücher und Training-Materialien</li>
+                                <li>Administratoren-Dokumentation</li>
+                                <li>Wartungsverträge und Support-Kontakte</li>
+                                <li>Backup- und Recovery-Prozeduren</li>
+                            </ul>
+                        </li>
+                        <li><strong>Organisatorische Übergabe:</strong>
+                            <ul class="list">
+                                <li>Projektdokumentation und Berichte</li>
+                                <li>Verträge und rechtliche Dokumente</li>
+                                <li>Budgetabrechnung und Kostenübersicht</li>
+                                <li>Stakeholder-Kontaktlisten</li>
+                            </ul>
+                        </li>
+                    </ol>
+
+                    <div class="info-box">
+                        <h4>💾 Digitale Archivierung - Best Practices</h4>
+                        <ul class="list">
+                            <li><strong>Strukturierte Ordnerstruktur:</strong> Logische Hierarchie verwenden</li>
+                            <li><strong>Versionierung:</strong> Alle Dokumente mit Versionsnummern</li>
+                            <li><strong>Metadaten:</strong> Erstellungsdatum, Autor, Zweck dokumentieren</li>
+                            <li><strong>Zugriffsrechte:</strong> Klar definieren, wer was lesen/ändern darf</li>
+                            <li><strong>Backup-Strategie:</strong> Mehrere Kopien an verschiedenen Orten</li>
+                            <li><strong>Auffindbarkeit:</strong> Suchbare Dateiformate und beschreibende Dateinamen</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🎉 Projekterfolg feiern und würdigen</h3>
+                    <p>
+                        Ein erfolgreicher Projektabschluss sollte gefeiert werden! Das stärkt die 
+                        Motivation des Teams und schafft positive Erinnerungen für zukünftige Projekte.
+                    </p>
+
+                    <h4>🏆 Arten der Anerkennung:</h4>
+                    <div class="grid">
+                        <div class="card">
+                            <h4>👥 Team-Anerkennung</h4>
+                            <ul class="list">
+                                <li>Gemeinsames Abschlussfest</li>
+                                <li>Team-Dinner oder -Event</li>
+                                <li>Projekt-T-Shirts oder Merchandise</li>
+                                <li>Gemeinsame Retrospektive</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>🌟 Individuelle Anerkennung</h4>
+                            <ul class="list">
+                                <li>Persönliche Danksagungen</li>
+                                <li>Erwähnung in Unternehmensmedien</li>
+                                <li>Bonuszahlungen oder Gutscheine</li>
+                                <li>Zeugnisse und Empfehlungsschreiben</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>📢 Öffentliche Anerkennung</h4>
+                            <ul class="list">
+                                <li>Präsentation vor der Geschäftsführung</li>
+                                <li>Artikel in der Unternehmenszeitung</li>
+                                <li>Social Media Posts</li>
+                                <li>Konferenz-Präsentationen</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>📚 Lernerfahrungen teilen</h4>
+                            <ul class="list">
+                                <li>Interne Wissensaustausch-Sessions</li>
+                                <li>Best-Practice-Dokumentation</li>
+                                <li>Mentoring für neue Projekte</li>
+                                <li>Prozessverbesserungen implementieren</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div class="success-box">
+                        <h4>✅ Erfolgsmessung: Definition of Done für Projekte</h4>
+                        <p>Ein Projekt ist erfolgreich abgeschlossen, wenn:</p>
+                        <ul class="list">
+                            <li>✅ Alle definierten Ziele erreicht wurden</li>
+                            <li>✅ Stakeholder zufrieden sind</li>
+                            <li>✅ Dokumentation vollständig und übergeben</li>
+                            <li>✅ System produktiv im Einsatz</li>
+                            <li>✅ Team-Lessons-Learned dokumentiert</li>
+                            <li>✅ Budgetvorgaben eingehalten</li>
+                            <li>✅ Qualitätsstandards erfüllt</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Zusammenfassung und Ausblick -->
+        <section class="section">
+            <div class="section-header">
+                <h2>📚 Zusammenfassung & Prüfungstipps</h2>
+                <p>Die wichtigsten Punkte für Ihre Abiturprüfung</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>🎯 Prüfungsrelevante Kernthemen</h3>
+                    
+                    <div class="highlight-box">
+                        <h4>💡 Was Sie auf jeden Fall können müssen:</h4>
+                        <ol class="numbered-list">
+                            <li><strong>Dokumentationsarten unterscheiden:</strong> Technische Doku, Prozessdoku, Benutzerdoku</li>
+                            <li><strong>Agile Dokumentation erklären:</strong> Scrum-Artefakte, kontinuierliche Dokumentation</li>
+                            <li><strong>Präsentationsstruktur aufbauen:</strong> 3-Akt-Struktur, Zielgruppenanalyse</li>
+                            <li><strong>Präsentationstechniken anwenden:</strong> Foliengestaltung, Vortragstechnik</li>
+                            <li><strong>Projektabschluss durchführen:</strong> Retrospektive, Übergabe, Archivierung</li>
+                        </ol>
+                    </div>
+
+                    <h4>📝 Typische Prüfungsfragen:</h4>
+                    <div class="example">
+                        <h4>Beispielaufgaben:</h4>
+                        <ol class="numbered-list">
+                            <li><strong>Analysieren Sie</strong> die Vor- und Nachteile verschiedener Dokumentationsformate für ein Softwareprojekt.</li>
+                            <li><strong>Erläutern Sie</strong> den Unterschied zwischen traditioneller und agiler Projektdokumentation.</li>
+                            <li><strong>Planen Sie</strong> eine 15-minütige Präsentation für die Projektübergabe eines E-Commerce-Systems.</li>
+                            <li><strong>Bewerten Sie</strong> die Bedeutung von "Lessons Learned" für zukünftige Projekte.</li>
+                            <li><strong>Entwickeln Sie</strong> eine Checkliste für den Projektabschluss eines Mobile-App-Projekts.</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>💪 Erfolgstipps für die Prüfung</h3>
+                    
+                    <div class="grid">
+                        <div class="card">
+                            <h4>📖 Vorbereitung</h4>
+                            <ul class="list">
+                                <li>Fachbegriffe auswendig lernen</li>
+                                <li>Beispiele aus der Praxis kennen</li>
+                                <li>Zusammenhänge verstehen</li>
+                                <li>Mind-Maps erstellen</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>✍️ In der Prüfung</h4>
+                            <ul class="list">
+                                <li>Aufgabenstellung genau lesen</li>
+                                <li>Operatoren beachten</li>
+                                <li>Strukturiert antworten</li>
+                                <li>Beispiele verwenden</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>🎯 Antwortstruktur</h4>
+                            <ul class="list">
+                                <li>Einleitung: Kontext schaffen</li>
+                                <li>Hauptteil: Strukturiert abarbeiten</li>
+                                <li>Fazit: Zusammenfassung/Bewertung</li>
+                                <li>Fachsprache verwenden</li>
+                            </ul>
+                        </div>
+                        <div class="card">
+                            <h4>⚡ Last-Minute-Tipps</h4>
+                            <ul class="list">
+                                <li>Ruhe bewahren</li>
+                                <li>Zeit einteilen</li>
+                                <li>Klar und deutlich schreiben</li>
+                                <li>Am Ende nochmals durchlesen</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🔗 Weiterführende Ressourcen</h3>
+                    <p>Für vertiefende Informationen und praktische Übungen empfehlen wir:</p>
+                    
+                    <ul class="list">
+                        <li><strong>Agile Manifesto:</strong> Offizielle Seite mit allen Prinzipien</li>
+                        <li><strong>Scrum Guide:</strong> Vollständiger Leitfaden zu Scrum-Praktiken</li>
+                        <li><strong>Toastmasters International:</strong> Organisation für Präsentationstraining</li>
+                        <li><strong>GitHub Documentation:</strong> Beispiele für exzellente technische Dokumentation</li>
+                        <li><strong>TED Talks:</strong> Inspirationen für überzeugende Präsentationen</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- Navigation -->
+        <nav class="navigation">
+            <a href="projektmanagement.html" class="nav-button">
+                ⬅️ Zurück: Projektmanagement
+            </a>
+            <a href="qualitaetssicherung.html" class="nav-button">
+                Weiter: Qualitätssicherung ➡️
+            </a>
+        </nav>
+    </div>
+
+    <!-- JavaScript für Interaktivität -->
+    <script>
+        // Smooth scrolling für Inhaltsverzeichnis-Links
+        document.querySelectorAll('.toc a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight aktueller Abschnitt beim Scrollen
+        window.addEventListener('scroll', () => {
+            const sections = document.querySelectorAll('section[id]');
+            const scrollPos = window.pageYOffset + 100;
+
+            sections.forEach(section => {
+                const top = section.offsetTop;
+                const height = section.offsetHeight;
+                const id = section.getAttribute('id');
+                const navLink = document.querySelector(`.toc a[href="#${id}"]`);
+
+                if (scrollPos >= top && scrollPos < top + height) {
+                    // Entferne aktive Klasse von allen Links
+                    document.querySelectorAll('.toc a').forEach(link => {
+                        link.style.color = '';
+                        link.style.fontWeight = '';
+                    });
+                    
+                    // Füge aktive Klasse zum aktuellen Link hinzu
+                    if (navLink) {
+                        navLink.style.color = '#2563eb';
+                        navLink.style.fontWeight = 'bold';
+                    }
+                }
+            });
+        });
+
+        // Expandable Boxen (für mobile Ansicht)
+        document.querySelectorAll('.card h4').forEach(header => {
+            header.style.cursor = 'pointer';
+            header.addEventListener('click', function() {
+                const content = this.nextElementSibling;
+                if (window.innerWidth <= 768) {
+                    content.style.display = content.style.display === 'none' ? 'block' : 'none';
+                }
+            });
+        });
+
+        // Tooltip für Fachbegriffe
+        const fachbegriffe = {
+            'Scrum': 'Agiles Framework für Projektmanagement mit festen Rollen und Zeitrahmen',
+            'Sprint': 'Fester Zeitraum (meist 1-4 Wochen) für die Entwicklung in Scrum',
+            'Stakeholder': 'Alle Personen oder Gruppen, die ein Interesse am Projekt haben',
+            'API': 'Application Programming Interface - Schnittstelle für Softwareanwendungen'
+        };
+
+        // Füge Tooltips zu Fachbegriffen hinzu
+        Object.keys(fachbegriffe).forEach(begriff => {
+            const regex = new RegExp(`\\b${begriff}\\b`, 'g');
+            document.body.innerHTML = document.body.innerHTML.replace(regex, 
+                `<span class="tooltip" title="${fachbegriffe[begriff]}">${begriff}</span>`
+            );
+        });
+
+        // CSS für Tooltips
+        const style = document.createElement('style');
+        style.textContent = `
+            .tooltip {
+                border-bottom: 1px dotted #2563eb;
+                cursor: help;
+            }
+            .tooltip:hover {
+                color: #2563eb;
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Print-freundliche Ansicht
+        if (window.matchMedia) {
+            const mediaQuery = window.matchMedia('print');
+            mediaQuery.addEventListener('change', (e) => {
+                if (e.matches) {
+                    document.body.style.background = 'white';
+                    document.querySelectorAll('.section').forEach(section => {
+                        section.style.boxShadow = 'none';
+                        section.style.border = '1px solid #ccc';
+                    });
+                }
+            });
+        }
+    </script>
+</body>
+</html>

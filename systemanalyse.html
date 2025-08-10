@@ -1,0 +1,1018 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Systemanalyse & Design - Abitur 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .header .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            background: var(--bg-white);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .content-section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .definition-box {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border: 2px solid var(--accent-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .definition-box h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+        }
+
+        .definition-box strong {
+            color: var(--secondary-color);
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border: 2px solid var(--success-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .example-box h4 {
+            color: var(--success-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .important-box {
+            background: linear-gradient(135deg, #fefce8, #fef3c7);
+            border: 2px solid var(--warning-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .important-box h4 {
+            color: var(--warning-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .process-steps {
+            display: grid;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .process-step {
+            background: var(--bg-light);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            position: relative;
+        }
+
+        .process-step .step-number {
+            position: absolute;
+            top: -15px;
+            left: 20px;
+            background: var(--primary-color);
+            color: white;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .process-step h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            margin-left: 1rem;
+        }
+
+        .architecture-diagram {
+            background: var(--bg-light);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 2rem;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .layer {
+            background: var(--bg-white);
+            margin: 1rem 0;
+            padding: 1rem;
+            border-radius: 8px;
+            border: 2px solid var(--accent-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .layer.view {
+            background: linear-gradient(135deg, #fef3c7, #fde68a);
+            border-color: var(--warning-color);
+        }
+
+        .layer.control {
+            background: linear-gradient(135deg, #ddd6fe, #c4b5fd);
+            border-color: #8b5cf6;
+        }
+
+        .layer.model {
+            background: linear-gradient(135deg, #dcfce7, #bbf7d0);
+            border-color: var(--success-color);
+        }
+
+        .layer h5 {
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .concepts-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .concept-card {
+            background: var(--bg-light);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .concept-card:hover {
+            border-color: var(--accent-color);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .concept-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .concept-card ul {
+            list-style-type: none;
+            padding-left: 0;
+        }
+
+        .concept-card li {
+            padding: 0.3rem 0;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .concept-card li:before {
+            content: "▶";
+            color: var(--accent-color);
+            position: absolute;
+            left: 0;
+        }
+
+        .checklist {
+            background: var(--bg-light);
+            border: 2px solid var(--success-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .checklist h4 {
+            color: var(--success-color);
+            margin-bottom: 1rem;
+        }
+
+        .checklist ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .checklist li {
+            padding: 0.5rem 0;
+            position: relative;
+            padding-left: 2rem;
+        }
+
+        .checklist li:before {
+            content: "✓";
+            color: var(--success-color);
+            font-weight: bold;
+            position: absolute;
+            left: 0;
+            font-size: 1.2rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding: 1rem;
+            background: var(--bg-white);
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+        }
+
+        .nav-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-button.disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+        }
+
+        .nav-button.disabled:hover {
+            transform: none;
+        }
+
+        @media (max-width: 768px) {
+            .concepts-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+
+            .navigation {
+                flex-direction: column;
+                gap: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            <a href="index.html">🏠 Startseite</a> → 
+            <a href="systemgestaltung.html">Systemgestaltung & Projektarbeit</a> → 
+            <strong>Systemanalyse & Design</strong>
+        </div>
+
+        <header class="header">
+            <h1>🏗️ Systemanalyse & Design</h1>
+            <p class="subtitle">Systematisches Vorgehen zur Entwicklung komplexer IT-Systeme</p>
+            <div style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                <strong>Bildungsplaneinheit BPE 4:</strong> Systemgestaltung<br>
+                <em>Analysieren, entwerfen und modellieren von informationstechnischen Systemen</em>
+            </div>
+        </header>
+
+        <!-- Was ist Systemanalyse? -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>🔍 Was ist Systemanalyse?</h2>
+                <p>Grundlagen verstehen und anwenden können</p>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <h3>💡 Definition: Systemanalyse</h3>
+                    <p><strong>Systemanalyse</strong> ist der systematische Prozess der Untersuchung und Zerlegung komplexer Probleme oder Systeme in ihre Einzelteile, um sie besser zu verstehen, zu bewerten und Lösungsansätze zu entwickeln.</p>
+                    
+                    <p style="margin-top: 1rem;"><strong>Einfach erklärt:</strong> Stell dir vor, du sollst ein kaputtes Auto reparieren. Systemanalyse wäre wie wenn du zuerst genau hinschaust, welche Teile kaputt sind, wie sie zusammengehören, und erst dann eine Reparaturstrategie entwickelst - anstatt einfach wild drauflos zu schrauben!</p>
+                </div>
+
+                <div class="important-box">
+                    <h4>⚡ Warum ist Systemanalyse wichtig?</h4>
+                    <ul>
+                        <li><strong>Komplexität beherrschen:</strong> Moderne IT-Systeme sind sehr komplex - ohne systematische Analyse geht man unter</li>
+                        <li><strong>Fehler vermeiden:</strong> Wer nicht richtig plant, verschwendet Zeit und Geld</li>
+                        <li><strong>Effizienz steigern:</strong> Durchdachte Lösungen funktionieren besser und länger</li>
+                        <li><strong>Kommunikation verbessern:</strong> Alle Beteiligten verstehen das gleiche System</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>🏫 Beispiel: Schulverwaltungssystem</h4>
+                    <p><strong>Problem:</strong> Eine Schule möchte ihre Verwaltung digitalisieren.</p>
+                    <p><strong>Ohne Systemanalyse:</strong> "Lass uns einfach eine App programmieren!"</p>
+                    <p><strong>Mit Systemanalyse:</strong></p>
+                    <ul>
+                        <li>Welche Daten werden benötigt? (Schüler, Noten, Termine, etc.)</li>
+                        <li>Wer soll das System nutzen? (Lehrer, Schüler, Verwaltung, Eltern)</li>
+                        <li>Welche Funktionen werden benötigt? (Noten eingeben, Stundenplan anzeigen, etc.)</li>
+                        <li>Wie soll es aussehen und funktionieren?</li>
+                        <li>Welche Sicherheitsanforderungen gibt es?</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Der Systemanalyse-Prozess -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>🔄 Der Systemanalyse-Prozess</h2>
+                <p>Schritt-für-Schritt zum erfolgreichen System</p>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <h3>📋 Problemlösungszyklus nach Bildungsplan</h3>
+                    <p>Der Bildungsplan definiert einen systematischen <strong>Problemlösungszyklus</strong>, der in drei Hauptphasen unterteilt ist:</p>
+                </div>
+
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <h4>📚 Informationsbeschaffung</h4>
+                        <p><strong>Ziel:</strong> Alle relevanten Informationen über das Problem sammeln</p>
+                        <ul>
+                            <li><strong>Problemstellung definieren:</strong> Was genau soll gelöst werden?</li>
+                            <li><strong>Stakeholder identifizieren:</strong> Wer ist betroffen? Wer nutzt das System?</li>
+                            <li><strong>Ist-Zustand analysieren:</strong> Wie läuft es aktuell?</li>
+                            <li><strong>Anforderungen sammeln:</strong> Was muss das neue System können?</li>
+                            <li><strong>Rahmenbedingungen klären:</strong> Budget, Zeit, technische Grenzen</li>
+                        </ul>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <h4>🔧 Aufbereiten der Informationen</h4>
+                        <p><strong>Ziel:</strong> Die gesammelten Informationen strukturieren und bewerten</p>
+                        <ul>
+                            <li><strong>Informationen sortieren:</strong> Wichtiges von Unwichtigem trennen</li>
+                            <li><strong>Zusammenhänge erkennen:</strong> Wie hängen die Teile zusammen?</li>
+                            <li><strong>Modelle erstellen:</strong> Diagramme, Skizzen, Prototypen entwickeln</li>
+                            <li><strong>Alternativen entwickeln:</strong> Verschiedene Lösungsansätze durchdenken</li>
+                            <li><strong>Risiken bewerten:</strong> Was könnte schiefgehen?</li>
+                        </ul>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <h4>🎯 Zielformulierung</h4>
+                        <p><strong>Ziel:</strong> Klare, messbare Ziele für das System definieren</p>
+                        <ul>
+                            <li><strong>SMART-Ziele:</strong> Spezifisch, Messbar, Erreichbar, Relevant, Terminiert</li>
+                            <li><strong>Funktionale Anforderungen:</strong> Was muss das System tun?</li>
+                            <li><strong>Nicht-funktionale Anforderungen:</strong> Wie gut muss es das tun? (Performance, Sicherheit, etc.)</li>
+                            <li><strong>Erfolg definieren:</strong> Woran erkennt man, dass das System gut ist?</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>🎮 Praktisches Beispiel: Gaming-App entwickeln</h4>
+                    <p><strong>Phase 1 - Informationsbeschaffung:</strong></p>
+                    <ul>
+                        <li>"Wir wollen eine Handyspiel-App machen"</li>
+                        <li>Zielgruppe: Jugendliche 12-18 Jahre</li>
+                        <li>Konkurrenz anschauen: Was gibt es schon?</li>
+                        <li>Budget: 5.000€, Zeit: 6 Monate</li>
+                        <li>Team: 2 Programmierer, 1 Designer</li>
+                    </ul>
+                    
+                    <p><strong>Phase 2 - Informationen aufbereiten:</strong></p>
+                    <ul>
+                        <li>Spielgenre festlegen: Jump'n'Run</li>
+                        <li>Schwierigkeitslevel definieren</li>
+                        <li>Mockups/Skizzen der Spieloberfläche erstellen</li>
+                        <li>Technische Architektur planen</li>
+                    </ul>
+                    
+                    <p><strong>Phase 3 - Zielformulierung:</strong></p>
+                    <ul>
+                        <li>10 Level bis März 2026</li>
+                        <li>Unter 50MB Speicherplatz</li>
+                        <li>Läuft auf Android + iOS</li>
+                        <li>Maximale Ladezeit: 3 Sekunden</li>
+                        <li>1000+ Downloads im ersten Monat</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Modellbildung und Problemlösung -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>🧮 Modellbildung und Problemlösung</h2>
+                <p>Komplexe Systeme verstehbar machen</p>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <h3>🏗️ Was ist ein Modell?</h3>
+                    <p><strong>Modell:</strong> Eine vereinfachte Darstellung der Realität, die die wichtigsten Aspekte eines Systems zeigt und unwichtige Details weglässt.</p>
+                    
+                    <p style="margin-top: 1rem;"><strong>Beispiel:</strong> Eine Straßenkarte ist ein Modell der echten Landschaft - sie zeigt Straßen und Städte, aber nicht jeden einzelnen Baum oder Stein.</p>
+                </div>
+
+                <div class="concepts-grid">
+                    <div class="concept-card">
+                        <h4>🔍 Warum Modelle?</h4>
+                        <ul>
+                            <li>Komplexität reduzieren</li>
+                            <li>Kommunikation verbessern</li>
+                            <li>Fehler früh erkennen</li>
+                            <li>Verschiedene Sichtweisen ermöglichen</li>
+                            <li>Dokumentation erstellen</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>📊 Arten von Modellen</h4>
+                        <ul>
+                            <li><strong>Grafische Modelle:</strong> Diagramme, Flowcharts</li>
+                            <li><strong>Mathematische Modelle:</strong> Formeln, Algorithmen</li>
+                            <li><strong>Physische Modelle:</strong> Prototypen, Mockups</li>
+                            <li><strong>Textuelle Modelle:</strong> Spezifikationen, User Stories</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="important-box">
+                    <h4>⚠️ Grenzen von Modellen</h4>
+                    <p>Der Bildungsplan betont: <em>"Grenzen von Modellvorstellungen werden beschrieben und bewertet."</em></p>
+                    <ul>
+                        <li><strong>Vereinfachung:</strong> Nicht alle Details sind erfasst</li>
+                        <li><strong>Aktualität:</strong> Modelle können veralten</li>
+                        <li><strong>Subjektivität:</strong> Verschiedene Personen sehen verschiedene Aspekte</li>
+                        <li><strong>Kosten:</strong> Zu detaillierte Modelle sind aufwendig</li>
+                    </ul>
+                    
+                    <p style="margin-top: 1rem;"><strong>Wichtig für die Prüfung:</strong> Du solltest immer auch die Schwächen deines Modells erwähnen können!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- 3-Schichten-Architektur -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>🏢 3-Schichten-Architektur: Model-View-Controller</h2>
+                <p>Das wichtigste Architekturmuster verstehen</p>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <h3>🏗️ Model-View-Controller (MVC)</h3>
+                    <p><strong>MVC</strong> ist ein Architekturmuster, das ein System in drei unabhängige, aber zusammenarbeitende Schichten unterteilt.</p>
+                    
+                    <p style="margin-top: 1rem;"><strong>Grundidee:</strong> Verschiedene Aspekte eines Systems voneinander trennen, damit sie unabhängig verändert werden können.</p>
+                </div>
+
+                <div class="architecture-diagram">
+                    <h4>📐 MVC-Architektur Visualisierung</h4>
+                    
+                    <div class="layer view">
+                        <h5>🖥️ VIEW (Präsentationsschicht)</h5>
+                        <p><strong>Was der Benutzer sieht und womit er interagiert</strong></p>
+                        <p>Benutzeroberfläche • Eingabefelder • Buttons • Anzeigen</p>
+                    </div>
+                    
+                    <div style="text-align: center; margin: 1rem 0; color: var(--primary-color); font-size: 1.2rem;">↕️ Benutzerinteraktion</div>
+                    
+                    <div class="layer control">
+                        <h5>🎮 CONTROLLER (Steuerungsschicht)</h5>
+                        <p><strong>Vermittler zwischen View und Model</strong></p>
+                        <p>Eingaben verarbeiten • Geschäftslogik • Koordination</p>
+                    </div>
+                    
+                    <div style="text-align: center; margin: 1rem 0; color: var(--primary-color); font-size: 1.2rem;">↕️ Datenfluss</div>
+                    
+                    <div class="layer model">
+                        <h5>🗄️ MODEL (Datenschicht)</h5>
+                        <p><strong>Daten und deren Verwaltung</strong></p>
+                        <p>Datenbank • Dateien • Datenstrukturen • Berechnungen</p>
+                    </div>
+                </div>
+
+                <div class="concepts-grid">
+                    <div class="concept-card">
+                        <h4>🖥️ VIEW - Präsentation</h4>
+                        <p><strong>Aufgaben:</strong></p>
+                        <ul>
+                            <li>Daten anzeigen</li>
+                            <li>Benutzereingaben entgegennehmen</li>
+                            <li>Benutzeroberfläche bereitstellen</li>
+                            <li>Formatierung und Design</li>
+                        </ul>
+                        <p><strong>Beispiele:</strong> Webseite, App-Screen, Formular</p>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>🎮 CONTROLLER - Steuerung</h4>
+                        <p><strong>Aufgaben:</strong></p>
+                        <ul>
+                            <li>Benutzereingaben verarbeiten</li>
+                            <li>Geschäftslogik ausführen</li>
+                            <li>Model und View koordinieren</li>
+                            <li>Entscheidungen treffen</li>
+                        </ul>
+                        <p><strong>Beispiele:</strong> Event-Handler, API-Controller, Game-Logic</p>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>🗄️ MODEL - Daten</h4>
+                        <p><strong>Aufgaben:</strong></p>
+                        <ul>
+                            <li>Daten speichern und verwalten</li>
+                            <li>Datenintegrität sicherstellen</li>
+                            <li>Berechnungen durchführen</li>
+                            <li>Datenzugriff bereitstellen</li>
+                        </ul>
+                        <p><strong>Beispiele:</strong> Datenbank, Datei, Klassen-Objekte</p>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>🏪 Praktisches Beispiel: Online-Shop</h4>
+                    
+                    <p><strong>VIEW (Was der Kunde sieht):</strong></p>
+                    <ul>
+                        <li>Webseite mit Produktliste</li>
+                        <li>Warenkorb-Anzeige</li>
+                        <li>Bestellformular</li>
+                        <li>Buttons zum Kaufen</li>
+                    </ul>
+                    
+                    <p><strong>CONTROLLER (Was passiert bei Klicks):</strong></p>
+                    <ul>
+                        <li>Produkt in Warenkorb legen</li>
+                        <li>Bestellung verarbeiten</li>
+                        <li>Bezahlung abwickeln</li>
+                        <li>E-Mail versenden</li>
+                    </ul>
+                    
+                    <p><strong>MODEL (Wo die Daten sind):</strong></p>
+                    <ul>
+                        <li>Produktdatenbank</li>
+                        <li>Kundendatenbank</li>
+                        <li>Bestellhistorie</li>
+                        <li>Lagerbestand</li>
+                    </ul>
+                </div>
+
+                <div class="important-box">
+                    <h4>💡 Vorteile der 3-Schichten-Architektur</h4>
+                    <ul>
+                        <li><strong>Trennung der Verantwortlichkeiten:</strong> Jede Schicht hat ihre eigene Aufgabe</li>
+                        <li><strong>Wartbarkeit:</strong> Änderungen in einer Schicht beeinflussen die anderen weniger</li>
+                        <li><strong>Teamwork:</strong> Verschiedene Entwickler können parallel an verschiedenen Schichten arbeiten</li>
+                        <li><strong>Wiederverwendbarkeit:</strong> Das Model kann für verschiedene Views genutzt werden</li>
+                        <li><strong>Testbarkeit:</strong> Jede Schicht kann einzeln getestet werden</li>
+                        <li><strong>Flexibilität:</strong> Einfacher Austausch einzelner Komponenten möglich</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Objekt- und Klassenstrukturen -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>🧱 Objekt- und Klassenstrukturen</h2>
+                <p>Systematischer Entwurf von Software-Architekturen</p>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <h3>🏗️ Objektorientierte Systemgestaltung</h3>
+                    <p>Bei der <strong>objektorientierten Systemgestaltung</strong> wird ein System als Sammlung von zusammenarbeitenden Objekten verstanden, die jeweils bestimmte Aufgaben übernehmen.</p>
+                    
+                    <p style="margin-top: 1rem;"><strong>Grundprinzip:</strong> Die reale Welt wird in Softwareobjekte übersetzt - genau wie eine Schule aus Lehrern, Schülern, Räumen und Büchern besteht, besteht ein Schulverwaltungssystem aus entsprechenden Software-Objekten.</p>
+                </div>
+
+                <div class="concepts-grid">
+                    <div class="concept-card">
+                        <h4>🎭 Klassen vs. Objekte</h4>
+                        <p><strong>Klasse = Bauplan</strong></p>
+                        <ul>
+                            <li>Definiert Eigenschaften (Attribute)</li>
+                            <li>Definiert Verhalten (Methoden)</li>
+                            <li>Ist wie eine Schablone</li>
+                            <li>Beispiel: Klasse "Auto"</li>
+                        </ul>
+                        <p><strong>Objekt = Konkrete Instanz</strong></p>
+                        <ul>
+                            <li>Hat tatsächliche Werte</li>
+                            <li>Kann Aktionen ausführen</li>
+                            <li>Beispiel: "Mein roter BMW"</li>
+                        </ul>
+                    </div>
+
+                    <div class="concept-card">
+                        <h4>🔗 Beziehungen zwischen Objekten</h4>
+                        <p><strong>Assoziation:</strong> "kennt/nutzt"</p>
+                        <ul>
+                            <li>Student kennt seine Kurse</li>
+                            <li>Auto hat einen Besitzer</li>
+                        </ul>
+                        <p><strong>Komposition:</strong> "besteht aus"</p>
+                        <ul>
+                            <li>Auto besteht aus Motor, Rädern</li>
+                            <li>Ohne Auto gibt es keinen Motor</li>
+                        </ul>
+                        <p><strong>Vererbung:</strong> "ist eine Art von"</p>
+                        <ul>
+                            <li>PKW ist eine Art Fahrzeug</li>
+                            <li>Lehrer ist eine Art Person</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>🏫 Beispiel: Schulverwaltungssystem</h4>
+                    
+                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <h5>📋 Klasse: Person</h5>
+                        <p><strong>Attribute:</strong> Name, Vorname, Geburtsdatum, Adresse</p>
+                        <p><strong>Methoden:</strong> getName(), setAdresse(), berechneAlter()</p>
+                    </div>
+
+                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <h5>👨‍🎓 Klasse: Schüler (erbt von Person)</h5>
+                        <p><strong>Zusätzliche Attribute:</strong> Schülernummer, Klasse, Noten</p>
+                        <p><strong>Zusätzliche Methoden:</strong> einschreiben(), notenHinzufügen(), durchschnittBerechnen()</p>
+                    </div>
+
+                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <h5>👨‍🏫 Klasse: Lehrer (erbt von Person)</h5>
+                        <p><strong>Zusätzliche Attribute:</strong> Personalnummer, Fächer, Gehalt</p>
+                        <p><strong>Zusätzliche Methoden:</strong> unterrichten(), notenVergeben(), fortbilden()</p>
+                    </div>
+
+                    <p><strong>Beziehungen:</strong></p>
+                    <ul>
+                        <li>Ein Lehrer unterrichtet viele Schüler (1:n)</li>
+                        <li>Ein Schüler hat viele Lehrer (n:m)</li>
+                        <li>Eine Klasse besteht aus vielen Schülern (1:n)</li>
+                    </ul>
+                </div>
+
+                <div class="important-box">
+                    <h4>🎯 Entwurfsprinzipien</h4>
+                    <ul>
+                        <li><strong>Single Responsibility:</strong> Jede Klasse hat nur eine Aufgabe</li>
+                        <li><strong>Datenkapselung:</strong> Attribute sind privat, Zugriff nur über Methoden</li>
+                        <li><strong>Wiederverwendbarkeit:</strong> Klassen sollen mehrfach verwendbar sein</li>
+                        <li><strong>Erweiterbarkeit:</strong> Neue Funktionen sollen einfach hinzufügbar sein</li>
+                        <li><strong>Lose Kopplung:</strong> Klassen sollen möglichst unabhängig voneinander sein</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Systemtechnisches Vorgehen -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>⚙️ Systemtechnisches Vorgehen</h2>
+                <p>Professionelle Methodik für komplexe Projekte</p>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <h3>🔄 System- und Lebensphasen eines Projektes</h3>
+                    <p>Jedes IT-Projekt durchläuft verschiedene <strong>Phasen</strong>, die systematisch aufeinander aufbauen. Dies wird im Bildungsplan als "System- und Lebensphasen" bezeichnet.</p>
+                </div>
+
+                <div class="process-steps">
+                    <div class="process-step">
+                        <div class="step-number">1</div>
+                        <h4>🎯 Analysephase</h4>
+                        <p><strong>Ziel:</strong> Das Problem vollständig verstehen</p>
+                        <ul>
+                            <li><strong>Ist-Analyse:</strong> Wie läuft es aktuell?</li>
+                            <li><strong>Problemidentifikation:</strong> Was läuft schlecht?</li>
+                            <li><strong>Anforderungsanalyse:</strong> Was wird gewünscht?</li>
+                            <li><strong>Machbarkeitsstudie:</strong> Ist das überhaupt möglich?</li>
+                            <li><strong>Stakeholder-Analyse:</strong> Wer ist betroffen?</li>
+                        </ul>
+                        <p><strong>Ergebnis:</strong> Detaillierte Problembeschreibung und Anforderungskatalog</p>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="step-number">2</div>
+                        <h4>🏗️ Designphase</h4>
+                        <p><strong>Ziel:</strong> Die Lösung planen und entwerfen</p>
+                        <ul>
+                            <li><strong>Systemarchitektur:</strong> Wie soll das System aufgebaut sein?</li>
+                            <li><strong>Datenmodellierung:</strong> Welche Daten werden benötigt?</li>
+                            <li><strong>Schnittstellendesign:</strong> Wie kommunizieren die Teile?</li>
+                            <li><strong>UI/UX-Design:</strong> Wie soll es aussehen und bedient werden?</li>
+                            <li><strong>Technologieauswahl:</strong> Welche Tools und Sprachen?</li>
+                        </ul>
+                        <p><strong>Ergebnis:</strong> Detaillierte Baupläne für das System</p>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="step-number">3</div>
+                        <h4>⚒️ Implementierungsphase</h4>
+                        <p><strong>Ziel:</strong> Das System tatsächlich bauen</p>
+                        <ul>
+                            <li><strong>Programmierung:</strong> Code schreiben</li>
+                            <li><strong>Datenbank aufsetzen:</strong> Tabellen erstellen, Daten importieren</li>
+                            <li><strong>Benutzeroberfläche erstellen:</strong> Formulare, Menüs, etc.</li>
+                            <li><strong>Integration:</strong> Alle Teile zusammenfügen</li>
+                            <li><strong>Unit-Tests:</strong> Einzelne Funktionen testen</li>
+                        </ul>
+                        <p><strong>Ergebnis:</strong> Funktionsfähiges System (erste Version)</p>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="step-number">4</div>
+                        <h4>🧪 Testphase</h4>
+                        <p><strong>Ziel:</strong> Fehler finden und beheben</p>
+                        <ul>
+                            <li><strong>Integrationstests:</strong> Funktionieren alle Teile zusammen?</li>
+                            <li><strong>Systemtests:</strong> Erfüllt das System alle Anforderungen?</li>
+                            <li><strong>Benutzertest (UAT):</strong> Sind die Nutzer zufrieden?</li>
+                            <li><strong>Performance-Tests:</strong> Ist das System schnell genug?</li>
+                            <li><strong>Sicherheitstests:</strong> Gibt es Sicherheitslücken?</li>
+                        </ul>
+                        <p><strong>Ergebnis:</strong> Fehlerfreies, getestetes System</p>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="step-number">5</div>
+                        <h4>🚀 Einführungsphase</h4>
+                        <p><strong>Ziel:</strong> Das System in Betrieb nehmen</p>
+                        <ul>
+                            <li><strong>Deployment:</strong> System auf Produktionsservern installieren</li>
+                            <li><strong>Datenmigration:</strong> Alte Daten übertragen</li>
+                            <li><strong>Schulungen:</strong> Benutzer ausbilden</li>
+                            <li><strong>Go-Live:</strong> System offiziell starten</li>
+                            <li><strong>Monitoring:</strong> System überwachen</li>
+                        </ul>
+                        <p><strong>Ergebnis:</strong> System läuft produktiv</p>
+                    </div>
+
+                    <div class="process-step">
+                        <div class="step-number">6</div>
+                        <h4>🔧 Wartungsphase</h4>
+                        <p><strong>Ziel:</strong> System langfristig am Laufen halten</p>
+                        <ul>
+                            <li><strong>Fehlerbehebung:</strong> Bugs fixen, die erst im Betrieb auftauchen</li>
+                            <li><strong>Updates:</strong> Neue Funktionen hinzufügen</li>
+                            <li><strong>Performance-Optimierung:</strong> System schneller machen</li>
+                            <li><strong>Sicherheitsupdates:</strong> System vor neuen Bedrohungen schützen</li>
+                            <li><strong>Benutzersupport:</strong> Bei Problemen helfen</li>
+                        </ul>
+                        <p><strong>Ergebnis:</strong> System bleibt aktuell und funktionsfähig</p>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>📱 Praxisbeispiel: Entwicklung einer Schul-App</h4>
+                    
+                    <p><strong>Phase 1 - Analyse (2 Wochen):</strong></p>
+                    <ul>
+                        <li>Gespräche mit Lehrern, Schülern, Eltern</li>
+                        <li>Analyse der aktuellen Papier-Prozesse</li>
+                        <li>Definition: "App soll Stundenplan, Noten und Hausaufgaben verwalten"</li>
+                    </ul>
+                    
+                    <p><strong>Phase 2 - Design (3 Wochen):</strong></p>
+                    <ul>
+                        <li>Mockups der App-Bildschirme erstellen</li>
+                        <li>Datenbank-Schema für Schüler, Kurse, Noten planen</li>
+                        <li>Entscheidung: React Native für iOS/Android</li>
+                    </ul>
+                    
+                    <p><strong>Phase 3 - Implementierung (8 Wochen):</strong></p>
+                    <ul>
+                        <li>Datenbank mit PostgreSQL aufsetzen</li>
+                        <li>Backend-API mit Node.js programmieren</li>
+                        <li>App-Oberfläche mit React Native entwickeln</li>
+                    </ul>
+                    
+                    <p><strong>Phase 4 - Test (2 Wochen):</strong></p>
+                    <ul>
+                        <li>Beta-Test mit einer Klasse</li>
+                        <li>Feedback sammeln und Bugs beheben</li>
+                        <li>Performance-Test mit 1000 gleichzeitigen Benutzern</li>
+                    </ul>
+                    
+                    <p><strong>Phase 5 - Einführung (1 Woche):</strong></p>
+                    <ul>
+                        <li>App in App Store veröffentlichen</li>
+                        <li>Lehrer-Schulung durchführen</li>
+                        <li>Offizielle Einführung in der ganzen Schule</li>
+                    </ul>
+                    
+                    <p><strong>Phase 6 - Wartung (laufend):</strong></p>
+                    <ul>
+                        <li>Monatliche Updates mit neuen Features</li>
+                        <li>Support-Hotline für Benutzerprobleme</li>
+                        <li>Sicherheitsupdates bei Bedarf</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Praktische Anwendung -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>🎯 Praktische Anwendung</h2>
+                <p>Systemanalyse in der Praxis und Prüfung</p>
+            </div>
+            <div class="section-content">
+                <div class="checklist">
+                    <h4>✅ Checkliste: Gute Systemanalyse</h4>
+                    <ul>
+                        <li><strong>Problem klar definiert:</strong> Jeder versteht, was gelöst werden soll</li>
+                        <li><strong>Alle Stakeholder identifiziert:</strong> Niemand wichtiges vergessen</li>
+                        <li><strong>Anforderungen vollständig:</strong> Funktionale und nicht-funktionale Aspekte</li>
+                        <li><strong>Machbarkeit geprüft:</strong> Zeit, Budget, Technik realistisch</li>
+                        <li><strong>Risiken bekannt:</strong> Was könnte schiefgehen?</li>
+                        <li><strong>Modelle erstellt:</strong> Diagramme, Prototypen, Dokumentation</li>
+                        <li><strong>Ziele messbar:</strong> Erfolg ist objektiv bewertbar</li>
+                        <li><strong>Alternativen betrachtet:</strong> Nicht nur eine Lösung</li>
+                    </ul>
+                </div>
+
+                <div class="important-box">
+                    <h4>📝 Prüfungsrelevante Aspekte</h4>
+                    <ul>
+                        <li><strong>Problemlösungszyklus erklären:</strong> Die 3 Phasen nach Bildungsplan</li>
+                        <li><strong>MVC-Architektur anwenden:</strong> System in drei Schichten aufteilen</li>
+                        <li><strong>Modelle erstellen und bewerten:</strong> Diagramme zeichnen, Grenzen erkennen</li>
+                        <li><strong>Objekt-/Klassenstrukturen entwerfen:</strong> Sinnvolle Klassenhierarchien</li>
+                        <li><strong>Systemphasen zuordnen:</strong> Welche Aktivität gehört zu welcher Phase?</li>
+                        <li><strong>Anforderungen kategorisieren:</strong> Funktional vs. nicht-funktional</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>📚 Typische Prüfungsaufgabe</h4>
+                    <p><strong>Aufgabe:</strong> "Eine Bibliothek möchte ihr Ausleihsystem digitalisieren. Führen Sie eine Systemanalyse durch."</p>
+                    
+                    <p><strong>Musterlösung - Phase 1 (Informationsbeschaffung):</strong></p>
+                    <ul>
+                        <li><strong>Problem:</strong> Aktuell werden Bücher handschriftlich verwaltet, dauert lange, Fehler passieren</li>
+                        <li><strong>Stakeholder:</strong> Bibliothekare, Benutzer, IT-Abteilung, Verwaltung</li>
+                        <li><strong>Ist-Zustand:</strong> Karteikarten, manuelle Suche, kein Überblick über verfügbare Bücher</li>
+                        <li><strong>Anforderungen:</strong> Schnelle Buchsuche, automatische Ausleihverwaltung, Übersicht</li>
+                    </ul>
+                    
+                    <p><strong>Phase 2 (Aufbereitung):</strong></p>
+                    <ul>
+                        <li><strong>MVC-Design:</strong> View=Suchoberfläche, Controller=Ausleihlogik, Model=Buchdatenbank</li>
+                        <li><strong>Objekte:</strong> Buch, Benutzer, Ausleihe, Bibliothek</li>
+                        <li><strong>Alternativen:</strong> Web-App vs. Desktop-Software vs. Mobile App</li>
+                    </ul>
+                    
+                    <p><strong>Phase 3 (Zielformulierung):</strong></p>
+                    <ul>
+                        <li><strong>Funktional:</strong> Buchsuche in unter 3 Sekunden, Ausleihvorgang in 1 Minute</li>
+                        <li><strong>Nicht-funktional:</strong> 24/7 Verfügbarkeit, 1000 gleichzeitige Benutzer</li>
+                        <li><strong>Erfolgsmessung:</strong> 50% Zeitersparnis, 90% Benutzer zufrieden</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <a href="projektmanagement.html" class="nav-button">⬅️ Projektmanagement</a>
+            <a href="index.html" class="nav-button">🏠 Übersicht</a>
+            <a href="#" class="nav-button disabled">UML-Diagramme ➡️</a>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Interactive elements
+        document.querySelectorAll('.concept-card').forEach(card => {
+            card.addEventListener('mouseenter', function() {
+                this.style.transform = 'translateY(-4px) scale(1.02)';
+            });
+            
+            card.addEventListener('mouseleave', function() {
+                this.style.transform = 'translateY(-2px) scale(1)';
+            });
+        });
+
+        // Progress tracking (can be extended)
+        function markAsRead() {
+            localStorage.setItem('systemanalyse_read', 'true');
+        }
+
+        // Mark as read when scrolled to bottom
+        window.addEventListener('scroll', function() {
+            if (window.innerHeight + window.scrollY >= document.body.offsetHeight - 100) {
+                markAsRead();
+            }
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1656 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datenbankentwicklung - Abitur 2026</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --code-bg: #1e293b;
+            --code-text: #e2e8f0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .navigation {
+            background: var(--bg-white);
+            padding: 1rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .nav-link {
+            padding: 0.5rem 1rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+            text-decoration: none;
+            color: var(--text-dark);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .nav-link:hover {
+            background: var(--primary-color);
+            color: white;
+        }
+
+        .section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.8rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            opacity: 0.9;
+            font-size: 1rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .subsection {
+            margin-bottom: 3rem;
+        }
+
+        .subsection:last-child {
+            margin-bottom: 0;
+        }
+
+        .subsection h3 {
+            color: var(--primary-color);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--bg-light);
+        }
+
+        .subsection h4 {
+            color: var(--secondary-color);
+            font-size: 1.2rem;
+            margin: 1.5rem 0 1rem 0;
+        }
+
+        .highlight-box {
+            background: linear-gradient(135deg, #fef7cd 0%, #fbbf24 5%, #fef7cd 100%);
+            border-left: 4px solid var(--warning-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .info-box {
+            background: linear-gradient(135deg, #dbeafe 0%, #3b82f6 5%, #dbeafe 100%);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .success-box {
+            background: linear-gradient(135deg, #d1fae5 0%, #10b981 5%, #d1fae5 100%);
+            border-left: 4px solid var(--success-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .warning-box {
+            background: linear-gradient(135deg, #fee2e2 0%, #ef4444 5%, #fee2e2 100%);
+            border-left: 4px solid var(--danger-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1rem 0;
+            overflow-x: auto;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.5;
+            border: 1px solid #374151;
+        }
+
+        .code-block .comment {
+            color: #9ca3af;
+            font-style: italic;
+        }
+
+        .code-block .keyword {
+            color: #60a5fa;
+            font-weight: bold;
+        }
+
+        .code-block .string {
+            color: #34d399;
+        }
+
+        .inline-code {
+            background: var(--bg-light);
+            padding: 0.2rem 0.5rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+            color: var(--secondary-color);
+            border: 1px solid var(--border-color);
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr:nth-child(even) {
+            background-color: var(--bg-light);
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, var(--bg-light) 0%, #f1f5f9 100%);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .example-title {
+            color: var(--primary-color);
+            font-weight: bold;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .concept-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .concept-card {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .concept-card:hover {
+            border-color: var(--primary-color);
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.15);
+        }
+
+        .concept-card h5 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-size: 1.1rem;
+        }
+
+        .step-list {
+            counter-reset: step-counter;
+        }
+
+        .step-item {
+            counter-increment: step-counter;
+            margin-bottom: 1.5rem;
+            padding-left: 3rem;
+            position: relative;
+        }
+
+        .step-item::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: var(--primary-color);
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        .diagram-container {
+            text-align: center;
+            margin: 2rem 0;
+            padding: 1.5rem;
+            background: var(--bg-light);
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .entity {
+            display: inline-block;
+            background: white;
+            border: 2px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 1rem;
+            margin: 0.5rem;
+            min-width: 120px;
+        }
+
+        .relationship {
+            display: inline-block;
+            background: var(--warning-color);
+            color: white;
+            border-radius: 50%;
+            padding: 0.5rem;
+            margin: 0.5rem;
+            width: 80px;
+            height: 80px;
+            line-height: 1.2;
+            text-align: center;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .back-to-top {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(37, 99, 235, 0.3);
+            transition: all 0.3s ease;
+        }
+
+        .back-to-top:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .concept-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .nav-links {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <div style="text-align: left; margin-bottom: 1rem;">
+                <a href="index.html" style="display: inline-flex; align-items: center; text-decoration: none; color: var(--primary-color); font-weight: 600; padding: 0.5rem 1rem; background: var(--bg-light); border-radius: 8px; border: 1px solid var(--border-color); transition: all 0.3s ease;">
+                    ← Zurück zur Hauptübersicht
+                </a>
+            </div>
+            <h1>🗄️ Datenbankentwicklung</h1>
+            <p>Systematischer Entwicklungsprozess relationaler Datenbanken</p>
+            <div style="background: linear-gradient(135deg, var(--primary-color), var(--secondary-color)); color: white; padding: 1rem; border-radius: 8px; margin-top: 1rem;">
+                <strong>BPE 9.4 - Datenbankentwicklung</strong><br>
+                Von der Problemanalyse zur funktionsfähigen Datenbank
+            </div>
+        </header>
+
+        <nav class="navigation">
+            <div class="nav-links">
+                <a href="#grundlagen" class="nav-link">Grundlagen</a>
+                <a href="#entwicklungsprozess" class="nav-link">Entwicklungsprozess</a>
+                <a href="#erm" class="nav-link">ERM-Entwicklung</a>
+                <a href="#relationenschema" class="nav-link">Relationenschema</a>
+                <a href="#normalisierung" class="nav-link">Normalisierung</a>
+                <a href="#implementation" class="nav-link">Implementation</a>
+                <a href="#praxisbeispiel" class="nav-link">Praxisbeispiel</a>
+            </div>
+        </nav>
+
+        <!-- Grundlagen -->
+        <section id="grundlagen" class="section">
+            <div class="section-header">
+                <h2>📚 Grundlagen der Datenbankentwicklung</h2>
+                <p>Was ist Datenbankentwicklung und warum ist sie wichtig?</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Was ist Datenbankentwicklung?</h3>
+                    
+                    <div class="info-box">
+                        <h4>💡 Definition</h4>
+                        <p><strong>Datenbankentwicklung</strong> ist der systematische Prozess der Erstellung einer funktionsfähigen Datenbank von der ersten Problemanalyse bis zur fertigen, nutzbaren Anwendung.</p>
+                    </div>
+
+                    <p>Stellen Sie sich vor, Sie müssen ein System für eine Schulbibliothek entwickeln. Sie können nicht einfach drauflos programmieren - Sie brauchen einen strukturierten Plan:</p>
+
+                    <div class="concept-grid">
+                        <div class="concept-card">
+                            <h5>🎯 Ziel definieren</h5>
+                            <p>Was soll die Datenbank leisten? Bücher verwalten, Ausleihen verfolgen, Nutzer administrieren?</p>
+                        </div>
+                        <div class="concept-card">
+                            <h5>📊 Datenstrukturen planen</h5>
+                            <p>Welche Informationen werden gespeichert und wie hängen sie zusammen?</p>
+                        </div>
+                        <div class="concept-card">
+                            <h5>🏗️ System aufbauen</h5>
+                            <p>Die geplante Struktur in einer tatsächlichen Datenbank umsetzen.</p>
+                        </div>
+                        <div class="concept-card">
+                            <h5>✅ Testen & Optimieren</h5>
+                            <p>Funktioniert alles? Ist es effizient? Anpassungen vornehmen.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Warum systematische Entwicklung?</h3>
+                    
+                    <div class="warning-box">
+                        <h4>⚠️ Ohne systematische Planung passiert folgendes:</h4>
+                        <ul style="margin-top: 1rem;">
+                            <li><strong>Datenredundanz:</strong> Dieselben Informationen werden mehrfach gespeichert</li>
+                            <li><strong>Inkonsistenzen:</strong> Widersprüchliche Daten in der Datenbank</li>
+                            <li><strong>Anomalien:</strong> Probleme beim Einfügen, Ändern oder Löschen von Daten</li>
+                            <li><strong>Schlechte Performance:</strong> Langsame Abfragen und ineffiziente Speichernutzung</li>
+                        </ul>
+                    </div>
+
+                    <div class="success-box">
+                        <h4>✅ Mit systematischer Entwicklung erreichen Sie:</h4>
+                        <ul style="margin-top: 1rem;">
+                            <li><strong>Datenintegrität:</strong> Konsistente, verlässliche Daten</li>
+                            <li><strong>Effizienz:</strong> Schnelle Abfragen und optimale Speichernutzung</li>
+                            <li><strong>Erweiterbarkeit:</strong> Einfache Anpassungen und Ergänzungen</li>
+                            <li><strong>Wartbarkeit:</strong> Verständliche Struktur für andere Entwickler</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Entwicklungsprozess -->
+        <section id="entwicklungsprozess" class="section">
+            <div class="section-header">
+                <h2>🔄 Der Datenbankentwicklungsprozess</h2>
+                <p>Schritt für Schritt zur perfekten Datenbank</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Die 7 Phasen der Datenbankentwicklung</h3>
+                    
+                    <div class="step-list">
+                        <div class="step-item">
+                            <h4>Anforderungsanalyse</h4>
+                            <p><strong>Was wird benötigt?</strong> Sammeln aller Anforderungen und Wünsche der zukünftigen Nutzer. Interviews führen, Prozesse verstehen, Datenflüsse analysieren.</p>
+                            <div class="example-box">
+                                <div class="example-title">Beispiel Schulbibliothek:</div>
+                                <p>"Wir brauchen eine Übersicht über alle Bücher, wer hat was ausgeliehen, wann ist die Rückgabe fällig, welche Bücher sind verfügbar?"</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <h4>Konzeptioneller Entwurf (ERM)</h4>
+                            <p><strong>Wie sieht das Datenmodell aus?</strong> Erstellen eines Entity-Relationship-Modells (ERM), das die Datenstrukturen und ihre Beziehungen darstellt.</p>
+                            <div class="example-box">
+                                <div class="example-title">Beispiel Schulbibliothek:</div>
+                                <p>Entitäten: BUCH, NUTZER, AUSLEIHE<br>Beziehungen: Ein Nutzer kann mehrere Bücher ausleihen, ein Buch kann nur von einem Nutzer gleichzeitig ausgeliehen sein.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <h4>Logischer Entwurf (Relationenschema)</h4>
+                            <p><strong>Wie werden die Tabellen aufgebaut?</strong> Umwandlung des ERM in ein Relationenschema mit konkreten Tabellen, Spalten und Schlüsseln.</p>
+                        </div>
+
+                        <div class="step-item">
+                            <h4>Normalisierung</h4>
+                            <p><strong>Ist die Struktur optimal?</strong> Überprüfung und Optimierung der Tabellenstruktur zur Vermeidung von Redundanzen und Anomalien.</p>
+                        </div>
+
+                        <div class="step-item">
+                            <h4>Physischer Entwurf</h4>
+                            <p><strong>Wie wird implementiert?</strong> Entscheidungen über Datentypen, Indizes, Speicherstrukturen und Performance-Optimierung.</p>
+                        </div>
+
+                        <div class="step-item">
+                            <h4>Implementation</h4>
+                            <p><strong>Datenbank erstellen!</strong> Tatsächliche Erstellung der Datenbank mit SQL-Befehlen (CREATE TABLE, etc.).</p>
+                        </div>
+
+                        <div class="step-item">
+                            <h4>Test und Wartung</h4>
+                            <p><strong>Funktioniert alles?</strong> Testen der Funktionalität, Performance-Optimierung und laufende Wartung.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- ERM-Entwicklung -->
+        <section id="erm" class="section">
+            <div class="section-header">
+                <h2>🎯 Entity-Relationship-Modell (ERM) entwickeln</h2>
+                <p>Das Herzstück des konzeptionellen Entwurfs</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Was ist ein ERM?</h3>
+                    
+                    <div class="info-box">
+                        <h4>💡 Entity-Relationship-Modell (ERM)</h4>
+                        <p>Ein <strong>ERM</strong> ist eine grafische Darstellung der Datenstrukturen und ihrer Beziehungen. Es zeigt, welche "Dinge" (Entitäten) in der realen Welt existieren und wie sie miteinander verbunden sind.</p>
+                    </div>
+
+                    <div class="concept-grid">
+                        <div class="concept-card">
+                            <h5>🏢 Entität (Entity)</h5>
+                            <p>Ein "Ding" aus der realen Welt, das Daten hat.<br><strong>Beispiel:</strong> KUNDE, BUCH, BESTELLUNG</p>
+                        </div>
+                        <div class="concept-card">
+                            <h5>🏷️ Attribut</h5>
+                            <p>Eine Eigenschaft einer Entität.<br><strong>Beispiel:</strong> Name, Preis, Datum</p>
+                        </div>
+                        <div class="concept-card">
+                            <h5>🔗 Beziehung (Relationship)</h5>
+                            <p>Eine Verbindung zwischen Entitäten.<br><strong>Beispiel:</strong> Kunde BESTELLT Buch</p>
+                        </div>
+                        <div class="concept-card">
+                            <h5>📊 Kardinalität</h5>
+                            <p>Wie viele Entitäten in Beziehung stehen.<br><strong>Beispiel:</strong> 1:n, n:m</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Schritt-für-Schritt: ERM erstellen</h3>
+
+                    <div class="step-list">
+                        <div class="step-item">
+                            <h4>Entitäten identifizieren</h4>
+                            <p>Finden Sie alle "Dinge", über die Daten gespeichert werden sollen. Fragen Sie sich: "Worüber möchte ich Informationen sammeln?"</p>
+                            
+                            <div class="example-box">
+                                <div class="example-title">🏪 Beispiel Online-Shop:</div>
+                                <p><strong>Entitäten:</strong> KUNDE, ARTIKEL, BESTELLUNG, KATEGORIE, LIEFERANT</p>
+                                <p><strong>Warum?</strong> Über jeden dieser Bereiche müssen Informationen gespeichert werden.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <h4>Attribute bestimmen</h4>
+                            <p>Für jede Entität: Welche Eigenschaften sind wichtig und müssen gespeichert werden?</p>
+                            
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Entität</th>
+                                            <th>Attribute</th>
+                                            <th>Primärschlüssel</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>KUNDE</td>
+                                            <td>Kunden-Nr, Name, Vorname, Email, Adresse, Telefon</td>
+                                            <td>Kunden-Nr</td>
+                                        </tr>
+                                        <tr>
+                                            <td>ARTIKEL</td>
+                                            <td>Artikel-Nr, Bezeichnung, Preis, Beschreibung, Lagerbestand</td>
+                                            <td>Artikel-Nr</td>
+                                        </tr>
+                                        <tr>
+                                            <td>BESTELLUNG</td>
+                                            <td>Bestell-Nr, Bestelldatum, Versandkosten, Status</td>
+                                            <td>Bestell-Nr</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <h4>Beziehungen erkennen</h4>
+                            <p>Wie hängen die Entitäten zusammen? Fragen Sie: "Was macht X mit Y?" oder "Wie sind X und Y verbunden?"</p>
+                            
+                            <div class="example-box">
+                                <div class="example-title">🔗 Beziehungen im Online-Shop:</div>
+                                <ul>
+                                    <li>KUNDE <strong>bestellt</strong> BESTELLUNG</li>
+                                    <li>BESTELLUNG <strong>enthält</strong> ARTIKEL</li>
+                                    <li>ARTIKEL <strong>gehört zu</strong> KATEGORIE</li>
+                                    <li>LIEFERANT <strong>liefert</strong> ARTIKEL</li>
+                                </ul>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <h4>Kardinalitäten bestimmen</h4>
+                            <p>Für jede Beziehung: Wie viele Entitäten stehen maximal in Beziehung?</p>
+                            
+                            <div class="concept-grid">
+                                <div class="concept-card">
+                                    <h5>1:1 Beziehung</h5>
+                                    <p>Jeder A gehört zu genau einem B und umgekehrt.<br><strong>Beispiel:</strong> Ein Kunde hat genau eine Kundennummer.</p>
+                                </div>
+                                <div class="concept-card">
+                                    <h5>1:n Beziehung</h5>
+                                    <p>Ein A kann zu mehreren B gehören, aber jeder B nur zu einem A.<br><strong>Beispiel:</strong> Ein Kunde kann mehrere Bestellungen haben.</p>
+                                </div>
+                                <div class="concept-card">
+                                    <h5>n:m Beziehung</h5>
+                                    <p>Mehrere A können zu mehreren B gehören.<br><strong>Beispiel:</strong> Eine Bestellung kann mehrere Artikel enthalten, ein Artikel kann in mehreren Bestellungen sein.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>ERM-Diagramm zeichnen</h3>
+                    
+                    <div class="diagram-container">
+                        <h4>📋 Symbolik im ERM</h4>
+                        <div style="display: flex; justify-content: space-around; flex-wrap: wrap; margin: 1rem 0;">
+                            <div class="entity">ENTITÄT<br><small>(Rechteck)</small></div>
+                            <div class="relationship">beziehung<br><small>(Raute)</small></div>
+                            <div style="background: white; border: 1px solid #ccc; border-radius: 20px; padding: 0.5rem 1rem; margin: 0.5rem;">attribut<br><small>(Oval)</small></div>
+                        </div>
+                        <p><strong>Primärschlüssel:</strong> unterstrichen | <strong>Kardinalitäten:</strong> 1, n, m an den Linien</p>
+                    </div>
+
+                    <div class="highlight-box">
+                        <h4>💡 Praktischer Tipp</h4>
+                        <p>Beginnen Sie immer mit einem einfachen Bleistift-Diagramm auf Papier! Sie werden oft Änderungen vornehmen müssen, bevor das ERM perfekt ist. Erst dann übertragen Sie es in eine digitale Form.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Relationenschema -->
+        <section id="relationenschema" class="section">
+            <div class="section-header">
+                <h2>🏗️ Vom ERM zum Relationenschema</h2>
+                <p>Die Überführung in konkrete Tabellenstrukturen</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Was ist ein Relationenschema?</h3>
+                    
+                    <div class="info-box">
+                        <h4>💡 Relationenschema</h4>
+                        <p>Ein <strong>Relationenschema</strong> ist die strukturierte Darstellung der Tabellen einer relationalen Datenbank. Es zeigt alle Tabellennamen, ihre Spalten (Attribute) und die Beziehungen zwischen den Tabellen durch Schlüssel.</p>
+                    </div>
+
+                    <div class="example-box">
+                        <div class="example-title">📝 Schreibweise Relationenschema:</div>
+                        <div class="code-block">
+<span class="comment">-- Tabellenname (Spalten mit Datentypen)</span>
+<span class="keyword">KUNDE</span> (<u>Kunden-Nr</u>, Name, Vorname, Email, Adresse)
+<span class="keyword">ARTIKEL</span> (<u>Artikel-Nr</u>, Bezeichnung, Preis, Beschreibung, Lagerbestand)
+<span class="keyword">BESTELLUNG</span> (<u>Bestell-Nr</u>, Bestelldatum, Status, ↑Kunden-Nr)
+
+<span class="comment">-- Legende:</span>
+<span class="comment">-- <u>unterstrichen</u> = Primärschlüssel</span>
+<span class="comment">-- ↑ = Fremdschlüssel (zeigt auf andere Tabelle)</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Überführungsregeln: ERM → Relationenschema</h3>
+                    
+                    <div class="step-list">
+                        <div class="step-item">
+                            <h4>Entitäten → Tabellen</h4>
+                            <p>Jede Entität wird zu einer Tabelle. Alle Attribute werden zu Spalten.</p>
+                            
+                            <div class="example-box">
+                                <div class="example-title">🔄 Beispiel Transformation:</div>
+                                <div style="display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap;">
+                                    <div>
+                                        <strong>ERM:</strong><br>
+                                        Entität KUNDE<br>
+                                        Attribute: Nr, Name, Email
+                                    </div>
+                                    <div style="font-size: 2rem;">→</div>
+                                    <div>
+                                        <strong>Relationenschema:</strong><br>
+                                        KUNDE (<u>Kunden-Nr</u>, Name, Email)
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <h4>1:n Beziehungen → Fremdschlüssel</h4>
+                            <p>Der Primärschlüssel der "1"-Seite wird als Fremdschlüssel in die "n"-Seite eingefügt.</p>
+                            
+                            <div class="example-box">
+                                <div class="example-title">🔗 1:n Beziehung: Ein Kunde hat mehrere Bestellungen</div>
+                                <div class="code-block">
+<span class="comment">-- Vor der Beziehung:</span>
+<span class="keyword">KUNDE</span> (<u>Kunden-Nr</u>, Name, Email)
+<span class="keyword">BESTELLUNG</span> (<u>Bestell-Nr</u>, Bestelldatum)
+
+<span class="comment">-- Nach der Beziehung:</span>
+<span class="keyword">KUNDE</span> (<u>Kunden-Nr</u>, Name, Email)
+<span class="keyword">BESTELLUNG</span> (<u>Bestell-Nr</u>, Bestelldatum, <span class="string">↑Kunden-Nr</span>)
+                                </div>
+                                <p><strong>Bedeutung:</strong> Jede Bestellung gehört zu genau einem Kunden (über Kunden-Nr), aber ein Kunde kann mehrere Bestellungen haben.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <h4>n:m Beziehungen → Zwischentabelle</h4>
+                            <p>Für jede n:m Beziehung wird eine neue Tabelle erstellt, die beide Primärschlüssel als Fremdschlüssel enthält.</p>
+                            
+                            <div class="warning-box">
+                                <h4>⚠️ Warum Zwischentabelle bei n:m?</h4>
+                                <p>Ohne Zwischentabelle würden Sie bei n:m Beziehungen dieselben Daten mehrfach speichern müssen, was zu Redundanz und Problemen führt.</p>
+                            </div>
+
+                            <div class="example-box">
+                                <div class="example-title">🔗 n:m Beziehung: Bestellung enthält mehrere Artikel</div>
+                                <div class="code-block">
+<span class="comment">-- Ausgangstabellen:</span>
+<span class="keyword">BESTELLUNG</span> (<u>Bestell-Nr</u>, Bestelldatum, ↑Kunden-Nr)
+<span class="keyword">ARTIKEL</span> (<u>Artikel-Nr</u>, Bezeichnung, Preis)
+
+<span class="comment">-- Neue Zwischentabelle für n:m Beziehung:</span>
+<span class="keyword">BESTELL_POSITION</span> (<u>↑Bestell-Nr, ↑Artikel-Nr</u>, Anzahl, Einzelpreis)
+                                </div>
+                                <p><strong>Bedeutung:</strong> Eine Bestellung kann mehrere verschiedene Artikel enthalten, und derselbe Artikel kann in verschiedenen Bestellungen vorkommen.</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <h4>1:1 Beziehungen → Fremdschlüssel oder Vereinigung</h4>
+                            <p>Entweder Fremdschlüssel in eine der Tabellen einfügen oder beide Tabellen zu einer zusammenfassen.</p>
+                            
+                            <div class="example-box">
+                                <div class="example-title">🔗 1:1 Beziehung: Ein Mitarbeiter hat einen Arbeitsplatz</div>
+                                <div class="code-block">
+<span class="comment">-- Option 1: Fremdschlüssel</span>
+<span class="keyword">MITARBEITER</span> (<u>Personal-Nr</u>, Name, ↑Arbeitsplatz-Nr)
+<span class="keyword">ARBEITSPLATZ</span> (<u>Arbeitsplatz-Nr</u>, Raum, Ausstattung)
+
+<span class="comment">-- Option 2: Zusammenfassen</span>
+<span class="keyword">MITARBEITER</span> (<u>Personal-Nr</u>, Name, Arbeitsplatz-Nr, Raum, Ausstattung)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Vollständiges Beispiel: Online-Shop</h3>
+                    
+                    <div class="example-box">
+                        <div class="example-title">🛒 Komplettes Relationenschema Online-Shop</div>
+                        <div class="code-block">
+<span class="comment">-- Grundentitäten</span>
+<span class="keyword">KUNDE</span> (<u>Kunden-Nr</u>, Name, Vorname, Email, Adresse, PLZ, Ort, Telefon)
+<span class="keyword">ARTIKEL</span> (<u>Artikel-Nr</u>, Bezeichnung, Beschreibung, Preis, Lagerbestand, ↑Kategorie-ID, ↑Lieferanten-Nr)
+<span class="keyword">KATEGORIE</span> (<u>Kategorie-ID</u>, Kategoriename, Beschreibung)
+<span class="keyword">LIEFERANT</span> (<u>Lieferanten-Nr</u>, Firmenname, Kontakt, Adresse)
+
+<span class="comment">-- 1:n Beziehung: Ein Kunde kann mehrere Bestellungen haben</span>
+<span class="keyword">BESTELLUNG</span> (<u>Bestell-Nr</u>, Bestelldatum, Versandkosten, Status, Lieferadresse, ↑Kunden-Nr)
+
+<span class="comment">-- n:m Beziehung: Bestellung enthält mehrere Artikel</span>
+<span class="keyword">BESTELL_POSITION</span> (<u>↑Bestell-Nr, ↑Artikel-Nr</u>, Anzahl, Einzelpreis)
+                        </div>
+                    </div>
+
+                    <div class="table-container">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Beziehung</th>
+                                    <th>Typ</th>
+                                    <th>Lösung</th>
+                                    <th>Ergebnis</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Kunde → Bestellung</td>
+                                    <td>1:n</td>
+                                    <td>Fremdschlüssel</td>
+                                    <td>Kunden-Nr in BESTELLUNG</td>
+                                </tr>
+                                <tr>
+                                    <td>Artikel → Kategorie</td>
+                                    <td>n:1</td>
+                                    <td>Fremdschlüssel</td>
+                                    <td>Kategorie-ID in ARTIKEL</td>
+                                </tr>
+                                <tr>
+                                    <td>Bestellung ↔ Artikel</td>
+                                    <td>n:m</td>
+                                    <td>Zwischentabelle</td>
+                                    <td>BESTELL_POSITION</td>
+                                </tr>
+                                <tr>
+                                    <td>Lieferant → Artikel</td>
+                                    <td>1:n</td>
+                                    <td>Fremdschlüssel</td>
+                                    <td>Lieferanten-Nr in ARTIKEL</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Normalisierung -->
+        <section id="normalisierung" class="section">
+            <div class="section-header">
+                <h2>⚡ Normalisierung</h2>
+                <p>Optimierung der Datenbankstruktur zur Vermeidung von Problemen</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Was ist Normalisierung?</h3>
+                    
+                    <div class="info-box">
+                        <h4>💡 Normalisierung</h4>
+                        <p><strong>Normalisierung</strong> ist ein systematischer Prozess zur Strukturierung von Datenbanktabellen, um Datenredundanz zu minimieren und Datenintegrität zu gewährleisten. Ziel ist es, eine effiziente und wartbare Datenbankstruktur zu schaffen.</p>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Probleme ohne Normalisierung</h3>
+                    
+                    <div class="warning-box">
+                        <h4>🚨 Die drei Anomalien</h4>
+                        <div style="margin-top: 1rem;">
+                            <h5>1. Einfüge-Anomalie (INSERT)</h5>
+                            <p>Neue Daten können nur eingefügt werden, wenn bereits andere Daten vorhanden sind.</p>
+                            
+                            <h5 style="margin-top: 1rem;">2. Änderungs-Anomalie (UPDATE)</h5>
+                            <p>Änderungen müssen an mehreren Stellen vorgenommen werden, was zu Inkonsistenzen führen kann.</p>
+                            
+                            <h5 style="margin-top: 1rem;">3. Lösch-Anomalie (DELETE)</h5>
+                            <p>Beim Löschen von Datensätzen gehen ungewollt wichtige Informationen verloren.</p>
+                        </div>
+                    </div>
+
+                    <div class="example-box">
+                        <div class="example-title">❌ Schlecht normalisierte Tabelle</div>
+                        <div class="table-container">
+                            <table>
+                                <thead>
+                                    <tr>
+                                        <th>Bestell-Nr</th>
+                                        <th>Kunde-Name</th>
+                                        <th>Kunde-Adresse</th>
+                                        <th>Artikel-Name</th>
+                                        <th>Artikel-Preis</th>
+                                        <th>Anzahl</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>1001</td>
+                                        <td>Max Müller</td>
+                                        <td>Musterstr. 1</td>
+                                        <td>Laptop</td>
+                                        <td>899€</td>
+                                        <td>1</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1001</td>
+                                        <td>Max Müller</td>
+                                        <td>Musterstr. 1</td>
+                                        <td>Maus</td>
+                                        <td>25€</td>
+                                        <td>2</td>
+                                    </tr>
+                                    <tr>
+                                        <td>1002</td>
+                                        <td>Max Müller</td>
+                                        <td>Musterstr. 1</td>
+                                        <td>Monitor</td>
+                                        <td>299€</td>
+                                        <td>1</td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                        
+                        <div style="margin-top: 1rem;">
+                            <h5 style="color: var(--danger-color);">Probleme dieser Struktur:</h5>
+                            <ul>
+                                <li><strong>Redundanz:</strong> Max Müllers Daten werden mehrfach gespeichert</li>
+                                <li><strong>Änderungs-Anomalie:</strong> Zieht Max um, müssen alle seine Zeilen geändert werden</li>
+                                <li><strong>Einfüge-Anomalie:</strong> Ein neuer Artikel kann nur mit Bestellung gespeichert werden</li>
+                                <li><strong>Lösch-Anomalie:</strong> Wird Bestellung 1002 gelöscht, verschwinden auch Infos über den Monitor</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Die Normalformen</h3>
+                    
+                    <div class="step-list">
+                        <div class="step-item">
+                            <h4>1. Normalform (1NF)</h4>
+                            <p><strong>Regel:</strong> Alle Attributwerte müssen atomar (unteilbar) sein. Keine zusammengesetzten oder mehrwertigen Attribute.</p>
+                            
+                            <div class="example-box">
+                                <div class="example-title">❌ Nicht in 1NF:</div>
+                                <div class="table-container">
+                                    <table>
+                                        <thead>
+                                            <tr><th>Kunden-Nr</th><th>Name</th><th>Telefon</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>1</td><td>Max Müller</td><td>089/123456, 0171/987654</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                <p><strong>Problem:</strong> Telefon-Spalte enthält mehrere Werte</p>
+                                
+                                <div class="example-title">✅ In 1NF:</div>
+                                <div class="table-container">
+                                    <table>
+                                        <thead>
+                                            <tr><th>Kunden-Nr</th><th>Name</th><th>Telefon-Typ</th><th>Telefonnummer</th></tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td>1</td><td>Max Müller</td><td>Festnetz</td><td>089/123456</td></tr>
+                                            <tr><td>1</td><td>Max Müller</td><td>Mobil</td><td>0171/987654</td></tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <h4>2. Normalform (2NF)</h4>
+                            <p><strong>Regel:</strong> 1NF + Keine partiellen Abhängigkeiten. Alle Nicht-Schlüssel-Attribute müssen vollständig vom gesamten Primärschlüssel abhängig sein.</p>
+                            
+                            <div class="example-box">
+                                <div class="example-title">❌ Nicht in 2NF:</div>
+                                <div class="code-block">
+BESTELL_POSITION (<u>Bestell-Nr, Artikel-Nr</u>, Anzahl, Artikel-Name, Artikel-Preis)
+                                </div>
+                                <p><strong>Problem:</strong> Artikel-Name und Artikel-Preis hängen nur von Artikel-Nr ab, nicht vom vollständigen Schlüssel.</p>
+                                
+                                <div class="example-title">✅ In 2NF:</div>
+                                <div class="code-block">
+BESTELL_POSITION (<u>Bestell-Nr, Artikel-Nr</u>, Anzahl)
+ARTIKEL (<u>Artikel-Nr</u>, Artikel-Name, Artikel-Preis)
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <h4>3. Normalform (3NF)</h4>
+                            <p><strong>Regel:</strong> 2NF + Keine transitiven Abhängigkeiten. Kein Nicht-Schlüssel-Attribut darf von einem anderen Nicht-Schlüssel-Attribut abhängen.</p>
+                            
+                            <div class="example-box">
+                                <div class="example-title">❌ Nicht in 3NF:</div>
+                                <div class="code-block">
+KUNDE (<u>Kunden-Nr</u>, Name, PLZ, Ort)
+                                </div>
+                                <p><strong>Problem:</strong> Ort hängt von PLZ ab (transitive Abhängigkeit)</p>
+                                
+                                <div class="example-title">✅ In 3NF:</div>
+                                <div class="code-block">
+KUNDE (<u>Kunden-Nr</u>, Name, ↑PLZ)
+PLZ_ORT (<u>PLZ</u>, Ort)
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="success-box">
+                        <h4>🎯 Faustregel für die Praxis</h4>
+                        <p>Die <strong>3. Normalform</strong> ist für die meisten praktischen Anwendungen ausreichend und wird im Abitur erwartet. Höhere Normalformen sind meist nur in speziellen Fällen notwendig.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Implementation -->
+        <section id="implementation" class="section">
+            <div class="section-header">
+                <h2>🏗️ Implementation der Datenbank</h2>
+                <p>Von der Theorie zur funktionsfähigen Datenbank</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Datenbank erstellen mit SQL</h3>
+                    
+                    <div class="step-list">
+                        <div class="step-item">
+                            <h4>Datenbank erstellen</h4>
+                            <div class="code-block">
+<span class="comment">-- Neue Datenbank erstellen</span>
+<span class="keyword">CREATE DATABASE</span> online_shop;
+<span class="keyword">USE</span> online_shop;
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <h4>Tabellen erstellen (CREATE TABLE)</h4>
+                            <div class="code-block">
+<span class="comment">-- Kunde-Tabelle</span>
+<span class="keyword">CREATE TABLE</span> kunde (
+    kunden_nr <span class="keyword">INT PRIMARY KEY</span>,
+    name <span class="keyword">VARCHAR</span>(50) <span class="keyword">NOT NULL</span>,
+    vorname <span class="keyword">VARCHAR</span>(50),
+    email <span class="keyword">VARCHAR</span>(100) <span class="keyword">UNIQUE</span>,
+    adresse <span class="keyword">VARCHAR</span>(200),
+    plz <span class="keyword">VARCHAR</span>(5),
+    ort <span class="keyword">VARCHAR</span>(50),
+    telefon <span class="keyword">VARCHAR</span>(20)
+);
+
+<span class="comment">-- Kategorie-Tabelle</span>
+<span class="keyword">CREATE TABLE</span> kategorie (
+    kategorie_id <span class="keyword">INT PRIMARY KEY AUTO_INCREMENT</span>,
+    kategoriename <span class="keyword">VARCHAR</span>(100) <span class="keyword">NOT NULL</span>,
+    beschreibung <span class="keyword">TEXT</span>
+);
+
+<span class="comment">-- Artikel-Tabelle mit Fremdschlüssel</span>
+<span class="keyword">CREATE TABLE</span> artikel (
+    artikel_nr <span class="keyword">INT PRIMARY KEY</span>,
+    bezeichnung <span class="keyword">VARCHAR</span>(200) <span class="keyword">NOT NULL</span>,
+    beschreibung <span class="keyword">TEXT</span>,
+    preis <span class="keyword">DECIMAL</span>(10,2) <span class="keyword">NOT NULL</span>,
+    lagerbestand <span class="keyword">INT</span> <span class="keyword">DEFAULT</span> 0,
+    kategorie_id <span class="keyword">INT</span>,
+    <span class="keyword">FOREIGN KEY</span> (kategorie_id) <span class="keyword">REFERENCES</span> kategorie(kategorie_id)
+);
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <h4>Beziehungstabellen erstellen</h4>
+                            <div class="code-block">
+<span class="comment">-- Bestellung-Tabelle</span>
+<span class="keyword">CREATE TABLE</span> bestellung (
+    bestell_nr <span class="keyword">INT PRIMARY KEY AUTO_INCREMENT</span>,
+    bestelldatum <span class="keyword">DATE NOT NULL</span>,
+    versandkosten <span class="keyword">DECIMAL</span>(8,2) <span class="keyword">DEFAULT</span> 0.00,
+    status <span class="keyword">VARCHAR</span>(20) <span class="keyword">DEFAULT</span> <span class="string">'offen'</span>,
+    kunden_nr <span class="keyword">INT NOT NULL</span>,
+    <span class="keyword">FOREIGN KEY</span> (kunden_nr) <span class="keyword">REFERENCES</span> kunde(kunden_nr)
+);
+
+<span class="comment">-- Zwischentabelle für n:m Beziehung</span>
+<span class="keyword">CREATE TABLE</span> bestell_position (
+    bestell_nr <span class="keyword">INT</span>,
+    artikel_nr <span class="keyword">INT</span>,
+    anzahl <span class="keyword">INT NOT NULL DEFAULT</span> 1,
+    einzelpreis <span class="keyword">DECIMAL</span>(10,2) <span class="keyword">NOT NULL</span>,
+    <span class="keyword">PRIMARY KEY</span> (bestell_nr, artikel_nr),
+    <span class="keyword">FOREIGN KEY</span> (bestell_nr) <span class="keyword">REFERENCES</span> bestellung(bestell_nr),
+    <span class="keyword">FOREIGN KEY</span> (artikel_nr) <span class="keyword">REFERENCES</span> artikel(artikel_nr)
+);
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Daten einfügen und testen</h3>
+                    
+                    <div class="code-block">
+<span class="comment">-- Testdaten einfügen</span>
+<span class="keyword">INSERT INTO</span> kategorie (kategoriename, beschreibung) 
+<span class="keyword">VALUES</span> 
+    (<span class="string">'Elektronik'</span>, <span class="string">'Computer und Zubehör'</span>),
+    (<span class="string">'Bücher'</span>, <span class="string">'Fachbücher und Romane'</span>);
+
+<span class="keyword">INSERT INTO</span> kunde (kunden_nr, name, vorname, email) 
+<span class="keyword">VALUES</span> 
+    (1, <span class="string">'Müller'</span>, <span class="string">'Max'</span>, <span class="string">'max@email.de'</span>),
+    (2, <span class="string">'Schmidt'</span>, <span class="string">'Anna'</span>, <span class="string">'anna@email.de'</span>);
+
+<span class="keyword">INSERT INTO</span> artikel (artikel_nr, bezeichnung, preis, kategorie_id) 
+<span class="keyword">VALUES</span> 
+    (101, <span class="string">'Laptop'</span>, 899.99, 1),
+    (102, <span class="string">'Maus'</span>, 25.99, 1);
+
+<span class="comment">-- Test-Abfrage</span>
+<span class="keyword">SELECT</span> a.bezeichnung, a.preis, k.kategoriename
+<span class="keyword">FROM</span> artikel a 
+<span class="keyword">JOIN</span> kategorie k <span class="keyword">ON</span> a.kategorie_id = k.kategorie_id;
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Praxisbeispiel -->
+        <section id="praxisbeispiel" class="section">
+            <div class="section-header">
+                <h2>💼 Vollständiges Praxisbeispiel</h2>
+                <p>Schritt-für-Schritt: Schulbibliothek-Datenbank entwickeln</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Aufgabenstellung</h3>
+                    
+                    <div class="highlight-box">
+                        <h4>📋 Szenario: Schulbibliothek</h4>
+                        <p>Entwickeln Sie eine Datenbank für eine Schulbibliothek. Die Bibliothek möchte Bücher, Schüler und Ausleihen digital verwalten. Folgende Anforderungen sind gegeben:</p>
+                        <ul style="margin-top: 1rem;">
+                            <li>Verwaltung von Büchern (Titel, Autor, ISBN, Erscheinungsjahr, Standort)</li>
+                            <li>Verwaltung von Schülern (Name, Klasse, Email)</li>
+                            <li>Ausleihen verfolgen (wer hat was wann ausgeliehen, Rückgabedatum)</li>
+                            <li>Ein Buch kann nur von einem Schüler gleichzeitig ausgeliehen werden</li>
+                            <li>Ein Schüler kann mehrere Bücher gleichzeitig ausleihen</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Schritt 1: Anforderungsanalyse</h3>
+                    
+                    <div class="concept-grid">
+                        <div class="concept-card">
+                            <h5>📚 Was wird verwaltet?</h5>
+                            <ul>
+                                <li>Bücher</li>
+                                <li>Schüler</li>
+                                <li>Ausleihen</li>
+                            </ul>
+                        </div>
+                        <div class="concept-card">
+                            <h5>🔍 Welche Informationen?</h5>
+                            <ul>
+                                <li>Buchdaten</li>
+                                <li>Schülerdaten</li>
+                                <li>Ausleihdaten</li>
+                            </ul>
+                        </div>
+                        <div class="concept-card">
+                            <h5>🔗 Welche Beziehungen?</h5>
+                            <ul>
+                                <li>Schüler leiht Buch aus</li>
+                                <li>Ausleihe hat Zeitraum</li>
+                                <li>Rückgabe verfolgen</li>
+                            </ul>
+                        </div>
+                        <div class="concept-card">
+                            <h5>📊 Welche Abfragen?</h5>
+                            <ul>
+                                <li>Wer hat welches Buch?</li>
+                                <li>Welche Bücher sind frei?</li>
+                                <li>Überfällige Ausleihen?</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Schritt 2: ERM entwickeln</h3>
+                    
+                    <div class="step-list">
+                        <div class="step-item">
+                            <h4>Entitäten identifizieren</h4>
+                            <div class="concept-grid">
+                                <div class="concept-card">
+                                    <h5>📖 BUCH</h5>
+                                    <p><strong>Attribute:</strong></p>
+                                    <ul>
+                                        <li><u>ISBN</u> (Primärschlüssel)</li>
+                                        <li>Titel</li>
+                                        <li>Autor</li>
+                                        <li>Erscheinungsjahr</li>
+                                        <li>Standort</li>
+                                        <li>Status</li>
+                                    </ul>
+                                </div>
+                                <div class="concept-card">
+                                    <h5>👨‍🎓 SCHÜLER</h5>
+                                    <p><strong>Attribute:</strong></p>
+                                    <ul>
+                                        <li><u>Schüler-Nr</u> (Primärschlüssel)</li>
+                                        <li>Name</li>
+                                        <li>Vorname</li>
+                                        <li>Klasse</li>
+                                        <li>Email</li>
+                                    </ul>
+                                </div>
+                                <div class="concept-card">
+                                    <h5>📋 AUSLEIHE</h5>
+                                    <p><strong>Attribute:</strong></p>
+                                    <ul>
+                                        <li><u>Ausleihe-Nr</u> (Primärschlüssel)</li>
+                                        <li>Ausleih-Datum</li>
+                                        <li>Rückgabe-Datum</li>
+                                        <li>Zurückgegeben (Ja/Nein)</li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <h4>Beziehungen und Kardinalitäten bestimmen</h4>
+                            
+                            <div class="table-container">
+                                <table>
+                                    <thead>
+                                        <tr>
+                                            <th>Beziehung</th>
+                                            <th>Kardinalität</th>
+                                            <th>Begründung</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>SCHÜLER → AUSLEIHE</td>
+                                            <td>1:n</td>
+                                            <td>Ein Schüler kann mehrere Ausleihen haben, jede Ausleihe gehört zu einem Schüler</td>
+                                        </tr>
+                                        <tr>
+                                            <td>BUCH → AUSLEIHE</td>
+                                            <td>1:n</td>
+                                            <td>Ein Buch kann mehrfach ausgeliehen werden (zu verschiedenen Zeiten), jede Ausleihe bezieht sich auf ein Buch</td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="info-box">
+                                <h4>💡 Warum nicht n:m zwischen SCHÜLER und BUCH?</h4>
+                                <p>Da wir Details über die Ausleihe speichern wollen (Datum, Rückgabe, etc.), benötigen wir eine separate AUSLEIHE-Entität. Diese fungiert als "Verbindungsentität" zwischen SCHÜLER und BUCH.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Schritt 3: Relationenschema ableiten</h3>
+                    
+                    <div class="example-box">
+                        <div class="example-title">📋 Relationenschema Schulbibliothek</div>
+                        <div class="code-block">
+<span class="comment">-- Grundentitäten</span>
+<span class="keyword">SCHÜLER</span> (<u>Schüler-Nr</u>, Name, Vorname, Klasse, Email)
+<span class="keyword">BUCH</span> (<u>ISBN</u>, Titel, Autor, Erscheinungsjahr, Standort, Status)
+
+<span class="comment">-- Beziehungsentität mit Fremdschlüsseln</span>
+<span class="keyword">AUSLEIHE</span> (<u>Ausleihe-Nr</u>, Ausleih-Datum, Rückgabe-Datum, Zurückgegeben, ↑Schüler-Nr, ↑ISBN)
+                        </div>
+                    </div>
+
+                    <div class="success-box">
+                        <h4>✅ Überprüfung der Kardinalitäten</h4>
+                        <ul>
+                            <li><strong>1:n (Schüler → Ausleihe):</strong> Schüler-Nr als Fremdschlüssel in AUSLEIHE ✓</li>
+                            <li><strong>1:n (Buch → Ausleihe):</strong> ISBN als Fremdschlüssel in AUSLEIHE ✓</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Schritt 4: Normalisierung prüfen</h3>
+                    
+                    <div class="step-list">
+                        <div class="step-item">
+                            <h4>1. Normalform prüfen</h4>
+                            <div class="success-box">
+                                <p>✅ <strong>1NF erfüllt:</strong> Alle Attributwerte sind atomar (unteilbar)</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <h4>2. Normalform prüfen</h4>
+                            <div class="success-box">
+                                <p>✅ <strong>2NF erfüllt:</strong> Alle Tabellen haben einfache Primärschlüssel, keine partiellen Abhängigkeiten möglich</p>
+                            </div>
+                        </div>
+
+                        <div class="step-item">
+                            <h4>3. Normalform prüfen</h4>
+                            <div class="success-box">
+                                <p>✅ <strong>3NF erfüllt:</strong> Keine transitiven Abhängigkeiten erkennbar</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Schritt 5: SQL-Implementation</h3>
+                    
+                    <div class="code-block">
+<span class="comment">-- Datenbank erstellen</span>
+<span class="keyword">CREATE DATABASE</span> schulbibliothek;
+<span class="keyword">USE</span> schulbibliothek;
+
+<span class="comment">-- Schüler-Tabelle</span>
+<span class="keyword">CREATE TABLE</span> schueler (
+    schueler_nr <span class="keyword">INT PRIMARY KEY</span>,
+    name <span class="keyword">VARCHAR</span>(50) <span class="keyword">NOT NULL</span>,
+    vorname <span class="keyword">VARCHAR</span>(50) <span class="keyword">NOT NULL</span>,
+    klasse <span class="keyword">VARCHAR</span>(10) <span class="keyword">NOT NULL</span>,
+    email <span class="keyword">VARCHAR</span>(100) <span class="keyword">UNIQUE</span>
+);
+
+<span class="comment">-- Buch-Tabelle</span>
+<span class="keyword">CREATE TABLE</span> buch (
+    isbn <span class="keyword">VARCHAR</span>(13) <span class="keyword">PRIMARY KEY</span>,
+    titel <span class="keyword">VARCHAR</span>(200) <span class="keyword">NOT NULL</span>,
+    autor <span class="keyword">VARCHAR</span>(100) <span class="keyword">NOT NULL</span>,
+    erscheinungsjahr <span class="keyword">INT</span>,
+    standort <span class="keyword">VARCHAR</span>(20),
+    status <span class="keyword">VARCHAR</span>(20) <span class="keyword">DEFAULT</span> <span class="string">'verfügbar'</span>
+);
+
+<span class="comment">-- Ausleihe-Tabelle</span>
+<span class="keyword">CREATE TABLE</span> ausleihe (
+    ausleihe_nr <span class="keyword">INT PRIMARY KEY AUTO_INCREMENT</span>,
+    ausleih_datum <span class="keyword">DATE NOT NULL</span>,
+    rueckgabe_datum <span class="keyword">DATE NOT NULL</span>,
+    zurueckgegeben <span class="keyword">BOOLEAN DEFAULT FALSE</span>,
+    schueler_nr <span class="keyword">INT NOT NULL</span>,
+    isbn <span class="keyword">VARCHAR</span>(13) <span class="keyword">NOT NULL</span>,
+    <span class="keyword">FOREIGN KEY</span> (schueler_nr) <span class="keyword">REFERENCES</span> schueler(schueler_nr),
+    <span class="keyword">FOREIGN KEY</span> (isbn) <span class="keyword">REFERENCES</span> buch(isbn)
+);
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Schritt 6: Testdaten und Beispielabfragen</h3>
+                    
+                    <div class="code-block">
+<span class="comment">-- Testdaten einfügen</span>
+<span class="keyword">INSERT INTO</span> schueler <span class="keyword">VALUES</span>
+(1, <span class="string">'Müller'</span>, <span class="string">'Max'</span>, <span class="string">'10A'</span>, <span class="string">'max.mueller@schule.de'</span>),
+(2, <span class="string">'Schmidt'</span>, <span class="string">'Anna'</span>, <span class="string">'10B'</span>, <span class="string">'anna.schmidt@schule.de'</span>);
+
+<span class="keyword">INSERT INTO</span> buch <span class="keyword">VALUES</span>
+(<span class="string">'9783123456789'</span>, <span class="string">'Informatik Grundlagen'</span>, <span class="string">'Mustermann'</span>, 2023, <span class="string">'R1-S2'</span>, <span class="string">'verfügbar'</span>),
+(<span class="string">'9783987654321'</span>, <span class="string">'Java Programmierung'</span>, <span class="string">'Beispiel'</span>, 2022, <span class="string">'R1-S3'</span>, <span class="string">'ausgeliehen'</span>);
+
+<span class="keyword">INSERT INTO</span> ausleihe (ausleih_datum, rueckgabe_datum, schueler_nr, isbn) <span class="keyword">VALUES</span>
+(<span class="string">'2024-01-15'</span>, <span class="string">'2024-02-15'</span>, 1, <span class="string">'9783987654321'</span>);
+
+<span class="comment">-- Beispielabfragen</span>
+
+<span class="comment">-- 1. Alle aktuellen Ausleihen anzeigen</span>
+<span class="keyword">SELECT</span> s.name, s.vorname, b.titel, a.ausleih_datum, a.rueckgabe_datum
+<span class="keyword">FROM</span> ausleihe a
+<span class="keyword">JOIN</span> schueler s <span class="keyword">ON</span> a.schueler_nr = s.schueler_nr
+<span class="keyword">JOIN</span> buch b <span class="keyword">ON</span> a.isbn = b.isbn
+<span class="keyword">WHERE</span> a.zurueckgegeben = <span class="keyword">FALSE</span>;
+
+<span class="comment">-- 2. Überfällige Ausleihen finden</span>
+<span class="keyword">SELECT</span> s.name, s.vorname, b.titel, a.rueckgabe_datum,
+       <span class="keyword">DATEDIFF</span>(<span class="keyword">CURDATE</span>(), a.rueckgabe_datum) <span class="keyword">AS</span> tage_ueberfaellig
+<span class="keyword">FROM</span> ausleihe a
+<span class="keyword">JOIN</span> schueler s <span class="keyword">ON</span> a.schueler_nr = s.schueler_nr
+<span class="keyword">JOIN</span> buch b <span class="keyword">ON</span> a.isbn = b.isbn
+<span class="keyword">WHERE</span> a.zurueckgegeben = <span class="keyword">FALSE</span> 
+  <span class="keyword">AND</span> a.rueckgabe_datum < <span class="keyword">CURDATE</span>();
+
+<span class="comment">-- 3. Verfügbare Bücher anzeigen</span>
+<span class="keyword">SELECT</span> titel, autor, standort
+<span class="keyword">FROM</span> buch
+<span class="keyword">WHERE</span> status = <span class="string">'verfügbar'</span>
+<span class="keyword">ORDER BY</span> autor, titel;
+
+<span class="comment">-- 4. Ausleihstatistik pro Schüler</span>
+<span class="keyword">SELECT</span> s.name, s.vorname, s.klasse,
+       <span class="keyword">COUNT</span>(a.ausleihe_nr) <span class="keyword">AS</span> anzahl_ausleihen
+<span class="keyword">FROM</span> schueler s
+<span class="keyword">LEFT JOIN</span> ausleihe a <span class="keyword">ON</span> s.schueler_nr = a.schueler_nr
+<span class="keyword">GROUP BY</span> s.schueler_nr, s.name, s.vorname, s.klasse
+<span class="keyword">ORDER BY</span> anzahl_ausleihen <span class="keyword">DESC</span>;
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Zusammenfassung und Tipps -->
+        <section class="section">
+            <div class="section-header">
+                <h2>🎯 Zusammenfassung und Abitur-Tipps</h2>
+                <p>Das Wichtigste für die Prüfung auf einen Blick</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>Der komplette Entwicklungsprozess</h3>
+                    
+                    <div class="step-list">
+                        <div class="step-item">
+                            <h4>Anforderungen analysieren</h4>
+                            <p>Text gründlich lesen, alle Entitäten und Beziehungen identifizieren</p>
+                        </div>
+                        <div class="step-item">
+                            <h4>ERM erstellen</h4>
+                            <p>Entitäten, Attribute, Beziehungen und Kardinalitäten bestimmen</p>
+                        </div>
+                        <div class="step-item">
+                            <h4>Relationenschema ableiten</h4>
+                            <p>ERM in Tabellen mit Schlüsseln umwandeln</p>
+                        </div>
+                        <div class="step-item">
+                            <h4>Normalisierung prüfen</h4>
+                            <p>1NF, 2NF und 3NF überprüfen und anwenden</p>
+                        </div>
+                        <div class="step-item">
+                            <h4>SQL-Implementation</h4>
+                            <p>CREATE TABLE-Befehle schreiben und testen</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Häufige Abitur-Aufgabentypen</h3>
+                    
+                    <div class="concept-grid">
+                        <div class="concept-card">
+                            <h5>📋 ERM aus Text erstellen</h5>
+                            <ul>
+                                <li>Entitäten unterstreichen</li>
+                                <li>Attribute sammeln</li>
+                                <li>Beziehungen finden</li>
+                                <li>Kardinalitäten bestimmen</li>
+                            </ul>
+                        </div>
+                        <div class="concept-card">
+                            <h5>🔄 ERM → Relationenschema</h5>
+                            <ul>
+                                <li>1:n → Fremdschlüssel</li>
+                                <li>n:m → Zwischentabelle</li>
+                                <li>Schlüssel markieren</li>
+                            </ul>
+                        </div>
+                        <div class="concept-card">
+                            <h5>⚡ Normalisierung</h5>
+                            <ul>
+                                <li>Normalformen prüfen</li>
+                                <li>Anomalien erkennen</li>
+                                <li>Tabellen aufteilen</li>
+                            </ul>
+                        </div>
+                        <div class="concept-card">
+                            <h5>💻 SQL schreiben</h5>
+                            <ul>
+                                <li>CREATE TABLE</li>
+                                <li>FOREIGN KEY</li>
+                                <li>Testdaten einfügen</li>
+                                <li>Abfragen formulieren</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Typische Fehler vermeiden</h3>
+                    
+                    <div class="warning-box">
+                        <h4>❌ Häufige Fehler</h4>
+                        <ul>
+                            <li><strong>Kardinalitäten falsch bestimmt:</strong> Genau überlegen, wer mit wem wie oft in Beziehung steht</li>
+                            <li><strong>n:m Beziehungen nicht aufgelöst:</strong> Immer Zwischentabelle erstellen</li>
+                            <li><strong>Fremdschlüssel vergessen:</strong> 1:n Beziehungen durch Fremdschlüssel darstellen</li>
+                            <li><strong>Primärschlüssel nicht eindeutig:</strong> Jede Tabelle braucht einen eindeutigen Schlüssel</li>
+                            <li><strong>Normalisierung übersprungen:</strong> Kann zu Datenproblemen führen</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Checkliste für die Prüfung</h3>
+                    
+                    <div class="success-box">
+                        <h4>✅ Prüfungs-Checkliste</h4>
+                        <div class="step-list" style="counter-reset: check-counter;">
+                            <div class="step-item">
+                                <strong>Text analysiert?</strong> Alle Entitäten und Beziehungen identifiziert?
+                            </div>
+                            <div class="step-item">
+                                <strong>ERM vollständig?</strong> Alle Attribute und Kardinalitäten eingetragen?
+                            </div>
+                            <div class="step-item">
+                                <strong>Relationenschema korrekt?</strong> Alle Fremdschlüssel und Zwischentabellen?
+                            </div>
+                            <div class="step-item">
+                                <strong>Normalisiert?</strong> 3NF erreicht, keine Anomalien?
+                            </div>
+                            <div class="step-item">
+                                <strong>SQL syntaktisch korrekt?</strong> Alle Befehle vollständig?
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>Weiterführende Themen</h3>
+                    
+                    <div class="info-box">
+                        <h4>🚀 Nach dem Abitur</h4>
+                        <p>Die Datenbankentwicklung geht über das Abitur hinaus. Weitere wichtige Themen sind:</p>
+                        <ul style="margin-top: 1rem;">
+                            <li><strong>Performance-Optimierung:</strong> Indizes, Query-Optimierung</li>
+                            <li><strong>Transaktionen:</strong> ACID-Eigenschaften, Concurrency Control</li>
+                            <li><strong>NoSQL-Datenbanken:</strong> Dokumenten-, Graph- und Key-Value-Stores</li>
+                            <li><strong>Data Warehousing:</strong> OLAP, Dimensionsmodellierung</li>
+                            <li><strong>Datenschutz und Sicherheit:</strong> Verschlüsselung, Zugriffskontrolle</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer mit Navigation -->
+        <footer style="background: var(--bg-white); padding: 2rem; border-radius: 16px; border: 1px solid var(--border-color); text-align: center; margin-top: 2rem;">
+            <div style="margin-bottom: 2rem;">
+                <a href="index.html" style="display: inline-flex; align-items: center; text-decoration: none; color: var(--primary-color); font-weight: 600; padding: 1rem 2rem; background: var(--bg-light); border-radius: 12px; border: 2px solid var(--primary-color); transition: all 0.3s ease; font-size: 1.1rem;">
+                    ← Zurück zur Hauptübersicht
+                </a>
+            </div>
+            <div style="border-top: 1px solid var(--border-color); padding-top: 1.5rem;">
+                <p style="color: var(--text-light); margin-bottom: 0.5rem;">
+                    <strong>Datenbankentwicklung - Abitur 2026</strong>
+                </p>
+                <p style="color: var(--text-light); font-size: 0.9rem;">
+                    Systematische Entwicklung relationaler Datenbanksysteme<br>
+                    Teil der ITS/ITH Lernzettel-Sammlung für das Technische Gymnasium
+                </p>
+            </div>
+        </footer>
+
+        <button class="back-to-top" onclick="window.scrollTo({top: 0, behavior: 'smooth'})" title="Nach oben">
+            ↑
+        </button>
+    </div>
+
+    <script>
+        // Navigation highlight
+        function updateActiveNav() {
+            const sections = document.querySelectorAll('.section');
+            const navLinks = document.querySelectorAll('.nav-link');
+            
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (window.scrollY >= sectionTop - 200) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href') === '#' + current) {
+                    link.classList.add('active');
+                }
+            });
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('.nav-link').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetSection = document.querySelector(targetId);
+                if (targetSection) {
+                    targetSection.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Hover effect for back links
+        const backLinks = document.querySelectorAll('a[href="index.html"]');
+        backLinks.forEach(link => {
+            link.addEventListener('mouseenter', function() {
+                this.style.background = 'var(--primary-color)';
+                this.style.color = 'white';
+                this.style.transform = 'translateX(-5px)';
+            });
+            link.addEventListener('mouseleave', function() {
+                this.style.background = 'var(--bg-light)';
+                this.style.color = 'var(--primary-color)';
+                this.style.transform = 'translateX(0)';
+            });
+        });
+
+        // Update navigation on scroll
+        window.addEventListener('scroll', updateActiveNav);
+        
+        // Show/hide back to top button
+        window.addEventListener('scroll', function() {
+            const backToTop = document.querySelector('.back-to-top');
+            if (window.scrollY > 300) {
+                backToTop.style.display = 'block';
+            } else {
+                backToTop.style.display = 'none';
+            }
+        });
+
+        // Add active style for navigation
+        const style = document.createElement('style');
+        style.textContent = `
+            .nav-link.active {
+                background: var(--primary-color) !important;
+                color: white !important;
+            }
+        `;
+        document.head.appendChild(style);
+    </script>
+</body>
+</html>

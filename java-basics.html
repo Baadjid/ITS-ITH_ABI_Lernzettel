@@ -1,0 +1,2261 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Java Grundlagen - Abitur 2026 Informatik TG</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --code-bg: #1e1e1e;
+            --code-text: #d4d4d4;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .breadcrumb {
+            background: var(--bg-white);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1.5rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .info-banner {
+            background: linear-gradient(135deg, var(--success-color), #059669);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header p {
+            opacity: 0.9;
+            font-size: 0.95rem;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .subsection {
+            margin-bottom: 2rem;
+        }
+
+        .subsection h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.3rem;
+            border-bottom: 2px solid var(--accent-color);
+            padding-bottom: 0.5rem;
+        }
+
+        .subsection h4 {
+            color: var(--secondary-color);
+            margin: 1.5rem 0 1rem 0;
+            font-size: 1.1rem;
+        }
+
+        .info-box {
+            background: var(--bg-light);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .info-box.warning {
+            border-left-color: var(--warning-color);
+            background: #fef3c7;
+        }
+
+        .info-box.success {
+            border-left-color: var(--success-color);
+            background: #dcfce7;
+        }
+
+        .info-box.danger {
+            border-left-color: var(--danger-color);
+            background: #fee2e2;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            color: var(--code-text);
+            padding: 1.5rem;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9rem;
+            line-height: 1.4;
+            overflow-x: auto;
+            margin: 1rem 0;
+            border: 1px solid #444;
+        }
+
+        .code-inline {
+            background: #e2e8f0;
+            color: var(--text-dark);
+            padding: 0.2rem 0.4rem;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.9em;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+            border: 1px solid var(--border-color);
+        }
+
+        .comparison-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 0.8rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .example-box {
+            background: #f0f9ff;
+            border: 1px solid #0ea5e9;
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .example-box h5 {
+            color: #0369a1;
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .navigation {
+            background: var(--bg-white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .navigation a {
+            display: inline-block;
+            margin: 0 1rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: all 0.3s ease;
+        }
+
+        .navigation a:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .toc {
+            background: var(--bg-white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+        }
+
+        .toc h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc a {
+            color: var(--text-dark);
+            text-decoration: none;
+            padding: 0.5rem;
+            display: block;
+            border-radius: 4px;
+            transition: background-color 0.2s ease;
+        }
+
+        .toc a:hover {
+            background-color: var(--bg-light);
+            color: var(--primary-color);
+        }
+
+        .highlight {
+            background: linear-gradient(120deg, transparent 0%, var(--accent-color) 0%, transparent 100%);
+            background-size: 0% 100%;
+            background-repeat: no-repeat;
+            transition: background-size 0.3s ease;
+            padding: 0.1rem 0;
+        }
+
+        .highlight:hover {
+            background-size: 100% 100%;
+            color: white;
+            padding: 0.1rem 0.3rem;
+            border-radius: 4px;
+        }
+
+        .step-list {
+            counter-reset: step-counter;
+        }
+
+        .step-list li {
+            counter-increment: step-counter;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-left: 3rem;
+        }
+
+        .step-list li::before {
+            content: counter(step-counter);
+            position: absolute;
+            left: 0;
+            top: 0;
+            background: var(--primary-color);
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 768px) {
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .container {
+                padding: 10px;
+            }
+            
+            .section-content {
+                padding: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="index.html">🏠 Hauptseite</a> → 
+            <a href="#grundlagen">Grundlagen der Programmentwicklung</a> → 
+            <span>Java Grundlagen</span>
+        </nav>
+
+        <header class="header">
+            <h1>☕ Java Grundlagen</h1>
+            <p>Vollständiger Einstieg in die Programmiersprache Java</p>
+            <div class="info-banner">
+                <strong>BPE 3 - Grundlagen der Programmentwicklung</strong><br>
+                39 Stunden (39 praktisch) | Basis für objektorientierte Programmierung
+            </div>
+
+        <!-- Methoden -->
+        <div class="section" id="methoden">
+            <div class="section-header">
+                <h2>8. Methoden</h2>
+                <p>Code in wiederverwendbare Blöcke aufteilen - Modularisierung</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>🔧 Was sind Methoden?</h3>
+                    <p>Eine Methode ist ein <span class="highlight">benannter Codeblock, der eine bestimmte Aufgabe erfüllt</span>. Methoden helfen dabei:</p>
+                    <ul>
+                        <li><strong>Code zu strukturieren</strong> (Problemzerlegung in Teilprobleme)</li>
+                        <li><strong>Code wiederzuverwenden</strong> (mehrfach verwendbar)</li>
+                        <li><strong>Programme übersichtlicher</strong> zu machen</li>
+                        <li><strong>Teamarbeit zu ermöglichen</strong> (verschiedene Personen, verschiedene Methoden)</li>
+                        <li><strong>Fehlersuche zu vereinfachen</strong> (isolierte Funktionsblöcke)</li>
+                    </ul>
+
+                    <div class="example-box">
+                        <h5>Einfache Methode ohne Rückgabe:</h5>
+                        <div class="code-block">
+public class MeinProgramm {
+    
+    // Methode definieren (außerhalb der main-Methode)
+    public static void begruessung() {
+        System.out.println("Hallo, willkommen!");
+        System.out.println("Schön, dass du da bist!");
+    }
+    
+    // Hauptprogramm
+    public static void main(String[] args) {
+        begruessung();  // Methode aufrufen
+        System.out.println("Das war die Begrüßung.");
+        begruessung();  // Kann mehrmals aufgerufen werden
+    }
+}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>📋 Methoden-Aufbau verstehen</h3>
+                    <p>Jede Methode hat einen festen Aufbau:</p>
+                    
+                    <div class="info-box">
+                        <h4>Methoden-Signatur erklärt:</h4>
+                        <div class="code-block">
+public static double berechneKreis(double radius) {
+//  ^      ^     ^         ^            ^
+//  |      |     |         |            |
+//  |      |     |         |            └─ Parameter (Eingabe)
+//  |      |     |         └─ Methodenname
+//  |      |     └─ Rückgabetyp (was kommt zurück?)
+//  |      └─ static (kann ohne Objekt aufgerufen werden)
+//  └─ Sichtbarkeit (public = von überall erreichbar)
+
+    double flaeche = Math.PI * radius * radius;
+    return flaeche;  // Wert zurückgeben
+}
+                        </div>
+                    </div>
+
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Bestandteil</th>
+                                <th>Bedeutung</th>
+                                <th>Mögliche Werte</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Sichtbarkeit</strong></td>
+                                <td>Wer kann die Methode verwenden?</td>
+                                <td><code>public</code>, <code>private</code>, <code>protected</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>static</strong></td>
+                                <td>Kann ohne Objekt aufgerufen werden</td>
+                                <td><code>static</code> oder weggelassen</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Rückgabetyp</strong></td>
+                                <td>Was gibt die Methode zurück?</td>
+                                <td><code>void</code> (nichts), <code>int</code>, <code>String</code>, etc.</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Methodenname</strong></td>
+                                <td>Eindeutiger Name</td>
+                                <td>camelCase-Konvention</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Parameter</strong></td>
+                                <td>Eingabewerte (optional)</td>
+                                <td>Typ und Name, durch Komma getrennt</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h3>📥 Parameter und Rückgabewerte</h3>
+                    
+                    <div class="example-box">
+                        <h5>Methoden mit Parametern:</h5>
+                        <div class="code-block">
+// Methode mit einem Parameter
+public static void sagHallo(String name) {
+    System.out.println("Hallo " + name + "!");
+}
+
+// Methode mit mehreren Parametern
+public static int addiere(int a, int b) {
+    int summe = a + b;
+    return summe;  // Wert zurückgeben
+}
+
+// Methode mit verschiedenen Parametertypen
+public static void zeigePersonInfo(String name, int alter, boolean istStudent) {
+    System.out.println("Name: " + name);
+    System.out.println("Alter: " + alter);
+    System.out.println("Student: " + (istStudent ? "Ja" : "Nein"));
+}
+
+// Verwendung in main:
+public static void main(String[] args) {
+    sagHallo("Maria");           // Parameter übergeben
+    
+    int ergebnis = addiere(5, 3); // Rückgabewert empfangen
+    System.out.println("5 + 3 = " + ergebnis);
+    
+    zeigePersonInfo("Max", 20, true);  // Mehrere Parameter
+}
+                        </div>
+                    </div>
+
+                    <div class="info-box warning">
+                        <h4>⚠️ Wichtige Regeln:</h4>
+                        <ul>
+                            <li><strong>Parameter sind Kopien</strong> - Änderungen wirken nicht auf Original zurück</li>
+                            <li><strong>return beendet Methode</strong> sofort</li>
+                            <li><strong>Jeder Pfad muss return haben</strong> (außer bei void)</li>
+                            <li><strong>Parameterreihenfolge beachten</strong> beim Aufruf</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🔄 Methoden-Überladung</h3>
+                    <p>Java erlaubt mehrere Methoden mit gleichem Namen, aber <strong>unterschiedlichen Parametern</strong>:</p>
+                    
+                    <div class="example-box">
+                        <h5>Überladene Methoden:</h5>
+                        <div class="code-block">
+// Verschiedene Versionen der gleichen Methode
+public static int addiere(int a, int b) {
+    return a + b;
+}
+
+public static double addiere(double a, double b) {
+    return a + b;
+}
+
+public static int addiere(int a, int b, int c) {
+    return a + b + c;
+}
+
+public static String addiere(String a, String b) {
+    return a + b;  // String-Verkettung
+}
+
+// Verwendung - Java wählt automatisch die richtige Version:
+public static void main(String[] args) {
+    System.out.println(addiere(5, 3));         // → int-Version: 8
+    System.out.println(addiere(5.5, 3.2));     // → double-Version: 8.7
+    System.out.println(addiere(1, 2, 3));      // → 3-Parameter-Version: 6
+    System.out.println(addiere("Hallo", " Welt")); // → String-Version: "Hallo Welt"
+}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🎯 Praktische Beispiele</h3>
+                    
+                    <div class="example-box">
+                        <h5>Nützliche Hilfsmethoden:</h5>
+                        <div class="code-block">
+// Prüfung ob Zahl gerade ist
+public static boolean istGerade(int zahl) {
+    return zahl % 2 == 0;
+}
+
+// Maximum von zwei Zahlen finden
+public static int maximum(int a, int b) {
+    if (a > b) {
+        return a;
+    } else {
+        return b;
+    }
+    // Alternativ kürzer: return (a > b) ? a : b;
+}
+
+// Fakultät berechnen (rekursiv)
+public static long fakultaet(int n) {
+    if (n <= 1) {
+        return 1;  // Basis-Fall
+    }
+    return n * fakultaet(n - 1);  // Rekursiver Aufruf
+}
+
+// Temperatur umrechnen
+public static double celsiusNachFahrenheit(double celsius) {
+    return (celsius * 9.0 / 5.0) + 32;
+}
+
+// Verwendung:
+public static void main(String[] args) {
+    System.out.println("8 ist gerade: " + istGerade(8));      // true
+    System.out.println("Maximum: " + maximum(15, 23));        // 23
+    System.out.println("5! = " + fakultaet(5));               // 120
+    System.out.println("20°C = " + celsiusNachFahrenheit(20) + "°F");  // 68.0°F
+}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>⚠️ Häufige Fehler bei Methoden</h3>
+                    
+                    <div class="info-box danger">
+                        <h4>🚫 Typische Fehlerquellen:</h4>
+                        <div class="code-block">
+// FEHLER 1: Fehlender return bei nicht-void-Methode
+public static int berechne(int x) {
+    if (x > 0) {
+        return x * 2;
+    }
+    // FEHLER: Was passiert wenn x <= 0? Kein return!
+    // LÖSUNG: return 0; oder anderer default-Wert
+}
+
+// FEHLER 2: Unerreichbarer Code nach return
+public static int test() {
+    return 5;
+    System.out.println("Das wird nie ausgeführt!");  // FEHLER!
+}
+
+// FEHLER 3: Falsche Parameteranzahl beim Aufruf
+public static void methode(int a, int b) { ... }
+
+public static void main(String[] args) {
+    methode(5);     // FEHLER: Zu wenige Parameter
+    methode(1,2,3); // FEHLER: Zu viele Parameter
+}
+
+// FEHLER 4: Non-static Methode aus static Kontext aufrufen
+public void nichtStatisch() { ... }
+
+public static void main(String[] args) {
+    nichtStatisch();  // FEHLER! Braucht Objekt-Instanz
+}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Arrays -->
+        <div class="section" id="arrays">
+            <div class="section-header">
+                <h2>9. Arrays (Felder)</h2>
+                <p>Mehrere Werte des gleichen Typs zusammenfassen</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>📦 Was sind Arrays?</h3>
+                    <p>Ein Array ist wie ein <span class="highlight">Container mit nummerierten Fächern</span>, in dem mehrere Werte des gleichen Datentyps gespeichert werden können. Jedes Fach hat einen Index (Position), der bei 0 beginnt!</p>
+
+                    <div class="example-box">
+                        <h5>Array-Grundlagen:</h5>
+                        <div class="code-block">
+// Array deklarieren und erstellen
+int[] zahlen = new int[5];  // Array für 5 int-Werte (Indizes 0-4)
+
+// Oder: Array deklarieren und initialisieren
+int[] noten = {1, 2, 1, 3, 2};  // Array mit 5 Elementen
+
+// Einzelne Werte zuweisen/lesen (Index beginnt bei 0!)
+zahlen[0] = 10;    // Erstes Element
+zahlen[1] = 20;    // Zweites Element  
+zahlen[4] = 50;    // Letztes Element (bei 5 Elementen)
+
+// Werte lesen
+System.out.println("Erste Zahl: " + zahlen[0]);     // 10
+System.out.println("Zweite Note: " + noten[1]);     // 2
+
+// Array-Länge ermitteln
+System.out.println("Array-Länge: " + zahlen.length);  // 5
+                        </div>
+                    </div>
+
+                    <div class="info-box warning">
+                        <h4>⚠️ Array-Index Fallstrick:</h4>
+                        <p>Arrays beginnen bei Index 0, nicht bei 1!</p>
+                        <div class="code-block">
+int[] arr = new int[3];  // Indizes: 0, 1, 2
+
+arr[0] = 100;  // ✅ OK
+arr[1] = 200;  // ✅ OK  
+arr[2] = 300;  // ✅ OK
+arr[3] = 400;  // ❌ FEHLER! ArrayIndexOutOfBoundsException
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🔄 Arrays durchlaufen</h3>
+                    
+                    <div class="example-box">
+                        <h5>Klassische for-Schleife:</h5>
+                        <div class="code-block">
+int[] zahlen = {10, 20, 30, 40, 50};
+
+// Alle Elemente ausgeben
+for (int i = 0; i < zahlen.length; i++) {
+    System.out.println("Index " + i + ": " + zahlen[i]);
+}
+
+// Summe aller Elemente berechnen
+int summe = 0;
+for (int i = 0; i < zahlen.length; i++) {
+    summe += zahlen[i];
+}
+System.out.println("Summe: " + summe);  // 150
+                        </div>
+                    </div>
+
+                    <div class="example-box">
+                        <h5>Enhanced for-Loop (for-each):</h5>
+                        <div class="code-block">
+int[] zahlen = {10, 20, 30, 40, 50};
+
+// Einfacher durchlaufen (nur lesen, nicht schreiben)
+for (int zahl : zahlen) {
+    System.out.println("Wert: " + zahl);
+}
+
+// Praktisch für Strings
+String[] namen = {"Anna", "Ben", "Clara"};
+for (String name : namen) {
+    System.out.println("Hallo " + name + "!");
+}
+
+// ABER: Kann Werte nicht ändern
+for (int zahl : zahlen) {
+    zahl = zahl * 2;  // Ändert NICHT das Array!
+}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🛠️ Array-Operationen</h3>
+                    
+                    <div class="example-box">
+                        <h5>Nützliche Array-Methoden:</h5>
+                        <div class="code-block">
+// Arrays-Hilfsmethoden importieren
+import java.util.Arrays;
+
+public class ArrayDemo {
+    public static void main(String[] args) {
+        int[] zahlen = {5, 2, 8, 1, 9};
+        
+        // Array ausgeben (hübsch formatiert)
+        System.out.println(Arrays.toString(zahlen));  // [5, 2, 8, 1, 9]
+        
+        // Array sortieren
+        Arrays.sort(zahlen);
+        System.out.println(Arrays.toString(zahlen));  // [1, 2, 5, 8, 9]
+        
+        // In Array suchen (nur bei sortierten Arrays!)
+        int position = Arrays.binarySearch(zahlen, 5);
+        System.out.println("5 ist an Position: " + position);  // 2
+        
+        // Array füllen
+        int[] nullen = new int[5];
+        Arrays.fill(nullen, 42);
+        System.out.println(Arrays.toString(nullen));  // [42, 42, 42, 42, 42]
+        
+        // Arrays vergleichen
+        int[] a = {1, 2, 3};
+        int[] b = {1, 2, 3};
+        System.out.println(Arrays.equals(a, b));  // true
+    }
+}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>📊 Mehrdimensionale Arrays</h3>
+                    <p>Arrays können auch Arrays enthalten - für Tabellen, Matrizen etc.:</p>
+                    
+                    <div class="example-box">
+                        <h5>2D-Array (Tabelle):</h5>
+                        <div class="code-block">
+// 2D-Array erstellen (3 Zeilen, 4 Spalten)
+int[][] tabelle = new int[3][4];
+
+// Oder direkt initialisieren
+int[][] matrix = {
+    {1, 2, 3, 4},
+    {5, 6, 7, 8}, 
+    {9, 10, 11, 12}
+};
+
+// Zugriff auf Element: [Zeile][Spalte]
+matrix[1][2] = 99;  // Zeile 1, Spalte 2 auf 99 setzen
+
+// Durchlaufen mit verschachtelten Schleifen
+for (int zeile = 0; zeile < matrix.length; zeile++) {
+    for (int spalte = 0; spalte < matrix[zeile].length; spalte++) {
+        System.out.print(matrix[zeile][spalte] + "\t");
+    }
+    System.out.println();  // Neue Zeile nach jeder Reihe
+}
+
+// Mit for-each durchlaufen
+for (int[] zeile : matrix) {
+    for (int wert : zeile) {
+        System.out.print(wert + "\t");
+    }
+    System.out.println();
+}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🎯 Praktische Array-Beispiele</h3>
+                    
+                    <div class="example-box">
+                        <h5>Nützliche Array-Algorithmen:</h5>
+                        <div class="code-block">
+// Maximum in Array finden
+public static int findeMaximum(int[] arr) {
+    if (arr.length == 0) return 0;
+    
+    int max = arr[0];
+    for (int i = 1; i < arr.length; i++) {
+        if (arr[i] > max) {
+            max = arr[i];
+        }
+    }
+    return max;
+}
+
+// Durchschnitt berechnen
+public static double berechnenDurchschnitt(double[] werte) {
+    double summe = 0;
+    for (double wert : werte) {
+        summe += wert;
+    }
+    return summe / werte.length;
+}
+
+// Element im Array suchen
+public static int sucheElement(int[] arr, int gesucht) {
+    for (int i = 0; i < arr.length; i++) {
+        if (arr[i] == gesucht) {
+            return i;  // Index zurückgeben
+        }
+    }
+    return -1;  // Nicht gefunden
+}
+
+// Array umkehren
+public static void umkehren(int[] arr) {
+    int links = 0;
+    int rechts = arr.length - 1;
+    
+    while (links < rechts) {
+        // Elemente tauschen
+        int temp = arr[links];
+        arr[links] = arr[rechts]; 
+        arr[rechts] = temp;
+        
+        links++;
+        rechts--;
+    }
+}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Ein- und Ausgabe -->
+        <div class="section" id="ein-ausgabe">
+            <div class="section-header">
+                <h2>10. Ein- und Ausgabe</h2>
+                <p>Mit dem Benutzer kommunizieren - Daten lesen und ausgeben</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>📤 Ausgabe mit System.out</h3>
+                    <p>Java bietet verschiedene Möglichkeiten zur Ausgabe:</p>
+                    
+                    <div class="example-box">
+                        <h5>Verschiedene Ausgabe-Methoden:</h5>
+                        <div class="code-block">
+// print() - ohne Zeilenwechsel
+System.out.print("Hallo ");
+System.out.print("Welt!");  
+// Ausgabe: "Hallo Welt!" (in einer Zeile)
+
+// println() - mit Zeilenwechsel
+System.out.println("Erste Zeile");
+System.out.println("Zweite Zeile");
+// Ausgabe: 
+// Erste Zeile
+// Zweite Zeile
+
+// printf() - formatierte Ausgabe
+String name = "Max";
+int alter = 25;
+double gehalt = 2500.75;
+
+System.out.printf("Name: %s, Alter: %d, Gehalt: %.2f Euro%n", 
+                  name, alter, gehalt);
+// Ausgabe: "Name: Max, Alter: 25, Gehalt: 2500,75 Euro"
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>📋 printf Platzhalter:</h4>
+                        <table class="comparison-table">
+                            <thead>
+                                <tr>
+                                    <th>Platzhalter</th>
+                                    <th>Datentyp</th>
+                                    <th>Beispiel</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><code>%s</code></td>
+                                    <td>String</td>
+                                    <td><code>%s → "Hallo"</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>%d</code></td>
+                                    <td>int (Dezimal)</td>
+                                    <td><code>%d → 42</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>%f</code></td>
+                                    <td>double/float</td>
+                                    <td><code>%f → 3.141500</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>%.2f</code></td>
+                                    <td>2 Nachkommastellen</td>
+                                    <td><code>%.2f → 3.14</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>%c</code></td>
+                                    <td>char</td>
+                                    <td><code>%c → 'A'</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>%b</code></td>
+                                    <td>boolean</td>
+                                    <td><code>%b → true</code></td>
+                                </tr>
+                                <tr>
+                                    <td><code>%n</code></td>
+                                    <td>Neue Zeile</td>
+                                    <td>Plattformunabhängig</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>📥 Eingabe mit Scanner</h3>
+                    <p>Für die Eingabe von Benutzerdaten verwenden wir die <code class="code-inline">Scanner</code>-Klasse:</p>
+                    
+                    <div class="example-box">
+                        <h5>Scanner verwenden:</h5>
+                        <div class="code-block">
+import java.util.Scanner;  // Scanner importieren
+
+public class EingabeDemo {
+    public static void main(String[] args) {
+        // Scanner erstellen (System.in = Tastatur-Eingabe)
+        Scanner scanner = new Scanner(System.in);
+        
+        // String einlesen
+        System.out.print("Gib deinen Namen ein: ");
+        String name = scanner.nextLine();  // Ganze Zeile inkl. Leerzeichen
+        
+        // int einlesen  
+        System.out.print("Gib dein Alter ein: ");
+        int alter = scanner.nextInt();
+        
+        // double einlesen
+        System.out.print("Gib dein Gehalt ein: ");
+        double gehalt = scanner.nextDouble();
+        
+        // Ausgabe
+        System.out.println("Hallo " + name + "!");
+        System.out.println("Du bist " + alter + " Jahre alt.");
+        System.out.printf("Dein Gehalt beträgt %.2f Euro.%n", gehalt);
+        
+        // Scanner schließen (wichtig!)
+        scanner.close();
+    }
+}
+                        </div>
+                    </div>
+
+                    <div class="info-box warning">
+                        <h4>⚠️ Scanner-Fallstricke:</h4>
+                        <div class="code-block">
+Scanner scanner = new Scanner(System.in);
+
+// Problem: Zeilenwechsel bleibt im Puffer
+System.out.print("Alter: ");
+int alter = scanner.nextInt();        // Liest nur Zahl, nicht \n
+
+System.out.print("Name: ");
+String name = scanner.nextLine();    // Liest leere Zeile!
+
+// Lösung 1: Puffer leeren
+scanner.nextLine();  // Leere Zeile "wegwerfen"
+name = scanner.nextLine();
+
+// Lösung 2: Immer nextLine() verwenden und konvertieren
+String alterStr = scanner.nextLine();
+int alter2 = Integer.parseInt(alterStr);
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🔄 Vollständiges Eingabe-Beispiel</h3>
+                    
+                    <div class="example-box">
+                        <h5>Praktisches Programm:</h5>
+                        <div class="code-block">
+import java.util.Scanner;
+
+public class Taschenrechner {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        
+        System.out.println("=== Einfacher Taschenrechner ===");
+        
+        // Erste Zahl
+        System.out.print("Erste Zahl: ");
+        double zahl1 = scanner.nextDouble();
+        
+        // Operation
+        System.out.print("Operation (+, -, *, /): ");
+        String operation = scanner.next();
+        
+        // Zweite Zahl
+        System.out.print("Zweite Zahl: ");
+        double zahl2 = scanner.nextDouble();
+        
+        // Berechnung
+        double ergebnis = 0;
+        boolean gueltig = true;
+        
+        switch (operation) {
+            case "+":
+                ergebnis = zahl1 + zahl2;
+                break;
+            case "-":
+                ergebnis = zahl1 - zahl2;
+                break;
+            case "*":
+                ergebnis = zahl1 * zahl2;
+                break;
+            case "/":
+                if (zahl2 != 0) {
+                    ergebnis = zahl1 / zahl2;
+                } else {
+                    System.out.println("FEHLER: Division durch 0!");
+                    gueltig = false;
+                }
+                break;
+            default:
+                System.out.println("FEHLER: Unbekannte Operation!");
+                gueltig = false;
+        }
+        
+        // Ausgabe
+        if (gueltig) {
+            System.out.printf("%.2f %s %.2f = %.2f%n", 
+                            zahl1, operation, zahl2, ergebnis);
+        }
+        
+        scanner.close();
+    }
+}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <h3>📚 Weiterführende Themen</h3>
+            <a href="index.html">🏠 Zurück zur Hauptseite</a>
+            <a href="oop-grundlagen.html">➡️ Objektorientierte Programmierung</a>
+            <a href="klassen-objekte.html">🏗️ Klassen und Objekte</a>
+        </div>
+
+        <!-- Footer -->
+        <footer class="section">
+            <div class="section-content" style="text-align: center;">
+                <h3>🎯 Zusammenfassung: Java-Grundlagen</h3>
+                <p><strong>Du hast gelernt:</strong></p>
+                <ul style="text-align: left; max-width: 600px; margin: 0 auto;">
+                    <li>✅ <strong>Syntax beherrschen:</strong> Klassen, Methoden, Kommentare</li>
+                    <li>✅ <strong>Variablen verwenden:</strong> Datentypen, Konstanten, Namenskonventionen</li>
+                    <li>✅ <strong>Operatoren anwenden:</strong> Arithmetik, Vergleiche, Logik</li>
+                    <li>✅ <strong>Programmfluss steuern:</strong> if-else, switch, Schleifen</li>
+                    <li>✅ <strong>Methoden erstellen:</strong> Parameter, Rückgabewerte, Überladung</li>
+                    <li>✅ <strong>Arrays nutzen:</strong> Ein- und mehrdimensional, Algorithmen</li>
+                    <li>✅ <strong>Ein-/Ausgabe programmieren:</strong> System.out, Scanner</li>
+                </ul>
+                
+                <div class="info-box success" style="margin-top: 2rem;">
+                    <h4>🚀 Nächste Schritte:</h4>
+                    <p>Mit diesen Java-Grundlagen bist du bereit für <strong>objektorientierte Programmierung</strong>! 
+                    Hier lernst du Klassen und Objekte zu erstellen - das Herzstück von Java.</p>
+                </div>
+                
+                <div style="margin-top: 2rem; padding-top: 2rem; border-top: 2px solid var(--border-color);">
+                    <p><small><em>
+                        Lernzettel für das Abitur 2026 - Informationstechnik TG<br>
+                        Basierend auf BPE 3: Grundlagen der Programmentwicklung<br>
+                        Baden-Württemberg Bildungsplan 2019
+                    </em></small></p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Highlight current section in TOC
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.section[id]');
+            const tocLinks = document.querySelectorAll('.toc a[href^="#"]');
+            
+            let currentSection = '';
+            sections.forEach(section => {
+                const rect = section.getBoundingClientRect();
+                if (rect.top <= 100) {
+                    currentSection = section.id;
+                }
+            });
+            
+            tocLinks.forEach(link => {
+                link.style.fontWeight = link.getAttribute('href') === '#' + currentSection ? 'bold' : 'normal';
+                link.style.color = link.getAttribute('href') === '#' + currentSection ? 'var(--primary-color)' : 'var(--text-dark)';
+            });
+        });
+
+        // Code block copy functionality
+        document.addEventListener('DOMContentLoaded', function() {
+            const codeBlocks = document.querySelectorAll('.code-block');
+            
+            codeBlocks.forEach(block => {
+                // Add copy button
+                const button = document.createElement('button');
+                button.textContent = '📋';
+                button.style.position = 'absolute';
+                button.style.top = '10px';
+                button.style.right = '10px';
+                button.style.background = 'var(--primary-color)';
+                button.style.color = 'white';
+                button.style.border = 'none';
+                button.style.borderRadius = '4px';
+                button.style.padding = '5px 8px';
+                button.style.cursor = 'pointer';
+                button.style.fontSize = '12px';
+                button.title = 'Code kopieren';
+                
+                block.style.position = 'relative';
+                block.appendChild(button);
+                
+                button.addEventListener('click', function() {
+                    navigator.clipboard.writeText(block.textContent.replace('📋', '').trim()).then(() => {
+                        button.textContent = '✅';
+                        setTimeout(() => {
+                            button.textContent = '📋';
+                        }, 2000);
+                    });
+                });
+            });
+        });
+
+        // Progress tracking (could be extended for real progress tracking)
+        function updateProgress() {
+            const sections = document.querySelectorAll('.section');
+            const readSections = JSON.parse(localStorage.getItem('readSections') || '[]');
+            
+            // Mark sections as read when user scrolls through them
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting && entry.intersectionRatio > 0.5) {
+                        const sectionId = entry.target.id;
+                        if (sectionId && !readSections.includes(sectionId)) {
+                            readSections.push(sectionId);
+                            localStorage.setItem('readSections', JSON.stringify(readSections));
+                        }
+                    }
+                });
+            }, {
+                threshold: 0.5
+            });
+            
+            sections.forEach(section => {
+                if (section.id) {
+                    observer.observe(section);
+                }
+            });
+        }
+
+        updateProgress();
+
+        // Interactive examples (could be extended)
+        function createInteractiveExample() {
+            const examples = document.querySelectorAll('.example-box');
+            
+            examples.forEach(example => {
+                // Add "Ausprobieren" button to code examples
+                const codeBlock = example.querySelector('.code-block');
+                if (codeBlock && codeBlock.textContent.includes('public static void main')) {
+                    const button = document.createElement('button');
+                    button.textContent = '▶️ Code-Logik durchgehen';
+                    button.style.marginTop = '10px';
+                    button.style.padding = '8px 16px';
+                    button.style.background = 'var(--success-color)';
+                    button.style.color = 'white';
+                    button.style.border = 'none';
+                    button.style.borderRadius = '6px';
+                    button.style.cursor = 'pointer';
+                    
+                    button.addEventListener('click', function() {
+                        alert('In einer vollständigen Lernplattform würde hier eine interaktive Code-Ausführung starten! 🚀');
+                    });
+                    
+                    example.appendChild(button);
+                }
+            });
+        }
+
+        createInteractiveExample();
+    </script>
+</body>
+</html>>Java verstehen:</strong> Compiler, JVM, Entwicklungsumgebung</li>
+                    <li>✅ <strong
+        </header>
+
+        <!-- Inhaltsverzeichnis -->
+        <div class="toc">
+            <h3>📋 Inhaltsverzeichnis</h3>
+            <ul>
+                <li><a href="#was-ist-java">1. Was ist Java?</a></li>
+                <li><a href="#entwicklungsumgebung">2. Entwicklungsumgebung einrichten</a></li>
+                <li><a href="#erstes-programm">3. Erstes Java-Programm</a></li>
+                <li><a href="#syntax-grundlagen">4. Java-Syntax Grundlagen</a></li>
+                <li><a href="#variablen-datentypen">5. Variablen und Datentypen</a></li>
+                <li><a href="#operatoren">6. Operatoren</a></li>
+                <li><a href="#kontrollstrukturen">7. Kontrollstrukturen</a></li>
+                <li><a href="#methoden">8. Methoden</a></li>
+                <li><a href="#arrays">9. Arrays (Felder)</a></li>
+                <li><a href="#ein-ausgabe">10. Ein- und Ausgabe</a></li>
+            </ul>
+        </div>
+
+        <!-- Was ist Java? -->
+        <div class="section" id="was-ist-java">
+            <div class="section-header">
+                <h2>1. Was ist Java?</h2>
+                <p>Grundlagen verstehen: Von der Idee zur Ausführung</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>🤔 Warum Java?</h3>
+                    <p>Java ist eine <span class="highlight">objektorientierte Programmiersprache</span>, die 1995 von Sun Microsystems (jetzt Oracle) entwickelt wurde. Der große Vorteil: <strong>"Write once, run anywhere"</strong> – einmal geschrieben, läuft überall!</p>
+
+                    <div class="info-box success">
+                        <h4>💡 Wichtig zu wissen:</h4>
+                        <p>Java ist eine <strong>höhere Programmiersprache</strong>. Das bedeutet, sie ist menschenlesbar und muss erst in Maschinensprache übersetzt werden, damit der Computer sie versteht.</p>
+                    </div>
+
+                    <h4>🔄 Von Java-Code zur Ausführung</h4>
+                    <div class="example-box">
+                        <h5>Der Java-Entwicklungszyklus:</h5>
+                        <ol class="step-list">
+                            <li><strong>Schreiben:</strong> Du schreibst Java-Code in einer .java-Datei</li>
+                            <li><strong>Kompilieren:</strong> Der <code class="code-inline">javac</code> Compiler übersetzt deinen Code in Bytecode (.class-Datei)</li>
+                            <li><strong>Ausführen:</strong> Die <code class="code-inline">java</code> Virtual Machine (JVM) führt den Bytecode aus</li>
+                        </ol>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🏗️ Java-Versionen und -Editionen</h3>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Edition</th>
+                                <th>Verwendungszweck</th>
+                                <th>Beispiele</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>Java SE</strong><br>(Standard Edition)</td>
+                                <td>Desktop-Programme für PCs</td>
+                                <td>Spiele, Kalkulatoren, normale Anwendungen</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Java EE</strong><br>(Enterprise Edition)</td>
+                                <td>Server-Programmierung für Unternehmen</td>
+                                <td>Webseiten, Online-Shops, Unternehmenssoftware</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Java ME</strong><br>(Micro Edition)</td>
+                                <td>Programme für kleine Geräte</td>
+                                <td>Handys, eingebettete Systeme</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h3>⚙️ JDK vs. JRE - Was ist der Unterschied?</h3>
+                    <div class="info-box">
+                        <h4>🔧 JDK (Java Development Kit)</h4>
+                        <p><strong>Für Entwickler:</strong> Enthält alles zum Programmieren:</p>
+                        <ul>
+                            <li><code class="code-inline">javac</code> - Der Compiler</li>
+                            <li><code class="code-inline">java</code> - Die Ausführungsumgebung</li>
+                            <li>Entwickler-Tools und Bibliotheken</li>
+                        </ul>
+                    </div>
+                    
+                    <div class="info-box warning">
+                        <h4>▶️ JRE (Java Runtime Environment)</h4>
+                        <p><strong>Für Anwender:</strong> Nur zum Ausführen von Java-Programmen:</p>
+                        <ul>
+                            <li>Java Virtual Machine (JVM)</li>
+                            <li>Basis-Bibliotheken</li>
+                            <li>Kein Compiler - kann nicht entwickeln!</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Entwicklungsumgebung -->
+        <div class="section" id="entwicklungsumgebung">
+            <div class="section-header">
+                <h2>2. Entwicklungsumgebung einrichten</h2>
+                <p>Alles bereit machen zum Programmieren</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>💻 Was brauche ich?</h3>
+                    <div class="example-box">
+                        <h5>Minimum-Ausstattung:</h5>
+                        <ol class="step-list">
+                            <li><strong>JDK installieren</strong> - Java Development Kit von Oracle</li>
+                            <li><strong>Text-Editor</strong> - Notepad++, VS Code oder ähnliches</li>
+                            <li><strong>Kommandozeile</strong> - Windows: cmd oder PowerShell</li>
+                        </ol>
+                    </div>
+
+                    <h4>🚀 Professionelle IDEs (Integrierte Entwicklungsumgebungen)</h4>
+                    <ul>
+                        <li><strong>Eclipse:</strong> Kostenlos, weit verbreitet in Schulen</li>
+                        <li><strong>IntelliJ IDEA:</strong> Sehr mächtig, kostenpflichtig/kostenlose Community-Version</li>
+                        <li><strong>NetBeans:</strong> Kostenlos, von Oracle</li>
+                        <li><strong>JCreator:</strong> Einfach zu verwenden, gut für Anfänger</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h3>🛠️ Erste Schritte mit der Kommandozeile</h3>
+                    <div class="info-box">
+                        <h4>Windows-Befehle für Java:</h4>
+                        <div class="code-block">
+# Kommandozeile öffnen: Windows+R → "cmd" eingeben
+# Oder: Windows-Taste → "cmd" tippen
+
+# Java-Version prüfen
+java -version
+
+# Compiler-Version prüfen  
+javac -version
+
+# Java-Datei kompilieren
+javac MeinProgramm.java
+
+# Java-Programm ausführen
+java MeinProgramm
+                        </div>
+                    </div>
+
+                    <div class="info-box warning">
+                        <h4>⚠️ Häufige Probleme:</h4>
+                        <ul>
+                            <li><strong>"java ist kein bekannter Befehl"</strong> → JDK nicht installiert oder PATH nicht gesetzt</li>
+                            <li><strong>"Hauptklasse nicht gefunden"</strong> → Falscher Dateiname oder Pfad</li>
+                            <li><strong>Syntaxfehler</strong> → Code-Fehler, vor Ausführung korrigieren</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Erstes Programm -->
+        <div class="section" id="erstes-programm">
+            <div class="section-header">
+                <h2>3. Erstes Java-Programm</h2>
+                <p>Das klassische "Hello World" verstehen</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>👋 Hello World - Zeile für Zeile erklärt</h3>
+                    
+                    <div class="example-box">
+                        <h5>Vollständiges erstes Programm:</h5>
+                        <div class="code-block">
+public class HelloWorld {
+    public static void main(String[] args) {
+        System.out.println("Hello World!");
+    }
+}
+                        </div>
+                    </div>
+
+                    <h4>🔍 Zeile für Zeile Erklärung:</h4>
+                    
+                    <div class="info-box">
+                        <h4><code class="code-inline">public class HelloWorld {</code></h4>
+                        <ul>
+                            <li><strong>public:</strong> Die Klasse ist von überall aus sichtbar</li>
+                            <li><strong>class:</strong> Definiert eine Klasse (Bauplan für Objekte)</li>
+                            <li><strong>HelloWorld:</strong> Name der Klasse - muss mit Dateiname übereinstimmen!</li>
+                            <li><strong>{:</strong> Öffnet den Klassen-Block</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box">
+                        <h4><code class="code-inline">public static void main(String[] args) {</code></h4>
+                        <ul>
+                            <li><strong>public:</strong> Methode ist von außen aufrufbar</li>
+                            <li><strong>static:</strong> Kann ohne Objekt-Erstellung aufgerufen werden</li>
+                            <li><strong>void:</strong> Gibt nichts zurück</li>
+                            <li><strong>main:</strong> Spezielle Methode - Programm-Startpunkt</li>
+                            <li><strong>(String[] args):</strong> Parameter für Kommandozeilen-Argumente</li>
+                        </ul>
+                    </div>
+
+                    <div class="info-box">
+                        <h4><code class="code-inline">System.out.println("Hello World!");</code></h4>
+                        <ul>
+                            <li><strong>System.out:</strong> Standard-Ausgabe (Konsole)</li>
+                            <li><strong>.println():</strong> Methode zum Ausgeben mit Zeilenwechsel</li>
+                            <li><strong>"Hello World!":</strong> Text in Anführungszeichen (String)</li>
+                            <li><strong>;</strong> Jede Anweisung endet mit Semikolon!</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>📁 Datei erstellen und ausführen</h3>
+                    <div class="example-box">
+                        <h5>Schritt für Schritt:</h5>
+                        <ol class="step-list">
+                            <li>Datei erstellen: <code class="code-inline">HelloWorld.java</code> (Name muss exakt mit Klassenname übereinstimmen!)</li>
+                            <li>Code eintippen und speichern</li>
+                            <li>Kommandozeile öffnen und zu Datei-Ordner navigieren</li>
+                            <li>Kompilieren: <code class="code-inline">javac HelloWorld.java</code></li>
+                            <li>Ausführen: <code class="code-inline">java HelloWorld</code></li>
+                        </ol>
+                    </div>
+
+                    <div class="info-box success">
+                        <h4>✅ Erfolgreich, wenn ausgegeben wird:</h4>
+                        <div class="code-block">Hello World!</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Java-Syntax Grundlagen -->
+        <div class="section" id="syntax-grundlagen">
+            <div class="section-header">
+                <h2>4. Java-Syntax Grundlagen</h2>
+                <p>Die "Grammatik" von Java verstehen</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>📝 Was ist Syntax?</h3>
+                    <p>Syntax ist wie die <span class="highlight">Rechtschreibung und Grammatik</span> in menschlichen Sprachen. Java hat strenge Regeln - ein einziger Fehler und das Programm funktioniert nicht!</p>
+
+                    <h4>🔤 Grundregeln:</h4>
+                    <div class="info-box">
+                        <ul>
+                            <li><strong>Groß-/Kleinschreibung wichtig:</strong> <code class="code-inline">Main</code> ≠ <code class="code-inline">main</code></li>
+                            <li><strong>Jede Anweisung endet mit ;</strong> (Semikolon)</li>
+                            <li><strong>Blöcke mit geschweiften Klammern:</strong> <code class="code-inline">{ }</code></li>
+                            <li><strong>Strings in Anführungszeichen:</strong> <code class="code-inline">"Text"</code></li>
+                            <li><strong>Kommentare werden ignoriert</strong></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>💬 Kommentare - Notizen im Code</h3>
+                    <div class="example-box">
+                        <h5>Verschiedene Kommentar-Arten:</h5>
+                        <div class="code-block">
+// Einzeiliger Kommentar
+// Wird vom Compiler ignoriert
+
+/* 
+   Mehrzeiliger Kommentar
+   Kann mehrere Zeilen umfassen
+   Wird komplett ignoriert
+*/
+
+/**
+ * Dokumentations-Kommentar (JavaDoc)
+ * Wird für automatische Dokumentation verwendet
+ * @author Dein Name
+ */
+public class MeinProgramm {
+    public static void main(String[] args) {
+        System.out.println("Hello!"); // Kommentar am Zeilenende
+    }
+}
+                        </div>
+                    </div>
+
+                    <div class="info-box warning">
+                        <h4>💡 Gute Kommentar-Praxis:</h4>
+                        <ul>
+                            <li><strong>Was macht der Code?</strong> - Bei komplexen Stellen</li>
+                            <li><strong>Warum so gemacht?</strong> - Bei ungewöhnlichen Lösungen</li>
+                            <li><strong>Nicht jeden Code kommentieren</strong> - Code soll selbsterklärend sein</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🔤 Bezeichner und Schlüsselwörter</h3>
+                    
+                    <h4>✅ Gültige Bezeichner (Namen für Variablen, Methoden, Klassen):</h4>
+                    <div class="code-block">
+// Erlaubt:
+int alter;
+String meinName;
+double gehalt2023;
+int _privat;
+String $waehrung;
+
+// Nicht erlaubt:
+int 123zahl;     // Beginnt mit Zahl
+String mein-name; // Bindestrich nicht erlaubt
+double class;     // Schlüsselwort reserviert
+                    </div>
+
+                    <h4>📚 Wichtige Java-Schlüsselwörter:</h4>
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Kategorie</th>
+                                <th>Schlüsselwörter</th>
+                                <th>Bedeutung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Klassen/Objekte</td>
+                                <td><code>class, extends, implements</code></td>
+                                <td>Klassen definieren und erweitern</td>
+                            </tr>
+                            <tr>
+                                <td>Sichtbarkeit</td>
+                                <td><code>public, private, protected</code></td>
+                                <td>Zugriffschutz festlegen</td>
+                            </tr>
+                            <tr>
+                                <td>Datentypen</td>
+                                <td><code>int, double, boolean, char</code></td>
+                                <td>Variablentypen</td>
+                            </tr>
+                            <tr>
+                                <td>Kontrollstrukturen</td>
+                                <td><code>if, else, while, for</code></td>
+                                <td>Programmfluss steuern</td>
+                            </tr>
+                            <tr>
+                                <td>Modifikatoren</td>
+                                <td><code>static, final, abstract</code></td>
+                                <td>Besondere Eigenschaften</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Variablen und Datentypen -->
+        <div class="section" id="variablen-datentypen">
+            <div class="section-header">
+                <h2>5. Variablen und Datentypen</h2>
+                <p>Daten im Speicher verwalten - die Grundlage jedes Programms</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>🗃️ Was sind Variablen?</h3>
+                    <p>Eine Variable ist wie ein <span class="highlight">beschrifteter Container im Arbeitsspeicher</span>, in dem wir Daten aufbewahren können. Jede Variable hat:</p>
+                    <ul>
+                        <li><strong>Einen Namen</strong> (z.B. "alter")</li>
+                        <li><strong>Einen Datentyp</strong> (z.B. "int" für ganze Zahlen)</li>
+                        <li><strong>Einen Wert</strong> (z.B. 18)</li>
+                    </ul>
+
+                    <div class="example-box">
+                        <h5>Variable deklarieren und verwenden:</h5>
+                        <div class="code-block">
+// Variable deklarieren (erstellen)
+int alter;              // Container "alter" für ganze Zahlen erstellt
+
+// Wert zuweisen (speichern)
+alter = 18;            // Zahl 18 in Container "alter" speichern
+
+// Deklaration und Zuweisung in einem Schritt
+String name = "Max";   // Container "name" erstellen und "Max" speichern
+
+// Variable verwenden
+System.out.println("Hallo " + name + ", du bist " + alter + " Jahre alt!");
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🔢 Primitive Datentypen</h3>
+                    <p>Java hat 8 grundlegende Datentypen, die direkt im Speicher abgelegt werden:</p>
+                    
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Datentyp</th>
+                                <th>Verwendung</th>
+                                <th>Speicher</th>
+                                <th>Wertebereich</th>
+                                <th>Beispiel</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>byte</strong></td>
+                                <td>Sehr kleine ganze Zahlen</td>
+                                <td>1 Byte</td>
+                                <td>-128 bis 127</td>
+                                <td><code>byte alter = 25;</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>short</strong></td>
+                                <td>Kleine ganze Zahlen</td>
+                                <td>2 Bytes</td>
+                                <td>-32.768 bis 32.767</td>
+                                <td><code>short jahr = 2024;</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>int</strong></td>
+                                <td>Standard für ganze Zahlen</td>
+                                <td>4 Bytes</td>
+                                <td>-2,1 Mrd bis 2,1 Mrd</td>
+                                <td><code>int punkte = 1500;</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>long</strong></td>
+                                <td>Sehr große ganze Zahlen</td>
+                                <td>8 Bytes</td>
+                                <td>Riesige Zahlen</td>
+                                <td><code>long distanz = 1000000L;</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>float</strong></td>
+                                <td>Kommazahlen (ungenau)</td>
+                                <td>4 Bytes</td>
+                                <td>~7 Nachkommastellen</td>
+                                <td><code>float preis = 19.99f;</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>double</strong></td>
+                                <td>Kommazahlen (genauer)</td>
+                                <td>8 Bytes</td>
+                                <td>~15 Nachkommastellen</td>
+                                <td><code>double pi = 3.14159;</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>boolean</strong></td>
+                                <td>Wahrheitswerte</td>
+                                <td>1 Bit</td>
+                                <td>true oder false</td>
+                                <td><code>boolean istStudent = true;</code></td>
+                            </tr>
+                            <tr>
+                                <td><strong>char</strong></td>
+                                <td>Einzelne Zeichen</td>
+                                <td>2 Bytes</td>
+                                <td>Unicode-Zeichen</td>
+                                <td><code>char note = 'A';</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h3>📝 String - Zeichenketten</h3>
+                    <p><code class="code-inline">String</code> ist KEIN primitiver Datentyp, sondern eine Klasse. Strings speichern Texte:</p>
+                    
+                    <div class="example-box">
+                        <h5>String-Beispiele:</h5>
+                        <div class="code-block">
+// String deklarieren und initialisieren
+String vorname = "Maria";
+String nachname = "Schmidt";
+String leer = "";           // Leerer String
+String mehrzeilig = "Zeile 1\nZeile 2";  // \n = neue Zeile
+
+// Strings verbinden (Konkatenation)
+String vollname = vorname + " " + nachname;  // "Maria Schmidt"
+
+// Zahl an String anhängen
+String meldung = "Du hast " + 100 + " Punkte!";  // "Du hast 100 Punkte!"
+
+// Wichtig: String-Verhalten
+String text1 = "Hallo";
+String text2 = "Hallo";
+// text1 == text2 ist true (gleiche Referenz)
+// text1.equals(text2) ist true (gleicher Inhalt) ← RICHTIGE Art zum Vergleichen!
+                        </div>
+                    </div>
+
+                    <div class="info-box warning">
+                        <h4>⚠️ String-Vergleich Fallstrick:</h4>
+                        <div class="code-block">
+// FALSCH - vergleicht Referenzen, nicht Inhalt:
+if (name == "Max") { ... }
+
+// RICHTIG - vergleicht Inhalt:
+if (name.equals("Max")) { ... }
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🔧 Konstanten mit final</h3>
+                    <p>Konstanten sind Variablen, deren Wert sich nach der Initialisierung nicht mehr ändern kann:</p>
+                    
+                    <div class="example-box">
+                        <h5>Konstanten definieren:</h5>
+                        <div class="code-block">
+// Konstante deklarieren (Konvention: GROSSBUCHSTABEN)
+final double PI = 3.14159;
+final int MAX_PUNKTE = 1000;
+final String PROGRAMM_NAME = "MeinSpiel";
+
+// Fehler - Konstante kann nicht geändert werden:
+// PI = 3.14;  // Compiler-Fehler!
+
+// Mathematische Konstanten aus Math-Klasse verwenden:
+double kreis = 2 * Math.PI * radius;  // Math.PI ist vordefiniert
+double wurzel = Math.sqrt(25);        // Math.sqrt() = Quadratwurzel
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>📏 Namenskonventionen:</h4>
+                        <ul>
+                            <li><strong>Variablen:</strong> <code class="code-inline">meinAlter</code> (camelCase)</li>
+                            <li><strong>Konstanten:</strong> <code class="code-inline">MAX_WERT</code> (SCREAMING_SNAKE_CASE)</li>
+                            <li><strong>Klassen:</strong> <code class="code-inline">MeineKlasse</code> (PascalCase)</li>
+                            <li><strong>Methoden:</strong> <code class="code-inline">berechnePreis()</code> (camelCase)</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Operatoren -->
+        <div class="section" id="operatoren">
+            <div class="section-header">
+                <h2>6. Operatoren</h2>
+                <p>Rechnen und vergleichen - die Werkzeuge für Berechnungen</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>➕ Arithmetische Operatoren</h3>
+                    <p>Für mathematische Berechnungen:</p>
+                    
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Operator</th>
+                                <th>Bedeutung</th>
+                                <th>Beispiel</th>
+                                <th>Ergebnis</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>+</code></td>
+                                <td>Addition</td>
+                                <td><code>5 + 3</code></td>
+                                <td><code>8</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>-</code></td>
+                                <td>Subtraktion</td>
+                                <td><code>10 - 4</code></td>
+                                <td><code>6</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>*</code></td>
+                                <td>Multiplikation</td>
+                                <td><code>7 * 2</code></td>
+                                <td><code>14</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>/</code></td>
+                                <td>Division</td>
+                                <td><code>15 / 3</code></td>
+                                <td><code>5</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>%</code></td>
+                                <td>Modulo (Rest)</td>
+                                <td><code>17 % 5</code></td>
+                                <td><code>2</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+
+                    <div class="info-box warning">
+                        <h4>⚠️ Integer-Division Fallstrick:</h4>
+                        <div class="code-block">
+// Beide Zahlen sind int → Integer-Division
+int a = 8, b = 5;
+int ergebnis = a / b;        // ergebnis = 1 (nicht 1.6!)
+int rest = a % b;           // rest = 3
+
+// Mindestens eine Zahl double → Fließkomma-Division  
+double c = 8.0, d = 5;
+double ergebnis2 = c / d;   // ergebnis2 = 1.6
+
+// Trick: Typumwandlung erzwingen
+double ergebnis3 = (double)a / b;  // ergebnis3 = 1.6
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🔢 Zuweisungsoperatoren</h3>
+                    <p>Verkürzte Schreibweise für häufige Operationen:</p>
+                    
+                    <div class="example-box">
+                        <h5>Verschiedene Zuweisungsarten:</h5>
+                        <div class="code-block">
+int x = 10;
+
+// Normale Zuweisung
+x = x + 5;      // x ist jetzt 15
+
+// Verkürzte Zuweisung (gleiches Ergebnis)
+x += 5;         // x = x + 5, also x ist jetzt 20
+x -= 3;         // x = x - 3, also x ist jetzt 17
+x *= 2;         // x = x * 2, also x ist jetzt 34
+x /= 2;         // x = x / 2, also x ist jetzt 17
+x %= 5;         // x = x % 5, also x ist jetzt 2
+
+// Inkrement und Dekrement
+x++;            // x = x + 1, also x ist jetzt 3
+x--;            // x = x - 1, also x ist jetzt 2
+
+// Unterschied zwischen ++x und x++
+int y = 5;
+int a = ++y;    // Erst erhöhen, dann zuweisen: y=6, a=6
+int b = y++;    // Erst zuweisen, dann erhöhen: y=7, b=6
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🔍 Vergleichsoperatoren</h3>
+                    <p>Zum Vergleichen von Werten - Ergebnis ist immer <code class="code-inline">boolean</code>:</p>
+                    
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Operator</th>
+                                <th>Bedeutung</th>
+                                <th>Beispiel</th>
+                                <th>Ergebnis bei x=5, y=3</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><code>==</code></td>
+                                <td>Gleich</td>
+                                <td><code>x == y</code></td>
+                                <td><code>false</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>!=</code></td>
+                                <td>Ungleich</td>
+                                <td><code>x != y</code></td>
+                                <td><code>true</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>&gt;</code></td>
+                                <td>Größer als</td>
+                                <td><code>x &gt; y</code></td>
+                                <td><code>true</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>&lt;</code></td>
+                                <td>Kleiner als</td>
+                                <td><code>x &lt; y</code></td>
+                                <td><code>false</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>&gt;=</code></td>
+                                <td>Größer oder gleich</td>
+                                <td><code>x &gt;= y</code></td>
+                                <td><code>true</code></td>
+                            </tr>
+                            <tr>
+                                <td><code>&lt;=</code></td>
+                                <td>Kleiner oder gleich</td>
+                                <td><code>x &lt;= y</code></td>
+                                <td><code>false</code></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="subsection">
+                    <h3>🧠 Logische Operatoren</h3>
+                    <p>Für die Verknüpfung von boolean-Werten:</p>
+                    
+                    <div class="example-box">
+                        <h5>Logische Verknüpfungen:</h5>
+                        <div class="code-block">
+boolean istStudent = true;
+boolean hatRabatt = false;
+int alter = 20;
+
+// UND (&&) - beide Bedingungen müssen wahr sein
+boolean kannErmäßigung = istStudent && (alter < 25);  // true
+
+// ODER (||) - mindestens eine Bedingung muss wahr sein  
+boolean bekommtRabatt = istStudent || hatRabatt;      // true
+
+// NICHT (!) - kehrt Wahrheitswert um
+boolean istKeinStudent = !istStudent;                 // false
+
+// Komplexe Bedingung
+if ((alter >= 18 && alter <= 25) || istStudent) {
+    System.out.println("Jugendrabatt möglich!");
+}
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>⚡ Kurzschluss-Auswertung:</h4>
+                        <p>Java wertet logische Operatoren "intelligent" aus:</p>
+                        <div class="code-block">
+// Bei && wird rechte Seite nur geprüft, wenn linke true ist
+if (x != 0 && (10/x) > 2) { ... }  // Verhindert Division durch 0
+
+// Bei || wird rechte Seite nur geprüft, wenn linke false ist  
+if (istAdmin || hatSonderrechte()) { ... }  // Methode wird nur bei Bedarf aufgerufen
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🔄 String-Konkatenation mit +</h3>
+                    <p>Der <code class="code-inline">+</code> Operator ist in Java "überladen" - bei Strings werden sie verknüpft:</p>
+                    
+                    <div class="example-box">
+                        <h5>String-Verknüpfung verstehen:</h5>
+                        <div class="code-block">
+// Punkt-vor-Strich-Regel beachten!
+System.out.println(5 + 8 + "Heaven");     // "13Heaven" (erst rechnen, dann anhängen)
+System.out.println("Heaven" + 5 + 8);     // "Heaven58" (von links nach rechts)
+System.out.println("Heaven" + (5 + 8));   // "Heaven13" (Klammern erzwingen Addition)
+
+// Automatische Typ-Umwandlung
+String nachricht = "Du hast " + 100 + " Punkte!";  // int wird zu String
+String info = "Pi ist ungefähr " + 3.14159;        // double wird zu String
+
+// Verschiedene Datentypen zusammenfügen
+int alter = 18;
+boolean volljährig = true;
+String ausgabe = "Alter: " + alter + ", volljährig: " + volljährig;
+// Ergebnis: "Alter: 18, volljährig: true"
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Kontrollstrukturen -->
+        <div class="section" id="kontrollstrukturen">
+            <div class="section-header">
+                <h2>7. Kontrollstrukturen</h2>
+                <p>Den Programmablauf steuern - Entscheidungen und Wiederholungen</p>
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h3>🤔 if-else Verzweigungen</h3>
+                    <p>Programme müssen Entscheidungen treffen können. Mit <code class="code-inline">if-else</code> können wir verschiedene Wege einschlagen:</p>
+                    
+                    <div class="example-box">
+                        <h5>Einfache if-Anweisung:</h5>
+                        <div class="code-block">
+int alter = 18;
+
+// Einfaches if
+if (alter >= 18) {
+    System.out.println("Du bist volljährig!");
+}
+
+// if-else (entweder-oder)
+if (alter >= 18) {
+    System.out.println("Du darfst wählen!");
+} else {
+    System.out.println("Du bist noch minderjährig.");
+}
+
+// Mehrfach-Verzweigung (if-else-if)
+if (alter < 13) {
+    System.out.println("Kind");
+} else if (alter < 18) {
+    System.out.println("Jugendlicher");
+} else if (alter < 65) {
+    System.out.println("Erwachsener");  
+} else {
+    System.out.println("Senior");
+}
+                        </div>
+                    </div>
+
+                    <div class="info-box">
+                        <h4>💡 Wichtige Regeln:</h4>
+                        <ul>
+                            <li><strong>Bedingung muss boolean sein</strong> (true/false)</li>
+                            <li><strong>Geschweifte Klammern { }</strong> auch bei einer Zeile verwenden (gute Praxis)</li>
+                            <li><strong>else ist optional</strong></li>
+                            <li><strong>Reihenfolge wichtig:</strong> erste wahre Bedingung wird ausgeführt</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🎯 switch-case Anweisung</h3>
+                    <p>Bei vielen Alternativen für einen Wert ist <code class="code-inline">switch</code> übersichtlicher als viele <code class="code-inline">if-else</code>:</p>
+                    
+                    <div class="example-box">
+                        <h5>switch-case Beispiel:</h5>
+                        <div class="code-block">
+int wochentag = 3;
+String tagName;
+
+switch (wochentag) {
+    case 1:
+        tagName = "Montag";
+        break;
+    case 2:
+        tagName = "Dienstag";
+        break;
+    case 3:
+        tagName = "Mittwoch";
+        break;
+    case 4:
+        tagName = "Donnerstag"; 
+        break;
+    case 5:
+        tagName = "Freitag";
+        break;
+    case 6:
+    case 7:  // Mehrere cases für gleiche Aktion
+        tagName = "Wochenende";
+        break;
+    default:  // Falls kein case zutrifft
+        tagName = "Ungültiger Tag";
+        break;
+}
+
+System.out.println("Heute ist " + tagName);  // "Heute ist Mittwoch"
+                        </div>
+                    </div>
+
+                    <div class="info-box warning">
+                        <h4>⚠️ break nicht vergessen!</h4>
+                        <p>Ohne <code class="code-inline">break</code> läuft das Programm in den nächsten case weiter:</p>
+                        <div class="code-block">
+int note = 2;
+switch (note) {
+    case 1:
+        System.out.println("Sehr gut");
+        // break vergessen!
+    case 2:
+        System.out.println("Gut");
+        break;
+}
+// Ausgabe bei note=1: "Sehr gut" UND "Gut" (beide!)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🔄 while-Schleifen</h3>
+                    <p>Schleifen wiederholen Code, solange eine Bedingung wahr ist:</p>
+                    
+                    <div class="example-box">
+                        <h5>while-Schleife (kopfgesteuert):</h5>
+                        <div class="code-block">
+// Kopfgesteuert: Bedingung wird VOR jedem Durchlauf geprüft
+int i = 1;
+while (i <= 5) {
+    System.out.println("Durchlauf " + i);
+    i++;  // WICHTIG: Zähler erhöhen, sonst Endlosschleife!
+}
+// Ausgabe: "Durchlauf 1", "Durchlauf 2", ..., "Durchlauf 5"
+
+// Kann auch 0-mal ausgeführt werden
+int x = 10;
+while (x < 5) {
+    System.out.println("Das wird nie ausgegeben");  // Bedingung ist von Anfang an false
+}
+                        </div>
+                    </div>
+
+                    <div class="example-box">
+                        <h5>do-while-Schleife (fußgesteuert):</h5>
+                        <div class="code-block">
+// Fußgesteuert: Bedingung wird NACH jedem Durchlauf geprüft  
+int j = 1;
+do {
+    System.out.println("Durchlauf " + j);
+    j++;
+} while (j <= 5);
+
+// Wird MINDESTENS 1-mal ausgeführt
+int y = 10;
+do {
+    System.out.println("Das wird einmal ausgegeben");  // Läuft trotzdem einmal
+} while (y < 5);
+                        </div>
+                    </div>
+
+                    <div class="info-box danger">
+                        <h4>🚫 Endlosschleifen vermeiden!</h4>
+                        <div class="code-block">
+// FEHLER: Endlosschleife - i wird nie erhöht
+int i = 1;
+while (i <= 5) {
+    System.out.println("Durchlauf " + i);
+    // i++; vergessen! → Programm läuft ewig
+}
+
+// FEHLER: Falsche Bedingung
+int count = 0;
+while (count != 5) {
+    System.out.println(count);
+    count += 2;  // count wird 0, 2, 4, 6, 8, ... aber nie 5!
+}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>🎯 for-Schleifen</h3>
+                    <p>Die <code class="code-inline">for</code>-Schleife ist perfekt, wenn die Anzahl der Wiederholungen bekannt ist:</p>
+                    
+                    <div class="example-box">
+                        <h5>for-Schleife Aufbau:</h5>
+                        <div class="code-block">
+// for (Initialisierung; Bedingung; Aktualisierung)
+for (int i = 1; i <= 10; i++) {
+    System.out.println("Zahl: " + i);
+}
+
+// Gleichbedeutend mit while:
+int i = 1;           // Initialisierung
+while (i <= 10) {    // Bedingung
+    System.out.println("Zahl: " + i);
+    i++;             // Aktualisierung  
+}
+
+// Rückwärts zählen
+for (int countdown = 10; countdown > 0; countdown--) {
+    System.out.println(countdown);
+}
+System.out.println("Start!");
+
+// Andere Schrittweite
+for (int gerade = 2; gerade <= 20; gerade += 2) {
+    System.out.println("Gerade Zahl: " + gerade);
+}
+                        </div>
+                    </div>
+
+                    <div class="example-box">
+                        <h5>Verschachtelte Schleifen:</h5>
+                        <div class="code-block">
+// Multiplikationstabelle
+for (int zeile = 1; zeile <= 5; zeile++) {
+    for (int spalte = 1; spalte <= 5; spalte++) {
+        System.out.print((zeile * spalte) + "\t");  // \t = Tab
+    }
+    System.out.println();  // Neue Zeile nach jeder Reihe
+}
+                        </div>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h3>⏭️ break und continue</h3>
+                    <p>Spezielle Befehle zum Steuern von Schleifen:</p>
+                    
+                    <div class="example-box">
+                        <h5>break und continue verwenden:</h5>
+                        <div class="code-block">
+// break: Schleife komplett verlassen
+for (int i = 1; i <= 10; i++) {
+    if (i == 5) {
+        break;  // Schleife bei i=5 beenden
+    }
+    System.out.println(i);  // Ausgabe: 1, 2, 3, 4
+}
+
+// continue: Aktuellen Durchlauf überspringen
+for (int i = 1; i <= 10; i++) {
+    if (i % 2 == 0) {  // Gerade Zahlen
+        continue;      // Überspringen, nächste Iteration
+    }
+    System.out.println(i);  // Ausgabe: 1, 3, 5, 7, 9 (nur ungerade)
+}
+
+// Praktisches Beispiel: Zahlen eingeben bis 0
+Scanner scanner = new Scanner(System.in);
+while (true) {  // "Endlos"schleife
+    System.out.print("Zahl eingeben (0 zum Beenden): ");
+    int zahl = scanner.nextInt();
+    
+    if (zahl == 0) {
+        break;  // Schleife verlassen
+    }
+    
+    System.out.println("Du hast eingegeben: " + zahl);
+}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>

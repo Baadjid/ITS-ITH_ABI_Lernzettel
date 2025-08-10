@@ -1,0 +1,1038 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Normalisierung - Datenbanksysteme</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --code-bg: #f1f5f9;
+            --highlight-bg: #fef3c7;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .breadcrumb {
+            background: var(--bg-white);
+            padding: 1rem 1.5rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .header {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            text-align: center;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 0.5rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+        }
+
+        .section {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 2px 4px -1px rgba(0, 0, 0, 0.1);
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .section h3 {
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+            margin-bottom: 1rem;
+            margin-top: 2rem;
+        }
+
+        .section h4 {
+            color: var(--text-dark);
+            font-size: 1.2rem;
+            margin-bottom: 0.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .intro-box {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .intro-box h3 {
+            color: white;
+            margin: 0 0 1rem 0;
+        }
+
+        .concept-box {
+            background: var(--highlight-bg);
+            border-left: 4px solid var(--warning-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .concept-box h4 {
+            color: var(--warning-color);
+            margin-top: 0;
+        }
+
+        .problem-box {
+            background: #fee2e2;
+            border-left: 4px solid var(--danger-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .problem-box h4 {
+            color: var(--danger-color);
+            margin-top: 0;
+        }
+
+        .solution-box {
+            background: #dcfce7;
+            border-left: 4px solid var(--success-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .solution-box h4 {
+            color: var(--success-color);
+            margin-top: 0;
+        }
+
+        .table-container {
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg-white);
+        }
+
+        th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        td {
+            padding: 0.75rem 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .example-table {
+            margin: 1rem 0;
+        }
+
+        .example-table th {
+            background: var(--secondary-color);
+        }
+
+        .highlighted-issue {
+            background: #fecaca !important;
+            font-weight: bold;
+        }
+
+        .normalform-card {
+            background: var(--bg-light);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            position: relative;
+        }
+
+        .normalform-card::before {
+            content: attr(data-form);
+            position: absolute;
+            top: -12px;
+            left: 20px;
+            background: var(--primary-color);
+            color: white;
+            padding: 0.25rem 1rem;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .step-process {
+            display: grid;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+
+        .step {
+            background: var(--bg-light);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            border-radius: 0 8px 8px 0;
+            position: relative;
+        }
+
+        .step::before {
+            content: attr(data-step);
+            position: absolute;
+            left: -20px;
+            top: 50%;
+            transform: translateY(-50%);
+            background: var(--primary-color);
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        .code-block {
+            background: var(--code-bg);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+            font-family: 'Courier New', monospace;
+            overflow-x: auto;
+        }
+
+        .arrow {
+            text-align: center;
+            font-size: 2rem;
+            color: var(--primary-color);
+            margin: 1rem 0;
+        }
+
+        .key-points {
+            background: var(--bg-light);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .key-points ul {
+            padding-left: 1.5rem;
+        }
+
+        .key-points li {
+            margin-bottom: 0.5rem;
+        }
+
+        .visual-example {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 2rem 0;
+            text-align: center;
+        }
+
+        .table-representation {
+            display: inline-block;
+            margin: 1rem;
+            vertical-align: top;
+        }
+
+        .table-title {
+            background: var(--secondary-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 8px 8px 0 0;
+            font-weight: bold;
+        }
+
+        .foreign-key {
+            color: var(--danger-color);
+            font-weight: bold;
+        }
+
+        .primary-key {
+            color: var(--primary-color);
+            font-weight: bold;
+            text-decoration: underline;
+        }
+
+        .quiz-box {
+            background: #e0e7ff;
+            border: 2px solid var(--primary-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            margin: 2rem 0;
+        }
+
+        .quiz-box h4 {
+            color: var(--primary-color);
+            margin-top: 0;
+        }
+
+        .btn-check {
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            cursor: pointer;
+            margin-top: 1rem;
+        }
+
+        .btn-check:hover {
+            background: var(--secondary-color);
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+                flex-direction: column;
+            }
+            
+            .section {
+                padding: 1.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <nav class="breadcrumb">
+            <a href="index.html">🏠 Hauptseite</a> > 
+            <a href="datenbank-grundlagen.html">🗄️ Datenbanksysteme</a> > 
+            <strong>Normalisierung</strong>
+        </nav>
+
+        <header class="header">
+            <h1>🔧 Normalisierung</h1>
+            <p>Strukturierung relationaler Datenbanken zur Vermeidung von Redundanzen und Anomalien</p>
+        </header>
+
+        <div class="intro-box">
+            <h3>🎯 Was lernst du hier?</h3>
+            <p>Die Normalisierung ist ein fundamentaler Prozess beim Entwurf von Datenbanken. Du lernst, warum schlecht strukturierte Datenbanken Probleme verursachen und wie du diese durch systematische Normalisierung lösen kannst. Am Ende verstehst du die drei wichtigsten Normalformen und kannst sie praktisch anwenden.</p>
+        </div>
+
+        <section class="section">
+            <h2>🤔 Warum Normalisierung?</h2>
+            
+            <p>Stell dir vor, du verwaltest eine Bibliothek und speicherst alle Informationen in einer einzigen großen Tabelle:</p>
+
+            <div class="table-container">
+                <table class="example-table">
+                    <thead>
+                        <tr>
+                            <th>Buch-ID</th>
+                            <th>Buchtitel</th>
+                            <th>Autor</th>
+                            <th>Autor-Geburtsjahr</th>
+                            <th>Verlag</th>
+                            <th>Verlag-Adresse</th>
+                            <th>Ausleih-Datum</th>
+                            <th>Kunde-Name</th>
+                            <th>Kunde-Adresse</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Java Grundlagen</td>
+                            <td>Max Mustermann</td>
+                            <td>1970</td>
+                            <td>IT-Verlag</td>
+                            <td class="highlighted-issue">Musterstraße 1, 12345 Berlin</td>
+                            <td>2024-01-15</td>
+                            <td>Anna Schmidt</td>
+                            <td>Hauptstraße 5, 54321 München</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Python für Anfänger</td>
+                            <td>Max Mustermann</td>
+                            <td class="highlighted-issue">1970</td>
+                            <td>IT-Verlag</td>
+                            <td class="highlighted-issue">Musterstraße 1, 12345 Berlin</td>
+                            <td>2024-02-10</td>
+                            <td>Tom Weber</td>
+                            <td>Nebenstraße 8, 67890 Hamburg</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Datenbanken verstehen</td>
+                            <td>Lisa Meyer</td>
+                            <td>1985</td>
+                            <td>IT-Verlag</td>
+                            <td class="highlighted-issue">Musterstraße 1, 12345 Berlin</td>
+                            <td>2024-02-20</td>
+                            <td>Anna Schmidt</td>
+                            <td class="highlighted-issue">Hauptstraße 5, 54321 München</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="problem-box">
+                <h4>🚨 Siehst du die Probleme?</h4>
+                <ul>
+                    <li><strong>Redundanz:</strong> Die Verlag-Adresse wird dreimal gespeichert</li>
+                    <li><strong>Speicherverschwendung:</strong> Gleiche Daten werden mehrfach gespeichert</li>
+                    <li><strong>Update-Anomalie:</strong> Wenn der Verlag umzieht, müssen alle Zeilen geändert werden</li>
+                    <li><strong>Inkonsistenz:</strong> Vergisst man eine Zeile zu ändern, entstehen Widersprüche</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>📚 Grundbegriffe</h2>
+
+            <div class="concept-box">
+                <h4>🔑 Redundanz</h4>
+                <p><strong>Definition:</strong> Mehrfache Speicherung derselben Daten</p>
+                <p><strong>Beispiel:</strong> Die Adresse "Musterstraße 1, 12345 Berlin" steht in unserer Tabelle dreimal</p>
+                <p><strong>Problem:</strong> Verbraucht unnötig Speicher und erschwert die Datenpflege</p>
+            </div>
+
+            <div class="concept-box">
+                <h4>⚠️ Anomalien</h4>
+                <p>Probleme und Fehler, die durch schlecht strukturierte Datenbanken entstehen:</p>
+                <ul>
+                    <li><strong>Einfügeanomalie:</strong> Man kann keine Verlage ohne Bücher speichern</li>
+                    <li><strong>Änderungsanomalie:</strong> Bei Adressänderung müssen alle Zeilen geändert werden</li>
+                    <li><strong>Löschanomalie:</strong> Löscht man das letzte Buch eines Verlags, verliert man die Verlag-Daten</li>
+                </ul>
+            </div>
+
+            <div class="concept-box">
+                <h4>🔄 Inkonsistenzen</h4>
+                <p><strong>Definition:</strong> Widersprüche in der Datenbank</p>
+                <p><strong>Beispiel:</strong> Derselbe Verlag hat in verschiedenen Zeilen unterschiedliche Adressen</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>🎯 Was ist Normalisierung?</h2>
+            
+            <div class="solution-box">
+                <h4>✅ Die Lösung: Normalisierung</h4>
+                <p><strong>Normalisierung</strong> ist der systematische Prozess der Strukturierung einer relationalen Datenbank, um:</p>
+                <ul>
+                    <li>🗑️ <strong>Redundanzen zu reduzieren</strong> (weniger doppelte Daten)</li>
+                    <li>🛡️ <strong>Datenintegrität zu verbessern</strong> (weniger Fehler)</li>
+                    <li>⚡ <strong>Anomalien zu vermeiden</strong> (sicherere Operationen)</li>
+                    <li>📊 <strong>Effizienz zu steigern</strong> (bessere Performance)</li>
+                </ul>
+            </div>
+
+            <p>Die Normalisierung erfolgt stufenweise durch verschiedene <strong>Normalformen</strong>. Jede Normalform baut auf der vorherigen auf und eliminiert bestimmte Arten von Problemen.</p>
+        </section>
+
+        <section class="section">
+            <h2>🏗️ Die Drei Normalformen</h2>
+
+            <div class="normalform-card" data-form="1NF">
+                <h3>🥇 Erste Normalform (1NF)</h3>
+                <p><strong>Regel:</strong> Alle Attribute müssen <strong>atomar</strong> (unteilbar) sein.</p>
+                
+                <h4>❌ Nicht in 1NF:</h4>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Kunde-ID</th>
+                                <th>Name</th>
+                                <th>Telefonnummern</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Anna Schmidt</td>
+                                <td class="highlighted-issue">0123-456789, 0987-654321</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <p><strong>Problem:</strong> Das Attribut "Telefonnummern" enthält mehrere Werte in einer Zelle!</p>
+
+                <div class="arrow">⬇️</div>
+
+                <h4>✅ In 1NF:</h4>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Kunde-ID</th>
+                                <th>Name</th>
+                                <th>Telefon1</th>
+                                <th>Telefon2</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Anna Schmidt</td>
+                                <td>0123-456789</td>
+                                <td>0987-654321</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="key-points">
+                    <h4>🎯 Merksatz für 1NF:</h4>
+                    <p><strong>"Ein Attribut = Ein Wert"</strong></p>
+                    <p>Jede Zelle darf nur einen atomaren (unteilbaren) Wert enthalten.</p>
+                </div>
+            </div>
+
+            <div class="normalform-card" data-form="2NF">
+                <h3>🥈 Zweite Normalform (2NF)</h3>
+                <p><strong>Regel:</strong> 1NF erfüllt + alle Nichtschlüsselattribute sind <strong>voll funktional abhängig</strong> vom Primärschlüssel.</p>
+
+                <div class="concept-box">
+                    <h4>🔍 Was bedeutet "voll funktional abhängig"?</h4>
+                    <p>Ein Attribut ist voll funktional abhängig, wenn es vom <strong>gesamten</strong> Primärschlüssel abhängt, nicht nur von einem Teil davon.</p>
+                </div>
+
+                <h4>❌ Nicht in 2NF:</h4>
+                <div class="code-block">
+Bestellungen(<span class="primary-key">BestellNr</span>, <span class="primary-key">ArtikelNr</span>, Menge, ArtikelName, Preis)
+</div>
+                <p><strong>Problem:</strong> "ArtikelName" und "Preis" hängen nur von "ArtikelNr" ab, nicht von der kompletten Bestellung!</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>BestellNr</th>
+                                <th>ArtikelNr</th>
+                                <th>Menge</th>
+                                <th>ArtikelName</th>
+                                <th>Preis</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1001</td>
+                                <td>A001</td>
+                                <td>2</td>
+                                <td class="highlighted-issue">Laptop</td>
+                                <td class="highlighted-issue">800€</td>
+                            </tr>
+                            <tr>
+                                <td>1002</td>
+                                <td>A001</td>
+                                <td>1</td>
+                                <td class="highlighted-issue">Laptop</td>
+                                <td class="highlighted-issue">800€</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="arrow">⬇️</div>
+
+                <h4>✅ In 2NF:</h4>
+                <div class="visual-example">
+                    <div class="table-representation">
+                        <div class="table-title">Bestellungen</div>
+                        <div class="code-block">
+(<span class="primary-key">BestellNr</span>, <span class="primary-key">ArtikelNr</span>, Menge)
+                        </div>
+                    </div>
+                    <div class="table-representation">
+                        <div class="table-title">Artikel</div>
+                        <div class="code-block">
+(<span class="primary-key">ArtikelNr</span>, ArtikelName, Preis)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="key-points">
+                    <h4>🎯 Merksatz für 2NF:</h4>
+                    <p><strong>"Alles hängt vom ganzen Schlüssel ab"</strong></p>
+                    <p>Jedes Nichtschlüsselattribut muss vom kompletten Primärschlüssel abhängen.</p>
+                </div>
+            </div>
+
+            <div class="normalform-card" data-form="3NF">
+                <h3>🥉 Dritte Normalform (3NF)</h3>
+                <p><strong>Regel:</strong> 2NF erfüllt + keine <strong>transitiven Abhängigkeiten</strong> von Nichtschlüsselattributen.</p>
+
+                <div class="concept-box">
+                    <h4>🔍 Was sind "transitive Abhängigkeiten"?</h4>
+                    <p>Ein Nichtschlüsselattribut hängt von einem anderen Nichtschlüsselattribut ab.</p>
+                    <p><strong>Beispiel:</strong> Primärschlüssel → PLZ → Stadt</p>
+                </div>
+
+                <h4>❌ Nicht in 3NF:</h4>
+                <div class="code-block">
+Mitarbeiter(<span class="primary-key">MitarbeiterNr</span>, Name, PLZ, Stadt, Abteilung)
+</div>
+                <p><strong>Problem:</strong> "Stadt" hängt von "PLZ" ab, nicht direkt von "MitarbeiterNr"!</p>
+
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>MitarbeiterNr</th>
+                                <th>Name</th>
+                                <th>PLZ</th>
+                                <th>Stadt</th>
+                                <th>Abteilung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>001</td>
+                                <td>Max Müller</td>
+                                <td>12345</td>
+                                <td class="highlighted-issue">Berlin</td>
+                                <td>IT</td>
+                            </tr>
+                            <tr>
+                                <td>002</td>
+                                <td>Anna Weber</td>
+                                <td>12345</td>
+                                <td class="highlighted-issue">Berlin</td>
+                                <td>Marketing</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="arrow">⬇️</div>
+
+                <h4>✅ In 3NF:</h4>
+                <div class="visual-example">
+                    <div class="table-representation">
+                        <div class="table-title">Mitarbeiter</div>
+                        <div class="code-block">
+(<span class="primary-key">MitarbeiterNr</span>, Name, <span class="foreign-key">PLZ</span>, Abteilung)
+                        </div>
+                    </div>
+                    <div class="table-representation">
+                        <div class="table-title">Orte</div>
+                        <div class="code-block">
+(<span class="primary-key">PLZ</span>, Stadt)
+                        </div>
+                    </div>
+                </div>
+
+                <div class="key-points">
+                    <h4>🎯 Merksatz für 3NF:</h4>
+                    <p><strong>"Keine Abhängigkeiten zwischen Nichtschlüsseln"</strong></p>
+                    <p>Nichtschlüsselattribute dürfen nur vom Primärschlüssel abhängen, nicht voneinander.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>🔄 Praktisches Beispiel: Schritt für Schritt</h2>
+            
+            <p>Lass uns gemeinsam eine Tabelle normalisieren. Gegeben ist folgende Spieler-Tabelle:</p>
+
+            <div class="table-container">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>TrikotNr</th>
+                            <th>Name</th>
+                            <th>Adresse</th>
+                            <th>Ort</th>
+                            <th>PLZ</th>
+                            <th>Mannschaft</th>
+                            <th>Trainer</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>7</td>
+                            <td>Max Mustermann</td>
+                            <td>Musterstraße 1, 12345 Berlin</td>
+                            <td>Berlin</td>
+                            <td>12345</td>
+                            <td>FC Beispiel</td>
+                            <td>Hans Trainer</td>
+                        </tr>
+                        <tr>
+                            <td>10</td>
+                            <td>Anna Schmidt</td>
+                            <td>Hauptstraße 5, 54321 München</td>
+                            <td>München</td>
+                            <td>54321</td>
+                            <td>FC Beispiel</td>
+                            <td>Hans Trainer</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="step-process">
+                <div class="step" data-step="1">
+                    <h4>1NF: Atomare Werte</h4>
+                    <p><strong>Problem:</strong> "Adresse" enthält mehrere Informationen (Straße, Hausnummer, PLZ, Ort)</p>
+                    <p><strong>Lösung:</strong> Aufteilen in einzelne Attribute</p>
+                    <div class="code-block">
+Spieler(<span class="primary-key">TrikotNr</span>, Vorname, Nachname, Straße, HausNr, PLZ, Ort, Mannschaft, Trainer)
+                    </div>
+                </div>
+
+                <div class="step" data-step="2">
+                    <h4>2NF: Keine partiellen Abhängigkeiten</h4>
+                    <p><strong>Problem:</strong> Da wir nur einen einfachen Primärschlüssel haben (TrikotNr), sind alle Attribute voll funktional abhängig. Die Tabelle ist bereits in 2NF.</p>
+                    <p><strong>Ergebnis:</strong> Keine Änderung nötig</p>
+                </div>
+
+                <div class="step" data-step="3">
+                    <h4>3NF: Keine transitiven Abhängigkeiten</h4>
+                    <p><strong>Problem erkannt:</strong></p>
+                    <ul>
+                        <li>TrikotNr → Mannschaft → Trainer (transitiv!)</li>
+                        <li>TrikotNr → PLZ → Ort (transitiv!)</li>
+                    </ul>
+                    <p><strong>Lösung:</strong> Aufteilen in drei Tabellen</p>
+                </div>
+            </div>
+
+            <div class="visual-example">
+                <h3>✅ Endergebnis in 3NF:</h3>
+                
+                <div class="table-representation">
+                    <div class="table-title">Spieler</div>
+                    <div class="code-block">
+(<span class="primary-key">TrikotNr</span>, Vorname, Nachname, Straße, HausNr, <span class="foreign-key">PLZ</span>, <span class="foreign-key">Mannschaft</span>)
+                    </div>
+                </div>
+
+                <div class="table-representation">
+                    <div class="table-title">Mannschaften</div>
+                    <div class="code-block">
+(<span class="primary-key">Mannschaft</span>, Trainer)
+                    </div>
+                </div>
+
+                <div class="table-representation">
+                    <div class="table-title">Orte</div>
+                    <div class="code-block">
+(<span class="primary-key">PLZ</span>, Ort)
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>🎯 Vorteile der Normalisierung</h2>
+            
+            <div class="solution-box">
+                <h4>✅ Was haben wir erreicht?</h4>
+                <ul>
+                    <li><strong>🗑️ Keine Redundanz:</strong> Jede Information wird nur einmal gespeichert</li>
+                    <li><strong>⚡ Effizienz:</strong> Weniger Speicherverbrauch und schnellere Updates</li>
+                    <li><strong>🛡️ Konsistenz:</strong> Keine widersprüchlichen Daten</li>
+                    <li><strong>🔄 Einfache Wartung:</strong> Änderungen nur an einer Stelle</li>
+                    <li><strong>🚫 Keine Anomalien:</strong> Sichere Einfüge-, Änderungs- und Löschoperationen</li>
+                </ul>
+            </div>
+
+            <h3>Konkrete Beispiele der Verbesserungen:</h3>
+            
+            <div class="key-points">
+                <h4>🔄 Änderungsanomalie gelöst:</h4>
+                <p><strong>Vorher:</strong> Trainer-Wechsel = Änderung in allen Spieler-Datensätzen</p>
+                <p><strong>Nachher:</strong> Trainer-Wechsel = Änderung nur in der Mannschafts-Tabelle</p>
+            </div>
+
+            <div class="key-points">
+                <h4>📥 Einfügeanomalie gelöst:</h4>
+                <p><strong>Vorher:</strong> Neue Mannschaft nur mit Spieler speicherbar</p>
+                <p><strong>Nachher:</strong> Neue Mannschaft kann eigenständig gespeichert werden</p>
+            </div>
+
+            <div class="key-points">
+                <h4>🗑️ Löschanomalie gelöst:</h4>
+                <p><strong>Vorher:</strong> Letzter Spieler gelöscht = Mannschafts-Info verloren</p>
+                <p><strong>Nachher:</strong> Mannschafts-Info bleibt auch ohne Spieler erhalten</p>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>📝 Normalisierung in 5 Schritten</h2>
+            
+            <div class="step-process">
+                <div class="step" data-step="1">
+                    <h4>Analyse der ursprünglichen Tabelle</h4>
+                    <p>Identifiziere alle Attribute und ihre Beziehungen zueinander. Bestimme den Primärschlüssel.</p>
+                </div>
+
+                <div class="step" data-step="2">
+                    <h4>1NF: Atomare Werte schaffen</h4>
+                    <p>Teile alle zusammengesetzten Attribute auf. Jede Zelle darf nur einen Wert enthalten.</p>
+                </div>
+
+                <div class="step" data-step="3">
+                    <h4>2NF: Partielle Abhängigkeiten eliminieren</h4>
+                    <p>Bei zusammengesetzten Primärschlüsseln: Attribute, die nur von einem Teil des Schlüssels abhängen, in separate Tabellen auslagern.</p>
+                </div>
+
+                <div class="step" data-step="4">
+                    <h4>3NF: Transitive Abhängigkeiten eliminieren</h4>
+                    <p>Nichtschlüsselattribute, die von anderen Nichtschlüsselattributen abhängen, in separate Tabellen auslagern.</p>
+                </div>
+
+                <div class="step" data-step="5">
+                    <h4>Beziehungen mit Fremdschlüsseln herstellen</h4>
+                    <p>Verbinde die getrennten Tabellen durch Fremdschlüssel, um die ursprünglichen Beziehungen zu erhalten.</p>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>🧠 Übung: Teste dein Wissen!</h2>
+            
+            <div class="quiz-box">
+                <h4>🎯 Übungsaufgabe</h4>
+                <p>Gegeben ist folgende Tabelle einer Autovermietung:</p>
+                <div class="table-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>MietNr</th>
+                                <th>KundenNr</th>
+                                <th>KundenName</th>
+                                <th>KundenAdresse</th>
+                                <th>AutoKennzeichen</th>
+                                <th>AutoMarke</th>
+                                <th>AutoModell</th>
+                                <th>MietDatum</th>
+                                <th>TagesPreis</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>M001</td>
+                                <td>K123</td>
+                                <td>Max Müller</td>
+                                <td>Hauptstr. 1, 12345 Berlin</td>
+                                <td>B-AB 123</td>
+                                <td>BMW</td>
+                                <td>3er</td>
+                                <td>2024-01-15</td>
+                                <td>50€</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                
+                <p><strong>Frage:</strong> Identifiziere die Probleme und normalisiere bis zur 3NF!</p>
+                
+                <button class="btn-check" onclick="toggleAnswer()">💡 Lösung anzeigen</button>
+                
+                <div id="answer" style="display: none; margin-top: 1rem; padding: 1rem; background: #dcfce7; border-radius: 8px;">
+                    <h4>✅ Lösung:</h4>
+                    
+                    <p><strong>Probleme identifiziert:</strong></p>
+                    <ul>
+                        <li>Redundanz: KundenName und KundenAdresse bei jeder Miete</li>
+                        <li>Transitive Abhängigkeit: MietNr → AutoKennzeichen → AutoMarke/AutoModell</li>
+                        <li>Transitive Abhängigkeit: MietNr → KundenNr → KundenName/KundenAdresse</li>
+                    </ul>
+                    
+                    <p><strong>3NF-Lösung:</strong></p>
+                    
+                    <div class="code-block">
+<strong>Mieten</strong>(<span class="primary-key">MietNr</span>, <span class="foreign-key">KundenNr</span>, <span class="foreign-key">AutoKennzeichen</span>, MietDatum, TagesPreis)
+
+<strong>Kunden</strong>(<span class="primary-key">KundenNr</span>, KundenName, KundenAdresse)
+
+<strong>Autos</strong>(<span class="primary-key">AutoKennzeichen</span>, AutoMarke, AutoModell)
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>🎯 Abitur-Tipps</h2>
+            
+            <div class="concept-box">
+                <h4>📋 Häufige Prüfungsaufgaben</h4>
+                <ul>
+                    <li>Normalisierungsprobleme in gegebenen Tabellen identifizieren</li>
+                    <li>Schrittweise Normalisierung von 1NF bis 3NF</li>
+                    <li>Anomalien in nicht-normalisierten Tabellen erklären</li>
+                    <li>Vor- und Nachteile der Normalisierung benennen</li>
+                    <li>Fremdschlüssel-Beziehungen in normalisierten Tabellen einzeichnen</li>
+                </ul>
+            </div>
+
+            <div class="solution-box">
+                <h4>💡 Strategien für die Prüfung</h4>
+                <ul>
+                    <li><strong>Systematisch vorgehen:</strong> Immer der Reihe nach (1NF → 2NF → 3NF)</li>
+                    <li><strong>Abhängigkeiten aufzeichnen:</strong> Visualisiere die funktionalen Abhängigkeiten</li>
+                    <li><strong>Primärschlüssel zuerst:</strong> Identifiziere eindeutige Schlüssel</li>
+                    <li><strong>Probleme benennen:</strong> Erkläre konkret, welche Anomalien auftreten würden</li>
+                    <li><strong>Fremdschlüssel nicht vergessen:</strong> Verbindungen zwischen Tabellen darstellen</li>
+                </ul>
+            </div>
+
+            <div class="problem-box">
+                <h4>⚠️ Häufige Fehler vermeiden</h4>
+                <ul>
+                    <li><strong>Normalform-Reihenfolge:</strong> Nicht von 1NF direkt zur 3NF springen</li>
+                    <li><strong>Schlüssel falsch bestimmen:</strong> Primärschlüssel muss eindeutig sein</li>
+                    <li><strong>Transitive Abhängigkeiten übersehen:</strong> Auf "Umwege" bei Abhängigkeiten achten</li>
+                    <li><strong>Fremdschlüssel vergessen:</strong> Beziehungen müssen erhalten bleiben</li>
+                </ul>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2>📖 Zusammenfassung</h2>
+            
+            <div class="key-points">
+                <h3>🔑 Die wichtigsten Punkte:</h3>
+                <ul>
+                    <li><strong>Normalisierung</strong> eliminiert Redundanzen und Anomalien in Datenbanken</li>
+                    <li><strong>1NF:</strong> Alle Attribute sind atomar (unteilbar)</li>
+                    <li><strong>2NF:</strong> 1NF + keine partiellen Abhängigkeiten vom Primärschlüssel</li>
+                    <li><strong>3NF:</strong> 2NF + keine transitiven Abhängigkeiten zwischen Nichtschlüsselattributen</li>
+                    <li><strong>Ziel:</strong> Effiziente, konsistente und wartbare Datenbank-Struktur</li>
+                </ul>
+            </div>
+
+            <div class="concept-box">
+                <h4>🧠 Merkhilfen</h4>
+                <ul>
+                    <li><strong>1NF:</strong> "Ein Feld = Ein Wert"</li>
+                    <li><strong>2NF:</strong> "Alles hängt vom ganzen Schlüssel ab"</li>
+                    <li><strong>3NF:</strong> "Keine Abhängigkeiten zwischen Nichtschlüsseln"</li>
+                </ul>
+            </div>
+        </section>
+
+        <footer style="text-align: center; margin-top: 3rem; padding: 2rem; background: var(--bg-white); border-radius: 16px; border: 1px solid var(--border-color);">
+            <p><strong>📚 Nächste Themen:</strong></p>
+            <p>
+                <a href="sql.html" style="color: var(--primary-color); text-decoration: none; margin: 0 1rem;">→ SQL-Abfragen</a>
+                <a href="er-modell.html" style="color: var(--primary-color); text-decoration: none; margin: 0 1rem;">→ ER-Modellierung</a>
+                <a href="datenbankentwicklung.html" style="color: var(--primary-color); text-decoration: none; margin: 0 1rem;">→ Datenbankentwicklung</a>
+            </p>
+        </footer>
+    </div>
+
+    <script>
+        function toggleAnswer() {
+            const answer = document.getElementById('answer');
+            const button = document.querySelector('.btn-check');
+            
+            if (answer.style.display === 'none') {
+                answer.style.display = 'block';
+                button.textContent = '🙈 Lösung verbergen';
+                button.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            } else {
+                answer.style.display = 'none';
+                button.textContent = '💡 Lösung anzeigen';
+            }
+        }
+
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Highlight navigation
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.section');
+            const scrollPos = window.scrollY + 100;
+            
+            sections.forEach(section => {
+                if (section.offsetTop <= scrollPos && section.offsetTop + section.offsetHeight > scrollPos) {
+                    // Could add active navigation highlighting here
+                }
+            });
+        });
+    </script>
+</body>
+</html>

@@ -1,0 +1,1181 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Datenschutz & Sicherheit - Informatik TG</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #0ea5e9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.7;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+            margin-bottom: 2rem;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+        }
+
+        .header p {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            background: var(--bg-white);
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .breadcrumb a {
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            text-decoration: underline;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr 300px;
+            gap: 2rem;
+        }
+
+        .main-content {
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            border: 1px solid var(--border-color);
+        }
+
+        .sidebar {
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+        }
+
+        .toc {
+            background: var(--bg-white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            position: sticky;
+            top: 20px;
+        }
+
+        .toc h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+        }
+
+        .toc ul {
+            list-style: none;
+        }
+
+        .toc li {
+            margin-bottom: 0.5rem;
+        }
+
+        .toc a {
+            color: var(--text-dark);
+            text-decoration: none;
+            font-size: 0.9rem;
+            display: block;
+            padding: 0.3rem 0.5rem;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+
+        .toc a:hover {
+            background: var(--bg-light);
+            color: var(--primary-color);
+        }
+
+        .section {
+            margin-bottom: 3rem;
+        }
+
+        .section h2 {
+            color: var(--primary-color);
+            font-size: 1.8rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--border-color);
+        }
+
+        .section h3 {
+            color: var(--secondary-color);
+            font-size: 1.4rem;
+            margin-bottom: 0.8rem;
+            margin-top: 1.5rem;
+        }
+
+        .section h4 {
+            color: var(--text-dark);
+            font-size: 1.1rem;
+            margin-bottom: 0.5rem;
+            margin-top: 1rem;
+        }
+
+        .intro-box {
+            background: linear-gradient(135deg, var(--info-color), #0284c7);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .intro-box h3 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .definition-box {
+            background: var(--bg-light);
+            border-left: 4px solid var(--primary-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .definition-box .term {
+            font-weight: bold;
+            color: var(--primary-color);
+            font-size: 1.1rem;
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .example-box {
+            background: #fef3c7;
+            border: 1px solid #fbbf24;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .example-box .title {
+            font-weight: bold;
+            color: #92400e;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .warning-box {
+            background: #fee2e2;
+            border: 1px solid #f87171;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .warning-box .title {
+            font-weight: bold;
+            color: #dc2626;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .success-box {
+            background: #dcfce7;
+            border: 1px solid #4ade80;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .success-box .title {
+            font-weight: bold;
+            color: #166534;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+        }
+
+        .comparison-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .process-steps {
+            display: grid;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .step {
+            display: flex;
+            align-items: flex-start;
+            gap: 1rem;
+            background: var(--bg-white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+        }
+
+        .step-number {
+            background: var(--primary-color);
+            color: white;
+            width: 2rem;
+            height: 2rem;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            flex-shrink: 0;
+        }
+
+        .step-content h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .law-box {
+            background: linear-gradient(135deg, #1e293b, #334155);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 8px;
+            margin: 1.5rem 0;
+        }
+
+        .law-box .title {
+            color: #fbbf24;
+            font-weight: bold;
+            margin-bottom: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .rights-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .right-item {
+            background: var(--bg-white);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 1px solid var(--border-color);
+            border-left: 4px solid var(--success-color);
+        }
+
+        .right-item h4 {
+            color: var(--success-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .crypto-visual {
+            background: var(--bg-light);
+            padding: 2rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            text-align: center;
+        }
+
+        .crypto-flow {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            flex-wrap: wrap;
+            margin: 1rem 0;
+        }
+
+        .crypto-box {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            min-width: 120px;
+            text-align: center;
+        }
+
+        .crypto-arrow {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .key-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 1rem 0;
+            flex-wrap: wrap;
+        }
+
+        .key-box {
+            background: var(--warning-color);
+            color: white;
+            padding: 0.8rem 1.2rem;
+            border-radius: 20px;
+            font-weight: bold;
+        }
+
+        .public-key {
+            background: var(--success-color);
+        }
+
+        .private-key {
+            background: var(--danger-color);
+        }
+
+        .attack-scenarios {
+            display: grid;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .attack-item {
+            background: #fef2f2;
+            border: 1px solid #fca5a5;
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .attack-item h4 {
+            color: var(--danger-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .navigation {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 3rem;
+            padding-top: 2rem;
+            border-top: 1px solid var(--border-color);
+        }
+
+        .nav-button {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.5rem;
+            padding: 0.8rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+            transform: translateY(-2px);
+        }
+
+        .nav-button.disabled {
+            background: var(--text-light);
+            cursor: not-allowed;
+            transform: none;
+        }
+
+        @media (max-width: 768px) {
+            .content-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .sidebar {
+                order: -1;
+            }
+            
+            .toc {
+                position: static;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+                flex-direction: column;
+            }
+            
+            .comparison-table {
+                font-size: 0.9rem;
+            }
+            
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.5rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="breadcrumb">
+            🏠 <a href="index.html">Abitur 2026 Informatik TG</a> → 
+            <a href="#">Vernetzte Systeme & Internet</a> → 
+            <strong>Datenschutz & Sicherheit</strong>
+        </div>
+
+        <header class="header">
+            <h1>🔐 Datenschutz & Sicherheit</h1>
+            <p>Schutz von Daten und Kommunikation in vernetzten Systemen</p>
+        </header>
+
+        <div class="content-grid">
+            <main class="main-content">
+                <div class="intro-box">
+                    <h3>🎯 Was lernst du hier?</h3>
+                    <p>In diesem Kapitel verstehst du, wie wichtig der Schutz von Daten ist und welche Technologien dafür verwendet werden. Du lernst die rechtlichen Grundlagen des Datenschutzes, verschiedene Verschlüsselungsverfahren und wie du dich vor Cyberangriffen schützen kannst.</p>
+                </div>
+
+                <section class="section" id="grundlagen-datenschutz">
+                    <h2>1. Grundlagen des Datenschutzes</h2>
+                    
+                    <div class="definition-box">
+                        <span class="term">Datenschutz</span>
+                        Datenschutz schützt nicht die Daten selbst, sondern die <strong>Freiheit der Menschen</strong>, selbst zu entscheiden, wer was wann und bei welcher Gelegenheit über sie weiß. Es geht um das Recht auf <strong>informationelle Selbstbestimmung</strong>.
+                    </div>
+
+                    <h3>📜 Rechtliche Grundlagen</h3>
+                    <div class="law-box">
+                        <div class="title">⚖️ Grundgesetz der Bundesrepublik Deutschland</div>
+                        <p>Das Grundgesetz gewährleistet jedem das <strong>Recht, über Verwendung und Preisgabe seiner persönlichen Daten zu bestimmen</strong>. Dieses Recht entstand nach Protesten um die Volkszählung 1987, als viele Menschen Angst vor dem Missbrauch ihrer Daten hatten.</p>
+                    </div>
+
+                    <h3>👤 Arten personenbezogener Daten</h3>
+                    <div class="comparison-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Datentyp</th>
+                                    <th>Beschreibung</th>
+                                    <th>Beispiele</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td><strong>Personenbezogene Daten</strong></td>
+                                    <td>Lassen sich eindeutig einer Person zuordnen</td>
+                                    <td>Name, Geburtsdatum, Adresse, Telefonnummer, E-Mail</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Pseudonymisierte Daten</strong></td>
+                                    <td>Erlauben keinen oder nur schwer Rückschluss auf Personen</td>
+                                    <td>Benutzername, Kundennummer, verschleierte IP-Adressen</td>
+                                </tr>
+                                <tr>
+                                    <td><strong>Besondere Kategorien</strong></td>
+                                    <td>Besonders sensible, intime Daten</td>
+                                    <td>Gesundheitsdaten, Religion, politische Meinung, sexuelle Orientierung</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>🛡️ Rechte der Bürger</h3>
+                    <div class="rights-list">
+                        <div class="right-item">
+                            <h4>🔍 Auskunftsrecht</h4>
+                            <p>Du hast das Recht zu erfahren, welche Daten über dich gespeichert sind, warum sie gespeichert werden und woher sie stammen.</p>
+                        </div>
+                        <div class="right-item">
+                            <h4>✏️ Berichtigungsrecht</h4>
+                            <p>Falsch gespeicherte Daten müssen korrigiert werden, wenn du es verlangst.</p>
+                        </div>
+                        <div class="right-item">
+                            <h4>🗑️ Löschungsrecht</h4>
+                            <p>Unrechtmäßig gespeicherte Daten müssen gelöscht werden ("Recht auf Vergessenwerden").</p>
+                        </div>
+                        <div class="right-item">
+                            <h4>🔒 Sperrung</h4>
+                            <p>Daten können gesperrt werden, wenn ihre Richtigkeit nicht feststellbar ist.</p>
+                        </div>
+                        <div class="right-item">
+                            <h4>💰 Schadenersatz</h4>
+                            <p>Bei Schäden durch unrechtmäßige Datenspeicherung kannst du Entschädigung verlangen.</p>
+                        </div>
+                    </div>
+
+                    <h3>📋 Grundprinzipien des Datenschutzes</h3>
+                    <div class="process-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Verbot mit Erlaubnisvorbehalt</h4>
+                                <p>Erheben, Verarbeiten und Nutzen von personenbezogenen Daten ist <strong>grundsätzlich verboten</strong>. Ausnahme: Es gibt eine gesetzliche Regelung oder die betroffene Person stimmt zu.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Direkterhebung</h4>
+                                <p>Daten sollen nur <strong>beim Betroffenen selbst</strong> erhoben werden, nicht über Umwege bei anderen.</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Datenminimierung</h4>
+                                <p>Es müssen <strong>so wenig personenbezogene Daten wie möglich</strong> verarbeitet werden. Datensparsamkeit ist das Ziel!</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="example-box">
+                        <div class="title">💡 Beispiel aus dem Alltag</div>
+                        <p><strong>Online-Shop:</strong> Ein Online-Shop braucht deine Adresse für die Lieferung (erlaubt), aber nicht deine Religionszugehörigkeit für den Kauf von Sportschuhen (verboten). Nach dem Kauf und der Lieferung sollten unnötige Daten gelöscht werden.</p>
+                    </div>
+                </section>
+
+                <section class="section" id="verschluesselung">
+                    <h2>2. Verschlüsselungsverfahren (Kryptografie)</h2>
+                    
+                    <div class="definition-box">
+                        <span class="term">Kryptografie</span>
+                        Die Wissenschaft der Verschlüsselung von Informationen, um sie vor unbefugtem Zugriff zu schützen. Das Wort kommt aus dem Griechischen: "kryptos" (versteckt) und "graphein" (schreiben).
+                    </div>
+
+                    <h3>🔤 Einfache Verschlüsselungsverfahren</h3>
+                    
+                    <h4>Monoalphabetische Verschlüsselung</h4>
+                    <p>Jeder Buchstabe wird immer durch denselben anderen Buchstaben ersetzt.</p>
+                    
+                    <div class="example-box">
+                        <div class="title">💡 Caesar-Verschlüsselung</div>
+                        <p><strong>Prinzip:</strong> Jeder Buchstabe wird um eine feste Anzahl von Positionen im Alphabet verschoben.</p>
+                        <div class="crypto-visual">
+                            <p><strong>Klartext:</strong> HALLO</p>
+                            <p><strong>Verschiebung um 3:</strong></p>
+                            <p>A→D, B→E, C→F ... H→K, L→O</p>
+                            <p><strong>Geheimtext:</strong> KDOOR</p>
+                        </div>
+                        <p><strong>Problem:</strong> Leicht durch Häufigkeitsanalyse knackbar (der Buchstabe 'E' kommt im Deutschen am häufigsten vor).</p>
+                    </div>
+
+                    <h4>Polyalphabetische Verschlüsselung</h4>
+                    <p>Ein Buchstabe kann durch verschiedene andere Buchstaben ersetzt werden, abhängig von seiner Position.</p>
+                    
+                    <div class="example-box">
+                        <div class="title">💡 Vigenère-Verschlüsselung</div>
+                        <p><strong>Schlüssel:</strong> SCHLUESSEL</p>
+                        <div class="crypto-visual">
+                            <p>Klartext: &nbsp;&nbsp;<strong>H A L L O</strong></p>
+                            <p>Schlüssel: <strong>S C H L U</strong></p>
+                            <p>Geheimtext: <strong>Z C S W I</strong></p>
+                        </div>
+                        <p><strong>Vorteil:</strong> Sicherer als monoalphabetische Verfahren, da Häufigkeitsanalyse nicht direkt funktioniert.</p>
+                    </div>
+
+                    <h3>🔐 Moderne Verschlüsselungsverfahren</h3>
+
+                    <h4>Symmetrische Verschlüsselung</h4>
+                    <div class="crypto-visual">
+                        <div class="crypto-flow">
+                            <div class="crypto-box">Klartext</div>
+                            <div class="crypto-arrow">→</div>
+                            <div class="crypto-box key-box">Gleicher Schlüssel</div>
+                            <div class="crypto-arrow">→</div>
+                            <div class="crypto-box">Geheimtext</div>
+                        </div>
+                        <div class="crypto-flow">
+                            <div class="crypto-box">Geheimtext</div>
+                            <div class="crypto-arrow">→</div>
+                            <div class="crypto-box key-box">Gleicher Schlüssel</div>
+                            <div class="crypto-arrow">→</div>
+                            <div class="crypto-box">Klartext</div>
+                        </div>
+                    </div>
+
+                    <div class="comparison-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Vorteile</th>
+                                    <th>Nachteile</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>✅ Sehr schnell</td>
+                                    <td>❌ Schlüsselaustauschproblem</td>
+                                </tr>
+                                <tr>
+                                    <td>✅ Einfach zu implementieren</td>
+                                    <td>❌ Für jeden Partner ein neuer Schlüssel</td>
+                                </tr>
+                                <tr>
+                                    <td>✅ Wenig Rechenaufwand</td>
+                                    <td>❌ Sichere Schlüsselübertragung nötig</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h4>Asymmetrische Verschlüsselung</h4>
+                    <p>Revolutionäre Idee: Zwei verschiedene Schlüssel, die mathematisch zusammengehören!</p>
+                    
+                    <div class="key-visual">
+                        <div class="key-box public-key">🔓 Public Key (Öffentlich)</div>
+                        <div class="key-box private-key">🔐 Private Key (Geheim)</div>
+                    </div>
+
+                    <div class="process-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Alice will Bob eine Nachricht schicken</h4>
+                                <p>Alice holt sich Bobs <strong>öffentlichen Schlüssel</strong> (jeder kann ihn haben)</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Alice verschlüsselt</h4>
+                                <p>Alice verschlüsselt ihre Nachricht mit Bobs <strong>öffentlichem Schlüssel</strong></p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Bob entschlüsselt</h4>
+                                <p>Nur Bob kann mit seinem <strong>privaten Schlüssel</strong> die Nachricht entschlüsseln</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="comparison-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Vorteile</th>
+                                    <th>Nachteile</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>✅ Kein Schlüsselaustauschproblem</td>
+                                    <td>❌ Sehr langsam</td>
+                                </tr>
+                                <tr>
+                                    <td>✅ Hohe Sicherheit</td>
+                                    <td>❌ Viel Rechenaufwand</td>
+                                </tr>
+                                <tr>
+                                    <td>✅ Digitale Signaturen möglich</td>
+                                    <td>❌ Kompliziert zu implementieren</td>
+                                </tr>
+                                <tr>
+                                    <td>✅ Unsichere Kanäle nutzbar</td>
+                                    <td>❌ Anfällig für Man-in-the-Middle</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <h3>✍️ Digitale Signaturen</h3>
+                    <div class="definition-box">
+                        <span class="term">Digitale Signatur</span>
+                        Ein mathematisches Verfahren, um die <strong>Echtheit</strong>, <strong>Unversehrtheit</strong> und <strong>Verbindlichkeit</strong> digitaler Nachrichten zu gewährleisten.
+                    </div>
+
+                    <div class="process-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Hash-Wert erstellen</h4>
+                                <p>Aus der Nachricht wird ein eindeutiger "Fingerabdruck" (Hash-Wert) berechnet</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Mit privatem Schlüssel signieren</h4>
+                                <p>Der Hash-Wert wird mit dem <strong>privaten Schlüssel</strong> des Absenders verschlüsselt</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Empfänger prüft</h4>
+                                <p>Mit dem öffentlichen Schlüssel wird die Signatur entschlüsselt und der Hash-Wert verglichen</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="success-box">
+                        <div class="title">✅ Was garantiert eine digitale Signatur?</div>
+                        <ul>
+                            <li><strong>Authentizität:</strong> Die Nachricht kommt wirklich von der angegebenen Person</li>
+                            <li><strong>Integrität:</strong> Die Nachricht wurde nicht verändert</li>
+                            <li><strong>Verbindlichkeit:</strong> Der Absender kann nicht leugnen, die Nachricht gesendet zu haben</li>
+                        </ul>
+                    </div>
+
+                    <h3>📜 Zertifikate</h3>
+                    <div class="definition-box">
+                        <span class="term">Digitales Zertifikat</span>
+                        Ein elektronischer "Ausweis", der bestätigt, dass ein öffentlicher Schlüssel wirklich zu einer bestimmten Person oder Organisation gehört. Ausgestellt von vertrauenswürdigen Zertifizierungsstellen (Certificate Authority, CA).
+                    </div>
+
+                    <div class="example-box">
+                        <div class="title">💡 Warum brauchen wir Zertifikate?</div>
+                        <p><strong>Problem ohne Zertifikat:</strong> Wenn Alice Bobs öffentlichen Schlüssel haben möchte, könnte Eve (eine Angreiferin) ihren eigenen Schlüssel ausgeben und behaupten, er sei von Bob. So könnte sie alle Nachrichten mitlesen.</p>
+                        <p><strong>Lösung mit Zertifikat:</strong> Eine vertrauenswürdige Zertifizierungsstelle bestätigt: "Ja, dieser öffentliche Schlüssel gehört wirklich zu Bob!"</p>
+                    </div>
+                </section>
+
+                <section class="section" id="bedrohungen">
+                    <h2>3. Sicherheitsbedrohungen und Angriffe</h2>
+
+                    <h3>👨‍💻 Häufige Angriffsmethoden</h3>
+                    <div class="attack-scenarios">
+                        <div class="attack-item">
+                            <h4>🕵️ Man-in-the-Middle-Angriff</h4>
+                            <p><strong>Funktionsweise:</strong> Eve schaltet sich unbemerkt zwischen Alice und Bob und fängt alle Nachrichten ab.</p>
+                            <p><strong>Beispiel:</strong> In einem ungesicherten WLAN liest jemand deine Login-Daten mit.</p>
+                            <p><strong>Schutz:</strong> HTTPS verwenden, Zertifikate prüfen, VPN nutzen</p>
+                        </div>
+                        
+                        <div class="attack-item">
+                            <h4>💥 Brute-Force-Angriff</h4>
+                            <p><strong>Funktionsweise:</strong> Systematisches Ausprobieren aller möglichen Passwörter oder Schlüssel.</p>
+                            <p><strong>Beispiel:</strong> Ein Computer probiert millionen Passwörter pro Sekunde aus.</p>
+                            <p><strong>Schutz:</strong> Lange, komplexe Passwörter, Account-Sperrung nach Fehlversuchen</p>
+                        </div>
+                        
+                        <div class="attack-item">
+                            <h4>📊 Häufigkeitsanalyse</h4>
+                            <p><strong>Funktionsweise:</strong> Analyse der Häufigkeit von Buchstaben/Zeichen im verschlüsselten Text.</p>
+                            <p><strong>Beispiel:</strong> 'E' ist der häufigste Buchstabe im Deutschen - damit kann Caesar-Verschlüsselung geknackt werden.</p>
+                            <p><strong>Schutz:</strong> Moderne Verschlüsselungsverfahren verwenden</p>
+                        </div>
+                        
+                        <div class="attack-item">
+                            <h4>🎣 Social Engineering</h4>
+                            <p><strong>Funktionsweise:</strong> Menschen werden manipuliert, um Informationen preiszugeben.</p>
+                            <p><strong>Beispiel:</strong> Anruf: "Ich bin vom IT-Support, geben Sie mir Ihr Passwort."</p>
+                            <p><strong>Schutz:</strong> Aufklärung, niemals Passwörter herausgeben, Identität prüfen</p>
+                        </div>
+                    </div>
+
+                    <h3>📡 WLAN-Sicherheit</h3>
+                    <div class="comparison-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Verschlüsselung</th>
+                                    <th>Sicherheit</th>
+                                    <th>Status</th>
+                                    <th>Bemerkung</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Offen (keine)</td>
+                                    <td>❌ Keine</td>
+                                    <td>Gefährlich</td>
+                                    <td>Alle Daten unverschlüsselt übertragen</td>
+                                </tr>
+                                <tr>
+                                    <td>WEP</td>
+                                    <td>❌ Sehr schwach</td>
+                                    <td>Veraltet</td>
+                                    <td>In wenigen Minuten knackbar</td>
+                                </tr>
+                                <tr>
+                                    <td>WPA</td>
+                                    <td>⚠️ Schwach</td>
+                                    <td>Veraltet</td>
+                                    <td>Besser als WEP, aber nicht mehr sicher</td>
+                                </tr>
+                                <tr>
+                                    <td>WPA2</td>
+                                    <td>✅ Gut</td>
+                                    <td>Standard</td>
+                                    <td>Sicher bei starkem Passwort</td>
+                                </tr>
+                                <tr>
+                                    <td>WPA3</td>
+                                    <td>✅ Sehr gut</td>
+                                    <td>Modern</td>
+                                    <td>Neuester Standard, beste Sicherheit</td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </section>
+
+                <section class="section" id="datenschutz-praxis">
+                    <h2>4. Datenschutz in der Praxis</h2>
+
+                    <h3>🏢 DSGVO (Datenschutz-Grundverordnung)</h3>
+                    <div class="law-box">
+                        <div class="title">🇪🇺 Europäische Datenschutz-Grundverordnung</div>
+                        <p>Seit 25. Mai 2018 geltendes EU-weites Gesetz zum Schutz personenbezogener Daten. Unternehmen müssen sich an strenge Regeln halten, sonst drohen hohe Geldstrafen (bis zu 4% des Jahresumsatzes!).</p>
+                    </div>
+
+                    <h3>🎯 Wichtige DSGVO-Prinzipien für Unternehmen</h3>
+                    <div class="process-steps">
+                        <div class="step">
+                            <div class="step-number">📋</div>
+                            <div class="step-content">
+                                <h4>Transparenz</h4>
+                                <p>Klare Information, welche Daten warum gespeichert werden</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">🎯</div>
+                            <div class="step-content">
+                                <h4>Zweckbindung</h4>
+                                <p>Daten nur für den angegebenen Zweck verwenden</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">⏱️</div>
+                            <div class="step-content">
+                                <h4>Speicherbegrenzung</h4>
+                                <p>Daten nur so lange speichern, wie nötig</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">🔒</div>
+                            <div class="step-content">
+                                <h4>Sicherheit</h4>
+                                <p>Technische und organisatorische Schutzmaßnahmen</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>🏫 Beispiele aus dem Schulalltag</h3>
+                    
+                    <div class="example-box">
+                        <div class="title">📚 Beispiel 1: Schüleraccounts</div>
+                        <p><strong>Situation:</strong> Eine Schule speichert Namen, E-Mail-Adressen und Accountnamen der Schüler für Gruppen und Arbeitsgemeinschaften.</p>
+                        <p><strong>Datenschutz-Analyse:</strong></p>
+                        <ul>
+                            <li>✅ <strong>Erlaubt:</strong> Diese Daten sind für den Schulbetrieb notwendig</li>
+                            <li>❌ <strong>Problem:</strong> Wenn die Schule zusätzlich Surfverhalten oder private E-Mails analysiert</li>
+                            <li>🛡️ <strong>Schutzmaßnahmen:</strong> Sichere Server, Zugriffsbeschränkungen, Löschung nach Schulzeit</li>
+                        </ul>
+                    </div>
+
+                    <div class="example-box">
+                        <div class="title">🏥 Beispiel 2: Arztpraxis</div>
+                        <p><strong>Situation:</strong> Ein Arzt speichert Patientendaten inklusive Diagnosen und Behandlungen.</p>
+                        <p><strong>Datenschutz-Analyse:</strong></p>
+                        <ul>
+                            <li>✅ <strong>Erlaubt:</strong> Medizinische Behandlung rechtfertigt Datenspeicherung</li>
+                            <li>⚠️ <strong>Besondere Kategorie:</strong> Gesundheitsdaten brauchen extra Schutz</li>
+                            <li>❌ <strong>Verboten:</strong> Daten an Krankenkasse ohne Einwilligung weitergeben</li>
+                        </ul>
+                    </div>
+
+                    <div class="warning-box">
+                        <div class="title">⚠️ Häufige Datenschutz-Fallen</div>
+                        <ul>
+                            <li><strong>WhatsApp in Schulklassen:</strong> Telefonnummern aller Schüler werden automatisch geteilt</li>
+                            <li><strong>Zoom-Aufzeichnungen:</strong> Personen werden ohne Einwilligung aufgezeichnet</li>
+                            <li><strong>Google Analytics:</strong> IP-Adressen der Website-Besucher werden in die USA übertragen</li>
+                            <li><strong>Newsletter:</strong> E-Mail-Adressen ohne ausdrückliche Zustimmung sammeln</li>
+                        </ul>
+                    </div>
+
+                    <h3>🔐 Praktische Sicherheitsmaßnahmen</h3>
+                    <div class="rights-list">
+                        <div class="right-item">
+                            <h4>🔑 Starke Passwörter</h4>
+                            <p>Mindestens 12 Zeichen, Groß-/Kleinbuchstaben, Zahlen, Sonderzeichen. Besser: Passwort-Manager verwenden!</p>
+                        </div>
+                        <div class="right-item">
+                            <h4>🔄 Zwei-Faktor-Authentifizierung</h4>
+                            <p>Zusätzlicher Code per SMS oder App. Selbst wenn das Passwort gestohlen wird, ist der Account geschützt.</p>
+                        </div>
+                        <div class="right-item">
+                            <h4>🆙 Software-Updates</h4>
+                            <p>Immer die neueste Version verwenden. Updates schließen oft Sicherheitslücken.</p>
+                        </div>
+                        <div class="right-item">
+                            <h4>🛡️ Antivirus & Firewall</h4>
+                            <p>Schutz vor Malware und unerlaubten Netzwerkzugriffen.</p>
+                        </div>
+                        <div class="right-item">
+                            <h4>📱 Sichere Kommunikation</h4>
+                            <p>Signal, WhatsApp oder Threema für private Nachrichten. E-Mail-Verschlüsselung für sensible Inhalte.</p>
+                        </div>
+                        <div class="right-item">
+                            <h4>🔒 HTTPS überall</h4>
+                            <p>Nur auf Websites mit grünem Schloss-Symbol persönliche Daten eingeben.</p>
+                        </div>
+                    </div>
+                </section>
+
+                <section class="section" id="moderne-verfahren">
+                    <h2>5. Moderne Verschlüsselungsverfahren</h2>
+
+                    <h3>🧩 AES (Advanced Encryption Standard)</h3>
+                    <div class="definition-box">
+                        <span class="term">AES - Advanced Encryption Standard</span>
+                        Der weltweit am meisten verwendete symmetrische Verschlüsselungsalgorithmus. Verwendet von Banken, Regierungen und in fast jeder verschlüsselten Internetverbindung.
+                    </div>
+
+                    <h4>Funktionsweise von AES (Blockchiffre)</h4>
+                    <div class="process-steps">
+                        <div class="step">
+                            <div class="step-number">1</div>
+                            <div class="step-content">
+                                <h4>Daten in Blöcke teilen</h4>
+                                <p>Der Text wird in 128-Bit-Blöcke (16 Zeichen) aufgeteilt</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">2</div>
+                            <div class="step-content">
+                                <h4>Substitution (S-Box)</h4>
+                                <p>Jedes Byte wird durch einen anderen Wert ersetzt (wie bei Caesar, aber viel komplexer)</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">3</div>
+                            <div class="step-content">
+                                <h4>Shift Rows</h4>
+                                <p>Die Zeilen werden zyklisch nach links verschoben</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">4</div>
+                            <div class="step-content">
+                                <h4>Mix Columns</h4>
+                                <p>Spalten werden mathematisch vermischt (Matrixmultiplikation)</p>
+                            </div>
+                        </div>
+                        <div class="step">
+                            <div class="step-number">🔁</div>
+                            <div class="step-content">
+                                <h4>Wiederholen</h4>
+                                <p>Diese Schritte werden 10-14 mal wiederholt (je nach Schlüssellänge)</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <h3>🔮 Zukunft der Kryptografie</h3>
+                    <div class="warning-box">
+                        <div class="title">⚡ Die Bedrohung durch Quantencomputer</div>
+                        <p><strong>Problem:</strong> Quantencomputer könnten in Zukunft aktuelle asymmetrische Verschlüsselung in kurzer Zeit knacken.</p>
+                        <p><strong>Lösung:</strong> Forscher entwickeln "Post-Quanten-Kryptografie" - neue Verfahren, die auch gegen Quantencomputer sicher sind.</p>
+                        <p><strong>Zeitrahmen:</strong> Experten schätzen, dass leistungsfähige Quantencomputer in 10-20 Jahren verfügbar sein könnten.</p>
+                    </div>
+                </section>
+
+                <section class="section" id="zusammenfassung">
+                    <h2>6. Zusammenfassung & Prüfungstipps</h2>
+
+                    <div class="success-box">
+                        <div class="title">🎯 Das Wichtigste für die Prüfung</div>
+                        <ul>
+                            <li><strong>Datenschutz-Grundlagen:</strong> Informationelle Selbstbestimmung, personenbezogene Daten, DSGVO-Prinzipien</li>
+                            <li><strong>Verschlüsselung:</strong> Symmetrisch vs. asymmetrisch, Vor-/Nachteile, praktische Anwendungen</li>
+                            <li><strong>Digitale Signaturen:</strong> Authentizität, Integrität, Verbindlichkeit</li>
+                            <li><strong>Sicherheitsbedrohungen:</strong> Man-in-the-Middle, Brute-Force, Social Engineering</li>
+                            <li><strong>Praktische Sicherheit:</strong> WLAN-Verschlüsselung, starke Passwörter, Updates</li>
+                        </ul>
+                    </div>
+
+                    <h3>📝 Typische Prüfungsaufgaben</h3>
+                    <div class="example-box">
+                        <div class="title">💡 Aufgabentyp 1: Datenschutz-Szenario analysieren</div>
+                        <p><strong>Aufgabe:</strong> "Eine Firma sammelt E-Mail-Adressen für Marktforschung. Analysieren Sie die datenschutzrechtlichen Probleme."</p>
+                        <p><strong>Lösungsansatz:</strong></p>
+                        <ol>
+                            <li>Welche Daten werden gesammelt? (E-Mail = personenbezogen)</li>
+                            <li>Gibt es eine Rechtsgrundlage? (Einwilligung nötig)</li>
+                            <li>Wurden die Betroffenen informiert?</li>
+                            <li>Werden die DSGVO-Prinzipien eingehalten?</li>
+                        </ol>
+                    </div>
+
+                    <div class="example-box">
+                        <div class="title">💡 Aufgabentyp 2: Verschlüsselungsverfahren vergleichen</div>
+                        <p><strong>Aufgabe:</strong> "Vergleichen Sie symmetrische und asymmetrische Verschlüsselung."</p>
+                        <p><strong>Lösungsansatz:</strong></p>
+                        <ol>
+                            <li>Funktionsweise erklären (1 vs. 2 Schlüssel)</li>
+                            <li>Vor- und Nachteile auflisten</li>
+                            <li>Anwendungsbeispiele nennen</li>
+                            <li>Kombinierte Nutzung erwähnen (Hybrid-Verfahren)</li>
+                        </ol>
+                    </div>
+
+                    <div class="example-box">
+                        <div class="title">💡 Aufgabentyp 3: Sicherheitslücken identifizieren</div>
+                        <p><strong>Aufgabe:</strong> "Eine Schule nutzt ein offenes WLAN. Welche Sicherheitsrisiken entstehen?"</p>
+                        <p><strong>Lösungsansatz:</strong></p>
+                        <ol>
+                            <li>Datenübertragung unverschlüsselt</li>
+                            <li>Man-in-the-Middle-Angriffe möglich</li>
+                            <li>Mitlesen von Passwörtern</li>
+                            <li>Lösungsvorschläge: WPA2/3, VPN, HTTPS</li>
+                        </ol>
+                    </div>
+                </section>
+
+                <div class="navigation">
+                    <a href="index.html" class="nav-button">
+                        ← Zurück zur Übersicht
+                    </a>
+                    <a href="#" class="nav-button disabled">
+                        Nächstes Thema →
+                    </a>
+                </div>
+            </main>
+
+            <aside class="sidebar">
+                <nav class="toc">
+                    <h3>📑 Inhaltsverzeichnis</h3>
+                    <ul>
+                        <li><a href="#grundlagen-datenschutz">1. Grundlagen des Datenschutzes</a></li>
+                        <li><a href="#verschluesselung">2. Verschlüsselungsverfahren</a></li>
+                        <li><a href="#bedrohungen">3. Sicherheitsbedrohungen</a></li>
+                        <li><a href="#datenschutz-praxis">4. Datenschutz in der Praxis</a></li>
+                        <li><a href="#moderne-verfahren">5. Moderne Verfahren</a></li>
+                        <li><a href="#zusammenfassung">6. Zusammenfassung</a></li>
+                    </ul>
+                </nav>
+
+                <div class="success-box">
+                    <div class="title">💡 Lerntipp</div>
+                    <p>Verschlüsselung ist wie ein Tresor: Symmetrisch = ein Schlüssel für alle, asymmetrisch = jeder hat seinen eigenen Schlüssel.</p>
+                </div>
+
+                <div class="warning-box">
+                    <div class="title">⚠️ Häufiger Fehler</div>
+                    <p>Datenschutz schützt nicht die Daten, sondern die Menschen! Es geht um das Recht auf informationelle Selbstbestimmung.</p>
+                </div>
+            </aside>
+        </div>
+    </div>
+
+    <script>
+        // Smooth scrolling für Inhaltsverzeichnis-Links
+        document.querySelectorAll('.toc a[href^="#"]').forEach(link => {
+            link.addEventListener('click', function(e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ 
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Aktiven Abschnitt im Inhaltsverzeichnis hervorheben
+        const observerOptions = {
+            root: null,
+            rootMargin: '-20% 0px -70% 0px',
+            threshold: 0
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const id = entry.target.getAttribute('id');
+                    const currentActive = document.querySelector('.toc a.active');
+                    if (currentActive) {
+                        currentActive.classList.remove('active');
+                    }
+                    const newActive = document.querySelector(`.toc a[href="#${id}"]`);
+                    if (newActive) {
+                        newActive.classList.add('active');
+                        newActive.style.backgroundColor = 'var(--bg-light)';
+                        newActive.style.color = 'var(--primary-color)';
+                    }
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.section[id]').forEach(section => {
+            observer.observe(section);
+        });
+
+        // Interaktive Elemente
+        document.querySelectorAll('.nav-button.disabled').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                alert('Diese Seite wird noch erstellt!');
+            });
+        });
+    </script>
+</body>
+</html>

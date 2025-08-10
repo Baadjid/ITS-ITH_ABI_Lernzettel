@@ -1,0 +1,1097 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Projektmanagement - Informatik TG Lernzettel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #0ea5e9;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
+            min-height: 100vh;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 2rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .header .subtitle {
+            font-size: 1.1rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            border-radius: 8px;
+            margin-bottom: 1rem;
+        }
+
+        .breadcrumb a {
+            color: rgba(255, 255, 255, 0.8);
+            text-decoration: none;
+        }
+
+        .breadcrumb a:hover {
+            color: white;
+        }
+
+        .learning-objectives {
+            background: linear-gradient(135deg, var(--success-color), #059669);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
+        }
+
+        .learning-objectives h3 {
+            margin-bottom: 1rem;
+        }
+
+        .learning-objectives ul {
+            list-style: none;
+        }
+
+        .learning-objectives li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .learning-objectives li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            font-weight: bold;
+        }
+
+        .content-section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
+        }
+
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+        }
+
+        .section-header h2 {
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .section-header .section-description {
+            font-size: 0.95rem;
+            opacity: 0.9;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .definition-box {
+            background: linear-gradient(135deg, #f0f9ff, #e0f2fe);
+            border-left: 4px solid var(--info-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .definition-box h4 {
+            color: var(--info-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .important-box {
+            background: linear-gradient(135deg, #fef7cd, #fef3c7);
+            border-left: 4px solid var(--warning-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .important-box h4 {
+            color: var(--warning-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #f0fdf4, #dcfce7);
+            border-left: 4px solid var(--success-color);
+            padding: 1.5rem;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+        }
+
+        .example-box h4 {
+            color: var(--success-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 1.5rem 0;
+            background: var(--bg-white);
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .comparison-table th {
+            background: var(--primary-color);
+            color: white;
+            padding: 1rem;
+            text-align: left;
+        }
+
+        .comparison-table td {
+            padding: 1rem;
+            border-bottom: 1px solid var(--border-color);
+        }
+
+        .comparison-table tr:nth-child(even) {
+            background: var(--bg-light);
+        }
+
+        .process-flow {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+
+        .process-step {
+            flex: 1;
+            min-width: 200px;
+            background: var(--bg-light);
+            border: 2px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .process-step:not(:last-child):after {
+            content: "→";
+            position: absolute;
+            right: -15px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .process-step h4 {
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
+        }
+
+        .role-card {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        .role-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .role-responsibilities {
+            list-style: none;
+        }
+
+        .role-responsibilities li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .role-responsibilities li:before {
+            content: "•";
+            position: absolute;
+            left: 0;
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+
+        .scrum-artifacts {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .artifact-card {
+            background: var(--bg-light);
+            border: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 1.5rem;
+        }
+
+        .artifact-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .navigation {
+            background: var(--bg-white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            border: 1px solid var(--border-color);
+            margin-top: 2rem;
+            text-align: center;
+        }
+
+        .nav-button {
+            display: inline-block;
+            padding: 0.75rem 1.5rem;
+            margin: 0.5rem;
+            background: var(--primary-color);
+            color: white;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
+        }
+
+        .nav-button:hover {
+            background: var(--secondary-color);
+        }
+
+        .key-takeaways {
+            background: linear-gradient(135deg, #fef2f2, #fee2e2);
+            border-left: 4px solid var(--danger-color);
+            padding: 1.5rem;
+            margin: 2rem 0;
+            border-radius: 8px;
+        }
+
+        .key-takeaways h4 {
+            color: var(--danger-color);
+            margin-bottom: 1rem;
+        }
+
+        .key-takeaways ul {
+            list-style: none;
+        }
+
+        .key-takeaways li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
+            position: relative;
+        }
+
+        .key-takeaways li:before {
+            content: "⚡";
+            position: absolute;
+            left: 0;
+        }
+
+        @media (max-width: 768px) {
+            .container {
+                padding: 10px;
+            }
+            
+            .header h1 {
+                font-size: 2rem;
+            }
+            
+            .process-flow {
+                flex-direction: column;
+            }
+            
+            .process-step:not(:last-child):after {
+                content: "↓";
+                right: 50%;
+                bottom: -15px;
+                top: auto;
+                transform: translateX(50%);
+            }
+            
+            .scrum-artifacts {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>📋 Projektmanagement</h1>
+            <div class="subtitle">Systematische Planung und Durchführung von IT-Projekten</div>
+            <div class="breadcrumb">
+                <a href="index.html">🏠 Hauptseite</a> → 
+                <a href="#systemgestaltung">Systemgestaltung & Projektarbeit</a> → 
+                <strong>Projektmanagement</strong>
+            </div>
+        </header>
+
+        <div class="learning-objectives">
+            <h3>🎯 Lernziele (BPE 5 - 12 Stunden)</h3>
+            <ul>
+                <li>Verschiedene Projektmanagement-Verfahren nennen und deren primäre Einsatzgebiete beschreiben</li>
+                <li>Den zyklischen Ablauf eines agilen Projektmanagements erklären</li>
+                <li>Große Projekte in Teilaufgaben gliedern können</li>
+                <li>Agiles Projektmanagement mit Scrum verstehen und anwenden</li>
+                <li>Mindestens ein Projekt strukturiert durchführen</li>
+            </ul>
+        </div>
+
+        <!-- Was ist Projektmanagement? -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>1. Was ist Projektmanagement?</h2>
+                <div class="section-description">Grundlagen und Begriffe verstehen</div>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <h4>📚 Definition: Projekt</h4>
+                    <p>Ein <strong>Projekt</strong> ist ein einmaliges Vorhaben mit einem definierten Anfang und Ende, das durchgeführt wird, um ein einzigartiges Ergebnis zu schaffen. Projekte haben begrenzte Ressourcen (Zeit, Geld, Personal) und spezifische Ziele.</p>
+                </div>
+
+                <div class="definition-box">
+                    <h4>📚 Definition: Projektmanagement</h4>
+                    <p><strong>Projektmanagement</strong> ist die systematische Planung, Steuerung und Kontrolle von Projekten. Es umfasst die Anwendung von Wissen, Fähigkeiten, Werkzeugen und Techniken auf Projektaktivitäten, um die Projektanforderungen zu erfüllen.</p>
+                </div>
+
+                <h3>🔍 Merkmale eines IT-Projekts</h3>
+                <ul style="margin-left: 2rem; margin-top: 1rem;">
+                    <li><strong>Einmaligkeit:</strong> Jedes Projekt ist einzigartig</li>
+                    <li><strong>Zeitlich begrenzt:</strong> Klarer Start- und Endtermin</li>
+                    <li><strong>Zielorientiert:</strong> Spezifische, messbare Ziele</li>
+                    <li><strong>Ressourcenbegrenzt:</strong> Budget, Personal, Zeit sind limitiert</li>
+                    <li><strong>Komplexität:</strong> Viele Teilaufgaben und Abhängigkeiten</li>
+                    <li><strong>Risiko:</strong> Ungewissheit über den Erfolg</li>
+                </ul>
+
+                <div class="example-box">
+                    <h4>🌟 Beispiele für IT-Projekte</h4>
+                    <ul>
+                        <li>Entwicklung einer neuen App für das Smartphone</li>
+                        <li>Einführung eines neuen Datenbanksystems in einer Firma</li>
+                        <li>Aufbau einer neuen Website für eine Schule</li>
+                        <li>Programmierung eines Lagerverwaltungssystems</li>
+                        <li>Installation eines neuen Netzwerks in einem Unternehmen</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Warum Projektmanagement? -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>2. Warum ist Projektmanagement wichtig?</h2>
+                <div class="section-description">Die Notwendigkeit systematischer Projektführung</div>
+            </div>
+            <div class="section-content">
+                <div class="important-box">
+                    <h4>⚠️ Probleme ohne Projektmanagement</h4>
+                    <ul>
+                        <li><strong>Zeitüberschreitungen:</strong> Projekte werden nicht rechtzeitig fertig</li>
+                        <li><strong>Kostenexplosion:</strong> Budgets werden massiv überschritten</li>
+                        <li><strong>Qualitätsmängel:</strong> Das Ergebnis entspricht nicht den Anforderungen</li>
+                        <li><strong>Kommunikationsprobleme:</strong> Missverständnisse zwischen Beteiligten</li>
+                        <li><strong>Scope Creep:</strong> Anforderungen ändern sich ständig</li>
+                        <li><strong>Demotivation:</strong> Team arbeitet unkoordiniert und ineffizient</li>
+                    </ul>
+                </div>
+
+                <h3>📈 Vorteile von gutem Projektmanagement</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px;">
+                        <h4 style="color: var(--success-color);">✅ Planungssicherheit</h4>
+                        <p>Klare Ziele, Termine und Verantwortlichkeiten</p>
+                    </div>
+                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px;">
+                        <h4 style="color: var(--success-color);">✅ Kostenkontrolle</h4>
+                        <p>Budget wird eingehalten und überwacht</p>
+                    </div>
+                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px;">
+                        <h4 style="color: var(--success-color);">✅ Qualitätssicherung</h4>
+                        <p>Systematische Kontrolle und Tests</p>
+                    </div>
+                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px;">
+                        <h4 style="color: var(--success-color);">✅ Risikominimierung</h4>
+                        <p>Frühe Erkennung und Behandlung von Problemen</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Traditionelles vs. Agiles Projektmanagement -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>3. Traditionelles vs. Agiles Projektmanagement</h2>
+                <div class="section-description">Zwei grundlegend verschiedene Ansätze</div>
+            </div>
+            <div class="section-content">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Aspekt</th>
+                            <th>Traditionell (Wasserfall)</th>
+                            <th>Agil (z.B. Scrum)</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Planung</strong></td>
+                            <td>Umfassende Planung zu Beginn</td>
+                            <td>Iterative Planung in kurzen Zyklen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Anforderungen</strong></td>
+                            <td>Alle Anforderungen zu Beginn definiert</td>
+                            <td>Anforderungen können sich ändern</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Dokumentation</strong></td>
+                            <td>Umfangreiche Dokumentation</td>
+                            <td>Funktionierendes Produkt vor Dokumentation</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kundenfeedback</strong></td>
+                            <td>Erst am Ende des Projekts</td>
+                            <td>Regelmäßig während der Entwicklung</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Flexibilität</strong></td>
+                            <td>Schwer änderbar</td>
+                            <td>Hohe Flexibilität bei Änderungen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Risiko</strong></td>
+                            <td>Hohes Risiko bei späten Problemen</td>
+                            <td>Geringeres Risiko durch frühe Tests</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="important-box">
+                    <h4>🤔 Wann welcher Ansatz?</h4>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 1rem;">
+                        <div>
+                            <h5 style="color: var(--primary-color);">Traditionell geeignet für:</h5>
+                            <ul>
+                                <li>Klare, unveränderliche Anforderungen</li>
+                                <li>Regulierte Branchen (Medizin, Luftfahrt)</li>
+                                <li>Große, langfristige Projekte</li>
+                                <li>Erfahrene Teams mit etablierten Prozessen</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h5 style="color: var(--success-color);">Agil geeignet für:</h5>
+                            <ul>
+                                <li>Sich ändernde Anforderungen</li>
+                                <li>Innovative Softwareprojekte</li>
+                                <li>Kurze Time-to-Market</li>
+                                <li>Kleine, flexible Teams</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Das Agile Manifest -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>4. Das Agile Manifest</h2>
+                <div class="section-description">Die Grundlagen der agilen Softwareentwicklung</div>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <h4>📜 Geschichte des Agilen Manifests</h4>
+                    <p>Ende der 90er Jahre wurde Software ähnlich wie eine Brücke geplant - sehr detailliert und starr. Das führte zu Problemen: Kunden konnten sich die Software nicht vorstellen, Entwickler fokussierten sich auf Tools statt auf Kundenbedürfnisse, und es entstanden Konflikte. 2001 entwickelten 17 Softwareentwickler das <strong>Agile Manifest</strong> als Antwort auf diese Probleme.</p>
+                </div>
+
+                <div style="background: linear-gradient(135deg, #f0f9ff, #e0f2fe); padding: 2rem; border-radius: 8px; margin: 1.5rem 0;">
+                    <h3 style="color: var(--primary-color); text-align: center; margin-bottom: 1.5rem;">Die 4 Grundwerte des Agilen Manifests</h3>
+                    
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem;">
+                        <div style="background: white; padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--primary-color);">
+                            <h4 style="color: var(--primary-color);">👥 Individuen und Interaktionen</h4>
+                            <p style="margin: 0.5rem 0; color: var(--text-light);">sind wichtiger als</p>
+                            <p style="text-decoration: line-through;">Prozesse und Werkzeuge</p>
+                        </div>
+                        
+                        <div style="background: white; padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--success-color);">
+                            <h4 style="color: var(--success-color);">💻 Funktionierende Software</h4>
+                            <p style="margin: 0.5rem 0; color: var(--text-light);">ist wichtiger als</p>
+                            <p style="text-decoration: line-through;">umfassende Dokumentation</p>
+                        </div>
+                        
+                        <div style="background: white; padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--warning-color);">
+                            <h4 style="color: var(--warning-color);">🤝 Zusammenarbeit mit dem Kunden</h4>
+                            <p style="margin: 0.5rem 0; color: var(--text-light);">ist wichtiger als</p>
+                            <p style="text-decoration: line-through;">Vertragsverhandlungen</p>
+                        </div>
+                        
+                        <div style="background: white; padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--danger-color);">
+                            <h4 style="color: var(--danger-color);">🔄 Reagieren auf Veränderung</h4>
+                            <p style="margin: 0.5rem 0; color: var(--text-light);">ist wichtiger als</p>
+                            <p style="text-decoration: line-through;">das Befolgen eines Plans</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>💡 Was bedeutet das konkret?</h4>
+                    <ul>
+                        <li><strong>Menschen vor Prozessen:</strong> Ein gutes Team löst Probleme auch ohne perfekte Tools</li>
+                        <li><strong>Software vor Dokumentation:</strong> Lieber eine funktionierende App als 100 Seiten Spezifikation</li>
+                        <li><strong>Zusammenarbeit vor Verträgen:</strong> Regelmäßige Gespräche statt starrer Verträge</li>
+                        <li><strong>Flexibilität vor Plänen:</strong> Auf neue Anforderungen eingehen statt stur am Plan festhalten</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scrum Framework -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>5. Scrum - Das agile Framework</h2>
+                <div class="section-description">Strukturiertes agiles Projektmanagement</div>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <h4>📚 Was ist Scrum?</h4>
+                    <p><strong>Scrum</strong> (englisch für "Gedränge") ist ein Framework für agile Softwareentwicklung und Projektmanagement. Es wurde 1993 entwickelt und besteht aus nur wenigen, aber klaren Regeln. Scrum ist <strong>iterativ</strong> (wiederholend) und <strong>inkrementell</strong> (schrittweise aufbauend).</p>
+                </div>
+
+                <div class="important-box">
+                    <h4>🎯 Wann eignet sich Scrum?</h4>
+                    <ul>
+                        <li><strong>Komplexe Aufgabenstellungen:</strong> Anforderungen sind hoch, aber der Lösungsweg ist unklar</li>
+                        <li><strong>Kleine Teams:</strong> 4-7 Personen arbeiten optimal zusammen</li>
+                        <li><strong>In-House-Projekte:</strong> Besonders bei internen Projekten (z.B. interne Tools)</li>
+                        <li><strong>Innovative Projekte:</strong> Wenn viel experimentiert und getestet werden muss</li>
+                    </ul>
+                </div>
+
+                <h3>👥 Die drei Scrum-Rollen</h3>
+                
+                <div class="role-card">
+                    <h4>🔧 Product Owner</h4>
+                    <p><strong>Der Produktverantwortliche</strong> - vertritt die Interessen der Kunden und Nutzer</p>
+                    <ul class="role-responsibilities">
+                        <li>Definiert die Anforderungen (User Stories)</li>
+                        <li>Priorisiert die Aufgaben im Product Backlog</li>
+                        <li>Entscheidet über Funktionen und deren Reihenfolge</li>
+                        <li>Nimmt die fertigen Funktionen ab</li>
+                        <li>Kommuniziert mit Stakeholdern und Kunden</li>
+                    </ul>
+                </div>
+
+                <div class="role-card">
+                    <h4>💻 Development Team</h4>
+                    <p><strong>Das Entwicklungsteam</strong> - erstellt das Produkt</p>
+                    <ul class="role-responsibilities">
+                        <li>Entwickelt die Software/das Produkt</li>
+                        <li>Schätzt den Aufwand für Aufgaben</li>
+                        <li>Organisiert sich selbst</li>
+                        <li>Ist verantwortlich für die Qualität</li>
+                        <li>Besteht aus 3-9 Entwicklern</li>
+                    </ul>
+                </div>
+
+                <div class="role-card">
+                    <h4>🎯 Scrum Master</h4>
+                    <p><strong>Der Prozessverantwortliche</strong> - sorgt für den reibungslosen Scrum-Prozess</p>
+                    <ul class="role-responsibilities">
+                        <li>Moderiert die Scrum-Meetings</li>
+                        <li>Beseitigt Hindernisse für das Team</li>
+                        <li>Coacht das Team in Scrum-Praktiken</li>
+                        <li>Schützt das Team vor Störungen</li>
+                        <li>Sorgt für die Einhaltung der Scrum-Regeln</li>
+                        <li>Ist kein Projektleiter im traditionellen Sinn</li>
+                    </ul>
+                </div>
+
+                <h3>📦 Die Scrum-Artefakte</h3>
+                <p style="margin-bottom: 1rem;">Artefakte sind die "Arbeitsergebnisse" in Scrum - sie machen die Planung und den Fortschritt sichtbar:</p>
+                
+                <div class="scrum-artifacts">
+                    <div class="artifact-card">
+                        <h4>📋 Product Backlog</h4>
+                        <p><strong>Die Gesamtliste aller Anforderungen</strong></p>
+                        <ul>
+                            <li>Enthält alle gewünschten Funktionen</li>
+                            <li>Wird vom Product Owner verwaltet</li>
+                            <li>Ist nach Priorität sortiert</li>
+                            <li>Wird kontinuierlich gepflegt und aktualisiert</li>
+                            <li>Enthält User Stories mit Schätzungen</li>
+                        </ul>
+                    </div>
+
+                    <div class="artifact-card">
+                        <h4>📝 Sprint Backlog</h4>
+                        <p><strong>Die Aufgaben für den aktuellen Sprint</strong></p>
+                        <ul>
+                            <li>Ausgewählte Items aus dem Product Backlog</li>
+                            <li>Wird vom Development Team verwaltet</li>
+                            <li>Enthält konkrete Aufgaben und deren Status</li>
+                            <li>Wird täglich im Daily Scrum besprochen</li>
+                            <li>Zeigt den aktuellen Arbeitsfortschritt</li>
+                        </ul>
+                    </div>
+
+                    <div class="artifact-card">
+                        <h4>🚀 Product Increment</h4>
+                        <p><strong>Das fertige, funktionierende Produktstück</strong></p>
+                        <ul>
+                            <li>Potentiell auslieferbare Software</li>
+                            <li>Entsteht am Ende jedes Sprints</li>
+                            <li>Muss die Definition of Done erfüllen</li>
+                            <li>Wird im Sprint Review demonstriert</li>
+                            <li>Baut auf vorherigen Incrementen auf</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>🔄 Die Scrum-Events (Ereignisse)</h3>
+                <p style="margin-bottom: 1rem;">Scrum hat fünf festgelegte Meetings, die den Rahmen für die Zusammenarbeit bilden:</p>
+
+                <div class="process-flow">
+                    <div class="process-step">
+                        <h4>📅 Sprint Planning</h4>
+                        <p><strong>Dauer:</strong> 8h (4-Wochen-Sprint)</p>
+                        <p>Das Team plant, was im kommenden Sprint umgesetzt wird</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <h4>🏃 Sprint (1-4 Wochen)</h4>
+                        <p>Das Herz von Scrum - die eigentliche Entwicklungsphase</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <h4>☀️ Daily Scrum</h4>
+                        <p><strong>Dauer:</strong> 15 min (täglich)</p>
+                        <p>Kurze Abstimmung über Fortschritt und Hindernisse</p>
+                    </div>
+                </div>
+
+                <div class="process-flow" style="margin-top: 2rem;">
+                    <div class="process-step">
+                        <h4>🎯 Sprint Review</h4>
+                        <p><strong>Dauer:</strong> 4h (4-Wochen-Sprint)</p>
+                        <p>Demonstration der fertigen Funktionen</p>
+                    </div>
+                    
+                    <div class="process-step">
+                        <h4>🔄 Sprint Retrospective</h4>
+                        <p><strong>Dauer:</strong> 3h (4-Wochen-Sprint)</p>
+                        <p>Reflexion über den Prozess und Verbesserungen</p>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>🌟 Beispiel: Daily Scrum Fragen</h4>
+                    <p>Jedes Teammitglied beantwortet drei Fragen:</p>
+                    <ol>
+                        <li><strong>Was habe ich gestern gemacht?</strong> (um das Sprintziel zu erreichen)</li>
+                        <li><strong>Was werde ich heute machen?</strong> (um das Sprintziel zu erreichen)</li>
+                        <li><strong>Welche Hindernisse blockieren mich?</strong> (die der Scrum Master beseitigen kann)</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+
+        <!-- Projekt in Teilaufgaben gliedern -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>6. Große Projekte in Teilaufgaben gliedern</h2>
+                <div class="section-description">Systematische Zerlegung komplexer Aufgaben</div>
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <h4>🧩 Warum Aufgaben aufteilen?</h4>
+                    <p>Große Projekte sind komplex und schwer zu überblicken. Durch die Aufteilung in kleinere Teilaufgaben wird das Projekt:</p>
+                    <ul style="margin-top: 1rem;">
+                        <li>Überschaubarer und planbar</li>
+                        <li>Besser schätzbar (Zeit und Aufwand)</li>
+                        <li>Parallelisierbar (mehrere Personen können gleichzeitig arbeiten)</li>
+                        <li>Testbarer (einzelne Teile können getestet werden)</li>
+                        <li>Kontrollierbarer (Fortschritt wird sichtbar)</li>
+                    </ul>
+                </div>
+
+                <h3>📝 Teilaufgaben aus Kundensicht (User Stories)</h3>
+                <div class="important-box">
+                    <h4>📖 Was sind User Stories?</h4>
+                    <p>User Stories beschreiben Funktionen aus der Sicht des Anwenders. Sie folgen dem Schema:</p>
+                    <div style="background: white; padding: 1rem; border-radius: 8px; margin: 1rem 0; font-family: monospace; text-align: center; font-size: 1.1rem;">
+                        <strong>"Als [Benutzerrolle] möchte ich [Funktion], damit [Nutzen]"</strong>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h4>🌟 Beispiele für User Stories</h4>
+                    <div style="background: white; padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+                        <p><strong>Online-Shop Projekt:</strong></p>
+                        <ul>
+                            <li>"Als <em>Kunde</em> möchte ich <em>Produkte in den Warenkorb legen</em>, damit <em>ich mehrere Artikel auf einmal kaufen kann</em>"</li>
+                            <li>"Als <em>Shop-Betreiber</em> möchte ich <em>Produktbewertungen anzeigen</em>, damit <em>Kunden informierte Kaufentscheidungen treffen können</em>"</li>
+                            <li>"Als <em>registrierter Nutzer</em> möchte ich <em>meine Bestellhistorie einsehen</em>, damit <em>ich vorherige Käufe nachvollziehen kann</em>"</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>✅ Überprüfbarkeit von Teilaufgaben</h3>
+                <p>Jede Teilaufgabe muss klar überprüfbar sein. Dazu gehören:</p>
+                
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 1rem; margin: 1.5rem 0;">
+                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px;">
+                        <h4 style="color: var(--primary-color);">📋 Akzeptanzkriterien</h4>
+                        <p>Konkrete Bedingungen, die erfüllt sein müssen</p>
+                        <ul style="font-size: 0.9rem; margin-top: 0.5rem;">
+                            <li>Messbare Ergebnisse</li>
+                            <li>Eindeutige Formulierung</li>
+                            <li>Testbare Kriterien</li>
+                        </ul>
+                    </div>
+
+                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px;">
+                        <h4 style="color: var(--primary-color);">🎯 Definition of Done</h4>
+                        <p>Allgemeine Qualitätsstandards für alle Aufgaben</p>
+                        <ul style="font-size: 0.9rem; margin-top: 0.5rem;">
+                            <li>Code ist getestet</li>
+                            <li>Dokumentation erstellt</li>
+                            <li>Review durchgeführt</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <h3>⏱️ Aufwandsabschätzung und Priorisierung</h3>
+                
+                <div class="important-box">
+                    <h4>🔢 Story Points - Relative Schätzung</h4>
+                    <p>Statt Stunden zu schätzen, verwendet Scrum <strong>Story Points</strong> - eine relative Bewertung des Aufwands:</p>
+                    <ul style="margin-top: 1rem;">
+                        <li><strong>1 Point:</strong> Sehr einfach, schnell erledigt</li>
+                        <li><strong>2 Points:</strong> Einfach, wenig Komplexität</li>
+                        <li><strong>3 Points:</strong> Mittel, normale Komplexität</li>
+                        <li><strong>5 Points:</strong> Komplex, mehrere Tage Arbeit</li>
+                        <li><strong>8 Points:</strong> Sehr komplex, sollte aufgeteilt werden</li>
+                        <li><strong>13+ Points:</strong> Zu groß, muss aufgeteilt werden</li>
+                    </ul>
+                </div>
+
+                <div class="example-box">
+                    <h4>📊 Priorisierung nach MoSCoW-Methode</h4>
+                    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem; margin-top: 1rem;">
+                        <div style="background: #dc2626; color: white; padding: 1rem; border-radius: 8px; text-align: center;">
+                            <h5>Must Have</h5>
+                            <p style="font-size: 0.9rem;">Absolut notwendig</p>
+                        </div>
+                        <div style="background: #ea580c; color: white; padding: 1rem; border-radius: 8px; text-align: center;">
+                            <h5>Should Have</h5>
+                            <p style="font-size: 0.9rem;">Wichtig, aber nicht kritisch</p>
+                        </div>
+                        <div style="background: #ca8a04; color: white; padding: 1rem; border-radius: 8px; text-align: center;">
+                            <h5>Could Have</h5>
+                            <p style="font-size: 0.9rem;">Schön zu haben</p>
+                        </div>
+                        <div style="background: #64748b; color: white; padding: 1rem; border-radius: 8px; text-align: center;">
+                            <h5>Won't Have</h5>
+                            <p style="font-size: 0.9rem;">Nicht in dieser Version</p>
+                        </div>
+                    </div>
+                </div>
+
+                <h3>🔄 Zustände von Teilaufgaben</h3>
+                <p>Jede Aufgabe durchläuft verschiedene Zustände. Ein typisches Kanban-Board zeigt:</p>
+                
+                <div style="display: flex; gap: 1rem; margin: 1.5rem 0; overflow-x: auto;">
+                    <div style="background: #fee2e2; border: 2px solid #dc2626; border-radius: 8px; padding: 1rem; min-width: 150px; text-align: center;">
+                        <h5 style="color: #dc2626;">📝 To Do</h5>
+                        <p style="font-size: 0.9rem;">Geplant, aber noch nicht begonnen</p>
+                    </div>
+                    <div style="background: #fef3c7; border: 2px solid #d97706; border-radius: 8px; padding: 1rem; min-width: 150px; text-align: center;">
+                        <h5 style="color: #d97706;">🔄 In Progress</h5>
+                        <p style="font-size: 0.9rem;">Wird gerade bearbeitet</p>
+                    </div>
+                    <div style="background: #dbeafe; border: 2px solid #2563eb; border-radius: 8px; padding: 1rem; min-width: 150px; text-align: center;">
+                        <h5 style="color: #2563eb;">👀 Review</h5>
+                        <p style="font-size: 0.9rem;">Zur Kontrolle/Test</p>
+                    </div>
+                    <div style="background: #dcfce7; border: 2px solid #16a34a; border-radius: 8px; padding: 1rem; min-width: 150px; text-align: center;">
+                        <h5 style="color: #16a34a;">✅ Done</h5>
+                        <p style="font-size: 0.9rem;">Fertig und abgenommen</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Praktisches Beispiel -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>7. Praktisches Beispiel: Schulwebsite-Projekt</h2>
+                <div class="section-description">Scrum in der Praxis anwenden</div>
+            </div>
+            <div class="section-content">
+                <div class="example-box">
+                    <h4>🎯 Projektauftrag</h4>
+                    <p><strong>Ziel:</strong> Entwicklung einer neuen Website für unsere Schule mit modernem Design, Informationen für Schüler und Eltern, sowie einem News-Bereich.</p>
+                    <p><strong>Team:</strong> 5 Schüler (1 Product Owner, 1 Scrum Master, 3 Entwickler)</p>
+                    <p><strong>Zeitrahmen:</strong> 8 Wochen (4 Sprints à 2 Wochen)</p>
+                </div>
+
+                <h3>👥 Rollenverteilung</h3>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 1rem; margin: 1rem 0;">
+                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px;">
+                        <h4 style="color: var(--primary-color);">Product Owner: Lisa</h4>
+                        <p>Sammelt Anforderungen von Lehrern und Schulleitung, priorisiert Features</p>
+                    </div>
+                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px;">
+                        <h4 style="color: var(--success-color);">Scrum Master: Tom</h4>
+                        <p>Organisiert Meetings, beseitigt Hindernisse, coacht das Team</p>
+                    </div>
+                    <div style="background: var(--bg-light); padding: 1rem; border-radius: 8px;">
+                        <h4 style="color: var(--warning-color);">Entwickler: Anna, Ben, Clara</h4>
+                        <p>Programmieren die Website, erstellen Design, testen Funktionen</p>
+                    </div>
+                </div>
+
+                <h3>📋 Product Backlog (Auszug)</h3>
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Priorität</th>
+                            <th>User Story</th>
+                            <th>Story Points</th>
+                            <th>MoSCoW</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>1</td>
+                            <td>Als <strong>Besucher</strong> möchte ich <strong>grundlegende Schulinfos</strong> finden, damit <strong>ich mich über die Schule informieren kann</strong></td>
+                            <td>5</td>
+                            <td style="background: #dc2626; color: white;">Must</td>
+                        </tr>
+                        <tr>
+                            <td>2</td>
+                            <td>Als <strong>Schüler</strong> möchte ich <strong>aktuelle Termine einsehen</strong>, damit <strong>ich keine wichtigen Ereignisse verpasse</strong></td>
+                            <td>3</td>
+                            <td style="background: #dc2626; color: white;">Must</td>
+                        </tr>
+                        <tr>
+                            <td>3</td>
+                            <td>Als <strong>Lehrer</strong> möchte ich <strong>News veröffentlichen</strong>, damit <strong>ich Schüler und Eltern informieren kann</strong></td>
+                            <td>8</td>
+                            <td style="background: #ea580c; color: white;">Should</td>
+                        </tr>
+                        <tr>
+                            <td>4</td>
+                            <td>Als <strong>Elternteil</strong> möchte ich <strong>Kontaktdaten der Lehrer</strong> finden, damit <strong>ich sie bei Fragen erreichen kann</strong></td>
+                            <td>2</td>
+                            <td style="background: #ea580c; color: white;">Should</td>
+                        </tr>
+                        <tr>
+                            <td>5</td>
+                            <td>Als <strong>Schüler</strong> möchte ich <strong>eine Bildergalerie</strong> von Schulevents ansehen, damit <strong>ich Erinnerungen teilen kann</strong></td>
+                            <td>5</td>
+                            <td style="background: #ca8a04; color: white;">Could</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h3>🏃 Sprint 1 Planning</h3>
+                <div class="important-box">
+                    <h4>Sprint Ziel: "Grundlegende Website mit Schulinfos und Navigation"</h4>
+                    <p><strong>Sprint Backlog:</strong></p>
+                    <ul>
+                        <li>Grundlegendes HTML-Layout erstellen (3 SP)</li>
+                        <li>CSS-Design für Header und Navigation (2 SP)</li>
+                        <li>Startseite mit Schulinfos (3 SP)</li>
+                        <li>Impressum und Kontaktseite (2 SP)</li>
+                    </ul>
+                    <p><strong>Gesamtaufwand:</strong> 10 Story Points (Team-Kapazität: 12 SP pro Sprint)</p>
+                </div>
+
+                <h3>📊 Sprint Review & Retrospective</h3>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin: 1.5rem 0;">
+                    <div style="background: #f0fdf4; padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--success-color);">
+                        <h4 style="color: var(--success-color);">✅ Was lief gut?</h4>
+                        <ul style="margin-top: 1rem;">
+                            <li>Alle geplanten Features fertiggestellt</li>
+                            <li>Gute Zusammenarbeit im Team</li>
+                            <li>Rechtzeitige Fertigstellung</li>
+                            <li>Positive Rückmeldung der Schulleitung</li>
+                        </ul>
+                    </div>
+                    <div style="background: #fef2f2; padding: 1.5rem; border-radius: 8px; border-left: 4px solid var(--danger-color);">
+                        <h4 style="color: var(--danger-color);">⚠️ Was kann verbessert werden?</h4>
+                        <ul style="margin-top: 1rem;">
+                            <li>Daily Scrums waren teilweise zu lang</li>
+                            <li>Bessere Koordination bei CSS-Änderungen nötig</li>
+                            <li>Mehr Zeit für Testing einplanen</li>
+                            <li>Klarere Definition of Done festlegen</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Andere Projektmanagement-Verfahren -->
+        <div class="content-section">
+            <div class="section-header">
+                <h2>8. Andere Projektmanagement-Verfahren</h2>
+                <div class="section-description">Überblick über weitere Methoden</div>
+            </div>
+            <div class="section-content">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Verfahren</th>
+                            <th>Beschreibung</th>
+                            <th>Einsatzgebiet</th>
+                            <th>Vor-/Nachteile</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Wasserfall</strong></td>
+                            <td>Sequenzielles Vorgehen: Analyse → Design → Implementierung → Test → Deployment</td>
+                            <td>Klare, stabile Anforderungen; regulierte Branchen</td>
+                            <td>+ Planbar<br>- Unflexibel bei Änderungen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Kanban</strong></td>
+                            <td>Visuelles System mit Boards und Karten; kontinuierlicher Fluss</td>
+                            <td>Support, Wartung; kontinuierliche Arbeit</td>
+                            <td>+ Sehr flexibel<br>- Weniger Struktur</td>
+                        </tr>
+                        <tr>
+                            <td><strong>V-Modell</strong></td>
+                            <td>Erweitertes Wasserfallmodell mit parallelen Test-Phasen</td>
+                            <td>Sicherheitskritische Systeme; Behörden</td>
+                            <td>+ Hohe Qualität<br>- Sehr aufwändig</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Extreme Programming (XP)</strong></td>
+                            <td>Agile Methode mit Fokus auf Programmier-Praktiken</td>
+                            <td>Kleine Teams; technische Projekte</td>
+                            <td>+ Hohe Code-Qualität<br>- Sehr diszipliniert</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="important-box">
+                    <h4>🤔 Welches Verfahren wählen?</h4>
+                    <p>Die Wahl hängt von verschiedenen Faktoren ab:</p>
+                    <ul style="margin-top: 1rem;">
+                        <li><strong>Projektgröße:</strong> Kleine Projekte = agil, große Projekte = traditionell</li>
+                        <li><strong>Anforderungsstabilität:</strong> Stabil = Wasserfall, ändernd = agil</li>
+                        <li><strong>Teamgröße:</strong> Klein = Scrum, groß = strukturierte Methoden</li>
+                        <li><strong>Branche:</strong> Reguliert = V-Modell, innovativ = agil</li>
+                        <li><strong>Risiko:</strong> Hoch = strukturiert, niedrig = flexibel</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Key Takeaways -->
+        <div class="key-takeaways">
+            <h4>⚡ Die wichtigsten Punkte für das Abitur</h4>
+            <ul>
+                <li><strong>Projektmanagement</strong> ist die systematische Planung und Steuerung von zeitlich begrenzten, einmaligen Vorhaben</li>
+                <li><strong>Agiles PM</strong> ist flexibler als traditionelles PM und reagiert besser auf Änderungen</li>
+                <li><strong>Scrum</strong> hat 3 Rollen (Product Owner, Scrum Master, Development Team), 3 Artefakte (Product Backlog, Sprint Backlog, Increment) und 5 Events</li>
+                <li><strong>User Stories</strong> beschreiben Anforderungen aus Nutzersicht: "Als [Rolle] möchte ich [Funktion], damit [Nutzen]"</li>
+                <li><strong>Teilaufgaben</strong> müssen überprüfbar, schätzbar und priorisierbar sein</li>
+                <li><strong>Story Points</strong> werden für relative Aufwandsschätzung verwendet</li>
+                <li>Die <strong>4 Grundwerte des Agilen Manifests</strong> priorisieren Menschen, funktionierende Software, Zusammenarbeit und Flexibilität</li>
+            </ul>
+        </div>
+
+        <!-- Navigation -->
+        <div class="navigation">
+            <h3>📍 Navigation</h3>
+            <a href="index.html" class="nav-button">🏠 Zurück zur Hauptseite</a>
+            <a href="systemanalyse.html" class="nav-button">➡️ Nächstes Thema: Systemanalyse & Design</a>
+            <a href="dokumentation.html" class="nav-button">📝 Dokumentation & Präsentation</a>
+        </div>
+    </div>
+
+    <script>
+        // Simple interactions
+        document.addEventListener('DOMContentLoaded', function() {
+            // Add smooth scrolling for anchor links
+            const links = document.querySelectorAll('a[href^="#"]');
+            links.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const target = document.querySelector(this.getAttribute('href'));
+                    if (target) {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }
+                });
+            });
+
+            // Add click handlers for navigation buttons (placeholder)
+            document.querySelectorAll('.nav-button').forEach(button => {
+                button.addEventListener('click', function(e) {
+                    if (this.href.includes('.html') && !this.href.includes('index.html')) {
+                        e.preventDefault();
+                        alert('Dieser Lernzettel wird noch erstellt!');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>
