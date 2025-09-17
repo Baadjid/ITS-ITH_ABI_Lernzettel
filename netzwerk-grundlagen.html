@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Deutschland, Europa und die Welt nach 1945 - Geschichte Abitur</title>
+    <title>Netzwerk-Grundlagen - Abitur 2026 Lernzettel</title>
     <style>
         * {
             margin: 0;
@@ -11,11 +11,26 @@
             box-sizing: border-box;
         }
 
+        :root {
+            --primary-color: #2563eb;
+            --secondary-color: #1e40af;
+            --accent-color: #3b82f6;
+            --text-dark: #1e293b;
+            --text-light: #64748b;
+            --bg-light: #f8fafc;
+            --bg-white: #ffffff;
+            --border-color: #e2e8f0;
+            --success-color: #10b981;
+            --warning-color: #f59e0b;
+            --danger-color: #ef4444;
+            --info-color: #06b6d4;
+        }
+
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             line-height: 1.6;
-            color: #333;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: var(--text-dark);
+            background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
             min-height: 100vh;
         }
 
@@ -23,1806 +38,1220 @@
             max-width: 1200px;
             margin: 0 auto;
             padding: 20px;
-            position: relative;
         }
 
-        header {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 30px;
-            margin-bottom: 30px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        h1 {
-            color: #2c3e50;
-            font-size: 2.5em;
-            margin-bottom: 10px;
-            font-weight: 700;
-        }
-
-        .nav-links {
-            margin-bottom: 20px;
-        }
-
-        .nav-links a {
-            color: #3498db;
+        .back-button {
+            display: inline-block;
+            margin-bottom: 2rem;
+            padding: 0.75rem 1.5rem;
+            background: var(--primary-color);
+            color: white;
             text-decoration: none;
-            margin: 0 15px;
-            font-weight: 500;
-            transition: color 0.3s ease;
+            border-radius: 8px;
+            transition: background-color 0.3s ease;
         }
 
-        .nav-links a:hover {
-            color: #e74c3c;
+        .back-button:hover {
+            background: var(--secondary-color);
         }
 
-        .main-content {
-            display: grid;
-            gap: 25px;
-            margin-bottom: 30px;
+        .header {
+            text-align: center;
+            margin-bottom: 3rem;
+            background: var(--bg-white);
+            padding: 2rem;
+            border-radius: 16px;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
         }
 
-        .chapter-section {
-            background: rgba(255, 255, 255, 0.95);
-            backdrop-filter: blur(10px);
-            border-radius: 15px;
-            padding: 25px;
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.2);
-        }
-
-        .chapter-title {
-            color: #2c3e50;
-            font-size: 1.8em;
-            font-weight: 600;
-            margin-bottom: 20px;
-            padding-bottom: 10px;
-            border-bottom: 3px solid #3498db;
-        }
-
-        .section-title {
-            color: #34495e;
-            font-size: 1.4em;
-            font-weight: 600;
-            margin: 25px 0 15px 0;
-            padding-left: 15px;
-            border-left: 4px solid #e74c3c;
-        }
-
-        .subsection-title {
-            color: #2980b9;
-            font-size: 1.2em;
-            font-weight: 500;
-            margin: 20px 0 10px 0;
-        }
-
-        .content-text {
-            margin-bottom: 15px;
-            text-align: justify;
-            line-height: 1.7;
-        }
-
-        .highlight-box {
-            background: linear-gradient(135deg, #ff9a9e 0%, #fecfef 100%);
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            border-left: 5px solid #e74c3c;
-        }
-
-        .timeline {
-            background: linear-gradient(135deg, #a8edea 0%, #fed6e3 100%);
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-        }
-
-        .timeline-item {
-            margin-bottom: 15px;
-            padding-left: 20px;
-            border-left: 3px solid #3498db;
-        }
-
-        .timeline-date {
+        .header h1 {
+            font-size: 2.5rem;
+            color: var(--primary-color);
+            margin-bottom: 0.5rem;
             font-weight: bold;
-            color: #2c3e50;
         }
 
-        .important-concept {
-            background: linear-gradient(135deg, #ffecd2 0%, #fcb69f 100%);
-            border-radius: 10px;
-            padding: 15px;
-            margin: 15px 0;
-            border-left: 4px solid #f39c12;
+        .header .subtitle {
+            font-size: 1.2rem;
+            color: var(--text-light);
+            margin-bottom: 1rem;
         }
 
-        .method-box {
-            background: linear-gradient(135deg, #d299c2 0%, #fef9d7 100%);
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
-            border: 2px solid #9b59b6;
+        .learning-objectives {
+            background: linear-gradient(135deg, var(--info-color), #0891b2);
+            color: white;
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 2rem;
         }
 
-        .key-points {
-            background: linear-gradient(135deg, #89f7fe 0%, #66a6ff 100%);
-            border-radius: 10px;
-            padding: 20px;
-            margin: 20px 0;
+        .learning-objectives h3 {
+            margin-bottom: 1rem;
         }
 
-        .key-points ul {
+        .learning-objectives ul {
             list-style: none;
             padding-left: 0;
         }
 
-        .key-points li {
-            margin-bottom: 10px;
-            padding-left: 25px;
+        .learning-objectives li {
+            margin-bottom: 0.5rem;
+            padding-left: 1.5rem;
             position: relative;
         }
 
-        .key-points li:before {
-            content: "★";
+        .learning-objectives li::before {
+            content: "✓";
             position: absolute;
             left: 0;
-            color: #f39c12;
             font-weight: bold;
         }
 
-        /* Table Styles */
-        .table-wrapper {
-            width: 100%;
-            overflow-x: auto;
-            margin: 20px 0;
-            border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-            /* Wichtig: Tooltips nicht abschneiden */
-            overflow-y: visible;
+        .content-section {
+            background: var(--bg-white);
+            margin-bottom: 2rem;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            border: 1px solid var(--border-color);
         }
 
-        .comparison-table {
+        .section-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 1.5rem;
+            font-size: 1.3rem;
+            font-weight: bold;
+        }
+
+        .section-content {
+            padding: 2rem;
+        }
+
+        .subsection {
+            margin-bottom: 2rem;
+            padding: 1.5rem;
+            background: var(--bg-light);
+            border-radius: 12px;
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .subsection h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            font-size: 1.2rem;
+        }
+
+        .definition-box {
+            background: linear-gradient(135deg, #fef3c7, #fcd34d);
+            border: 2px solid var(--warning-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+        }
+
+        .definition-box h5 {
+            color: #92400e;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .example-box {
+            background: linear-gradient(135deg, #dcfce7, #86efac);
+            border: 2px solid var(--success-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+        }
+
+        .example-box h5 {
+            color: #166534;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .topology-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 1.5rem;
+            margin: 1.5rem 0;
+        }
+
+        .topology-card {
+            background: var(--bg-white);
+            border: 2px solid var(--border-color);
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        .topology-card:hover {
+            transform: translateY(-4px);
+            border-color: var(--accent-color);
+        }
+
+        .topology-visual {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 1rem;
+            background: var(--bg-light);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2rem;
+            color: var(--primary-color);
+            border: 3px solid var(--accent-color);
+        }
+
+        .advantages-disadvantages {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 1rem;
+        }
+
+        .advantages, .disadvantages {
+            padding: 1rem;
+            border-radius: 8px;
+        }
+
+        .advantages {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--success-color);
+        }
+
+        .disadvantages {
+            background: rgba(239, 68, 68, 0.1);
+            border: 1px solid var(--danger-color);
+        }
+
+        .advantages h6, .disadvantages h6 {
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .advantages h6 {
+            color: var(--success-color);
+        }
+
+        .disadvantages h6 {
+            color: var(--danger-color);
+        }
+
+        .component-table {
             width: 100%;
-            min-width: 600px; /* Ensures minimum width for desktop readability */
             border-collapse: collapse;
-            background: white;
-            border-radius: 10px;
-            overflow: visible; /* Tooltips nicht abschneiden */
-            position: relative; /* Für absolute Positionierung der Tooltips */
+            margin: 1.5rem 0;
+            background: var(--bg-white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        .comparison-table th,
-        .comparison-table td {
-            padding: 15px;
+        .component-table th,
+        .component-table td {
+            padding: 1rem;
             text-align: left;
-            border-bottom: 1px solid #ddd;
-            word-wrap: break-word;
-            hyphens: auto;
-            /* Wichtig: Tooltips aus Zellen herausragen lassen */
-            overflow: visible;
-            position: relative;
+            border-bottom: 1px solid var(--border-color);
         }
 
-        .comparison-table th {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        .component-table th {
+            background: var(--primary-color);
             color: white;
-            font-weight: 600;
-            position: sticky;
-            top: 0;
-            z-index: 2;
-        }
-
-        .comparison-table tr:nth-child(even) {
-            background-color: #f8f9fa;
-        }
-
-        /* Spezielle Tooltip-Behandlung in Tabellen */
-        .comparison-table .tooltip-term {
-            position: relative;
-        }
-
-        .comparison-table .tooltip-content {
-            /* In Tabellen: Fixed positioning für bessere Sichtbarkeit */
-            position: fixed !important;
-            z-index: 10001 !important;
-        }
-
-        .comparison-table .tooltip-content.show {
-            /* Standard-Position für Tabellen-Tooltips überschreiben */
-            visibility: visible !important;
-            opacity: 1 !important;
-            pointer-events: auto !important;
-            bottom: auto !important;
-            left: auto !important;
-            transform: none !important;
-        }
-
-        .back-link {
-            display: inline-block;
-            background: linear-gradient(45deg, #3498db, #2980b9);
-            color: white;
-            text-decoration: none;
-            padding: 12px 25px;
-            border-radius: 25px;
-            font-weight: 600;
-            margin-top: 20px;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(52, 152, 219, 0.3);
-        }
-
-        .back-link:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(52, 152, 219, 0.4);
-        }
-
-        /* Tooltip Styles - Komplett neu */
-        .tooltip-term {
-            position: relative;
-            color: #2980b9;
-            font-weight: 600;
-            cursor: help;
-            text-decoration: underline;
-            text-decoration-style: dotted;
-            text-underline-offset: 2px;
-        }
-
-        .tooltip-term:hover {
-            color: #3498db;
-        }
-
-        .tooltip-content {
-            visibility: hidden;
-            opacity: 0;
-            position: absolute;
-            z-index: 1000;
-            background: rgba(44, 62, 80, 0.95);
-            color: white;
-            text-align: left;
-            padding: 15px;
-            border-radius: 10px;
-            font-size: 14px;
-            line-height: 1.5;
-            font-weight: normal;
-            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.3);
-            backdrop-filter: blur(10px);
-            transition: all 0.3s ease;
-            pointer-events: none;
-            max-width: 300px;
-            min-width: 250px;
-            width: max-content;
-            /* Standard Position: oberhalb des Elements */
-            bottom: 100%;
-            left: 50%;
-            transform: translate(-50%, -10px);
-        }
-
-        .tooltip-content::after {
-            content: "";
-            position: absolute;
-            top: 100%;
-            left: 50%;
-            margin-left: -5px;
-            border-width: 5px;
-            border-style: solid;
-            border-color: rgba(44, 62, 80, 0.95) transparent transparent transparent;
-        }
-
-        /* Klasse für sichtbare Tooltips */
-        .tooltip-content.show {
-            visibility: visible;
-            opacity: 1;
-            pointer-events: auto;
-            transform: translate(-50%, -5px);
-        }
-
-        /* Mobile Tooltip Styling */
-        .tooltip-content.mobile {
-            position: fixed !important;
-            top: 50% !important;
-            left: 50% !important;
-            bottom: auto !important;
-            transform: translate(-50%, -50%) !important;
-            max-width: 90vw !important;
-            min-width: 280px !important;
-            max-height: 70vh !important;
-            overflow-y: auto !important;
-            z-index: 10000 !important;
-        }
-
-        .tooltip-content.mobile::after {
-            display: none !important;
-        }
-
-        /* Overlay für Mobile */
-        .tooltip-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 9999;
-            display: none;
-        }
-
-        .tooltip-overlay.active {
-            display: block;
-        }
-
-        /* Mobile Card Layout für Tables */
-        .mobile-card-container {
-            display: none;
-        }
-
-        .mobile-card {
-            background: white;
-            border-radius: 10px;
-            padding: 20px;
-            margin-bottom: 15px;
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-        }
-
-        .mobile-card-header {
             font-weight: bold;
-            color: #2c3e50;
-            margin-bottom: 10px;
-            padding-bottom: 10px;
-            border-bottom: 2px solid #3498db;
         }
 
-        .mobile-card-row {
-            margin-bottom: 12px;
+        .component-table tr:hover {
+            background: var(--bg-light);
         }
 
-        .mobile-card-label {
-            font-weight: 600;
-            color: #34495e;
-            margin-bottom: 4px;
+        .protocol-stack {
+            display: flex;
+            flex-direction: column-reverse;
+            gap: 0.5rem;
+            margin: 1.5rem 0;
+            padding: 1rem;
+            background: var(--bg-light);
+            border-radius: 12px;
         }
 
-        .mobile-card-value {
-            color: #333;
-            line-height: 1.5;
+        .protocol-layer {
+            background: var(--bg-white);
+            padding: 1rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent-color);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
-        /* Mobile optimizations */
+        .protocol-layer.layer-1 { border-left-color: #ef4444; }
+        .protocol-layer.layer-2 { border-left-color: #f59e0b; }
+        .protocol-layer.layer-3 { border-left-color: #10b981; }
+        .protocol-layer.layer-4 { border-left-color: #3b82f6; }
+        .protocol-layer.layer-5 { border-left-color: #8b5cf6; }
+        .protocol-layer.layer-6 { border-left-color: #ec4899; }
+        .protocol-layer.layer-7 { border-left-color: #06b6d4; }
+
+        .important-note {
+            background: linear-gradient(135deg, #fee2e2, #fca5a5);
+            border: 2px solid var(--danger-color);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin: 1.5rem 0;
+        }
+
+        .important-note h5 {
+            color: #991b1b;
+            margin-bottom: 0.5rem;
+            font-weight: bold;
+        }
+
+        .quiz-section {
+            background: linear-gradient(135deg, #e0e7ff, #c7d2fe);
+            padding: 2rem;
+            border-radius: 16px;
+            margin-top: 3rem;
+            border: 2px solid var(--accent-color);
+        }
+
+        .quiz-section h3 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            text-align: center;
+        }
+
+        .quiz-question {
+            background: var(--bg-white);
+            padding: 1.5rem;
+            border-radius: 12px;
+            margin-bottom: 1rem;
+            border: 1px solid var(--border-color);
+        }
+
+        .visual-network {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 2rem;
+            background: var(--bg-light);
+            border-radius: 12px;
+            margin: 1.5rem 0;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .network-device {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 1rem;
+            background: var(--bg-white);
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+            min-width: 120px;
+        }
+
+        .device-icon {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--accent-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 1.5rem;
+            margin-bottom: 0.5rem;
+        }
+
+        .network-connection {
+            width: 2px;
+            height: 40px;
+            background: var(--primary-color);
+            margin: 0 1rem;
+        }
+
         @media (max-width: 768px) {
             .container {
-                padding: 15px;
-                overflow-x: hidden;
+                padding: 10px;
             }
             
-            h1 {
-                font-size: 2em;
-            }
-
-            .chapter-title {
-                font-size: 1.5em;
-            }
-
-            .section-title {
-                font-size: 1.2em;
+            .header h1 {
+                font-size: 2rem;
             }
             
-            .nav-links {
-                display: flex;
+            .topology-grid {
+                grid-template-columns: 1fr;
+            }
+            
+            .advantages-disadvantages {
+                grid-template-columns: 1fr;
+            }
+            
+            .visual-network {
                 flex-direction: column;
-                gap: 10px;
-                align-items: center;
-            }
-
-            .nav-links a {
-                margin: 5px 0;
-                padding: 8px 16px;
-                background: rgba(52, 152, 219, 0.1);
-                border-radius: 8px;
-                display: inline-block;
-            }
-
-            /* Hide table wrapper and show mobile cards on small screens */
-            .table-wrapper {
-                display: none;
-            }
-
-            .mobile-card-container {
-                display: block;
-            }
-
-            .tooltip-term {
-                -webkit-tap-highlight-color: transparent;
-            }
-
-            .highlight-box, .timeline, .important-concept, .method-box, .key-points {
-                margin: 15px 0;
-                padding: 15px;
-            }
-
-            .timeline-item {
-                padding-left: 15px;
-                margin-bottom: 12px;
-            }
-        }
-
-        /* Medium screens */
-        @media (max-width: 1024px) and (min-width: 769px) {
-            .comparison-table {
-                min-width: 500px;
             }
             
-            .comparison-table th,
-            .comparison-table td {
-                padding: 12px;
-                font-size: 0.9em;
-            }
-        }
-
-        /* Touch-friendly tooltips for mobile */
-        @media (hover: none) and (pointer: coarse) {
-            .tooltip-term:active .tooltip-content {
-                visibility: visible;
-                opacity: 1;
-                transform: translate(-50%, -50%);
-            }
-
-            .tooltip-overlay {
-                position: fixed;
-                top: 0;
-                left: 0;
-                width: 100%;
-                height: 100%;
-                background: rgba(0, 0, 0, 0.3);
-                z-index: 9999;
-                display: none;
-            }
-
-            .tooltip-overlay.active {
-                display: block;
-            }
-        }
-
-        /* Scrollable tooltip content */
-        .tooltip-scrollable {
-            max-height: 300px;
-            overflow-y: auto;
-            scrollbar-width: thin;
-            scrollbar-color: #3498db rgba(255, 255, 255, 0.1);
-        }
-
-        .tooltip-scrollable::-webkit-scrollbar {
-            width: 6px;
-        }
-
-        .tooltip-scrollable::-webkit-scrollbar-track {
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 3px;
-        }
-
-        .tooltip-scrollable::-webkit-scrollbar-thumb {
-            background: #3498db;
-            border-radius: 3px;
-        }
-
-        /* Improved readability for mobile */
-        @media (max-width: 768px) {
-            .content-text {
-                text-align: left;
-                font-size: 16px;
-                line-height: 1.6;
-            }
-
-            .important-concept ul,
-            .key-points ul {
-                padding-left: 0;
-            }
-
-            .important-concept li,
-            .key-points li {
-                padding-left: 20px;
-                margin-bottom: 8px;
+            .network-connection {
+                height: 2px;
+                width: 40px;
             }
         }
     </style>
 </head>
 <body>
-    <div class="tooltip-overlay" id="tooltipOverlay"></div>
-    
     <div class="container">
-        <header>
-            <h1>Deutschland, Europa und die Welt nach 1945</h1>
-            <div class="nav-links">
-                <a href="index.html">← Zurück zum Hauptmenü</a>
-                <a href="Methoden.html">Methoden</a>
-                <a href="Begriffslexikon.html">Begriffslexikon</a>
-                <a href="Operatoren.html">Operatoren</a>
-            </div>
+        <a href="index.html" class="back-button">← Zurück zur Übersicht</a>
+
+        <header class="header">
+            <h1>🌐 Netzwerk-Grundlagen</h1>
+            <p class="subtitle">Vernetzte Systeme & Internet - BPE 11</p>
         </header>
 
-        <div class="main-content">
-            <!-- Kapitel 10: Der Kalte Krieg und seine Folgen -->
-            <div class="chapter-section">
-                <h2 class="chapter-title">10. Der Kalte Krieg und seine Folgen</h2>
-                
-                <div class="highlight-box">
-                    <strong>Überblick:</strong> Nach dem Ende des Zweiten Weltkriegs entwickelte sich zwischen den ehemaligen Alliierten USA und UdSSR ein ideologischer und machtpolitischer Konflikt, der die Weltpolitik für fast ein halbes Jahrhundert prägte.
-                </div>
+        <div class="learning-objectives">
+            <h3>🎯 Lernziele</h3>
+            <ul>
+                <li>Verstehen, was ein Computernetzwerk ist und wofür es gebraucht wird</li>
+                <li>Verschiedene Netzwerk-Topologien kennen und bewerten können</li>
+                <li>Wichtige Netzwerkkomponenten und ihre Funktionen verstehen</li>
+                <li>Unterschied zwischen LAN, MAN und WAN erklären können</li>
+                <li>Grundlagen der Datenübertragung verstehen</li>
+                <li>OSI-Schichtenmodell in Grundzügen kennen</li>
+            </ul>
+        </div>
 
-                <h3 class="section-title">10.1 Der Kalte Krieg – ein Krieg der Ideologien?</h3>
-                
-                <div class="content-text">
-                    Der <span class="tooltip-term">Kalte Krieg<span class="tooltip-content tooltip-scrollable">Ein Konflikt zwischen den USA und der UdSSR (1947-1991), der sich durch ideologische Gegensätze, Wettrüsten und Stellvertreterkriege auszeichnete. "Kalt" bedeutete, dass beide Supermächte nie direkt gegeneinander kämpften, aber ständig in Konkurrenz standen.</span></span> begann beinahe unmittelbar nach dem Ende des Zweiten Weltkrieges. Beteiligt waren einerseits die <span class="tooltip-term">Westalliierten<span class="tooltip-content">USA, Großbritannien und später auch Frankreich - die demokratischen Siegermächte des Zweiten Weltkriegs</span></span> und ihre Verbündeten, die kapitalistisch und demokratisch orientiert waren. Ihnen gegenüber standen die UdSSR und ihre <span class="tooltip-term">Satellitenstaaten<span class="tooltip-content">Osteuropäische Länder, die nach 1945 unter sowjetischem Einfluss standen und kommunistische Regierungen erhielten (Polen, Ungarn, Tschechoslowakei, DDR, etc.)</span></span>, die kommunistisch und diktatorisch geprägt waren.
-                </div>
-
-                <!-- Desktop Table -->
-                <div class="table-wrapper">
-                    <table class="comparison-table">
-                        <tr>
-                            <th>Westlicher Block (USA)</th>
-                            <th>Östlicher Block (UdSSR)</th>
-                        </tr>
-                        <tr>
-                            <td>
-                                <strong>Ideologie:</strong> <span class="tooltip-term">Kapitalismus<span class="tooltip-content">Wirtschaftssystem basierend auf Privateigentum, freiem Markt und Gewinnstreben</span></span>, Demokratie<br>
-                                <strong>Wirtschaft:</strong> <span class="tooltip-term">Marktwirtschaft<span class="tooltip-content">Wirtschaftssystem, in dem Angebot und Nachfrage den Preis bestimmen und private Unternehmen konkurrieren</span></span><br>
-                                <strong>Politik:</strong> Pluralismus, <span class="tooltip-term">Gewaltenteilung<span class="tooltip-content">Aufteilung der Staatsgewalt in Legislative (Gesetzgebung), Exekutive (Ausführung) und Judikative (Rechtsprechung)</span></span><br>
-                                <strong>Bündnis:</strong> <span class="tooltip-term">NATO<span class="tooltip-content">North Atlantic Treaty Organization - 1949 gegründetes Verteidigungsbündnis westlicher Staaten unter Führung der USA</span></span> (1949)
-                            </td>
-                            <td>
-                                <strong>Ideologie:</strong> <span class="tooltip-term">Kommunismus<span class="tooltip-content">Gesellschaftsordnung ohne Privateigentum an Produktionsmitteln, Gleichberechtigung aller Menschen und Abschaffung der Klassenunterschiede</span></span>, Sozialismus<br>
-                                <strong>Wirtschaft:</strong> <span class="tooltip-term">Planwirtschaft<span class="tooltip-content">Wirtschaftssystem, in dem der Staat alle wirtschaftlichen Entscheidungen zentral plant und steuert</span></span><br>
-                                <strong>Politik:</strong> <span class="tooltip-term">Einparteiensystem<span class="tooltip-content">Politisches System, in dem nur eine Partei legal existiert und alle Macht ausübt</span></span><br>
-                                <strong>Bündnis:</strong> <span class="tooltip-term">Warschauer Pakt<span class="tooltip-content">1955 gegründetes Militärbündnis der Ostblockstaaten unter sowjetischer Führung als Gegengewicht zur NATO</span></span> (1955)
-                            </td>
-                        </tr>
-                    </table>
-                </div>
-
-                <!-- Mobile Card Layout -->
-                <div class="mobile-card-container">
-                    <div class="mobile-card">
-                        <div class="mobile-card-header">Westlicher Block (USA)</div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Ideologie:</div>
-                            <div class="mobile-card-value"><span class="tooltip-term">Kapitalismus<span class="tooltip-content">Wirtschaftssystem basierend auf Privateigentum, freiem Markt und Gewinnstreben</span></span>, Demokratie</div>
-                        </div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Wirtschaft:</div>
-                            <div class="mobile-card-value"><span class="tooltip-term">Marktwirtschaft<span class="tooltip-content">Wirtschaftssystem, in dem Angebot und Nachfrage den Preis bestimmen und private Unternehmen konkurrieren</span></span></div>
-                        </div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Politik:</div>
-                            <div class="mobile-card-value">Pluralismus, <span class="tooltip-term">Gewaltenteilung<span class="tooltip-content">Aufteilung der Staatsgewalt in Legislative (Gesetzgebung), Exekutive (Ausführung) und Judikative (Rechtsprechung)</span></span></div>
-                        </div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Bündnis:</div>
-                            <div class="mobile-card-value"><span class="tooltip-term">NATO<span class="tooltip-content">North Atlantic Treaty Organization - 1949 gegründetes Verteidigungsbündnis westlicher Staaten unter Führung der USA</span></span> (1949)</div>
-                        </div>
-                    </div>
-
-                    <div class="mobile-card">
-                        <div class="mobile-card-header">Östlicher Block (UdSSR)</div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Ideologie:</div>
-                            <div class="mobile-card-value"><span class="tooltip-term">Kommunismus<span class="tooltip-content">Gesellschaftsordnung ohne Privateigentum an Produktionsmitteln, Gleichberechtigung aller Menschen und Abschaffung der Klassenunterschiede</span></span>, Sozialismus</div>
-                        </div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Wirtschaft:</div>
-                            <div class="mobile-card-value"><span class="tooltip-term">Planwirtschaft<span class="tooltip-content">Wirtschaftssystem, in dem der Staat alle wirtschaftlichen Entscheidungen zentral plant und steuert</span></span></div>
-                        </div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Politik:</div>
-                            <div class="mobile-card-value"><span class="tooltip-term">Einparteiensystem<span class="tooltip-content">Politisches System, in dem nur eine Partei legal existiert und alle Macht ausübt</span></span></div>
-                        </div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Bündnis:</div>
-                            <div class="mobile-card-value"><span class="tooltip-term">Warschauer Pakt<span class="tooltip-content">1955 gegründetes Militärbündnis der Ostblockstaaten unter sowjetischer Führung als Gegengewicht zur NATO</span></span> (1955)</div>
-                        </div>
-                    </div>
-                </div>
-
-                <h3 class="section-title">10.2 Potsdamer Abkommen – ein Dokument der Teilung</h3>
-                
-                <div class="content-text">
-                    Zunächst waren die späteren Gegner jedoch Verbündete gegen Deutschland. Schon während der letzten Jahre des Zweiten Weltkrieges trafen sich die <span class="tooltip-term">"Großen Drei"<span class="tooltip-content">Die Regierungschefs der drei Hauptsiegermächte: Roosevelt (USA), Stalin (UdSSR) und Churchill (Großbritannien)</span></span> – die USA unter Roosevelt, die UdSSR unter Stalin und Großbritannien unter Churchill – zu verschiedenen Konferenzen.
-                </div>
-
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-date">1943</div>
-                        <strong>Konferenz von Teheran:</strong> Weitgehende Einigkeit zwischen den Siegermächten
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">Februar 1945</div>
-                        <strong><span class="tooltip-term">Konferenz von Jalta<span class="tooltip-content">Konferenz zwischen Roosevelt, Churchill und Stalin zur Nachkriegsordnung. Erste Spannungen zwischen den Alliierten werden sichtbar.</span></span>:</strong> Erste Differenzen, Aufteilung Deutschlands in Besatzungszonen
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">17. Juli - 2. August 1945</div>
-                        <strong><span class="tooltip-term">Potsdamer Konferenz<span class="tooltip-content">Letzte Konferenz der "Großen Drei" (nun Truman, Attlee, Stalin). Endgültige Festlegung der Deutschlandpolitik und erste Anzeichen des Kalten Krieges.</span></span>:</strong> Endgültige Festlegung der Deutschlandpolitik
-                    </div>
-                </div>
-
-                <div class="important-concept">
-                    <strong>Die <span class="tooltip-term">"5 Ds"<span class="tooltip-content">Die fünf Grundprinzipien der alliierten Deutschlandpolitik nach 1945, die Deutschland grundlegend umgestalten sollten</span></span> des Potsdamer Abkommens:</strong>
-                    <ul>
-                        <li><strong><span class="tooltip-term">Demokratisierung<span class="tooltip-content">Aufbau demokratischer Institutionen, Parteien und Wahlen nach westlichem Vorbild</span></span>:</strong> Aufbau demokratischer Strukturen</li>
-                        <li><strong><span class="tooltip-term">Demilitarisierung<span class="tooltip-content">Vollständige Abrüstung und Auflösung der deutschen Wehrmacht</span></span>:</strong> Vollständige Abrüstung</li>
-                        <li><strong><span class="tooltip-term">Demontage<span class="tooltip-content">Abbau von Industrieanlagen, besonders der Rüstungsindustrie, teilweise als Reparationen</span></span>:</strong> Abbau der Rüstungsindustrie</li>
-                        <li><strong><span class="tooltip-term">Dezentralisierung<span class="tooltip-content">Aufbau föderaler Strukturen statt eines zentralisierten Staates</span></span>:</strong> Föderale Strukturen</li>
-                        <li><strong><span class="tooltip-term">Denazifizierung<span class="tooltip-content">Beseitigung des Nationalsozialismus aus Politik, Verwaltung, Justiz und Gesellschaft</span></span>:</strong> Beseitigung des Nationalsozialismus</li>
-                    </ul>
-                </div>
-
-                <h3 class="section-title">10.3 Entnazifizierung – ein Sieg der Gerechtigkeit?</h3>
-                
-                <div class="content-text">
-                    Die <span class="tooltip-term">Entnazifizierung<span class="tooltip-content">Systematische Säuberung von Nationalsozialisten aus öffentlichen Ämtern und die juristische Aufarbeitung von NS-Verbrechen</span></span> war einer der wichtigen Beschlüsse der Alliierten Siegermächte. In der Umsetzung gab es jedoch nach Besatzungszone Unterschiede:
-                </div>
-
-                <!-- Desktop Table -->
-                <div class="table-wrapper">
-                    <table class="comparison-table">
-                        <tr>
-                            <th>Besatzungszone</th>
-                            <th>Verfahren</th>
-                            <th>Besonderheiten</th>
-                        </tr>
-                        <tr>
-                            <td>Westzonen</td>
-                            <td><span class="tooltip-term">Fragebogenaktion<span class="tooltip-content">Alle Deutschen mussten einen detaillierten Fragebogen über ihre NS-Vergangenheit ausfüllen</span></span>, <span class="tooltip-term">Spruchkammerverfahren<span class="tooltip-content">Deutsche Zivilgerichte zur Beurteilung der NS-Belastung einzelner Personen</span></span>, <span class="tooltip-term">Nürnberger Prozesse<span class="tooltip-content">Internationale Kriegsverbrecherprozesse gegen die Hauptkriegsverbrecher (1945/46)</span></span> (1945/46)</td>
-                            <td>Kategorisierung in 5 Stufen (Hauptschuldige bis Entlastete)</td>
-                        </tr>
-                        <tr>
-                            <td>Sowjetische Zone</td>
-                            <td>Politische Säuberung durch <span class="tooltip-term">SMAD<span class="tooltip-content">Sowjetische Militäradministration in Deutschland - Besatzungsbehörde der UdSSR</span></span></td>
-                            <td>Enthobung aller Nationalsozialisten aus höheren Ämtern</td>
-                        </tr>
-                    </table>
-                </div>
-
-                <!-- Mobile Card Layout -->
-                <div class="mobile-card-container">
-                    <div class="mobile-card">
-                        <div class="mobile-card-header">Westzonen</div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Verfahren:</div>
-                            <div class="mobile-card-value"><span class="tooltip-term">Fragebogenaktion<span class="tooltip-content">Alle Deutschen mussten einen detaillierten Fragebogen über ihre NS-Vergangenheit ausfüllen</span></span>, <span class="tooltip-term">Spruchkammerverfahren<span class="tooltip-content">Deutsche Zivilgerichte zur Beurteilung der NS-Belastung einzelner Personen</span></span>, <span class="tooltip-term">Nürnberger Prozesse<span class="tooltip-content">Internationale Kriegsverbrecherprozesse gegen die Hauptkriegsverbrecher (1945/46)</span></span> (1945/46)</div>
-                        </div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Besonderheiten:</div>
-                            <div class="mobile-card-value">Kategorisierung in 5 Stufen (Hauptschuldige bis Entlastete)</div>
-                        </div>
-                    </div>
-
-                    <div class="mobile-card">
-                        <div class="mobile-card-header">Sowjetische Zone</div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Verfahren:</div>
-                            <div class="mobile-card-value">Politische Säuberung durch <span class="tooltip-term">SMAD<span class="tooltip-content">Sowjetische Militäradministration in Deutschland - Besatzungsbehörde der UdSSR</span></span></div>
-                        </div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Besonderheiten:</div>
-                            <div class="mobile-card-value">Enthobung aller Nationalsozialisten aus höheren Ämtern</div>
-                        </div>
-                    </div>
-                </div>
-
-                <h3 class="section-title">10.4 Die wirtschaftliche Entwicklung der Besatzungszonen</h3>
-                
-                <div class="content-text">
-                    Aufgrund des Einflusses der Westalliierten und der UdSSR auf ihre Besatzungszonen entwickelten sich diese nach 1945 sehr unterschiedlich. In den drei Westzonen wurde die <span class="tooltip-term">Soziale Marktwirtschaft<span class="tooltip-content">Wirtschaftsordnung, die freie Marktwirtschaft mit sozialer Absicherung verbindet, entwickelt von Ludwig Erhard</span></span>, in der sowjetischen Besatzungszone die Planwirtschaft etabliert.
-                </div>
-
-                <div class="key-points">
-                    <h4>Entwicklung in den Westzonen:</h4>
-                    <ul>
-                        <li>Soziale Marktwirtschaft unter <span class="tooltip-term">Ludwig Erhard<span class="tooltip-content">Wirtschaftsminister der BRD (1949-1963), "Vater des Wirtschaftswunders" und der Sozialen Marktwirtschaft</span></span></li>
-                        <li><span class="tooltip-term">Währungsreform 1948<span class="tooltip-content">Einführung der Deutschen Mark (DM) in den Westzonen, ersetzte die wertlose Reichsmark und leitete das Wirtschaftswunder ein</span></span> (Deutsche Mark)</li>
-                        <li><strong><span class="tooltip-term">Marshall-Plan<span class="tooltip-content">US-Wirtschaftshilfeprogramm (1948-1952) für Europa nach dem Zweiten Weltkrieg, benannt nach US-Außenminister George Marshall</span></span> (1948):</strong> US-Wirtschaftshilfe half den Westzonen wirtschaftlich auf die Beine</li>
-                        <li><span class="tooltip-term">Montanunion<span class="tooltip-content">Europäische Gemeinschaft für Kohle und Stahl (1951) - erste supranationale europäische Organisation</span></span> (1951) - erste europäische Integration</li>
-                    </ul>
-                </div>
-
-                <div class="key-points">
-                    <h4>Entwicklung in der Sowjetischen Zone:</h4>
-                    <ul>
-                        <li>Planwirtschaft nach sowjetischem Vorbild</li>
-                        <li><span class="tooltip-term">Enteignung und Verstaatlichung<span class="tooltip-content">Private Unternehmen und Großgrundbesitz wurden enteignet und in Staatseigentum überführt</span></span></li>
-                        <li><span class="tooltip-term">Bodenreform und Kollektivierung<span class="tooltip-content">Umverteilung des Großgrundbesitzes an Kleinbauern und spätere Zwangskollektivierung in LPGs (Landwirtschaftliche Produktionsgenossenschaften)</span></span></li>
-                        <li><strong><span class="tooltip-term">RGW<span class="tooltip-content">Rat für gegenseitige Wirtschaftshilfe (1949) - Wirtschaftsbündnis der Ostblockstaaten als Antwort auf den Marshall-Plan</span></span> (1949):</strong> Rat für gegenseitige Wirtschaftshilfe als Gegenentwurf zum Marshall-Plan</li>
-                        <li>Gründung der Staatspartei <span class="tooltip-term">SED<span class="tooltip-content">Sozialistische Einheitspartei Deutschlands (1946) - entstanden durch Zwangsvereinigung von SPD und KPD in der Sowjetzone</span></span> (1946)</li>
-                    </ul>
-                </div>
-
-                <div class="highlight-box">
-                    <strong><span class="tooltip-term">Berlin-Blockade<span class="tooltip-content">Sowjetische Blockade aller Land- und Wasserwege nach West-Berlin (24.6.1948 - 12.5.1949) als Reaktion auf die Währungsreform</span></span> (1948/49):</strong><br>
-                    Als die Westalliierten die Währungsreform auch in den westlichen Sektoren Berlins durchführten, reagierte die UdSSR mit der Berlin-Blockade. Sämtliche Landwege nach Westberlin wurden blockiert, sodass eine Versorgung nur per Flugzeug durch die <span class="tooltip-term">Luftbrücke<span class="tooltip-content">Versorgung West-Berlins durch westliche Flugzeuge während der Blockade - etwa 277.000 Flüge transportierten 2,3 Millionen Tonnen Güter</span></span> möglich war.
-                </div>
-
-                <h3 class="section-title">10.5 Doppelte Staatsgründung von BRD und DDR</h3>
-                
-                <div class="content-text">
-                    Ebenso unterschiedlich wie die wirtschaftliche verlief die politische Entwicklung in den einzelnen Zonen. Die drei Westzonen vertieften ihre Gemeinsamkeiten immer mehr:
-                </div>
-
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-date">1947</div>
-                        <strong><span class="tooltip-term">Bizone<span class="tooltip-content">Wirtschaftlicher Zusammenschluss der amerikanischen und britischen Besatzungszone</span></span>:</strong> Zusammenschluss der amerikanischen und britischen Zone
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1948</div>
-                        <strong><span class="tooltip-term">Trizone<span class="tooltip-content">Einbeziehung der französischen Zone - alle drei westlichen Besatzungszonen nun wirtschaftlich vereinigt</span></span>:</strong> Beitritt Frankreichs - drei westliche Besatzungszonen politisch und wirtschaftlich quasi vereinigt
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1946</div>
-                        <strong>SED-Gründung:</strong> <span class="tooltip-term">Zwangsvereinigung<span class="tooltip-content">Erzwungene Fusion von SPD und KPD in der Sowjetzone unter Druck der SMAD, viele SPD-Mitglieder wurden verfolgt</span></span> von SPD und KPD in der Sowjetzone unter SMAD-Verwaltung
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">23. Mai 1949</div>
-                        <strong>Gründung der BRD:</strong> Inkrafttreten des <span class="tooltip-term">Grundgesetzes<span class="tooltip-content">Verfassung der BRD, erarbeitet vom Parlamentarischen Rat. Bewusst "Grundgesetz" genannt, da man eine Wiedervereinigung erwartete</span></span> (Parlamentarischer Rat)
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">7. Oktober 1949</div>
-                        <strong>Gründung der DDR:</strong> Deutsche Demokratische Republik (<span class="tooltip-term">Volkskongress<span class="tooltip-content">Pseudo-demokratisches Gremium in der Sowjetzone, das die DDR-Verfassung verabschiedete</span></span>)
-                    </div>
-                </div>
-
-                <div class="important-concept">
-                    <strong>Unterschiedliche Staatskonzeptionen:</strong><br>
-                    <strong>BRD:</strong> <span class="tooltip-term">Parlamentarische Demokratie<span class="tooltip-content">Regierungssystem, in dem die Regierung vom Parlament gewählt wird und diesem verantwortlich ist</span></span>, föderale Struktur, Gewaltenteilung, Grundrechte<br>
-                    <strong>DDR:</strong> <span class="tooltip-term">"Demokratischer Zentralismus"<span class="tooltip-content">Prinzip der kommunistischen Parteien: scheinbar demokratische Diskussion, aber zentrale Entscheidung durch die Parteiführung</span></span>, sozialistischer Staat, Führungsrolle der SED
-                </div>
-
-                <h3 class="section-title">10.6 Die Entwicklung der beiden deutschen Staaten</h3>
-                
-                <h4 class="subsection-title">Bundesrepublik Deutschland:</h4>
-                <div class="content-text">
-                    <ul>
-                        <li><strong><span class="tooltip-term">Wirtschaftswunder<span class="tooltip-content">Schneller wirtschaftlicher Aufschwung der BRD in den 1950er/60er Jahren mit hohen Wachstumsraten und Vollbeschäftigung</span></span>:</strong> Wirtschaftlich entwickelte sich die BRD zu einem modernen Industriestaat</li>
-                        <li><strong><span class="tooltip-term">Westintegration<span class="tooltip-content">Politik der BRD, sich politisch, militärisch und wirtschaftlich in westliche Strukturen zu integrieren</span></span>:</strong> NATO-Beitritt (1955), <span class="tooltip-term">EWG<span class="tooltip-content">Europäische Wirtschaftsgemeinschaft (1957) - Vorläufer der EU</span></span>-Gründungsmitglied (1957)</li>
-                        <li><strong><span class="tooltip-term">Adenauer-Ära<span class="tooltip-content">Regierungszeit von Konrad Adenauer (1949-1963), geprägt von Westbindung und "Politik der Stärke"</span></span>:</strong> "Politik der Stärke", <span class="tooltip-term">Hallstein-Doktrin<span class="tooltip-content">BRD erkannte keine Staaten an, die die DDR anerkannten (außer UdSSR). Alleinvertretungsanspruch für ganz Deutschland</span></span></li>
-                        <li><strong><span class="tooltip-term">68er-Bewegung<span class="tooltip-content">Studentenproteste und gesellschaftlicher Aufbruch Ende der 1960er Jahre gegen autoritäre Strukturen</span></span>:</strong> Gesellschaftlicher Wandel und Generationenkonflikt</li>
-                    </ul>
-                </div>
-
-                <h4 class="subsection-title">Deutsche Demokratische Republik:</h4>
-                <div class="content-text">
-                    <ul>
-                        <li><strong><span class="tooltip-term">17. Juni 1953<span class="tooltip-content">Volksaufstand in der DDR gegen Normerhöhungen, niedergeschlagen mit sowjetischen Panzern. Bis 1990 Nationalfeiertag der BRD</span></span>:</strong> Volksaufstand in Ostberlin und der DDR</li>
-                        <li><strong>Ostintegration:</strong> Warschauer Pakt (1955), RGW</li>
-                        <li><strong>Staatssicherheit:</strong> Gründung des <span class="tooltip-term">Ministeriums für Staatssicherheit<span class="tooltip-content">Geheimer Polizeiapparat der DDR (gegr. 1950), überwachte und unterdrückte die eigene Bevölkerung mit einem Netz von Spitzeln</span></span> (Stasi) 1950</li>
-                        <li><strong>Fluchtbewegung:</strong> Bis 1961 ca. 2,7 Millionen <span class="tooltip-term">Übersiedler<span class="tooltip-content">DDR-Bürger, die in den Westen flohen, meist über Berlin. Offizielle DDR-Bezeichnung zur Vermeidung des Wortes "Flucht"</span></span> in den Westen</li>
-                    </ul>
-                </div>
-
-                <h3 class="section-title">10.7 Leben in Ost und West</h3>
-                
-                <!-- Desktop Table -->
-                <div class="table-wrapper">
-                    <table class="comparison-table">
-                        <tr>
-                            <th>Aspekt</th>
-                            <th>BRD</th>
-                            <th>DDR</th>
-                        </tr>
-                        <tr>
-                            <td>Lebensstandard</td>
-                            <td>Steigender Wohlstand, <span class="tooltip-term">Konsumgesellschaft<span class="tooltip-content">Gesellschaft, die durch Konsum und materiellen Wohlstand geprägt ist</span></span></td>
-                            <td>Grundversorgung, aber Mangel an Konsumgütern</td>
-                        </tr>
-                        <tr>
-                            <td>Bildung</td>
-                            <td>Föderales System, Bildungsautonomie der Länder</td>
-                            <td>Einheitliches System, <span class="tooltip-term">polytechnische Bildung<span class="tooltip-content">Bildungssystem, das theoretisches Lernen mit praktischer Arbeit verbindet</span></span></td>
-                        </tr>
-                        <tr>
-                            <td>Medien</td>
-                            <td>Pressefreiheit, plurale Medienlandschaft</td>
-                            <td>Staatliche Kontrolle, <span class="tooltip-term">Zensur<span class="tooltip-content">Staatliche Kontrolle und Unterdrückung unerwünschter Meinungen in Medien</span></span></td>
-                        </tr>
-                        <tr>
-                            <td>Reisefreiheit</td>
-                            <td>Freizügigkeit</td>
-                            <td>Eingeschränkt, besonders in den Westen</td>
-                        </tr>
-                    </table>
-                </div>
-
-                <!-- Mobile Card Layout -->
-                <div class="mobile-card-container">
-                    <div class="mobile-card">
-                        <div class="mobile-card-header">Lebensstandard</div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">BRD:</div>
-                            <div class="mobile-card-value">Steigender Wohlstand, <span class="tooltip-term">Konsumgesellschaft<span class="tooltip-content">Gesellschaft, die durch Konsum und materiellen Wohlstand geprägt ist</span></span></div>
-                        </div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">DDR:</div>
-                            <div class="mobile-card-value">Grundversorgung, aber Mangel an Konsumgütern</div>
-                        </div>
-                    </div>
-
-                    <div class="mobile-card">
-                        <div class="mobile-card-header">Bildung</div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">BRD:</div>
-                            <div class="mobile-card-value">Föderales System, Bildungsautonomie der Länder</div>
-                        </div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">DDR:</div>
-                            <div class="mobile-card-value">Einheitliches System, <span class="tooltip-term">polytechnische Bildung<span class="tooltip-content">Bildungssystem, das theoretisches Lernen mit praktischer Arbeit verbindet</span></span></div>
-                        </div>
-                    </div>
-
-                    <div class="mobile-card">
-                        <div class="mobile-card-header">Medien</div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">BRD:</div>
-                            <div class="mobile-card-value">Pressefreiheit, plurale Medienlandschaft</div>
-                        </div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">DDR:</div>
-                            <div class="mobile-card-value">Staatliche Kontrolle, <span class="tooltip-term">Zensur<span class="tooltip-content">Staatliche Kontrolle und Unterdrückung unerwünschter Meinungen in Medien</span></span></div>
-                        </div>
-                    </div>
-
-                    <div class="mobile-card">
-                        <div class="mobile-card-header">Reisefreiheit</div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">BRD:</div>
-                            <div class="mobile-card-value">Freizügigkeit</div>
-                        </div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">DDR:</div>
-                            <div class="mobile-card-value">Eingeschränkt, besonders in den Westen</div>
-                        </div>
-                    </div>
-                </div>
-
-                <h3 class="section-title">10.8 Aufstände in den Ostblockstaaten</h3>
-                
-                <div class="content-text">
-                    Die DDR gehörte wie die meisten anderen Staaten Osteuropas zu den Satellitenstaaten der Sowjetunion. Nach dem Tod von <span class="tooltip-term">Stalin 1953<span class="tooltip-content">Josef Stalin, sowjetischer Diktator, starb am 5. März 1953. Sein Tod leitete eine Phase der "Entstalinisierung" ein</span></span> breitete sich die Hoffnung aus, dass sein Nachfolger mehr Freiheiten zugestehen würde.
-                </div>
-
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-date">17. Juni 1953</div>
-                        <strong>DDR:</strong> Volksaufstand gegen <span class="tooltip-term">Normerhöhungen<span class="tooltip-content">Erhöhung der Arbeitsleistung bei gleichem Lohn - Auslöser der Proteste</span></span>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1956</div>
-                        <strong><span class="tooltip-term">Ungarn<span class="tooltip-content">Ungarischer Volksaufstand gegen sowjetische Herrschaft, brutal niedergeschlagen von sowjetischen Truppen</span></span>:</strong> Volksaufstand gegen sowjetische Herrschaft
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1968</div>
-                        <strong><span class="tooltip-term">Prager Frühling<span class="tooltip-content">Reformbewegung in der Tschechoslowakei unter Alexander Dubček, beendet durch Invasion von Warschauer Pakt-Truppen</span></span>:</strong> Politische und wirtschaftliche Reformen in der Tschechoslowakei
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1980/81</div>
-                        <strong>Polen:</strong> <span class="tooltip-term">Solidarność-Bewegung<span class="tooltip-content">Erste freie Gewerkschaft im Ostblock unter Lech Wałęsa, führte schließlich zum Ende des Kommunismus in Polen</span></span> unter Lech Wałęsa
-                    </div>
-                </div>
-
-                <h3 class="section-title">10.9 Der Mauerbau – Zementierung der Teilung</h3>
-                
-                <div class="content-text">
-                    In der DDR führte die Unzufriedenheit der Bevölkerung dazu, dass immer mehr Bürgerinnen und Bürger das Land verließen, sehr viele davon von Ost- nach Westberlin.
-                </div>
-
-                <div class="key-points">
-                    <h4>Fluchtursachen:</h4>
-                    <ul>
-                        <li><strong>Bessere Lebensverhältnisse:</strong> Wunsch nach höherem Lebensstandard im Westen</li>
-                        <li><strong><span class="tooltip-term">Kollektivierung<span class="tooltip-content">Zwangsweise Zusammenlegung privater Bauernhöfe zu staatlich kontrollierten Landwirtschaftlichen Produktionsgenossenschaften (LPGs)</span></span>:</strong> Landwirte mussten ihren Besitz an den Staat abtreten</li>
-                        <li><strong>Politischer Druck:</strong> Zwang zur politischen Organisation und systematischer Druck auf Andersdenkende</li>
-                        <li><strong>Wirtschaftliche Schwächung:</strong> Die zunehmende Abwanderung schwächte die Wirtschaft der DDR</li>
-                    </ul>
-                </div>
-
-                <div class="highlight-box">
-                    <strong><span class="tooltip-term">13. August 1961 - Mauerbau<span class="tooltip-content">Errichtung der Berliner Mauer und Befestigung der innerdeutschen Grenze durch die DDR, um Fluchtbewegung zu stoppen</span></span>:</strong><br>
-                    Das DDR-Regime errichtete Grenzanlagen mit <span class="tooltip-term">Sperrzonen<span class="tooltip-content">Militärisch gesicherte Bereiche entlang der Grenze mit Stacheldraht, Minen und Wachtürmen</span></span> und <span class="tooltip-term">Selbstschussanlagen<span class="tooltip-content">Automatische Schusswaffen, die bei Berührung des Grenzzauns aktiviert wurden</span></span>, um sich gegen den Westen abzuschotten.<br>
-                    <strong>Folgen:</strong> Endgültige Teilung Deutschlands, internationale Spannungen, Familien wurden getrennt
-                </div>
-
-                <h3 class="section-title">10.10 Internationale Ordnungssysteme zur Zeit des Kalten Krieges</h3>
-                
-                <div class="content-text">
-                    Die <span class="tooltip-term">UNO<span class="tooltip-content">United Nations Organization - 1945 gegründete internationale Organisation zur Wahrung des Weltfriedens</span></span> bemühte sich darum, die harten Frontlinien zwischen den Westalliierten und der Sowjetunion aufzuweichen. Im <span class="tooltip-term">UN-Sicherheitsrat<span class="tooltip-content">Oberstes Entscheidungsgremium der UNO mit 5 ständigen Mitgliedern (USA, UdSSR/Russland, China, Frankreich, Großbritannien) mit Vetorecht</span></span> wurden die USA und die UdSSR durch die Wahrnehmung ihres <span class="tooltip-term">Veto-Rechts<span class="tooltip-content">Recht der ständigen Sicherheitsratsmitglieder, Beschlüsse zu blockieren</span></span> oft blockiert.
-                </div>
-
-                <div class="key-points">
-                    <h4>Blockbildung durch Bündnissysteme:</h4>
-                    <ul>
-                        <li><strong>NATO:</strong> USA und Verbündete in Europa sowie Kanada</li>
-                        <li><strong>Warschauer Pakt:</strong> UdSSR und Satellitenstaaten in Osteuropa</li>
-                        <li><strong><span class="tooltip-term">Blockfreie Staaten<span class="tooltip-content">Länder, die sich keinem der beiden Blöcke anschlossen, z.B. Jugoslawien unter Tito</span></span>:</strong> Jugoslawien, Zypern und andere schafften es, neutral zu bleiben</li>
-                    </ul>
-                </div>
-
-                <h3 class="section-title">10.11 Der Beginn der Europäischen Einigung</h3>
-                
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-date">1951</div>
-                        <strong>Montanunion (EGKS):</strong> Europäische Gemeinschaft für Kohle und Stahl
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1957</div>
-                        <strong><span class="tooltip-term">Römische Verträge<span class="tooltip-content">Gründungsverträge von EWG und EURATOM, unterzeichnet von Deutschland, Frankreich, Italien und den Benelux-Staaten</span></span>:</strong> Gründung von EWG und <span class="tooltip-term">EURATOM<span class="tooltip-content">Europäische Atomgemeinschaft zur friedlichen Nutzung der Kernenergie</span></span>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1963</div>
-                        <strong><span class="tooltip-term">Élysée-Vertrag<span class="tooltip-content">Freundschaftsvertrag zwischen Deutschland und Frankreich, besiegelte die Aussöhnung der "Erbfeinde"</span></span>:</strong> Deutsch-französische Freundschaft
-                    </div>
-                </div>
-
-                <div class="important-concept">
-                    <strong>Ziele der europäischen Integration:</strong>
-                    <ul>
-                        <li><span class="tooltip-term">Friedenssicherung<span class="tooltip-content">Krieg zwischen den Mitgliedern sollte durch wirtschaftliche Verflechtung unmöglich werden</span></span> durch wirtschaftliche Verflechtung</li>
-                        <li>Stärkung gegenüber den Supermächten</li>
-                        <li>Wohlstandssteigerung durch gemeinsamen Markt</li>
-                    </ul>
-                </div>
-
-                <h3 class="section-title">10.12 Blockkonfrontation</h3>
-                
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-date">1948/49</div>
-                        <strong>Berlin-Blockade:</strong> Sowjetische Blockade West-Berlins, Luftbrücke der Alliierten
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1950-1953</div>
-                        <strong>Korea-Krieg:</strong> <span class="tooltip-term">Stellvertreterkrieg<span class="tooltip-content">Konflikte, in denen die Supermächte indirekt gegeneinander kämpften, ohne sich direkt zu bekämpfen</span></span> zwischen Ost und West
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1962</div>
-                        <strong><span class="tooltip-term">Kuba-Krise<span class="tooltip-content">Konfrontation zwischen USA und UdSSR wegen sowjetischer Raketen auf Kuba - die Welt stand am Rand eines Atomkriegs</span></span>:</strong> Höhepunkt der Blockkonfrontation, Gefahr eines Atomkriegs
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1964-1975</div>
-                        <strong><span class="tooltip-term">Vietnam-Krieg<span class="tooltip-content">Krieg der USA in Vietnam zur Eindämmung des Kommunismus - endete mit dem Sieg Nordvietnams</span></span>:</strong> USA vs. kommunistisches Nordvietnam
-                    </div>
-                </div>
+        <!-- Was ist ein Netzwerk? -->
+        <div class="content-section">
+            <div class="section-header">
+                1. Was ist ein Computernetzwerk?
             </div>
-
-            <!-- Kapitel 11: Wege aus der Blockkonfrontation -->
-            <div class="chapter-section">
-                <h2 class="chapter-title">11. Wege aus der Blockkonfrontation</h2>
-                
-                <div class="highlight-box">
-                    <strong>Überblick:</strong> Ab den 1960er Jahren entwickelten sich verschiedene Ansätze zur <span class="tooltip-term">Entspannung<span class="tooltip-content">Politik der Spannungsverringerung zwischen Ost und West durch Dialog und Kooperation</span></span> zwischen Ost und West, die schließlich zum Ende des Kalten Krieges führten.
+            <div class="section-content">
+                <div class="definition-box">
+                    <h5>📚 Definition: Computernetzwerk</h5>
+                    <p>Ein Computernetzwerk ist ein Verbund von mehreren Computern und anderen Geräten, die miteinander kommunizieren können. Diese Geräte sind über Übertragungsmedien (Kabel, WLAN) miteinander verbunden und können Daten, Dateien und Ressourcen austauschen.</p>
                 </div>
 
-                <h3 class="section-title">11.1 Atomare Abrüstung – schmilzt das Eis?</h3>
-                
-                <div class="content-text">
-                    Die Erkenntnis der gegenseitigen nuklearen Vernichtungsfähigkeit führte zu ersten Abrüstungsverhandlungen:
-                </div>
-
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-date">1963</div>
-                        <strong><span class="tooltip-term">Atomteststopp-Abkommen<span class="tooltip-content">Verbot von Kernwaffentests in der Atmosphäre, im Weltraum und unter Wasser</span></span>:</strong> Verbot oberirdischer Kernwaffentests
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1968</div>
-                        <strong><span class="tooltip-term">Atomwaffensperrvertrag<span class="tooltip-content">Internationale Vereinbarung zur Verhinderung der Weiterverbreitung von Kernwaffen</span></span>:</strong> Verhinderung der Weiterverbreitung von Kernwaffen
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1972</div>
-                        <strong><span class="tooltip-term">SALT I<span class="tooltip-content">Strategic Arms Limitation Talks - erstes Rüstungsbegrenzungsabkommen zwischen USA und UdSSR</span></span>:</strong> Begrenzung strategischer Rüstung zwischen USA und UdSSR
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1987</div>
-                        <strong><span class="tooltip-term">INF-Vertrag<span class="tooltip-content">Intermediate Range Nuclear Forces Treaty - Abkommen zur Vernichtung aller landgestützten Mittelstreckenraketen</span></span>:</strong> Verbot landgestützter Mittelstreckenraketen
-                    </div>
-                </div>
-
-                <h3 class="section-title">11.2 Neue Ostpolitik – neue Verständigung?</h3>
-                
-                <div class="important-concept">
-                    <strong><span class="tooltip-term">Willy Brandts Ostpolitik<span class="tooltip-content">Politik der SPD/FDP-Regierung ab 1969 zur Verbesserung der Beziehungen zu den Ostblockstaaten</span></span> (ab 1969):</strong>
+                <h4>🤔 Warum brauchen wir Netzwerke?</h4>
+                <div class="subsection">
+                    <strong>Hauptgründe für Netzwerke:</strong>
                     <ul>
-                        <li><strong>Grundsatz:</strong> <span class="tooltip-term">"Wandel durch Annäherung"<span class="tooltip-content">Konzept von Egon Bahr: Durch Dialog und Kooperation sollten die kommunistischen Systeme allmählich liberalisiert werden</span></span></li>
-                        <li><strong>Ziel:</strong> Verbesserung der Beziehungen zu Osteuropa</li>
-                        <li><strong>Methode:</strong> Anerkennung der Realitäten, kleine Schritte</li>
+                        <li><strong>Ressourcen teilen:</strong> Drucker, Dateien, Programme gemeinsam nutzen</li>
+                        <li><strong>Kommunikation:</strong> E-Mails, Nachrichten, Videokonferenzen</li>
+                        <li><strong>Datenaustausch:</strong> Schnelle Übertragung von Informationen</li>
+                        <li><strong>Zentrale Verwaltung:</strong> Updates, Backups zentral durchführen</li>
+                        <li><strong>Kosteneinsparung:</strong> Weniger Hardware durch gemeinsame Nutzung</li>
                     </ul>
                 </div>
 
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-date">1970</div>
-                        <strong><span class="tooltip-term">Moskauer Vertrag<span class="tooltip-content">Gewaltverzichtsabkommen zwischen BRD und UdSSR - Grundlage der neuen Ostpolitik</span></span>:</strong> Gewaltverzicht zwischen BRD und UdSSR
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1970</div>
-                        <strong><span class="tooltip-term">Warschauer Vertrag<span class="tooltip-content">Vertrag zwischen BRD und Polen mit Anerkennung der Oder-Neiße-Linie als polnische Westgrenze. Willy Brandts Kniefall vor dem Warschauer Ghetto-Denkmal wurde zum Symbol der Versöhnung</span></span>:</strong> Anerkennung der Oder-Neiße-Linie
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1971</div>
-                        <strong><span class="tooltip-term">Viermächte-Abkommen<span class="tooltip-content">Abkommen zwischen USA, UdSSR, Großbritannien und Frankreich über den Status von Berlin</span></span>:</strong> Regelung des Berlin-Status
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1972</div>
-                        <strong><span class="tooltip-term">Grundlagenvertrag<span class="tooltip-content">Vertrag zwischen BRD und DDR zur Normalisierung der Beziehungen, ohne dass sich beide Staaten völkerrechtlich anerkannten</span></span>:</strong> Normalisierung der deutsch-deutschen Beziehungen
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1973</div>
-                        <strong><span class="tooltip-term">Prager Vertrag<span class="tooltip-content">Vertrag zwischen BRD und Tschechoslowakei, erklärte das Münchner Abkommen von 1938 für "nichtig"</span></span>:</strong> Aussöhnung mit der Tschechoslowakei
-                    </div>
-                </div>
-
-                <h3 class="section-title">11.3 Neue Konfrontation der Supermächte</h3>
-                
-                <div class="content-text">
-                    Ende der 1970er Jahre: Rückkehr zu verschärften Spannungen:
-                </div>
-
-                <div class="key-points">
-                    <ul>
-                        <li><strong><span class="tooltip-term">NATO-Doppelbeschluss<span class="tooltip-content">NATO-Beschluss von 1979: Stationierung von Pershing II-Raketen in Europa, falls keine Abrüstungsverhandlungen mit der UdSSR erfolgreich sind</span></span> (1979):</strong> Stationierung von Pershing II-Raketen</li>
-                        <li><strong><span class="tooltip-term">Sowjetische Invasion in Afghanistan<span class="tooltip-content">Sowjetischer Einmarsch in Afghanistan (1979-1989), führte zu internationaler Isolierung der UdSSR und zum "sowjetischen Vietnam"</span></span> (1979):</strong> Internationale Isolierung der UdSSR</li>
-                        <li><strong>Solidarność-Bewegung in Polen:</strong> Herausforderung des kommunistischen Systems</li>
-                        <li><strong><span class="tooltip-term">Reagan-Doktrin<span class="tooltip-content">Aggressive Außenpolitik von US-Präsident Ronald Reagan zur Eindämmung des sowjetischen Einflusses weltweit</span></span>:</strong> Aggressive Anti-Kommunismus-Politik der USA</li>
-                    </ul>
-                </div>
-
-                <h3 class="section-title">11.4 "Wind of Change" – ein Imperium löst sich auf</h3>
-                
-                <div class="highlight-box">
-                    <strong><span class="tooltip-term">Michail Gorbatschow<span class="tooltip-content">Sowjetischer Reformer und letzter Staatschef der UdSSR (1985-1991), Friedensnobelpreisträger</span></span> (ab 1985):</strong><br>
-                    <strong><span class="tooltip-term">Glasnost<span class="tooltip-content">"Offenheit" - Politik der Transparenz und Meinungsfreiheit in der UdSSR</span></span>:</strong> Offenheit, Transparenz<br>
-                    <strong><span class="tooltip-term">Perestroika<span class="tooltip-content">"Umgestaltung" - Wirtschafts- und Gesellschaftsreformen in der UdSSR</span></span>:</strong> Umgestaltung, Reformen<br>
-                    <strong>Folgen:</strong> Demokratisierung und schließlich Zusammenbruch der UdSSR
-                </div>
-
-                <h3 class="section-title">11.5 Vom Zerfall der DDR bis zur Wiedervereinigung</h3>
-                
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-date">Frühjahr 1989</div>
-                        <strong>Öffnung des <span class="tooltip-term">"Eisernen Vorhangs"<span class="tooltip-content">Begriff für die stark bewachte Grenze zwischen Ost- und Westeuropa während des Kalten Krieges</span></span>:</strong> Ungarn öffnet Grenze zu Österreich
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">Sommer 1989</div>
-                        <strong>Massenflucht:</strong> DDR-Bürger fliehen über Ungarn und <span class="tooltip-term">Botschaften<span class="tooltip-content">Besonders die deutschen Botschaften in Prag, Warschau und Budapest wurden von DDR-Bürgern besetzt</span></span>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">Oktober 1989</div>
-                        <strong><span class="tooltip-term">Montagsdemonstrationen<span class="tooltip-content">Friedliche Proteste in Leipzig und anderen DDR-Städten, ausgehend von Friedensgebeten in der Nikolaikirche</span></span>:</strong> Friedliche Proteste in Leipzig und anderen Städten
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">9. November 1989</div>
-                        <strong><span class="tooltip-term">Mauerfall<span class="tooltip-content">Öffnung der Berliner Mauer nach einem missverständlichen Pressezitat von Günter Schabowski</span></span>:</strong> Öffnung der innerdeutschen Grenze
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">3. Oktober 1990</div>
-                        <strong><span class="tooltip-term">Deutsche Einheit<span class="tooltip-content">Beitritt der DDR zur Bundesrepublik nach Artikel 23 des Grundgesetzes, seitdem deutscher Nationalfeiertag</span></span>:</strong> Beitritt der DDR zur Bundesrepublik
-                    </div>
-                </div>
-
-                <div class="important-concept">
-                    <strong>Internationale Aspekte der Wiedervereinigung:</strong>
-                    <ul>
-                        <li><strong><span class="tooltip-term">2+4-Verträge<span class="tooltip-content">Verhandlungen zwischen den beiden deutschen Staaten und den vier Siegermächten über die außenpolitischen Aspekte der Einheit</span></span>:</strong> Regelung der außenpolitischen Aspekte</li>
-                        <li><strong>NATO-Mitgliedschaft:</strong> Gesamtdeutschland bleibt in der NATO</li>
-                        <li><strong>Abzug sowjetischer Truppen:</strong> Bis 1994 aus Ostdeutschland</li>
-                        <li><strong>Finanzielle Leistungen:</strong> Deutsche Hilfen für die UdSSR</li>
-                    </ul>
-                </div>
-
-                <h3 class="section-title">11.6 Osteuropa in der Transformation</h3>
-                
-                <div class="content-text">
-                    Der Zusammenbruch des kommunistischen Systems führte zu grundlegenden Veränderungen in ganz Osteuropa:
-                </div>
-
-                <!-- Desktop Table -->
-                <div class="table-wrapper">
-                    <table class="comparison-table">
-                        <tr>
-                            <th>Land</th>
-                            <th>Wendejahr</th>
-                            <th>Besonderheiten</th>
-                        </tr>
-                        <tr>
-                            <td>Polen</td>
-                            <td>1989</td>
-                            <td><span class="tooltip-term">Runder Tisch<span class="tooltip-content">Verhandlungen zwischen Regierung und Opposition über den friedlichen Übergang zur Demokratie</span></span>, friedlicher Übergang, Solidarność</td>
-                        </tr>
-                        <tr>
-                            <td>Ungarn</td>
-                            <td>1989</td>
-                            <td>Grenzöffnung zu Österreich, <span class="tooltip-term">sanfte Revolution<span class="tooltip-content">Friedlicher Übergang ohne Gewalt und Blutvergießen</span></span></td>
-                        </tr>
-                        <tr>
-                            <td>Tschechoslowakei</td>
-                            <td>1989</td>
-                            <td><span class="tooltip-term">"Samtene Revolution"<span class="tooltip-content">Friedlicher Sturz des kommunistischen Regimes in der Tschechoslowakei, benannt nach dem gewaltlosen Charakter</span></span>, <span class="tooltip-term">Václav Havel<span class="tooltip-content">Tschechischer Dramatiker, Dissident und erster Präsident der post-kommunistischen Tschechoslowakei</span></span></td>
-                        </tr>
-                        <tr>
-                            <td>Rumänien</td>
-                            <td>1989</td>
-                            <td>Gewaltsamer Sturz <span class="tooltip-term">Ceaușescus<span class="tooltip-content">Nicolae Ceaușescu, rumänischer Diktator, wurde 1989 gestürzt und hingerichtet</span></span></td>
-                        </tr>
-                        <tr>
-                            <td>Jugoslawien</td>
-                            <td>1991-2001</td>
-                            <td><span class="tooltip-term">Zerfall in Bürgerkriegen<span class="tooltip-content">Gewaltsame Auflösung Jugoslawiens in mehrere Nachfolgestaaten mit ethnischen Säuberungen und Völkermord</span></span></td>
-                        </tr>
-                    </table>
-                </div>
-
-                <!-- Mobile Card Layout -->
-                <div class="mobile-card-container">
-                    <div class="mobile-card">
-                        <div class="mobile-card-header">Polen (1989)</div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Besonderheiten:</div>
-                            <div class="mobile-card-value"><span class="tooltip-term">Runder Tisch<span class="tooltip-content">Verhandlungen zwischen Regierung und Opposition über den friedlichen Übergang zur Demokratie</span></span>, friedlicher Übergang, Solidarność</div>
-                        </div>
-                    </div>
-
-                    <div class="mobile-card">
-                        <div class="mobile-card-header">Ungarn (1989)</div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Besonderheiten:</div>
-                            <div class="mobile-card-value">Grenzöffnung zu Österreich, <span class="tooltip-term">sanfte Revolution<span class="tooltip-content">Friedlicher Übergang ohne Gewalt und Blutvergießen</span></span></div>
-                        </div>
-                    </div>
-
-                    <div class="mobile-card">
-                        <div class="mobile-card-header">Tschechoslowakei (1989)</div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Besonderheiten:</div>
-                            <div class="mobile-card-value"><span class="tooltip-term">"Samtene Revolution"<span class="tooltip-content">Friedlicher Sturz des kommunistischen Regimes in der Tschechoslowakei, benannt nach dem gewaltlosen Charakter</span></span>, <span class="tooltip-term">Václav Havel<span class="tooltip-content">Tschechischer Dramatiker, Dissident und erster Präsident der post-kommunistischen Tschechoslowakei</span></span></div>
-                        </div>
-                    </div>
-
-                    <div class="mobile-card">
-                        <div class="mobile-card-header">Rumänien (1989)</div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Besonderheiten:</div>
-                            <div class="mobile-card-value">Gewaltsamer Sturz <span class="tooltip-term">Ceaușescus<span class="tooltip-content">Nicolae Ceaușescu, rumänischer Diktator, wurde 1989 gestürzt und hingerichtet</span></span></div>
-                        </div>
-                    </div>
-
-                    <div class="mobile-card">
-                        <div class="mobile-card-header">Jugoslawien (1991-2001)</div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Besonderheiten:</div>
-                            <div class="mobile-card-value"><span class="tooltip-term">Zerfall in Bürgerkriegen<span class="tooltip-content">Gewaltsame Auflösung Jugoslawiens in mehrere Nachfolgestaaten mit ethnischen Säuberungen und Völkermord</span></span></div>
-                        </div>
-                    </div>
-                </div>
-
-                <h3 class="section-title">11.7 Internationale Ordnungssysteme nach dem Ende des Kalten Krieges</h3>
-                
-                <div class="key-points">
-                    <h4>Neue Herausforderungen:</h4>
-                    <ul>
-                        <li>Ende der <span class="tooltip-term">bipolaren Weltordnung<span class="tooltip-content">Weltordnung mit zwei dominierenden Supermächten (USA und UdSSR)</span></span></li>
-                        <li>USA als einzige <span class="tooltip-term">Supermacht<span class="tooltip-content">Staat mit globaler militärischer, wirtschaftlicher und kultureller Dominanz</span></span></li>
-                        <li>Neue Konflikte: <span class="tooltip-term">Nationalismus<span class="tooltip-content">Übersteigertes Nationalbewusstsein, oft mit Ausgrenzung anderer Völker verbunden</span></span>, <span class="tooltip-term">Terrorismus<span class="tooltip-content">Gewaltanwendung gegen Zivilisten zu politischen Zwecken</span></span></li>
-                        <li><span class="tooltip-term">Globalisierung<span class="tooltip-content">Weltweite Vernetzung in Wirtschaft, Politik, Kultur und Kommunikation</span></span> und ihre Folgen</li>
-                    </ul>
-                </div>
-
-                <div class="method-box">
-                    <h4>Methode: Eine Karte analysieren</h4>
-                    <p><strong>Schritte der Kartenanalyse:</strong></p>
-                    <ol>
-                        <li><strong>Formale Analyse:</strong> Titel, Legende, Maßstab, Quelle</li>
-                        <li><strong>Beschreibung:</strong> Was zeigt die Karte? Welche Informationen sind dargestellt?</li>
-                        <li><strong>Inhaltliche Analyse:</strong> Zusammenhänge erkennen, Muster interpretieren</li>
-                        <li><strong>Historischer Kontext:</strong> Karte in zeitlichen Zusammenhang einordnen</li>
-                        <li><strong>Beurteilung:</strong> Aussagekraft und Grenzen der Darstellung bewerten</li>
-                    </ol>
-                </div>
-
-                <h3 class="section-title">11.8 Die EU nach Ende des Kalten Krieges – ein Erfolgsmodell?</h3>
-                
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-date">1992</div>
-                        <strong><span class="tooltip-term">Vertrag von Maastricht<span class="tooltip-content">Gründungsvertrag der Europäischen Union, führte Unionsbürgerschaft und gemeinsame Währung ein</span></span>:</strong> Gründung der Europäischen Union
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1995</div>
-                        <strong>Erste Norderweiterung:</strong> <span class="tooltip-term">Österreich, Finnland, Schweden<span class="tooltip-content">Nach dem Ende des Kalten Krieges konnten neutrale Staaten der EU beitreten</span></span>
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1999</div>
-                        <strong><span class="tooltip-term">Euro-Einführung<span class="tooltip-content">Gemeinsame europäische Währung, zunächst als Buchgeld, ab 2002 als Bargeld</span></span>:</strong> Gemeinsame Währung (zunächst Buchgeld)
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">2004/2007</div>
-                        <strong><span class="tooltip-term">Osterweiterung<span class="tooltip-content">Aufnahme ehemaliger Ostblockstaaten in die EU: Polen, Ungarn, Tschechien, Slowakei, Slowenien, Estland, Lettland, Litauen, Malta, Zypern (2004), Bulgarien, Rumänien (2007)</span></span>:</strong> Aufnahme ehemaliger Ostblockstaaten
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">2009</div>
-                        <strong><span class="tooltip-term">Vertrag von Lissabon<span class="tooltip-content">EU-Reformvertrag, stärkte die Rolle des Europäischen Parlaments und schuf den Posten des EU-Ratspräsidenten</span></span>:</strong> Reform der EU-Institutionen
-                    </div>
-                </div>
-
-                <div class="important-concept">
-                    <strong>Grundpfeiler der EU nach Maastricht:</strong>
-                    <ul>
-                        <li><strong>1. Säule:</strong> <span class="tooltip-term">Europäische Gemeinschaften<span class="tooltip-content">Supranationale Bereiche wie Binnenmarkt, Währungsunion (Gemeinschaftsmethode)</span></span> (supranational)</li>
-                        <li><strong>2. Säule:</strong> <span class="tooltip-term">Gemeinsame Außen- und Sicherheitspolitik<span class="tooltip-content">Koordinierung der Außenpolitik der Mitgliedstaaten, erfordert Einstimmigkeit</span></span> (intergouvernemental)</li>
-                        <li><strong>3. Säule:</strong> <span class="tooltip-term">Zusammenarbeit in Justiz und Inneres<span class="tooltip-content">Kooperation in Bereichen wie Einwanderung, Asyl und Kriminalitätsbekämpfung</span></span> (intergouvernemental)</li>
-                    </ul>
-                </div>
-
-                <h3 class="section-title">11.9 Multipolare Ordnung – wer beherrscht die Welt?</h3>
-                
-                <div class="content-text">
-                    Nach dem Ende der bipolaren Ordnung entwickelte sich eine komplexere Weltordnung:
-                </div>
-
-                <!-- Desktop Table -->
-                <div class="table-wrapper">
-                    <table class="comparison-table">
-                        <tr>
-                            <th>Akteur</th>
-                            <th>Stärken</th>
-                            <th>Rolle in der Weltordnung</th>
-                        </tr>
-                        <tr>
-                            <td>USA</td>
-                            <td>Militärische Überlegenheit, Technologie, Dollar als Leitwährung</td>
-                            <td><span class="tooltip-term">Hegemon<span class="tooltip-content">Führungsmacht, die das internationale System dominiert</span></span>, aber relativer Machtverlust</td>
-                        </tr>
-                        <tr>
-                            <td>China</td>
-                            <td>Wirtschaftsmacht, große Bevölkerung, staatliche Lenkung</td>
-                            <td>Aufsteigende Supermacht</td>
-                        </tr>
-                        <tr>
-                            <td>Russland</td>
-                            <td>Rohstoffe, Atomwaffen, regionale Macht</td>
-                            <td><span class="tooltip-term">Revisionistische Macht<span class="tooltip-content">Staat, der die bestehende internationale Ordnung ändern will</span></span></td>
-                        </tr>
-                        <tr>
-                            <td>EU</td>
-                            <td>Wirtschaftsmacht, <span class="tooltip-term">soft power<span class="tooltip-content">Einfluss durch Attraktivität und Überzeugung statt durch Zwang</span></span>, Normsetzung</td>
-                            <td><span class="tooltip-term">Zivilmacht<span class="tooltip-content">Akteur, der vor allem durch wirtschaftliche und diplomatische Mittel Einfluss ausübt</span></span> mit begrenzter militärischer Rolle</td>
-                        </tr>
-                    </table>
-                </div>
-
-                <!-- Mobile Card Layout -->
-                <div class="mobile-card-container">
-                    <div class="mobile-card">
-                        <div class="mobile-card-header">USA</div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Stärken:</div>
-                            <div class="mobile-card-value">Militärische Überlegenheit, Technologie, Dollar als Leitwährung</div>
-                        </div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Rolle:</div>
-                            <div class="mobile-card-value"><span class="tooltip-term">Hegemon<span class="tooltip-content">Führungsmacht, die das internationale System dominiert</span></span>, aber relativer Machtverlust</div>
-                        </div>
-                    </div>
-
-                    <div class="mobile-card">
-                        <div class="mobile-card-header">China</div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Stärken:</div>
-                            <div class="mobile-card-value">Wirtschaftsmacht, große Bevölkerung, staatliche Lenkung</div>
-                        </div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Rolle:</div>
-                            <div class="mobile-card-value">Aufsteigende Supermacht</div>
-                        </div>
-                    </div>
-
-                    <div class="mobile-card">
-                        <div class="mobile-card-header">Russland</div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Stärken:</div>
-                            <div class="mobile-card-value">Rohstoffe, Atomwaffen, regionale Macht</div>
-                        </div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Rolle:</div>
-                            <div class="mobile-card-value"><span class="tooltip-term">Revisionistische Macht<span class="tooltip-content">Staat, der die bestehende internationale Ordnung ändern will</span></span></div>
-                        </div>
-                    </div>
-
-                    <div class="mobile-card">
-                        <div class="mobile-card-header">EU</div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Stärken:</div>
-                            <div class="mobile-card-value">Wirtschaftsmacht, <span class="tooltip-term">soft power<span class="tooltip-content">Einfluss durch Attraktivität und Überzeugung statt durch Zwang</span></span>, Normsetzung</div>
-                        </div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Rolle:</div>
-                            <div class="mobile-card-value"><span class="tooltip-term">Zivilmacht<span class="tooltip-content">Akteur, der vor allem durch wirtschaftliche und diplomatische Mittel Einfluss ausübt</span></span> mit begrenzter militärischer Rolle</div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="key-points">
-                    <h4>Neue globale Herausforderungen:</h4>
-                    <ul>
-                        <li><strong>Terrorismus:</strong> <span class="tooltip-term">9/11<span class="tooltip-content">Terroranschläge vom 11. September 2001 in den USA, veränderten die internationale Sicherheitspolitik grundlegend</span></span> und seine Folgen</li>
-                        <li><strong><span class="tooltip-term">Proliferation<span class="tooltip-content">Weiterverbreitung von Massenvernichtungswaffen an staatliche und nicht-staatliche Akteure</span></span>:</strong> Verbreitung von Massenvernichtungswaffen</li>
-                        <li><strong>Klimawandel:</strong> Globale Umweltprobleme</li>
-                        <li><strong>Migration:</strong> Flucht- und Wanderungsbewegungen</li>
-                        <li><strong>Cyber-Sicherheit:</strong> Neue Formen der Kriegsführung</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Kapitel 12: Globale Bedrohungen und Herausforderungen -->
-            <div class="chapter-section">
-                <h2 class="chapter-title">12. Globale Bedrohungen und Herausforderungen für die internationalen Ordnungssysteme</h2>
-                
-                <div class="highlight-box">
-                    <strong>Überblick:</strong> Das 21. Jahrhundert ist geprägt von neuen, grenzüberschreitenden Herausforderungen, die internationale Kooperation erfordern.
-                </div>
-
-                <h3 class="section-title">12.1 Bedrohungen und Sicherheitspolitik in einer globalisierten Welt</h3>
-                
-                <div class="content-text">
-                    Sicherheit hat sich seit dem Ende des Kalten Krieges grundlegend gewandelt:
-                </div>
-
-                <div class="important-concept">
-                    <strong>Traditionelle vs. Neue Sicherheitsbedrohungen:</strong><br><br>
-                    <strong>Traditionell:</strong> <span class="tooltip-term">Zwischenstaatliche Kriege<span class="tooltip-content">Kriege zwischen souveränen Staaten mit regulären Armeen</span></span>, territoriale Konflikte<br>
-                    <strong>Neu:</strong> Terrorismus, <span class="tooltip-term">Cyber-Angriffe<span class="tooltip-content">Angriffe auf Computersysteme und digitale Infrastruktur</span></span>, Klimawandel, <span class="tooltip-term">Pandemien<span class="tooltip-content">Weltweite Ausbreitung von Infektionskrankheiten</span></span>, <span class="tooltip-term">organisierte Kriminalität<span class="tooltip-content">Grenzüberschreitende kriminelle Netzwerke (Drogen-, Menschen-, Waffenhandel)</span></span>
-                </div>
-
-                <div class="key-points">
-                    <h4>Internationale Sicherheitsorganisationen:</h4>
-                    <ul>
-                        <li><strong>UN-Sicherheitsrat:</strong> <span class="tooltip-term">Kollektive Sicherheit<span class="tooltip-content">Konzept, dass alle Staaten gemeinsam für Frieden und Sicherheit verantwortlich sind</span></span>, aber oft blockiert</li>
-                        <li><strong>NATO:</strong> Anpassung von Territorialverteidigung zu <span class="tooltip-term">"Out-of-Area"-Einsätzen<span class="tooltip-content">NATO-Operationen außerhalb des ursprünglichen Bündnisgebiets</span></span></li>
-                        <li><strong><span class="tooltip-term">OSZE<span class="tooltip-content">Organisation für Sicherheit und Zusammenarbeit in Europa - Forum für Dialog zwischen Ost und West</span></span>:</strong> Konfliktprävention und Demokratieförderung</li>
-                        <li><strong><span class="tooltip-term">G7/G20<span class="tooltip-content">Gruppe der sieben/zwanzig wichtigsten Industrienationen für wirtschaftliche Koordinierung</span></span>:</strong> Koordinierung der Wirtschafts- und Sicherheitspolitik</li>
-                    </ul>
-                </div>
-
-                <h3 class="section-title">12.2 Politikfeld Klimawandel</h3>
-                
-                <div class="content-text">
-                    Der <span class="tooltip-term">Klimawandel<span class="tooltip-content">Langfristige Veränderung der globalen Durchschnittstemperaturen und Wettermuster, hauptsächlich verursacht durch menschliche Aktivitäten</span></span> ist zu einer der wichtigsten globalen Herausforderungen des 21. Jahrhunderts geworden:
-                </div>
-
-                <div class="timeline">
-                    <div class="timeline-item">
-                        <div class="timeline-date">1992</div>
-                        <strong><span class="tooltip-term">Rio-Konferenz<span class="tooltip-content">UN-Konferenz für Umwelt und Entwicklung in Rio de Janeiro, verabschiedete die Klimarahmenkonvention</span></span>:</strong> UN-Klimarahmenkonvention
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1997</div>
-                        <strong><span class="tooltip-term">Kyoto-Protokoll<span class="tooltip-content">Erstes internationales Abkommen mit verbindlichen Zielen zur Reduzierung von Treibhausgasemissionen</span></span>:</strong> Erste verbindliche Emissionsziele
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">2015</div>
-                        <strong><span class="tooltip-term">Pariser Abkommen<span class="tooltip-content">Internationales Klimaabkommen mit dem Ziel, die Erderwärmung auf deutlich unter 2°C, möglichst 1,5°C zu begrenzen</span></span>:</strong> Begrenzung der Erderwärmung auf 1,5°C
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">2019</div>
-                        <strong><span class="tooltip-term">European Green Deal<span class="tooltip-content">EU-Strategie zur Erreichung der Klimaneutralität bis 2050 durch grüne Transformation der Wirtschaft</span></span>:</strong> EU-Klimaneutralität bis 2050
-                    </div>
-                </div>
-
-                <div class="important-concept">
-                    <strong>Herausforderungen der Klimapolitik:</strong>
-                    <ul>
-                        <li><strong><span class="tooltip-term">Globales Handlungsproblem<span class="tooltip-content">Problem, das nur durch koordiniertes Handeln aller Staaten gelöst werden kann</span></span>:</strong> Alle müssen mitmachen</li>
-                        <li><strong>Generationenkonflikt:</strong> Kosten heute, Nutzen in der Zukunft</li>
-                        <li><strong>Entwicklungsländer:</strong> Recht auf wirtschaftliche Entwicklung</li>
-                        <li><strong>Technologie:</strong> Transformation der Energiesysteme nötig</li>
-                    </ul>
-                </div>
-
-                <h3 class="section-title">12.3 Fallstudie Nigeria</h3>
-                
-                <div class="content-text">
-                    <span class="tooltip-term">Nigeria<span class="tooltip-content">Bevölkerungsreichstes Land Afrikas mit über 200 Millionen Einwohnern, größte Volkswirtschaft Afrikas, aber auch große Herausforderungen</span></span> als Beispiel für die Herausforderungen afrikanischer Staaten im 21. Jahrhundert:
-                </div>
-
-                <div class="key-points">
-                    <h4>Herausforderungen Nigerias:</h4>
-                    <ul>
-                        <li><strong>Demographie:</strong> Bevölkerungswachstum von 200 Mio. auf geschätzte 400 Mio. bis 2050</li>
-                        <li><strong>Wirtschaft:</strong> Abhängigkeit vom Öl, hohe Arbeitslosigkeit</li>
-                        <li><strong>Politik:</strong> <span class="tooltip-term">Korruption<span class="tooltip-content">Missbrauch öffentlicher Macht für private Zwecke, schwächt staatliche Institutionen</span></span>, schwache Institutionen</li>
-                        <li><strong>Sicherheit:</strong> <span class="tooltip-term">Boko Haram<span class="tooltip-content">Islamistische Terrororganisation in Nordnigeria, entführte 2014 über 270 Schülerinnen</span></span> im Norden, Piraten im Süden</li>
-                        <li><strong>Umwelt:</strong> Ölverschmutzung im <span class="tooltip-term">Niger-Delta<span class="tooltip-content">Ölfördergebiet in Südnigeria, stark von Umweltverschmutzung betroffen</span></span>, Klimawandel</li>
-                        <li><strong>Religion:</strong> Spannungen zwischen Christen und Muslimen</li>
-                    </ul>
-                </div>
-
-                <!-- Desktop Table -->
-                <div class="table-wrapper">
-                    <table class="comparison-table">
-                        <tr>
-                            <th>Problem</th>
-                            <th>Ursachen</th>
-                            <th>Lösungsansätze</th>
-                        </tr>
-                        <tr>
-                            <td>Terrorismus (Boko Haram)</td>
-                            <td>Armut, fehlende Bildung, religiöse Radikalisierung</td>
-                            <td>Bildungsinvestitionen, Entwicklungshilfe, militärische Bekämpfung</td>
-                        </tr>
-                        <tr>
-                            <td>Umweltzerstörung</td>
-                            <td>Ölförderung, illegale Raffinerien, Klimawandel</td>
-                            <td>Umweltstandards, erneuerbare Energien, internationale Unterstützung</td>
-                        </tr>
-                        <tr>
-                            <td>Wirtschaftliche Probleme</td>
-                            <td><span class="tooltip-term">Rohstoffabhängigkeit<span class="tooltip-content">Einseitige Abhängigkeit der Wirtschaft von Rohstoffexporten, macht anfällig für Preisschwankungen</span></span>, Korruption, schwache Infrastruktur</td>
-                            <td><span class="tooltip-term">Diversifizierung<span class="tooltip-content">Ausweitung der Wirtschaft auf verschiedene Bereiche, um Abhängigkeiten zu reduzieren</span></span>, <span class="tooltip-term">Good Governance<span class="tooltip-content">Gute Regierungsführung mit transparenten, rechenschaftspflichtigen Institutionen</span></span>, Infrastrukturinvestitionen</td>
-                        </tr>
-                    </table>
-                </div>
-
-                <!-- Mobile Card Layout -->
-                <div class="mobile-card-container">
-                    <div class="mobile-card">
-                        <div class="mobile-card-header">Terrorismus (Boko Haram)</div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Ursachen:</div>
-                            <div class="mobile-card-value">Armut, fehlende Bildung, religiöse Radikalisierung</div>
-                        </div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Lösungsansätze:</div>
-                            <div class="mobile-card-value">Bildungsinvestitionen, Entwicklungshilfe, militärische Bekämpfung</div>
-                        </div>
-                    </div>
-
-                    <div class="mobile-card">
-                        <div class="mobile-card-header">Umweltzerstörung</div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Ursachen:</div>
-                            <div class="mobile-card-value">Ölförderung, illegale Raffinerien, Klimawandel</div>
-                        </div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Lösungsansätze:</div>
-                            <div class="mobile-card-value">Umweltstandards, erneuerbare Energien, internationale Unterstützung</div>
-                        </div>
-                    </div>
-
-                    <div class="mobile-card">
-                        <div class="mobile-card-header">Wirtschaftliche Probleme</div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Ursachen:</div>
-                            <div class="mobile-card-value"><span class="tooltip-term">Rohstoffabhängigkeit<span class="tooltip-content">Einseitige Abhängigkeit der Wirtschaft von Rohstoffexporten, macht anfällig für Preisschwankungen</span></span>, Korruption, schwache Infrastruktur</div>
-                        </div>
-                        <div class="mobile-card-row">
-                            <div class="mobile-card-label">Lösungsansätze:</div>
-                            <div class="mobile-card-value"><span class="tooltip-term">Diversifizierung<span class="tooltip-content">Ausweitung der Wirtschaft auf verschiedene Bereiche, um Abhängigkeiten zu reduzieren</span></span>, <span class="tooltip-term">Good Governance<span class="tooltip-content">Gute Regierungsführung mit transparenten, rechenschaftspflichtigen Institutionen</span></span>, Infrastrukturinvestitionen</div>
-                        </div>
-                    </div>
-                </div>
-
-                <h3 class="section-title">12.4 Klimawandel – was kann Kunst?</h3>
-                
-                <div class="content-text">
-                    Kunst als Medium zur Bewusstseinsbildung für den Klimawandel:
-                </div>
-
-                <div class="key-points">
-                    <h4>Funktionen von <span class="tooltip-term">Klimakunst<span class="tooltip-content">Künstlerische Werke, die sich mit dem Klimawandel und Umweltproblemen auseinandersetzen</span></span>:</h4>
-                    <ul>
-                        <li><strong>Sensibilisierung:</strong> Emotionale Zugänge zu abstrakten Problemen</li>
-                        <li><strong>Visualisierung:</strong> Unsichtbare Prozesse sichtbar machen</li>
-                        <li><strong>Motivation:</strong> Zum Handeln motivieren</li>
-                        <li><strong>Kritik:</strong> Gesellschaftliche Strukturen hinterfragen</li>
-                    </ul>
-                </div>
-
-                <div class="method-box">
-                    <h4>Methode: Mündliches Präsentieren</h4>
-                    <p><strong>Vorbereitung einer Präsentation:</strong></p>
-                    <ol>
-                        <li><strong>Thema eingrenzen:</strong> Klare Fragestellung entwickeln</li>
-                        <li><strong>Recherche:</strong> Verlässliche Quellen nutzen</li>
-                        <li><strong>Gliederung:</strong> Einleitung - Hauptteil - Schluss</li>
-                        <li><strong>Visualisierung:</strong> Angemessene Hilfsmittel wählen</li>
-                        <li><strong>Üben:</strong> Freies Sprechen, Zeitmanagement</li>
-                        <li><strong>Nachbereitung:</strong> Feedback einholen und reflektieren</li>
-                    </ol>
-                </div>
-
-                <div class="key-points">
-                    <h4>Zentrale Erkenntnisse:</h4>
-                    <ul>
-                        <li>Globale Probleme erfordern internationale Kooperation</li>
-                        <li>Neue Akteure (<span class="tooltip-term">NGOs<span class="tooltip-content">Non-Governmental Organizations - Nichtregierungsorganisationen wie Greenpeace oder Amnesty International</span></span>, Unternehmen) gewinnen an Bedeutung</li>
-                        <li>Technologie bietet Chancen und Risiken</li>
-                        <li>Demokratische Legitimation bei <span class="tooltip-term">globaler Governance<span class="tooltip-content">Steuerung globaler Probleme durch internationale Organisationen und Abkommen</span></span> schwierig</li>
-                        <li><span class="tooltip-term">Präventive Diplomatie<span class="tooltip-content">Vorbeugende diplomatische Maßnahmen zur Verhinderung von Konflikten</span></span> wichtiger als reaktive Krisenbewältigung</li>
-                    </ul>
-                </div>
-            </div>
-
-            <!-- Zusammenfassung -->
-            <div class="chapter-section">
-                <h2 class="chapter-title">Zusammenfassung: Deutschland, Europa und die Welt nach 1945</h2>
-                
-                <div class="highlight-box">
-                    <h4>Wichtigste Entwicklungslinien:</h4>
-                    <ul>
-                        <li><strong>1945-1989:</strong> <span class="tooltip-term">Bipolare Weltordnung<span class="tooltip-content">Internationale Ordnung mit zwei dominierenden Supermächten (USA und UdSSR)</span></span>, deutsche Teilung, europäische Integration</li>
-                        <li><strong>1989-2001:</strong> Ende des Kalten Krieges, deutsche Einheit, <span class="tooltip-term">US-Hegemonie<span class="tooltip-content">Dominanz der USA als einzige verbliebene Supermacht nach dem Zusammenbruch der UdSSR</span></span></li>
-                        <li><strong>Ab 2001:</strong> <span class="tooltip-term">Multipolare Welt<span class="tooltip-content">Weltordnung mit mehreren Machtzentren (USA, China, EU, Russland, etc.)</span></span>, neue Bedrohungen, globale Herausforderungen</li>
-                    </ul>
-                </div>
-
-                <div class="important-concept">
-                    <strong>Kontinuitäten und Brüche:</strong><br>
-                    <strong>Kontinuitäten:</strong> Streben nach Sicherheit, wirtschaftlicher Prosperität, demokratischen Werten<br>
-                    <strong>Brüche:</strong> Ende der Blockkonfrontation, Globalisierung, neue Technologien, Klimawandel
-                </div>
-
-                <div class="key-points">
-                    <h4>Abiturrelevante Schwerpunkte:</h4>
-                    <ul>
-                        <li>Ursachen und Verlauf des Kalten Krieges</li>
-                        <li>Deutsche Teilung und Wiedervereinigung</li>
-                        <li>Europäische Integration von Montanunion bis EU</li>
-                        <li><span class="tooltip-term">Transformation Osteuropas<span class="tooltip-content">Übergang der osteuropäischen Staaten von kommunistischen Diktaturen zu demokratischen Marktwirtschaften</span></span> nach 1989</li>
-                        <li>Neue Weltordnung nach dem Kalten Krieg</li>
-                        <li>Globale Herausforderungen des 21. Jahrhunderts</li>
-                    </ul>
-                </div>
-
-                <div class="timeline">
-                    <h4>Zentrale Daten im Überblick:</h4>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1945</div>
-                        <span class="tooltip-term">Potsdamer Konferenz<span class="tooltip-content">Letzte Konferenz der Alliierten, legte die Grundlagen für die Nachkriegsordnung in Deutschland fest</span></span>, Beginn der Nachkriegsordnung
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1949</div>
-                        Gründung von BRD und DDR, NATO
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1961</div>
-                        Mauerbau in Berlin
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1989</div>
-                        Fall der Berliner Mauer
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1990</div>
-                        Deutsche Wiedervereinigung
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">1992</div>
-                        Vertrag von Maastricht, Gründung der EU
-                    </div>
-                    <div class="timeline-item">
-                        <div class="timeline-date">2001</div>
-                        <span class="tooltip-term">11. September<span class="tooltip-content">Terroranschläge auf World Trade Center und Pentagon, markierten Beginn des "Kriegs gegen den Terror"</span></span>, Beginn des "Kriegs gegen den Terror"
-                    </div>
+                <div class="example-box">
+                    <h5>💡 Beispiel aus dem Alltag</h5>
+                    <p><strong>Schul-Netzwerk:</strong> In eurer Schule sind alle Computer im Informatikraum miteinander vernetzt. Dadurch können alle Schüler auf den gleichen Drucker zugreifen, der Lehrer kann Dateien an alle verteilen, und ihr könnt eure Arbeiten auf einem zentralen Server speichern.</p>
                 </div>
             </div>
         </div>
 
-        <a href="index.html" class="back-link">← Zurück zur Übersicht</a>
+        <!-- Netzwerk-Arten -->
+        <div class="content-section">
+            <div class="section-header">
+                2. Arten von Netzwerken (nach Größe)
+            </div>
+            <div class="section-content">
+                <table class="component-table">
+                    <thead>
+                        <tr>
+                            <th>Netzwerk-Typ</th>
+                            <th>Abkürzung</th>
+                            <th>Reichweite</th>
+                            <th>Beispiele</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Personal Area Network</strong></td>
+                            <td>PAN</td>
+                            <td>Wenige Meter</td>
+                            <td>Bluetooth zwischen Handy und Kopfhörern</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Local Area Network</strong></td>
+                            <td>LAN</td>
+                            <td>Gebäude/Campus</td>
+                            <td>Schul-Netzwerk, Heimnetzwerk, Büro</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Metropolitan Area Network</strong></td>
+                            <td>MAN</td>
+                            <td>Stadt/Region</td>
+                            <td>Stadtnetz, Uni-Campus mit mehreren Standorten</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Wide Area Network</strong></td>
+                            <td>WAN</td>
+                            <td>Länder/Kontinente</td>
+                            <td>Internet, Firmennetzwerke über mehrere Standorte</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="important-note">
+                    <h5>⚠️ Wichtig für die Prüfung</h5>
+                    <p>Am wichtigsten sind <strong>LAN</strong> und <strong>WAN</strong>. LAN = lokales Netzwerk (zuhause, Schule), WAN = weltweites Netzwerk (Internet). Der Unterschied liegt in der Reichweite und wem das Netzwerk gehört!</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Netzwerk-Topologien -->
+        <div class="content-section">
+            <div class="section-header">
+                3. Netzwerk-Topologien (Aufbau-Arten)
+            </div>
+            <div class="section-content">
+                <p>Die <strong>Topologie</strong> beschreibt, wie die Geräte in einem Netzwerk miteinander verbunden sind. Es ist wie der "Bauplan" des Netzwerks.</p>
+
+                <div class="topology-grid">
+                    <!-- Bus-Topologie -->
+                    <div class="topology-card">
+                        <div class="topology-visual">🚌</div>
+                        <h4>Bus-Topologie</h4>
+                        <p>Alle Geräte hängen an einem gemeinsamen Kabel (wie Haltestellen an einer Buslinie)</p>
+                        <div class="advantages-disadvantages">
+                            <div class="advantages">
+                                <h6>✅ Vorteile</h6>
+                                <ul>
+                                    <li>Günstig</li>
+                                    <li>Wenig Kabel</li>
+                                    <li>Einfach aufzubauen</li>
+                                </ul>
+                            </div>
+                            <div class="disadvantages">
+                                <h6>❌ Nachteile</h6>
+                                <ul>
+                                    <li>Hauptkabel = Schwachstelle</li>
+                                    <li>Kollisionen möglich</li>
+                                    <li>Schwer zu erweitern</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Ring-Topologie -->
+                    <div class="topology-card">
+                        <div class="topology-visual">💍</div>
+                        <h4>Ring-Topologie</h4>
+                        <p>Geräte sind in einem Ring verbunden, Daten laufen im Kreis</p>
+                        <div class="advantages-disadvantages">
+                            <div class="advantages">
+                                <h6>✅ Vorteile</h6>
+                                <ul>
+                                    <li>Keine Kollisionen</li>
+                                    <li>Gleichmäßige Datenverteilung</li>
+                                    <li>Vorhersagbare Leistung</li>
+                                </ul>
+                            </div>
+                            <div class="disadvantages">
+                                <h6>❌ Nachteile</h6>
+                                <ul>
+                                    <li>Ein Ausfall = Ring kaputt</li>
+                                    <li>Schwer zu erweitern</li>
+                                    <li>Langsam bei vielen Geräten</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Stern-Topologie -->
+                    <div class="topology-card">
+                        <div class="topology-visual">⭐</div>
+                        <h4>Stern-Topologie</h4>
+                        <p>Alle Geräte sind mit einem zentralen Hub/Switch verbunden</p>
+                        <div class="advantages-disadvantages">
+                            <div class="advantages">
+                                <h6>✅ Vorteile</h6>
+                                <ul>
+                                    <li>Ausfallsicher</li>
+                                    <li>Einfach zu erweitern</li>
+                                    <li>Heute Standard</li>
+                                </ul>
+                            </div>
+                            <div class="disadvantages">
+                                <h6>❌ Nachteile</h6>
+                                <ul>
+                                    <li>Mehr Kabel nötig</li>
+                                    <li>Hub = Single Point of Failure</li>
+                                    <li>Etwas teurer</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Baum-Topologie -->
+                    <div class="topology-card">
+                        <div class="topology-visual">🌳</div>
+                        <h4>Baum-Topologie</h4>
+                        <p>Hierarchische Struktur mit mehreren Ebenen (wie ein Stammbaum)</p>
+                        <div class="advantages-disadvantages">
+                            <div class="advantages">
+                                <h6>✅ Vorteile</h6>
+                                <ul>
+                                    <li>Gut für große Netzwerke</li>
+                                    <li>Hierarchische Verwaltung</li>
+                                    <li>Erweiterbar</li>
+                                </ul>
+                            </div>
+                            <div class="disadvantages">
+                                <h6>❌ Nachteile</h6>
+                                <ul>
+                                    <li>Komplex</li>
+                                    <li>Wurzel = kritischer Punkt</li>
+                                    <li>Viel Verkabelung</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Netz-Topologie -->
+                    <div class="topology-card">
+                        <div class="topology-visual">🕸️</div>
+                        <h4>Netz-Topologie (Mesh)</h4>
+                        <p>Jedes Gerät ist mit mehreren anderen verbunden</p>
+                        <div class="advantages-disadvantages">
+                            <div class="advantages">
+                                <h6>✅ Vorteile</h6>
+                                <ul>
+                                    <li>Sehr ausfallsicher</li>
+                                    <li>Mehrere Wege für Daten</li>
+                                    <li>Hohe Verfügbarkeit</li>
+                                </ul>
+                            </div>
+                            <div class="disadvantages">
+                                <h6>❌ Nachteile</h6>
+                                <ul>
+                                    <li>Sehr teuer</li>
+                                    <li>Komplexe Verkabelung</li>
+                                    <li>Schwer zu verwalten</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Hybride Topologie -->
+                    <div class="topology-card">
+                        <div class="topology-visual">🔄</div>
+                        <h4>Hybride Topologie</h4>
+                        <p>Mischung aus verschiedenen Topologien</p>
+                        <div class="advantages-disadvantages">
+                            <div class="advantages">
+                                <h6>✅ Vorteile</h6>
+                                <ul>
+                                    <li>Flexibel</li>
+                                    <li>Anpassbar</li>
+                                    <li>Kombiniert Vorteile</li>
+                                </ul>
+                            </div>
+                            <div class="disadvantages">
+                                <h6>❌ Nachteile</h6>
+                                <ul>
+                                    <li>Kompliziert</li>
+                                    <li>Schwer zu planen</li>
+                                    <li>Wartungsaufwand</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="important-note">
+                    <h5>⚠️ Prüfungstipp</h5>
+                    <p>Die <strong>Stern-Topologie</strong> ist heute der Standard! Fast alle modernen Netzwerke (zuhause, Schule, Firma) nutzen diese Topologie mit einem Switch als zentralem Element.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Netzwerk-Komponenten -->
+        <div class="content-section">
+            <div class="section-header">
+                4. Wichtige Netzwerk-Komponenten
+            </div>
+            <div class="section-content">
+                <div class="visual-network">
+                    <div class="network-device">
+                        <div class="device-icon">💻</div>
+                        <strong>Client</strong>
+                        <small>Computer/Laptop</small>
+                    </div>
+                    <div class="network-connection"></div>
+                    <div class="network-device">
+                        <div class="device-icon">🔄</div>
+                        <strong>Switch</strong>
+                        <small>Verteiler</small>
+                    </div>
+                    <div class="network-connection"></div>
+                    <div class="network-device">
+                        <div class="device-icon">🌐</div>
+                        <strong>Router</strong>
+                        <small>Internet-Zugang</small>
+                    </div>
+                    <div class="network-connection"></div>
+                    <div class="network-device">
+                        <div class="device-icon">🏢</div>
+                        <strong>Server</strong>
+                        <small>Zentral-Computer</small>
+                    </div>
+                </div>
+
+                <table class="component-table">
+                    <thead>
+                        <tr>
+                            <th>Komponente</th>
+                            <th>Funktion</th>
+                            <th>Arbeitsweise</th>
+                            <th>Beispiel</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Client</strong></td>
+                            <td>Nutzt Dienste von Servern</td>
+                            <td>Stellt Anfragen, empfängt Antworten</td>
+                            <td>Euer PC, Smartphone, Tablet</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Server</strong></td>
+                            <td>Stellt Dienste bereit</td>
+                            <td>Wartet auf Anfragen, sendet Antworten</td>
+                            <td>Webserver, Dateiserver, Mailserver</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Switch</strong></td>
+                            <td>Verbindet Geräte im gleichen Netzwerk</td>
+                            <td>Lernt MAC-Adressen, leitet intelligent weiter</td>
+                            <td>24-Port Switch im Informatikraum</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hub</strong></td>
+                            <td>Einfacher Verteiler (veraltet)</td>
+                            <td>Wiederholt alle Signale an alle Ports</td>
+                            <td>Heute nicht mehr verwendet</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Router</strong></td>
+                            <td>Verbindet verschiedene Netzwerke</td>
+                            <td>Findet besten Weg, übersetzt IP-Adressen</td>
+                            <td>FritzBox zuhause, Internet-Router</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Access Point</strong></td>
+                            <td>Ermöglicht WLAN-Verbindungen</td>
+                            <td>Wandelt zwischen Kabel und Funk um</td>
+                            <td>WLAN-Router, Hotspot</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Firewall</strong></td>
+                            <td>Schützt vor unerwünschtem Datenverkehr</td>
+                            <td>Filtert Datenpakete nach Regeln</td>
+                            <td>Windows Firewall, Hardware-Firewall</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Repeater</strong></td>
+                            <td>Verstärkt schwache Signale</td>
+                            <td>Empfängt und sendet Signale neu</td>
+                            <td>WLAN-Repeater für größere Reichweite</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="subsection">
+                    <h4>🔍 Switch vs. Hub - Der wichtige Unterschied</h4>
+                    <div class="example-box">
+                        <h5>💡 Stellt euch vor: Klassenraum-Vergleich</h5>
+                        <p><strong>Hub (veraltet):</strong> Wie ein Lehrer, der alles, was ein Schüler sagt, an die ganze Klasse weitergibt. Sehr laut und chaotisch!</p>
+                        <p><strong>Switch (modern):</strong> Wie ein intelligenter Lehrer, der weiß, wer wo sitzt und Nachrichten nur an die richtige Person weiterleitet. Viel effizienter!</p>
+                    </div>
+                </div>
+
+                <div class="definition-box">
+                    <h5>📚 MAC-Adresse</h5>
+                    <p>Jede Netzwerkkarte hat eine einzigartige MAC-Adresse (Media Access Control). Das ist wie ein Personalausweis für Netzwerkgeräte. Format: 6 Hex-Paare, z.B. 00:1A:2B:3C:4D:5E</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- OSI-Modell Grundlagen -->
+        <div class="content-section">
+            <div class="section-header">
+                5. OSI-Schichtenmodell (Grundlagen)
+            </div>
+            <div class="section-content">
+                <div class="definition-box">
+                    <h5>📚 Was ist das OSI-Modell?</h5>
+                    <p>Das OSI-Modell (Open Systems Interconnection) ist ein theoretisches Modell, das erklärt, wie Daten in einem Netzwerk übertragen werden. Es teilt die Kommunikation in 7 Schichten auf - wie die Stockwerke eines Gebäudes.</p>
+                </div>
+
+                <div class="protocol-stack">
+                    <div class="protocol-layer layer-7">
+                        <strong>Schicht 7 - Anwendungsschicht</strong>
+                        <p>Programme, die ihr benutzt: Browser, E-Mail, WhatsApp</p>
+                        <small>Protokolle: HTTP, FTP, SMTP</small>
+                    </div>
+                    <div class="protocol-layer layer-6">
+                        <strong>Schicht 6 - Darstellungsschicht</strong>
+                        <p>Verschlüsselung, Kompression, Formatierung</p>
+                        <small>Beispiel: JPEG-Bilder, ZIP-Dateien</small>
+                    </div>
+                    <div class="protocol-layer layer-5">
+                        <strong>Schicht 5 - Sitzungsschicht</strong>
+                        <p>Verbindungen aufbauen und beenden</p>
+                        <small>Beispiel: Login-Session</small>
+                    </div>
+                    <div class="protocol-layer layer-4">
+                        <strong>Schicht 4 - Transportschicht</strong>
+                        <p>Zuverlässige Datenübertragung, Fehlerkorrektur</p>
+                        <small>Protokolle: TCP, UDP</small>
+                    </div>
+                    <div class="protocol-layer layer-3">
+                        <strong>Schicht 3 - Netzwerkschicht</strong>
+                        <p>Routing, IP-Adressen, Weg durch das Internet finden</p>
+                        <small>Protokolle: IP, ICMP</small>
+                    </div>
+                    <div class="protocol-layer layer-2">
+                        <strong>Schicht 2 - Sicherungsschicht</strong>
+                        <p>MAC-Adressen, Frames, lokale Netzwerk-Kommunikation</p>
+                        <small>Protokolle: Ethernet, WLAN</small>
+                    </div>
+                    <div class="protocol-layer layer-1">
+                        <strong>Schicht 1 - Bitübertragungsschicht</strong>
+                        <p>Physische Übertragung: Kabel, Signale, Strom</p>
+                        <small>Hardware: Kabel, WLAN, Glasfaser</small>
+                    </div>
+                </div>
+
+                <div class="example-box">
+                    <h5>💡 Beispiel: WhatsApp-Nachricht senden</h5>
+                    <ol>
+                        <li><strong>Schicht 7:</strong> Ihr tippt "Hi!" in WhatsApp</li>
+                        <li><strong>Schicht 6:</strong> Text wird verschlüsselt</li>
+                        <li><strong>Schicht 5:</strong> Verbindung zu WhatsApp-Server wird geprüft</li>
+                        <li><strong>Schicht 4:</strong> Daten werden in kleine Pakete aufgeteilt</li>
+                        <li><strong>Schicht 3:</strong> Router finden den Weg zum Empfänger</li>
+                        <li><strong>Schicht 2:</strong> Daten werden in Ethernet-Frames verpackt</li>
+                        <li><strong>Schicht 1:</strong> Elektrische Signale über Kabel/WLAN</li>
+                    </ol>
+                </div>
+
+                <div class="important-note">
+                    <h5>⚠️ Merkspruch für die Schichten</h5>
+                    <p><strong>Von unten nach oben:</strong><br>
+                    "Alle Deutschen Studenten Trinken Verschiedene Sorten Bier"<br>
+                    (Anwendung - Darstellung - Sitzung - Transport - Vermittlung - Sicherung - Bitübertragung)</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Übertragungsmedien -->
+        <div class="content-section">
+            <div class="section-header">
+                6. Übertragungsmedien
+            </div>
+            <div class="section-content">
+                <div class="topology-grid">
+                    <div class="topology-card">
+                        <div class="topology-visual">🔌</div>
+                        <h4>Kupferkabel</h4>
+                        <p><strong>Twisted Pair (UTP/STP)</strong></p>
+                        <div class="advantages-disadvantages">
+                            <div class="advantages">
+                                <h6>✅ Vorteile</h6>
+                                <ul>
+                                    <li>Günstig</li>
+                                    <li>Einfach zu verlegen</li>
+                                    <li>Standard in LANs</li>
+                                </ul>
+                            </div>
+                            <div class="disadvantages">
+                                <h6>❌ Nachteile</h6>
+                                <ul>
+                                    <li>Begrenzte Reichweite (100m)</li>
+                                    <li>Störungsanfällig</li>
+                                    <li>Langsamere Übertragung</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <small><strong>Beispiele:</strong> CAT5e, CAT6, Ethernet-Kabel</small>
+                    </div>
+
+                    <div class="topology-card">
+                        <div class="topology-visual">💡</div>
+                        <h4>Glasfaserkabel</h4>
+                        <p><strong>Lichtsignale durch Glasfasern</strong></p>
+                        <div class="advantages-disadvantages">
+                            <div class="advantages">
+                                <h6>✅ Vorteile</h6>
+                                <ul>
+                                    <li>Sehr schnell</li>
+                                    <li>Große Reichweite</li>
+                                    <li>Keine Störungen</li>
+                                </ul>
+                            </div>
+                            <div class="disadvantages">
+                                <h6>❌ Nachteile</h6>
+                                <ul>
+                                    <li>Teuer</li>
+                                    <li>Empfindlich</li>
+                                    <li>Schwer zu installieren</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <small><strong>Beispiele:</strong> Internet-Backbone, Rechenzentren</small>
+                    </div>
+
+                    <div class="topology-card">
+                        <div class="topology-visual">📡</div>
+                        <h4>Funktechnik (WLAN)</h4>
+                        <p><strong>Drahtlose Übertragung</strong></p>
+                        <div class="advantages-disadvantages">
+                            <div class="advantages">
+                                <h6>✅ Vorteile</h6>
+                                <ul>
+                                    <li>Keine Kabel nötig</li>
+                                    <li>Mobil nutzbar</li>
+                                    <li>Flexibel</li>
+                                </ul>
+                            </div>
+                            <div class="disadvantages">
+                                <h6>❌ Nachteile</h6>
+                                <ul>
+                                    <li>Störungsanfällig</li>
+                                    <li>Sicherheitsrisiken</li>
+                                    <li>Langsamere Übertragung</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <small><strong>Standards:</strong> 802.11 (a/b/g/n/ac/ax)</small>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h4>🔢 Übertragungsgeschwindigkeiten im Vergleich</h4>
+                    <table class="component-table">
+                        <thead>
+                            <tr>
+                                <th>Medium</th>
+                                <th>Standard</th>
+                                <th>Geschwindigkeit</th>
+                                <th>Typische Nutzung</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>Ethernet (Kupfer)</td>
+                                <td>CAT5e</td>
+                                <td>1 Gbit/s</td>
+                                <td>Heimnetzwerk, Büro</td>
+                            </tr>
+                            <tr>
+                                <td>Ethernet (Kupfer)</td>
+                                <td>CAT6/6A</td>
+                                <td>10 Gbit/s</td>
+                                <td>Moderne Büronetzwerke</td>
+                            </tr>
+                            <tr>
+                                <td>WLAN</td>
+                                <td>802.11n</td>
+                                <td>150-600 Mbit/s</td>
+                                <td>Ältere WLAN-Router</td>
+                            </tr>
+                            <tr>
+                                <td>WLAN</td>
+                                <td>802.11ac</td>
+                                <td>433-1300 Mbit/s</td>
+                                <td>Moderne WLAN-Router</td>
+                            </tr>
+                            <tr>
+                                <td>Glasfaser</td>
+                                <td>Single-Mode</td>
+                                <td>10-100+ Gbit/s</td>
+                                <td>Internet-Backbone, Rechenzentren</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+
+        <!-- Client-Server vs Peer-to-Peer -->
+        <div class="content-section">
+            <div class="section-header">
+                7. Netzwerk-Architekturen
+            </div>
+            <div class="section-content">
+                <div class="topology-grid">
+                    <div class="topology-card">
+                        <div class="topology-visual">🏢</div>
+                        <h4>Client-Server-Netzwerk</h4>
+                        <p>Ein oder mehrere zentrale Server bedienen viele Clients</p>
+                        <div class="advantages-disadvantages">
+                            <div class="advantages">
+                                <h6>✅ Vorteile</h6>
+                                <ul>
+                                    <li>Zentrale Verwaltung</li>
+                                    <li>Sicherheit</li>
+                                    <li>Backup einfach</li>
+                                    <li>Skalierbar</li>
+                                </ul>
+                            </div>
+                            <div class="disadvantages">
+                                <h6>❌ Nachteile</h6>
+                                <ul>
+                                    <li>Teuer (Server nötig)</li>
+                                    <li>Server = Schwachstelle</li>
+                                    <li>Komplexere Einrichtung</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <small><strong>Beispiele:</strong> Schul-Netzwerk, Firmennetzwerk, Webseiten</small>
+                    </div>
+
+                    <div class="topology-card">
+                        <div class="topology-visual">👥</div>
+                        <h4>Peer-to-Peer-Netzwerk</h4>
+                        <p>Alle Computer sind gleichberechtigt und können Server und Client sein</p>
+                        <div class="advantages-disadvantages">
+                            <div class="advantages">
+                                <h6>✅ Vorteile</h6>
+                                <ul>
+                                    <li>Günstig</li>
+                                    <li>Einfach einzurichten</li>
+                                    <li>Keine zentrale Schwachstelle</li>
+                                </ul>
+                            </div>
+                            <div class="disadvantages">
+                                <h6>❌ Nachteile</h6>
+                                <ul>
+                                    <li>Schwer zu verwalten</li>
+                                    <li>Sicherheitsprobleme</li>
+                                    <li>Nicht skalierbar</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <small><strong>Beispiele:</strong> Heimnetzwerk, BitTorrent, Blockchain</small>
+                    </div>
+                </div>
+
+                <div class="definition-box">
+                    <h5>📚 Client und Server - Die Rollen</h5>
+                    <p><strong>Client:</strong> "Kunde" - stellt Anfragen, möchte etwas (Webseite laden, Datei herunterladen)</p>
+                    <p><strong>Server:</strong> "Dienstleister" - wartet auf Anfragen und beantwortet sie (Webserver liefert Webseiten)</p>
+                    <p><strong>Wichtig:</strong> Ein Computer kann beides sein! Euer PC ist Client (lädt Webseiten) und kann auch Server sein (teilt Dateien).</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Praktische Anwendungen -->
+        <div class="content-section">
+            <div class="section-header">
+                8. Praktische Anwendungen und Beispiele
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h4>🏠 Heimnetzwerk</h4>
+                    <div class="example-box">
+                        <h5>💡 Typisches Setup zuhause</h5>
+                        <ul>
+                            <li><strong>Router/Modem:</strong> Verbindung zum Internet (FritzBox, Speedport)</li>
+                            <li><strong>WLAN Access Point:</strong> Meist im Router integriert</li>
+                            <li><strong>Clients:</strong> Laptops, Smartphones, Smart-TV, Spielkonsole</li>
+                            <li><strong>Topologie:</strong> Stern (alle Geräte zum Router)</li>
+                            <li><strong>Architektur:</strong> Peer-to-Peer für lokale Dateien, Client-Server für Internet</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="subsection">
+                    <h4>🏫 Schul-Netzwerk</h4>
+                    <div class="example-box">
+                        <h5>💡 Schule/Unternehmen</h5>
+                        <ul>
+                            <li><strong>Server:</strong> Dateiserver, Druckserver, Webserver</li>
+                            <li><strong>Clients:</strong> Computer in Klassenräumen</li>
+                            <li><strong>Switches:</strong> In jedem Raum, verbinden Computer</li>
+                            <li><strong>Router:</strong> Verbindung zum Internet mit Firewall</li>
+                            <li><strong>Architektur:</strong> Client-Server (zentrale Verwaltung)</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="important-note">
+                    <h5>⚠️ Sicherheit im Netzwerk</h5>
+                    <p><strong>Wichtige Sicherheitsmaßnahmen:</strong></p>
+                    <ul>
+                        <li><strong>Firewall:</strong> Filtert unerwünschten Verkehr</li>
+                        <li><strong>WLAN-Verschlüsselung:</strong> WPA3 (oder mindestens WPA2)</li>
+                        <li><strong>Sichere Passwörter:</strong> Für WLAN und Geräte</li>
+                        <li><strong>Updates:</strong> Router-Firmware aktuell halten</li>
+                        <li><strong>VPN:</strong> Sicherer Zugang von außen</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Übungsaufgaben -->
+        <div class="quiz-section">
+            <h3>🧠 Teste dein Wissen!</h3>
+            
+            <div class="quiz-question">
+                <h4>Frage 1: Topologien</h4>
+                <p><strong>Welche Topologie wird heute am häufigsten in LANs verwendet und warum?</strong></p>
+                <details>
+                    <summary>Antwort anzeigen</summary>
+                    <p><strong>Stern-Topologie</strong> ist heute Standard, weil:</p>
+                    <ul>
+                        <li>Ausfallsicher (ein Kabel kaputt = nur ein Gerät betroffen)</li>
+                        <li>Einfach zu erweitern</li>
+                        <li>Gute Performance</li>
+                        <li>Zentrale Verwaltung über Switch möglich</li>
+                    </ul>
+                </details>
+            </div>
+
+            <div class="quiz-question">
+                <h4>Frage 2: Komponenten</h4>
+                <p><strong>Was ist der Unterschied zwischen einem Switch und einem Router?</strong></p>
+                <details>
+                    <summary>Antwort anzeigen</summary>
+                    <ul>
+                        <li><strong>Switch:</strong> Verbindet Geräte im <em>gleichen</em> Netzwerk (Layer 2), verwendet MAC-Adressen</li>
+                        <li><strong>Router:</strong> Verbindet <em>verschiedene</em> Netzwerke (Layer 3), verwendet IP-Adressen, kann ins Internet routen</li>
+                    </ul>
+                </details>
+            </div>
+
+            <div class="quiz-question">
+                <h4>Frage 3: OSI-Modell</h4>
+                <p><strong>Auf welcher OSI-Schicht arbeitet eine IP-Adresse?</strong></p>
+                <details>
+                    <summary>Antwort anzeigen</summary>
+                    <p><strong>Schicht 3 - Netzwerkschicht (Vermittlungsschicht)</strong></p>
+                    <p>IP-Adressen werden für das Routing zwischen verschiedenen Netzwerken verwendet.</p>
+                </details>
+            </div>
+
+            <div class="quiz-question">
+                <h4>Frage 4: Übertragungsmedien</h4>
+                <p><strong>Warum ist Glasfaser schneller als Kupferkabel?</strong></p>
+                <details>
+                    <summary>Antwort anzeigen</summary>
+                    <ul>
+                        <li><strong>Lichtgeschwindigkeit:</strong> Lichtsignale sind schneller als elektrische Signale</li>
+                        <li><strong>Keine Störungen:</strong> Licht wird nicht von elektromagnetischen Feldern beeinflusst</li>
+                        <li><strong>Höhere Bandbreite:</strong> Kann viel mehr Daten gleichzeitig übertragen</li>
+                        <li><strong>Geringere Dämpfung:</strong> Signal bleibt über größere Entfernungen stark</li>
+                    </ul>
+                </details>
+            </div>
+
+            <div class="quiz-question">
+                <h4>Frage 5: Netzwerkarten</h4>
+                <p><strong>Erkläre den Unterschied zwischen LAN und WAN mit je einem Beispiel.</strong></p>
+                <details>
+                    <summary>Antwort anzeigen</summary>
+                    <ul>
+                        <li><strong>LAN (Local Area Network):</strong> 
+                            <ul>
+                                <li>Lokales Netzwerk, begrenzte Reichweite (Gebäude/Campus)</li>
+                                <li>Beispiel: Schulnetzwerk, Heimnetzwerk</li>
+                                <li>Gehört einer Organisation</li>
+                            </ul>
+                        </li>
+                        <li><strong>WAN (Wide Area Network):</strong> 
+                            <ul>
+                                <li>Weitreichendes Netzwerk über große Entfernungen</li>
+                                <li>Beispiel: Internet, Firmennetzwerk mit mehreren Standorten</li>
+                                <li>Verbindet verschiedene LANs</li>
+                            </ul>
+                        </li>
+                    </ul>
+                </details>
+            </div>
+        </div>
+
+        <!-- Zusammenfassung -->
+        <div class="content-section">
+            <div class="section-header">
+                📝 Zusammenfassung - Das Wichtigste in Kürze
+            </div>
+            <div class="section-content">
+                <div class="subsection">
+                    <h4>🔑 Kernbegriffe</h4>
+                    <ul>
+                        <li><strong>Netzwerk:</strong> Verbund von Computern zum Datenaustausch</li>
+                        <li><strong>LAN/WAN:</strong> Lokales vs. weitreichendes Netzwerk</li>
+                        <li><strong>Topologie:</strong> Physischer/logischer Aufbau (Stern ist Standard)</li>
+                        <li><strong>Client-Server:</strong> Zentrale Dienste vs. Peer-to-Peer (gleichberechtigt)</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>🔧 Wichtige Komponenten</h4>
+                    <ul>
+                        <li><strong>Switch:</strong> Intelligenter Verteiler im LAN (MAC-Adressen)</li>
+                        <li><strong>Router:</strong> Verbindet Netzwerke, Internet-Zugang (IP-Adressen)</li>
+                        <li><strong>Server:</strong> Stellt Dienste bereit, wartet auf Anfragen</li>
+                        <li><strong>Client:</strong> Nutzt Dienste, stellt Anfragen</li>
+                    </ul>
+                </div>
+
+                <div class="subsection">
+                    <h4>📊 OSI-Modell (vereinfacht)</h4>
+                    <ul>
+                        <li><strong>Schicht 1-2:</strong> Hardware (Kabel, Ethernet, MAC-Adressen)</li>
+                        <li><strong>Schicht 3:</strong> Internet (IP-Adressen, Routing)</li>
+                        <li><strong>Schicht 4:</strong> Transport (TCP/UDP, Zuverlässigkeit)</li>
+                        <li><strong>Schicht 7:</strong> Anwendungen (HTTP, E-Mail, etc.)</li>
+                    </ul>
+                </div>
+
+                <div class="important-note">
+                    <h5>⚠️ Für die Prüfung besonders wichtig</h5>
+                    <ul>
+                        <li>Unterschied Switch vs. Router vs. Hub</li>
+                        <li>Stern-Topologie als Standard verstehen</li>
+                        <li>Client-Server-Prinzip erklären können</li>
+                        <li>LAN vs. WAN unterscheiden</li>
+                        <li>OSI-Modell: Welche Schicht macht was?</li>
+                        <li>MAC-Adresse vs. IP-Adresse</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- Navigation -->
+        <div style="text-align: center; margin: 3rem 0;">
+            <a href="index.html" class="back-button">🏠 Zurück zur Übersicht</a>
+            <a href="osi-modell.html" class="back-button" style="margin-left: 1rem;">📡 Weiter: OSI-Schichtenmodell</a>
+        </div>
     </div>
 
     <script>
-        // Einfache, funktionierende Tooltip-Lösung
-        document.addEventListener('DOMContentLoaded', function() {
-            const tooltipTerms = document.querySelectorAll('.tooltip-term');
-            const overlay = document.getElementById('tooltipOverlay');
-            let activeTooltip = null;
-            let isMobile = window.innerWidth <= 768;
-
-            // Update mobile detection on resize
-            window.addEventListener('resize', function() {
-                isMobile = window.innerWidth <= 768;
-                if (activeTooltip) {
-                    hideAllTooltips();
-                }
-            });
-
-            tooltipTerms.forEach(term => {
-                const tooltip = term.querySelector('.tooltip-content');
-                if (!tooltip) return;
-
-                // Check if term is inside a table
-                const isInTable = term.closest('.comparison-table') !== null;
-
-                // Desktop: Hover Events
-                term.addEventListener('mouseenter', function() {
-                    if (!isMobile) {
-                        showTooltip(tooltip, term, isInTable);
-                    }
+        // Smooth scrolling for internal links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
                 });
-
-                term.addEventListener('mouseleave', function() {
-                    if (!isMobile && activeTooltip !== tooltip) {
-                        hideTooltip(tooltip);
-                    }
-                });
-
-                // Mobile & Desktop: Click Events
-                term.addEventListener('click', function(e) {
-                    e.preventDefault();
-                    e.stopPropagation();
-
-                    // Schließe anderen aktiven Tooltip
-                    if (activeTooltip && activeTooltip !== tooltip) {
-                        hideTooltip(activeTooltip);
-                    }
-
-                    // Toggle aktuellen Tooltip
-                    if (activeTooltip === tooltip) {
-                        hideTooltip(tooltip);
-                        activeTooltip = null;
-                    } else {
-                        showTooltip(tooltip, term, isInTable);
-                        activeTooltip = tooltip;
-                    }
-                });
-            });
-
-            function showTooltip(tooltip, term, isInTable) {
-                // Erst alle anderen schließen
-                hideAllTooltips();
-
-                if (isMobile) {
-                    tooltip.classList.add('mobile');
-                    overlay.classList.add('active');
-                } else if (isInTable) {
-                    // Spezielle Behandlung für Tabellen-Tooltips
-                    positionTableTooltip(tooltip, term);
-                } else {
-                    tooltip.classList.remove('mobile');
-                }
-
-                tooltip.classList.add('show');
-                
-                // Positionierung für normale Desktop-Tooltips prüfen
-                if (!isMobile && !isInTable) {
-                    checkPosition(tooltip);
-                }
-            }
-
-            function positionTableTooltip(tooltip, term) {
-                const termRect = term.getBoundingClientRect();
-                const viewportWidth = window.innerWidth;
-                const viewportHeight = window.innerHeight;
-                
-                // Erst Tooltip sichtbar machen, damit wir seine Größe messen können
-                tooltip.style.visibility = 'visible';
-                tooltip.style.opacity = '0'; // Unsichtbar aber gerendert für Messungen
-                
-                // Fixed positioning für Tabellen-Tooltips
-                tooltip.style.position = 'fixed';
-                tooltip.style.zIndex = '10001';
-                
-                // Tooltip-Größe messen
-                const tooltipRect = tooltip.getBoundingClientRect();
-                const tooltipWidth = tooltipRect.width;
-                const tooltipHeight = tooltipRect.height;
-                
-                // Standard: Oberhalb des Elements, zentriert
-                let top = termRect.top - tooltipHeight - 10;
-                let left = termRect.left + (termRect.width / 2) - (tooltipWidth / 2);
-
-                // Horizontale Anpassung
-                if (left < 10) {
-                    left = 10; // Links am Rand
-                } else if (left + tooltipWidth > viewportWidth - 10) {
-                    left = viewportWidth - tooltipWidth - 10; // Rechts am Rand
-                }
-
-                // Vertikale Anpassung
-                if (top < 10) {
-                    // Nicht genug Platz oben - zeige unterhalb
-                    top = termRect.bottom + 10;
-                }
-
-                // Finale Anpassung wenn immer noch außerhalb des Viewports
-                if (top + tooltipHeight > viewportHeight - 10) {
-                    // Als letzter Ausweg: mittig im Viewport
-                    top = Math.max(10, (viewportHeight - tooltipHeight) / 2);
-                }
-
-                // Positionierung anwenden
-                tooltip.style.top = top + 'px';
-                tooltip.style.left = left + 'px';
-                tooltip.style.transform = 'none'; // Kein CSS transform nötig
-                
-                // Jetzt sichtbar machen
-                tooltip.style.opacity = '1';
-            }
-
-            function hideTooltip(tooltip) {
-                tooltip.classList.remove('show', 'mobile');
-                overlay.classList.remove('active');
-                
-                // Reset alle inline styles für Tabellen-Tooltips
-                tooltip.style.position = '';
-                tooltip.style.top = '';
-                tooltip.style.left = '';
-                tooltip.style.right = '';
-                tooltip.style.bottom = '';
-                tooltip.style.transform = '';
-                tooltip.style.zIndex = '';
-            }
-
-            function hideAllTooltips() {
-                const allTooltips = document.querySelectorAll('.tooltip-content');
-                allTooltips.forEach(tooltip => {
-                    hideTooltip(tooltip);
-                });
-                activeTooltip = null;
-            }
-
-            function checkPosition(tooltip) {
-                // Warte einen Frame für korrekte Berechnung (nur für normale Tooltips)
-                setTimeout(() => {
-                    const rect = tooltip.getBoundingClientRect();
-                    const viewportWidth = window.innerWidth;
-                    const viewportHeight = window.innerHeight;
-
-                    // Horizontale Anpassung
-                    if (rect.left < 10) {
-                        tooltip.style.left = '0';
-                        tooltip.style.transform = 'translateY(-5px)';
-                    } else if (rect.right > viewportWidth - 10) {
-                        tooltip.style.left = 'auto';
-                        tooltip.style.right = '0';
-                        tooltip.style.transform = 'translateY(-5px)';
-                    }
-
-                    // Vertikale Anpassung - wenn Tooltip unten aus dem Bildschirm ragt
-                    if (rect.bottom > viewportHeight - 10) {
-                        tooltip.style.bottom = 'auto';
-                        tooltip.style.top = '100%';
-                        tooltip.style.transform = 'translateX(-50%) translateY(5px)';
-                    }
-                }, 10);
-            }
-
-            // Event Listeners
-            overlay.addEventListener('click', hideAllTooltips);
-
-            document.addEventListener('click', function(e) {
-                if (!e.target.closest('.tooltip-term')) {
-                    hideAllTooltips();
-                }
-            });
-
-            document.addEventListener('keydown', function(e) {
-                if (e.key === 'Escape') {
-                    hideAllTooltips();
-                }
             });
         });
 
-        // Keyboard accessibility
-        document.addEventListener('keydown', function(e) {
-            if (e.key === 'Escape') {
-                const overlay = document.getElementById('tooltipOverlay');
-                const visibleTooltips = document.querySelectorAll('.tooltip-content[style*="visible"]');
-                
-                visibleTooltips.forEach(tooltip => {
-                    tooltip.style.visibility = 'hidden';
-                    tooltip.style.opacity = '0';
-                });
-                
-                overlay.classList.remove('active');
-            }
+        // Add interaction to topology cards
+        document.querySelectorAll('.topology-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'translateY(-8px)';
+                setTimeout(() => {
+                    this.style.transform = 'translateY(-4px)';
+                }, 200);
+            });
         });
     </script>
 </body>
