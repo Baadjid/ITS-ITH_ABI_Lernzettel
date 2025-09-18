@@ -133,14 +133,21 @@
             gap: 0.5rem;
         }
 
+        /* Mobile-optimierte Tabellen mit horizontalem Scrollen */
+        .table-container {
+            width: 100%;
+            overflow-x: auto;
+            margin: 1.5rem 0;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            -webkit-overflow-scrolling: touch; /* Smooth scrolling auf iOS */
+        }
+
         .comparison-table {
             width: 100%;
+            min-width: 700px; /* Mindestbreite für horizontales Scrollen */
             border-collapse: collapse;
-            margin: 1.5rem 0;
             background: var(--bg-white);
-            border-radius: 8px;
-            overflow: hidden;
-            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
 
         .comparison-table th,
@@ -148,12 +155,16 @@
             padding: 1rem;
             text-align: left;
             border-bottom: 1px solid var(--border-color);
+            white-space: nowrap; /* Verhindert Zeilenumbrüche in Zellen */
         }
 
         .comparison-table th {
             background: var(--primary-color);
             color: white;
             font-weight: bold;
+            position: sticky;
+            top: 0;
+            z-index: 1;
         }
 
         .comparison-table tr:nth-child(even) {
@@ -162,6 +173,24 @@
 
         .comparison-table tr:hover {
             background: #e0e7ff;
+        }
+
+        /* Spezielle Behandlung für mobile Geräte */
+        @media (max-width: 768px) {
+            .table-container {
+                margin: 1rem -1rem; /* Erweitert die Tabelle bis zu den Seitenrändern */
+                border-radius: 0;
+            }
+            
+            .comparison-table {
+                min-width: 600px; /* Kleinere Mindestbreite für mobile Geräte */
+            }
+            
+            .comparison-table th,
+            .comparison-table td {
+                padding: 0.75rem 0.5rem;
+                font-size: 0.9rem;
+            }
         }
 
         .diagram-container {
@@ -394,8 +423,16 @@
                 padding: 10px;
             }
 
+            .header {
+                padding: 1.5rem;
+            }
+
             .header h1 {
                 font-size: 2rem;
+            }
+
+            .content-section {
+                padding: 1.5rem;
             }
 
             .advantage-disadvantage {
@@ -409,6 +446,56 @@
 
             .key-terms {
                 grid-template-columns: 1fr;
+            }
+
+            .requirements-list {
+                grid-template-columns: 1fr;
+            }
+
+            .layer {
+                min-width: 250px;
+                padding: 1rem 1.5rem;
+            }
+
+            /* Mobile Breadcrumb */
+            .breadcrumb {
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            /* Mobile Diagramm-Container */
+            .diagram-container {
+                padding: 1.5rem;
+                margin: 1rem 0;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 5px;
+            }
+
+            .header h1 {
+                font-size: 1.75rem;
+            }
+
+            .content-section {
+                padding: 1rem;
+            }
+
+            .content-section h2 {
+                font-size: 1.5rem;
+            }
+
+            .layer {
+                min-width: 200px;
+                padding: 0.75rem 1rem;
+                font-size: 0.9rem;
+            }
+
+            .nav-button {
+                padding: 0.5rem 1rem;
+                font-size: 0.9rem;
             }
         }
     </style>
@@ -573,40 +660,42 @@
             
             <p>Es gibt verschiedene Wege, wie Datenbanken aufgebaut werden können. Hier die drei wichtigsten Architekturen:</p>
 
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Architektur</th>
-                        <th>Aufbau</th>
-                        <th>Vorteile</th>
-                        <th>Nachteile</th>
-                        <th>Anwendung</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td><strong>Desktop-DB (Einbenutzer)</strong></td>
-                        <td>Frontend + Backend in einer Datei</td>
-                        <td>Einfach, kostengünstig</td>
-                        <td>Nur ein Benutzer</td>
-                        <td>Persönliche Projekte</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Desktop-DB (Mehrbenutzer)</strong></td>
-                        <td>Frontend-Datei + Backend auf Netzwerk</td>
-                        <td>Mehrere Benutzer möglich</td>
-                        <td>Hohe Netzwerklast</td>
-                        <td>Kleine Teams</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Client/Server-DB</strong></td>
-                        <td>Client sendet Anfragen an DB-Server</td>
-                        <td>Effizient, professionell</td>
-                        <td>Komplexer, teurer</td>
-                        <td>Unternehmen</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Architektur</th>
+                            <th>Aufbau</th>
+                            <th>Vorteile</th>
+                            <th>Nachteile</th>
+                            <th>Anwendung</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Desktop-DB (Einbenutzer)</strong></td>
+                            <td>Frontend + Backend in einer Datei</td>
+                            <td>Einfach, kostengünstig</td>
+                            <td>Nur ein Benutzer</td>
+                            <td>Persönliche Projekte</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Desktop-DB (Mehrbenutzer)</strong></td>
+                            <td>Frontend-Datei + Backend auf Netzwerk</td>
+                            <td>Mehrere Benutzer möglich</td>
+                            <td>Hohe Netzwerklast</td>
+                            <td>Kleine Teams</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Client/Server-DB</strong></td>
+                            <td>Client sendet Anfragen an DB-Server</td>
+                            <td>Effizient, professionell</td>
+                            <td>Komplexer, teurer</td>
+                            <td>Unternehmen</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <div class="info-box example">
                 <h4>🌟 Client/Server - Der Goldstandard</h4>
@@ -664,42 +753,44 @@
             
             <p>Es gibt verschiedene Arten, wie Daten in einer Datenbank organisiert werden können:</p>
 
-            <div class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>Modell</th>
-                        <th>Aufbau</th>
-                        <th>Besonderheiten</th>
-                        <th>Wichtigkeit fürs Abitur</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr style="background: linear-gradient(135deg, #ecfdf5, #d1fae5);">
-                        <td><strong>Relationale DB</strong> ⭐</td>
-                        <td>Ausschließlich Tabellen</td>
-                        <td>Mathematisch fundiert, SQL</td>
-                        <td><strong>SEHR WICHTIG</strong></td>
-                    </tr>
-                    <tr>
-                        <td><strong>Objektorientierte DB</strong></td>
-                        <td>Ausschließlich Objekte</td>
-                        <td>Vererbung, Kapselung</td>
-                        <td>Grundwissen</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Hierarchische DB</strong></td>
-                        <td>Baumstruktur</td>
-                        <td>Sehr schnell, inflexibel</td>
-                        <td>Grundwissen</td>
-                    </tr>
-                    <tr>
-                        <td><strong>Netzwerkartige DB</strong></td>
-                        <td>Beliebige Verknüpfungen</td>
-                        <td>Flexibel, komplex</td>
-                        <td>Grundwissen</td>
-                    </tr>
-                </tbody>
-            </table>
+            <div class="table-container">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th>Modell</th>
+                            <th>Aufbau</th>
+                            <th>Besonderheiten</th>
+                            <th>Wichtigkeit fürs Abitur</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr style="background: linear-gradient(135deg, #ecfdf5, #d1fae5);">
+                            <td><strong>Relationale DB</strong> ⭐</td>
+                            <td>Ausschließlich Tabellen</td>
+                            <td>Mathematisch fundiert, SQL</td>
+                            <td><strong>SEHR WICHTIG</strong></td>
+                        </tr>
+                        <tr>
+                            <td><strong>Objektorientierte DB</strong></td>
+                            <td>Ausschließlich Objekte</td>
+                            <td>Vererbung, Kapselung</td>
+                            <td>Grundwissen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Hierarchische DB</strong></td>
+                            <td>Baumstruktur</td>
+                            <td>Sehr schnell, inflexibel</td>
+                            <td>Grundwissen</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Netzwerkartige DB</strong></td>
+                            <td>Beliebige Verknüpfungen</td>
+                            <td>Flexibel, komplex</td>
+                            <td>Grundwissen</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
 
             <div class="info-box definition">
                 <h4>🎯 Fokus: Relationale Datenbanken</h4>
@@ -868,6 +959,36 @@
                 }, 1000);
             });
         });
+
+        // Mobile table scroll indicator
+        document.querySelectorAll('.table-container').forEach(container => {
+            const table = container.querySelector('.comparison-table');
+            
+            // Add scroll indicators for mobile
+            if (table && window.innerWidth <= 768) {
+                const scrollIndicator = document.createElement('div');
+                scrollIndicator.innerHTML = '← Horizontal scrollen →';
+                scrollIndicator.style.cssText = `
+                    text-align: center;
+                    font-size: 0.8rem;
+                    color: var(--text-light);
+                    padding: 0.5rem;
+                    background: var(--bg-light);
+                    margin-top: -1px;
+                    border-radius: 0 0 8px 8px;
+                `;
+                
+                // Only show if table is wider than container
+                if (table.scrollWidth > container.clientWidth) {
+                    container.appendChild(scrollIndicator);
+                }
+            }
+        });
+
+        // Performance optimization: Reduce animations on slow devices
+        if (navigator.hardwareConcurrency && navigator.hardwareConcurrency < 4) {
+            document.documentElement.style.setProperty('--animation-duration', '0.1s');
+        }
     </script>
 </body>
 </html>
