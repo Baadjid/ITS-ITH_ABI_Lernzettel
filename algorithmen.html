@@ -799,22 +799,294 @@
             <div class="code-block">
 <span class="keyword">import</span> java.util.ArrayList;
 
-<span class="comment">// ArrayList erstellen</span>
-ArrayList&lt;Integer&gt; <span class="variable">liste</span> <span class="operator">=</span> <span class="keyword">new</span> ArrayList&lt;&gt;();
+<span class="comment">// ArrayList erstellen und verwenden</span>
+ArrayList&lt;String&gt; <span class="variable">spiele</span> <span class="operator">=</span> <span class="keyword">new</span> ArrayList&lt;&gt;();
 
 <span class="comment">// Elemente hinzufügen</span>
-<span class="variable">liste</span>.add(<span class="number">10</span>);      <span class="comment">// [10]</span>
-<span class="variable">liste</span>.add(<span class="number">20</span>);      <span class="comment">// [10, 20]</span>
-<span class="variable">liste</span>.add(<span class="number">1</span>, <span class="number">15</span>);   <span class="comment">// [10, 15, 20] - an Index 1 einfügen</span>
+<span class="variable">spiele</span>.add(<span class="string">"Chess"</span>);
+<span class="variable">spiele</span>.add(<span class="string">"Poker"</span>);
+<span class="variable">spiele</span>.add(<span class="number">1</span>, <span class="string">"Solitaire"</span>); <span class="comment">// An Index 1 einfügen</span>
+<span class="variable">spiele</span>.add(<span class="string">"Chess"</span>); <span class="comment">// Duplikate erlaubt!</span>
 
-<span class="comment">// Elemente abrufen</span>
-<span class="keyword">int</span> <span class="variable">element</span> <span class="operator">=</span> <span class="variable">liste</span>.get(<span class="number">0</span>);  <span class="comment">// 10</span>
+<span class="comment">// Ausgabe: [Chess, Solitaire, Poker, Chess]</span>
+System.out.println(<span class="variable">spiele</span>);
 
-<span class="comment">// Element entfernen</span>
-<span class="variable">liste</span>.remove(<span class="number">1</span>);    <span class="comment">// [10, 20] - Index 1 entfernen</span>
+<span class="comment">// Zugriff und Größe</span>
+<span class="keyword">int</span> <span class="variable">groesse</span> <span class="operator">=</span> <span class="variable">spiele</span>.size(); <span class="comment">// 4</span>
+String <span class="variable">erstes</span> <span class="operator">=</span> <span class="variable">spiele</span>.get(<span class="number">0</span>); <span class="comment">// "Chess"</span>
+            </div>
+        </section>
 
-<span class="comment">// Größe prüfen</span>
-<span class="keyword">int</span> <span class="variable">groesse</span> <span class="operator">=</span> <span class="variable">liste</span>.size();  <span class="comment">// 2</span>
+        <!-- Java Collections Framework -->
+        <section class="section">
+            <h2>📚 12. Java Collections Framework (JCF)</h2>
+            
+            <div class="definition-box">
+                <strong>Java Collections Framework:</strong> Eine umfangreiche Sammlung von Klassen und Interfaces im Package java.util, die effiziente Datenstrukturen zur Verfügung stellt. Alle Collections arbeiten mit Objekten, nicht mit primitiven Datentypen.
+            </div>
+
+            <h3>🎯 Boxing und Unboxing</h3>
+            
+            <div class="definition-box">
+                <strong>Boxing:</strong> Automatische Umwandlung eines primitiven Datentyps in das entsprechende Wrapper-Objekt.<br>
+                <strong>Unboxing:</strong> Automatische Umwandlung eines Wrapper-Objekts zurück in den primitiven Datentyp.
+            </div>
+
+            <div class="code-block">
+<span class="comment">// Boxing - primitive Werte werden automatisch "verpackt"</span>
+ArrayList&lt;Integer&gt; <span class="variable">zahlen</span> <span class="operator">=</span> <span class="keyword">new</span> ArrayList&lt;&gt;();
+<span class="variable">zahlen</span>.add(<span class="number">42</span>); <span class="comment">// int wird automatisch zu Integer</span>
+
+<span class="comment">// Unboxing - Wrapper werden automatisch "ausgepackt"</span>
+<span class="keyword">int</span> <span class="variable">wert</span> <span class="operator">=</span> <span class="variable">zahlen</span>.get(<span class="number">0</span>); <span class="comment">// Integer wird zu int</span>
+
+<span class="comment">// Wrapper-Klassen für primitive Typen:</span>
+<span class="comment">// int → Integer, double → Double, boolean → Boolean, etc.</span>
+            </div>
+
+            <h3>📋 Vector - Die historische Liste</h3>
+            
+            <div class="definition-box">
+                <strong>Vector:</strong> Eine der ersten Collection-Klassen in Java. Ähnlich wie ArrayList, aber synchronized (thread-safe) und daher langsamer. Meist wird heute ArrayList bevorzugt.
+            </div>
+
+            <div class="code-block">
+<span class="keyword">import</span> java.util.Vector;
+
+Vector&lt;String&gt; <span class="variable">v</span> <span class="operator">=</span> <span class="keyword">new</span> Vector&lt;&gt;();
+
+<span class="comment">// Kapazität prüfen</span>
+System.out.println(<span class="string">"Kapazität: "</span> <span class="operator">+</span> <span class="variable">v</span>.capacity()); <span class="comment">// 10 (Standard)</span>
+System.out.println(<span class="string">"Größe: "</span> <span class="operator">+</span> <span class="variable">v</span>.size()); <span class="comment">// 0</span>
+
+<span class="variable">v</span>.add(<span class="string">"Chess"</span>);
+<span class="variable">v</span>.add(<span class="string">"Poker"</span>);
+<span class="variable">v</span>.add(<span class="number">1</span>, <span class="string">"Solitaire"</span>);
+
+<span class="comment">// Ausgabe: [Chess, Solitaire, Poker]</span>
+System.out.println(<span class="variable">v</span>);
+            </div>
+
+            <h3>🔗 LinkedList - Die verkettete Liste</h3>
+            
+            <div class="definition-box">
+                <strong>LinkedList:</strong> Implementiert sowohl List als auch Deque Interface. Optimal für häufiges Einfügen/Löschen in der Mitte, aber langsamerer Zugriff auf Elemente über Index.
+            </div>
+
+            <div class="code-block">
+<span class="keyword">import</span> java.util.LinkedList;
+<span class="keyword">import</span> java.util.Iterator;
+
+LinkedList&lt;String&gt; <span class="variable">ll</span> <span class="operator">=</span> <span class="keyword">new</span> LinkedList&lt;&gt;();
+
+<span class="comment">// Elemente hinzufügen</span>
+<span class="variable">ll</span>.add(<span class="string">"Chess"</span>);
+<span class="variable">ll</span>.addFirst(<span class="string">"Poker"</span>); <span class="comment">// Am Anfang einfügen</span>
+<span class="variable">ll</span>.addLast(<span class="string">"Solitaire"</span>); <span class="comment">// Am Ende einfügen</span>
+
+<span class="comment">// Mit Iterator durchlaufen</span>
+Iterator&lt;String&gt; <span class="variable">it</span> <span class="operator">=</span> <span class="variable">ll</span>.iterator();
+<span class="keyword">while</span> (<span class="variable">it</span>.hasNext()) {
+    System.out.print(<span class="variable">it</span>.next() <span class="operator">+</span> <span class="string">" "</span>);
+}
+<span class="comment">// Ausgabe: Poker Chess Solitaire</span>
+            </div>
+
+            <h3>🏷️ HashSet - Eindeutige Elemente</h3>
+            
+            <div class="definition-box">
+                <strong>HashSet:</strong> Speichert Elemente in ungeordneter Reihenfolge, keine Duplikate erlaubt. Sehr schnell bei add(), remove() und contains() Operationen durch Hashing.
+            </div>
+
+            <div class="code-block">
+<span class="keyword">import</span> java.util.HashSet;
+
+HashSet&lt;String&gt; <span class="variable">hs</span> <span class="operator">=</span> <span class="keyword">new</span> HashSet&lt;&gt;();
+
+<span class="variable">hs</span>.add(<span class="string">"Chess"</span>);
+<span class="variable">hs</span>.add(<span class="string">"Poker"</span>);
+<span class="variable">hs</span>.add(<span class="string">"Solitaire"</span>);
+<span class="variable">hs</span>.add(<span class="string">"Chess"</span>); <span class="comment">// Duplikat - wird ignoriert!</span>
+
+<span class="comment">// Ausgabe: [Poker, Chess, Solitaire] (Reihenfolge nicht vorhersagbar)</span>
+System.out.println(<span class="variable">hs</span>);
+
+<span class="comment">// Prüfen ob Element enthalten ist</span>
+<span class="keyword">boolean</span> <span class="variable">enthalten</span> <span class="operator">=</span> <span class="variable">hs</span>.contains(<span class="string">"Chess"</span>); <span class="comment">// true</span>
+            </div>
+
+            <h3>🌳 TreeSet - Sortierte eindeutige Elemente</h3>
+            
+            <div class="definition-box">
+                <strong>TreeSet:</strong> Speichert Elemente automatisch sortiert, keine Duplikate. Basiert auf einem balancierten Binärbaum. Elemente müssen Comparable implementieren oder ein Comparator muss angegeben werden.
+            </div>
+
+            <div class="code-block">
+<span class="keyword">import</span> java.util.TreeSet;
+
+TreeSet&lt;String&gt; <span class="variable">ts</span> <span class="operator">=</span> <span class="keyword">new</span> TreeSet&lt;&gt;();
+
+<span class="variable">ts</span>.add(<span class="string">"Chess"</span>);
+<span class="variable">ts</span>.add(<span class="string">"Poker"</span>);
+<span class="variable">ts</span>.add(<span class="string">"Solitaire"</span>);
+<span class="variable">ts</span>.add(<span class="string">"Chess"</span>); <span class="comment">// Duplikat - wird ignoriert!</span>
+
+<span class="comment">// Ausgabe: [Chess, Poker, Solitaire] (automatisch sortiert!)</span>
+System.out.println(<span class="variable">ts</span>);
+
+<span class="comment">// Spezielle TreeSet Methoden</span>
+String <span class="variable">erstes</span> <span class="operator">=</span> <span class="variable">ts</span>.first(); <span class="comment">// "Chess"</span>
+String <span class="variable">letztes</span> <span class="operator">=</span> <span class="variable">ts</span>.last(); <span class="comment">// "Solitaire"</span>
+            </div>
+
+            <h3>🗝️ HashMap - Schlüssel-Wert-Paare</h3>
+            
+            <div class="definition-box">
+                <strong>HashMap:</strong> Speichert Schlüssel-Wert-Paare (Key-Value). Jeder Schlüssel ist eindeutig, Werte können doppelt vorkommen. Sehr schneller Zugriff über den Schlüssel durch Hashing.
+            </div>
+
+            <div class="code-block">
+<span class="keyword">import</span> java.util.HashMap;
+
+HashMap&lt;String, String&gt; <span class="variable">hm</span> <span class="operator">=</span> <span class="keyword">new</span> HashMap&lt;&gt;();
+
+<span class="comment">// Schlüssel-Wert-Paare hinzufügen</span>
+<span class="variable">hm</span>.put(<span class="string">"Game1"</span>, <span class="string">"Hearts"</span>);
+<span class="variable">hm</span>.put(<span class="string">"Game2"</span>, <span class="string">"Chess"</span>);
+<span class="variable">hm</span>.put(<span class="string">"Game3"</span>, <span class="string">"Checkers"</span>);
+<span class="variable">hm</span>.put(<span class="string">"Game3"</span>, <span class="string">"Whist"</span>); <span class="comment">// Überschreibt den alten Wert!</span>
+
+<span class="comment">// Wert abrufen</span>
+String <span class="variable">spiel</span> <span class="operator">=</span> <span class="variable">hm</span>.get(<span class="string">"Game1"</span>); <span class="comment">// "Hearts"</span>
+
+<span class="comment">// Alle Einträge anzeigen</span>
+System.out.println(<span class="variable">hm</span>);
+<span class="comment">// {Game1=Hearts, Game2=Chess, Game3=Whist}</span>
+            </div>
+
+            <h3>🗃️ TreeMap - Sortierte Schlüssel-Wert-Paare</h3>
+            
+            <div class="definition-box">
+                <strong>TreeMap:</strong> Wie HashMap, aber die Schlüssel werden automatisch sortiert gespeichert. Basiert auf einem balancierten Binärbaum (Red-Black-Tree).
+            </div>
+
+            <div class="code-block">
+<span class="keyword">import</span> java.util.TreeMap;
+
+TreeMap&lt;String, String&gt; <span class="variable">tm</span> <span class="operator">=</span> <span class="keyword">new</span> TreeMap&lt;&gt;();
+
+<span class="variable">tm</span>.put(<span class="string">"Game3"</span>, <span class="string">"Checkers"</span>);
+<span class="variable">tm</span>.put(<span class="string">"Game1"</span>, <span class="string">"Hearts"</span>);
+<span class="variable">tm</span>.put(<span class="string">"Game2"</span>, <span class="string">"Chess"</span>);
+
+<span class="comment">// Ausgabe: {Game1=Hearts, Game2=Chess, Game3=Checkers}</span>
+<span class="comment">// Automatisch nach Schlüsseln sortiert!</span>
+System.out.println(<span class="variable">tm</span>);
+
+<span class="comment">// Spezielle TreeMap Methoden</span>
+String <span class="variable">ersterSchluessel</span> <span class="operator">=</span> <span class="variable">tm</span>.firstKey(); <span class="comment">// "Game1"</span>
+String <span class="variable">letzterSchluessel</span> <span class="operator">=</span> <span class="variable">tm</span>.lastKey(); <span class="comment">// "Game3"</span>
+            </div>
+
+            <h3>📊 Vergleich der Collection-Klassen</h3>
+            
+            <table class="complexity-table">
+                <tr>
+                    <th>Klasse</th>
+                    <th>Typ</th>
+                    <th>Sortiert</th>
+                    <th>Duplikate</th>
+                    <th>Index-Zugriff</th>
+                    <th>Besonderheiten</th>
+                </tr>
+                <tr>
+                    <td><strong>ArrayList</strong></td>
+                    <td>List</td>
+                    <td>❌</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                    <td>Array-basiert, schneller Zugriff</td>
+                </tr>
+                <tr>
+                    <td><strong>Vector</strong></td>
+                    <td>List</td>
+                    <td>❌</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                    <td>Thread-safe, legacy</td>
+                </tr>
+                <tr>
+                    <td><strong>LinkedList</strong></td>
+                    <td>List + Deque</td>
+                    <td>❌</td>
+                    <td>✅</td>
+                    <td>✅</td>
+                    <td>Verkettete Liste, schnelles Einfügen</td>
+                </tr>
+                <tr>
+                    <td><strong>HashSet</strong></td>
+                    <td>Set</td>
+                    <td>❌</td>
+                    <td>❌</td>
+                    <td>❌</td>
+                    <td>Hash-basiert, sehr schnell</td>
+                </tr>
+                <tr>
+                    <td><strong>TreeSet</strong></td>
+                    <td>SortedSet</td>
+                    <td>✅</td>
+                    <td>❌</td>
+                    <td>❌</td>
+                    <td>Baum-basiert, automatisch sortiert</td>
+                </tr>
+                <tr>
+                    <td><strong>HashMap</strong></td>
+                    <td>Map</td>
+                    <td>❌</td>
+                    <td>Werte: ✅</td>
+                    <td>❌</td>
+                    <td>Hash-basiert, Key-Value</td>
+                </tr>
+                <tr>
+                    <td><strong>TreeMap</strong></td>
+                    <td>SortedMap</td>
+                    <td>✅</td>
+                    <td>Werte: ✅</td>
+                    <td>❌</td>
+                    <td>Baum-basiert, sortierte Schlüssel</td>
+                </tr>
+            </table>
+
+            <div class="example-box">
+                <h4>💡 Wann welche Collection verwenden?</h4>
+                <ul>
+                    <li><strong>ArrayList:</strong> Wenn du häufig auf Elemente über Index zugreifst</li>
+                    <li><strong>LinkedList:</strong> Wenn du häufig Elemente in der Mitte einfügst/löschst</li>
+                    <li><strong>HashSet:</strong> Wenn du eindeutige Elemente brauchst und Reihenfolge egal ist</li>
+                    <li><strong>TreeSet:</strong> Wenn du eindeutige, sortierte Elemente brauchst</li>
+                    <li><strong>HashMap:</strong> Wenn du Schlüssel-Wert-Paare brauchst mit schnellem Zugriff</li>
+                    <li><strong>TreeMap:</strong> Wenn du sortierte Schlüssel-Wert-Paare brauchst</li>
+                </ul>
+            </div>
+
+            <h3>🔄 Collections-Hilfsmethoden</h3>
+            
+            <div class="code-block">
+<span class="keyword">import</span> java.util.Collections;
+<span class="keyword">import</span> java.util.ArrayList;
+
+ArrayList&lt;String&gt; <span class="variable">liste</span> <span class="operator">=</span> <span class="keyword">new</span> ArrayList&lt;&gt;();
+<span class="variable">liste</span>.add(<span class="string">"Zebra"</span>);
+<span class="variable">liste</span>.add(<span class="string">"Anton"</span>);
+<span class="variable">liste</span>.add(<span class="string">"Berta"</span>);
+
+<span class="comment">// Sortieren</span>
+Collections.sort(<span class="variable">liste</span>);
+System.out.println(<span class="variable">liste</span>); <span class="comment">// [Anton, Berta, Zebra]</span>
+
+<span class="comment">// Mischen</span>
+Collections.shuffle(<span class="variable">liste</span>);
+System.out.println(<span class="variable">liste</span>); <span class="comment">// Zufällige Reihenfolge</span>
             </div>
         </section>
 
@@ -1606,4 +1878,5 @@ ArrayList&lt;Integer&gt; <span class="variable">liste</span> <span class="operat
         resetBinarySearch();
     </script>
 </body>
+
 </html>
