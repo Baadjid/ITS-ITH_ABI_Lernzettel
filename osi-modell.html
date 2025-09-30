@@ -698,40 +698,201 @@
                     </div>
                 </div>
 
-                <!-- Schicht 1: Physische Schicht -->
-                <div class="layer layer-1" onclick="toggleDetails('layer1-details')">
-                    <div class="layer-number">1</div>
-                    <div class="layer-name">Physische Schicht<br>(Physical Layer)</div>
-                    <div class="layer-description">
-                        Hardware und elektrische Übertragung der rohen Bits
-                    </div>
-                    <div class="layer-details" id="layer1-details">
-                        <h4>🎯 Aufgaben:</h4>
-                        <ul>
-                            <li><strong>Bit-Übertragung:</strong> 0en und 1en als elektrische Signale</li>
-                            <li><strong>Mechanische Spezifikation:</strong> Kabel, Stecker, Pins</li>
-                            <li><strong>Elektrische Spezifikation:</strong> Spannungen, Ströme</li>
-                            <li><strong>Timing:</strong> Wie schnell Bits übertragen werden</li>
-                        </ul>
-                        
-                        <h4>🔌 Übertragungsmedien:</h4>
-                        <div class="protocols-grid">
-                            <div class="protocol">Kupferkabel</div>
-                            <div class="protocol">Glasfaser</div>
-                            <div class="protocol">WLAN</div>
-                            <div class="protocol">Bluetooth</div>
-                            <div class="protocol">Koaxialkabel</div>
-                            <div class="protocol">Satellit</div>
-                        </div>
+<!-- Schicht 1: Physische Schicht -->
+<div class="layer layer-1" onclick="toggleDetails('layer1-details')">
+    <div class="layer-number">1</div>
+    <div class="layer-name">Bitübertragungsschicht<br>(Physical Layer)</div>
+    <div class="layer-description">
+        Hardware und elektrische Übertragung der rohen Bits
+    </div>
+    <div class="layer-details" id="layer1-details">
+        <h4>🎯 Aufgaben:</h4>
+        <ul>
+            <li><strong>Bit-Übertragung:</strong> 0en und 1en als elektrische Signale</li>
+            <li><strong>Mechanische Spezifikation:</strong> Kabel, Stecker, Pins</li>
+            <li><strong>Elektrische Spezifikation:</strong> Spannungen, Ströme</li>
+            <li><strong>Timing:</strong> Wie schnell Bits übertragen werden</li>
+        </ul>
 
-                        <div class="example-box">
-                            <h4>💡 Beispiel:</h4>
-                            Das Ethernet-Kabel zwischen deinem Computer und dem Switch überträgt 
-                            die Daten als elektrische Impulse. Ein "1" könnte +5V sein, ein "0" könnte 0V sein.
-                        </div>
-                    </div>
-                </div>
+        <h4>🔄 Übertragungsmodi:</h4>
+        <ul>
+            <li><strong>Vollduplex:</strong> Gleichzeitiges Senden und Empfangen möglich (z.B. Telefongespräch - beide können gleichzeitig sprechen)</li>
+            <li><strong>Halbduplex:</strong> Jeweils nur einer sendet, dann der andere (z.B. Walkie-Talkie)</li>
+            <li><strong>Simplex:</strong> Nur in eine Richtung (z.B. Radio-Broadcast)</li>
+        </ul>
+
+        <h4>🔌 Übertragungsmedien und Kabelarten:</h4>
+
+        <div style="background: rgba(255, 255, 255, 0.2); padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+            <h5 style="color: white; margin-bottom: 1rem;">1️⃣ Glasfaserkabel (Fiber Optic)</h5>
+            
+            <!-- Platzhalter für Glasfaserkabel-Bild -->
+            <div style="background: rgba(0,0,0,0.3); padding: 2rem; border-radius: 8px; text-align: center; margin: 1rem 0;">
+                <p style="color: rgba(255,255,255,0.7); font-style: italic;">
+                    [Bild: Glasfaserkabel - Monomode und Multimode]<br>
+                    Bildlink hier einfügen
+                </p>
             </div>
+
+            <p><strong>Typen:</strong></p>
+            <ul>
+                <li><strong>Monomode (Single-Mode):</strong> Ein Lichtstrahl, größere Distanzen (bis 100km+), teurer</li>
+                <li><strong>Multimode:</strong> Mehrere Lichtstrahlen, kürzere Distanzen (bis 2km), günstiger</li>
+            </ul>
+            
+            <p><strong>✅ Vorteile:</strong></p>
+            <ul>
+                <li>Sehr hohe Bandbreite (bis zu 100 Gbit/s und mehr)</li>
+                <li>Große Reichweite ohne Signalverlust</li>
+                <li>Immun gegen elektromagnetische Störungen</li>
+                <li>Abhörsicher</li>
+            </ul>
+            
+            <p><strong>❌ Nachteile:</strong></p>
+            <ul>
+                <li>Teuer in Anschaffung und Installation</li>
+                <li>Empfindlich gegen Biegung und mechanische Belastung</li>
+                <li>Spezialwerkzeug für Installation nötig</li>
+            </ul>
+        </div>
+
+        <div style="background: rgba(255, 255, 255, 0.2); padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+            <h5 style="color: white; margin-bottom: 1rem;">2️⃣ Twisted Pair Kabel (Verdrillt)</h5>
+            
+            <!-- Platzhalter für Twisted Pair-Bild -->
+            <div style="background: rgba(0,0,0,0.3); padding: 2rem; border-radius: 8px; text-align: center; margin: 1rem 0;">
+                <p style="color: rgba(255,255,255,0.7); font-style: italic;">
+                    [Bild: Twisted Pair Kabel - UTP/STP Aufbau]<br>
+                    Bildlink hier einfügen
+                </p>
+            </div>
+
+            <p><strong>Typen:</strong></p>
+            <ul>
+                <li><strong>UTP (Unshielded):</strong> Ungeschirmt, Standard für LANs</li>
+                <li><strong>STP (Shielded):</strong> Geschirmt, besserer Schutz vor Störungen</li>
+            </ul>
+
+            <p><strong>Kategorien:</strong> Cat5e (1 Gbit/s), Cat6 (10 Gbit/s), Cat7 (10 Gbit/s geschirmt)</p>
+            
+            <p><strong>✅ Vorteile:</strong></p>
+            <ul>
+                <li>Günstig und weit verbreitet</li>
+                <li>Einfache Installation</li>
+                <li>Flexibel und robust</li>
+                <li>Gute Performance für LANs (bis 100m)</li>
+            </ul>
+            
+            <p><strong>❌ Nachteile:</strong></p>
+            <ul>
+                <li>Begrenzte Reichweite (max. 100m für Ethernet)</li>
+                <li>Anfällig für elektromagnetische Störungen (bei UTP)</li>
+                <li>Niedrigere Bandbreite als Glasfaser</li>
+            </ul>
+        </div>
+
+        <div style="background: rgba(255, 255, 255, 0.2); padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+            <h5 style="color: white; margin-bottom: 1rem;">3️⃣ Koaxialkabel (Coaxial Cable)</h5>
+            
+            <!-- Platzhalter für Koaxialkabel-Bild mit BNC -->
+            <div style="background: rgba(0,0,0,0.3); padding: 2rem; border-radius: 8px; text-align: center; margin: 1rem 0;">
+                <p style="color: rgba(255,255,255,0.7); font-style: italic;">
+                    [Bild: Koaxialkabel mit BNC-Stecker]<br>
+                    Bildlink hier einfügen
+                </p>
+            </div>
+
+            <p><strong>Aufbau:</strong> Innenleiter, Isolierung, Abschirmung, Außenmantel</p>
+            <p><strong>Stecker:</strong> BNC (Bayonet Neill-Concelman) - Bajonettverschluss</p>
+            
+            <p><strong>✅ Vorteile:</strong></p>
+            <ul>
+                <li>Gute Abschirmung gegen Störungen</li>
+                <li>Höhere Bandbreite als Twisted Pair</li>
+                <li>Robust und langlebig</li>
+            </ul>
+            
+            <p><strong>❌ Nachteile:</strong></p>
+            <ul>
+                <li>Teurer als Twisted Pair</li>
+                <li>Unflexibel und schwerer zu verlegen</li>
+                <li>Wird heute seltener verwendet (veraltet in LANs)</li>
+                <li>Bus-Topologie anfällig für Ausfälle</li>
+            </ul>
+        </div>
+
+        <h4>🔧 RJ45 (Registered Jack 45):</h4>
+        <div style="background: rgba(255, 255, 255, 0.2); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+            <p><strong>RJ45</strong> ist der Standard-Stecker für Ethernet-Netzwerke mit Twisted Pair Kabeln.</p>
+            <ul>
+                <li>8 Pins (8P8C - 8 Position 8 Contact)</li>
+                <li>Verwendet für Cat5e, Cat6, Cat7 Kabel</li>
+                <li>Belegung nach T568A oder T568B Standard</li>
+                <li>Klick-Mechanismus für sicheren Halt</li>
+            </ul>
+        </div>
+
+        <h4>📊 Kabel-Spezifikationen Vergleich:</h4>
+        <div style="background: rgba(0,0,0,0.3); padding: 1.5rem; border-radius: 8px; margin: 1rem 0;">
+            <!-- Platzhalter für Spezifikations-Tabelle -->
+            <table style="width: 100%; color: white; border-collapse: collapse;">
+                <thead>
+                    <tr style="border-bottom: 2px solid rgba(255,255,255,0.3);">
+                        <th style="padding: 0.5rem; text-align: left;">Kabeltyp</th>
+                        <th style="padding: 0.5rem; text-align: left;">Max. Bandbreite</th>
+                        <th style="padding: 0.5rem; text-align: left;">Max. Reichweite</th>
+                        <th style="padding: 0.5rem; text-align: left;">Kosten</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.2);">
+                        <td style="padding: 0.5rem;">Twisted Pair (Cat6)</td>
+                        <td style="padding: 0.5rem;">10 Gbit/s</td>
+                        <td style="padding: 0.5rem;">100m</td>
+                        <td style="padding: 0.5rem;">€</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.2);">
+                        <td style="padding: 0.5rem;">Koaxialkabel</td>
+                        <td style="padding: 0.5rem;">10 Mbit/s - 1 Gbit/s</td>
+                        <td style="padding: 0.5rem;">500m</td>
+                        <td style="padding: 0.5rem;">€€</td>
+                    </tr>
+                    <tr style="border-bottom: 1px solid rgba(255,255,255,0.2);">
+                        <td style="padding: 0.5rem;">Glasfaser (Multimode)</td>
+                        <td style="padding: 0.5rem;">100 Gbit/s+</td>
+                        <td style="padding: 0.5rem;">2km</td>
+                        <td style="padding: 0.5rem;">€€€</td>
+                    </tr>
+                    <tr>
+                        <td style="padding: 0.5rem;">Glasfaser (Monomode)</td>
+                        <td style="padding: 0.5rem;">100 Gbit/s+</td>
+                        <td style="padding: 0.5rem;">100km+</td>
+                        <td style="padding: 0.5rem;">€€€€</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h4>🔁 Repeater (Signalverstärker):</h4>
+        <div style="background: rgba(255, 255, 255, 0.2); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+            <p><strong>Funktion:</strong> Verstärkt und regeneriert Signale auf der physischen Schicht</p>
+            <ul>
+                <li><strong>Horizontale Kommunikation:</strong> Arbeitet nur auf Schicht 1</li>
+                <li><strong>Keine Prüfung:</strong> Leitet alle Signale weiter, ohne Inhalt zu analysieren</li>
+                <li><strong>Zweck:</strong> Verlängert Kabelreichweite durch Signalaufbereitung</li>
+                <li><strong>Beispiel:</strong> WLAN-Repeater verlängern Funkreichweite</li>
+            </ul>
+            <p style="margin-top: 1rem;"><em>Wichtig: Repeater verstehen keine Protokolle, Adressen oder Pakete - sie verstärken nur das rohe Signal!</em></p>
+        </div>
+
+        <div class="example-box">
+            <h4>💡 Beispiel:</h4>
+            Das Ethernet-Kabel (Twisted Pair mit RJ45) zwischen deinem Computer und dem Switch überträgt 
+            die Daten als elektrische Impulse. Ein "1" könnte +2,5V sein, ein "0" könnte 0V sein. 
+            Wenn das Kabel zu lang ist (über 100m), wird ein Repeater benötigt, um das Signal zu verstärken.
+        </div>
+    </div>
+</div>            </div>
         </div>
 
         <div class="section">
@@ -1042,6 +1203,7 @@
 </body>
 
 </html>
+
 
 
 
