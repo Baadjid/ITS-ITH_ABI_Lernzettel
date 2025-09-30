@@ -218,12 +218,14 @@
     border-radius: 12px;
     box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
     background: var(--bg-white);
+    -webkit-overflow-scrolling: touch; /* Smooth scrolling on iOS */
 }
 
 .comparison-table {
     width: 100%;
-    min-width: 600px;
+    min-width: 700px; /* Etwas breiter für bessere Lesbarkeit */
     border-collapse: collapse;
+    background: var(--bg-white);
 }
 
 .comparison-table th,
@@ -231,6 +233,7 @@
     padding: 1rem;
     text-align: left;
     border-bottom: 1px solid var(--border-color);
+    white-space: nowrap; /* Verhindert ungewollte Zeilenumbrüche */
 }
 
 .comparison-table th {
@@ -243,6 +246,18 @@
     background: var(--bg-light);
 }
 
+/* Optional: Bessere Lesbarkeit auf sehr kleinen Bildschirmen */
+@media (max-width: 480px) {
+    .comparison-table th,
+    .comparison-table td {
+        padding: 0.75rem 0.5rem;
+        font-size: 0.9rem;
+    }
+    
+    .comparison-table {
+        min-width: 650px; /* Etwas schmaler für sehr kleine Displays */
+    }
+}
         .example-box {
             background: var(--bg-light);
             padding: 1.5rem;
@@ -720,68 +735,70 @@
         </div>
 
         <div class="section">
-            <h2>📊 OSI vs. TCP/IP Modell Vergleich</h2>
-            
-            <p>In der Praxis wird oft das <strong>TCP/IP-Modell</strong> verwendet, welches nur 4 Schichten hat. 
-            Hier die Zuordnung:</p>
+    <h2>📊 OSI vs. TCP/IP Modell Vergleich</h2>
+    
+    <p>In der Praxis wird oft das <strong>TCP/IP-Modell</strong> verwendet, welches nur 4 Schichten hat. 
+    Hier die Zuordnung:</p>
 
-            <table class="comparison-table">
-                <thead>
-                    <tr>
-                        <th>OSI-Schicht</th>
-                        <th>OSI-Name</th>
-                        <th>TCP/IP-Schicht</th>
-                        <th>TCP/IP-Name</th>
-                        <th>Wichtige Protokolle</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>7</td>
-                        <td>Anwendungsschicht</td>
-                        <td rowspan="3">4</td>
-                        <td rowspan="3">Anwendungsschicht</td>
-                        <td>HTTP, FTP, SMTP, DNS</td>
-                    </tr>
-                    <tr>
-                        <td>6</td>
-                        <td>Darstellungsschicht</td>
-                        <td>TLS, SSL, JPEG</td>
-                    </tr>
-                    <tr>
-                        <td>5</td>
-                        <td>Sitzungsschicht</td>
-                        <td>NetBIOS, RPC</td>
-                    </tr>
-                    <tr>
-                        <td>4</td>
-                        <td>Transportschicht</td>
-                        <td>3</td>
-                        <td>Transportschicht</td>
-                        <td>TCP, UDP</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Vermittlungsschicht</td>
-                        <td>2</td>
-                        <td>Internetschicht</td>
-                        <td>IP, ICMP, IGMP</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Sicherungsschicht</td>
-                        <td rowspan="2">1</td>
-                        <td rowspan="2">Netzzugangsschicht</td>
-                        <td>Ethernet, Wi-Fi</td>
-                    </tr>
-                    <tr>
-                        <td>1</td>
-                        <td>Physische Schicht</td>
-                        <td>Kabel, Funkwellen</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+    <div class="comparison-table-container">
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>OSI-Schicht</th>
+                    <th>OSI-Name</th>
+                    <th>TCP/IP-Schicht</th>
+                    <th>TCP/IP-Name</th>
+                    <th>Wichtige Protokolle</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>7</td>
+                    <td>Anwendungsschicht</td>
+                    <td rowspan="3">4</td>
+                    <td rowspan="3">Anwendungsschicht</td>
+                    <td>HTTP, FTP, SMTP, DNS</td>
+                </tr>
+                <tr>
+                    <td>6</td>
+                    <td>Darstellungsschicht</td>
+                    <td>TLS, SSL, JPEG</td>
+                </tr>
+                <tr>
+                    <td>5</td>
+                    <td>Sitzungsschicht</td>
+                    <td>NetBIOS, RPC</td>
+                </tr>
+                <tr>
+                    <td>4</td>
+                    <td>Transportschicht</td>
+                    <td>3</td>
+                    <td>Transportschicht</td>
+                    <td>TCP, UDP</td>
+                </tr>
+                <tr>
+                    <td>3</td>
+                    <td>Vermittlungsschicht</td>
+                    <td>2</td>
+                    <td>Internetschicht</td>
+                    <td>IP, ICMP, IGMP</td>
+                </tr>
+                <tr>
+                    <td>2</td>
+                    <td>Sicherungsschicht</td>
+                    <td rowspan="2">1</td>
+                    <td rowspan="2">Netzzugangsschicht</td>
+                    <td>Ethernet, Wi-Fi</td>
+                </tr>
+                <tr>
+                    <td>1</td>
+                    <td>Physische Schicht</td>
+                    <td>Kabel, Funkwellen</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+</div>
 
         <div class="section">
             <h2>🔄 Datenfluss durch die Schichten</h2>
@@ -1025,3 +1042,4 @@
 </body>
 
 </html>
+
