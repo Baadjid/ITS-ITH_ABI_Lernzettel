@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>OSI-7-Schichtenmodell - Abitur 2026 Informatik TG</title>
-        <style>
+         <style>
         * {
             margin: 0;
             padding: 0;
@@ -39,48 +39,58 @@
             background: linear-gradient(135deg, var(--bg-light) 0%, #e0e7ff 100%);
             min-height: 100vh;
             -webkit-text-size-adjust: 100%;
+            overflow-x: hidden;
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 100%;
             margin: 0 auto;
-            padding: 20px;
+            padding: 15px;
+            width: 100%;
+            overflow-x: hidden;
         }
 
         .header {
             background: var(--bg-white);
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             border: 1px solid var(--border-color);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             text-align: center;
+            width: 100%;
+            max-width: 100%;
         }
 
         .header h1 {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             color: var(--primary-color);
             margin-bottom: 0.5rem;
+            word-wrap: break-word;
         }
 
         .header p {
-            font-size: 1.1rem;
+            font-size: 1rem;
             color: var(--text-light);
             margin-bottom: 1rem;
         }
 
         .breadcrumb {
             background: var(--bg-white);
-            padding: 1rem 1.5rem;
+            padding: 1rem;
             border-radius: 8px;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             border: 1px solid var(--border-color);
             font-size: 0.9rem;
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
         }
 
         .breadcrumb a {
             color: var(--primary-color);
             text-decoration: none;
+            white-space: nowrap;
         }
 
         .breadcrumb a:hover {
@@ -89,77 +99,88 @@
 
         .section {
             background: var(--bg-white);
-            padding: 2rem;
-            border-radius: 16px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            padding: 1.5rem;
+            border-radius: 12px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             border: 1px solid var(--border-color);
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
+            width: 100%;
+            max-width: 100%;
+            overflow: hidden;
         }
 
         .section h2 {
             color: var(--primary-color);
-            font-size: 1.8rem;
+            font-size: 1.5rem;
             margin-bottom: 1rem;
             border-bottom: 2px solid var(--border-color);
             padding-bottom: 0.5rem;
+            word-wrap: break-word;
         }
 
         .section h3 {
             color: var(--secondary-color);
-            font-size: 1.4rem;
-            margin: 1.5rem 0 1rem 0;
+            font-size: 1.3rem;
+            margin: 1.2rem 0 0.8rem 0;
+            word-wrap: break-word;
         }
 
         .section h4 {
             color: var(--text-dark);
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             margin: 1rem 0 0.5rem 0;
+            word-wrap: break-word;
         }
 
         .intro-box {
             background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
             color: white;
-            padding: 2rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin-bottom: 1.5rem;
+            width: 100%;
+            max-width: 100%;
         }
 
         .intro-box h3 {
             color: white;
             margin-bottom: 1rem;
+            font-size: 1.3rem;
         }
 
         .intro-box p {
-            font-size: 1.1rem;
-            line-height: 1.7;
+            font-size: 1rem;
+            line-height: 1.6;
         }
 
         .osi-model {
-            margin: 2rem 0;
+            margin: 1.5rem 0;
+            width: 100%;
         }
 
         .layers-container {
             display: flex;
             flex-direction: column;
-            gap: 1rem;
-            margin: 2rem 0;
+            gap: 0.8rem;
+            margin: 1.5rem 0;
+            width: 100%;
         }
 
         .layer {
-            display: grid;
-            grid-template-columns: 60px 200px 1fr;
-            align-items: center;
-            padding: 1.5rem;
-            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            padding: 1.2rem;
+            border-radius: 10px;
             border: 2px solid var(--border-color);
             transition: all 0.3s ease;
             cursor: pointer;
-            min-height: 80px;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .layer:hover {
             transform: translateX(5px);
-            box-shadow: 0 8px 15px -3px rgba(0, 0, 0, 0.1);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         .layer-7 { background: linear-gradient(135deg, var(--rose), #fda4af); color: white; }
@@ -170,20 +191,30 @@
         .layer-2 { background: linear-gradient(135deg, var(--indigo), #818cf8); color: white; }
         .layer-1 { background: linear-gradient(135deg, var(--purple), #a78bfa); color: white; }
 
+        .layer-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 0.5rem;
+        }
+
         .layer-number {
-            font-size: 2rem;
+            font-size: 1.8rem;
             font-weight: bold;
+            margin-right: 1rem;
+            min-width: 40px;
             text-align: center;
         }
 
         .layer-name {
-            font-size: 1.3rem;
+            font-size: 1.2rem;
             font-weight: bold;
+            flex: 1;
         }
 
         .layer-description {
-            font-size: 1rem;
+            font-size: 0.95rem;
             opacity: 0.95;
+            margin-bottom: 0.5rem;
         }
 
         .layer-details {
@@ -191,7 +222,7 @@
             margin-top: 1rem;
             padding-top: 1rem;
             border-top: 1px solid rgba(255, 255, 255, 0.3);
-            grid-column: 1 / -1;
+            width: 100%;
         }
 
         .layer-details.active {
@@ -200,9 +231,10 @@
 
         .protocols-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
             gap: 0.5rem;
             margin: 1rem 0;
+            width: 100%;
         }
 
         .protocol {
@@ -211,7 +243,8 @@
             border-radius: 6px;
             text-align: center;
             font-weight: bold;
-            font-size: 0.9rem;
+            font-size: 0.85rem;
+            word-break: break-word;
         }
 
         /* Responsive Tabellen-Container */
@@ -223,6 +256,7 @@
             background: rgba(0,0,0,0.3);
             padding: 1rem;
             -webkit-overflow-scrolling: touch;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
         }
 
         .responsive-table-container p {
@@ -274,11 +308,12 @@
         .comparison-table-container {
             width: 100%;
             overflow-x: auto;
-            margin: 2rem 0;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            margin: 1.5rem 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
             background: var(--bg-white);
             -webkit-overflow-scrolling: touch;
+            -ms-overflow-style: -ms-autohiding-scrollbar;
         }
 
         .comparison-table {
@@ -290,9 +325,10 @@
 
         .comparison-table th,
         .comparison-table td {
-            padding: 1rem;
+            padding: 0.8rem;
             text-align: left;
             border-bottom: 1px solid var(--border-color);
+            font-size: 0.9rem;
         }
 
         .comparison-table th {
@@ -307,90 +343,104 @@
 
         .example-box {
             background: rgba(0, 0, 0, 0.5);
-            padding: 1.5rem;
-            border-radius: 12px;
+            padding: 1.2rem;
+            border-radius: 10px;
             border-left: 4px solid var(--success-color);
-            margin: 1.5rem 0;
+            margin: 1.2rem 0;
+            width: 100%;
         }
 
         .example-box h4 {
             color: var(--success-color);
-            margin-bottom: 1rem;
+            margin-bottom: 0.8rem;
+            font-size: 1.1rem;
         }
 
         .important-note {
             background: linear-gradient(135deg, var(--warning-color), #fbbf24);
             color: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin: 1.5rem 0;
+            padding: 1.2rem;
+            border-radius: 10px;
+            margin: 1.2rem 0;
             border-left: 4px solid #f59e0b;
+            width: 100%;
         }
 
         .important-note h4 {
             color: white;
             margin-bottom: 0.5rem;
+            font-size: 1.1rem;
         }
 
         .data-flow {
             background: var(--bg-light);
-            padding: 2rem;
-            border-radius: 12px;
-            margin: 2rem 0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            width: 100%;
         }
 
         .flow-step {
             display: flex;
+            flex-direction: column;
             align-items: center;
             margin: 1rem 0;
             padding: 1rem;
             background: var(--bg-white);
             border-radius: 8px;
             border-left: 4px solid var(--primary-color);
+            text-align: center;
+            width: 100%;
         }
 
         .flow-arrow {
             font-size: 1.5rem;
             color: var(--primary-color);
-            margin: 0 1rem;
+            margin: 0.5rem 0;
+            transform: rotate(90deg);
         }
 
         .memory-aid {
             background: linear-gradient(135deg, var(--purple), #a78bfa);
             color: white;
-            padding: 2rem;
-            border-radius: 12px;
-            margin: 2rem 0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            width: 100%;
         }
 
         .memory-aid h3 {
             color: white;
             margin-bottom: 1rem;
+            font-size: 1.3rem;
         }
 
         .memory-phrase {
-            font-size: 1.2rem;
+            font-size: 1.1rem;
             font-weight: bold;
             text-align: center;
             margin: 1rem 0;
             padding: 1rem;
             background: rgba(255, 255, 255, 0.1);
             border-radius: 8px;
+            word-wrap: break-word;
         }
 
         .quiz-section {
             background: var(--bg-light);
-            padding: 2rem;
-            border-radius: 12px;
-            margin: 2rem 0;
+            padding: 1.5rem;
+            border-radius: 10px;
+            margin: 1.5rem 0;
+            width: 100%;
         }
 
         .quiz-question {
             background: var(--bg-white);
-            padding: 1.5rem;
+            padding: 1.2rem;
             border-radius: 8px;
             margin: 1rem 0;
             border-left: 4px solid var(--primary-color);
+            width: 100%;
         }
 
         .quiz-answer {
@@ -400,18 +450,20 @@
             border-radius: 8px;
             margin-top: 1rem;
             display: none;
+            width: 100%;
         }
 
         .show-answer {
             background: var(--primary-color);
             color: white;
             border: none;
-            padding: 0.8rem 1.5rem;
+            padding: 0.8rem 1.2rem;
             border-radius: 6px;
             cursor: pointer;
             margin-top: 0.5rem;
             font-size: 1rem;
-            min-height: 44px; /* Touch-friendly size */
+            min-height: 44px;
+            width: 100%;
         }
 
         .show-answer:hover {
@@ -422,17 +474,30 @@
             display: inline-block;
             background: var(--primary-color);
             color: white;
-            padding: 0.75rem 1.5rem;
+            padding: 0.8rem 1.2rem;
             border-radius: 8px;
             text-decoration: none;
-            margin-bottom: 2rem;
+            margin-bottom: 1.5rem;
             transition: background-color 0.3s ease;
-            min-height: 44px; /* Touch-friendly size */
+            min-height: 44px;
             line-height: 1.5;
+            text-align: center;
+            width: 100%;
+            box-sizing: border-box;
         }
 
         .back-link:hover {
             background: var(--secondary-color);
+        }
+
+        ul, ol {
+            padding-left: 1.5rem;
+            margin: 1rem 0;
+        }
+
+        li {
+            margin-bottom: 0.5rem;
+            word-wrap: break-word;
         }
 
         /* Mobile Optimierungen */
@@ -442,23 +507,23 @@
             }
 
             .header {
-                padding: 1.5rem;
+                padding: 1.2rem;
             }
 
             .header h1 {
-                font-size: 1.8rem;
+                font-size: 1.6rem;
             }
 
             .header p {
-                font-size: 1rem;
+                font-size: 0.95rem;
             }
 
             .section {
-                padding: 1.5rem;
+                padding: 1.2rem;
             }
 
             .section h2 {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
             }
 
             .section h3 {
@@ -466,11 +531,7 @@
             }
 
             .layer {
-                grid-template-columns: 1fr;
-                gap: 1rem;
-                text-align: center;
                 padding: 1rem;
-                min-height: auto;
             }
 
             .layer:hover {
@@ -479,6 +540,7 @@
 
             .layer-number {
                 font-size: 1.5rem;
+                min-width: 35px;
             }
 
             .layer-name {
@@ -490,7 +552,7 @@
             }
 
             .protocols-grid {
-                grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
             }
 
             .memory-phrase {
@@ -498,11 +560,11 @@
             }
 
             .intro-box {
-                padding: 1.5rem;
+                padding: 1.2rem;
             }
 
             .intro-box p {
-                font-size: 1rem;
+                font-size: 0.95rem;
             }
 
             .responsive-table {
@@ -521,34 +583,19 @@
 
             .comparison-table th,
             .comparison-table td {
-                padding: 0.75rem 0.5rem;
-                font-size: 0.9rem;
-            }
-
-            .flow-step {
-                flex-direction: column;
-                text-align: center;
-            }
-
-            .flow-arrow {
-                margin: 0.5rem 0;
-                transform: rotate(90deg);
+                padding: 0.6rem 0.4rem;
+                font-size: 0.85rem;
             }
 
             .breadcrumb {
                 font-size: 0.85rem;
-                padding: 0.8rem 1rem;
-            }
-
-            .show-answer {
-                width: 100%;
-                padding: 1rem;
+                padding: 0.8rem;
             }
         }
 
         @media (max-width: 480px) {
             .header h1 {
-                font-size: 1.5rem;
+                font-size: 1.4rem;
             }
 
             .section {
@@ -556,15 +603,13 @@
             }
 
             .breadcrumb {
-                padding: 0.75rem 1rem;
+                padding: 0.7rem;
                 font-size: 0.8rem;
             }
 
             .back-link {
-                padding: 0.8rem 1rem;
+                padding: 0.8rem;
                 font-size: 0.9rem;
-                width: 100%;
-                text-align: center;
             }
 
             .layer {
@@ -573,6 +618,7 @@
 
             .layer-number {
                 font-size: 1.3rem;
+                min-width: 30px;
             }
 
             .layer-name {
@@ -580,7 +626,7 @@
             }
 
             .intro-box, .memory-aid, .important-note {
-                padding: 1.2rem;
+                padding: 1rem;
             }
 
             .quiz-question {
@@ -591,12 +637,21 @@
                 padding: 0.8rem;
                 font-size: 0.9rem;
             }
+
+            .protocols-grid {
+                grid-template-columns: repeat(auto-fill, minmax(90px, 1fr));
+            }
+
+            .protocol {
+                font-size: 0.8rem;
+                padding: 0.4rem;
+            }
         }
 
         /* Extra small devices */
         @media (max-width: 360px) {
             .container {
-                padding: 5px;
+                padding: 8px;
             }
 
             .header {
@@ -612,21 +667,28 @@
             }
 
             .section h2 {
-                font-size: 1.3rem;
+                font-size: 1.2rem;
             }
 
             .breadcrumb {
-                padding: 0.6rem 0.8rem;
+                padding: 0.6rem;
             }
 
-            .protocols-grid {
-                grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+            .layer-header {
+                flex-direction: column;
+                text-align: center;
             }
 
-            .protocol {
-                font-size: 0.8rem;
-                padding: 0.4rem;
+            .layer-number {
+                margin-right: 0;
+                margin-bottom: 0.5rem;
             }
+        }
+
+        /* Verhindert horizontales Scrollen auf Body-Ebene */
+        html, body {
+            max-width: 100%;
+            overflow-x: hidden;
         }
     </style>
 </head>
@@ -1483,6 +1545,7 @@
 </body>
 
 </html>
+
 
 
 
