@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITS-ITH ABI Lernzettel</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        header {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            margin-bottom: 30px;
+        }
+
+        h1 {
+            color: #667eea;
+            font-size: 2.5em;
+            margin-bottom: 10px;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 1.1em;
+        }
+
+        .tabs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 10px;
+            margin-bottom: 30px;
+        }
+        
+        @media (max-width: 600px) {
+            .tabs {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .tab-button {
+            background: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 1.1em;
+            font-weight: 600;
+            color: #667eea;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .tab-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+        }
+
+        .tab-button.active {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .tab-content {
+            display: none;
+        }
+
+        .tab-content.active {
+            display: block;
+        }
+
+        .section {
+            background: white;
+            border-radius: 20px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+        }
+
+        .section-title {
+            color: #667eea;
+            font-size: 1.8em;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 3px solid #667eea;
+        }
+
+        .pdf-viewer-container {
+            background: #f8f9fa;
+            border-radius: 15px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border: 2px solid #e0e0e0;
+            transition: all 0.3s ease;
+        }
+
+        .pdf-viewer-container:hover {
+            border-color: #667eea;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.1);
+        }
+
+        .pdf-viewer-container h3 {
+            color: #333;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .pdf-iframe {
+            width: 100%;
+            height: 800px;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            background: white;
+            display: none;
+            margin-top: 15px;
+        }
+
+        .pdf-iframe.active {
+            display: block;
+        }
+
+        .pdf-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 10px;
+        }
+        
+        @media (max-width: 600px) {
+            .pdf-controls {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 1em;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            text-align: center;
+            display: inline-block;
+        }
+
+        .btn-view {
+            background: #667eea;
+            color: white;
+        }
+
+        .btn-view:hover {
+            background: #5568d3;
+            transform: scale(1.05);
+        }
+
+        .btn-download {
+            background: #28a745;
+            color: white;
+        }
+
+        .btn-download:hover {
+            background: #218838;
+            transform: scale(1.05);
+        }
+
+        .btn-github {
+            background: #24292e;
+            color: white;
+        }
+
+        .btn-github:hover {
+            background: #1a1e22;
+            transform: scale(1.05);
+        }
+
+        .info-box {
+            background: #e7f3ff;
+            border-left: 4px solid #2196F3;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .info-box p {
+            color: #1565C0;
+            margin: 5px 0;
+            line-height: 1.6;
+        }
+
+        .info-box strong {
+            color: #0D47A1;
+        }
+
+        /* Mobile Optimierung */
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 1.8em;
+            }
+
+            .tab-button {
+                padding: 12px 20px;
+                font-size: 1em;
+            }
+
+            .section {
+                padding: 20px;
+            }
+
+            .pdf-viewer-container {
+                padding: 15px;
+            }
+
+            .pdf-iframe {
+                height: 600px;
+            }
+
+            .btn {
+                padding: 12px 20px;
+                font-size: 0.95em;
+            }
+        }
+        
+        @media (max-width: 600px) {
+            body {
+                padding: 10px;
+            }
+            
+            header {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.5em;
+            }
+            
+            .subtitle {
+                font-size: 1em;
+            }
+            
+            .tab-button {
+                width: 100%;
+                padding: 14px;
+            }
+            
+            .section {
+                padding: 15px;
+            }
+            
+            .pdf-viewer-container {
+                padding: 12px;
+            }
+            
+            .pdf-viewer-container h3 {
+                font-size: 1.1em;
+            }
+            
+            .btn {
+                width: 100%;
+                padding: 14px;
+                font-size: 1em;
+            }
+            
+            .pdf-iframe {
+                height: 500px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .pdf-iframe {
+                height: 400px;
+            }
+        }
+
+        footer {
+            text-align: center;
+            color: white;
+            margin-top: 40px;
+            padding: 20px;
+        }
+
+        footer a {
+            color: white;
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+	    <nav class="breadcrumb">
+                <a href="index.html">🏠 Abitur 2026 Informatik TG</a> > 
+                Abiturprüfungen mit Lösungen
+            </nav>
+            <h1>📚 ITS-ITH ABI Lernzettel</h1>
+            <p class="subtitle">Abiturprüfungen mit Lösungen</p>
+        </header>
+
+        <div class="info-box">
+            <p><strong>ℹ️ So funktioniert's:</strong></p>
+            <p>• <strong>⬇️ Download</strong> lädt das PDF von GitHub herunter</p>
+            <p>• <strong>📦 GitHub</strong> führt dich zum kompletten GitHub Release</p>
+        </div>
+
+        <div class="tabs">
+            <button class="tab-button active" onclick="showTab('2021-2022')">Abitur 2021/2022</button>
+            <button class="tab-button" onclick="showTab('2023-2024')">Abitur 2023/2024</button>
+        </div>
+
+        <!-- Tab Content 2023/2024 -->
+        <div id="2023-2024" class="tab-content">
+            <div class="section">
+                <h2 class="section-title">📝 Aufgaben</h2>
+                
+                <div class="pdf-viewer-container">
+                    <h3>📄 Abiturprüfung 2023/2024 - Teil 1/2</h3>
+                    <div class="pdf-controls">
+                        <button class="btn btn-view" onclick="togglePDF('iframe-2324-1')">📖 PDF anzeigen</button>
+                        <a href="https://github.com/user-attachments/files/23105837/Abiturprufung.2023_2024.1_2.pdf" download class="btn btn-download">⬇️ Download</a>
+                    </div>
+                    <iframe id="iframe-2324-1" src="https://drive.google.com/file/d/1QFPC0v84bbgKZN8jjEx3RKPOnHVkqStW/preview" class="pdf-iframe" allow="autoplay"></iframe>
+                </div>
+
+                <div class="pdf-viewer-container">
+                    <h3>📄 Abiturprüfung 2023/2024 - Teil 2/2</h3>
+                    <div class="pdf-controls">
+                        <button class="btn btn-view" onclick="togglePDF('iframe-2324-2')">📖 PDF anzeigen</button>
+                        <a href="https://github.com/user-attachments/files/23105838/Abiturprufung.2023_2024.2_2.pdf" download class="btn btn-download">⬇️ Download</a>
+                    </div>
+                    <iframe id="iframe-2324-2" src="https://drive.google.com/file/d/1MjOJ3skeNnZB5SbC6yy_eosSC9WKM0yU/preview" class="pdf-iframe" allow="autoplay"></iframe>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">✅ Lösungen</h2>
+                
+                <div class="pdf-viewer-container">
+                    <h3>✔️ Lösungen zur Abiturprüfung 2023/2024</h3>
+                    <div class="pdf-controls">
+                        <button class="btn btn-view" onclick="togglePDF('iframe-2324-l')">📖 PDF anzeigen</button>
+                        <a href="https://github.com/user-attachments/files/23105839/Abiturprufung.2023_2024.Losungen.pdf" download class="btn btn-download">⬇️ Download</a>
+                    </div>
+                    <iframe id="iframe-2324-l" src="https://drive.google.com/file/d/1SDjT1BDbcZ52vEs4Haj8BAYSvjBChoT-/preview" class="pdf-iframe" allow="autoplay"></iframe>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tab Content 2021/2022 -->
+        <div id="2021-2022" class="tab-content active">
+            <div class="section">
+                <h2 class="section-title">📝 Aufgaben</h2>
+                
+                <div class="pdf-viewer-container">
+                    <h3>📄 Abiturprüfung 2021/2022 - Teil 1/2</h3>
+                    <div class="pdf-controls">
+                        <button class="btn btn-view" onclick="togglePDF('iframe-2122-1')">📖 PDF anzeigen</button>
+                        <a href="https://github.com/user-attachments/files/23105833/Abiturprufung.2021_2022.1_2.pdf" download class="btn btn-download">⬇️ Download</a>
+                    </div>
+                    <iframe id="iframe-2122-1" src="https://drive.google.com/file/d/1WGa4OCGD5BM-bpO4h524aIFiLNGxZWmQ/preview" class="pdf-iframe" allow="autoplay"></iframe>
+                </div>
+
+                <div class="pdf-viewer-container">
+                    <h3>📄 Abiturprüfung 2021/2022 - Teil 2/2</h3>
+                    <div class="pdf-controls">
+                        <button class="btn btn-view" onclick="togglePDF('iframe-2122-2')">📖 PDF anzeigen</button>
+                        <a href="https://github.com/user-attachments/files/23105834/Abiturprufung.2021_2022.2_2.pdf" download class="btn btn-download">⬇️ Download</a>
+                    </div>
+                    <iframe id="iframe-2122-2" src="https://drive.google.com/file/d/1PcM4QC-qARtX5BdxSZ_PnQzcTgs3c-mh/preview" class="pdf-iframe" allow="autoplay"></iframe>
+                </div>
+            </div>
+
+            <div class="section">
+                <h2 class="section-title">✅ Lösungen</h2>
+                
+                <div class="pdf-viewer-container">
+                    <h3>✔️ Lösungen zur Abiturprüfung 2021/2022</h3>
+                    <div class="pdf-controls">
+                        <button class="btn btn-view" onclick="togglePDF('iframe-2122-l')">📖 PDF anzeigen</button>
+                        <a href="https://github.com/user-attachments/files/23105835/Abiturprufung.2021_2022.Losungen.pdf" download class="btn btn-download">⬇️ Download</a>
+                    </div>
+                    <iframe id="iframe-2122-l" src="https://drive.google.com/file/d/1I51OD0eGBg6rPavknn78jgPm8ogoy6lw/preview" class="pdf-iframe" allow="autoplay"></iframe>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>📚 ITS-ITH Abitur Lernzettel | PDFs auf <a href="https://github.com/Baadjid/ITS-ITH_ABI_Lernzettel/releases" target="_blank">GitHub</a></p>
+    </footer>
+
+    <script>
+        function showTab(tabId) {
+            const tabContents = document.querySelectorAll('.tab-content');
+            tabContents.forEach(content => {
+                content.classList.remove('active');
+            });
+
+            const tabButtons = document.querySelectorAll('.tab-button');
+            tabButtons.forEach(button => {
+                button.classList.remove('active');
+            });
+
+            document.getElementById(tabId).classList.add('active');
+            event.target.classList.add('active');
+        }
+
+        function togglePDF(iframeId) {
+            const iframe = document.getElementById(iframeId);
+            const btn = event.target;
+            
+            if (iframe.classList.contains('active')) {
+                iframe.classList.remove('active');
+                btn.textContent = '📖 PDF anzeigen';
+            } else {
+                iframe.classList.add('active');
+                btn.textContent = '✖️ PDF ausblenden';
+            }
+        }
+    </script>
+</body>
+</html>
