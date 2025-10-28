@@ -1276,10 +1276,11 @@
     <div class="layer-details" id="layer1-details">
         <h4>🎯 Aufgaben:</h4>
         <ul>
-            <li><strong>Bit-Übertragung:</strong> 0en und 1en als elektrische Signale</li>
-            <li><strong>Mechanische Spezifikation:</strong> Kabel, Stecker, Pins</li>
-            <li><strong>Elektrische Spezifikation:</strong> Spannungen, Ströme</li>
-            <li><strong>Timing:</strong> Wie schnell Bits übertragen werden</li>
+            <li><strong>Bit-Übertragung:</strong> 0en und 1en als elektrische Signale, Lichtsignale oder Funkwellen</li>
+            <li><strong>Mechanische Spezifikation:</strong> Kabel, Stecker, Pins (z.B. RJ45, BNC)</li>
+            <li><strong>Elektrische Spezifikation:</strong> Spannungen, Ströme, Lichtintensität</li>
+            <li><strong>Timing:</strong> Wie schnell Bits übertragen werden (Übertragungsrate)</li>
+            <li><strong>Basisbandübertragung:</strong> Direktes Senden digitaler Signale über das Medium</li>
         </ul>
 
         <h4>🔄 Übertragungsmodi:</h4>
@@ -1289,36 +1290,90 @@
             <li><strong>Simplex:</strong> Nur in eine Richtung (z.B. Radio-Broadcast)</li>
         </ul>
 
+        <h4>📏 Wichtige Konzepte:</h4>
+        <div style="background: rgba(255, 255, 255, 0.15); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+            <ul style="font-size: 0.95rem;">
+                <li><strong>Segmentlänge:</strong> Die maximale Länge, nach der ein Signal aufbereitet (verstärkt) werden muss</li>
+                <li><strong>Kabellänge:</strong> Die physische Länge der Verbindung zwischen zwei Geräten</li>
+                <li><strong>Dämpfung:</strong> Abschwächung des Signals über die Distanz (gemessen in dB)</li>
+            </ul>
+        </div>
+
         <h4>🔌 Übertragungsmedien und Kabelarten:</h4>
 
         <div style="background: rgba(255, 255, 255, 0.2); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
-            <h5 style="color: white; margin-bottom: 1rem;">1️⃣ Glasfaserkabel (Fiber Optic)</h5>
+            <h5 style="color: white; margin-bottom: 1rem;">1️⃣ Glasfaserkabel (Lichtwellenleiter / Fiber Optic)</h5>
             
-            <!-- Platzhalter für Glasfaserkabel-Bild -->
             <div style="text-align: center;">
                 <img src="Bilder/photo_3.jpg" alt="Glasfaserkabel" style="width: 90%; max-width: 400px; height: auto; margin: 15px 0;">
             </div>
 
-            <p><strong>Typen:</strong></p>
+            <p style="font-size: 0.95rem;"><strong>Funktionsweise:</strong></p>
             <ul style="font-size: 0.95rem;">
-                <li><strong>Monomode (Single-Mode):</strong> Ein Lichtstrahl, größere Distanzen (bis 100km+), teurer</li>
-                <li><strong>Multimode:</strong> Mehrere Lichtstrahlen, kürzere Distanzen (bis 2km), günstiger</li>
+                <li><strong>Medium:</strong> Glas oder Kunststoff als Übertragungsmedium</li>
+                <li><strong>Elektrische Größe:</strong> Licht (Photonen statt Elektronen)</li>
+                <li><strong>Lichtgeschwindigkeit:</strong> c = c₀/n, wobei n = 1,47–1,49 (Brechungsindex)</li>
+                <li><strong>Prinzip:</strong> Totale Reflexion am Mantelglas - das Licht breitet sich im Faserkern aus</li>
+                <li><strong>Optoelektrische Wandler:</strong> LED/Laser zum Senden, Photodiode zum Empfangen</li>
+                <li><strong>Dualismus:</strong> Teilchen-Wellen-Verhalten des Lichts</li>
+            </ul>
+
+            <p style="font-size: 0.95rem; margin-top: 1rem;"><strong>Typen:</strong></p>
+            <ul style="font-size: 0.95rem;">
+                <li><strong>Monomode (Single-Mode):</strong>
+                    <ul style="margin-top: 0.5rem;">
+                        <li>Ein einzelner Lichtstrahl durchläuft die Faser</li>
+                        <li>Kerndurchmesser: 9 μm (sehr dünn)</li>
+                        <li>Größere Distanzen möglich (> 100 km)</li>
+                        <li>Teurer, aber höchste Qualität und Bandbreite</li>
+                        <li>Keine Modendispersion</li>
+                    </ul>
+                </li>
+                <li><strong>Multimode - Stufenindexfaser:</strong>
+                    <ul style="margin-top: 0.5rem;">
+                        <li>Mehrere Lichtstrahlen (Moden) durchlaufen die Faser</li>
+                        <li>Kerndurchmesser: 50–62,5 μm</li>
+                        <li>Kürzere Distanzen (< 2 km)</li>
+                        <li>Günstiger als Monomode</li>
+                        <li>Problem: <em>Modendispersion</em> - ungewollte Verbreiterung des ursprünglichen Signals durch unterschiedliche Laufzeiten der Lichtstrahlen</li>
+                        <li>Bandbreite-Längen-Produkt: z.B. 1 GBit/500m</li>
+                    </ul>
+                </li>
+                <li><strong>Multimode - Gradientenindexfaser:</strong>
+                    <ul style="margin-top: 0.5rem;">
+                        <li>Verbesserung der Stufenindexfaser</li>
+                        <li>Brechungsindex nimmt vom Kern zum Mantel graduell ab</li>
+                        <li>Reduziert Modendispersion deutlich</li>
+                        <li>Signal kommt mit geringeren Laufzeitunterschieden an</li>
+                        <li>Bessere Performance als Stufenindexfaser</li>
+                    </ul>
+                </li>
             </ul>
             
-            <p><strong>✅ Vorteile:</strong></p>
+            <p style="font-size: 0.95rem; margin-top: 1rem;"><strong>✅ Vorteile:</strong></p>
             <ul style="font-size: 0.95rem;">
                 <li>Sehr hohe Bandbreite (bis zu 100 Gbit/s und mehr)</li>
                 <li>Große Reichweite ohne Signalverlust</li>
-                <li>Immun gegen elektromagnetische Störungen</li>
-                <li>Abhörsicher</li>
+                <li>Immun gegen elektromagnetische Störfelder</li>
+                <li>Abhörsicher - Anzapfen ist schwierig zu erkennen</li>
+                <li>Keine Rohstoffprobleme (Glas aus Sand)</li>
+                <li>Dünnere Kabel als Kupferkabel</li>
+                <li>Geringere Dämpfung → geringere Sendeleistung nötig</li>
             </ul>
             
-            <p><strong>❌ Nachteile:</strong></p>
+            <p style="font-size: 0.95rem; margin-top: 1rem;"><strong>❌ Nachteile:</strong></p>
             <ul style="font-size: 0.95rem;">
                 <li>Teuer in Anschaffung und Installation</li>
-                <li>Empfindlich gegen Biegung und mechanische Belastung</li>
+                <li>Empfindlich gegen mechanische Belastung und Biegung (Biegeradius beachten!)</li>
                 <li>Spezialwerkzeug für Installation nötig</li>
+                <li>Komplizierter Aufbau und Verbindungstechnik</li>
+                <li>Optoelektrische Wandler an beiden Seiten notwendig</li>
+                <li>Modendispersion bei Multimode-Stufenindex (kann aber mit Gradientenindex verbessert werden)</li>
             </ul>
+
+            <p style="font-size: 0.9rem; margin-top: 1rem; font-style: italic; color: rgba(255,255,255,0.9);">
+                💡 <strong>Tipp:</strong> Lichtgeschwindigkeit ist in Glasfaser identisch mit Radio-/Magnetwellen - die Geschwindigkeit hängt vom Medium ab!
+            </p>
         </div>
 
         <div style="background: rgba(255, 255, 255, 0.2); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
@@ -1328,26 +1383,46 @@
                 <img src="Bilder/photo_6.jpg" alt="Twisted Pair Kabel" style="width: 90%; max-width: 400px; height: auto; margin: 15px 0;">
             </div>
 
-            <p><strong>Typen:</strong></p>
+            <p style="font-size: 0.95rem;"><strong>Funktionsweise:</strong></p>
             <ul style="font-size: 0.95rem;">
-                <li><strong>UTP (Unshielded):</strong> Ungeschirmt, Standard für LANs</li>
-                <li><strong>STP (Shielded):</strong> Geschirmt, besserer Schutz vor Störungen</li>
+                <li><strong>Aufbau:</strong> Paarweise verdrillte Kupferdrähte</li>
+                <li><strong>Wichtig:</strong> Jedes Paar hat eine unterschiedliche Schlaglänge (Verdrillung)</li>
+                <li><strong>Prinzip:</strong> Durch das Verdrillen (Twisting) werden elektromagnetische Störungen ausgelöscht</li>
+                <li><strong>Verwendung:</strong> Telekommunikation, Ethernet-Netzwerke</li>
+                <li><strong>Übertragung:</strong> Basisbandübertragung (z.B. 10 Megabit)</li>
             </ul>
 
-            <p style="font-size: 0.95rem;"><strong>Kategorien:</strong> Cat5e (1 Gbit/s), Cat6 (10 Gbit/s), Cat7 (10 Gbit/s geschirmt)</p>
-            
-            <p><strong>✅ Vorteile:</strong></p>
+            <p style="font-size: 0.95rem; margin-top: 1rem;"><strong>Typen:</strong></p>
             <ul style="font-size: 0.95rem;">
-                <li>Günstig und weit verbreitet</li>
-                <li>Einfache Installation</li>
-                <li>Flexibel und robust</li>
-                <li>Gute Performance für LANs (bis 100m)</li>
+                <li><strong>UTP (Unshielded Twisted Pair):</strong> Ungeschirmt, Standard für LANs</li>
+                <li><strong>STP (Shielded Twisted Pair):</strong> Geschirmt, besserer Schutz vor Störungen</li>
+                <li><strong>S/STP:</strong> Komplett geschirmt mit zusätzlicher Paarschirmung</li>
+            </ul>
+
+            <p style="font-size: 0.95rem; margin-top: 1rem;"><strong>Kategorien:</strong></p>
+            <ul style="font-size: 0.95rem;">
+                <li><strong>Cat 3:</strong> bis 10 Mbit/s, bis 16 MHz</li>
+                <li><strong>Cat 4:</strong> bis 20 Mbit/s, bis 20 MHz</li>
+                <li><strong>Cat 5/5e:</strong> bis 100 Mbit/s (5e: 1 Gbit/s), bis 100 MHz</li>
+                <li><strong>Cat 6:</strong> bis 10 Gbit/s, bis 250 MHz</li>
+                <li><strong>Cat 7:</strong> bis 10 Gbit/s (geschirmt), bis 600 MHz</li>
             </ul>
             
-            <p><strong>❌ Nachteile:</strong></p>
+            <p style="font-size: 0.95rem; margin-top: 1rem;"><strong>✅ Vorteile:</strong></p>
             <ul style="font-size: 0.95rem;">
-                <li>Begrenzte Reichweite (max. 100m für Ethernet)</li>
-                <li>Anfällig für elektromagnetische Störungen (bei UTP)</li>
+                <li>Günstig und weit verbreitet</li>
+                <li>Einfacher Aufbau und Installation</li>
+                <li>Flexibel und robust</li>
+                <li>Gute Performance für LANs (bis 100m)</li>
+                <li>Geringere Störungen durch Verdrillung</li>
+                <li>Mechanisch leichter zu verarbeiten</li>
+                <li>Billig im Vergleich zu Glasfaser</li>
+            </ul>
+            
+            <p style="font-size: 0.95rem; margin-top: 1rem;"><strong>❌ Nachteile:</strong></p>
+            <ul style="font-size: 0.95rem;">
+                <li>Begrenzte Reichweite (max. 100m für Ethernet ohne Repeater)</li>
+                <li>Anfällig für elektromagnetische Störungen (besonders bei UTP)</li>
                 <li>Niedrigere Bandbreite als Glasfaser</li>
             </ul>
         </div>
@@ -1355,42 +1430,63 @@
         <div style="background: rgba(255, 255, 255, 0.2); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
             <h5 style="color: white; margin-bottom: 1rem;">3️⃣ Koaxialkabel (Coaxial Cable)</h5>
             
-        <div style="text-align: center;">
-            <img src="Bilder/photo_9.jpg" alt="Koaxialkabel" style="width: 90%; max-width: 400px; height: auto; margin: 15px 0;">
-        </div>
+            <div style="text-align: center;">
+                <img src="Bilder/photo_9.jpg" alt="Koaxialkabel" style="width: 90%; max-width: 400px; height: auto; margin: 15px 0;">
+            </div>
 
-            <p style="font-size: 0.95rem;"><strong>Aufbau:</strong> Innenleiter, Isolierung, Abschirmung, Außenmantel</p>
-            <p style="font-size: 0.95rem;"><strong>Stecker:</strong> BNC (Bayonet Neill-Concelman) - Bajonettverschluss</p>
+            <p style="font-size: 0.95rem;"><strong>Aufbau:</strong> Innenleiter → Isolierung → Abschirmgeflecht → Außenmantel</p>
             
-            <p><strong>✅ Vorteile:</strong></p>
+            <p style="font-size: 0.95rem; margin-top: 1rem;"><strong>Stecker & Komponenten:</strong></p>
             <ul style="font-size: 0.95rem;">
-                <li>Gute Abschirmung gegen Störungen</li>
-                <li>Höhere Bandbreite als Twisted Pair</li>
-                <li>Robust und langlebig</li>
+                <li><strong>BNC (Bayonet Neill-Concelman):</strong> Bajonettverschluss mit Drehverriegelung</li>
+                <li><strong>Terminator:</strong> Abschlusswiderstand - notwendig am Ende der Bus-Leitung</li>
+            </ul>
+
+            <p style="font-size: 0.95rem; margin-top: 1rem;"><strong>Standards:</strong></p>
+            <ul style="font-size: 0.95rem;">
+                <li><strong>10Base5 (Thick Ethernet):</strong> max. 500 Meter Segmentlänge</li>
+                <li><strong>10Base2 (Thin Ethernet):</strong> max. 185 Meter Segmentlänge</li>
+            </ul>
+
+            <p style="font-size: 0.95rem; margin-top: 1rem;"><strong>Anwendungen:</strong></p>
+            <ul style="font-size: 0.95rem;">
+                <li>Satellitentechnik (TV-Signale)</li>
+                <li>Antennentechnik</li>
+                <li>Netzwerktechnik (historisch - heute veraltet für LANs)</li>
             </ul>
             
-            <p><strong>❌ Nachteile:</strong></p>
+            <p style="font-size: 0.95rem; margin-top: 1rem;"><strong>✅ Vorteile:</strong></p>
+            <ul style="font-size: 0.95rem;">
+                <li>Stabil und langlebig</li>
+                <li>Gute Abschirmung gegen Störungen</li>
+                <li>Höhere Frequenzen und Bandbreite als einfaches Twisted Pair</li>
+                <li>Robust gegen äußere Einflüsse</li>
+            </ul>
+            
+            <p style="font-size: 0.95rem; margin-top: 1rem;"><strong>❌ Nachteile:</strong></p>
             <ul style="font-size: 0.95rem;">
                 <li>Teurer als Twisted Pair</li>
-                <li>Unflexibel und schwerer zu verlegen</li>
+                <li>Unflexibel und schwerer zu verlegen (kleiner Biegeradius)</li>
+                <li>Komplizierter Aufbau</li>
                 <li>Wird heute seltener verwendet (veraltet in LANs)</li>
-                <li>Bus-Topologie anfällig für Ausfälle</li>
+                <li>Bus-Topologie anfällig für Ausfälle - wenn ein Segment defekt, fällt das ganze Netz aus</li>
             </ul>
         </div>
 
-        <h4>🔧 RJ45 (Registered Jack 45):</h4>
+        <h4>🔧 Stecker und Anschlüsse:</h4>
         <div style="background: rgba(255, 255, 255, 0.2); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+            <h5 style="color: white; margin-bottom: 1rem;">RJ45 (Registered Jack 45)</h5>
+            
+            <div style="text-align: center;">
+                <img src="Bilder/photo_2.jpg" alt="RJ45 Stecker" style="width: 90%; max-width: 400px; height: auto; margin: 15px 0;">
+            </div>
+
             <p style="font-size: 0.95rem;"><strong>RJ45</strong> ist der Standard-Stecker für Ethernet-Netzwerke mit Twisted Pair Kabeln.</p>
             <ul style="font-size: 0.95rem;">
-               
-                    <div style="text-align: center;">
-                        <img src="Bilder/photo_2.jpg" alt="RJ45 Stecker" style="width: 90%; max-width: 400px; height: auto; margin: 15px 0;">
-                    </div>
-                
-                <li>8 Pins (8P8C - 8 Position 8 Contact)</li>
-                <li>Verwendet für Cat5e, Cat6, Cat7 Kabel</li>
-                <li>Belegung nach T568A oder T568B Standard</li>
-                <li>Klick-Mechanismus für sicheren Halt</li>
+                <li><strong>8 Kontakte (8P8C):</strong> 8 Position, 8 Contact</li>
+                <li><strong>4 Adernpaare:</strong> In modernen Netzwerken werden alle 4 Paare genutzt</li>
+                <li><strong>Belegung:</strong> T568A oder T568B Standard für die Pinbelegung</li>
+                <li><strong>Verwendung:</strong> Ethernet (10/100/1000 Mbit/s und mehr)</li>
             </ul>
         </div>
 
@@ -1491,28 +1587,89 @@
             </table>
         </div>
 
-        <h4>🔁 Repeater (Signalverstärker):</h4>
+        <h4>🔧 Netzwerkgeräte auf Schicht 1:</h4>
+
         <div style="background: rgba(255, 255, 255, 0.2); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
-            <p style="font-size: 0.95rem;"><strong>Funktion:</strong> Verstärkt und regeneriert Signale auf der physischen Schicht</p>
+            <h5 style="color: white; margin-bottom: 1rem;">🔁 Repeater (Signalverstärker)</h5>
+            
+            <div style="text-align: center;">
+                <img src="Bilder/photo_4.jpg" alt="Repeater" style="width: 90%; max-width: 400px; height: auto; margin: 15px 0;">
+            </div>
+
+            <p style="font-size: 0.95rem;"><strong>Funktion:</strong> Verstärkt und regeneriert Signale auf der physischen Schicht (Schicht 1)</p>
+            
             <ul style="font-size: 0.95rem;">
-               
-                    <div style="text-align: center;">
-                        <img src="Bilder/photo_4.jpg" alt="Repeater" style="width: 90%; max-width: 400px; height: auto; margin: 15px 0;">
-                    </div>
-                
-                <li><strong>Horizontale Kommunikation:</strong> Arbeitet nur auf Schicht 1</li>
-                <li><strong>Keine Prüfung:</strong> Leitet alle Signale weiter, ohne Inhalt zu analysieren</li>
+                <li><strong>Schnittstellen:</strong> Hat nur ZWEI Schnittstellen - einen Eingang und einen Ausgang</li>
+                <li><strong>Horizontale Kommunikation:</strong> Arbeitet ausschließlich auf Schicht 1</li>
+                <li><strong>Keine Intelligenz:</strong> Keine Prüfung, keine Filterung - leitet alle Signale weiter</li>
+                <li><strong>Funktion:</strong> Nimmt ankommendes Signal (schwach) an, bereitet es auf und sendet es verstärkt weiter</li>
                 <li><strong>Zweck:</strong> Verlängert Kabelreichweite durch Signalaufbereitung</li>
                 <li><strong>Beispiel:</strong> WLAN-Repeater verlängern Funkreichweite</li>
             </ul>
-            <p style="margin-top: 1rem; font-size: 0.9rem; font-style: italic;"><em>Wichtig: Repeater verstehen keine Protokolle, Adressen oder Pakete - sie verstärken nur das rohe Signal!</em></p>
+            
+            <p style="margin-top: 1rem; font-size: 0.9rem; font-style: italic; color: rgba(255,255,255,0.9);">
+                <em>⚠️ Wichtig: Repeater verstehen keine Protokolle, Adressen oder Pakete - sie verstärken nur das rohe Signal (Bits)!</em>
+            </p>
         </div>
 
-        <div class="example-box">
-            <h4>💡 Beispiel:</h4>
-            <p style="font-size: 0.95rem;">Das Ethernet-Kabel (Twisted Pair mit RJ45) zwischen deinem Computer und dem Switch überträgt 
-            die Daten als elektrische Impulse. Ein "1" könnte +2,5V sein, ein "0" könnte 0V sein. 
-            Wenn das Kabel zu lang ist (über 100m), wird ein Repeater benötigt, um das Signal zu verstärken.</p>
+        <div style="background: rgba(255, 255, 255, 0.2); padding: 1rem; border-radius: 8px; margin: 1rem 0;">
+            <h5 style="color: white; margin-bottom: 1rem;">🔌 Hub (Verteiler)</h5>
+            
+            <p style="font-size: 0.95rem;"><strong>Funktion:</strong> Verteilt Signale an mehrere Ports (Sternpunkt)</p>
+            
+            <ul style="font-size: 0.95rem;">
+                <li><strong>Ports:</strong> Hat mehrere Ports (Anschlüsse) und verteilt das Signal an alle</li>
+                <li><strong>Arbeitsweise:</strong> Empfängt Signal an einem Port → sendet es an ALLE anderen Ports</li>
+                <li><strong>Keine Intelligenz:</strong> Trifft keine Entscheidungen, kein Filtering</li>
+            </ul>
+
+            <p style="font-size: 0.95rem; margin-top: 1rem;"><strong>Typen:</strong></p>
+            <ul style="font-size: 0.95rem;">
+                <li><strong>Passiver Hub:</strong>
+                    <ul style="margin-top: 0.5rem;">
+                        <li>Nur Verteilen des Signals</li>
+                        <li>Keine Verstärkung</li>
+                        <li>Veraltet, nicht mehr in Verwendung</li>
+                    </ul>
+                </li>
+                <li><strong>Aktiver Hub:</strong>
+                    <ul style="margin-top: 0.5rem;">
+                        <li>Wiederaufbereitung und Verstärkung des Signals</li>
+                        <li>Regeneriert das Signal wie ein Repeater</li>
+                        <li>Verteilt dann an alle Ports</li>
+                    </ul>
+                </li>
+            </ul>
+
+            <p style="margin-top: 1rem; font-size: 0.9rem; font-style: italic; color: rgba(255,255,255,0.9);">
+                <em>💡 Info: Hubs sind heute veraltet - Switches (Schicht 2) haben sie ersetzt, da diese intelligenter arbeiten!</em>
+            </p>
+        </div>
+
+        <div class="example-box" style="background: rgba(100, 200, 255, 0.15); padding: 1rem; border-radius: 8px; border-left: 4px solid rgba(100, 200, 255, 0.5); margin: 1rem 0;">
+            <h4>💡 Praxis-Beispiel:</h4>
+            <p style="font-size: 0.95rem;">
+                Das Ethernet-Kabel (Twisted Pair Cat5e mit RJ45-Stecker) zwischen deinem Computer und dem Router überträgt 
+                die Daten als elektrische Impulse. Ein Bit "1" könnte als +2,5V Signal repräsentiert werden, 
+                ein Bit "0" als 0V Signal.
+            </p>
+            <p style="font-size: 0.95rem; margin-top: 0.5rem;">
+                Wenn das Kabel zu lang ist (über 100m), wird das Signal zu schwach. Hier kommt ein <strong>Repeater</strong> 
+                zum Einsatz: Er verstärkt das Signal und verlängert so die mögliche Reichweite. Der Repeater arbeitet 
+                dabei "blind" - er sieht nur Bits (1en und 0en), versteht aber nicht, was die Daten bedeuten.
+            </p>
+        </div>
+
+        <div style="background: rgba(255, 200, 100, 0.15); padding: 1rem; border-radius: 8px; border-left: 4px solid rgba(255, 200, 100, 0.5); margin: 1rem 0;">
+            <h4>🎓 Abitur-Tipp:</h4>
+            <ul style="font-size: 0.95rem;">
+                <li><strong>Schicht 1 = Physisch:</strong> Alles, was du anfassen kannst (Kabel, Stecker)</li>
+                <li><strong>Übertragung = Bits:</strong> Nur 1en und 0en, keine Bedeutung</li>
+                <li><strong>Repeater vs. Hub:</strong> Repeater = 2 Ports, Hub = viele Ports</li>
+                <li><strong>Glasfaser-Typen:</strong> Mono = dünn + weit, Multi = dick + kurz</li>
+                <li><strong>Modendispersion:</strong> Problem bei Multimode-Stufenindex, gelöst durch Gradientenindex</li>
+                <li><strong>Twisted Pair:</strong> Verdrillung reduziert Störungen</li>
+            </ul>
         </div>
     </div>
 </div>
@@ -1826,6 +1983,7 @@
 </body>
 
 </html>
+
 
 
 
