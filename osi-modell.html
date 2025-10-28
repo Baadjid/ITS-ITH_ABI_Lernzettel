@@ -955,7 +955,7 @@
                     </div>
                 </div>
 
-                <!-- Schicht 2: Sicherungsschicht -->
+ <!-- Schicht 2: Sicherungsschicht -->
 <div class="layer layer-2" onclick="toggleDetails('layer2-details')">
     <div class="layer-number">2</div>
     <div class="layer-name">Sicherungsschicht<br>(Data Link Layer)</div>
@@ -998,26 +998,16 @@
             <p><strong>Minimale Länge:</strong> 64 Byte<br>
             <strong>Maximale Länge:</strong> 1518 Byte</p>
             
-           <div style="width:100%; margin-top:10px;">
-    <div style="border:1px solid #ddd; margin-bottom:8px; padding:8px; background:rgba(0,0,0,0.1);">
-        <strong>Präambel</strong> - 8 Byte
-    </div>
-    <div style="border:1px solid #ddd; margin-bottom:8px; padding:8px; background:rgba(0,0,0,0.1);">
-        <strong>Ziel-MAC</strong> - 6 Byte
-    </div>
-    <div style="border:1px solid #ddd; margin-bottom:8px; padding:8px; background:rgba(0,0,0,0.1);">
-        <strong>Absender-MAC</strong> - 6 Byte
-    </div>
-    <div style="border:1px solid #ddd; margin-bottom:8px; padding:8px; background:rgba(0,0,0,0.1);">
-        <strong>Länge/Typ</strong> - 2 Byte
-    </div>
-    <div style="border:1px solid #ddd; margin-bottom:8px; padding:8px; background:rgba(0,0,0,0.1);">
-        <strong>Daten</strong> - 46-1500 Byte
-    </div>
-    <div style="border:1px solid #ddd; margin-bottom:8px; padding:8px; background:rgba(0,0,0,0.1);">
-        <strong>FCS</strong> - 4 Byte
-    </div>
-</div>
+            <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
+                <tr style="background: #f0f0f0;">
+                    <td style="border:1px solid #ddd; padding:8px;"><strong>Präambel</strong><br>8 Byte</td>
+                    <td style="border:1px solid #ddd; padding:8px;"><strong>Ziel-MAC</strong><br>6 Byte</td>
+                    <td style="border:1px solid #ddd; padding:8px;"><strong>Absender-MAC</strong><br>6 Byte</td>
+                    <td style="border:1px solid #ddd; padding:8px;"><strong>Länge/Typ</strong><br>2 Byte</td>
+                    <td style="border:1px solid #ddd; padding:8px;"><strong>Daten</strong><br>46-1500 Byte</td>
+                    <td style="border:1px solid #ddd; padding:8px;"><strong>FCS</strong><br>4 Byte</td>
+                </tr>
+            </table>
             
             <p style="margin-top: 10px;"><strong>Felderklärung:</strong></p>
             <ul>
@@ -1076,45 +1066,26 @@
                 <li>Andere Stationen im Empfangsbereich hören CTS und halten sich zurück</li>
             </ul>
         </div>
-        
-<h4>🔄 Hub vs. Switch:</h4>
-<div style="display: flex; flex-direction: column; gap: 20px; margin: 20px 0;">
-    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px;">
-        <h5 style="color: white; margin-bottom: 10px;">🔴 Hub (Layer 1)</h5>
-        <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center;">
-            <div style="flex: 1; min-width: 200px;">
-                <ul style="font-size: 0.95rem;">
-                    <li>• Multiport-Repeater</li>
-                    <li>• Immer Broadcast</li>
-                    <li>• Kollisionsdomäne = ganzes Netz</li>
-                    <li>• CSMA/CD notwendig</li>
-                    <li>• Halfduplex</li>
-                </ul>
+
+        <h4>🔄 Hub vs. Switch:</h4>
+        <div class="protocols-grid">
+            <div class="protocol">
+                <strong>Hub (Layer 1)</strong><br>
+                • Multiport-Repeater<br>
+                • Immer Broadcast<br>
+                • Kollisionsdomäne = ganzes Netz<br>
+                • CSMA/CD notwendig<br>
+                • Halfduplex
             </div>
-            <div style="flex: 1; min-width: 200px; text-align: center;">
-                <img src="Bilder/photo_7.jpg" alt="Hub Darstellung" style="width: 100%; max-width: 300px; height: auto; border-radius: 8px;">
-            </div>
-        </div>
-    </div>
-    
-    <div style="background: rgba(255,255,255,0.1); padding: 15px; border-radius: 10px;">
-        <h5 style="color: white; margin-bottom: 10px;">🟢 Switch (Layer 2)</h5>
-        <div style="display: flex; flex-wrap: wrap; gap: 20px; align-items: center;">
-            <div style="flex: 1; min-width: 200px;">
-                <ul style="font-size: 0.95rem;">
-                    <li>• Intelligentes Weiterleiten</li>
-                    <li>• Unicast möglich</li>
-                    <li>• Kollisionsdomäne = einzelner Port</li>
-                    <li>• Kein CSMA/CD nötig</li>
-                    <li>• Fullduplex</li>
-                </ul>
-            </div>
-            <div style="flex: 1; min-width: 200px; text-align: center;">
-                <img src="Bilder/photo_1.jpg" alt="Switch Darstellung" style="width: 100%; max-width: 300px; height: auto; border-radius: 8px;">
+            <div class="protocol">
+                <strong>Switch (Layer 2)</strong><br>
+                • Intelligentes Weiterleiten<br>
+                • Unicast möglich<br>
+                • Kollisionsdomäne = einzelner Port<br>
+                • Kein CSMA/CD nötig<br>
+                • Fullduplex
             </div>
         </div>
-    </div>
-</div>
 
         <div class="important-note">
             <h4>📋 MAC-Table (Switch):</h4>
@@ -1130,12 +1101,24 @@
 
         <h4>🔗 Manchester-Code (Schicht 1):</h4>
         <div class="example-box">
+            <p><strong>Wichtig:</strong> Manchester-Code wird tatsächlich über die Leitung geschickt, nicht die rohen Daten!</p>
             <p>Kodierung für Ethernet auf Physical Layer:</p>
             <ul>
-                <li><strong>0</strong> = 1→0 Taktwechsel (keine Spannung in Bitmitte)</li>
-                <li><strong>1</strong> = 0→1 Taktwechsel (Spannung in Bitmitte)</li>
+                <li><strong>0</strong> = 1→0 Taktwechsel (kein Spannungswechsel in Bitmitte)</li>
+                <li><strong>1</strong> = 0→1 Taktwechsel (Spannungswechsel in Bitmitte)</li>
             </ul>
-            <p>💡 Ermöglicht Synchronisation und Kollisionserkennung durch Mittelwertüberprüfung</p>
+            <p><strong>Beispiel:</strong></p>
+            <ul>
+                <li>Daten (binär): <code>10100110</code></li>
+                <li>Manchester (gesendet): <code>0110011001100101</code></li>
+            </ul>
+            <p>💡 <strong>Vorteile:</strong></p>
+            <ul>
+                <li>Selbst-synchronisierend (Clock im Signal enthalten)</li>
+                <li>Ermöglicht Kollisionserkennung durch Mittelwertüberprüfung</li>
+                <li>Sender kann prüfen: "Was habe ich geschickt?" vs. "Was ist auf der Leitung?"</li>
+            </ul>
+            <p>⚠️ <strong>Nachteil:</strong> Doppelte Bandbreite nötig (1 Datenbit = 2 Manchester-Bits)</p>
         </div>
 
         <h4>🔌 ARP (Address Resolution Protocol):</h4>
@@ -1191,7 +1174,7 @@
 
         <h4>📊 Topologien (Layer 2):</h4>
         <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
-            <tr style="background: rgba(0, 0, 0, 0.5);">
+            <tr style="background: #f0f0f0;">
                 <th style="border:1px solid #ddd; padding:8px;">Technologie</th>
                 <th style="border:1px solid #ddd; padding:8px;">Physisch</th>
                 <th style="border:1px solid #ddd; padding:8px;">Logisch</th>
@@ -1212,6 +1195,19 @@
                 <td style="border:1px solid #ddd; padding:8px;">Bus</td>
             </tr>
         </table>
+
+        <h4>🔄 Spezialfälle:</h4>
+        <div class="protocols-grid">
+            <div class="protocol">
+                <strong>P2P-Netzwerk</strong><br>
+                (Peer to Peer)<br>
+                Direkte Verbindung zwischen zwei Geräten ohne zentrale Infrastruktur
+            </div>
+            <div class="protocol">
+                <strong>WiFi Direct</strong><br>
+                WLAN-Geräte verbinden sich direkt ohne Access Point (z.B. Smartphone → Drucker)
+            </div>
+        </div>
 
         <h4>📡 Wichtige Standards:</h4>
         <div class="protocols-grid">
@@ -1830,6 +1826,7 @@
 </body>
 
 </html>
+
 
 
 
