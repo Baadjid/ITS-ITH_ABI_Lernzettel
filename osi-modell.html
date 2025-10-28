@@ -955,44 +955,291 @@
                 </div>
 
                 <!-- Schicht 2: Sicherungsschicht -->
-                <div class="layer layer-2" onclick="toggleDetails('layer2-details')">
-                    <div class="layer-number">2</div>
-                    <div class="layer-name">Sicherungsschicht<br>(Data Link Layer)</div>
-                    <div class="layer-description">
-                        Fehlererkennung und physische Adressierung (MAC-Adressen)
-                    </div>
-                    <div class="layer-details" id="layer2-details">
-                        <h4>🎯 Aufgaben:</h4>
-                        <ul>
-                            <li><strong>Framing:</strong> Daten in Frames verpacken</li>
-                            <li><strong>Physical Addressing:</strong> MAC-Adressen verwenden</li>
-                            <li><strong>Error Detection:</strong> Fehler in Frames erkennen</li>
-                            <li><strong>Flow Control:</strong> Datenfluss zwischen direkt verbundenen Geräten</li>
-                        </ul>
-                        
-                        <h4>📡 Wichtige Protokolle/Standards:</h4>
-                        <div class="protocols-grid">
-                            <div class="protocol">Ethernet</div>
-                            <div class="protocol">Wi-Fi (802.11)</div>
-                            <div class="protocol">PPP</div>
-                            <div class="protocol">HDLC</div>
-                            <div class="protocol">Frame Relay</div>
-                            <div class="protocol">ATM</div>
-                        </div>
+<div class="layer layer-2" onclick="toggleDetails('layer2-details')">
+    <div class="layer-number">2</div>
+    <div class="layer-name">Sicherungsschicht<br>(Data Link Layer)</div>
+    <div class="layer-description">
+        Fehlererkennung, physische Adressierung (MAC) und Zugriffskontrolle aufs Medium
+    </div>
+    <div class="layer-details" id="layer2-details">
+        
+        <h4>🔧 Teilschichten:</h4>
+        <div class="protocols-grid">
+            <div class="protocol"><strong>LLC</strong> (Logical Link Control)<br>Verbindung zu Schicht 3</div>
+            <div class="protocol"><strong>MAC</strong> (Media Access Control)<br>Zugriff aufs Medium, Framestruktur</div>
+        </div>
 
-                        <div class="important-note">
-                            <h4>🔍 MAC-Adresse:</h4>
-                            Jede Netzwerkkarte hat eine eindeutige 48-Bit MAC-Adresse 
-                            (z.B. 00:1B:44:11:3A:B7), die wie ein "Hardware-Ausweis" funktioniert.
-                        </div>
+        <h4>🎯 Aufgaben:</h4>
+        <ul>
+            <li><strong>Framing:</strong> Daten von oben in Frames verpacken (Header + Trailer)</li>
+            <li><strong>Physical Addressing:</strong> MAC-Adressen für Adressierung im lokalen Netz</li>
+            <li><strong>Zugriffskontrolle:</strong> Regelt, wie Geräte aufs Medium zugreifen</li>
+            <li><strong>Error Detection:</strong> Fehlererkennung mit FCS (Frame Check Sum)</li>
+            <li><strong>Kollisionserkennung/-vermeidung:</strong> CSMA/CD bzw. CSMA/CA</li>
+        </ul>
+        
+        <div class="important-note">
+            <h4>🔍 MAC-Adresse (48 Bit):</h4>
+            <p><strong>Aufbau:</strong> 24 Bit Hersteller + 24 Bit Seriennummer</p>
+            <p><strong>Darstellung:</strong> 6 Gruppen mit 8 Bit in Hexadezimal<br>
+            Beispiel: <code>00:11:22:33:44:55</code></p>
+            <p><strong>Typen:</strong></p>
+            <ul>
+                <li><strong>BIA</strong> (Burned in Address) - fest eingebrannt</li>
+                <li><strong>LAA</strong> (Locally Administered Address) - lokal konfigurierbar</li>
+                <li>"Private MAC" & "Randomized MAC" (z.B. Wi-Fi für Datenschutz)</li>
+            </ul>
+            <p>⚠️ <strong>Wichtig:</strong> In einem Netzwerk (LAN) ist die MAC immer eindeutig!</p>
+        </div>
 
-                        <div class="example-box">
-                            <h4>💡 Beispiel:</h4>
-                            In deinem WLAN zu Hause sorgt diese Schicht dafür, dass deine Daten 
-                            zwischen deinem Laptop und dem Router korrekt übertragen werden.
-                        </div>
-                    </div>
-                </div>
+        <h4>📦 Ethernet Frame-Aufbau:</h4>
+        <div class="example-box">
+            <p><strong>Minimale Länge:</strong> 64 Byte<br>
+            <strong>Maximale Länge:</strong> 1518 Byte</p>
+            
+            <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
+                <tr style="background: #f0f0f0;">
+                    <td style="border:1px solid #ddd; padding:8px;"><strong>Präambel</strong><br>8 Byte</td>
+                    <td style="border:1px solid #ddd; padding:8px;"><strong>Ziel-MAC</strong><br>6 Byte</td>
+                    <td style="border:1px solid #ddd; padding:8px;"><strong>Absender-MAC</strong><br>6 Byte</td>
+                    <td style="border:1px solid #ddd; padding:8px;"><strong>Länge/Typ</strong><br>2 Byte</td>
+                    <td style="border:1px solid #ddd; padding:8px;"><strong>Daten</strong><br>46-1500 Byte</td>
+                    <td style="border:1px solid #ddd; padding:8px;"><strong>FCS</strong><br>4 Byte</td>
+                </tr>
+            </table>
+            
+            <p style="margin-top: 10px;"><strong>Felderklärung:</strong></p>
+            <ul>
+                <li><strong>Präambel:</strong> Synchronisation aller Teilnehmer, zeigt an, dass Frame kommt</li>
+                <li><strong>Zieladresse:</strong> Empfänger im eigenen Netz (nur lokal gültig)</li>
+                <li><strong>Absenderadresse:</strong> Sender im Netz</li>
+                <li><strong>Länge/Typ:</strong> Inhalt je nach Standard (802.2/3 nach IEEE)</li>
+                <li><strong>Daten:</strong> Info der höheren Schichten</li>
+                <li><strong>FCS (Trailer):</strong> Frame Check Sum - prüft, ob richtig übertragen</li>
+            </ul>
+        </div>
+
+        <h4>📡 CSMA/CD - Ethernet (Kabelgebunden):</h4>
+        <div class="example-box">
+            <p><strong>CS</strong> = Carrier Sense → NIC hört mit, bevor sie sendet<br>
+            <strong>MA</strong> = Multiple Access → Geräte teilen sich das Medium<br>
+            <strong>CD</strong> = Collision Detection → Kollision erkennen, Sendeabbruch</p>
+            
+            <p><strong>Bei Kollision:</strong></p>
+            <ol>
+                <li>NIC erkennt Kollision</li>
+                <li>Sendeabbruch + Jam-Signal (digitales Störsignal)</li>
+                <li>Sendewiederholung nach Wartezeit</li>
+                <li><strong>Backoff-Algorithmus:</strong> Zufällige Wartezeit in Zyklen
+                    <ul>
+                        <li>1. Versuch: 0-1 Zyklen</li>
+                        <li>2. Versuch: 0-3 Zyklen</li>
+                        <li>3. Versuch: 0-7 Zyklen</li>
+                        <li>...</li>
+                        <li>10. Versuch: 0-1023 Zyklen</li>
+                        <li>Nach 10 Versuchen: Abbruch & Fehlermeldung</li>
+                    </ul>
+                </li>
+            </ol>
+            <p>⚠️ <strong>Wichtig:</strong> Kollisionen werden nicht verhindert, nur erkannt!<br>
+            Sender hört gleichzeitig mit (Kollisionserkennung mit Manchester-Code)</p>
+            <p>💡 Tatsächliche Übertragungsrate ist wesentlich kleiner als die theoretische!</p>
+        </div>
+
+        <h4>📶 CSMA/CA - WLAN (Wireless):</h4>
+        <div class="example-box">
+            <p><strong>CA</strong> = Collision Avoidance → Kollisionsvermeidung (nicht Erkennung!)</p>
+            <p><strong>Warum?</strong> Bei Funk kann Sender nicht gleichzeitig hören</p>
+            
+            <p><strong>Mechanismen:</strong></p>
+            <ul>
+                <li><strong>IFS</strong> (Interframe Space): Wenn frei, kurz warten, dann senden</li>
+                <li><strong>Random Backoff:</strong> Bei Kollision zufällige Zeit warten</li>
+                <li><strong>ACK:</strong> Bestätigung vom Empfänger (kein ACK = Frame verloren → erneut senden)</li>
+            </ul>
+            
+            <p><strong>Hidden Station Problem - Lösung:</strong></p>
+            <ul>
+                <li><strong>RTS</strong> (Request to Send): Sender fragt Empfänger, ob er senden darf</li>
+                <li><strong>CTS</strong> (Clear to Send): Reserviert Medium für Sender</li>
+                <li>Andere Stationen im Empfangsbereich hören CTS und halten sich zurück</li>
+            </ul>
+        </div>
+
+        <h4>🔄 Hub vs. Switch:</h4>
+        <div class="protocols-grid">
+            <div class="protocol">
+                <strong>Hub (Layer 1)</strong><br>
+                • Multiport-Repeater<br>
+                • Immer Broadcast<br>
+                • Kollisionsdomäne = ganzes Netz<br>
+                • CSMA/CD notwendig<br>
+                • Halfduplex
+            </div>
+            <div class="protocol">
+                <strong>Switch (Layer 2)</strong><br>
+                • Intelligentes Weiterleiten<br>
+                • Unicast möglich<br>
+                • Kollisionsdomäne = einzelner Port<br>
+                • Kein CSMA/CD nötig<br>
+                • Fullduplex
+            </div>
+        </div>
+
+        <div class="important-note">
+            <h4>📋 MAC-Table (Switch):</h4>
+            <p>Switch hört passiv mit und lernt:</p>
+            <ul>
+                <li>Port 1 → MAC: 2A:...</li>
+                <li>Port 2 → MAC: ? → <strong>Broadcast!</strong></li>
+                <li>Port 3 → MAC: 3B:...</li>
+                <li>Port 4 → MAC: 01:...</li>
+            </ul>
+            <p>Bei unbekannter MAC: Switch macht ausnahmsweise Broadcast</p>
+        </div>
+
+        <h4>🔗 Manchester-Code (Schicht 1):</h4>
+        <div class="example-box">
+            <p>Kodierung für Ethernet auf Physical Layer:</p>
+            <ul>
+                <li><strong>0</strong> = 1→0 Taktwechsel (keine Spannung in Bitmitte)</li>
+                <li><strong>1</strong> = 0→1 Taktwechsel (Spannung in Bitmitte)</li>
+            </ul>
+            <p>💡 Ermöglicht Synchronisation und Kollisionserkennung durch Mittelwertüberprüfung</p>
+        </div>
+
+        <h4>🔌 ARP (Address Resolution Protocol):</h4>
+        <div class="example-box">
+            <p><strong>Funktion:</strong> Zuordnung zwischen IP-Adresse (Layer 3) und MAC-Adresse (Layer 2)</p>
+            
+            <p><strong>Ablauf:</strong></p>
+            <ol>
+                <li>Station kennt IP-Adresse des Ziels, aber nicht MAC-Adresse</li>
+                <li>Station sendet <strong>ARP Request</strong> als Broadcast: "Wer hat IP X.X.X.X?"</li>
+                <li>Host mit dieser IP antwortet mit <strong>ARP Reply</strong> (Unicast)</li>
+                <li>Zuordnung wird im <strong>ARP-Cache</strong> gespeichert</li>
+            </ol>
+            
+            <p><strong>Frame-Aufbau:</strong> [Ziel-MAC: FF:FF:FF:FF:FF:FF (Broadcast)] [Sender-MAC] [Typ: ARP] [Daten: IP-Ziel/Sender]</p>
+            
+            <p>⚠️ ARP arbeitet nur mit IPv4 und Ethernet<br>
+            Bei IPv6: <strong>NDP</strong> (Neighbor Discovery Protocol)</p>
+            <p><strong>RARP</strong> (Reverse ARP): Findet IP zu MAC (veraltet, ersetzt durch DHCP)</p>
+        </div>
+
+        <h4>🏷️ VLAN (Virtual LAN):</h4>
+        <div class="example-box">
+            <p><strong>Definition:</strong> Logisch getrenntes Netzwerk innerhalb physischen Netzwerks</p>
+            <p><strong>Standard:</strong> IEEE 802.1Q (VLAN-Tagging)</p>
+            
+            <p><strong>Port-Typen:</strong></p>
+            <ul>
+                <li><strong>Access-Port:</strong> Gehört zu genau einem VLAN (für Endgeräte)</li>
+                <li><strong>Trunk-Port:</strong> Überträgt mehrere VLANs zwischen Switches/Routern (mit VLAN-Tag)</li>
+            </ul>
+            
+            <p><strong>Frame mit VLAN-Tag:</strong><br>
+            [Präambel] [SFD] [D-MAC] [S-MAC] [TPID] [TCI] [Daten] [FCS]</p>
+            
+            <p>⚠️ Kommunikation zwischen VLANs nur über Router oder Layer-3-Switch möglich!</p>
+        </div>
+
+        <h4>📜 Token Ring (Historisch):</h4>
+        <div class="example-box">
+            <p><strong>Standard:</strong> IEEE 802.5 (veraltet, bis ~2004)</p>
+            <p><strong>Funktionsweise:</strong></p>
+            <ul>
+                <li>Logische Ringstruktur (physisch oft Stern über MAU)</li>
+                <li>Token (digitaler Staffelstab) zirkuliert durch Ring</li>
+                <li>Nur Computer mit Token darf senden</li>
+                <li>Deterministischer Zugriff (keine Kollisionen!)</li>
+            </ul>
+            <p><strong>MAU</strong> (Multistation Access Unit) überbrückt Ausfälle</p>
+            <p>❌ <strong>Nachteil:</strong> Sobald Ring gestört wird, funktioniert nichts mehr</p>
+            <p>✓ Wurde durch <strong>Switched Ethernet</strong> abgelöst (günstiger, schneller)</p>
+        </div>
+
+        <h4>📊 Topologien (Layer 2):</h4>
+        <table style="width:100%; border-collapse: collapse; margin-top: 10px;">
+            <tr style="background: #f0f0f0;">
+                <th style="border:1px solid #ddd; padding:8px;">Technologie</th>
+                <th style="border:1px solid #ddd; padding:8px;">Physisch</th>
+                <th style="border:1px solid #ddd; padding:8px;">Logisch</th>
+            </tr>
+            <tr>
+                <td style="border:1px solid #ddd; padding:8px;">Ethernet</td>
+                <td style="border:1px solid #ddd; padding:8px;">Stern (früher Bus)</td>
+                <td style="border:1px solid #ddd; padding:8px;">Bus</td>
+            </tr>
+            <tr>
+                <td style="border:1px solid #ddd; padding:8px;">Token Ring</td>
+                <td style="border:1px solid #ddd; padding:8px;">Ring oder Stern (MAU)</td>
+                <td style="border:1px solid #ddd; padding:8px;">Ring</td>
+            </tr>
+            <tr>
+                <td style="border:1px solid #ddd; padding:8px;">Wi-Fi</td>
+                <td style="border:1px solid #ddd; padding:8px;">Stern (Central über AP)</td>
+                <td style="border:1px solid #ddd; padding:8px;">Bus</td>
+            </tr>
+        </table>
+
+        <h4>📡 Wichtige Standards:</h4>
+        <div class="protocols-grid">
+            <div class="protocol">IEEE 802.3<br>(Ethernet)</div>
+            <div class="protocol">IEEE 802.11<br>(WLAN)</div>
+            <div class="protocol">IEEE 802.1Q<br>(VLAN)</div>
+            <div class="protocol">IEEE 802.5<br>(Token Ring)</div>
+            <div class="protocol">PPP<br>(Point-to-Point)</div>
+            <div class="protocol">HDLC<br>(High-Level Data Link)</div>
+        </div>
+
+        <h4>📝 Wichtige Begriffe für's Abitur:</h4>
+        <div class="important-note">
+            <ul>
+                <li><strong>Frame:</strong> Dateneinheit auf Schicht 2</li>
+                <li><strong>Broadcast:</strong> An alle im Netz (MAC: FF:FF:FF:FF:FF:FF)</li>
+                <li><strong>Unicast:</strong> An genau einen Empfänger</li>
+                <li><strong>Kollisionsdomäne:</strong> Bereich, in dem Kollisionen auftreten können</li>
+                <li><strong>Broadcastdomäne:</strong> Bereich, den Broadcasts erreichen</li>
+                <li><strong>FCS:</strong> Frame Check Sequence für Fehlererkennung</li>
+                <li><strong>Framing:</strong> Daten in Frames verpacken</li>
+            </ul>
+        </div>
+
+        <div class="example-box">
+            <h4>💡 Praxis-Beispiel:</h4>
+            <p>Wenn du in deinem WLAN zu Hause eine Webseite aufrufst:</p>
+            <ol>
+                <li>Dein Laptop (Schicht 3) möchte mit Router kommunizieren</li>
+                <li><strong>ARP</strong> findet MAC-Adresse des Routers zur IP</li>
+                <li><strong>Schicht 2</strong> verpackt Daten in WLAN-Frame mit:
+                    <ul>
+                        <li>Deine MAC als Absender</li>
+                        <li>Router-MAC als Ziel</li>
+                    </ul>
+                </li>
+                <li><strong>CSMA/CA</strong> prüft, ob Medium frei ist</li>
+                <li>Frame wird per Funk gesendet</li>
+                <li>Router empfängt, prüft FCS, sendet ACK zurück</li>
+            </ol>
+        </div>
+
+        <div class="important-note">
+            <h4>⚠️ Prüfungsrelevant:</h4>
+            <ul>
+                <li>Unterschied LLC/MAC-Teilschicht</li>
+                <li>MAC-Adressaufbau und -Typen</li>
+                <li>Ethernet Frame-Struktur (min/max Länge!)</li>
+                <li>CSMA/CD vs. CSMA/CA (wann welches?)</li>
+                <li>Backoff-Algorithmus bei Kollisionen</li>
+                <li>Hub vs. Switch (Unterschiede!)</li>
+                <li>ARP-Funktionsweise (Request/Reply)</li>
+                <li>VLAN-Konzept (Access-/Trunk-Ports)</li>
+                <li>Manchester-Code Grundprinzip</li>
+            </ul>
+        </div>
+    </div>
+</div>
 <!-- Schicht 1: Physische Schicht -->
 <div class="layer layer-1" onclick="toggleDetails('layer1-details')">
     <div class="layer-number">1</div>
@@ -1554,6 +1801,7 @@
 </body>
 
 </html>
+
 
 
 
