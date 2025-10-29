@@ -1,0 +1,1222 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KI Lernzettel - Abitur Vorbereitung</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+    :root {
+        --primary-color: #2563eb;
+        --secondary-color: #1e40af;
+        --accent-color: #3b82f6;
+        --bg-color: #f8fafc;
+        --card-bg: #ffffff;
+        --text-primary: #1e293b;
+        --text-secondary: #475569;
+        --border-color: #e2e8f0;
+        --success-color: #10b981;
+        --warning-color: #f59e0b;
+        --danger-color: #ef4444;
+    }
+
+    body {
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        line-height: 1.7;
+        color: var(--text-primary);
+        background: var(--bg-color);
+        padding-top: 80px;
+    }
+
+    /* Header & Navigation */
+    header {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 1.5rem 0;
+        top: 0;
+        width: 100%;
+        z-index: 1000;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    header h1 {
+        text-align: center;
+        font-size: 2rem;
+        margin-bottom: 0.5rem;
+    }
+
+    nav {
+        background: var(--card-bg);
+        padding: 1rem 0;
+        position: sticky;
+        top: 0px;
+        z-index: 999;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    nav ul {
+        display: flex;
+        justify-content: center;
+        flex-wrap: wrap;
+        list-style: none;
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 0 2rem;
+    }
+
+    nav li {
+        margin: 0.5rem;
+    }
+
+    nav a {
+        color: var(--text-primary);
+        text-decoration: none;
+        padding: 0.5rem 1rem;
+        border-radius: 6px;
+        transition: all 0.3s ease;
+        font-weight: 500;
+    }
+
+    nav a:hover {
+        background: var(--primary-color);
+        color: white;
+    }
+
+    /* Container */
+    .container {
+        max-width: 1200px;
+        margin: 0 auto;
+        padding: 2rem;
+    }
+
+    /* Sections */
+    section {
+        background: var(--card-bg);
+        margin: 2rem 0;
+        padding: 2.5rem;
+        border-radius: 12px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+    }
+
+    section h2 {
+        color: var(--primary-color);
+        font-size: 2rem;
+        margin-bottom: 1.5rem;
+        padding-bottom: 0.75rem;
+        border-bottom: 3px solid var(--primary-color);
+    }
+
+    section h3 {
+        color: var(--secondary-color);
+        font-size: 1.5rem;
+        margin: 2rem 0 1rem;
+    }
+
+    section h4 {
+        color: var(--text-primary);
+        font-size: 1.2rem;
+        margin: 1.5rem 0 0.75rem;
+        font-weight: 600;
+    }
+
+    /* Cards */
+    .card {
+        background: var(--bg-color);
+        padding: 1.5rem;
+        margin: 1.5rem 0;
+        border-radius: 8px;
+        border-left: 4px solid var(--primary-color);
+    }
+
+    .card-success {
+        border-left-color: var(--success-color);
+    }
+
+    .card-warning {
+        border-left-color: var(--warning-color);
+    }
+
+    .card-danger {
+        border-left-color: var(--danger-color);
+    }
+
+    /* Formula Box */
+    .formula {
+        background: #f1f5f9;
+        padding: 1.5rem;
+        margin: 1rem 0;
+        border-radius: 8px;
+        font-family: 'Courier New', monospace;
+        font-size: 1.1rem;
+        overflow-x: auto;
+        border: 2px solid var(--border-color);
+    }
+
+    /* Code Block */
+    pre {
+        background: #1e293b;
+        color: #e2e8f0;
+        padding: 1.5rem;
+        border-radius: 8px;
+        overflow-x: auto;
+        margin: 1rem 0;
+        font-size: 0.9rem;
+        line-height: 1.6;
+    }
+
+    /* Lists */
+    ul, ol {
+        margin: 1rem 0 1rem 2rem;
+    }
+
+    li {
+        margin: 0.5rem 0;
+    }
+
+    /* Tables */
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin: 1.5rem 0;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+    }
+
+    th, td {
+        padding: 1rem;
+        text-align: left;
+        border: 1px solid var(--border-color);
+    }
+
+    th {
+        background: var(--primary-color);
+        color: white;
+        font-weight: 600;
+    }
+
+    tr:nth-child(even) {
+        background: var(--bg-color);
+    }
+
+    /* Highlight Box */
+    .highlight {
+        background: linear-gradient(135deg, #dbeafe, #bfdbfe);
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin: 1.5rem 0;
+        border-left: 4px solid var(--primary-color);
+    }
+
+    .highlight strong {
+        color: var(--primary-color);
+    }
+
+    /* Important Note */
+    .wichtig {
+        background: #fef3c7;
+        padding: 1rem 1.5rem;
+        border-radius: 8px;
+        margin: 1rem 0;
+        border-left: 4px solid var(--warning-color);
+    }
+
+    .wichtig::before {
+        content: "⚠️ Wichtig: ";
+        font-weight: bold;
+        color: var(--warning-color);
+    }
+
+    /* Example Box */
+    .beispiel {
+        background: #d1fae5;
+        padding: 1.5rem;
+        border-radius: 8px;
+        margin: 1.5rem 0;
+        border-left: 4px solid var(--success-color);
+    }
+
+    .beispiel h4 {
+        color: var(--success-color);
+        margin-top: 0;
+    }
+
+    /* Two Column Layout */
+    .two-column {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 2rem;
+        margin: 1.5rem 0;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+    /* Tabellen scrollbar machen */
+    table {
+        display: block;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        font-size: 0.85rem;
+    }
+    
+    th, td {
+        padding: 0.75rem 0.5rem;
+        min-width: 100px;
+    }
+    
+    /* Formeln anpassen */
+    .formula {
+        font-size: 0.85rem;
+        padding: 1rem;
+    }
+    
+    /* Pre/Code kleiner */
+    pre {
+        font-size: 0.75rem;
+        padding: 1rem;
+    }
+    
+    /* Breadcrumb anpassen */
+    .breadcrumb {
+        font-size: 0.85rem;
+        padding: 0.75rem;
+    }
+    
+    /* Cards mit weniger Padding */
+    .card, .card-success, .card-warning, .card-danger {
+        padding: 1rem;
+    }
+    
+    .beispiel, .wichtig, .highlight {
+        padding: 1rem;
+    }
+}
+
+    /* Print Styles */
+    @media print {
+        body {
+            padding-top: 0;
+        }
+
+        header, nav {
+            position: static;
+        }
+
+        section {
+            page-break-inside: avoid;
+        }
+    }
+
+    /* Smooth Scroll */
+    html {
+        scroll-behavior: smooth;
+    }
+
+    /* Strong emphasis */
+    strong {
+        color: var(--primary-color);
+        font-weight: 600;
+    }
+
+    p {
+        margin: 1rem 0;
+    }
+
+        /* Für sehr kleine Handys */
+@media (max-width: 400px) {
+    body {
+        padding-top: 50px;
+    }
+    
+    header h1 {
+        font-size: 1.25rem;
+    }
+    
+    header p {
+        font-size: 0.85rem;
+    }
+    
+    .container {
+        padding: 0.5rem;
+    }
+    
+    section {
+        padding: 1rem;
+        margin: 1rem 0;
+    }
+    
+    section h2 {
+        font-size: 1.3rem;
+    }
+    
+    section h3 {
+        font-size: 1.15rem;
+    }
+    
+    nav a {
+        padding: 0.4rem 0.8rem;
+        font-size: 0.85rem;
+    }
+}
+</style>
+</head>
+<body>
+    <header>
+        <h1>🤖 Künstliche Intelligenz - Abitur Lernzettel</h1>
+        <p style="text-align: center; opacity: 0.9;">Umfassende Vorbereitung für das Informatik-Abitur</p>
+    </header>
+<nav>
+    <ul>
+        <li><a href="#ueberblick">Überblick</a></li>
+        <li><a href="#knn">k-NN Verfahren</a></li>
+        <li><a href="#kmeans">K-Means</a></li>
+        <li><a href="#minmax">Min-Max</a></li>
+        <li><a href="#zusammenfassung">Zusammenfassung</a></li>
+    </ul>
+</nav>
+<div class="container">
+    <div class="breadcrumb">
+         🏠 <a href="index.html">Abitur 2026 Informatik TG</a> → 
+        <a >Überblick über Künstliche Intelligenz</a> 
+    </div>
+    <!-- Überblick Section -->
+    <section id="ueberblick">
+        <h2>Überblick über Künstliche Intelligenz</h2>
+        
+        <div class="highlight">
+            <strong>Künstliche Intelligenz (KI)</strong> bezeichnet Systeme, die menschenähnliche Intelligenzleistungen erbringen. Im Abitur werden verschiedene KI-Ansätze unterschieden: wissensbasierte Systeme und maschinelles Lernen. 
+        </div>
+
+        <h3>Definitionen und Grundkonzepte</h3>
+        <div class="two-column">
+            <div class="card">
+                <h4>Starke KI (Strong AI)</h4>
+                <p>Systeme mit echtem Bewusstsein und Verständnis, die menschliche Intelligenz vollständig nachbilden können.</p>
+            </div>
+            <div class="card">
+                <h4>Schwache KI (Weak AI)</h4>
+                <p>Systeme für spezifische Aufgaben ohne echtes Verständnis. Beispiele: Sprachassistenten, Bilderkennung, Empfehlungssysteme.</p>
+            </div>
+        </div>
+
+        <h3>Kategorien von KI-Ansätzen</h3>
+        
+        <h4>1. Wissensbasierte Ansätze</h4>
+        <div class="card card-success">
+            <p><strong>Definition:</strong> Systeme, bei denen Wissen explizit und nachvollziehbar gespeichert, erzeugt, genutzt oder abgefragt werden kann.</p>
+            
+            <p><strong>Komponenten:</strong></p>
+            <ul>
+                <li><strong>Suchalgorithmen</strong> (z.B. A*-Algorithmus) </li>
+                <li><strong>Expertensysteme</strong> mit von Experten bereitgestellten Regeln </li>
+                <li><strong>Entscheidungsbaumlernen</strong> </li>
+            </ul>
+
+            <p><strong>Vorteile:</strong></p>
+            <ul>
+                <li>✅ Schlussfolgerungen sind nachvollziehbar (<em>Folgerichtigkeit</em>) </li>
+                <li>✅ Transparente Entscheidungsfindung</li>
+            </ul>
+
+            <p><strong>Nachteile:</strong></p>
+            <ul>
+                <li>❌ Nicht vollständig: Kann einfache Aufgaben wie Bild-Unterscheidung nicht lösen </li>
+                <li>❌ Wissen muss explizit formulierbar sein</li>
+            </ul>
+        </div>
+
+        <h4>2. Maschinelles Lernen</h4>
+        <div class="card card-success">
+            <p><strong>Definition:</strong> Ein System wird für seine Aufgabe "trainiert" anstatt explizit programmiert. </p>
+            
+            <p><strong>Ansätze:</strong></p>
+            <ul>
+                <li><strong>Überwachtes Lernen</strong> (Supervised Learning): Training mit gelabelten Daten</li>
+                <li><strong>Unüberwachtes Lernen</strong> (Unsupervised Learning): Muster in ungelabelten Daten finden</li>
+                <li><strong>Verstärkendes Lernen</strong> (Reinforcement Learning): Lernen durch Belohnung/Bestrafung</li>
+            </ul>
+        </div>
+
+        <h3>Turing-Test</h3>
+        <p>Der nach Alan Turing benannte Test stellt die Frage: <em>"Wie können wir feststellen, ob eine Maschine intelligent ist?"</em></p>
+        <p>Ein Mensch kommuniziert mit einer Maschine und einem anderen Menschen, ohne zu wissen, wer wer ist. Kann der Mensch nicht unterscheiden, welcher Gesprächspartner die Maschine ist, gilt der Test als bestanden.</p>
+
+        <h3>Wichtige Begriffe für das Abitur</h3>
+        <table>
+            <tr>
+                <th>Begriff</th>
+                <th>Erklärung</th>
+            </tr>
+            <tr>
+                <td><strong>Gelabelte Daten</strong></td>
+                <td>Daten, die bereits einer Klasse zugeordnet wurden </td>
+            </tr>
+            <tr>
+                <td><strong>Trainingsdaten</strong></td>
+                <td>Gelabelte Daten zum "Trainieren" des Algorithmus </td>
+            </tr>
+            <tr>
+                <td><strong>Testdaten</strong></td>
+                <td>Gelabelte Daten zur Evaluation der Algorithmusqualität </td>
+            </tr>
+            <tr>
+                <td><strong>Overfitting</strong></td>
+                <td>Überanpassung an Trainingsdaten, schlechte Generalisierung</td>
+            </tr>
+            <tr>
+                <td><strong>Underfitting</strong></td>
+                <td>Zu einfaches Modell, erfasst Muster nicht ausreichend</td>
+            </tr>
+        </table>
+    </section>
+
+    <!-- k-NN Section -->
+    <section id="knn">
+        <h2>k-Nächste-Nachbarn-Verfahren (k-NN)</h2>
+
+        <div class="highlight">
+            <strong>k-Nearest Neighbor (k-NN)</strong> ist ein instanzenbasiertes Klassifikationsverfahren. Die Klassifikation erfolgt durch Mehrheitsentscheidung der k ähnlichsten Trainingsbeispiele. 
+        </div>
+
+        <h3>Grundprinzip</h3>
+        <p>Bei der Klassifizierung neuer Datensätze werden die <strong>ähnlichsten Beispieldatensätze gesucht</strong> (die Nachbarn). Die Klasse, die bei diesen Nachbarn am häufigsten auftritt, wird der neuen Instanz zugeordnet.</p>
+
+        <div class="card">
+            <p><strong>Charakteristika:</strong></p>
+            <ul>
+                <li>🔹 <strong>Lazy Learning</strong>: Kein eigentliches Training, nur Abspeichern der Beispiele </li>
+                <li>🔹 <strong>Instanzenbasiert</strong>: Trainingsdaten selbst repräsentieren das Wissen </li>
+                <li>🔹 <strong>Nichtparametrisch</strong>: Keine Annahmen über Datenverteilung </li>
+                <li>🔹 Funktioniert für quantitative UND qualitative Merkmale </li>
+            </ul>
+        </div>
+
+        <h3>Algorithmus-Schritte</h3>
+        <div class="card card-success">
+            <ol>
+                <li><strong>Prüfung auf gleiche Dimension</strong> aller Punkte </li>
+                <li><strong>Sicherstellung eines gültigen k-Werts</strong> (k ≤ Anzahl Trainingspunkte) </li>
+                <li><strong>Berechnung der Distanzen</strong> zu allen Trainingspunkten </li>
+                <li><strong>Sortierung der Distanzen</strong> (aufsteigend)</li>
+                <li><strong>Auswahl der k kleinsten Distanzen</strong></li>
+                <li><strong>Mehrheitsentscheidung</strong>: Häufigste Klasse unter den k Nachbarn gewinnt </li>
+                <li><strong>Rückgabe</strong> der vorhergesagten Klasse</li>
+            </ol>
+        </div>
+
+        <h3>Distanzmaße</h3>
+        
+        <h4>1. Euklidische Distanz (am häufigsten verwendet)</h4>
+        <div class="formula">
+dist<sub>E</sub>(v,w) = √(Σ(v<sub>i</sub> - w<sub>i</sub>)²)
+</div>
+<p>Die Summe der quadrierten Differenzen aller Attributwerte. Entspricht der "Luftlinie" zwischen zwei Punkten. ibm</p>
+        <h4>2. Manhattan-Distanz</h4>
+        <div class="formula">
+dist<sub>M</sub>(v,w) = Σ|v<sub>i</sub> - w<sub>i</sub>|
+</div>
+<p>Die Summe der absoluten Differenzen. Entspricht dem Weg entlang von Straßen in einer Stadt. ibm</p>
+        <h4>3. Hamming-Distanz (für kategorische Daten)</h4>
+        <div class="formula">
+dist<sub>H</sub>(v,w) = count(v<sub>i</sub> ≠ w<sub>i</sub>)
+</div>
+<p>Anzahl der Attributwerte, bei denen v und w unterschiedlich sind. Gitlab</p>
+        <h3>Normalisierung</h3>
+        <div class="wichtig">
+            Bei stark unterschiedlichen Wertebereichen ist eine <strong>Normalisierung erforderlich</strong>, um Ungleichgewichtung zu vermeiden!
+        </div>
+
+        <div class="formula">
+x<sub>normalisiert</sub> = (x - x<sub>min</sub>) / (x<sub>max</sub> - x<sub>min</sub>)
+</div>
+        <div class="beispiel">
+            <h4>Beispiel: Warum Normalisierung wichtig ist</h4>
+            <p>Gegeben: Datensatz mit Attributen Alter (20-60) und Eigenheim (0-1)</p>
+            <p>Ohne Normalisierung: Das Alter dominiert die Distanzberechnung komplett!</p>
+            <ul>
+                <li>Distanz im Alter zwischen 26 und 59: 33</li>
+                <li>Distanz beim Eigenheim: maximal 1</li>
+            </ul>
+            <p><strong>Lösung:</strong> Normalisierung aller Attribute ins Intervall [0,1]</p>
+        </div>
+
+        <h3>Wahl von k</h3>
+        <table>
+            <tr>
+                <th>k-Wert</th>
+                <th>Eigenschaften</th>
+                <th>Probleme</th>
+            </tr>
+            <tr>
+                <td><strong>k = 1</strong></td>
+                <td>Nur der nächste Nachbar zählt </td>
+                <td>❌ Sehr sensitiv gegenüber Ausreißern und Rauschen<br>❌ Gefahr von Overfitting</td>
+            </tr>
+            <tr>
+                <td><strong>k klein (2-5)</strong></td>
+                <td>Wenige Nachbarn beeinflussen Entscheidung</td>
+                <td>⚠️ Noch anfällig für Rauschen</td>
+            </tr>
+            <tr>
+                <td><strong>k optimal (√n)</strong></td>
+                <td>Faustregel: k = √(Anzahl Trainingsdaten)</td>
+                <td>✅ Guter Kompromiss</td>
+            </tr>
+            <tr>
+                <td><strong>k groß</strong></td>
+                <td>Viele Nachbarn beeinflussen</td>
+                <td>❌ Punkte mit großem Abstand beeinflussen Entscheidung<br>❌ Wird langsam<br>❌ Gefahr von Underfitting </td>
+            </tr>
+        </table>
+
+        <div class="wichtig">
+            Bei zwei Klassen: <strong>k ungerade wählen</strong>, um Unentschieden zu vermeiden! 
+        </div>
+
+        <h3>Vorteile und Nachteile</h3>
+        <div class="two-column">
+            <div class="card card-success">
+                <h4>Vorteile ✅</h4>
+                <ul>
+                    <li>Sehr einfach zu verstehen und implementieren </li>
+                    <li>Keine Trainingsphase erforderlich</li>
+                    <li>Funktioniert für quantitative und qualitative Merkmale </li>
+                    <li>Liefert oft gute Ergebnisse </li>
+                    <li>Flexibel einsetzbar</li>
+                </ul>
+            </div>
+            <div class="card card-danger">
+                <h4>Nachteile ❌</h4>
+                <ul>
+                    <li>Aufwändige Klassifikationsphase </li>
+                    <li>Hoher Speicher- und Rechenaufwand bei vielen Trainingsdaten </li>
+                    <li>"Curse of Dimensionality" bei hochdimensionalen Räumen</li>
+                    <li>Liefert kein explizites Wissen über Klassen </li>
+                    <li>Sensitiv gegenüber Ausreißern</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>Beispielaufgabe</h3>
+        <div class="beispiel">
+            <h4>Klassifikation durchführen</h4>
+            <p><strong>Gegeben:</strong> 8 Trainingspunkte mit Attributen Alter, Familienstand, Ausbildung, Eigenheim und Einkommensniveau (hoch/niedrig). </p>
+            <p><strong>Aufgabe:</strong> Klassifiziere einen 26-jährigen, verheirateten Akademiker ohne Eigenheim mit k=2. </p>
+            
+            <p><strong>Lösungsschritte:</strong></p>
+            <ol>
+                <li>Normalisiere das Attribut Alter: Alter<sub>norm</sub> = (26 - 20) / (60 - 20) = 0.15</li>
+                <li>Berechne Distanzen zu allen 8 Trainingspunkten (mit normalisierten Werten)</li>
+                <li>Sortiere Distanzen aufsteigend</li>
+                <li>Wähle die 2 Datensätze mit kleinster Distanz</li>
+                <li>Zähle Klassen: z.B. 2x "hoch" → Vorhersage: "hohes Einkommen"</li>
+            </ol>
+        </div>
+
+        <h3>Prüfungsrelevante Begriffe</h3>
+        <ul>
+            <li><strong>Instanzenbasiertes Lernen</strong> (instance-based learning)</li>
+            <li><strong>Lazy Learning</strong> (träges Lernen)</li>
+            <li><strong>Merkmalsvektor</strong> (feature vector)</li>
+            <li><strong>Mehrheitsentscheidung</strong> (majority vote)</li>
+            <li><strong>Abstandsmaße</strong> (distance metrics)</li>
+            <li><strong>Normalisierung</strong> (normalization)</li>
+        </ul>
+    </section>
+
+    <!-- K-Means Section -->
+    <section id="kmeans">
+        <h2>K-Means Clusteranalyse</h2>
+
+        <div class="highlight">
+            <strong>K-Means</strong> ist ein unüberwachtes Lernverfahren zur Clusteranalyse. Es teilt Daten in k Cluster ein, sodass Punkte innerhalb eines Clusters möglichst ähnlich und Cluster untereinander möglichst verschieden sind. 
+        </div>
+
+        <h3>Grundkonzept</h3>
+        <p>K-Means ist ein <strong>unüberwachtes Lernverfahren</strong> – die Trainingsdaten haben keine vordefinierten Labels. Das Ziel ist es, k Clusterzentren (Zentroide) zu finden, um die Daten optimal in k Cluster aufzuteilen.</p>
+
+        <div class="card">
+            <p><strong>Charakteristika:</strong></p>
+            <ul>
+                <li>🔹 <strong>Unüberwachtes Lernen</strong>: Keine vordefinierten Klassen </li>
+                <li>🔹 Jeder Datenpunkt gehört zu genau einem Cluster </li>
+                <li>🔹 Cluster werden durch <strong>Zentroide</strong> (Schwerpunkte) repräsentiert</li>
+                <li>🔹 Iterativer Optimierungsprozess</li>
+            </ul>
+        </div>
+
+        <h3>Algorithmus-Schritte</h3>
+        <div class="card card-success">
+            <h4>Schritt 1: Initialisierung</h4>
+            <ul>
+                <li>Wähle die Anzahl der Cluster <strong>k</strong> </li>
+                <li>Platziere k Zentroide zufällig im Datenraum (oder verwende k-means++ Methode) </li>
+            </ul>
+
+            <h4>Schritt 2: Zuordnung (Assignment)</h4>
+            <ul>
+                <li>Für jeden Datenpunkt: Berechne Distanz zu allen k Zentroiden </li>
+                <li>Ordne Punkt dem nächstgelegenen Zentroid zu </li>
+                <li>Gib dem Punkt das Label des Zentroids </li>
+            </ul>
+
+            <h4>Schritt 3: Update (Neuberechnung)</h4>
+            <ul>
+                <li>Für jeden Cluster: Berechne neuen Zentroid als Schwerpunkt aller Punkte im Cluster</li>
+                <li>Neuer Zentroid = Mittelwert aller Punktkoordinaten im Cluster</li>
+            </ul>
+
+            <h4>Schritt 4: Konvergenzprüfung</h4>
+            <ul>
+                <li>Haben sich die Zentroide (signifikant) bewegt?</li>
+                <li><strong>NEIN</strong> → STOP, Algorithmus konvergiert</li>
+                <li><strong>JA</strong> → Zurück zu Schritt 2</li>
+            </ul>
+        </div>
+
+        <h3>Formeln und Berechnungen</h3>
+
+        <h4>Zentroid-Berechnung</h4>
+        <div class="formula">
+Zentroid μ<sub>i</sub> = (1/n) × Σ(x<sub>j</sub>)
+wobei n = Anzahl Punkte im Cluster C<sub>i</sub>
+x<sub>j</sub> = einzelne Datenpunkte
+</div>
+        <div class="beispiel">
+            <h4>Beispiel: Zentroid berechnen</h4>
+            <p>Gegeben: 3 Punkte im Cluster: (2,3), (4,5), (6,7)</p>
+            <p><strong>Berechnung:</strong></p>
+            <ul>
+                <li>x-Koordinate: (2+4+6)/3 = 4</li>
+                <li>y-Koordinate: (3+5+7)/3 = 5</li>
+            </ul>
+            <p><strong>Neuer Zentroid: (4, 5)</strong></p>
+        </div>
+
+        <h4>Euklidische Distanz</h4>
+        <div class="formula">
+d(p,q) = √[(p₁-q₁)² + (p₂-q₂)² + ... + (pₙ-qₙ)²]
+= √[Σ(pᵢ - qᵢ)²]
+</div>
+        <h4>Zielfunktion (Within-Cluster Sum of Squares - WCSS)</h4>
+        <div class="formula">
+J = Σ(i=1 bis k) Σ(x<sub>j</sub> ∈ C<sub>i</sub>) ||x<sub>j</sub> - μ<sub>i</sub>||²
+Ziel: J minimieren (Summe der quadrierten Abstände innerhalb der Cluster)
+</div>
+        <h3>Konvergenzkriterien</h3>
+        <table>
+            <tr>
+                <th>Kriterium</th>
+                <th>Beschreibung</th>
+            </tr>
+            <tr>
+                <td><strong>Keine Neuzuordnung</strong></td>
+                <td>Cluster-Zuordnungen ändern sich nicht mehr (häufigstes Kriterium)</td>
+            </tr>
+            <tr>
+                <td><strong>Zentroid-Stabilität</strong></td>
+                <td>Zentroide bewegen sich nicht mehr (Änderung \u003c Schwellenwert ε)</td>
+            </tr>
+            <tr>
+                <td><strong>Maximale Iterationen</strong></td>
+                <td>Vordefinierte Anzahl Durchläufe erreicht (z.B. 10 Iterationen)</td>
+            </tr>
+            <tr>
+                <td><strong>Minimale Verbesserung</strong></td>
+                <td>Abnahme der Zielfunktion J unter Schwellenwert</td>
+            </tr>
+        </table>
+
+        <h3>Optimale Clusterzahl k bestimmen</h3>
+
+        <h4>Elbow-Methode</h4>
+        <div class="card">
+            <ol>
+                <li>Führe K-Means für verschiedene k-Werte aus (z.B. k=1 bis 10)</li>
+                <li>Berechne WCSS (Inertia) für jeden k-Wert</li>
+                <li>Plotte k gegen WCSS</li>
+                <li>Suche den "Ellbogen"-Punkt: Stelle, wo WCSS-Abnahme sich stark verlangsamt</li>
+                <li>Dieses k ist optimal</li>
+            </ol>
+        </div>
+
+        <h4>Silhouetten-Koeffizient</h4>
+        <div class="formula">
+Silhouette = (b - a) / max(a, b)
+a = durchschnittliche Distanz zu Punkten im eigenen Cluster
+b = durchschnittliche Distanz zum nächsten Cluster
+Wertebereich: -1 bis +1
++1: Punkt liegt gut im eigenen Cluster
+0: Punkt liegt an Clustergrenze
+-1: Punkt ist falsch zugeordnet
+</div>
+        <h3>Anwendungen</h3>
+        <ul>
+            <li><strong>Kundensegmentierung</strong>: Gruppierung von Kunden mit ähnlichem Kaufverhalten</li>
+            <li><strong>Bildkompression</strong>: Reduktion der Farbanzahl durch Clustering im RGB-Raum</li>
+            <li><strong>Dokumenten-Clustering</strong>: Gruppierung ähnlicher Dokumente oder Texte</li>
+            <li><strong>Anomalieerkennung</strong>: Identifikation von Ausreißern (Spam, Betrug)</li>
+            <li><strong>Marktforschung</strong>: Marktsegmentierung für gezielte Kampagnen</li>
+            <li><strong>Qualitätskontrolle</strong>: Produktklassifizierung nach Qualitätsstufen</li>
+        </ul>
+
+        <div class="beispiel">
+            <h4>Beispiel: Bildkompression</h4>
+            <p><strong>Originalbild:</strong> 16,7 Millionen Farben (RGB: 256³)</p>
+            <p><strong>Nach K-Means mit k=15:</strong> Nur noch 15 Farben</p>
+            <p><strong>Ergebnis:</strong> 60% Speicherreduktion, Kerninhalt bleibt erkennbar</p>
+            <p><strong>Methode:</strong> Jeder Pixel = Datenpunkt (R,G,B). K-Means findet 15 repräsentative Farben.</p>
+        </div>
+
+        <h3>Vorteile und Nachteile</h3>
+        <div class="two-column">
+            <div class="card card-success">
+                <h4>Vorteile ✅</h4>
+                <ul>
+                    <li>Sehr schnell und effizient</li>
+                    <li>Skalierbar für große Datenmengen</li>
+                    <li>Einfach zu verstehen und implementieren</li>
+                    <li>Funktioniert gut bei sphärischen Clustern</li>
+                    <li>Geringe Speicher- und Rechenanforderungen</li>
+                </ul>
+            </div>
+            <div class="card card-danger">
+                <h4>Nachteile ❌</h4>
+                <ul>
+                    <li>k muss vorher festgelegt werden</li>
+                    <li>Ergebnis hängt von Initialisierung ab</li>
+                    <li>Sensitiv gegenüber Ausreißern</li>
+                    <li>Funktioniert nur für sphärische Cluster</li>
+                    <li>Nur numerische Daten (kategorische müssen encodiert werden)</li>
+                    <li>Keine Garantie für globales Optimum</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>Wichtige Hinweise für die Prüfung</h3>
+        <div class="wichtig">
+            <strong>Datenaufbereitung ist essentiell:</strong>
+            <ul>
+                <li>Alle Features normalisieren/standardisieren</li>
+                <li>Ausreißer vorher entfernen</li>
+                <li>Kategorische Variablen müssen encodiert werden</li>
+                <li>Keine fehlenden Werte erlaubt</li>
+            </ul>
+        </div>
+
+        <div class="wichtig">
+            <strong>Initialisierung verbessern:</strong>
+            <ul>
+                <li>Verwende k-means++ statt zufälliger Initialisierung</li>
+                <li>Führe Algorithmus mehrmals aus (verschiedene Starts)</li>
+                <li>Wähle Ergebnis mit niedrigster Inertia</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- MinMax Section -->
+    <section id="minmax">
+        <h2>Min-Max-Algorithmus</h2>
+
+        <div class="highlight">
+            <strong>Minimax</strong> ist ein rekursiver Entscheidungsalgorithmus für 2-Personen-Nullsummenspiele. Er minimiert den maximalen Verlust und maximiert den minimalen Gewinn unter der Annahme optimalen Spiels beider Spieler.
+        </div>
+
+        <h3>Grundkonzept</h3>
+        <p>Der Minimax-Algorithmus wird in der Spieltheorie und bei Computerspielen eingesetzt. Er ist besonders relevant für:</p>
+        <ul>
+            <li>Rundenbasierte Spiele (Schach, Dame, Tic-Tac-Toe)</li>
+            <li>Spiele mit <strong>vollständiger Information</strong> (keine versteckten Karten)</li>
+            <li><strong>Nullsummenspiele</strong>: Gewinn des einen = Verlust des anderen</li>
+        </ul>
+
+        <h3>Die zwei Spieler</h3>
+        <div class="two-column">
+            <div class="card card-success">
+                <h4>Maximierer (Max)</h4>
+                <ul>
+                    <li>Möchte den Score <strong>maximieren</strong></li>
+                    <li>Wählt Zug mit höchstem Nutzen</li>
+                    <li>Repräsentiert die KI oder den Spieler</li>
+                    <li>Nimmt an, Gegner spielt optimal</li>
+                </ul>
+            </div>
+            <div class="card card-danger">
+                <h4>Minimierer (Min)</h4>
+                <ul>
+                    <li>Möchte den Score des Maximierers <strong>minimieren</strong></li>
+                    <li>Wählt Zug mit niedrigstem Nutzen für Max</li>
+                    <li>Repräsentiert den Gegner</li>
+                    <li>Nimmt ebenfalls optimales Spiel an</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>Spielbaum-Struktur</h3>
+        <div class="card">
+            <p><strong>Komponenten eines Spielbaums:</strong></p>
+            <ul>
+                <li><strong>Wurzelknoten (Root)</strong>: Aktueller Spielzustand</li>
+                <li><strong>Innere Knoten</strong>: Zwischenzustände des Spiels</li>
+                <li><strong>Blattknoten (Terminal Nodes)</strong>: Endzustände (Gewinn/Verlust/Unentschieden)</li>
+                <li><strong>Kanten</strong>: Mögliche Züge/Aktionen</li>
+                <li><strong>Tiefe (Depth)</strong>: Anzahl Züge vorausschauend (gemessen in "Plies")</li>
+                <li><strong>Verzweigungsfaktor (Branching Factor)</strong>: Durchschnittliche Anzahl legaler Züge</li>
+            </ul>
+        </div>
+
+        <h3>Algorithmus-Schritte</h3>
+        <div class="card card-success">
+            <h4>Schritt 1: Spielbaum generieren</h4>
+            <p>Erstelle Baumstruktur aller möglichen Züge vom aktuellen Spielzustand aus.</p>
+
+            <h4>Schritt 2: Terminale Zustände bewerten</h4>
+            <p>Weise Nutzenwerte den Blattknoten zu:</p>
+            <ul>
+                <li>+1 (oder +∞): Maximierer gewinnt</li>
+                <li>0: Unentschieden</li>
+                <li>-1 (oder -∞): Minimierer gewinnt</li>
+            </ul>
+
+            <h4>Schritt 3: Werte nach oben propagieren (Backtracking)</h4>
+            <p>Für jeden inneren Knoten:</p>
+            <ul>
+                <li><strong>Max-Knoten</strong>: Wähle MAXIMUM der Kindknoten</li>
+                <li><strong>Min-Knoten</strong>: Wähle MINIMUM der Kindknoten</li>
+            </ul>
+
+            <h4>Schritt 4: Optimalen Zug wählen</h4>
+            <p>Am Wurzelknoten: Maximierer wählt den Zug mit dem höchsten Wert.</p>
+        </div>
+
+        <h3>Mathematische Formeln</h3>
+
+        <h4>Für Maximierer</h4>
+        <div class="formula">
+Max(s) = max[a ∈ A(s)] Min(Result(s, a))
+s = aktueller Zustand
+A(s) = Menge aller möglichen Aktionen
+Result(s, a) = Resultatszustand nach Aktion a
+</div>
+        <h4>Für Minimierer</h4>
+        <div class="formula">
+Min(s) = min[a ∈ A(s)] Max(Result(s, a))
+</div>
+        <h4>Nutzenfunktion für terminale Zustände</h4>
+        <div class="formula">
+Utility(s) = {
++1  wenn Maximierer gewinnt
+0  bei Unentschieden
+-1  wenn Minimierer gewinnt
+}
+</div>
+        <h3>Beispiel: Minimax-Baum evaluieren</h3>
+        <div class="beispiel">
+            <h4>Beispiel mit Terminalwerten [3, 5, 2, 9]</h4>
+            <pre>
+            Maximierer (Root)
+           /                \
+     Minimierer            Minimierer
+     /      \             /      \
+    3       5           2        9
+            </pre>
+
+            <p><strong>Evaluation:</strong></p>
+            <ol>
+                <li><strong>Minimierer LINKS:</strong> min(3, 5) = 3</li>
+                <li><strong>Minimierer RECHTS:</strong> min(2, 9) = 2</li>
+                <li><strong>Maximierer:</strong> max(3, 2) = 3</li>
+            </ol>
+            <p><strong>Optimaler Wert: 3 (Maximierer geht nach LINKS)</strong></p>
+            <p><em>Hinweis:</em> Obwohl der Wert 9 existiert, wird der Minimierer ihn nie wählen!</p>
+        </div>
+
+        <h3>Alpha-Beta-Pruning (Optimierung)</h3>
+        <p>Alpha-Beta-Pruning ist eine Optimierungstechnik, die Zweige abschneidet, die das Endergebnis nicht beeinflussen können.</p>
+
+        <h4>Parameter</h4>
+        <div class="two-column">
+            <div class="card">
+                <h4>Alpha (α)</h4>
+                <p>Bester Wert für den Maximierer bisher gefunden</p>
+                <p>Initialisierung: α = -∞</p>
+                <p>Wird beim Maximierer aktualisiert</p>
+            </div>
+            <div class="card">
+                <h4>Beta (β)</h4>
+                <p>Bester Wert für den Minimierer bisher gefunden</p>
+                <p>Initialisierung: β = +∞</p>
+                <p>Wird beim Minimierer aktualisiert</p>
+            </div>
+        </div>
+
+        <h4>Pruning-Bedingung</h4>
+        <div class="formula">
+Wenn α ≥ β, dann schneide verbleibende Zweige ab (Pruning)
+</div>
+        <h4>Funktionsweise</h4>
+        <div class="card card-warning">
+            <p><strong>Bei Maximierer-Knoten:</strong></p>
+            <ul>
+                <li>Aktualisiere α mit bestem gefundenen Wert</li>
+                <li>Wenn α ≥ β: <strong>PRUNE</strong> (Minimierer wird diesen Pfad nie wählen)</li>
+            </ul>
+
+            <p><strong>Bei Minimierer-Knoten:</strong></p>
+            <ul>
+                <li>Aktualisiere β mit bestem gefundenen Wert</li>
+                <li>Wenn β ≤ α: <strong>PRUNE</strong> (Maximierer wird diesen Pfad nie zulassen)</li>
+            </ul>
+        </div>
+
+        <h4>Vorteile von Alpha-Beta-Pruning</h4>
+        <ul>
+            <li>✅ <strong>Effizienz:</strong> Reduziert Anzahl zu evaluierender Knoten erheblich</li>
+            <li>✅ Ermöglicht tiefere Suche mit gleichen Ressourcen</li>
+            <li>✅ <strong>Optimale Entscheidungen:</strong> Garantiert gleiches Ergebnis wie Minimax</li>
+            <li>✅ Kann Millionen Positionen einsparen</li>
+        </ul>
+
+        <h3>Pseudocode</h3>
+        <pre>
+function minimax(state, depth, maximizingPlayer):
+if depth = 0 or state is terminal:
+return utility(state)
+if maximizingPlayer:
+    maxEval = -∞
+    for action in actions(state):
+        eval = minimax(result(state, action), depth-1, False)
+        maxEval = max(maxEval, eval)
+    return maxEval
+else:
+    minEval = +∞
+    for action in actions(state):
+        eval = minimax(result(state, action), depth-1, True)
+        minEval = min(minEval, eval)
+    return minEval
+        </pre>
+
+        <h3>Komplexität</h3>
+        <table>
+            <tr>
+                <th>Variante</th>
+                <th>Zeitkomplexität</th>
+                <th>Beschreibung</th>
+            </tr>
+            <tr>
+                <td><strong>Minimax ohne Pruning</strong></td>
+                <td>O(b<sup>d</sup>)</td>
+                <td>b = Verzweigungsfaktor, d = Tiefe</td>
+            </tr>
+            <tr>
+                <td><strong>Alpha-Beta (optimal)</strong></td>
+                <td>O(b<sup>d/2</sup>)</td>
+                <td>Verdoppelt effektiv die Suchtiefe</td>
+            </tr>
+            <tr>
+                <td><strong>Raumkomplexität</strong></td>
+                <td>O(bd)</td>
+                <td>Analog zu Tiefensuche (DFS)</td>
+            </tr>
+        </table>
+
+        <h3>Anwendungen</h3>
+        <ul>
+            <li><strong>Schach:</strong> IBM Deep Blue besiegte 1997 Weltmeister Garry Kasparov</li>
+            <li><strong>Dame (Checkers):</strong> Chinook gewann 1994 Weltmeisterschaft</li>
+            <li><strong>Tic-Tac-Toe:</strong> Perfektes Spiel führt immer zu Unentschieden</li>
+            <li><strong>Othello/Reversi:</strong> Effektiv mit Evaluationsfunktionen</li>
+            <li><strong>AlphaZero (DeepMind):</strong> Kombination von Minimax mit Deep Learning</li>
+        </ul>
+
+        <h3>Vorteile und Nachteile</h3>
+        <div class="two-column">
+            <div class="card card-success">
+                <h4>Vorteile ✅</h4>
+                <ul>
+                    <li>Garantiert optimale Entscheidung</li>
+                    <li>Einfach zu verstehen</li>
+                    <li>Deterministisch</li>
+                    <li>Vollständig (findet Lösung wenn vorhanden)</li>
+                    <li>Gut für Spiele mit perfekter Information</li>
+                </ul>
+            </div>
+            <div class="card card-danger">
+                <h4>Nachteile ❌</h4>
+                <ul>
+                    <li><strong>Exponenzielle Komplexität O(b<sup>d</sup>)</strong></li>
+                    <li>Unpraktisch für Spiele mit tiefem/komplexem Baum</li>
+                    <li>Tiefenbegrenzung notwendig → suboptimale Entscheidungen</li>
+                    <li>Nimmt deterministische Ergebnisse an</li>
+                    <li>Effektivität hängt von Zugreihenfolge ab (Alpha-Beta)</li>
+                    <li>Kein Lernen aus Erfahrung</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>Wichtig für die Prüfung</h3>
+        <div class="wichtig">
+            <ul>
+                <li>Minimax-Baum Schritt für Schritt evaluieren können</li>
+                <li>Verstehen, wann Alpha-Beta-Cutoffs auftreten</li>
+                <li>Unterschied zwischen Maximierer und Minimierer erklären können</li>
+                <li>Komplexitätsanalyse kennen (O(b<sup>d</sup>) vs. O(b<sup>d/2</sup>))</li>
+                <li>Annahme optimalen Spiels beider Spieler verstehen</li>
+                <li>Anwendungsbeispiele kennen (Deep Blue, Schach, Dame)</li>
+            </ul>
+        </div>
+    </section>
+
+    <!-- Zusammenfassung Section -->
+    <section id="zusammenfassung">
+        <h2>Zusammenfassung und Prüfungstipps</h2>
+
+        <h3>Vergleich der Algorithmen</h3>
+        <table>
+            <tr>
+                <th>Algorithmus</th>
+                <th>Typ</th>
+                <th>Lernart</th>
+                <th>Hauptanwendung</th>
+            </tr>
+            <tr>
+                <td><strong>k-NN</strong></td>
+                <td>Klassifikation</td>
+                <td>Überwacht (Supervised)</td>
+                <td>Vorhersage von Kategorien</td>
+            </tr>
+            <tr>
+                <td><strong>K-Means</strong></td>
+                <td>Clustering</td>
+                <td>Unüberwacht (Unsupervised)</td>
+                <td>Gruppierung ähnlicher Daten</td>
+            </tr>
+            <tr>
+                <td><strong>Min-Max</strong></td>
+                <td>Entscheidung</td>
+                <td>Spieltheorie</td>
+                <td>Optimale Spielzüge</td>
+            </tr>
+        </table>
+
+        <h3>Wichtigste Formeln</h3>
+        
+        <h4>k-NN: Euklidische Distanz</h4>
+        <div class="formula">
+d(p,q) = √[Σ(p<sub>i</sub> - q<sub>i</sub>)²]
+</div>
+        <h4>k-NN: Normalisierung</h4>
+        <div class="formula">
+x<sub>norm</sub> = (x - x<sub>min</sub>) / (x<sub>max</sub> - x<sub>min</sub>)
+</div>
+        <h4>K-Means: Zentroid</h4>
+        <div class="formula">
+μ<sub>i</sub> = (1/n) × Σ(x<sub>j</sub>)  für alle x<sub>j</sub> in Cluster C<sub>i</sub>
+</div>
+        <h4>Min-Max: Maximierer</h4>
+        <div class="formula">
+Max(s) = max[a ∈ A(s)] Min(Result(s, a))
+</div>
+        <h4>Alpha-Beta: Pruning-Bedingung</h4>
+        <div class="formula">
+Wenn α ≥ β, dann Pruning
+</div>
+        <h3>Prüfungstipps</h3>
+        
+        <div class="card card-success">
+            <h4>k-NN Prüfungstipps ✅</h4>
+            <ul>
+                <li>Immer normalisieren bei unterschiedlichen Wertebereichen</li>
+                <li>Ungerade k-Werte bei binärer Klassifikation wählen</li>
+                <li>Distanzberechnung sauber durchführen (alle Dimensionen)</li>
+                <li>Mehrheitsentscheidung korrekt zählen</li>
+                <li>Vor- und Nachteile im Kontext erklären können</li>
+            </ul>
+        </div>
+
+        <div class="card card-success">
+            <h4>K-Means Prüfungstipps ✅</h4>
+            <ul>
+                <li>Zentroid als Mittelwert aller Koordinaten berechnen</li>
+                <li>Iterativer Prozess: Assignment → Update → Check</li>
+                <li>Elbow-Methode zur k-Bestimmung verstehen</li>
+                <li>Problem der Initialisierung kennen (k-means++)</li>
+                <li>Anwendungen in eigenen Worten erklären können</li>
+            </ul>
+        </div>
+
+        <div class="card card-success">
+            <h4>Min-Max Prüfungstipps ✅</h4>
+            <ul>
+                <li>Spielbaum von unten nach oben evaluieren</li>
+                <li>Max wählt Maximum, Min wählt Minimum</li>
+                <li>Alpha-Beta-Cutoffs erkennen und begründen können</li>
+                <li>Komplexität O(b<sup>d</sup>) kennen</li>
+                <li>Annahme optimalen Spiels verstehen</li>
+            </ul>
+        </div>
+
+        <h3>Typische Prüfungsaufgaben</h3>
+
+        <div class="beispiel">
+            <h4>Aufgabe 1: k-NN Klassifikation</h4>
+            <p><strong>Gegeben:</strong> Trainingsdaten mit Attributen und Klassen, neuer zu klassifizierender Punkt, k=3</p>
+            <p><strong>Gefordert:</strong></p>
+            <ol>
+                <li>Normalisiere die Daten</li>
+                <li>Berechne alle Distanzen</li>
+                <li>Bestimme die 3 nächsten Nachbarn</li>
+                <li>Klassifiziere durch Mehrheitsentscheidung</li>
+            </ol>
+        </div>
+
+        <div class="beispiel">
+            <h4>Aufgabe 2: K-Means Durchführung</h4>
+            <p><strong>Gegeben:</strong> Datenpunkte und k=2 initiale Zentroide</p>
+            <p><strong>Gefordert:</strong></p>
+            <ol>
+                <li>Ordne jeden Punkt dem nächsten Zentroid zu</li>
+                <li>Berechne neue Zentroide</li>
+                <li>Führe Iteration durch bis Konvergenz</li>
+                <li>Erkläre, warum Algorithmus konvergiert ist</li>
+            </ol>
+        </div>
+
+        <div class="beispiel">
+            <h4>Aufgabe 3: Min-Max Evaluation</h4>
+            <p><strong>Gegeben:</strong> Spielbaum mit Terminalwerten</p>
+            <p><strong>Gefordert:</strong></p>
+            <ol>
+                <li>Evaluiere Baum mit Minimax-Algorithmus</li>
+                <li>Bestimme optimalen Zug für Maximierer</li>
+                <li>Markiere, wo Alpha-Beta-Cutoffs auftreten würden</li>
+                <li>Berechne eingesparte Knoten durch Pruning</li>
+            </ol>
+        </div>
+
+        <h3>Abschlusswörter</h3>
+        <div class="highlight">
+            <p><strong>Dieser Lernzettel deckt alle relevanten KI-Themen für das Informatik-Abitur ab.</strong></p>
+            <p>Wichtige Erfolgsfaktoren:</p>
+            <ul>
+                <li>✅ Verstehe die <strong>Grundprinzipien</strong> jedes Algorithmus</li>
+                <li>✅ Übe die <strong>Berechnungen</strong> an Beispielen</li>
+                <li>✅ Kenne <strong>Vor- und Nachteile</strong> jedes Verfahrens</li>
+                <li>✅ Erkenne <strong>Anwendungsfälle</strong> und wähle passenden Algorithmus</li>
+                <li>✅ Beherrsche die <strong>Formeln</strong> auswendig</li>
+            </ul>
+            <p style="text-align: center; margin-top: 1.5rem; font-size: 1.2rem;">
+                <strong>Viel Erfolg bei deiner Abiturprüfung! 🎓</strong>
+            </p>
+        </div>
+    </section>
+</div>
+
+<footer style="background: var(--text-primary); color: white; padding: 2rem; text-align: center; margin-top: 3rem;">
+    <p>KI Lernzettel - Abitur Vorbereitung 2025</p>
+    <p style="opacity: 0.8; margin-top: 0.5rem;">Basierend auf Musterprüfungsaufgaben und mezmedia.de Ressourcen</p>
+</footer>
+</body>
+</html>
