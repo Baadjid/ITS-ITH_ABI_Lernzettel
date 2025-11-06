@@ -373,6 +373,8 @@
         <li><a href="#knn">k-NN Verfahren</a></li>
         <li><a href="#kmeans">K-Means</a></li>
         <li><a href="#minmax">Min-Max</a></li>
+        <li><a href="#implementierungen">Code-Beispiele</a></li>
+        <li><a href="#pruefungstipps-code">Prüfungstipps</a></li>
         <li><a href="#zusammenfassung">Zusammenfassung</a></li>
     </ul>
 </nav>
@@ -1073,6 +1075,1199 @@ else:
         </div>
     </section>
 
+    <!-- Code-Implementierungen Section (füge dies nach der Zusammenfassung ein) -->
+<section id="implementierungen">
+    <h2>🔧 Code-Implementierungen</h2>
+    
+    <div class="highlight">
+        <strong>Wichtig für die Klassenarbeit:</strong> Diese Implementierungen zeigen, dass du die Algorithmen nicht nur verstehst, sondern auch programmieren kannst. Achte auf die Struktur und Kommentare!
+    </div>
+
+    <!-- k-NN Implementierung -->
+    <h3>k-NN Implementierung</h3>
+    
+    <h4>Pseudocode k-NN</h4>
+    <pre>
+ALGORITHMUS k-NearestNeighbor(trainingData, testPoint, k)
+    // Eingabe: trainingData = Liste von gelabelten Punkten
+    //          testPoint = zu klassifizierender Punkt
+    //          k = Anzahl Nachbarn
+    // Ausgabe: vorhergesagte Klasse
+    
+    distances = []
+    
+    FÜR JEDEN point IN trainingData:
+        distance = calculateEuclideanDistance(testPoint, point)
+        distances.add({distance, point.label})
+    ENDE FÜR
+    
+    // Sortiere nach Distanz aufsteigend
+    distances.sortByDistance()
+    
+    // Wähle k nächste Nachbarn
+    kNeighbors = distances.take(k)
+    
+    // Zähle Klassenhäufigkeiten
+    classCount = {}
+    FÜR JEDEN neighbor IN kNeighbors:
+        classCount[neighbor.label]++
+    ENDE FÜR
+    
+    // Gib häufigste Klasse zurück
+    RETURN classCount.getMostFrequent()
+ENDE ALGORITHMUS
+
+FUNKTION calculateEuclideanDistance(point1, point2)
+    sum = 0
+    FÜR i = 0 BIS point1.dimensions:
+        sum += (point1[i] - point2[i])²
+    ENDE FÜR
+    RETURN sqrt(sum)
+ENDE FUNKTION
+    </pre>
+
+    <h4>Java-Implementierung k-NN</h4>
+    <pre>
+import java.util.*;
+
+public class KNearestNeighbor {
+    // Klasse für Datenpunkte
+    class DataPoint {
+        double[] features;  // Merkmale des Punkts
+        String label;       // Klassenlabel
+        
+        public DataPoint(double[] features, String label) {
+            this.features = features;
+            this.label = label;
+        }
+    }
+    
+    // Klasse für Distanz-Label Paare
+    class DistanceLabelPair implements Comparable<DistanceLabelPair> {
+        double distance;
+        String label;
+        
+        public DistanceLabelPair(double distance, String label) {
+            this.distance = distance;
+            this.label = label;
+        }
+        
+        @Override
+        public int compareTo(DistanceLabelPair other) {
+            return Double.compare(this.distance, other.distance);
+        }
+    }
+    
+    private List<DataPoint> trainingData;
+    
+    public KNearestNeighbor(List<DataPoint> trainingData) {
+        this.trainingData = trainingData;
+    }
+    
+    // Hauptmethode: Klassifiziert einen neuen Punkt
+    public String classify(double[] testPoint, int k) {
+        // Validierung
+        if (k > trainingData.size()) {
+            throw new IllegalArgumentException("k darf nicht größer als Trainingsdaten sein");
+        }
+        
+        // Berechne Distanzen zu allen Trainingspunkten
+        List<DistanceLabelPair> distances = new ArrayList<>();
+        
+        for (DataPoint trainPoint : trainingData) {
+            double distance = euclideanDistance(testPoint, trainPoint.features);
+            distances.add(new DistanceLabelPair(distance, trainPoint.label));
+        }
+        
+        // Sortiere nach Distanz
+        Collections.sort(distances);
+        
+        // Wähle k nächste Nachbarn
+        Map<String, Integer> classVotes = new HashMap<>();
+        for (int i = 0; i < k; i++) {
+            String label = distances.get(i).label;
+            classVotes.put(label, classVotes.getOrDefault(label, 0) + 1);
+        }
+        
+        // Finde Klasse mit meisten Stimmen
+        String prediction = "";
+        int maxVotes = 0;
+        for (Map.Entry<String, Integer> entry : classVotes.entrySet()) {
+            if (entry.getValue() > maxVotes) {
+                maxVotes = entry.getValue();
+                prediction = entry.getKey();
+            }
+        }
+        
+        return prediction;
+    }
+    
+    // Berechnet euklidische Distanz
+    private double euclideanDistance(double[] point1, double[] point2) {
+        if (point1.length != point2.length) {
+            throw new IllegalArgumentException("Punkte müssen gleiche Dimension haben");
+        }
+        
+        double sum = 0.0;
+        for (int i = 0; i < point1.length; i++) {
+            sum += Math.pow(point1[i] - point2[i], 2);
+        }
+        return Math.sqrt(sum);
+    }
+    
+    // Normalisierung der Daten (Min-Max Normalisierung)
+    public static double[][] normalize(double[][] data) {
+        int rows = data.length;
+        int cols = data[0].length;
+        double[][] normalized = new double[rows][cols];
+        
+        // Finde Min und Max für jede Spalte
+        for (int j = 0; j < cols; j++) {
+            double min = Double.MAX_VALUE;
+            double max = Double.MIN_VALUE;
+            
+            for (int i = 0; i < rows; i++) {
+                min = Math.min(min, data[i][j]);
+                max = Math.max(max, data[i][j]);
+            }
+            
+            // Normalisiere Spalte
+            for (int i = 0; i < rows; i++) {
+                if (max - min != 0) {
+                    normalized[i][j] = (data[i][j] - min) / (max - min);
+                } else {
+                    normalized[i][j] = 0; // Falls alle Werte gleich
+                }
+            }
+        }
+        
+        return normalized;
+    }
+    
+    // Beispiel-Hauptmethode
+    public static void main(String[] args) {
+        KNearestNeighbor knn = new KNearestNeighbor(new ArrayList<>());
+        
+        // Erstelle Trainingsdaten
+        List<DataPoint> training = new ArrayList<>();
+        training.add(knn.new DataPoint(new double[]{2, 3}, "A"));
+        training.add(knn.new DataPoint(new double[]{5, 4}, "B"));
+        training.add(knn.new DataPoint(new double[]{9, 6}, "B"));
+        training.add(knn.new DataPoint(new double[]{4, 7}, "A"));
+        training.add(knn.new DataPoint(new double[]{8, 1}, "B"));
+        training.add(knn.new DataPoint(new double[]{7, 2}, "B"));
+        
+        knn = new KNearestNeighbor(training);
+        
+        // Klassifiziere neuen Punkt
+        double[] testPoint = {5, 5};
+        int k = 3;
+        
+        String prediction = knn.classify(testPoint, k);
+        System.out.println("Vorhersage für Punkt [5,5] mit k=3: " + prediction);
+    }
+}
+    </pre>
+
+    <!-- K-Means Implementierung -->
+    <h3>K-Means Implementierung</h3>
+    
+    <h4>Pseudocode K-Means</h4>
+    <pre>
+ALGORITHMUS KMeans(data, k, maxIterations)
+    // Eingabe: data = Liste von Datenpunkten
+    //          k = Anzahl Cluster
+    //          maxIterations = maximale Iterationen
+    // Ausgabe: Cluster-Zuordnungen und Zentroide
+    
+    // Schritt 1: Initialisiere k zufällige Zentroide
+    centroids = selectRandomCentroids(data, k)
+    
+    FÜR iteration = 1 BIS maxIterations:
+        // Schritt 2: Zuordnung (Assignment)
+        clusters = createEmptyClusters(k)
+        
+        FÜR JEDEN point IN data:
+            nearestCentroid = -1
+            minDistance = INFINITY
+            
+            FÜR i = 0 BIS k-1:
+                distance = calculateDistance(point, centroids[i])
+                WENN distance < minDistance:
+                    minDistance = distance
+                    nearestCentroid = i
+                ENDE WENN
+            ENDE FÜR
+            
+            clusters[nearestCentroid].add(point)
+        ENDE FÜR
+        
+        // Schritt 3: Update (Neuberechnung der Zentroide)
+        oldCentroids = centroids.copy()
+        
+        FÜR i = 0 BIS k-1:
+            WENN clusters[i] ist nicht leer:
+                centroids[i] = calculateMean(clusters[i])
+            ENDE WENN
+        ENDE FÜR
+        
+        // Schritt 4: Konvergenzprüfung
+        WENN centroids == oldCentroids:
+            BREAK  // Algorithmus konvergiert
+        ENDE WENN
+    ENDE FÜR
+    
+    RETURN clusters, centroids
+ENDE ALGORITHMUS
+
+FUNKTION calculateMean(points)
+    dimensions = points[0].length
+    mean = array[dimensions]
+    
+    FÜR JEDE dimension:
+        sum = 0
+        FÜR JEDEN point IN points:
+            sum += point[dimension]
+        ENDE FÜR
+        mean[dimension] = sum / points.size
+    ENDE FÜR
+    
+    RETURN mean
+ENDE FUNKTION
+    </pre>
+
+    <h4>Java-Implementierung K-Means</h4>
+    <pre>
+import java.util.*;
+import java.util.stream.*;
+
+public class KMeans {
+    private int k;                      // Anzahl Cluster
+    private int maxIterations;          // Max. Iterationen
+    private double[][] centroids;       // Cluster-Zentroide
+    private List<Integer> assignments;  // Cluster-Zuordnungen
+    
+    public KMeans(int k, int maxIterations) {
+        this.k = k;
+        this.maxIterations = maxIterations;
+    }
+    
+    // Hauptmethode: Führt K-Means aus
+    public void fit(double[][] data) {
+        int n = data.length;        // Anzahl Datenpunkte
+        int dimensions = data[0].length;  // Anzahl Dimensionen
+        
+        // Initialisiere zufällige Zentroide
+        centroids = initializeCentroids(data);
+        assignments = new ArrayList<>(Collections.nCopies(n, -1));
+        
+        // Iterativer K-Means Algorithmus
+        for (int iteration = 0; iteration < maxIterations; iteration++) {
+            boolean changed = false;
+            
+            // Schritt 1: Assignment - Ordne jeden Punkt dem nächsten Zentroid zu
+            for (int i = 0; i < n; i++) {
+                int nearestCluster = findNearestCentroid(data[i]);
+                
+                if (assignments.get(i) != nearestCluster) {
+                    assignments.set(i, nearestCluster);
+                    changed = true;
+                }
+            }
+            
+            // Schritt 2: Update - Berechne neue Zentroide
+            updateCentroids(data);
+            
+            // Konvergenz-Check
+            if (!changed) {
+                System.out.println("K-Means konvergiert nach " + (iteration + 1) + " Iterationen");
+                break;
+            }
+        }
+    }
+    
+    // Initialisiere k zufällige Zentroide aus den Datenpunkten
+    private double[][] initializeCentroids(double[][] data) {
+        double[][] centroids = new double[k][data[0].length];
+        Random random = new Random();
+        Set<Integer> usedIndices = new HashSet<>();
+        
+        for (int i = 0; i < k; i++) {
+            int index;
+            do {
+                index = random.nextInt(data.length);
+            } while (usedIndices.contains(index));
+            
+            usedIndices.add(index);
+            centroids[i] = Arrays.copyOf(data[index], data[index].length);
+        }
+        
+        return centroids;
+    }
+    
+    // K-Means++ Initialisierung (verbesserte Methode)
+    private double[][] initializeCentroidsPlusPlus(double[][] data) {
+        double[][] centroids = new double[k][data[0].length];
+        Random random = new Random();
+        
+        // Wähle ersten Zentroid zufällig
+        int firstIndex = random.nextInt(data.length);
+        centroids[0] = Arrays.copyOf(data[firstIndex], data[firstIndex].length);
+        
+        // Wähle weitere Zentroide basierend auf Distanz
+        for (int i = 1; i < k; i++) {
+            double[] distances = new double[data.length];
+            double sumDistances = 0;
+            
+            // Berechne Distanz zum nächsten Zentroid für jeden Punkt
+            for (int j = 0; j < data.length; j++) {
+                double minDist = Double.MAX_VALUE;
+                for (int c = 0; c < i; c++) {
+                    double dist = euclideanDistance(data[j], centroids[c]);
+                    minDist = Math.min(minDist, dist);
+                }
+                distances[j] = minDist * minDist;  // Quadrierte Distanz
+                sumDistances += distances[j];
+            }
+            
+            // Wähle neuen Zentroid mit Wahrscheinlichkeit proportional zur Distanz
+            double rand = random.nextDouble() * sumDistances;
+            double cumSum = 0;
+            for (int j = 0; j < data.length; j++) {
+                cumSum += distances[j];
+                if (cumSum >= rand) {
+                    centroids[i] = Arrays.copyOf(data[j], data[j].length);
+                    break;
+                }
+            }
+        }
+        
+        return centroids;
+    }
+    
+    // Findet nächsten Zentroid für einen Punkt
+    private int findNearestCentroid(double[] point) {
+        int nearest = 0;
+        double minDistance = Double.MAX_VALUE;
+        
+        for (int i = 0; i < k; i++) {
+            double distance = euclideanDistance(point, centroids[i]);
+            if (distance < minDistance) {
+                minDistance = distance;
+                nearest = i;
+            }
+        }
+        
+        return nearest;
+    }
+    
+    // Aktualisiert Zentroide basierend auf zugeordneten Punkten
+    private void updateCentroids(double[][] data) {
+        int dimensions = data[0].length;
+        
+        // Initialisiere neue Zentroide
+        double[][] newCentroids = new double[k][dimensions];
+        int[] clusterSizes = new int[k];
+        
+        // Summiere alle Punkte pro Cluster
+        for (int i = 0; i < data.length; i++) {
+            int cluster = assignments.get(i);
+            clusterSizes[cluster]++;
+            
+            for (int d = 0; d < dimensions; d++) {
+                newCentroids[cluster][d] += data[i][d];
+            }
+        }
+        
+        // Berechne Mittelwert (neue Zentroide)
+        for (int i = 0; i < k; i++) {
+            if (clusterSizes[i] > 0) {
+                for (int d = 0; d < dimensions; d++) {
+                    newCentroids[i][d] /= clusterSizes[i];
+                }
+                centroids[i] = newCentroids[i];
+            }
+            // Falls Cluster leer: behalte alten Zentroid
+        }
+    }
+    
+    // Berechnet euklidische Distanz
+    private double euclideanDistance(double[] point1, double[] point2) {
+        double sum = 0;
+        for (int i = 0; i < point1.length; i++) {
+            sum += Math.pow(point1[i] - point2[i], 2);
+        }
+        return Math.sqrt(sum);
+    }
+    
+    // Berechnet Within-Cluster Sum of Squares (WCSS)
+    public double calculateWCSS(double[][] data) {
+        double wcss = 0;
+        
+        for (int i = 0; i < data.length; i++) {
+            int cluster = assignments.get(i);
+            wcss += Math.pow(euclideanDistance(data[i], centroids[cluster]), 2);
+        }
+        
+        return wcss;
+    }
+    
+    // Elbow-Methode zur optimalen k-Bestimmung
+    public static void elbowMethod(double[][] data, int maxK) {
+        System.out.println("Elbow-Methode für k=1 bis k=" + maxK);
+        System.out.println("k\tWCSS");
+        
+        for (int k = 1; k <= maxK; k++) {
+            KMeans kmeans = new KMeans(k, 100);
+            kmeans.fit(data);
+            double wcss = kmeans.calculateWCSS(data);
+            System.out.println(k + "\t" + String.format("%.2f", wcss));
+        }
+    }
+    
+    // Getter-Methoden
+    public double[][] getCentroids() {
+        return centroids;
+    }
+    
+    public List<Integer> getAssignments() {
+        return assignments;
+    }
+    
+    // Beispiel-Hauptmethode
+    public static void main(String[] args) {
+        // Erstelle Beispieldaten
+        double[][] data = {
+            {2, 3},
+            {2, 4},
+            {3, 3},
+            {8, 7},
+            {8, 8},
+            {9, 7},
+            {25, 80},
+            {26, 81},
+            {24, 79}
+        };
+        
+        // Führe K-Means mit k=3 aus
+        KMeans kmeans = new KMeans(3, 100);
+        kmeans.fit(data);
+        
+        // Zeige Ergebnisse
+        System.out.println("\nCluster-Zuordnungen:");
+        for (int i = 0; i < data.length; i++) {
+            System.out.println("Punkt " + Arrays.toString(data[i]) + 
+                             " -> Cluster " + kmeans.getAssignments().get(i));
+        }
+        
+        System.out.println("\nFinal Zentroide:");
+        for (int i = 0; i < kmeans.k; i++) {
+            System.out.println("Cluster " + i + ": " + 
+                             Arrays.toString(kmeans.getCentroids()[i]));
+        }
+        
+        // Teste Elbow-Methode
+        System.out.println("\n");
+        elbowMethod(data, 5);
+    }
+}
+    </pre>
+
+    <!-- MinMax Implementierung -->
+    <h3>Min-Max Implementierung</h3>
+    
+    <h4>Pseudocode Min-Max mit Alpha-Beta-Pruning</h4>
+    <pre>
+FUNKTION minimax(node, depth, isMaximizingPlayer, alpha, beta)
+    // Basisfall: Blattknoten oder maximale Tiefe
+    WENN depth = 0 ODER node ist Terminalknoten:
+        RETURN evaluate(node)
+    ENDE WENN
+    
+    WENN isMaximizingPlayer:
+        maxEval = -INFINITY
+        
+        FÜR JEDES child IN getChildren(node):
+            eval = minimax(child, depth-1, FALSE, alpha, beta)
+            maxEval = max(maxEval, eval)
+            alpha = max(alpha, eval)
+            
+            // Alpha-Beta Pruning
+            WENN beta <= alpha:
+                BREAK  // Beta-Cutoff
+            ENDE WENN
+        ENDE FÜR
+        
+        RETURN maxEval
+    SONST:
+        minEval = +INFINITY
+        
+        FÜR JEDES child IN getChildren(node):
+            eval = minimax(child, depth-1, TRUE, alpha, beta)
+            minEval = min(minEval, eval)
+            beta = min(beta, eval)
+            
+            // Alpha-Beta Pruning
+            WENN beta <= alpha:
+                BREAK  // Alpha-Cutoff
+            ENDE WENN
+        ENDE FÜR
+        
+        RETURN minEval
+    ENDE WENN
+ENDE FUNKTION
+
+// Hauptfunktion zum Finden des besten Zugs
+FUNKTION findBestMove(currentState, depth)
+    bestMove = null
+    bestValue = -INFINITY
+    alpha = -INFINITY
+    beta = +INFINITY
+    
+    FÜR JEDEN move IN getPossibleMoves(currentState):
+        newState = makeMove(currentState, move)
+        moveValue = minimax(newState, depth-1, FALSE, alpha, beta)
+        
+        WENN moveValue > bestValue:
+            bestValue = moveValue
+            bestMove = move
+        ENDE WENN
+        
+        alpha = max(alpha, moveValue)
+    ENDE FÜR
+    
+    RETURN bestMove
+ENDE FUNKTION
+    </pre>
+
+    <h4>Java-Implementierung Min-Max (Tic-Tac-Toe Beispiel)</h4>
+    <pre>
+public class MinMaxTicTacToe {
+    // Spielbrett (3x3)
+    private char[][] board;
+    private static final char PLAYER_X = 'X';  // Maximierer
+    private static final char PLAYER_O = 'O';  // Minimierer
+    private static final char EMPTY = '-';
+    
+    // Statistiken für Alpha-Beta-Pruning
+    private int nodesEvaluated = 0;
+    private int pruningOccurred = 0;
+    
+    public MinMaxTicTacToe() {
+        board = new char[3][3];
+        initializeBoard();
+    }
+    
+    // Initialisiere leeres Brett
+    private void initializeBoard() {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                board[i][j] = EMPTY;
+            }
+        }
+    }
+    
+    // Klasse für Züge
+    class Move {
+        int row, col;
+        
+        public Move(int row, int col) {
+            this.row = row;
+            this.col = col;
+        }
+    }
+    
+    // Minimax mit Alpha-Beta-Pruning
+    public int minimax(char[][] board, int depth, boolean isMaximizing, 
+                       int alpha, int beta) {
+        nodesEvaluated++;
+        
+        // Terminal-Zustand überprüfen
+        int score = evaluate(board);
+        
+        // Basisfall: Gewinn/Verlust/Unentschieden oder maximale Tiefe
+        if (score == 10 || score == -10) {
+            return score;
+        }
+        if (!hasMovesLeft(board) || depth == 0) {
+            return 0;  // Unentschieden
+        }
+        
+        if (isMaximizing) {
+            int maxEval = Integer.MIN_VALUE;
+            
+            // Durchlaufe alle möglichen Züge
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (board[i][j] == EMPTY) {
+                        // Mache Zug
+                        board[i][j] = PLAYER_X;
+                        
+                        // Rekursiver Aufruf
+                        int eval = minimax(board, depth - 1, false, alpha, beta);
+                        
+                        // Rückgängig machen
+                        board[i][j] = EMPTY;
+                        
+                        // Update max und alpha
+                        maxEval = Math.max(maxEval, eval);
+                        alpha = Math.max(alpha, eval);
+                        
+                        // Alpha-Beta-Pruning
+                        if (beta <= alpha) {
+                            pruningOccurred++;
+                            break;  // Beta-Cutoff
+                        }
+                    }
+                }
+            }
+            return maxEval;
+        } 
+        else {  // Minimizing player
+            int minEval = Integer.MAX_VALUE;
+            
+            for (int i = 0; i < 3; i++) {
+                for (int j = 0; j < 3; j++) {
+                    if (board[i][j] == EMPTY) {
+                        // Mache Zug
+                        board[i][j] = PLAYER_O;
+                        
+                        // Rekursiver Aufruf
+                        int eval = minimax(board, depth - 1, true, alpha, beta);
+                        
+                        // Rückgängig machen
+                        board[i][j] = EMPTY;
+                        
+                        // Update min und beta
+                        minEval = Math.min(minEval, eval);
+                        beta = Math.min(beta, eval);
+                        
+                        // Alpha-Beta-Pruning
+                        if (beta <= alpha) {
+                            pruningOccurred++;
+                            break;  // Alpha-Cutoff
+                        }
+                    }
+                }
+            }
+            return minEval;
+        }
+    }
+    
+    // Evaluierungsfunktion für Tic-Tac-Toe
+    private int evaluate(char[][] board) {
+        // Überprüfe Zeilen
+        for (int row = 0; row < 3; row++) {
+            if (board[row][0] == board[row][1] && 
+                board[row][1] == board[row][2]) {
+                if (board[row][0] == PLAYER_X)
+                    return 10;
+                else if (board[row][0] == PLAYER_O)
+                    return -10;
+            }
+        }
+        
+        // Überprüfe Spalten
+        for (int col = 0; col < 3; col++) {
+            if (board[0][col] == board[1][col] && 
+                board[1][col] == board[2][col]) {
+                if (board[0][col] == PLAYER_X)
+                    return 10;
+                else if (board[0][col] == PLAYER_O)
+                    return -10;
+            }
+        }
+        
+        // Überprüfe Diagonalen
+        if (board[0][0] == board[1][1] && 
+            board[1][1] == board[2][2]) {
+            if (board[0][0] == PLAYER_X)
+                return 10;
+            else if (board[0][0] == PLAYER_O)
+                return -10;
+        }
+        
+        if (board[0][2] == board[1][1] && 
+            board[1][1] == board[2][0]) {
+            if (board[0][2] == PLAYER_X)
+                return 10;
+            else if (board[0][2] == PLAYER_O)
+                return -10;
+        }
+        
+        // Kein Gewinner
+        return 0;
+    }
+    
+    // Überprüfe ob noch Züge möglich sind
+    private boolean hasMovesLeft(char[][] board) {
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                if (board[i][j] == EMPTY) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
+    
+    // Finde besten Zug für Maximierer
+    public Move findBestMove(char[][] board) {
+        int bestVal = Integer.MIN_VALUE;
+        Move bestMove = new Move(-1, -1);
+        
+        // Reset Statistiken
+        nodesEvaluated = 0;
+        pruningOccurred = 0;
+        
+        // Durchlaufe alle Zellen
+        for (int i = 0; i < 3; i++) {
+            for (int j = 0; j < 3; j++) {
+                // Überprüfe ob Zelle leer ist
+                if (board[i][j] == EMPTY) {
+                    // Mache Zug
+                    board[i][j] = PLAYER_X;
+                    
+                    // Berechne Wert für diesen Zug
+                    int moveVal = minimax(board, 9, false, 
+                                        Integer.MIN_VALUE, Integer.MAX_VALUE);
+                    
+                    // Rückgängig machen
+                    board[i][j] = EMPTY;
+                    
+                    // Update bester Zug
+                    if (moveVal > bestVal) {
+                        bestMove.row = i;
+                        bestMove.col = j;
+                        bestVal = moveVal;
+                    }
+                }
+            }
+        }
+        
+        System.out.println("Knoten evaluiert: " + nodesEvaluated);
+        System.out.println("Pruning aufgetreten: " + pruningOccurred + " mal");
+        
+        return bestMove;
+    }
+    
+    // Zeige Brett
+    public void printBoard() {
+        System.out.println("  0 1 2");
+        for (int i = 0; i < 3; i++) {
+            System.out.print(i + " ");
+            for (int j = 0; j < 3; j++) {
+                System.out.print(board[i][j] + " ");
+            }
+            System.out.println();
+        }
+        System.out.println();
+    }
+    
+    // Hauptmethode zum Testen
+    public static void main(String[] args) {
+        MinMaxTicTacToe game = new MinMaxTicTacToe();
+        
+        // Setze einige Züge
+        game.board[0][0] = PLAYER_X;
+        game.board[0][1] = PLAYER_O;
+        game.board[1][1] = PLAYER_X;
+        game.board[2][0] = PLAYER_O;
+        
+        System.out.println("Aktuelles Brett:");
+        game.printBoard();
+        
+        // Finde besten Zug
+        Move bestMove = game.findBestMove(game.board);
+        
+        System.out.println("Bester Zug für X: Zeile " + bestMove.row + 
+                         ", Spalte " + bestMove.col);
+        
+        // Mache besten Zug
+        game.board[bestMove.row][bestMove.col] = PLAYER_X;
+        
+        System.out.println("\nBrett nach bestem Zug:");
+        game.printBoard();
+    }
+}
+    </pre>
+
+    <!-- Hilfsklassen und Utilities -->
+    <h3>Hilfsklassen und Utilities</h3>
+    
+    <h4>Distanzberechnungen (Utility-Klasse)</h4>
+    <pre>
+public class DistanceUtils {
+    
+    // Euklidische Distanz
+    public static double euclideanDistance(double[] p1, double[] p2) {
+        if (p1.length != p2.length) {
+            throw new IllegalArgumentException("Dimensionen müssen übereinstimmen");
+        }
+        
+        double sum = 0.0;
+        for (int i = 0; i < p1.length; i++) {
+            sum += Math.pow(p1[i] - p2[i], 2);
+        }
+        return Math.sqrt(sum);
+    }
+    
+    // Manhattan-Distanz (City-Block)
+    public static double manhattanDistance(double[] p1, double[] p2) {
+        if (p1.length != p2.length) {
+            throw new IllegalArgumentException("Dimensionen müssen übereinstimmen");
+        }
+        
+        double sum = 0.0;
+        for (int i = 0; i < p1.length; i++) {
+            sum += Math.abs(p1[i] - p2[i]);
+        }
+        return sum;
+    }
+    
+    // Hamming-Distanz (für kategorische Daten)
+    public static int hammingDistance(String[] s1, String[] s2) {
+        if (s1.length != s2.length) {
+            throw new IllegalArgumentException("Arrays müssen gleiche Länge haben");
+        }
+        
+        int distance = 0;
+        for (int i = 0; i < s1.length; i++) {
+            if (!s1[i].equals(s2[i])) {
+                distance++;
+            }
+        }
+        return distance;
+    }
+    
+    // Minkowski-Distanz (generalisierte Form)
+    public static double minkowskiDistance(double[] p1, double[] p2, double p) {
+        if (p1.length != p2.length) {
+            throw new IllegalArgumentException("Dimensionen müssen übereinstimmen");
+        }
+        
+        double sum = 0.0;
+        for (int i = 0; i < p1.length; i++) {
+            sum += Math.pow(Math.abs(p1[i] - p2[i]), p);
+        }
+        return Math.pow(sum, 1.0 / p);
+    }
+    
+    // Cosinus-Ähnlichkeit (für Textdokumente)
+    public static double cosineSimilarity(double[] v1, double[] v2) {
+        if (v1.length != v2.length) {
+            throw new IllegalArgumentException("Vektoren müssen gleiche Länge haben");
+        }
+        
+        double dotProduct = 0.0;
+        double norm1 = 0.0;
+        double norm2 = 0.0;
+        
+        for (int i = 0; i < v1.length; i++) {
+            dotProduct += v1[i] * v2[i];
+            norm1 += v1[i] * v1[i];
+            norm2 += v2[i] * v2[i];
+        }
+        
+        if (norm1 == 0.0 || norm2 == 0.0) {
+            return 0.0;
+        }
+        
+        return dotProduct / (Math.sqrt(norm1) * Math.sqrt(norm2));
+    }
+}
+    </pre>
+
+    <h4>Normalisierungs-Utilities</h4>
+    <pre>
+public class NormalizationUtils {
+    
+    // Min-Max Normalisierung (auf [0,1])
+    public static double[][] minMaxNormalize(double[][] data) {
+        int rows = data.length;
+        int cols = data[0].length;
+        double[][] normalized = new double[rows][cols];
+        
+        for (int j = 0; j < cols; j++) {
+            double min = Double.MAX_VALUE;
+            double max = Double.MIN_VALUE;
+            
+            // Finde Min und Max für jede Spalte
+            for (int i = 0; i < rows; i++) {
+                min = Math.min(min, data[i][j]);
+                max = Math.max(max, data[i][j]);
+            }
+            
+            // Normalisiere
+            double range = max - min;
+            for (int i = 0; i < rows; i++) {
+                if (range != 0) {
+                    normalized[i][j] = (data[i][j] - min) / range;
+                } else {
+                    normalized[i][j] = 0.5;  // Wenn alle Werte gleich
+                }
+            }
+        }
+        
+        return normalized;
+    }
+    
+    // Z-Score Normalisierung (Standardisierung)
+    public static double[][] zScoreNormalize(double[][] data) {
+        int rows = data.length;
+        int cols = data[0].length;
+        double[][] normalized = new double[rows][cols];
+        
+        for (int j = 0; j < cols; j++) {
+            // Berechne Mittelwert
+            double mean = 0.0;
+            for (int i = 0; i < rows; i++) {
+                mean += data[i][j];
+            }
+            mean /= rows;
+            
+            // Berechne Standardabweichung
+            double stdDev = 0.0;
+            for (int i = 0; i < rows; i++) {
+                stdDev += Math.pow(data[i][j] - mean, 2);
+            }
+            stdDev = Math.sqrt(stdDev / rows);
+            
+            // Standardisiere
+            for (int i = 0; i < rows; i++) {
+                if (stdDev != 0) {
+                    normalized[i][j] = (data[i][j] - mean) / stdDev;
+                } else {
+                    normalized[i][j] = 0.0;
+                }
+            }
+        }
+        
+        return normalized;
+    }
+    
+    // Robuste Skalierung (mit Median und IQR)
+    public static double[][] robustScale(double[][] data) {
+        int rows = data.length;
+        int cols = data[0].length;
+        double[][] scaled = new double[rows][cols];
+        
+        for (int j = 0; j < cols; j++) {
+            // Sortiere Spalte für Median und Quartile
+            double[] column = new double[rows];
+            for (int i = 0; i < rows; i++) {
+                column[i] = data[i][j];
+            }
+            Arrays.sort(column);
+            
+            // Berechne Median (Q2)
+            double median;
+            if (rows % 2 == 0) {
+                median = (column[rows/2 - 1] + column[rows/2]) / 2;
+            } else {
+                median = column[rows/2];
+            }
+            
+            // Berechne Q1 und Q3
+            double q1 = column[rows/4];
+            double q3 = column[3*rows/4];
+            double iqr = q3 - q1;
+            
+            // Skaliere
+            for (int i = 0; i < rows; i++) {
+                if (iqr != 0) {
+                    scaled[i][j] = (data[i][j] - median) / iqr;
+                } else {
+                    scaled[i][j] = 0.0;
+                }
+            }
+        }
+        
+        return scaled;
+    }
+}
+    </pre>
+</section>
+
+<!-- Prüfungstipps für Programmierung -->
+<section id="pruefungstipps-code">
+    <h2>💻 Prüfungstipps für Code-Aufgaben</h2>
+    
+    <div class="highlight">
+        <strong>Wichtig:</strong> In der Klassenarbeit musst du zeigen, dass du die Algorithmen nicht nur verstehst, sondern auch implementieren kannst!
+    </div>
+
+    <h3>Checkliste für Code-Aufgaben</h3>
+    
+    <div class="card card-success">
+        <h4>✅ Allgemeine Code-Struktur</h4>
+        <ul>
+            <li>Sinnvolle <strong>Variablennamen</strong> verwenden (nicht x, y, z)</li>
+            <li><strong>Kommentare</strong> an wichtigen Stellen einfügen</li>
+            <li>Code <strong>einrücken</strong> und strukturieren</li>
+            <li><strong>Edge Cases</strong> beachten (leere Arrays, k > n, etc.)</li>
+            <li><strong>Validierung</strong> der Eingaben durchführen</li>
+        </ul>
+    </div>
+
+    <div class="card card-warning">
+        <h4>⚠️ Häufige Fehler vermeiden</h4>
+        <ul>
+            <li><strong>Array-Grenzen:</strong> Immer auf Index-Out-of-Bounds achten</li>
+            <li><strong>Null-Pointer:</strong> Auf null-Werte prüfen</li>
+            <li><strong>Division durch 0:</strong> Bei Normalisierung und Mittelwertberechnung</li>
+            <li><strong>Unendliche Schleifen:</strong> Abbruchbedingungen definieren</li>
+            <li><strong>Falsche Datentypen:</strong> int vs. double bei Berechnungen</li>
+        </ul>
+    </div>
+
+    <h3>Typische Code-Aufgaben in der Prüfung</h3>
+
+    <div class="beispiel">
+        <h4>Aufgabe 1: k-NN Distanzberechnung implementieren</h4>
+        <p><strong>Aufgabenstellung:</strong> "Implementiere eine Methode zur Berechnung der euklidischen Distanz"</p>
+        <pre>
+// Musterlösung:
+public double euclideanDistance(double[] p1, double[] p2) {
+    // Validierung
+    if (p1 == null || p2 == null) {
+        throw new IllegalArgumentException("Punkte dürfen nicht null sein");
+    }
+    if (p1.length != p2.length) {
+        throw new IllegalArgumentException("Punkte müssen gleiche Dimension haben");
+    }
+    
+    // Berechnung
+    double sum = 0.0;
+    for (int i = 0; i < p1.length; i++) {
+        double diff = p1[i] - p2[i];
+        sum += diff * diff;  // Effizienter als Math.pow()
+    }
+    
+    return Math.sqrt(sum);
+}
+        </pre>
+    </div>
+
+    <div class="beispiel">
+        <h4>Aufgabe 2: K-Means Zentroid-Update</h4>
+        <p><strong>Aufgabenstellung:</strong> "Implementiere die Neuberechnung eines Zentroids"</p>
+        <pre>
+// Musterlösung:
+public double[] calculateCentroid(List<double[]> clusterPoints) {
+    // Edge Case: Leerer Cluster
+    if (clusterPoints == null || clusterPoints.isEmpty()) {
+        return null;
+    }
+    
+    int dimensions = clusterPoints.get(0).length;
+    double[] centroid = new double[dimensions];
+    
+    // Summiere alle Koordinaten
+    for (double[] point : clusterPoints) {
+        for (int d = 0; d < dimensions; d++) {
+            centroid[d] += point[d];
+        }
+    }
+    
+    // Teile durch Anzahl Punkte (Mittelwert)
+    int size = clusterPoints.size();
+    for (int d = 0; d < dimensions; d++) {
+        centroid[d] /= size;
+    }
+    
+    return centroid;
+}
+        </pre>
+    </div>
+
+    <div class="beispiel">
+        <h4>Aufgabe 3: Min-Max Evaluation</h4>
+        <p><strong>Aufgabenstellung:</strong> "Implementiere die Minimax-Evaluation für einen gegebenen Knoten"</p>
+        <pre>
+// Musterlösung:
+public int minimax(Node node, int depth, boolean isMaxPlayer) {
+    // Basisfall: Blattknoten oder Tiefe 0
+    if (depth == 0 || node.isTerminal()) {
+        return node.evaluate();
+    }
+    
+    if (isMaxPlayer) {
+        int maxEval = Integer.MIN_VALUE;
+        // Durchlaufe alle Kindknoten
+        for (Node child : node.getChildren()) {
+            int eval = minimax(child, depth - 1, false);
+            maxEval = Math.max(maxEval, eval);
+        }
+        return maxEval;
+    } else {
+        int minEval = Integer.MAX_VALUE;
+        // Durchlaufe alle Kindknoten
+        for (Node child : node.getChildren()) {
+            int eval = minimax(child, depth - 1, true);
+            minEval = Math.min(minEval, eval);
+        }
+        return minEval;
+    }
+}
+        </pre>
+    </div>
+
+    <h3>Quick Reference - Wichtige Java-Methoden</h3>
+    <table>
+        <tr>
+            <th>Operation</th>
+            <th>Java-Code</th>
+            <th>Verwendung</th>
+        </tr>
+        <tr>
+            <td>Quadratwurzel</td>
+            <td><code>Math.sqrt(x)</code></td>
+            <td>Distanzberechnung</td>
+        </tr>
+        <tr>
+            <td>Potenz</td>
+            <td><code>Math.pow(x, n)</code></td>
+            <td>Quadrieren bei Distanz</td>
+        </tr>
+        <tr>
+            <td>Absolutwert</td>
+            <td><code>Math.abs(x)</code></td>
+            <td>Manhattan-Distanz</td>
+        </tr>
+        <tr>
+            <td>Maximum</td>
+            <td><code>Math.max(a, b)</code></td>
+            <td>Maximierer in MinMax</td>
+        </tr>
+        <tr>
+            <td>Minimum</td>
+            <td><code>Math.min(a, b)</code></td>
+            <td>Minimierer in MinMax</td>
+        </tr>
+        <tr>
+            <td>Sortieren</td>
+            <td><code>Arrays.sort(array)</code></td>
+            <td>k-NN Nachbarn</td>
+        </tr>
+        <tr>
+            <td>Liste sortieren</td>
+            <td><code>Collections.sort(list)</code></td>
+            <td>Distanzen ordnen</td>
+        </tr>
+    </table>
+
+    <div class="wichtig">
+        <strong>Merke für die Prüfung:</strong>
+        <ul>
+            <li>Schreibe <strong>sauberen, lesbaren Code</strong> - Lesbarkeit vor Cleverness!</li>
+            <li>Vergiss nicht die <strong>Imports</strong> (java.util.*, java.util.List, etc.)</li>
+            <li>Teste mental mit <strong>kleinen Beispielen</strong> (2-3 Datenpunkte)</li>
+            <li>Bei Zeitdruck: <strong>Pseudocode</strong> ist besser als gar kein Code!</li>
+        </ul>
+    </div>
+</section>
+
     <!-- Zusammenfassung Section -->
     <section id="zusammenfassung">
         <h2>Zusammenfassung und Prüfungstipps</h2>
@@ -1225,4 +2420,5 @@ Wenn α ≥ β, dann Pruning
 </body>
 
 </html>
+
 
