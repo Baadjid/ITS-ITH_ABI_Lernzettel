@@ -1099,27 +1099,31 @@
             <p>Bei unbekannter MAC: Switch macht ausnahmsweise Broadcast</p>
         </div>
 
-        <h4>🔗 Manchester-Code (Schicht 1):</h4>
-        <div class="example-box">
-            <p><strong>Wichtig:</strong> Manchester-Code wird tatsächlich über die Leitung geschickt, nicht die rohen Daten!</p>
-            <p>Kodierung für Ethernet auf Physical Layer:</p>
-            <ul>
-                <li><strong>0</strong> = 10 Taktwechsel (kein Spannungswechsel in Bitmitte)</li>
-                <li><strong>1</strong> = 01 Taktwechsel (Spannungswechsel in Bitmitte)</li>
-            </ul>
-            <p><strong>Beispiel:</strong></p>
-            <ul>
-                <li>Daten (binär): <code>10100110</code></li>
-                <li>Manchester (gesendet): <code>1001100101101001</code></li>
-            </ul>
-            <p>💡 <strong>Vorteile:</strong></p>
-            <ul>
-                <li>Selbst-synchronisierend (Clock im Signal enthalten)</li>
-                <li>Ermöglicht Kollisionserkennung durch Mittelwertüberprüfung</li>
-                <li>Sender kann prüfen: "Was habe ich geschickt?" vs. "Was ist auf der Leitung?"</li>
-            </ul>
-            <p>⚠️ <strong>Nachteil:</strong> Doppelte Bandbreite nötig (1 Datenbit = 2 Manchester-Bits)</p>
-        </div>
+        <p><strong>Zwei gebräuchliche Standards:</strong></p>
+<ul>
+    <li><strong>IEEE 802.3 (Ethernet):</strong> "0" = <code>01</code>, "1" = <code>10</code></li>
+    <li><strong>IEEE 802.4 (Token Bus):</strong> "0" = <code>10</code>, "1" = <code>01</code></li>
+</ul>
+
+<p><strong>Beispiel mit IEEE 802.3 (Ethernet Standard):</strong></p>
+<ul>
+    <li>Daten (binär): <code>10100110</code></li>
+    <li>Manchester (gesendet): <code>1001100101101001</code></li>
+</ul>
+
+<p><strong>Erklärung der Kodierung:</strong></p>
+<ul>
+    <li><strong>1</strong> = <code>10</code> Taktwechsel (hoch-zu-niedrig in Bitmitte)</li>
+    <li><strong>0</strong> = <code>01</code> Taktwechsel (niedrig-zu-hoch in Bitmitte)</li>
+</ul>
+
+<p>💡 <strong>Vorteile:</strong></p>
+<ul>
+    <li>Selbst-synchronisierend (Clock im Signal enthalten)</li>
+    <li>Ermöglicht Kollisionserkennung durch Mittelwertüberprüfung</li>
+    <li>Sender kann prüfen: "Was habe ich geschickt?" vs. "Was ist auf der Leitung?"</li>
+</ul>
+<p>⚠️ <strong>Nachteil:</strong> Doppelte Bandbreite nötig (1 Datenbit = 2 Manchester-Bits)</p>
 
         <h4>🔌 ARP (Address Resolution Protocol):</h4>
         <div class="example-box">
@@ -1983,6 +1987,7 @@
 </body>
 
 </html>
+
 
 
 
