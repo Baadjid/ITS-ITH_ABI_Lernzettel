@@ -1104,13 +1104,13 @@
             <p><strong>Wichtig:</strong> Manchester-Code wird tatsächlich über die Leitung geschickt, nicht die rohen Daten!</p>
             <p>Kodierung für Ethernet auf Physical Layer:</p>
             <ul>
-                <li><strong>0</strong> = 1→0 Taktwechsel (kein Spannungswechsel in Bitmitte)</li>
-                <li><strong>1</strong> = 0→1 Taktwechsel (Spannungswechsel in Bitmitte)</li>
+                <li><strong>0</strong> = 10 Taktwechsel (kein Spannungswechsel in Bitmitte)</li>
+                <li><strong>1</strong> = 01 Taktwechsel (Spannungswechsel in Bitmitte)</li>
             </ul>
             <p><strong>Beispiel:</strong></p>
             <ul>
                 <li>Daten (binär): <code>10100110</code></li>
-                <li>Manchester (gesendet): <code>0110011001100101</code></li>
+                <li>Manchester (gesendet): <code>1001100101101001</code></li>
             </ul>
             <p>💡 <strong>Vorteile:</strong></p>
             <ul>
@@ -1983,6 +1983,7 @@
 </body>
 
 </html>
+
 
 
 
