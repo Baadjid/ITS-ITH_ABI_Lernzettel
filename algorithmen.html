@@ -581,7 +581,7 @@
     <div class="container">
         <div class="breadcrumb">
             <a href="index.html">🏠 Startseite</a> > 
-            <a href="index.html>💻 Grundlagen der Programmentwicklung</a> > 
+            <a href="index.html">💻 Grundlagen der Programmentwicklung</a> > 
             <strong>📊 Algorithmen & Datenstrukturen (Erweitert)</strong>
         </div>
 
@@ -1569,15 +1569,20 @@ class Node<T> {
             </div>
         </section>
 
-        <!-- 8. Java Collections Framework (aus Original) -->
+        <!-- 8. Java Collections Framework (MASSIV ERWEITERT) -->
         <section class="section">
-            <h2>📚 8. Java Collections Framework (JCF)</h2>
+            <h2>📚 8. Java Collections Framework (JCF) - Komplett</h2>
             
             <div class="definition-box">
-                <strong>Java Collections Framework:</strong> Umfangreiche Sammlung von Datenstrukturen im Package java.util. Alle arbeiten mit Objekten (Wrapper-Klassen für primitive Typen).
+                <strong>Java Collections Framework:</strong> Umfangreiche Sammlung von Datenstrukturen im Package java.util. Alle arbeiten mit Objekten (Wrapper-Klassen für primitive Typen wie Integer, Double, Boolean statt int, double, boolean).
             </div>
 
-            <h3>📊 Die wichtigsten Collections</h3>
+            <div class="intro-box">
+                <h3>🎯 Überblick</h3>
+                <p>Das JCF bietet fertige, optimierte Implementierungen für alle wichtigen Datenstrukturen. Du musst nicht selbst eine verkettete Liste programmieren - nutze einfach die Java-Klassen!</p>
+            </div>
+
+            <h3>📊 Übersichtstabelle - Alle Collections</h3>
             
             <table class="complexity-table">
                 <tr>
@@ -1631,25 +1636,916 @@ class Node<T> {
                 </tr>
             </table>
 
-            <h3>💡 Schnellreferenz</h3>
+            <!-- ========== ARRAYLIST ========== -->
+            <h3>1️⃣ ArrayList - Die dynamische Liste</h3>
+            
+            <div class="definition-box">
+                <strong>ArrayList&lt;E&gt;:</strong> Eine dynamische Liste, die intern ein Array verwendet. Die Größe passt sich automatisch an. Optimal für häufigen Zugriff über Index.
+            </div>
+
+            <div class="algorithm-comparison">
+                <div class="algorithm-card">
+                    <h4>📋 Eigenschaften</h4>
+                    <ul>
+                        <li>✅ Implementiert List Interface</li>
+                        <li>✅ Duplikate erlaubt</li>
+                        <li>✅ Reihenfolge bleibt erhalten</li>
+                        <li>✅ Schneller Index-Zugriff O(1)</li>
+                        <li>❌ Nicht sortiert</li>
+                        <li>❌ Langsames Einfügen in der Mitte</li>
+                    </ul>
+                </div>
+                <div class="algorithm-card">
+                    <h4>🎯 Wann verwenden?</h4>
+                    <ul>
+                        <li>Häufiger Lesezugriff</li>
+                        <li>Zugriff über Index wichtig</li>
+                        <li>Elemente meist am Ende hinzufügen</li>
+                        <li>Nicht viel Einfügen/Löschen in der Mitte</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>💻 ArrayList Beispiele</h4>
+            
+            <div class="code-block">
+import java.util.ArrayList;
+
+public class ArrayListBeispiel {
+    public static void main(String[] args) {
+        // ArrayList erstellen
+        ArrayList<String> namen = new ArrayList<>();
+        
+        // ===== ELEMENTE HINZUFÜGEN =====
+        namen.add("Anna");           // Am Ende hinzufügen
+        namen.add("Bob");
+        namen.add("Clara");
+        namen.add(1, "Zara");        // An Index 1 einfügen
+        
+        System.out.println(namen);   // [Anna, Zara, Bob, Clara]
+        
+        // ===== ZUGRIFF =====
+        String erster = namen.get(0);              // "Anna"
+        int groesse = namen.size();                 // 4
+        boolean enthaelt = namen.contains("Bob");   // true
+        int index = namen.indexOf("Clara");         // 3
+        
+        // ===== ÄNDERN =====
+        namen.set(1, "Max");         // Ersetze Index 1
+        System.out.println(namen);   // [Anna, Max, Bob, Clara]
+        
+        // ===== LÖSCHEN =====
+        namen.remove("Bob");         // Lösche "Bob"
+        namen.remove(0);             // Lösche Index 0
+        System.out.println(namen);   // [Max, Clara]
+        
+        // ===== DURCHLAUFEN =====
+        // Mit for-Schleife
+        for (int i = 0; i < namen.size(); i++) {
+            System.out.println(namen.get(i));
+        }
+        
+        // Mit enhanced for
+        for (String name : namen) {
+            System.out.println(name);
+        }
+        
+        // ===== WEITERE METHODEN =====
+        namen.clear();               // Alles löschen
+        boolean leer = namen.isEmpty();  // true
+    }
+}
+            </div>
+
+            <div class="example-box">
+                <h4>🎓 Praktisches Beispiel: Schülerliste</h4>
+                <div class="code-block">
+ArrayList<String> schueler = new ArrayList<>();
+schueler.add("Max Mustermann");
+schueler.add("Anna Schmidt");
+schueler.add("Peter Müller");
+
+// Note zuordnen (parallel ArrayList)
+ArrayList<Double> noten = new ArrayList<>();
+noten.add(2.3);
+noten.add(1.7);
+noten.add(2.0);
+
+// Ausgabe
+for (int i = 0; i < schueler.size(); i++) {
+    System.out.println(schueler.get(i) + ": " + noten.get(i));
+}
+// Output:
+// Max Mustermann: 2.3
+// Anna Schmidt: 1.7
+// Peter Müller: 2.0
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ ArrayList vs. Array:</strong><br>
+                • Array: Feste Größe, schnell, <code>int[] arr = new int[5];</code><br>
+                • ArrayList: Dynamische Größe, flexibel, <code>ArrayList&lt;Integer&gt; list = new ArrayList&lt;&gt;();</code>
+            </div>
+
+            <!-- ========== LINKEDLIST ========== -->
+            <h3>2️⃣ LinkedList - Die verkettete Liste</h3>
+            
+            <div class="definition-box">
+                <strong>LinkedList&lt;E&gt;:</strong> Implementiert sowohl List als auch Deque. Intern als doppelt verkettete Liste. Optimal für häufiges Einfügen/Löschen.
+            </div>
+
+            <div class="algorithm-comparison">
+                <div class="algorithm-card">
+                    <h4>📋 Eigenschaften</h4>
+                    <ul>
+                        <li>✅ Implementiert List UND Deque</li>
+                        <li>✅ Duplikate erlaubt</li>
+                        <li>✅ Schnelles Einfügen/Löschen O(1)</li>
+                        <li>✅ Kann als Stack oder Queue verwendet werden</li>
+                        <li>❌ Langsamer Index-Zugriff O(n)</li>
+                        <li>❌ Mehr Speicher pro Element</li>
+                    </ul>
+                </div>
+                <div class="algorithm-card">
+                    <h4>🎯 Wann verwenden?</h4>
+                    <ul>
+                        <li>Häufiges Einfügen/Löschen</li>
+                        <li>Am Anfang/Ende arbeiten wichtig</li>
+                        <li>Als Queue oder Stack nutzen</li>
+                        <li>Index-Zugriff unwichtig</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>💻 LinkedList Beispiele</h4>
+            
+            <div class="code-block">
+import java.util.LinkedList;
+
+public class LinkedListBeispiel {
+    public static void main(String[] args) {
+        LinkedList<String> liste = new LinkedList<>();
+        
+        // ===== ELEMENTE HINZUFÜGEN =====
+        liste.add("A");              // Am Ende
+        liste.add("B");
+        liste.addFirst("Z");         // Am Anfang ⚡ O(1)
+        liste.addLast("Y");          // Am Ende ⚡ O(1)
+        
+        System.out.println(liste);   // [Z, A, B, Y]
+        
+        // ===== ERSTES/LETZTES ELEMENT =====
+        String erstes = liste.getFirst();   // "Z"
+        String letztes = liste.getLast();   // "Y"
+        
+        // ===== ENTFERNEN =====
+        liste.removeFirst();         // Entfernt "Z" ⚡ O(1)
+        liste.removeLast();          // Entfernt "Y" ⚡ O(1)
+        System.out.println(liste);   // [A, B]
+        
+        // ===== ALS QUEUE (Warteschlange) =====
+        LinkedList<String> queue = new LinkedList<>();
+        queue.offer("Kunde 1");      // Hinten anstellen
+        queue.offer("Kunde 2");
+        queue.offer("Kunde 3");
+        
+        String bedient = queue.poll();  // Vorne entfernen
+        System.out.println("Bedient: " + bedient);  // "Kunde 1"
+        
+        // ===== ALS STACK (Stapel) =====
+        LinkedList<String> stack = new LinkedList<>();
+        stack.push("Teller 1");      // Oben drauf
+        stack.push("Teller 2");
+        stack.push("Teller 3");
+        
+        String oben = stack.pop();   // Oberstes entfernen
+        System.out.println("Oben: " + oben);  // "Teller 3"
+    }
+}
+            </div>
+
+            <div class="example-box">
+                <h4>🎓 Praktisches Beispiel: Undo-Funktion</h4>
+                <div class="code-block">
+// LinkedList als Stack für Undo
+LinkedList<String> aktionen = new LinkedList<>();
+
+// Aktionen durchführen
+aktionen.push("Text geschrieben");
+aktionen.push("Bild eingefügt");
+aktionen.push("Formatierung geändert");
+
+// Undo (letzte Aktion rückgängig)
+String letzteAktion = aktionen.pop();
+System.out.println("Rückgängig: " + letzteAktion);
+// Output: Rückgängig: Formatierung geändert
+
+// Nächstes Undo
+String vorletzteAktion = aktionen.pop();
+System.out.println("Rückgängig: " + vorletzteAktion);
+// Output: Rückgängig: Bild eingefügt
+                </div>
+            </div>
+
+            <h4>⚖️ ArrayList vs. LinkedList</h4>
+            
+            <table class="complexity-table">
+                <tr>
+                    <th>Operation</th>
+                    <th>ArrayList</th>
+                    <th>LinkedList</th>
+                </tr>
+                <tr>
+                    <td>get(index)</td>
+                    <td class="complexity-good">O(1) ✅</td>
+                    <td class="complexity-bad">O(n) ❌</td>
+                </tr>
+                <tr>
+                    <td>add() am Ende</td>
+                    <td class="complexity-good">O(1) ✅</td>
+                    <td class="complexity-good">O(1) ✅</td>
+                </tr>
+                <tr>
+                    <td>add(0, element)</td>
+                    <td class="complexity-bad">O(n) ❌</td>
+                    <td class="complexity-good">O(1) ✅</td>
+                </tr>
+                <tr>
+                    <td>remove(index)</td>
+                    <td class="complexity-bad">O(n) ❌</td>
+                    <td class="complexity-bad">O(n) ~</td>
+                </tr>
+                <tr>
+                    <td>Speicher</td>
+                    <td class="complexity-good">Weniger ✅</td>
+                    <td class="complexity-bad">Mehr ❌</td>
+                </tr>
+            </table>
+
+            <!-- ========== HASHSET ========== -->
+            <h3>3️⃣ HashSet - Eindeutige Elemente, blitzschnell</h3>
+            
+            <div class="definition-box">
+                <strong>HashSet&lt;E&gt;:</strong> Speichert eindeutige Elemente ohne bestimmte Reihenfolge. Verwendet Hashing für extrem schnelle Operationen.
+            </div>
+
+            <div class="algorithm-comparison">
+                <div class="algorithm-card">
+                    <h4>📋 Eigenschaften</h4>
+                    <ul>
+                        <li>✅ Implementiert Set Interface</li>
+                        <li>❌ Keine Duplikate!</li>
+                        <li>❌ Keine geordnete Reihenfolge</li>
+                        <li>✅ Sehr schnell: add(), remove(), contains() = O(1)</li>
+                        <li>❌ Kein Index-Zugriff</li>
+                        <li>❌ Erlaubt max. ein <code>null</code> Element</li>
+                    </ul>
+                </div>
+                <div class="algorithm-card">
+                    <h4>🎯 Wann verwenden?</h4>
+                    <ul>
+                        <li>Duplikate verhindern wichtig</li>
+                        <li>Sehr schnelles Suchen nötig</li>
+                        <li>Reihenfolge egal</li>
+                        <li>Mitgliedschaftstest (contains)</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>💻 HashSet Beispiele</h4>
+            
+            <div class="code-block">
+import java.util.HashSet;
+
+public class HashSetBeispiel {
+    public static void main(String[] args) {
+        HashSet<String> set = new HashSet<>();
+        
+        // ===== ELEMENTE HINZUFÜGEN =====
+        set.add("Apfel");
+        set.add("Banane");
+        set.add("Orange");
+        set.add("Apfel");       // Duplikat - wird ignoriert!
+        
+        System.out.println(set);
+        // Output: [Orange, Banane, Apfel] (Reihenfolge variiert!)
+        
+        System.out.println("Größe: " + set.size());  // 3 (nicht 4!)
+        
+        // ===== PRÜFEN =====
+        boolean hatApfel = set.contains("Apfel");    // true ⚡ O(1)
+        boolean hatKiwi = set.contains("Kiwi");      // false ⚡ O(1)
+        
+        // ===== ENTFERNEN =====
+        set.remove("Banane");    // Entfernt "Banane" ⚡ O(1)
+        
+        // ===== DURCHLAUFEN =====
+        for (String frucht : set) {
+            System.out.println(frucht);
+        }
+        
+        // ===== SET-OPERATIONEN =====
+        HashSet<Integer> a = new HashSet<>();
+        a.add(1); a.add(2); a.add(3);
+        
+        HashSet<Integer> b = new HashSet<>();
+        b.add(2); b.add(3); b.add(4);
+        
+        // Vereinigung (Union)
+        HashSet<Integer> union = new HashSet<>(a);
+        union.addAll(b);
+        System.out.println("Union: " + union);  // [1, 2, 3, 4]
+        
+        // Schnittmenge (Intersection)
+        HashSet<Integer> intersection = new HashSet<>(a);
+        intersection.retainAll(b);
+        System.out.println("Schnittmenge: " + intersection);  // [2, 3]
+        
+        // Differenz
+        HashSet<Integer> diff = new HashSet<>(a);
+        diff.removeAll(b);
+        System.out.println("Differenz: " + diff);  // [1]
+    }
+}
+            </div>
+
+            <div class="example-box">
+                <h4>🎓 Praktisches Beispiel: Duplikate entfernen</h4>
+                <div class="code-block">
+// Duplikate aus einer Liste entfernen
+ArrayList<String> listeMitDuplikaten = new ArrayList<>();
+listeMitDuplikaten.add("Rot");
+listeMitDuplikaten.add("Blau");
+listeMitDuplikaten.add("Rot");
+listeMitDuplikaten.add("Grün");
+listeMitDuplikaten.add("Blau");
+
+System.out.println("Mit Duplikaten: " + listeMitDuplikaten);
+// [Rot, Blau, Rot, Grün, Blau]
+
+// In HashSet konvertieren (entfernt automatisch Duplikate)
+HashSet<String> ohneDuplikate = new HashSet<>(listeMitDuplikaten);
+
+System.out.println("Ohne Duplikate: " + ohneDuplikate);
+// [Rot, Grün, Blau] (Reihenfolge variiert)
+
+// Zurück in ArrayList (falls Reihenfolge egal)
+ArrayList<String> liste = new ArrayList<>(ohneDuplikate);
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ HashSet Besonderheit:</strong><br>
+                Die Reihenfolge der Elemente ist NICHT garantiert und kann sich ändern! Wenn du Reihenfolge brauchst, nutze <code>LinkedHashSet</code> (behält Einfüge-Reihenfolge) oder <code>TreeSet</code> (sortiert).
+            </div>
+
+            <!-- ========== TREESET ========== -->
+            <h3>4️⃣ TreeSet - Sortierte eindeutige Elemente</h3>
+            
+            <div class="definition-box">
+                <strong>TreeSet&lt;E&gt;:</strong> Speichert eindeutige Elemente in <strong>sortierter</strong> Reihenfolge. Basiert auf einem Red-Black-Tree (balancierter Binärbaum).
+            </div>
+
+            <div class="algorithm-comparison">
+                <div class="algorithm-card">
+                    <h4>📋 Eigenschaften</h4>
+                    <ul>
+                        <li>✅ Implementiert SortedSet</li>
+                        <li>❌ Keine Duplikate</li>
+                        <li>✅ Automatisch sortiert!</li>
+                        <li>✅ Operationen: O(log n)</li>
+                        <li>❌ Langsamer als HashSet</li>
+                        <li>❌ Kein <code>null</code> erlaubt</li>
+                    </ul>
+                </div>
+                <div class="algorithm-card">
+                    <h4>🎯 Wann verwenden?</h4>
+                    <ul>
+                        <li>Elemente müssen sortiert sein</li>
+                        <li>Keine Duplikate gewünscht</li>
+                        <li>Bereich-Operationen (first, last)</li>
+                        <li>Navigation durch Elemente</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>💻 TreeSet Beispiele</h4>
+            
+            <div class="code-block">
+import java.util.TreeSet;
+
+public class TreeSetBeispiel {
+    public static void main(String[] args) {
+        TreeSet<Integer> zahlen = new TreeSet<>();
+        
+        // ===== ELEMENTE HINZUFÜGEN =====
+        zahlen.add(50);
+        zahlen.add(20);
+        zahlen.add(80);
+        zahlen.add(10);
+        zahlen.add(20);      // Duplikat - ignoriert!
+        
+        System.out.println(zahlen);
+        // Output: [10, 20, 50, 80] - AUTOMATISCH SORTIERT! ✨
+        
+        // ===== NAVIGATIONSMETHODEN =====
+        int erstes = zahlen.first();      // 10 (kleinstes)
+        int letztes = zahlen.last();      // 80 (größtes)
+        
+        int kleinerAls50 = zahlen.lower(50);     // 20
+        int größerAls50 = zahlen.higher(50);     // 80
+        
+        // ===== TEILMENGEN =====
+        // Alle Elemente kleiner als 50
+        TreeSet<Integer> kleineTeil = new TreeSet<>(zahlen.headSet(50));
+        System.out.println("< 50: " + kleineTeil);  // [10, 20]
+        
+        // Alle Elemente größer/gleich 50
+        TreeSet<Integer> großeTeil = new TreeSet<>(zahlen.tailSet(50));
+        System.out.println(">= 50: " + großeTeil);  // [50, 80]
+        
+        // Bereich von-bis
+        TreeSet<Integer> bereich = new TreeSet<>(zahlen.subSet(20, 80));
+        System.out.println("20-80: " + bereich);  // [20, 50]
+        
+        // ===== MIT STRINGS =====
+        TreeSet<String> namen = new TreeSet<>();
+        namen.add("Zara");
+        namen.add("Anna");
+        namen.add("Bob");
+        namen.add("Max");
+        
+        System.out.println(namen);
+        // Output: [Anna, Bob, Max, Zara] - alphabetisch sortiert!
+    }
+}
+            </div>
+
+            <div class="example-box">
+                <h4>🎓 Praktisches Beispiel: Rangliste</h4>
+                <div class="code-block">
+// Spieler-Scores automatisch sortiert
+TreeSet<Integer> highscores = new TreeSet<>();
+
+highscores.add(1500);
+highscores.add(2300);
+highscores.add(1800);
+highscores.add(900);
+highscores.add(2100);
+
+System.out.println("Rangliste (aufsteigend): " + highscores);
+// [900, 1500, 1800, 2100, 2300]
+
+// Top 3 (die höchsten)
+System.out.println("3. Platz: " + highscores.pollLast());  // 2300
+System.out.println("2. Platz: " + highscores.pollLast());  // 2100
+System.out.println("1. Platz: " + highscores.pollLast());  // 1800
+
+// Oder mit descendingSet() für absteigende Sortierung
+TreeSet<Integer> absteigend = (TreeSet<Integer>) highscores.descendingSet();
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ TreeSet Voraussetzung:</strong><br>
+                Elemente müssen <strong>vergleichbar</strong> sein (Comparable implementieren) oder du musst einen Comparator angeben!<br>
+                Für eigene Klassen: <code>class Person implements Comparable&lt;Person&gt;</code>
+            </div>
+
+            <!-- ========== HASHMAP ========== -->
+            <h3>5️⃣ HashMap - Key-Value Paare, superschnell</h3>
+            
+            <div class="definition-box">
+                <strong>HashMap&lt;K, V&gt;:</strong> Speichert Daten als Schlüssel-Wert-Paare (Key-Value). Jeder Schlüssel ist eindeutig und führt zu genau einem Wert. Verwendet Hashing für maximale Geschwindigkeit.
+            </div>
+
+            <div class="algorithm-comparison">
+                <div class="algorithm-card">
+                    <h4>📋 Eigenschaften</h4>
+                    <ul>
+                        <li>✅ Implementiert Map Interface</li>
+                        <li>❌ Schlüssel eindeutig, Werte dürfen doppelt vorkommen</li>
+                        <li>❌ Keine Reihenfolge</li>
+                        <li>✅ Sehr schnell: put(), get(), remove() = O(1)</li>
+                        <li>✅ Ein <code>null</code>-Schlüssel erlaubt</li>
+                        <li>✅ Mehrere <code>null</code>-Werte erlaubt</li>
+                    </ul>
+                </div>
+                <div class="algorithm-card">
+                    <h4>🎯 Wann verwenden?</h4>
+                    <ul>
+                        <li>Zuordnung von Schlüssel zu Wert</li>
+                        <li>Sehr schneller Zugriff nötig</li>
+                        <li>Reihenfolge egal</li>
+                        <li>Nachschlagen in "Tabellen"</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>💻 HashMap Beispiele</h4>
+            
+            <div class="code-block">
+import java.util.HashMap;
+import java.util.Map;
+
+public class HashMapBeispiel {
+    public static void main(String[] args) {
+        HashMap<String, Integer> alter = new HashMap<>();
+        
+        // ===== KEY-VALUE PAARE HINZUFÜGEN =====
+        alter.put("Anna", 25);
+        alter.put("Bob", 30);
+        alter.put("Clara", 28);
+        alter.put("Anna", 26);     // Überschreibt alten Wert!
+        
+        System.out.println(alter);
+        // {Bob=30, Clara=28, Anna=26} (Reihenfolge variiert)
+        
+        // ===== WERTE ABRUFEN =====
+        int annasAlter = alter.get("Anna");           // 26 ⚡ O(1)
+        int standard = alter.getOrDefault("Max", 0);  // 0 (nicht vorhanden)
+        
+        // ===== PRÜFEN =====
+        boolean hatBob = alter.containsKey("Bob");     // true
+        boolean hat30 = alter.containsValue(30);       // true
+        
+        // ===== ENTFERNEN =====
+        alter.remove("Bob");
+        
+        // ===== DURCHLAUFEN =====
+        // Über Keys
+        for (String name : alter.keySet()) {
+            System.out.println(name);
+        }
+        
+        // Über Values
+        for (Integer a : alter.values()) {
+            System.out.println(a);
+        }
+        
+        // Über Key-Value-Paare (beste Methode!)
+        for (Map.Entry<String, Integer> entry : alter.entrySet()) {
+            System.out.println(entry.getKey() + ": " + entry.getValue());
+        }
+        // Output:
+        // Clara: 28
+        // Anna: 26
+        
+        // ===== GRÖSSE =====
+        int anzahl = alter.size();
+        boolean leer = alter.isEmpty();
+    }
+}
+            </div>
+
+            <div class="example-box">
+                <h4>🎓 Praktisches Beispiel 1: Wörterbuch</h4>
+                <div class="code-block">
+// Deutsch-Englisch Wörterbuch
+HashMap<String, String> woerterbuch = new HashMap<>();
+
+woerterbuch.put("Haus", "house");
+woerterbuch.put("Auto", "car");
+woerterbuch.put("Baum", "tree");
+woerterbuch.put("Hund", "dog");
+
+// Übersetzen
+String wort = "Auto";
+String uebersetzung = woerterbuch.get(wort);
+System.out.println(wort + " auf Englisch: " + uebersetzung);
+// Output: Auto auf Englisch: car
+
+// Alle Übersetzungen
+for (Map.Entry<String, String> entry : woerterbuch.entrySet()) {
+    System.out.println(entry.getKey() + " = " + entry.getValue());
+}
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>🎓 Praktisches Beispiel 2: Buchstaben zählen</h4>
+                <div class="code-block">
+String text = "hallo welt";
+HashMap<Character, Integer> haeufigkeit = new HashMap<>();
+
+// Buchstaben zählen
+for (char c : text.toCharArray()) {
+    if (c != ' ') {  // Leerzeichen ignorieren
+        haeufigkeit.put(c, haeufigkeit.getOrDefault(c, 0) + 1);
+    }
+}
+
+System.out.println(haeufigkeit);
+// {a=1, e=1, h=1, l=3, o=1, t=1, w=1}
+
+// Häufigster Buchstabe
+int maxCount = 0;
+char haeufigster = ' ';
+for (Map.Entry<Character, Integer> entry : haeufigkeit.entrySet()) {
+    if (entry.getValue() > maxCount) {
+        maxCount = entry.getValue();
+        haeufigster = entry.getKey();
+    }
+}
+
+System.out.println("Häufigster Buchstabe: " + haeufigster);
+// Output: Häufigster Buchstabe: l
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>🎓 Praktisches Beispiel 3: Schüler-Noten</h4>
+                <div class="code-block">
+// Schüler → Note
+HashMap<String, Double> noten = new HashMap<>();
+
+noten.put("Max Mustermann", 2.3);
+noten.put("Anna Schmidt", 1.7);
+noten.put("Peter Müller", 2.0);
+noten.put("Lisa Wagner", 1.3);
+
+// Durchschnitt berechnen
+double summe = 0;
+for (Double note : noten.values()) {
+    summe += note;
+}
+double durchschnitt = summe / noten.size();
+System.out.println("Notendurchschnitt: " + durchschnitt);
+
+// Beste Note
+double beste = Double.MAX_VALUE;
+String besterSchueler = "";
+for (Map.Entry<String, Double> entry : noten.entrySet()) {
+    if (entry.getValue() < beste) {
+        beste = entry.getValue();
+        besterSchueler = entry.getKey();
+    }
+}
+System.out.println("Beste Note: " + besterSchueler + " mit " + beste);
+                </div>
+            </div>
+
+            <!-- ========== TREEMAP ========== -->
+            <h3>6️⃣ TreeMap - Sortierte Key-Value Paare</h3>
+            
+            <div class="definition-box">
+                <strong>TreeMap&lt;K, V&gt;:</strong> Wie HashMap, aber die Schlüssel werden automatisch sortiert gespeichert. Basiert auf einem Red-Black-Tree.
+            </div>
+
+            <div class="algorithm-comparison">
+                <div class="algorithm-card">
+                    <h4>📋 Eigenschaften</h4>
+                    <ul>
+                        <li>✅ Implementiert SortedMap</li>
+                        <li>❌ Schlüssel eindeutig</li>
+                        <li>✅ Nach Schlüsseln sortiert!</li>
+                        <li>✅ Operationen: O(log n)</li>
+                        <li>❌ Langsamer als HashMap</li>
+                        <li>❌ Kein <code>null</code> als Schlüssel</li>
+                    </ul>
+                </div>
+                <div class="algorithm-card">
+                    <h4>🎯 Wann verwenden?</h4>
+                    <ul>
+                        <li>Schlüssel müssen sortiert sein</li>
+                        <li>Navigation durch Keys wichtig</li>
+                        <li>Bereich-Operationen nötig</li>
+                        <li>Geordnete Key-Value Zuordnung</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h4>💻 TreeMap Beispiele</h4>
+            
+            <div class="code-block">
+import java.util.TreeMap;
+import java.util.Map;
+
+public class TreeMapBeispiel {
+    public static void main(String[] args) {
+        TreeMap<String, Integer> punkte = new TreeMap<>();
+        
+        // ===== KEY-VALUE PAARE HINZUFÜGEN =====
+        punkte.put("Zara", 95);
+        punkte.put("Anna", 87);
+        punkte.put("Max", 92);
+        punkte.put("Bob", 78);
+        
+        System.out.println(punkte);
+        // Output: {Anna=87, Bob=78, Max=92, Zara=95}
+        // ✨ Automatisch nach Namen (Schlüssel) sortiert!
+        
+        // ===== NAVIGATIONSMETHODEN =====
+        String ersterKey = punkte.firstKey();    // "Anna"
+        String letzterKey = punkte.lastKey();    // "Zara"
+        
+        Map.Entry<String, Integer> erstesEntry = punkte.firstEntry();
+        System.out.println(erstesEntry.getKey() + ": " + erstesEntry.getValue());
+        // Anna: 87
+        
+        // ===== TEILBEREICHE =====
+        // Alle bis "Max" (exklusiv)
+        TreeMap<String, Integer> vorMax = 
+            new TreeMap<>(punkte.headMap("Max"));
+        System.out.println("Vor Max: " + vorMax);
+        // {Anna=87, Bob=78}
+        
+        // Alle ab "Max" (inklusiv)
+        TreeMap<String, Integer> abMax = 
+            new TreeMap<>(punkte.tailMap("Max"));
+        System.out.println("Ab Max: " + abMax);
+        // {Max=92, Zara=95}
+        
+        // ===== MIT ZAHLEN ALS SCHLÜSSEL =====
+        TreeMap<Integer, String> rang = new TreeMap<>();
+        rang.put(1, "Gold");
+        rang.put(3, "Bronze");
+        rang.put(2, "Silber");
+        
+        System.out.println(rang);
+        // {1=Gold, 2=Silber, 3=Bronze} - nach Rang sortiert!
+        
+        // Durchlaufen (bereits sortiert!)
+        for (Map.Entry<Integer, String> entry : rang.entrySet()) {
+            System.out.println("Platz " + entry.getKey() + ": " + entry.getValue());
+        }
+        // Platz 1: Gold
+        // Platz 2: Silber
+        // Platz 3: Bronze
+    }
+}
+            </div>
+
+            <div class="example-box">
+                <h4>🎓 Praktisches Beispiel: Termine sortiert</h4>
+                <div class="code-block">
+// Termine automatisch nach Datum sortiert
+TreeMap<String, String> termine = new TreeMap<>();
+
+termine.put("2024-03-15", "Zahnarzt");
+termine.put("2024-01-10", "Friseur");
+termine.put("2024-02-20", "Geburtstag");
+termine.put("2024-01-05", "Meeting");
+
+// Ausgabe (automatisch chronologisch!)
+for (Map.Entry<String, String> entry : termine.entrySet()) {
+    System.out.println(entry.getKey() + ": " + entry.getValue());
+}
+// Output:
+// 2024-01-05: Meeting
+// 2024-01-10: Friseur
+// 2024-02-20: Geburtstag
+// 2024-03-15: Zahnarzt
+
+// Nächster Termin
+Map.Entry<String, String> naechster = termine.firstEntry();
+System.out.println("Nächster Termin: " + naechster.getValue() + 
+                   " am " + naechster.getKey());
+                </div>
+            </div>
+
+            <!-- ========== VERGLEICH ALLER MAPS ========== -->
+            <h3>📊 HashMap vs. TreeMap - Der direkte Vergleich</h3>
+            
+            <table class="complexity-table">
+                <tr>
+                    <th>Aspekt</th>
+                    <th>HashMap</th>
+                    <th>TreeMap</th>
+                </tr>
+                <tr>
+                    <td><strong>Sortierung</strong></td>
+                    <td class="complexity-bad">Keine Reihenfolge</td>
+                    <td class="complexity-good">Nach Schlüsseln sortiert</td>
+                </tr>
+                <tr>
+                    <td><strong>Geschwindigkeit</strong></td>
+                    <td class="complexity-good">O(1) - sehr schnell ⚡</td>
+                    <td class="complexity-medium">O(log n) - langsamer</td>
+                </tr>
+                <tr>
+                    <td><strong>null-Schlüssel</strong></td>
+                    <td class="complexity-good">1x erlaubt</td>
+                    <td class="complexity-bad">Nicht erlaubt</td>
+                </tr>
+                <tr>
+                    <td><strong>Navigation</strong></td>
+                    <td class="complexity-bad">Keine</td>
+                    <td class="complexity-good">first(), last(), etc.</td>
+                </tr>
+                <tr>
+                    <td><strong>Speicher</strong></td>
+                    <td class="complexity-good">Weniger</td>
+                    <td class="complexity-bad">Mehr</td>
+                </tr>
+                <tr>
+                    <td><strong>Wann nutzen?</strong></td>
+                    <td class="complexity-good">Schnellster Zugriff</td>
+                    <td class="complexity-good">Sortierung wichtig</td>
+                </tr>
+            </table>
+
+            <!-- ========== ENTSCHEIDUNGSHILFE ========== -->
+            <h3>🎯 Welche Collection wann? - Entscheidungshilfe</h3>
+            
+            <div class="algorithm-comparison">
+                <div class="algorithm-card">
+                    <h4>📋 Brauche ich eine Liste?</h4>
+                    <p><strong>→ Duplikate erlaubt, Reihenfolge wichtig</strong></p>
+                    <ul>
+                        <li>Viel Lesen? → <strong>ArrayList</strong></li>
+                        <li>Viel Einfügen/Löschen? → <strong>LinkedList</strong></li>
+                    </ul>
+                </div>
+                
+                <div class="algorithm-card">
+                    <h4>🏷️ Brauche ich ein Set?</h4>
+                    <p><strong>→ Keine Duplikate, Eindeutigkeit wichtig</strong></p>
+                    <ul>
+                        <li>Nur eindeutig, schnell? → <strong>HashSet</strong></li>
+                        <li>Eindeutig UND sortiert? → <strong>TreeSet</strong></li>
+                    </ul>
+                </div>
+                
+                <div class="algorithm-card">
+                    <h4>🗺️ Brauche ich eine Map?</h4>
+                    <p><strong>→ Zuordnung Schlüssel zu Wert</strong></p>
+                    <ul>
+                        <li>Nur schneller Zugriff? → <strong>HashMap</strong></li>
+                        <li>Sortierte Schlüssel? → <strong>TreeMap</strong></li>
+                    </ul>
+                </div>
+                
+                <div class="algorithm-card">
+                    <h4>⚡ Brauche ich Stack/Queue?</h4>
+                    <p><strong>→ LIFO oder FIFO wichtig</strong></p>
+                    <ul>
+                        <li>Stack (LIFO)? → <strong>LinkedList</strong> mit push/pop</li>
+                        <li>Queue (FIFO)? → <strong>LinkedList</strong> mit offer/poll</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="warning-box">
+                <h4>💡 Faustregel fürs Abitur</h4>
+                <ul>
+                    <li><strong>ArrayList:</strong> "Ich brauche eine Liste mit schnellem Zugriff"</li>
+                    <li><strong>LinkedList:</strong> "Ich füge viel am Anfang/Ende ein"</li>
+                    <li><strong>HashSet:</strong> "Keine Duplikate, schnell suchen"</li>
+                    <li><strong>TreeSet:</strong> "Keine Duplikate, automatisch sortiert"</li>
+                    <li><strong>HashMap:</strong> "Wörterbuch-Zuordnung, schnell"</li>
+                    <li><strong>TreeMap:</strong> "Wörterbuch-Zuordnung, sortiert nach Keys"</li>
+                </ul>
+            </div>
+
+            <!-- ========== COLLECTIONS UTILITIES ========== -->
+            <h3>🛠️ Collections-Hilfsmethoden</h3>
             
             <div class="code-block">
 import java.util.*;
 
-// ArrayList - dynamisches Array
-ArrayList<String> liste = new ArrayList<>();
-liste.add("Element");
-liste.get(0);
-
-// HashSet - eindeutige Elemente
-HashSet<Integer> set = new HashSet<>();
-set.add(42);
-set.add(42);  // Duplikat wird ignoriert
-
-// HashMap - Key-Value
-HashMap<String, Integer> map = new HashMap<>();
-map.put("Schlüssel", 100);
-int wert = map.get("Schlüssel");
+public class CollectionsUtils {
+    public static void main(String[] args) {
+        ArrayList<Integer> liste = new ArrayList<>();
+        liste.add(5);
+        liste.add(2);
+        liste.add(8);
+        liste.add(1);
+        liste.add(9);
+        
+        // Sortieren
+        Collections.sort(liste);
+        System.out.println("Sortiert: " + liste);
+        // [1, 2, 5, 8, 9]
+        
+        // Umkehren
+        Collections.reverse(liste);
+        System.out.println("Umgekehrt: " + liste);
+        // [9, 8, 5, 2, 1]
+        
+        // Mischen
+        Collections.shuffle(liste);
+        System.out.println("Gemischt: " + liste);
+        // [5, 1, 9, 2, 8] (zufällig)
+        
+        // Maximum und Minimum
+        int max = Collections.max(liste);
+        int min = Collections.min(liste);
+        System.out.println("Max: " + max + ", Min: " + min);
+        
+        // Häufigkeit
+        liste.add(5);
+        liste.add(5);
+        int count = Collections.frequency(liste, 5);
+        System.out.println("5 kommt " + count + "x vor");
+        
+        // Binäre Suche (NUR bei sortierten Listen!)
+        Collections.sort(liste);
+        int index = Collections.binarySearch(liste, 5);
+        System.out.println("5 ist an Index: " + index);
+    }
+}
             </div>
         </section>
 
@@ -2020,5 +2916,3 @@ public static int fakultaet(int n) {
     </script>
 </body>
 </html>
-
-
