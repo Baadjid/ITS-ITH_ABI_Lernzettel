@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Algorithmen & Datenstrukturen - Abitur TG 2026</title>
+    <title>Algorithmen & Datenstrukturen - Erweitert - Abitur TG 2026</title>
     <style>
         * {
             margin: 0;
@@ -204,6 +204,50 @@
             margin: 1.5rem 0;
             text-align: center;
             border: 2px dashed var(--border-color);
+        }
+
+        .linked-list-visual {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+            flex-wrap: wrap;
+        }
+
+        .node-box {
+            background: white;
+            border: 3px solid var(--primary-color);
+            border-radius: 8px;
+            padding: 1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .node-data {
+            background: var(--accent-color);
+            color: white;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: bold;
+            min-width: 50px;
+            text-align: center;
+        }
+
+        .node-arrow {
+            font-size: 1.5rem;
+            color: var(--primary-color);
+        }
+
+        .null-box {
+            background: #fee2e2;
+            color: #991b1b;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-weight: bold;
+            border: 2px solid #ef4444;
         }
 
         .array-visualization {
@@ -454,11 +498,46 @@
             transform: translateY(0);
         }
 
-        input[type="number"] {
+        input[type="number"], input[type="text"] {
             padding: 0.5rem;
             border: 1px solid var(--border-color);
             border-radius: 4px;
             font-size: 1rem;
+        }
+
+        .comparison-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+
+        .comparison-card {
+            background: var(--bg-light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            border: 2px solid var(--border-color);
+        }
+
+        .comparison-card h4 {
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+        }
+
+        .pros-cons {
+            margin-top: 1rem;
+        }
+
+        .pros-cons h5 {
+            margin-bottom: 0.5rem;
+        }
+
+        .pros {
+            color: var(--success-color);
+        }
+
+        .cons {
+            color: var(--danger-color);
         }
 
         @media (max-width: 768px) {
@@ -483,9 +562,17 @@
                 grid-template-columns: 1fr;
             }
 
+            .comparison-grid {
+                grid-template-columns: 1fr;
+            }
+
             .navigation {
                 flex-direction: column;
                 gap: 1rem;
+            }
+
+            .linked-list-visual {
+                flex-direction: column;
             }
         }
     </style>
@@ -495,83 +582,103 @@
         <div class="breadcrumb">
             <a href="index.html">🏠 Startseite</a> > 
             <a href="programmierung-grundlagen.html">💻 Grundlagen der Programmentwicklung</a> > 
-            <strong>📊 Algorithmen & Datenstrukturen</strong>
+            <strong>📊 Algorithmen & Datenstrukturen (Erweitert)</strong>
         </div>
 
         <header class="header">
             <h1>📊 Algorithmen & Datenstrukturen</h1>
-            <p>Die Grundlagen effizienter Programmierung verstehen und anwenden</p>
+            <p>Vollständiger Guide mit Generics, verketteten Listen und inneren Klassen</p>
         </header>
 
         <div class="intro-box">
-            <h3>🎯 Was du in diesem Kapitel lernst</h3>
-            <p>Algorithmen und Datenstrukturen sind das Herzstück der Informatik. Du lernst, wie Computer Probleme systematisch lösen und wie Daten effizient organisiert werden können. Nach diesem Kapitel weißt du, warum manche Programme schneller laufen als andere und wie du selbst effiziente Lösungen programmieren kannst.</p>
+            <h3>🎯 Was du in diesem erweiterten Kapitel lernst</h3>
+            <p>Dieses Kapitel deckt ALLE wichtigen Konzepte für dein Abitur ab: von den Grundlagen über Generics, verkettete Listen mit vollständiger Implementierung, innere Klassen (static vs. non-static), Java Collections Framework bis hin zu fortgeschrittenen Algorithmen. Nach diesem Kapitel bist du bestens vorbereitet!</p>
         </div>
 
-        <!-- 1. Was sind Algorithmen? -->
+        <!-- INHALTSVERZEICHNIS -->
+        <section class="section">
+            <h2>📑 Inhaltsverzeichnis</h2>
+            <div class="algorithm-comparison">
+                <div class="algorithm-card">
+                    <h4>Grundlagen</h4>
+                    <ul>
+                        <li>1. Algorithmen Grundlagen</li>
+                        <li>2. Datenstrukturen Grundlagen</li>
+                        <li>3. Arrays (1D & 2D)</li>
+                    </ul>
+                </div>
+                <div class="algorithm-card">
+                    <h4>Generics & OOP</h4>
+                    <ul>
+                        <li>4. Generics verstehen</li>
+                        <li>5. Innere Klassen (static vs. non-static)</li>
+                        <li>6. Verkettete Listen mit Generics</li>
+                    </ul>
+                </div>
+                <div class="algorithm-card">
+                    <h4>Dynamische Strukturen</h4>
+                    <ul>
+                        <li>7. Stack & Queue</li>
+                        <li>8. Java Collections Framework</li>
+                        <li>9. Binärbäume</li>
+                    </ul>
+                </div>
+                <div class="algorithm-card">
+                    <h4>Algorithmen</h4>
+                    <ul>
+                        <li>10. Sortieralgorithmen</li>
+                        <li>11. Suchalgorithmen</li>
+                        <li>12. Rekursion vs. Iteration</li>
+                    </ul>
+                </div>
+            </div>
+        </section>
+
+        <!-- 1. Algorithmen Grundlagen (kurz) -->
         <section class="section">
             <h2>🧮 1. Was sind Algorithmen?</h2>
             
             <div class="definition-box">
-                <strong>Definition:</strong> Ein Algorithmus ist eine Verarbeitungsvorschrift, die aus einer endlichen Folge von eindeutig ausführbaren Anweisungen besteht, mit der man eine Vielzahl gleichartiger Aufgaben lösen kann.
+                <strong>Definition:</strong> Ein Algorithmus ist eine Verarbeitungsvorschrift aus endlich vielen eindeutigen Anweisungen zur Lösung einer Aufgabe.
             </div>
 
-            <h3>📋 Die Eigenschaften eines Algorithmus</h3>
-            
-            <h4>1. Eindeutigkeit</h4>
-            <p>Jeder Schritt des Algorithmus ist klar definiert. Es gibt keine Mehrdeutigkeiten oder Interpretationsspielräume.</p>
-            
-            <div class="example-box">
-                <strong>Beispiel:</strong> "Addiere 5 zu einer Zahl" ist eindeutig. "Addiere etwas zu einer Zahl" wäre nicht eindeutig.
-            </div>
+            <h3>📋 Eigenschaften</h3>
+            <ul>
+                <li><strong>Eindeutigkeit:</strong> Jeder Schritt ist klar definiert</li>
+                <li><strong>Endlichkeit:</strong> Algorithmus terminiert nach endlich vielen Schritten</li>
+                <li><strong>Ausführbarkeit:</strong> Jede Anweisung ist ausführbar</li>
+                <li><strong>Determinismus:</strong> Gleiche Eingaben → Gleiche Ergebnisse</li>
+            </ul>
 
-            <h4>2. Endlichkeit (Finitheit)</h4>
-            <p>Ein Algorithmus besteht aus endlich vielen Anweisungen und muss nach endlich vielen Schritten terminieren.</p>
-
-            <h4>3. Ausführbarkeit (Effektivität)</h4>
-            <p>Jede Anweisung muss für den Ausführenden (Computer oder Mensch) verständlich und ausführbar sein.</p>
-
-            <h4>4. Determinismus</h4>
-            <p>Bei gleichen Eingaben liefert der Algorithmus immer die gleichen Ergebnisse.</p>
-
-            <h3>🏗️ Grundbausteine von Algorithmen</h3>
-            
-            <div class="step-by-step">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div>
-                        <strong>Sequenz:</strong> Anweisungen werden nacheinander abgearbeitet
-                        <div class="code-block">
-<span class="keyword">int</span> <span class="variable">a</span> <span class="operator">=</span> <span class="number">5</span>;
-<span class="keyword">int</span> <span class="variable">b</span> <span class="operator">=</span> <span class="number">10</span>;
-<span class="keyword">int</span> <span class="variable">summe</span> <span class="operator">=</span> <span class="variable">a</span> <span class="operator">+</span> <span class="variable">b</span>; <span class="comment">// Wird nach den oberen Zeilen ausgeführt</span>
-                        </div>
+            <h3>🏗️ Grundbausteine</h3>
+            <div class="algorithm-comparison">
+                <div class="algorithm-card">
+                    <h4>Sequenz</h4>
+                    <p>Anweisungen nacheinander</p>
+                    <div class="code-block">
+int a = 5;
+int b = 10;
+int summe = a + b;
                     </div>
                 </div>
-
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div>
-                        <strong>Verzweigung:</strong> Abhängig von Bedingungen werden unterschiedliche Wege genommen
-                        <div class="code-block">
-<span class="keyword">if</span> (<span class="variable">alter</span> <span class="operator">>=</span> <span class="number">18</span>) {
-    System.out.println(<span class="string">"Du darfst wählen"</span>);
-} <span class="keyword">else</span> {
-    System.out.println(<span class="string">"Du bist noch zu jung"</span>);
+                <div class="algorithm-card">
+                    <h4>Verzweigung</h4>
+                    <p>Bedingte Ausführung</p>
+                    <div class="code-block">
+if (alter >= 18) {
+    System.out.println("Volljährig");
+} else {
+    System.out.println("Minderjährig");
 }
-                        </div>
                     </div>
                 </div>
-
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div>
-                        <strong>Schleife:</strong> Anweisungen werden wiederholt ausgeführt
-                        <div class="code-block">
-<span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; <span class="variable">i</span> <span class="operator">&lt;</span> <span class="number">5</span>; <span class="variable">i</span><span class="operator">++</span>) {
-    System.out.println(<span class="string">"Durchlauf: "</span> <span class="operator">+</span> <span class="variable">i</span>);
+                <div class="algorithm-card">
+                    <h4>Schleife</h4>
+                    <p>Wiederholte Ausführung</p>
+                    <div class="code-block">
+for (int i = 0; i < 5; i++) {
+    System.out.println(i);
 }
-                        </div>
                     </div>
                 </div>
             </div>
@@ -579,49 +686,46 @@
 
         <!-- 2. Datenstrukturen Grundlagen -->
         <section class="section">
-            <h2>📦 2. Was sind Datenstrukturen?</h2>
+            <h2>📦 2. Datenstrukturen Grundlagen</h2>
             
             <div class="definition-box">
-                <strong>Definition:</strong> Datenstrukturen sind Objekte zur Speicherung und Organisation von Daten. Sie bestimmen, wie Daten angeordnet, verknüpft und verwaltet werden, um effizienten Zugriff zu ermöglichen.
+                <strong>Datenstruktur:</strong> Ein Konzept zur Speicherung und Organisation von Daten für effizienten Zugriff und Verarbeitung.
             </div>
 
-            <h3>📊 Statische vs. Dynamische Datenstrukturen</h3>
-            
-            <div class="algorithm-comparison">
-                <div class="algorithm-card">
+            <div class="comparison-grid">
+                <div class="comparison-card">
                     <h4>📏 Statische Datenstrukturen</h4>
                     <ul>
-                        <li>Haben eine <strong>festgelegte Größe</strong></li>
-                        <li>Größe wird bei der Erstellung definiert</li>
-                        <li>Schneller Zugriff durch feste Speicherplätze</li>
-                        <li><strong>Beispiel:</strong> Arrays</li>
+                        <li>Feste Größe bei Erstellung</li>
+                        <li>Schneller Zugriff</li>
+                        <li>Weniger flexibel</li>
                     </ul>
+                    <strong>Beispiel:</strong> Arrays
                 </div>
-                
-                <div class="algorithm-card">
+                <div class="comparison-card">
                     <h4>📈 Dynamische Datenstrukturen</h4>
                     <ul>
-                        <li>Größe kann sich <strong>zur Laufzeit ändern</strong></li>
-                        <li>Flexibler, aber oft etwas langsamer</li>
-                        <li>Speicher wird nach Bedarf allokiert</li>
-                        <li><strong>Beispiele:</strong> Listen, Stacks, Queues</li>
+                        <li>Größe ändert sich zur Laufzeit</li>
+                        <li>Flexibler</li>
+                        <li>Etwas langsamer</li>
                     </ul>
+                    <strong>Beispiele:</strong> Listen, Stacks, Queues
                 </div>
             </div>
         </section>
 
         <!-- 3. Arrays -->
         <section class="section">
-            <h2>📋 3. Arrays (Felder) - Die Grundlage</h2>
+            <h2>📋 3. Arrays - Die Grundlage</h2>
             
             <div class="definition-box">
-                <strong>Array:</strong> Ein Array ist eine statische Datenstruktur, die mehrere Elemente gleichen Datentyps in einer festen Reihenfolge speichert. Jedes Element hat einen Index (Position).
+                <strong>Array:</strong> Eine statische Datenstruktur mit fester Größe, die mehrere Elemente gleichen Datentyps speichert. Zugriff über Index (beginnt bei 0).
             </div>
 
             <h3>🔢 Eindimensionale Arrays</h3>
             
             <div class="visual-demo">
-                <h4>Visualisierung eines int-Arrays mit 5 Elementen:</h4>
+                <h4>Visualisierung: int[] zahlen = {42, 17, 8, -5, 23}</h4>
                 <div class="array-visualization">
                     <div>
                         <div class="array-cell">42</div>
@@ -646,349 +750,834 @@
                 </div>
             </div>
 
-            <h4>💻 Array-Erstellung und -Verwendung in Java</h4>
             <div class="code-block">
-<span class="comment">// Array deklarieren und erstellen</span>
-<span class="keyword">int</span>[] <span class="variable">zahlen</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">5</span>]; <span class="comment">// Array mit 5 Plätzen</span>
+// Array erstellen
+int[] zahlen = new int[5];  // 5 Plätze
 
-<span class="comment">// Werte zuweisen</span>
-<span class="variable">zahlen</span>[<span class="number">0</span>] <span class="operator">=</span> <span class="number">42</span>;  <span class="comment">// Erstes Element</span>
-<span class="variable">zahlen</span>[<span class="number">1</span>] <span class="operator">=</span> <span class="number">17</span>;  <span class="comment">// Zweites Element</span>
-<span class="variable">zahlen</span>[<span class="number">4</span>] <span class="operator">=</span> <span class="number">23</span>;  <span class="comment">// Letztes Element (Index 4!)</span>
+// Werte zuweisen
+zahlen[0] = 42;
+zahlen[1] = 17;
 
-<span class="comment">// Direkte Initialisierung</span>
-<span class="keyword">int</span>[] <span class="variable">fertigeZahlen</span> <span class="operator">=</span> {<span class="number">42</span>, <span class="number">17</span>, <span class="number">8</span>, <span class="operator">-</span><span class="number">5</span>, <span class="number">23</span>};
+// Direkte Initialisierung
+int[] fertig = {42, 17, 8, -5, 23};
 
-<span class="comment">// Alle Elemente ausgeben</span>
-<span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; <span class="variable">i</span> <span class="operator">&lt;</span> <span class="variable">zahlen</span>.length; <span class="variable">i</span><span class="operator">++</span>) {
-    System.out.println(<span class="string">"Element "</span> <span class="operator">+</span> <span class="variable">i</span> <span class="operator">+</span> <span class="string">": "</span> <span class="operator">+</span> <span class="variable">zahlen</span>[<span class="variable">i</span>]);
+// Durchlaufen
+for (int i = 0; i < zahlen.length; i++) {
+    System.out.println(zahlen[i]);
+}
+
+// Enhanced for-loop
+for (int zahl : zahlen) {
+    System.out.println(zahl);
 }
             </div>
 
             <div class="warning-box">
-                <strong>⚠️ Wichtig:</strong> Array-Indizes beginnen bei 0! Ein Array mit 5 Elementen hat die Indizes 0, 1, 2, 3, 4. Der Zugriff auf Index 5 würde einen ArrayIndexOutOfBoundsException-Fehler verursachen.
-            </div>
-
-            <h3>📊 Zweidimensionale Arrays</h3>
-            
-            <p>Stell dir eine Tabelle vor - das ist ein zweidimensionales Array:</p>
-            
-            <div class="visual-demo">
-                <h4>2D-Array (3×3 Matrix):</h4>
-                <div style="display: grid; grid-template-columns: repeat(3, 50px); gap: 4px; justify-content: center;">
-                    <div class="array-cell">1</div>
-                    <div class="array-cell">2</div>
-                    <div class="array-cell">3</div>
-                    <div class="array-cell">4</div>
-                    <div class="array-cell">5</div>
-                    <div class="array-cell">6</div>
-                    <div class="array-cell">7</div>
-                    <div class="array-cell">8</div>
-                    <div class="array-cell">9</div>
-                </div>
-            </div>
-
-            <div class="code-block">
-<span class="comment">// 2D-Array erstellen (3 Zeilen, 3 Spalten)</span>
-<span class="keyword">int</span>[][] <span class="variable">matrix</span> <span class="operator">=</span> <span class="keyword">new</span> <span class="keyword">int</span>[<span class="number">3</span>][<span class="number">3</span>];
-
-<span class="comment">// Oder direkt initialisieren</span>
-<span class="keyword">int</span>[][] <span class="variable">fertigeMatrix</span> <span class="operator">=</span> {
-    {<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>},
-    {<span class="number">4</span>, <span class="number">5</span>, <span class="number">6</span>},
-    {<span class="number">7</span>, <span class="number">8</span>, <span class="number">9</span>}
-};
-
-<span class="comment">// Zugriff auf Element in Zeile 1, Spalte 2</span>
-<span class="keyword">int</span> <span class="variable">element</span> <span class="operator">=</span> <span class="variable">matrix</span>[<span class="number">1</span>][<span class="number">2</span>]; <span class="comment">// Gibt 6 zurück</span>
-
-<span class="comment">// Alle Elemente durchlaufen</span>
-<span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">zeile</span> <span class="operator">=</span> <span class="number">0</span>; <span class="variable">zeile</span> <span class="operator">&lt;</span> <span class="variable">matrix</span>.length; <span class="variable">zeile</span><span class="operator">++</span>) {
-    <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">spalte</span> <span class="operator">=</span> <span class="number">0</span>; <span class="variable">spalte</span> <span class="operator">&lt;</span> <span class="variable">matrix</span>[<span class="variable">zeile</span>].length; <span class="variable">spalte</span><span class="operator">++</span>) {
-        System.out.print(<span class="variable">matrix</span>[<span class="variable">zeile</span>][<span class="variable">spalte</span>] <span class="operator">+</span> <span class="string">" "</span>);
-    }
-    System.out.println(); <span class="comment">// Neue Zeile</span>
-}
+                <strong>⚠️ Wichtig:</strong> Array-Indizes beginnen bei 0! Ein Array mit 5 Elementen hat Indizes 0-4.
             </div>
         </section>
 
-        <!-- 4. Dynamische Datenstrukturen -->
+        <!-- 4. GENERICS - NEU UND AUSFÜHRLICH -->
         <section class="section">
-            <h2>🔄 4. Dynamische Datenstrukturen</h2>
-
-            <h3>📚 Stapel (Stack) - LIFO-Prinzip</h3>
+            <h2>🎁 4. Generics - Flexibler Code für jeden Datentyp</h2>
             
             <div class="definition-box">
-                <strong>Stack (Stapel):</strong> Funktioniert nach dem LIFO-Prinzip (Last In, First Out). Wie ein Stapel Teller - das zuletzt draufgelegte Element wird als erstes wieder weggenommen.
+                <strong>Generics:</strong> Ermöglichen es, Klassen und Methoden zu schreiben, die mit verschiedenen Datentypen arbeiten können, ohne den Code zu duplizieren. Der Typ wird als Parameter übergeben.
+            </div>
+
+            <h3>🤔 Warum Generics?</h3>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <h4>❌ Ohne Generics</h4>
+                    <div class="code-block">
+// Separate Klassen für jeden Typ
+class StringListe {
+    String[] daten;
+    // ...
+}
+
+class IntegerListe {
+    Integer[] daten;
+    // ...
+}
+
+class AutoListe {
+    Auto[] daten;
+    // ...
+}
+
+// Code-Duplikation!
+                    </div>
+                </div>
+                <div class="comparison-card">
+                    <h4>✅ Mit Generics</h4>
+                    <div class="code-block">
+// EINE Klasse für ALLE Typen!
+class Liste<T> {
+    T[] daten;
+    // ...
+}
+
+// Verwendung
+Liste<String> strings = new Liste<>();
+Liste<Integer> zahlen = new Liste<>();
+Liste<Auto> autos = new Liste<>();
+
+// Kein Code dupliziert!
+                    </div>
+                </div>
+            </div>
+
+            <h3>📝 Generics Syntax</h3>
+            
+            <div class="code-block">
+// T = Type Parameter (Platzhalter für jeden Typ)
+public class Box<T> {
+    private T inhalt;
+    
+    public void setInhalt(T inhalt) {
+        this.inhalt = inhalt;
+    }
+    
+    public T getInhalt() {
+        return inhalt;
+    }
+}
+
+// Verwendung
+Box<String> stringBox = new Box<>();
+stringBox.setInhalt("Hallo");
+String s = stringBox.getInhalt();  // Kein Cast nötig!
+
+Box<Integer> intBox = new Box<>();
+intBox.setInhalt(42);
+Integer i = intBox.getInhalt();
+            </div>
+
+            <h3>🎯 Type Parameter Konventionen</h3>
+            
+            <table class="complexity-table">
+                <tr>
+                    <th>Buchstabe</th>
+                    <th>Bedeutung</th>
+                    <th>Beispiel</th>
+                </tr>
+                <tr>
+                    <td><strong>T</strong></td>
+                    <td>Type (allgemeiner Typ)</td>
+                    <td>class Box&lt;T&gt;</td>
+                </tr>
+                <tr>
+                    <td><strong>E</strong></td>
+                    <td>Element</td>
+                    <td>ArrayList&lt;E&gt;</td>
+                </tr>
+                <tr>
+                    <td><strong>K</strong></td>
+                    <td>Key (Schlüssel)</td>
+                    <td>HashMap&lt;K, V&gt;</td>
+                </tr>
+                <tr>
+                    <td><strong>V</strong></td>
+                    <td>Value (Wert)</td>
+                    <td>HashMap&lt;K, V&gt;</td>
+                </tr>
+            </table>
+
+            <h3>✨ Vorteile von Generics</h3>
+            
+            <div class="example-box">
+                <h4>1. Typ-Sicherheit zur Compile-Zeit</h4>
+                <div class="code-block">
+ArrayList<String> liste = new ArrayList<>();
+liste.add("Text");     // ✅ OK
+liste.add(123);        // ❌ FEHLER! Compiler fängt es ab
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>2. Kein Casting nötig</h4>
+                <div class="code-block">
+// Ohne Generics
+ArrayList liste = new ArrayList();
+liste.add("Text");
+String s = (String) liste.get(0);  // Cast nötig
+
+// Mit Generics
+ArrayList<String> liste = new ArrayList<>();
+liste.add("Text");
+String s = liste.get(0);  // Kein Cast nötig!
+                </div>
+            </div>
+
+            <div class="example-box">
+                <h4>3. Code-Wiederverwendung</h4>
+                <p>Eine generische Klasse funktioniert mit allen Typen!</p>
+            </div>
+
+            <h3>🔧 Generische Methoden</h3>
+            
+            <div class="code-block">
+public class Utils {
+    
+    // Generische Methode zum Ausgeben von Arrays
+    public static <T> void printArray(T[] array) {
+        for (T element : array) {
+            System.out.print(element + " ");
+        }
+        System.out.println();
+    }
+    
+    // Verwendung
+    public static void main(String[] args) {
+        Integer[] zahlen = {1, 2, 3, 4, 5};
+        String[] namen = {"Anna", "Bob", "Clara"};
+        
+        printArray(zahlen);  // 1 2 3 4 5
+        printArray(namen);   // Anna Bob Clara
+    }
+}
+            </div>
+
+            <div class="warning-box">
+                <strong>⚠️ Wichtig:</strong> Generics funktionieren nur mit Objekttypen, nicht mit primitiven Typen!<br>
+                <strong>Falsch:</strong> ArrayList&lt;int&gt;<br>
+                <strong>Richtig:</strong> ArrayList&lt;Integer&gt; (Wrapper-Klasse)
+            </div>
+        </section>
+
+        <!-- 5. INNERE KLASSEN - NEU -->
+        <section class="section">
+            <h2>🏠 5. Innere Klassen - Static vs. Non-Static</h2>
+            
+            <div class="definition-box">
+                <strong>Innere Klasse:</strong> Eine Klasse, die innerhalb einer anderen Klasse definiert ist. Es gibt zwei Haupttypen: <strong>static</strong> und <strong>non-static</strong> (innere Klassen).
+            </div>
+
+            <h3>🔍 Der entscheidende Unterschied</h3>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <h4>❌ Non-Static Innere Klasse</h4>
+                    <div class="code-block">
+public class Äußere {
+    private int wert = 42;
+    
+    // Non-static innere Klasse
+    class Innere {
+        void zeigen() {
+            // ✅ Kann auf wert zugreifen!
+            System.out.println(wert);
+        }
+    }
+}
+
+// Verwendung
+Äußere äußere = new Äußere();
+Äußere.Innere innere = äußere.new Innere();
+// Braucht Instanz von Äußere!
+                    </div>
+                    <div class="pros-cons">
+                        <h5 class="pros">✅ Vorteile:</h5>
+                        <ul>
+                            <li>Zugriff auf alle Felder der äußeren Klasse</li>
+                            <li>Logisch zur Instanz gehörend</li>
+                        </ul>
+                        <h5 class="cons">❌ Nachteile:</h5>
+                        <ul>
+                            <li>Braucht äußere Instanz</li>
+                            <li>Versteckte Referenz (mehr Speicher)</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="comparison-card">
+                    <h4>✅ Static Innere Klasse</h4>
+                    <div class="code-block">
+public class Äußere {
+    private int wert = 42;
+    
+    // Static innere Klasse
+    static class Innere {
+        void zeigen() {
+            // ❌ Kann NICHT auf wert zugreifen!
+            // System.out.println(wert);
+        }
+    }
+}
+
+// Verwendung
+Äußere.Innere innere = new Äußere.Innere();
+// Braucht KEINE Instanz von Äußere!
+                    </div>
+                    <div class="pros-cons">
+                        <h5 class="pros">✅ Vorteile:</h5>
+                        <ul>
+                            <li>Unabhängig von äußerer Instanz</li>
+                            <li>Weniger Speicher</li>
+                            <li>Kann in static Methoden verwendet werden</li>
+                        </ul>
+                        <h5 class="cons">❌ Nachteile:</h5>
+                        <ul>
+                            <li>Kein Zugriff auf Instanz-Felder</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <h3>🎯 Praktisches Beispiel: Warum Auto static sein muss</h3>
+            
+            <div class="code-block">
+public class Generics<T> {
+    private Node<T> head;
+    
+    // Auto als STATIC - funktioniert in main()
+    static class Auto {
+        String FGN, Besitzer;
+        
+        public Auto(String FGN, String Besitzer) {
+            this.FGN = FGN;
+            this.Besitzer = Besitzer;
+        }
+        
+        @Override
+        public String toString() {
+            return "Auto[" + FGN + ", " + Besitzer + "]";
+        }
+    }
+    
+    public static void main(String[] args) {
+        // main ist static!
+        // Wir können Auto hier nur nutzen, weil Auto auch static ist
+        Generics<Auto> autoListe = new Generics<>();
+        autoListe.add(new Auto("MH-AB 123", "Max"));
+        autoListe.add(new Auto("MH-CD 456", "Anna"));
+    }
+}
+            </div>
+
+            <div class="example-box">
+                <h4>💡 Wann was verwenden?</h4>
+                <ul>
+                    <li><strong>Non-static:</strong> Wenn die innere Klasse auf Instanz-Felder der äußeren Klasse zugreifen muss</li>
+                    <li><strong>Static:</strong> Wenn die innere Klasse unabhängig ist (wie Auto, Node, etc.)</li>
+                </ul>
+            </div>
+
+            <h3>📊 Vergleichstabelle</h3>
+            
+            <table class="complexity-table">
+                <tr>
+                    <th>Aspekt</th>
+                    <th>Non-Static</th>
+                    <th>Static</th>
+                </tr>
+                <tr>
+                    <td>Braucht äußere Instanz?</td>
+                    <td class="complexity-bad">Ja</td>
+                    <td class="complexity-good">Nein</td>
+                </tr>
+                <tr>
+                    <td>Zugriff auf Instanz-Felder?</td>
+                    <td class="complexity-good">Ja</td>
+                    <td class="complexity-bad">Nein</td>
+                </tr>
+                <tr>
+                    <td>Zugriff auf static Felder?</td>
+                    <td class="complexity-good">Ja</td>
+                    <td class="complexity-good">Ja</td>
+                </tr>
+                <tr>
+                    <td>Verwendbar in static Methoden?</td>
+                    <td class="complexity-bad">Nein</td>
+                    <td class="complexity-good">Ja</td>
+                </tr>
+                <tr>
+                    <td>Speicherverbrauch</td>
+                    <td class="complexity-bad">Höher</td>
+                    <td class="complexity-good">Niedriger</td>
+                </tr>
+            </table>
+        </section>
+
+        <!-- 6. VERKETTETE LISTEN MIT GENERICS - HAUPTTEIL -->
+        <section class="section">
+            <h2>🔗 6. Verkettete Listen mit Generics - Vollständig</h2>
+            
+            <div class="definition-box">
+                <strong>Verkettete Liste (Linked List):</strong> Eine dynamische Datenstruktur, bei der Elemente (Knoten) über Zeiger/Referenzen miteinander verbunden sind. Jeder Knoten enthält Daten und einen Verweis auf den nächsten Knoten.
+            </div>
+
+            <h3>📐 Struktur einer verketteten Liste</h3>
+            
+            <div class="visual-demo">
+                <h4>Visualisierung:</h4>
+                <div class="linked-list-visual">
+                    <div style="font-weight: bold; color: var(--primary-color);">head →</div>
+                    <div class="node-box">
+                        <div class="node-data">"Hallo"</div>
+                        <div>→</div>
+                    </div>
+                    <div class="node-box">
+                        <div class="node-data">"Welt"</div>
+                        <div>→</div>
+                    </div>
+                    <div class="node-box">
+                        <div class="node-data">"!"</div>
+                        <div>→</div>
+                    </div>
+                    <div class="null-box">null</div>
+                </div>
+                <p style="margin-top: 1rem;">Jeder Knoten hat: <strong>Daten</strong> und <strong>Verweis auf nächsten Knoten</strong></p>
+            </div>
+
+            <h3>🏗️ Node-Klasse (Der Baustein)</h3>
+            
+            <div class="code-block">
+// Node als innere Klasse
+class Node<T> {
+    T data;           // Die eigentlichen Daten
+    Node<T> next;     // Verweis auf nächsten Knoten
+    
+    public Node(T data) {
+        this.data = data;
+        this.next = null;
+    }
+}
+            </div>
+
+            <h3>💻 Vollständige LinkedList-Implementierung</h3>
+            
+            <div class="code-block">
+public class LinkedList<T> {
+    private Node<T> head;  // Erstes Element
+    private int size;      // Größe der Liste
+    
+    // ========== INNERE NODE-KLASSE ==========
+    private class Node<T> {
+        T data;
+        Node<T> next;
+        
+        public Node(T data) {
+            this.data = data;
+            this.next = null;
+        }
+    }
+    
+    // ========== KONSTRUKTOR ==========
+    public LinkedList() {
+        this.head = null;
+        this.size = 0;
+    }
+    
+    // ========== 1. ELEMENT AM ENDE HINZUFÜGEN ==========
+    public void add(T element) {
+        Node<T> newNode = new Node<>(element);
+        
+        if (head == null) {
+            // Liste ist leer
+            head = newNode;
+        } else {
+            // Durchlaufe bis zum letzten Knoten
+            Node<T> current = head;
+            while (current.next != null) {
+                current = current.next;
+            }
+            current.next = newNode;  // Neuen Knoten anhängen
+        }
+        size++;
+    }
+    
+    // ========== 2. ELEMENT AM ANFANG HINZUFÜGEN ==========
+    public void addFirst(T element) {
+        Node<T> newNode = new Node<>(element);
+        newNode.next = head;  // Neuer Knoten zeigt auf alten head
+        head = newNode;       // head wird neuer Knoten
+        size++;
+    }
+    
+    // ========== 3. ELEMENT AN POSITION EINFÜGEN ==========
+    public void addAt(int index, T element) {
+        if (index < 0 || index > size) {
+            throw new IndexOutOfBoundsException("Index: " + index);
+        }
+        
+        if (index == 0) {
+            addFirst(element);
+            return;
+        }
+        
+        Node<T> newNode = new Node<>(element);
+        Node<T> current = head;
+        
+        // Gehe zu Position index-1
+        for (int i = 0; i < index - 1; i++) {
+            current = current.next;
+        }
+        
+        newNode.next = current.next;
+        current.next = newNode;
+        size++;
+    }
+    
+    // ========== 4. ELEMENT ENTFERNEN ==========
+    public boolean remove(T element) {
+        if (head == null) return false;
+        
+        // Falls erstes Element gelöscht werden soll
+        if (head.data.equals(element)) {
+            head = head.next;
+            size--;
+            return true;
+        }
+        
+        // Suche Element in der Liste
+        Node<T> current = head;
+        while (current.next != null) {
+            if (current.next.data.equals(element)) {
+                current.next = current.next.next;
+                size--;
+                return true;
+            }
+            current = current.next;
+        }
+        
+        return false;
+    }
+    
+    // ========== 5. ELEMENT AN INDEX ENTFERNEN ==========
+    public T removeAt(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index: " + index);
+        }
+        
+        if (index == 0) {
+            T data = head.data;
+            head = head.next;
+            size--;
+            return data;
+        }
+        
+        Node<T> current = head;
+        for (int i = 0; i < index - 1; i++) {
+            current = current.next;
+        }
+        
+        T data = current.next.data;
+        current.next = current.next.next;
+        size--;
+        return data;
+    }
+    
+    // ========== 6. ELEMENT SUCHEN ==========
+    public boolean contains(T element) {
+        Node<T> current = head;
+        while (current != null) {
+            if (current.data.equals(element)) {
+                return true;
+            }
+            current = current.next;
+        }
+        return false;
+    }
+    
+    // ========== 7. ELEMENT AN INDEX ABRUFEN ==========
+    public T get(int index) {
+        if (index < 0 || index >= size) {
+            throw new IndexOutOfBoundsException("Index: " + index);
+        }
+        
+        Node<T> current = head;
+        for (int i = 0; i < index; i++) {
+            current = current.next;
+        }
+        return current.data;
+    }
+    
+    // ========== 8. LISTE ANZEIGEN ==========
+    public void display() {
+        if (head == null) {
+            System.out.println("[]");
+            return;
+        }
+        
+        Node<T> current = head;
+        System.out.print("[");
+        while (current != null) {
+            System.out.print(current.data);
+            if (current.next != null) {
+                System.out.print(" -> ");
+            }
+            current = current.next;
+        }
+        System.out.println("]");
+    }
+    
+    // ========== 9. GRÖSSE ==========
+    public int size() {
+        return size;
+    }
+    
+    // ========== 10. IST LEER? ==========
+    public boolean isEmpty() {
+        return head == null;
+    }
+    
+    // ========== 11. LISTE LEEREN ==========
+    public void clear() {
+        head = null;
+        size = 0;
+    }
+}
+            </div>
+
+            <h3>🎮 Verwendungsbeispiele</h3>
+            
+            <div class="code-block">
+public class Main {
+    public static void main(String[] args) {
+        
+        // ===== STRING-LISTE =====
+        LinkedList<String> namen = new LinkedList<>();
+        namen.add("Anna");
+        namen.add("Bob");
+        namen.add("Clara");
+        namen.addFirst("Zara");  // Am Anfang
+        
+        System.out.println("Namen:");
+        namen.display();  // [Zara -> Anna -> Bob -> Clara]
+        
+        namen.remove("Bob");
+        namen.display();  // [Zara -> Anna -> Clara]
+        
+        System.out.println("Enthält Anna? " + namen.contains("Anna"));
+        System.out.println("Element an Index 1: " + namen.get(1));
+        
+        
+        // ===== INTEGER-LISTE =====
+        LinkedList<Integer> zahlen = new LinkedList<>();
+        zahlen.add(10);
+        zahlen.add(20);
+        zahlen.add(30);
+        zahlen.addAt(1, 15);  // An Position 1
+        
+        System.out.println("\nZahlen:");
+        zahlen.display();  // [10 -> 15 -> 20 -> 30]
+        
+        
+        // ===== AUTO-LISTE =====
+        LinkedList<Auto> autos = new LinkedList<>();
+        autos.add(new Auto("MH-AB 123", "Max"));
+        autos.add(new Auto("MH-CD 456", "Anna"));
+        autos.add(new Auto("MH-EF 789", "Peter"));
+        
+        System.out.println("\nAutos:");
+        autos.display();
+        System.out.println("Anzahl: " + autos.size());
+    }
+    
+    // Auto als static innere Klasse
+    static class Auto {
+        String FGN, Besitzer;
+        
+        public Auto(String FGN, String Besitzer) {
+            this.FGN = FGN;
+            this.Besitzer = Besitzer;
+        }
+        
+        @Override
+        public String toString() {
+            return "Auto[" + FGN + ", " + Besitzer + "]";
+        }
+    }
+}
+            </div>
+
+            <h3>📊 Operationen Visualisiert</h3>
+            
+            <div class="step-by-step">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div>
+                        <strong>add("C") - Am Ende hinzufügen:</strong>
+                        <div class="visual-demo">
+                            <div style="text-align: left; font-family: monospace;">
+                                Vorher:  head → [A] → [B] → null<br>
+                                Nachher: head → [A] → [B] → [C] → null
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div>
+                        <strong>addFirst("Z") - Am Anfang hinzufügen:</strong>
+                        <div class="visual-demo">
+                            <div style="text-align: left; font-family: monospace;">
+                                Vorher:  head → [A] → [B] → null<br>
+                                Nachher: head → [Z] → [A] → [B] → null
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div>
+                        <strong>addAt(1, "X") - An Position 1:</strong>
+                        <div class="visual-demo">
+                            <div style="text-align: left; font-family: monospace;">
+                                Vorher:  head → [A] → [B] → [C] → null<br>
+                                Nachher: head → [A] → [X] → [B] → [C] → null
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div>
+                        <strong>remove("B") - Element entfernen:</strong>
+                        <div class="visual-demo">
+                            <div style="text-align: left; font-family: monospace;">
+                                Vorher:  head → [A] → [B] → [C] → null<br>
+                                Nachher: head → [A] → [C] → null
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <h3>⚖️ Vorteile vs. Nachteile</h3>
+            
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <h4 class="pros">✅ Vorteile</h4>
+                    <ul>
+                        <li>Dynamische Größe (wächst nach Bedarf)</li>
+                        <li>Effizientes Einfügen/Löschen am Anfang: O(1)</li>
+                        <li>Kein Verschieben von Elementen nötig</li>
+                        <li>Mit Generics typsicher für alle Typen</li>
+                    </ul>
+                </div>
+                <div class="comparison-card">
+                    <h4 class="cons">❌ Nachteile</h4>
+                    <ul>
+                        <li>Langsamer Zugriff auf Elemente: O(n)</li>
+                        <li>Mehr Speicher (jeder Node braucht extra Platz)</li>
+                        <li>Kein direkter Index-Zugriff wie bei Arrays</li>
+                        <li>Komplexer als Arrays</li>
+                    </ul>
+                </div>
+            </div>
+
+            <h3>⏱️ Zeitkomplexität</h3>
+            
+            <table class="complexity-table">
+                <tr>
+                    <th>Operation</th>
+                    <th>Zeitkomplexität</th>
+                    <th>Erklärung</th>
+                </tr>
+                <tr class="complexity-bad">
+                    <td>add() (am Ende)</td>
+                    <td>O(n)</td>
+                    <td>Muss bis zum Ende durchlaufen</td>
+                </tr>
+                <tr class="complexity-good">
+                    <td>addFirst()</td>
+                    <td>O(1)</td>
+                    <td>Direkt am Anfang einfügen</td>
+                </tr>
+                <tr class="complexity-bad">
+                    <td>addAt(index)</td>
+                    <td>O(n)</td>
+                    <td>Muss bis zum Index durchlaufen</td>
+                </tr>
+                <tr class="complexity-bad">
+                    <td>remove()</td>
+                    <td>O(n)</td>
+                    <td>Muss Element suchen</td>
+                </tr>
+                <tr class="complexity-bad">
+                    <td>get(index)</td>
+                    <td>O(n)</td>
+                    <td>Muss bis zum Index durchlaufen</td>
+                </tr>
+                <tr class="complexity-bad">
+                    <td>contains()</td>
+                    <td>O(n)</td>
+                    <td>Muss gesamte Liste durchsuchen</td>
+                </tr>
+            </table>
+
+            <div class="example-box">
+                <h4>💡 Doppelt verkettete Liste</h4>
+                <p>Eine Erweiterung: Jeder Knoten hat auch einen Verweis auf den <strong>vorherigen</strong> Knoten.</p>
+                <div class="code-block">
+class Node<T> {
+    T data;
+    Node<T> next;
+    Node<T> prev;  // NEU: Verweis auf vorherigen Knoten
+}
+                </div>
+                <div class="visual-demo">
+                    <div style="font-family: monospace;">
+                        null ← [A] ⇄ [B] ⇄ [C] → null
+                    </div>
+                </div>
+                <p><strong>Vorteil:</strong> Kann in beide Richtungen durchlaufen werden!</p>
+            </div>
+        </section>
+
+        <!-- 7. Stack & Queue (gekürzt) -->
+        <section class="section">
+            <h2>📚 7. Stack & Queue - LIFO und FIFO</h2>
+            
+            <h3>🥞 Stack (Stapel) - LIFO</h3>
+            
+            <div class="definition-box">
+                <strong>Stack:</strong> Last In, First Out - Wie ein Stapel Teller, das zuletzt draufgelegte wird zuerst weggenommen.
             </div>
 
             <div class="visual-demo">
-                <h4>Stack-Visualisierung:</h4>
                 <div class="stack-demo">
                     <div class="stack-item">Element 3 (Top)</div>
                     <div class="stack-item">Element 2</div>
                     <div class="stack-item">Element 1 (Bottom)</div>
                 </div>
-                <p><strong>Push:</strong> Neues Element oben drauflegen<br>
-                <strong>Pop:</strong> Oberstes Element entfernen und zurückgeben</p>
+                <p><strong>push():</strong> Oben drauflegen | <strong>pop():</strong> Oberstes entfernen</p>
             </div>
 
-            <h4>🔧 Stack-Operationen</h4>
-            <div class="step-by-step">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div><strong>push(element):</strong> Fügt ein Element oben auf den Stapel hinzu</div>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div><strong>pop():</strong> Entfernt das oberste Element und gibt es zurück</div>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div><strong>top():</strong> Zeigt das oberste Element an, ohne es zu entfernen</div>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <div><strong>isEmpty():</strong> Prüft, ob der Stack leer ist</div>
-                </div>
-            </div>
-
-            <h3>🚌 Warteschlange (Queue) - FIFO-Prinzip</h3>
+            <h3>🚌 Queue (Warteschlange) - FIFO</h3>
             
             <div class="definition-box">
-                <strong>Queue (Schlange):</strong> Funktioniert nach dem FIFO-Prinzip (First In, First Out). Wie eine Warteschlange - wer zuerst kommt, wird zuerst bedient.
+                <strong>Queue:</strong> First In, First Out - Wie eine Warteschlange, wer zuerst kommt wird zuerst bedient.
             </div>
 
             <div class="visual-demo">
-                <h4>Queue-Visualisierung:</h4>
                 <div class="queue-demo">
-                    <div class="queue-item">Element 1</div>
-                    <div class="queue-item">Element 2</div>
-                    <div class="queue-item">Element 3</div>
+                    <div class="queue-item">Erste</div>
+                    <div class="queue-item">→</div>
+                    <div class="queue-item">Zweite</div>
+                    <div class="queue-item">→</div>
+                    <div class="queue-item">Dritte</div>
                 </div>
-                <p><strong>Enqueue:</strong> Element hinten anstellen<br>
-                <strong>Dequeue:</strong> Vorderstes Element entfernen</p>
-            </div>
-
-            <h4>🔧 Queue-Operationen</h4>
-            <div class="step-by-step">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div><strong>enqueue(element):</strong> Fügt ein Element am Ende der Schlange hinzu</div>
-                </div>
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div><strong>dequeue():</strong> Entfernt das vorderste Element und gibt es zurück</div>
-                </div>
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div><strong>head():</strong> Zeigt das vorderste Element an</div>
-                </div>
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <div><strong>isEmpty():</strong> Prüft, ob die Queue leer ist</div>
-                </div>
-            </div>
-
-            <h3>📝 Dynamische Liste (ArrayList)</h3>
-            
-            <div class="definition-box">
-                <strong>Dynamische Liste:</strong> Eine veränderbare Sammlung von Elementen, auf die über Indizes zugegriffen werden kann. Im Gegensatz zu Arrays kann die Größe zur Laufzeit verändert werden.
-            </div>
-
-            <div class="code-block">
-<span class="keyword">import</span> java.util.ArrayList;
-
-<span class="comment">// ArrayList erstellen und verwenden</span>
-ArrayList&lt;String&gt; <span class="variable">spiele</span> <span class="operator">=</span> <span class="keyword">new</span> ArrayList&lt;&gt;();
-
-<span class="comment">// Elemente hinzufügen</span>
-<span class="variable">spiele</span>.add(<span class="string">"Chess"</span>);
-<span class="variable">spiele</span>.add(<span class="string">"Poker"</span>);
-<span class="variable">spiele</span>.add(<span class="number">1</span>, <span class="string">"Solitaire"</span>); <span class="comment">// An Index 1 einfügen</span>
-<span class="variable">spiele</span>.add(<span class="string">"Chess"</span>); <span class="comment">// Duplikate erlaubt!</span>
-
-<span class="comment">// Ausgabe: [Chess, Solitaire, Poker, Chess]</span>
-System.out.println(<span class="variable">spiele</span>);
-
-<span class="comment">// Zugriff und Größe</span>
-<span class="keyword">int</span> <span class="variable">groesse</span> <span class="operator">=</span> <span class="variable">spiele</span>.size(); <span class="comment">// 4</span>
-String <span class="variable">erstes</span> <span class="operator">=</span> <span class="variable">spiele</span>.get(<span class="number">0</span>); <span class="comment">// "Chess"</span>
+                <p><strong>enqueue():</strong> Hinten anstellen | <strong>dequeue():</strong> Vorne entfernen</p>
             </div>
         </section>
 
-        <!-- Java Collections Framework -->
+        <!-- 8. Java Collections Framework (aus Original) -->
         <section class="section">
-            <h2>📚 4.1 Java Collections Framework (JCF)</h2>
+            <h2>📚 8. Java Collections Framework (JCF)</h2>
             
             <div class="definition-box">
-                <strong>Java Collections Framework:</strong> Eine umfangreiche Sammlung von Klassen und Interfaces im Package java.util, die effiziente Datenstrukturen zur Verfügung stellt. Alle Collections arbeiten mit Objekten, nicht mit primitiven Datentypen.
+                <strong>Java Collections Framework:</strong> Umfangreiche Sammlung von Datenstrukturen im Package java.util. Alle arbeiten mit Objekten (Wrapper-Klassen für primitive Typen).
             </div>
 
-            <h3>🎯 Boxing und Unboxing</h3>
-            
-            <div class="definition-box">
-                <strong>Boxing:</strong> Automatische Umwandlung eines primitiven Datentyps in das entsprechende Wrapper-Objekt.<br>
-                <strong>Unboxing:</strong> Automatische Umwandlung eines Wrapper-Objekts zurück in den primitiven Datentyp.
-            </div>
-
-            <div class="code-block">
-<span class="comment">// Boxing - primitive Werte werden automatisch "verpackt"</span>
-ArrayList&lt;Integer&gt; <span class="variable">zahlen</span> <span class="operator">=</span> <span class="keyword">new</span> ArrayList&lt;&gt;();
-<span class="variable">zahlen</span>.add(<span class="number">42</span>); <span class="comment">// int wird automatisch zu Integer</span>
-
-<span class="comment">// Unboxing - Wrapper werden automatisch "ausgepackt"</span>
-<span class="keyword">int</span> <span class="variable">wert</span> <span class="operator">=</span> <span class="variable">zahlen</span>.get(<span class="number">0</span>); <span class="comment">// Integer wird zu int</span>
-
-<span class="comment">// Wrapper-Klassen für primitive Typen:</span>
-<span class="comment">// int → Integer, double → Double, boolean → Boolean, etc.</span>
-            </div>
-
-            <h3>📋 Vector - Die historische Liste</h3>
-            
-            <div class="definition-box">
-                <strong>Vector:</strong> Eine der ersten Collection-Klassen in Java. Ähnlich wie ArrayList, aber synchronized (thread-safe) und daher langsamer. Meist wird heute ArrayList bevorzugt.
-            </div>
-
-            <div class="code-block">
-<span class="keyword">import</span> java.util.Vector;
-
-Vector&lt;String&gt; <span class="variable">v</span> <span class="operator">=</span> <span class="keyword">new</span> Vector&lt;&gt;();
-
-<span class="comment">// Kapazität prüfen</span>
-System.out.println(<span class="string">"Kapazität: "</span> <span class="operator">+</span> <span class="variable">v</span>.capacity()); <span class="comment">// 10 (Standard)</span>
-System.out.println(<span class="string">"Größe: "</span> <span class="operator">+</span> <span class="variable">v</span>.size()); <span class="comment">// 0</span>
-
-<span class="variable">v</span>.add(<span class="string">"Chess"</span>);
-<span class="variable">v</span>.add(<span class="string">"Poker"</span>);
-<span class="variable">v</span>.add(<span class="number">1</span>, <span class="string">"Solitaire"</span>);
-
-<span class="comment">// Ausgabe: [Chess, Solitaire, Poker]</span>
-System.out.println(<span class="variable">v</span>);
-            </div>
-
-            <h3>🔗 LinkedList - Die verkettete Liste</h3>
-            
-            <div class="definition-box">
-                <strong>LinkedList:</strong> Implementiert sowohl List als auch Deque Interface. Optimal für häufiges Einfügen/Löschen in der Mitte, aber langsamerer Zugriff auf Elemente über Index.
-            </div>
-
-            <div class="code-block">
-<span class="keyword">import</span> java.util.LinkedList;
-<span class="keyword">import</span> java.util.Iterator;
-
-LinkedList&lt;String&gt; <span class="variable">ll</span> <span class="operator">=</span> <span class="keyword">new</span> LinkedList&lt;&gt;();
-
-<span class="comment">// Elemente hinzufügen</span>
-<span class="variable">ll</span>.add(<span class="string">"Chess"</span>);
-<span class="variable">ll</span>.addFirst(<span class="string">"Poker"</span>); <span class="comment">// Am Anfang einfügen</span>
-<span class="variable">ll</span>.addLast(<span class="string">"Solitaire"</span>); <span class="comment">// Am Ende einfügen</span>
-
-<span class="comment">// Mit Iterator durchlaufen</span>
-Iterator&lt;String&gt; <span class="variable">it</span> <span class="operator">=</span> <span class="variable">ll</span>.iterator();
-<span class="keyword">while</span> (<span class="variable">it</span>.hasNext()) {
-    System.out.print(<span class="variable">it</span>.next() <span class="operator">+</span> <span class="string">" "</span>);
-}
-<span class="comment">// Ausgabe: Poker Chess Solitaire</span>
-            </div>
-
-            <h3>🏷️ HashSet - Eindeutige Elemente</h3>
-            
-            <div class="definition-box">
-                <strong>HashSet:</strong> Speichert Elemente in ungeordneter Reihenfolge, keine Duplikate erlaubt. Sehr schnell bei add(), remove() und contains() Operationen durch Hashing.
-            </div>
-
-            <div class="code-block">
-<span class="keyword">import</span> java.util.HashSet;
-
-HashSet&lt;String&gt; <span class="variable">hs</span> <span class="operator">=</span> <span class="keyword">new</span> HashSet&lt;&gt;();
-
-<span class="variable">hs</span>.add(<span class="string">"Chess"</span>);
-<span class="variable">hs</span>.add(<span class="string">"Poker"</span>);
-<span class="variable">hs</span>.add(<span class="string">"Solitaire"</span>);
-<span class="variable">hs</span>.add(<span class="string">"Chess"</span>); <span class="comment">// Duplikat - wird ignoriert!</span>
-
-<span class="comment">// Ausgabe: [Poker, Chess, Solitaire] (Reihenfolge nicht vorhersagbar)</span>
-System.out.println(<span class="variable">hs</span>);
-
-<span class="comment">// Prüfen ob Element enthalten ist</span>
-<span class="keyword">boolean</span> <span class="variable">enthalten</span> <span class="operator">=</span> <span class="variable">hs</span>.contains(<span class="string">"Chess"</span>); <span class="comment">// true</span>
-            </div>
-
-            <h3>🌳 TreeSet - Sortierte eindeutige Elemente</h3>
-            
-            <div class="definition-box">
-                <strong>TreeSet:</strong> Speichert Elemente automatisch sortiert, keine Duplikate. Basiert auf einem balancierten Binärbaum. Elemente müssen Comparable implementieren oder ein Comparator muss angegeben werden.
-            </div>
-
-            <div class="code-block">
-<span class="keyword">import</span> java.util.TreeSet;
-
-TreeSet&lt;String&gt; <span class="variable">ts</span> <span class="operator">=</span> <span class="keyword">new</span> TreeSet&lt;&gt;();
-
-<span class="variable">ts</span>.add(<span class="string">"Chess"</span>);
-<span class="variable">ts</span>.add(<span class="string">"Poker"</span>);
-<span class="variable">ts</span>.add(<span class="string">"Solitaire"</span>);
-<span class="variable">ts</span>.add(<span class="string">"Chess"</span>); <span class="comment">// Duplikat - wird ignoriert!</span>
-
-<span class="comment">// Ausgabe: [Chess, Poker, Solitaire] (automatisch sortiert!)</span>
-System.out.println(<span class="variable">ts</span>);
-
-<span class="comment">// Spezielle TreeSet Methoden</span>
-String <span class="variable">erstes</span> <span class="operator">=</span> <span class="variable">ts</span>.first(); <span class="comment">// "Chess"</span>
-String <span class="variable">letztes</span> <span class="operator">=</span> <span class="variable">ts</span>.last(); <span class="comment">// "Solitaire"</span>
-            </div>
-
-            <h3>🗝️ HashMap - Schlüssel-Wert-Paare</h3>
-            
-            <div class="definition-box">
-                <strong>HashMap:</strong> Speichert Schlüssel-Wert-Paare (Key-Value). Jeder Schlüssel ist eindeutig, Werte können doppelt vorkommen. Sehr schneller Zugriff über den Schlüssel durch Hashing.
-            </div>
-
-            <div class="code-block">
-<span class="keyword">import</span> java.util.HashMap;
-
-HashMap&lt;String, String&gt; <span class="variable">hm</span> <span class="operator">=</span> <span class="keyword">new</span> HashMap&lt;&gt;();
-
-<span class="comment">// Schlüssel-Wert-Paare hinzufügen</span>
-<span class="variable">hm</span>.put(<span class="string">"Game1"</span>, <span class="string">"Hearts"</span>);
-<span class="variable">hm</span>.put(<span class="string">"Game2"</span>, <span class="string">"Chess"</span>);
-<span class="variable">hm</span>.put(<span class="string">"Game3"</span>, <span class="string">"Checkers"</span>);
-<span class="variable">hm</span>.put(<span class="string">"Game3"</span>, <span class="string">"Whist"</span>); <span class="comment">// Überschreibt den alten Wert!</span>
-
-<span class="comment">// Wert abrufen</span>
-String <span class="variable">spiel</span> <span class="operator">=</span> <span class="variable">hm</span>.get(<span class="string">"Game1"</span>); <span class="comment">// "Hearts"</span>
-
-<span class="comment">// Alle Einträge anzeigen</span>
-System.out.println(<span class="variable">hm</span>);
-<span class="comment">// {Game1=Hearts, Game2=Chess, Game3=Whist}</span>
-            </div>
-
-            <h3>🗃️ TreeMap - Sortierte Schlüssel-Wert-Paare</h3>
-            
-            <div class="definition-box">
-                <strong>TreeMap:</strong> Wie HashMap, aber die Schlüssel werden automatisch sortiert gespeichert. Basiert auf einem balancierten Binärbaum (Red-Black-Tree).
-            </div>
-
-            <div class="code-block">
-<span class="keyword">import</span> java.util.TreeMap;
-
-TreeMap&lt;String, String&gt; <span class="variable">tm</span> <span class="operator">=</span> <span class="keyword">new</span> TreeMap&lt;&gt;();
-
-<span class="variable">tm</span>.put(<span class="string">"Game3"</span>, <span class="string">"Checkers"</span>);
-<span class="variable">tm</span>.put(<span class="string">"Game1"</span>, <span class="string">"Hearts"</span>);
-<span class="variable">tm</span>.put(<span class="string">"Game2"</span>, <span class="string">"Chess"</span>);
-
-<span class="comment">// Ausgabe: {Game1=Hearts, Game2=Chess, Game3=Checkers}</span>
-<span class="comment">// Automatisch nach Schlüsseln sortiert!</span>
-System.out.println(<span class="variable">tm</span>);
-
-<span class="comment">// Spezielle TreeMap Methoden</span>
-String <span class="variable">ersterSchluessel</span> <span class="operator">=</span> <span class="variable">tm</span>.firstKey(); <span class="comment">// "Game1"</span>
-String <span class="variable">letzterSchluessel</span> <span class="operator">=</span> <span class="variable">tm</span>.lastKey(); <span class="comment">// "Game3"</span>
-            </div>
-
-            <h3>📊 Vergleich der Collection-Klassen</h3>
+            <h3>📊 Die wichtigsten Collections</h3>
             
             <table class="complexity-table">
                 <tr>
@@ -996,118 +1585,83 @@ String <span class="variable">letzterSchluessel</span> <span class="operator">=<
                     <th>Typ</th>
                     <th>Sortiert</th>
                     <th>Duplikate</th>
-                    <th>Index-Zugriff</th>
-                    <th>Besonderheiten</th>
+                    <th>Wann verwenden?</th>
                 </tr>
                 <tr>
                     <td><strong>ArrayList</strong></td>
                     <td>List</td>
                     <td>❌</td>
                     <td>✅</td>
-                    <td>✅</td>
-                    <td>Array-basiert, schneller Zugriff</td>
-                </tr>
-                <tr>
-                    <td><strong>Vector</strong></td>
-                    <td>List</td>
-                    <td>❌</td>
-                    <td>✅</td>
-                    <td>✅</td>
-                    <td>Thread-safe, legacy</td>
+                    <td>Häufiger Index-Zugriff</td>
                 </tr>
                 <tr>
                     <td><strong>LinkedList</strong></td>
-                    <td>List + Deque</td>
+                    <td>List</td>
                     <td>❌</td>
                     <td>✅</td>
-                    <td>✅</td>
-                    <td>Verkettete Liste, schnelles Einfügen</td>
+                    <td>Häufiges Einfügen/Löschen</td>
                 </tr>
                 <tr>
                     <td><strong>HashSet</strong></td>
                     <td>Set</td>
                     <td>❌</td>
                     <td>❌</td>
-                    <td>❌</td>
-                    <td>Hash-basiert, sehr schnell</td>
+                    <td>Eindeutige Elemente, schnell</td>
                 </tr>
                 <tr>
                     <td><strong>TreeSet</strong></td>
                     <td>SortedSet</td>
                     <td>✅</td>
                     <td>❌</td>
-                    <td>❌</td>
-                    <td>Baum-basiert, automatisch sortiert</td>
+                    <td>Sortierte eindeutige Elemente</td>
                 </tr>
                 <tr>
                     <td><strong>HashMap</strong></td>
                     <td>Map</td>
                     <td>❌</td>
                     <td>Werte: ✅</td>
-                    <td>❌</td>
-                    <td>Hash-basiert, Key-Value</td>
+                    <td>Key-Value Paare, schnell</td>
                 </tr>
                 <tr>
                     <td><strong>TreeMap</strong></td>
                     <td>SortedMap</td>
                     <td>✅</td>
                     <td>Werte: ✅</td>
-                    <td>❌</td>
-                    <td>Baum-basiert, sortierte Schlüssel</td>
+                    <td>Sortierte Key-Value Paare</td>
                 </tr>
             </table>
 
-            <div class="example-box">
-                <h4>💡 Wann welche Collection verwenden?</h4>
-                <ul>
-                    <li><strong>ArrayList:</strong> Wenn du häufig auf Elemente über Index zugreifst</li>
-                    <li><strong>LinkedList:</strong> Wenn du häufig Elemente in der Mitte einfügst/löschst</li>
-                    <li><strong>HashSet:</strong> Wenn du eindeutige Elemente brauchst und Reihenfolge egal ist</li>
-                    <li><strong>TreeSet:</strong> Wenn du eindeutige, sortierte Elemente brauchst</li>
-                    <li><strong>HashMap:</strong> Wenn du Schlüssel-Wert-Paare brauchst mit schnellem Zugriff</li>
-                    <li><strong>TreeMap:</strong> Wenn du sortierte Schlüssel-Wert-Paare brauchst</li>
-                </ul>
-            </div>
-
-            <h3>🔄 Collections-Hilfsmethoden</h3>
+            <h3>💡 Schnellreferenz</h3>
             
             <div class="code-block">
-<span class="keyword">import</span> java.util.Collections;
-<span class="keyword">import</span> java.util.ArrayList;
+import java.util.*;
 
-ArrayList&lt;String&gt; <span class="variable">liste</span> <span class="operator">=</span> <span class="keyword">new</span> ArrayList&lt;&gt;();
-<span class="variable">liste</span>.add(<span class="string">"Zebra"</span>);
-<span class="variable">liste</span>.add(<span class="string">"Anton"</span>);
-<span class="variable">liste</span>.add(<span class="string">"Berta"</span>);
+// ArrayList - dynamisches Array
+ArrayList<String> liste = new ArrayList<>();
+liste.add("Element");
+liste.get(0);
 
-<span class="comment">// Sortieren</span>
-Collections.sort(<span class="variable">liste</span>);
-System.out.println(<span class="variable">liste</span>); <span class="comment">// [Anton, Berta, Zebra]</span>
+// HashSet - eindeutige Elemente
+HashSet<Integer> set = new HashSet<>();
+set.add(42);
+set.add(42);  // Duplikat wird ignoriert
 
-<span class="comment">// Mischen</span>
-Collections.shuffle(<span class="variable">liste</span>);
-System.out.println(<span class="variable">liste</span>); <span class="comment">// Zufällige Reihenfolge</span>
+// HashMap - Key-Value
+HashMap<String, Integer> map = new HashMap<>();
+map.put("Schlüssel", 100);
+int wert = map.get("Schlüssel");
             </div>
         </section>
 
-        <!-- 5. Binärbäume -->
+        <!-- 9. Binärbäume (aus Original, gekürzt) -->
         <section class="section">
-            <h2>🌳 5. Binärbäume - Hierarchische Datenstrukturen</h2>
+            <h2>🌳 9. Binärbäume</h2>
             
             <div class="definition-box">
-                <strong>Binärbaum:</strong> Eine hierarchische Datenstruktur, bei der jeder Knoten maximal zwei Kindknoten hat (linkes und rechtes Kind). Der oberste Knoten heißt Wurzel.
+                <strong>Binärbaum:</strong> Hierarchische Struktur, jeder Knoten hat maximal zwei Kinder (links und rechts).
             </div>
 
-            <h3>🔍 Binärbaum-Terminologie</h3>
-            <ul>
-                <li><strong>Wurzel (Root):</strong> Der oberste Knoten</li>
-                <li><strong>Blatt (Leaf):</strong> Knoten ohne Kinder</li>
-                <li><strong>Innerer Knoten:</strong> Knoten mit mindestens einem Kind</li>
-                <li><strong>Tiefe/Level:</strong> Abstand zur Wurzel</li>
-            </ul>
-
             <div class="visual-demo">
-                <h4>Beispiel eines Binärbaums:</h4>
                 <div class="tree-visualization">
                     <div class="tree-level">
                         <div class="tree-node">8</div>
@@ -1122,762 +1676,347 @@ System.out.println(<span class="variable">liste</span>); <span class="comment">/
                         <div class="tree-node">14</div>
                     </div>
                 </div>
-                <p>Wurzel: 8 | Blätter: 1, 6, 14 | Tiefe: 3 Ebenen</p>
             </div>
 
-            <h3>🔄 Baum-Traversierung (Durchlaufen)</h3>
+            <h3>🔄 Durchlaufarten</h3>
             
-            <p>Es gibt drei wichtige Arten, einen Binärbaum systematisch zu durchlaufen:</p>
-
-            <div class="algorithm-comparison">
-                <div class="algorithm-card">
-                    <h4>📍 Preorder</h4>
-                    <p><strong>Reihenfolge:</strong> Wurzel → Links → Rechts</p>
-                    <p><strong>Beispiel:</strong> 8, 3, 1, 6, 10, 14</p>
-                    <div class="code-block">
-<span class="keyword">void</span> <span class="variable">preorder</span>(Knoten <span class="variable">k</span>) {
-    <span class="keyword">if</span> (<span class="variable">k</span> <span class="operator">!=</span> <span class="keyword">null</span>) {
-        System.out.print(<span class="variable">k</span>.<span class="variable">wert</span>);
-        <span class="variable">preorder</span>(<span class="variable">k</span>.<span class="variable">links</span>);
-        <span class="variable">preorder</span>(<span class="variable">k</span>.<span class="variable">rechts</span>);
-    }
-}
-                    </div>
-                </div>
-                
-                <div class="algorithm-card">
-                    <h4>📍 Inorder</h4>
-                    <p><strong>Reihenfolge:</strong> Links → Wurzel → Rechts</p>
-                    <p><strong>Beispiel:</strong> 1, 3, 6, 8, 10, 14</p>
-                    <div class="code-block">
-<span class="keyword">void</span> <span class="variable">inorder</span>(Knoten <span class="variable">k</span>) {
-    <span class="keyword">if</span> (<span class="variable">k</span> <span class="operator">!=</span> <span class="keyword">null</span>) {
-        <span class="variable">inorder</span>(<span class="variable">k</span>.<span class="variable">links</span>);
-        System.out.print(<span class="variable">k</span>.<span class="variable">wert</span>);
-        <span class="variable">inorder</span>(<span class="variable">k</span>.<span class="variable">rechts</span>);
-    }
-}
-                    </div>
-                </div>
-
-                <div class="algorithm-card">
-                    <h4>📍 Postorder</h4>
-                    <p><strong>Reihenfolge:</strong> Links → Rechts → Wurzel</p>
-                    <p><strong>Beispiel:</strong> 1, 6, 3, 14, 10, 8</p>
-                    <div class="code-block">
-<span class="keyword">void</span> <span class="variable">postorder</span>(Knoten <span class="variable">k</span>) {
-    <span class="keyword">if</span> (<span class="variable">k</span> <span class="operator">!=</span> <span class="keyword">null</span>) {
-        <span class="variable">postorder</span>(<span class="variable">k</span>.<span class="variable">links</span>);
-        <span class="variable">postorder</span>(<span class="variable">k</span>.<span class="variable">rechts</span>);
-        System.out.print(<span class="variable">k</span>.<span class="variable">wert</span>);
-    }
-}
-                    </div>
-                </div>
-            </div>
-
-            <div class="example-box">
-                <strong>💡 Merkhilfe:</strong><br>
-                • <strong>Pre</strong>order: Wurzel kommt <strong>vor</strong> den Kindern<br>
-                • <strong>In</strong>order: Wurzel kommt <strong>zwischen</strong> den Kindern<br>
-                • <strong>Post</strong>order: Wurzel kommt <strong>nach</strong> den Kindern
-            </div>
-
-            <h3>🔍 Binärer Suchbaum</h3>
-            
-            <div class="definition-box">
-                <strong>Binärer Suchbaum:</strong> Ein spezieller Binärbaum, bei dem für jeden Knoten gilt: Alle Werte im linken Teilbaum sind kleiner, alle Werte im rechten Teilbaum sind größer als der Knotenwert.
-            </div>
-
-            <h4>🔧 Operationen im binären Suchbaum</h4>
-
-            <div class="step-by-step">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div>
-                        <strong>Suchen nach Wert x:</strong>
-                        <ul>
-                            <li>Wenn aktueller Knoten = x → Gefunden!</li>
-                            <li>Wenn aktueller Knoten < x → Rechts weitersuchen</li>
-                            <li>Wenn aktueller Knoten > x → Links weitersuchen</li>
-                            <li>Wenn leerer Teilbaum → Nicht gefunden</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div>
-                        <strong>Einfügen von Wert x:</strong>
-                        <ul>
-                            <li>Suche die richtige Position (wie beim Suchen)</li>
-                            <li>Füge x an der leeren Stelle ein</li>
-                        </ul>
-                    </div>
-                </div>
-
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div>
-                        <strong>Löschen von Wert x:</strong>
-                        <ul>
-                            <li><strong>Fall 1:</strong> Knoten ist Blatt → Einfach entfernen</li>
-                            <li><strong>Fall 2:</strong> Knoten hat ein Kind → Durch Kind ersetzen</li>
-                            <li><strong>Fall 3:</strong> Knoten hat zwei Kinder → Durch Vorgänger oder Nachfolger ersetzen</li>
-                        </ul>
-                    </div>
-                </div>
-            </div>
+            <ul>
+                <li><strong>Preorder:</strong> Wurzel → Links → Rechts (8, 3, 1, 6, 10, 14)</li>
+                <li><strong>Inorder:</strong> Links → Wurzel → Rechts (1, 3, 6, 8, 10, 14)</li>
+                <li><strong>Postorder:</strong> Links → Rechts → Wurzel (1, 6, 3, 14, 10, 8)</li>
+            </ul>
         </section>
 
-        <!-- 6. Sortieralgorithmen -->
+        <!-- 10. Sortieralgorithmen -->
         <section class="section">
-            <h2>🔀 6. Sortieralgorithmen</h2>
+            <h2>🔀 10. Sortieralgorithmen</h2>
             
-            <div class="definition-box">
-                <strong>Sortieralgorithmus:</strong> Ein Verfahren, um Daten in eine bestimmte Reihenfolge zu bringen (meist aufsteigend oder absteigend). Die Effizienz verschiedener Algorithmen unterscheidet sich erheblich.
-            </div>
-
-            <h3>📊 Algorithmus-Komplexität verstehen</h3>
+            <h3>🫧 Bubblesort</h3>
             
-            <div class="example-box">
-                <strong>Was bedeutet "Komplexität"?</strong><br>
-                Die Komplexität beschreibt, wie sich die Laufzeit eines Algorithmus verändert, wenn die Datenmenge größer wird. Stell dir vor, du sortierst erst 10 Zahlen, dann 100, dann 1000...
-            </div>
-
-            <table class="complexity-table">
-                <tr>
-                    <th>Komplexität</th>
-                    <th>Name</th>
-                    <th>Bei 10 Elementen</th>
-                    <th>Bei 100 Elementen</th>
-                    <th>Bei 1000 Elementen</th>
-                </tr>
-                <tr class="complexity-good">
-                    <td>O(n)</td>
-                    <td>Linear</td>
-                    <td>10 Schritte</td>
-                    <td>100 Schritte</td>
-                    <td>1.000 Schritte</td>
-                </tr>
-                <tr class="complexity-medium">
-                    <td>O(n log n)</td>
-                    <td>Linearithmisch</td>
-                    <td>33 Schritte</td>
-                    <td>664 Schritte</td>
-                    <td>9.966 Schritte</td>
-                </tr>
-                <tr class="complexity-bad">
-                    <td>O(n²)</td>
-                    <td>Quadratisch</td>
-                    <td>100 Schritte</td>
-                    <td>10.000 Schritte</td>
-                    <td>1.000.000 Schritte</td>
-                </tr>
-            </table>
-
-            <div class="warning-box">
-                <strong>⚠️ Wichtig:</strong> Bei 1.000.000 Elementen benötigt ein O(n²) Algorithmus im schlechtesten Fall 1.000.000.000.000 Operationen, während O(n log n) nur etwa 20.000.000 benötigt!
-            </div>
-
-            <h3>🫧 Bubblesort - Der einfachste Sortieralgorithmus</h3>
-            
-            <div class="definition-box">
-                <strong>Bubblesort:</strong> Vergleicht benachbarte Elemente paarweise und vertauscht sie, wenn sie in falscher Reihenfolge stehen. Wie Luftblasen steigen die größten Elemente nach oben.
-            </div>
-
             <div class="code-block">
-<span class="comment">// Bubblesort Implementation</span>
-<span class="keyword">public static void</span> <span class="variable">bubblesort</span>(<span class="keyword">int</span>[] <span class="variable">array</span>) {
-    <span class="keyword">int</span> <span class="variable">n</span> <span class="operator">=</span> <span class="variable">array</span>.length;
-    
-    <span class="comment">// Äußere Schleife: n-1 Durchläufe</span>
-    <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; <span class="variable">i</span> <span class="operator">&lt;</span> <span class="variable">n</span> <span class="operator">-</span> <span class="number">1</span>; <span class="variable">i</span><span class="operator">++</span>) {
-        <span class="comment">// Innere Schleife: Paarweise Vergleiche</span>
-        <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="number">0</span>; <span class="variable">j</span> <span class="operator">&lt;</span> <span class="variable">n</span> <span class="operator">-</span> <span class="variable">i</span> <span class="operator">-</span> <span class="number">1</span>; <span class="variable">j</span><span class="operator">++</span>) {
-            <span class="comment">// Wenn linkes Element größer als rechtes</span>
-            <span class="keyword">if</span> (<span class="variable">array</span>[<span class="variable">j</span>] <span class="operator">&gt;</span> <span class="variable">array</span>[<span class="variable">j</span> <span class="operator">+</span> <span class="number">1</span>]) {
-                <span class="comment">// Vertauschen</span>
-                <span class="keyword">int</span> <span class="variable">temp</span> <span class="operator">=</span> <span class="variable">array</span>[<span class="variable">j</span>];
-                <span class="variable">array</span>[<span class="variable">j</span>] <span class="operator">=</span> <span class="variable">array</span>[<span class="variable">j</span> <span class="operator">+</span> <span class="number">1</span>];
-                <span class="variable">array</span>[<span class="variable">j</span> <span class="operator">+</span> <span class="number">1</span>] <span class="operator">=</span> <span class="variable">temp</span>;
+public static void bubblesort(int[] array) {
+    int n = array.length;
+    for (int i = 0; i < n - 1; i++) {
+        for (int j = 0; j < n - i - 1; j++) {
+            if (array[j] > array[j + 1]) {
+                // Tauschen
+                int temp = array[j];
+                array[j] = array[j + 1];
+                array[j + 1] = temp;
             }
         }
     }
 }
             </div>
 
-            <h3>⚡ Quicksort - Der schnelle Algorithmus</h3>
+            <h3>⚡ Quicksort</h3>
             
-            <div class="definition-box">
-                <strong>Quicksort:</strong> Ein effizienter Divide-and-Conquer-Algorithmus, der ein Pivot-Element auswählt und das Array in kleinere und größere Elemente unterteilt.
-            </div>
-
             <div class="code-block">
-<span class="comment">// Quicksort Implementation</span>
-<span class="keyword">public static void</span> <span class="variable">quicksort</span>(<span class="keyword">int</span>[] <span class="variable">array</span>, <span class="keyword">int</span> <span class="variable">low</span>, <span class="keyword">int</span> <span class="variable">high</span>) {
-    <span class="keyword">if</span> (<span class="variable">low</span> <span class="operator">&lt;</span> <span class="variable">high</span>) {
-        <span class="comment">// Partitioniere das Array</span>
-        <span class="keyword">int</span> <span class="variable">pi</span> <span class="operator">=</span> <span class="variable">partition</span>(<span class="variable">array</span>, <span class="variable">low</span>, <span class="variable">high</span>);
-        
-        <span class="comment">// Sortiere Elemente vor und nach der Partition</span>
-        <span class="variable">quicksort</span>(<span class="variable">array</span>, <span class="variable">low</span>, <span class="variable">pi</span> <span class="operator">-</span> <span class="number">1</span>);
-        <span class="variable">quicksort</span>(<span class="variable">array</span>, <span class="variable">pi</span> <span class="operator">+</span> <span class="number">1</span>, <span class="variable">high</span>);
+public static void quicksort(int[] array, int low, int high) {
+    if (low < high) {
+        int pi = partition(array, low, high);
+        quicksort(array, low, pi - 1);
+        quicksort(array, pi + 1, high);
     }
 }
 
-<span class="keyword">private static int</span> <span class="variable">partition</span>(<span class="keyword">int</span>[] <span class="variable">array</span>, <span class="keyword">int</span> <span class="variable">low</span>, <span class="keyword">int</span> <span class="variable">high</span>) {
-    <span class="keyword">int</span> <span class="variable">pivot</span> <span class="operator">=</span> <span class="variable">array</span>[<span class="variable">high</span>]; <span class="comment">// Letztes Element als Pivot</span>
-    <span class="keyword">int</span> <span class="variable">i</span> <span class="operator">=</span> (<span class="variable">low</span> <span class="operator">-</span> <span class="number">1</span>);
+private static int partition(int[] array, int low, int high) {
+    int pivot = array[high];
+    int i = (low - 1);
     
-    <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">j</span> <span class="operator">=</span> <span class="variable">low</span>; <span class="variable">j</span> <span class="operator">&lt;</span> <span class="variable">high</span>; <span class="variable">j</span><span class="operator">++</span>) {
-        <span class="keyword">if</span> (<span class="variable">array</span>[<span class="variable">j</span>] <span class="operator">&lt;</span> <span class="variable">pivot</span>) {
-            <span class="variable">i</span><span class="operator">++</span>;
-            <span class="comment">// Tausche array[i] und array[j]</span>
-            <span class="keyword">int</span> <span class="variable">temp</span> <span class="operator">=</span> <span class="variable">array</span>[<span class="variable">i</span>];
-            <span class="variable">array</span>[<span class="variable">i</span>] <span class="operator">=</span> <span class="variable">array</span>[<span class="variable">j</span>];
-            <span class="variable">array</span>[<span class="variable">j</span>] <span class="operator">=</span> <span class="variable">temp</span>;
+    for (int j = low; j < high; j++) {
+        if (array[j] < pivot) {
+            i++;
+            int temp = array[i];
+            array[i] = array[j];
+            array[j] = temp;
         }
     }
     
-    <span class="comment">// Tausche array[i+1] und array[high] (Pivot)</span>
-    <span class="keyword">int</span> <span class="variable">temp</span> <span class="operator">=</span> <span class="variable">array</span>[<span class="variable">i</span> <span class="operator">+</span> <span class="number">1</span>];
-    <span class="variable">array</span>[<span class="variable">i</span> <span class="operator">+</span> <span class="number">1</span>] <span class="operator">=</span> <span class="variable">array</span>[<span class="variable">high</span>];
-    <span class="variable">array</span>[<span class="variable">high</span>] <span class="operator">=</span> <span class="variable">temp</span>;
+    int temp = array[i + 1];
+    array[i + 1] = array[high];
+    array[high] = temp;
     
-    <span class="keyword">return</span> <span class="variable">i</span> <span class="operator">+</span> <span class="number">1</span>;
+    return i + 1;
 }
             </div>
 
-            <h3>📈 Vergleich der Sortieralgorithmen</h3>
+            <h3>📊 Vergleich</h3>
             
             <table class="complexity-table">
                 <tr>
                     <th>Algorithmus</th>
-                    <th>Best Case</th>
-                    <th>Average Case</th>
-                    <th>Worst Case</th>
-                    <th>Speicher</th>
-                    <th>Stabil?</th>
+                    <th>Best</th>
+                    <th>Average</th>
+                    <th>Worst</th>
                 </tr>
                 <tr class="complexity-bad">
                     <td>Bubblesort</td>
                     <td>O(n)</td>
                     <td>O(n²)</td>
                     <td>O(n²)</td>
-                    <td>O(1)</td>
-                    <td>Ja</td>
                 </tr>
                 <tr class="complexity-good">
                     <td>Quicksort</td>
                     <td>O(n log n)</td>
                     <td>O(n log n)</td>
                     <td>O(n²)</td>
-                    <td>O(log n)</td>
-                    <td>Nein</td>
                 </tr>
                 <tr class="complexity-good">
                     <td>Mergesort</td>
                     <td>O(n log n)</td>
                     <td>O(n log n)</td>
                     <td>O(n log n)</td>
-                    <td>O(n)</td>
-                    <td>Ja</td>
                 </tr>
             </table>
         </section>
 
-        <!-- 7. Suchalgorithmen -->
+        <!-- 11. Suchalgorithmen -->
         <section class="section">
-            <h2>🔍 7. Suchalgorithmen</h2>
+            <h2>🔍 11. Suchalgorithmen</h2>
             
-            <div class="definition-box">
-                <strong>Suchalgorithmus:</strong> Ein Verfahren, um ein bestimmtes Element in einer Datenstruktur zu finden. Die Effizienz hängt stark davon ab, ob die Daten sortiert sind oder nicht.
-            </div>
-
-            <h3>📍 Lineare Suche (Sequenzielle Suche)</h3>
+            <h3>📍 Lineare Suche</h3>
             
-            <div class="definition-box">
-                <strong>Lineare Suche:</strong> Durchsucht die Daten Element für Element von Anfang bis Ende, bis das gesuchte Element gefunden wird oder das Ende erreicht ist.
-            </div>
-
             <div class="code-block">
-<span class="comment">// Lineare Suche Implementation</span>
-<span class="keyword">public static int</span> <span class="variable">lineareSuche</span>(<span class="keyword">int</span>[] <span class="variable">array</span>, <span class="keyword">int</span> <span class="variable">gesucht</span>) {
-    <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">0</span>; <span class="variable">i</span> <span class="operator">&lt;</span> <span class="variable">array</span>.length; <span class="variable">i</span><span class="operator">++</span>) {
-        <span class="keyword">if</span> (<span class="variable">array</span>[<span class="variable">i</span>] <span class="operator">==</span> <span class="variable">gesucht</span>) {
-            <span class="keyword">return</span> <span class="variable">i</span>; <span class="comment">// Index des gefundenen Elements</span>
+public static int lineareSuche(int[] array, int gesucht) {
+    for (int i = 0; i < array.length; i++) {
+        if (array[i] == gesucht) {
+            return i;
         }
     }
-    <span class="keyword">return</span> <span class="operator">-</span><span class="number">1</span>; <span class="comment">// Element nicht gefunden</span>
+    return -1;  // Nicht gefunden
 }
             </div>
 
             <h3>🎯 Binäre Suche</h3>
             
-            <div class="definition-box">
-                <strong>Binäre Suche:</strong> Funktioniert nur bei sortierten Daten. Teilt den Suchbereich in jeder Iteration halbiert, indem das mittlere Element mit dem gesuchten verglichen wird.
-            </div>
-
             <div class="code-block">
-<span class="comment">// Binäre Suche Implementation</span>
-<span class="keyword">public static int</span> <span class="variable">binaereSuche</span>(<span class="keyword">int</span>[] <span class="variable">array</span>, <span class="keyword">int</span> <span class="variable">gesucht</span>) {
-    <span class="keyword">int</span> <span class="variable">links</span> <span class="operator">=</span> <span class="number">0</span>;
-    <span class="keyword">int</span> <span class="variable">rechts</span> <span class="operator">=</span> <span class="variable">array</span>.length <span class="operator">-</span> <span class="number">1</span>;
+public static int binaereSuche(int[] array, int gesucht) {
+    int links = 0;
+    int rechts = array.length - 1;
     
-    <span class="keyword">while</span> (<span class="variable">links</span> <span class="operator">&lt;=</span> <span class="variable">rechts</span>) {
-        <span class="keyword">int</span> <span class="variable">mitte</span> <span class="operator">=</span> (<span class="variable">links</span> <span class="operator">+</span> <span class="variable">rechts</span>) <span class="operator">/</span> <span class="number">2</span>;
+    while (links <= rechts) {
+        int mitte = (links + rechts) / 2;
         
-        <span class="keyword">if</span> (<span class="variable">array</span>[<span class="variable">mitte</span>] <span class="operator">==</span> <span class="variable">gesucht</span>) {
-            <span class="keyword">return</span> <span class="variable">mitte</span>; <span class="comment">// Gefunden</span>
-        }
-        <span class="keyword">else if</span> (<span class="variable">array</span>[<span class="variable">mitte</span>] <span class="operator">&lt;</span> <span class="variable">gesucht</span>) {
-            <span class="variable">links</span> <span class="operator">=</span> <span class="variable">mitte</span> <span class="operator">+</span> <span class="number">1</span>; <span class="comment">// Rechte Hälfte</span>
-        }
-        <span class="keyword">else</span> {
-            <span class="variable">rechts</span> <span class="operator">=</span> <span class="variable">mitte</span> <span class="operator">-</span> <span class="number">1</span>; <span class="comment">// Linke Hälfte</span>
+        if (array[mitte] == gesucht) {
+            return mitte;
+        } else if (array[mitte] < gesucht) {
+            links = mitte + 1;
+        } else {
+            rechts = mitte - 1;
         }
     }
-    <span class="keyword">return</span> <span class="operator">-</span><span class="number">1</span>; <span class="comment">// Nicht gefunden</span>
+    return -1;
 }
             </div>
 
-            <h3>📊 Vergleich der Suchalgorithmen</h3>
-            
             <table class="complexity-table">
                 <tr>
                     <th>Algorithmus</th>
                     <th>Voraussetzung</th>
-                    <th>Best Case</th>
-                    <th>Average Case</th>
-                    <th>Worst Case</th>
+                    <th>Komplexität</th>
                 </tr>
                 <tr class="complexity-medium">
                     <td>Lineare Suche</td>
                     <td>Keine</td>
-                    <td>O(1)</td>
-                    <td>O(n)</td>
                     <td>O(n)</td>
                 </tr>
                 <tr class="complexity-good">
                     <td>Binäre Suche</td>
-                    <td>Sortiert</td>
-                    <td>O(1)</td>
-                    <td>O(log n)</td>
+                    <td>Sortiert!</td>
                     <td>O(log n)</td>
                 </tr>
             </table>
         </section>
 
-        <!-- 8. Rekursion vs. Iteration -->
+        <!-- 12. Rekursion -->
         <section class="section">
-            <h2>🔄 8. Rekursion vs. Iteration</h2>
+            <h2>🔄 12. Rekursion vs. Iteration</h2>
             
-            <div class="definition-box">
-                <strong>Rekursion:</strong> Eine Funktion ruft sich selbst auf, um ein Problem zu lösen, indem es in kleinere Teilprobleme zerlegt wird.<br>
-                <strong>Iteration:</strong> Wiederholung von Anweisungen durch Schleifen (for, while).
-            </div>
-
-            <h3>🧮 Beispiel: Fakultät berechnen</h3>
-            
-            <div class="definition-box">
-                <strong>Fakultät:</strong> n! = n × (n-1) × (n-2) × ... × 2 × 1<br>
-                Beispiel: 5! = 5 × 4 × 3 × 2 × 1 = 120
-            </div>
-
-            <div class="algorithm-comparison">
-                <div class="algorithm-card">
-                    <h4>🔄 Rekursive Lösung</h4>
+            <div class="comparison-grid">
+                <div class="comparison-card">
+                    <h4>Rekursiv</h4>
                     <div class="code-block">
-<span class="keyword">public static int</span> <span class="variable">fakultaetRekursiv</span>(<span class="keyword">int</span> <span class="variable">n</span>) {
-    <span class="comment">// Basisfall</span>
-    <span class="keyword">if</span> (<span class="variable">n</span> <span class="operator">&lt;=</span> <span class="number">1</span>) {
-        <span class="keyword">return</span> <span class="number">1</span>;
+public static int fakultaet(int n) {
+    if (n <= 1) {
+        return 1;
     }
-    <span class="comment">// Rekursiver Aufruf</span>
-    <span class="keyword">return</span> <span class="variable">n</span> <span class="operator">*</span> <span class="variable">fakultaetRekursiv</span>(<span class="variable">n</span> <span class="operator">-</span> <span class="number">1</span>);
+    return n * fakultaet(n - 1);
 }
                     </div>
-                    <p><strong>Denkweise:</strong> 5! = 5 × 4!, 4! = 4 × 3!, ...</p>
                 </div>
-                
-                <div class="algorithm-card">
-                    <h4>🔁 Iterative Lösung</h4>
+                <div class="comparison-card">
+                    <h4>Iterativ</h4>
                     <div class="code-block">
-<span class="keyword">public static int</span> <span class="variable">fakultaetIterativ</span>(<span class="keyword">int</span> <span class="variable">n</span>) {
-    <span class="keyword">int</span> <span class="variable">ergebnis</span> <span class="operator">=</span> <span class="number">1</span>;
-    
-    <span class="keyword">for</span> (<span class="keyword">int</span> <span class="variable">i</span> <span class="operator">=</span> <span class="number">1</span>; <span class="variable">i</span> <span class="operator">&lt;=</span> <span class="variable">n</span>; <span class="variable">i</span><span class="operator">++</span>) {
-        <span class="variable">ergebnis</span> <span class="operator">=</span> <span class="variable">ergebnis</span> <span class="operator">*</span> <span class="variable">i</span>;
+public static int fakultaet(int n) {
+    int ergebnis = 1;
+    for (int i = 1; i <= n; i++) {
+        ergebnis *= i;
     }
-    
-    <span class="keyword">return</span> <span class="variable">ergebnis</span>;
+    return ergebnis;
 }
                     </div>
-                    <p><strong>Denkweise:</strong> 1×1×2×3×4×5 = 120</p>
                 </div>
             </div>
-
-            <h3>📊 Vor- und Nachteile</h3>
-            
-            <table class="complexity-table">
-                <tr>
-                    <th>Aspekt</th>
-                    <th>Rekursion</th>
-                    <th>Iteration</th>
-                </tr>
-                <tr>
-                    <td><strong>Verständlichkeit</strong></td>
-                    <td class="complexity-good">Oft natürlicher und eleganter</td>
-                    <td class="complexity-medium">Manchmal komplexer zu verstehen</td>
-                </tr>
-                <tr>
-                    <td><strong>Speicherverbrauch</strong></td>
-                    <td class="complexity-bad">Höher (Call Stack)</td>
-                    <td class="complexity-good">Niedriger</td>
-                </tr>
-                <tr>
-                    <td><strong>Geschwindigkeit</strong></td>
-                    <td class="complexity-bad">Langsamer (Funktionsaufrufe)</td>
-                    <td class="complexity-good">Schneller</td>
-                </tr>
-                <tr>
-                    <td><strong>Codekürze</strong></td>
-                    <td class="complexity-good">Meist kürzer</td>
-                    <td class="complexity-medium">Oft länger</td>
-                </tr>
-            </table>
         </section>
 
-        <!-- 9. Interaktive Demos -->
+        <!-- INTERAKTIVE DEMO -->
         <section class="section">
-            <h2>🎮 9. Interaktive Demonstrationen</h2>
+            <h2>🎮 13. Interaktive Linked List Demo</h2>
             
             <div class="interactive-demo">
-                <h3>🫧 Bubblesort Simulator</h3>
+                <h3>🔗 Verkettete Liste Simulator</h3>
                 <div class="demo-controls">
-                    <button class="demo-button" onclick="resetBubbleArray()">🔄 Neues Array</button>
-                    <button class="demo-button" onclick="bubbleStep()">➡️ Ein Schritt</button>
-                    <button class="demo-button" onclick="bubbleSort()">⚡ Komplett sortieren</button>
+                    <input type="text" id="linkedListInput" placeholder="Element eingeben...">
+                    <button class="demo-button" onclick="linkedListAdd()">➕ Am Ende hinzufügen</button>
+                    <button class="demo-button" onclick="linkedListAddFirst()">⬆️ Am Anfang hinzufügen</button>
+                    <button class="demo-button" onclick="linkedListRemove()">❌ Erstes entfernen</button>
+                    <button class="demo-button" onclick="linkedListClear()">🗑️ Alles löschen</button>
                 </div>
                 
-                <div id="bubbleArray" class="array-visualization">
-                    <div><div class="array-cell">5</div><div class="array-index">Index 0</div></div>
-                    <div><div class="array-cell">2</div><div class="array-index">Index 1</div></div>
-                    <div><div class="array-cell">8</div><div class="array-index">Index 2</div></div>
-                    <div><div class="array-cell">1</div><div class="array-index">Index 3</div></div>
-                    <div><div class="array-cell">9</div><div class="array-index">Index 4</div></div>
+                <div id="linkedListDisplay" class="visual-demo">
+                    <div class="linked-list-visual" id="linkedListNodes">
+                        <div style="font-weight: bold; color: var(--primary-color);">Leer</div>
+                    </div>
                 </div>
                 
-                <div id="bubbleInfo" style="margin-top: 1rem; font-weight: bold; color: var(--primary-color);">
-                    Klicke auf "Ein Schritt" um den Sortiervorgang zu verfolgen!
-                </div>
-            </div>
-
-            <div class="interactive-demo">
-                <h3>🔍 Binäre Suche Simulator</h3>
-                <div class="demo-controls">
-                    <input type="number" id="searchValue" placeholder="Zahl suchen..." style="padding: 0.5rem; border: 1px solid var(--border-color); border-radius: 4px;">
-                    <button class="demo-button" onclick="startBinarySearch()">🎯 Suche starten</button>
-                    <button class="demo-button" onclick="resetBinarySearch()">🔄 Reset</button>
-                </div>
-                
-                <div id="binaryArray" class="array-visualization">
-                    <div><div class="array-cell">1</div><div class="array-index">0</div></div>
-                    <div><div class="array-cell">3</div><div class="array-index">1</div></div>
-                    <div><div class="array-cell">5</div><div class="array-index">2</div></div>
-                    <div><div class="array-cell">7</div><div class="array-index">3</div></div>
-                    <div><div class="array-cell">9</div><div class="array-index">4</div></div>
-                    <div><div class="array-cell">11</div><div class="array-index">5</div></div>
-                    <div><div class="array-cell">13</div><div class="array-index">6</div></div>
-                </div>
-                
-                <div id="binaryInfo" style="margin-top: 1rem; font-weight: bold; color: var(--primary-color);">
-                    Sortiertes Array: [1, 3, 5, 7, 9, 11, 13] - Gib eine Zahl ein und starte die Suche!
+                <div id="linkedListInfo" style="margin-top: 1rem; font-weight: bold; color: var(--primary-color);">
+                    Größe: 0 Elemente
                 </div>
             </div>
         </section>
 
-        <!-- 10. Übungsaufgaben -->
+        <!-- ZUSAMMENFASSUNG -->
         <section class="section">
-            <h2>📝 10. Übungsaufgaben</h2>
-            
-            <h3>🎯 Grundlegende Aufgaben</h3>
-            
-            <div class="example-box">
-                <h4>Aufgabe 1: Array-Manipulation</h4>
-                <p>Gegeben ist das Array <code>[4, 2, 7, 1, 9]</code></p>
-                <ol>
-                    <li>Gib das Element an Index 2 aus</li>
-                    <li>Finde den Index des Elements mit Wert 1</li>
-                    <li>Berechne die Summe aller Elemente</li>
-                    <li>Finde das größte Element</li>
-                </ol>
-                
-                <details style="margin-top: 1rem;">
-                    <summary style="cursor: pointer; font-weight: bold;">💡 Lösung anzeigen</summary>
-                    <div style="margin-top: 0.5rem;">
-                        1. array[2] = 7<br>
-                        2. Index 3<br>
-                        3. 4+2+7+1+9 = 23<br>
-                        4. 9
-                    </div>
-                </details>
-            </div>
-
-            <div class="example-box">
-                <h4>Aufgabe 2: Sortieralgorithmus verstehen</h4>
-                <p>Sortiere das Array <code>[3, 1, 4, 1, 5]</code> mit Bubblesort. Zeige jeden Zwischenschritt!</p>
-                
-                <details style="margin-top: 1rem;">
-                    <summary style="cursor: pointer; font-weight: bold;">💡 Lösung anzeigen</summary>
-                    <div style="margin-top: 0.5rem;">
-                        <strong>Start:</strong> [3, 1, 4, 1, 5]<br>
-                        <strong>Durchlauf 1:</strong> [1, 3, 1, 4, 5] (5 ist sortiert)<br>
-                        <strong>Durchlauf 2:</strong> [1, 1, 3, 4, 5] (4 ist sortiert)<br>
-                        <strong>Durchlauf 3:</strong> [1, 1, 3, 4, 5] (3 ist sortiert)<br>
-                        <strong>Ergebnis:</strong> [1, 1, 3, 4, 5]
-                    </div>
-                </details>
-            </div>
-
-            <h3>🧠 Fortgeschrittene Aufgaben</h3>
-            
-            <div class="example-box">
-                <h4>Aufgabe 3: Binäre Suche manuell</h4>
-                <p>Suche die Zahl 6 im sortierten Array <code>[1, 3, 5, 6, 8, 10, 12]</code> mit binärer Suche. Dokumentiere jeden Schritt!</p>
-                
-                <details style="margin-top: 1rem;">
-                    <summary style="cursor: pointer; font-weight: bold;">💡 Lösung anzeigen</summary>
-                    <div style="margin-top: 0.5rem;">
-                        <strong>Schritt 1:</strong> Array [1,3,5,6,8,10,12], Mitte=6, 6=6 → Gefunden bei Index 3!
-                    </div>
-                </details>
-            </div>
-
-            <div class="example-box">
-                <h4>Aufgabe 4: Rekursion vs. Iteration</h4>
-                <p>Implementiere eine Funktion zur Berechnung der n-ten Fibonacci-Zahl sowohl rekursiv als auch iterativ.</p>
-                <p><em>Erinnerung: F(n) = F(n-1) + F(n-2), mit F(0)=0, F(1)=1</em></p>
-            </div>
-        </section>
-
-        <!-- 11. Zusammenfassung -->
-        <section class="section">
-            <h2>📚 11. Zusammenfassung & Klausurvorbereitung</h2>
-            
-            <h3>🎯 Die wichtigsten Konzepte</h3>
-            
-            <div class="algorithm-comparison">
-                <div class="algorithm-card">
-                    <h4>📊 Datenstrukturen</h4>
-                    <ul>
-                        <li><strong>Arrays:</strong> Feste Größe, schneller Zugriff</li>
-                        <li><strong>Listen:</strong> Dynamische Größe, flexibel</li>
-                        <li><strong>Stacks:</strong> LIFO-Prinzip</li>
-                        <li><strong>Queues:</strong> FIFO-Prinzip</li>
-                        <li><strong>Bäume:</strong> Hierarchische Struktur</li>
-                    </ul>
-                </div>
-                
-                <div class="algorithm-card">
-                    <h4>🔀 Sortieralgorithmen</h4>
-                    <ul>
-                        <li><strong>Bubblesort:</strong> O(n²), einfach</li>
-                        <li><strong>Quicksort:</strong> O(n log n), schnell</li>
-                        <li><strong>Mergesort:</strong> O(n log n), stabil</li>
-                        <li><strong>Insertionsort:</strong> Gut für kleine Arrays</li>
-                    </ul>
-                </div>
-
-                <div class="algorithm-card">
-                    <h4>🔍 Suchalgorithmen</h4>
-                    <ul>
-                        <li><strong>Linear:</strong> O(n), unsortierte Daten</li>
-                        <li><strong>Binär:</strong> O(log n), sortierte Daten</li>
-                        <li><strong>Baum-Suche:</strong> O(log n) im Durchschnitt</li>
-                    </ul>
-                </div>
-            </div>
-
-            <h3>💡 Tipps für die Klausur</h3>
+            <h2>📚 14. Zusammenfassung für's Abitur</h2>
             
             <div class="warning-box">
-                <h4>📋 Checkliste</h4>
+                <h4>🎯 Must-Know Konzepte</h4>
                 <ul>
-                    <li>✅ Verstehe die Komplexitäten (O-Notation)</li>
-                    <li>✅ Kenne die Vor-/Nachteile jedes Algorithmus</li>
-                    <li>✅ Übe das manuelle Durchführen von Sortier-/Suchalgorithmen</li>
-                    <li>✅ Verstehe Rekursion und deren Grenzen</li>
-                    <li>✅ Wisse, wann welche Datenstruktur sinnvoll ist</li>
+                    <li>✅ <strong>Generics:</strong> <code>&lt;T&gt;</code> für flexible Typen</li>
+                    <li>✅ <strong>Static vs. Non-static:</strong> Wann welche innere Klasse?</li>
+                    <li>✅ <strong>Verkettete Listen:</strong> Aufbau, Operationen, Komplexität</li>
+                    <li>✅ <strong>Collections:</strong> ArrayList, HashSet, HashMap - wann was?</li>
+                    <li>✅ <strong>Sortieren:</strong> Bubblesort vs. Quicksort</li>
+                    <li>✅ <strong>Suchen:</strong> Linear vs. Binär</li>
+                    <li>✅ <strong>O-Notation:</strong> O(1), O(n), O(log n), O(n²)</li>
                 </ul>
             </div>
 
             <div class="example-box">
-                <h4>🧠 Häufige Klausurfragen</h4>
+                <h4>💡 Klausur-Tipps</h4>
                 <ol>
-                    <li>Sortiere Array X mit Algorithmus Y (Schritt für Schritt)</li>
-                    <li>Vergleiche Laufzeiten verschiedener Algorithmen</li>
-                    <li>Implementiere eine rekursive Funktion</li>
-                    <li>Wähle die beste Datenstruktur für Szenario Z</li>
-                    <li>Analysiere die Komplexität eines gegebenen Codes</li>
+                    <li>Bei Generics immer Typ-Parameter angeben: <code>Liste&lt;String&gt;</code></li>
+                    <li>Static innere Klassen für unabhängige Hilfsklassen (Auto, Node)</li>
+                    <li>Linked Lists: Immer an <code>head</code> und <code>null</code> denken</li>
+                    <li>Bei Sortieralgorithmen jeden Schritt aufschreiben</li>
+                    <li>Binäre Suche nur bei sortierten Arrays!</li>
                 </ol>
             </div>
         </section>
 
         <div class="navigation">
-            <a href="programmiersprachen.html" class="nav-button">⬅️ Vorheriges: Programmiersprachen</a>
-            <span>Algorithmen & Datenstrukturen</span>
-            <a href="java-basics.html" class="nav-button">Nächstes: Java Grundlagen ➡️</a>
+            <a href="index.html" class="nav-button">⬅️ Zur Startseite</a>
+            <span>Algorithmen & Datenstrukturen - Vollständig</span>
+            <a href="index.html" class="nav-button">Weitere Themen ➡️</a>
         </div>
     </div>
 
     <script>
-        // Bubblesort Demo
-        let bubbleArray = [5, 2, 8, 1, 9];
-        let bubbleStep = 0;
-        let bubblePass = 0;
-        let bubbleComparisons = 0;
+        // Linked List Demo
+        let linkedList = [];
 
-        function resetBubbleArray() {
-            bubbleArray = [5, 2, 8, 1, 9];
-            bubbleStep = 0;
-            bubblePass = 0;
-            bubbleComparisons = 0;
-            updateBubbleDisplay();
-            document.getElementById('bubbleInfo').textContent = 'Klicke auf "Ein Schritt" um den Sortiervorgang zu verfolgen!';
-        }
-
-        function updateBubbleDisplay() {
-            const container = document.getElementById('bubbleArray');
+        function updateLinkedListDisplay() {
+            const container = document.getElementById('linkedListNodes');
             container.innerHTML = '';
-            bubbleArray.forEach((value, index) => {
-                const cell = document.createElement('div');
-                cell.innerHTML = `<div class="array-cell">${value}</div><div class="array-index">Index ${index}</div>`;
-                container.appendChild(cell);
-            });
-        }
-
-        function bubbleStepForward() {
-            if (bubbleStep < bubbleArray.length - bubblePass - 1) {
-                if (bubbleArray[bubbleStep] > bubbleArray[bubbleStep + 1]) {
-                    // Tauschen
-                    let temp = bubbleArray[bubbleStep];
-                    bubbleArray[bubbleStep] = bubbleArray[bubbleStep + 1];
-                    bubbleArray[bubbleStep + 1] = temp;
-                    
-                    document.getElementById('bubbleInfo').textContent = 
-                        `Tausche ${bubbleArray[bubbleStep + 1]} und ${bubbleArray[bubbleStep]} (Position ${bubbleStep} und ${bubbleStep + 1})`;
-                } else {
-                    document.getElementById('bubbleInfo').textContent = 
-                        `Vergleiche ${bubbleArray[bubbleStep]} und ${bubbleArray[bubbleStep + 1]} - kein Tausch nötig`;
-                }
-                bubbleStep++;
-                bubbleComparisons++;
+            
+            if (linkedList.length === 0) {
+                container.innerHTML = '<div style="font-weight: bold; color: var(--primary-color);">head → null</div>';
             } else {
-                bubblePass++;
-                bubbleStep = 0;
-                if (bubblePass < bubbleArray.length - 1) {
-                    document.getElementById('bubbleInfo').textContent = 
-                        `Durchlauf ${bubblePass} beendet. Starte Durchlauf ${bubblePass + 1}`;
-                } else {
-                    document.getElementById('bubbleInfo').textContent = 
-                        `✅ Sortierung abgeschlossen! Benötigte Vergleiche: ${bubbleComparisons}`;
-                }
+                // head
+                const headLabel = document.createElement('div');
+                headLabel.style.fontWeight = 'bold';
+                headLabel.style.color = 'var(--primary-color)';
+                headLabel.textContent = 'head →';
+                container.appendChild(headLabel);
+                
+                // Nodes
+                linkedList.forEach((item, index) => {
+                    const nodeBox = document.createElement('div');
+                    nodeBox.className = 'node-box';
+                    
+                    const nodeData = document.createElement('div');
+                    nodeData.className = 'node-data';
+                    nodeData.textContent = item;
+                    
+                    const arrow = document.createElement('div');
+                    arrow.textContent = '→';
+                    
+                    nodeBox.appendChild(nodeData);
+                    nodeBox.appendChild(arrow);
+                    container.appendChild(nodeBox);
+                });
+                
+                // null
+                const nullBox = document.createElement('div');
+                nullBox.className = 'null-box';
+                nullBox.textContent = 'null';
+                container.appendChild(nullBox);
             }
-            updateBubbleDisplay();
-        }
-
-        function bubbleSort() {
-            while (bubblePass < bubbleArray.length - 1) {
-                bubbleStepForward();
-            }
-        }
-
-        window.bubbleStep = bubbleStepForward;
-        window.bubbleSort = bubbleSort;
-        window.resetBubbleArray = resetBubbleArray;
-
-        // Binäre Suche Demo
-        const sortedArray = [1, 3, 5, 7, 9, 11, 13];
-
-        function resetBinarySearch() {
-            const container = document.getElementById('binaryArray');
-            container.innerHTML = '';
-            sortedArray.forEach((value, index) => {
-                const cell = document.createElement('div');
-                cell.innerHTML = `<div class="array-cell">${value}</div><div class="array-index">${index}</div>`;
-                container.appendChild(cell);
-            });
-            document.getElementById('binaryInfo').textContent = 
-                'Sortiertes Array: [1, 3, 5, 7, 9, 11, 13] - Gib eine Zahl ein und starte die Suche!';
-        }
-
-        function startBinarySearch() {
-            const searchValue = parseInt(document.getElementById('searchValue').value);
-            if (isNaN(searchValue)) {
-                alert('Bitte gib eine gültige Zahl ein!');
-                return;
-            }
-
-            let left = 0;
-            let right = sortedArray.length - 1;
-            let steps = 0;
-            let found = false;
             
-            resetBinarySearch();
-            
-            const searchInterval = setInterval(() => {
-                if (left <= right && !found) {
-                    const middle = Math.floor((left + right) / 2);
-                    steps++;
-                    
-                    // Aktuellen Suchbereich hervorheben
-                    const container = document.getElementById('binaryArray');
-                    const cells = container.children;
-                    
-                    for (let i = 0; i < cells.length; i++) {
-                        const cell = cells[i].children[0];
-                        if (i === middle) {
-                            cell.style.backgroundColor = '#3b82f6';
-                            cell.style.color = 'white';
-                        } else if (i >= left && i <= right) {
-                            cell.style.backgroundColor = '#dbeafe';
-                        } else {
-                            cell.style.backgroundColor = '#f1f5f9';
-                        }
-                    }
-                    
-                    if (sortedArray[middle] === searchValue) {
-                        document.getElementById('binaryInfo').textContent = 
-                            `✅ Gefunden! ${searchValue} ist an Index ${middle}. Benötigte Schritte: ${steps}`;
-                        found = true;
-                        clearInterval(searchInterval);
-                    } else if (sortedArray[middle] < searchValue) {
-                        left = middle + 1;
-                        document.getElementById('binaryInfo').textContent = 
-                            `Schritt ${steps}: Mitte=${sortedArray[middle]} < ${searchValue}. Suche rechts weiter...`;
-                    } else {
-                        right = middle - 1;
-                        document.getElementById('binaryInfo').textContent = 
-                            `Schritt ${steps}: Mitte=${sortedArray[middle]} > ${searchValue}. Suche links weiter...`;
-                    }
-                } else if (!found) {
-                    document.getElementById('binaryInfo').textContent = 
-                        `❌ ${searchValue} nicht gefunden. Benötigte Schritte: ${steps}`;
-                    clearInterval(searchInterval);
-                }
-            }, 1500);
+            document.getElementById('linkedListInfo').textContent = 
+                `Größe: ${linkedList.length} Element${linkedList.length !== 1 ? 'e' : ''}`;
         }
 
-        window.startBinarySearch = startBinarySearch;
-        window.resetBinarySearch = resetBinarySearch;
+        function linkedListAdd() {
+            const input = document.getElementById('linkedListInput');
+            const value = input.value.trim();
+            
+            if (value) {
+                linkedList.push(value);
+                input.value = '';
+                updateLinkedListDisplay();
+            } else {
+                alert('Bitte gib ein Element ein!');
+            }
+        }
+
+        function linkedListAddFirst() {
+            const input = document.getElementById('linkedListInput');
+            const value = input.value.trim();
+            
+            if (value) {
+                linkedList.unshift(value);
+                input.value = '';
+                updateLinkedListDisplay();
+            } else {
+                alert('Bitte gib ein Element ein!');
+            }
+        }
+
+        function linkedListRemove() {
+            if (linkedList.length > 0) {
+                linkedList.shift();
+                updateLinkedListDisplay();
+            } else {
+                alert('Liste ist bereits leer!');
+            }
+        }
+
+        function linkedListClear() {
+            linkedList = [];
+            updateLinkedListDisplay();
+        }
 
         // Initialisierung
-        resetBubbleArray();
-        resetBinarySearch();
+        updateLinkedListDisplay();
+
+        // Enter-Taste für Hinzufügen
+        document.getElementById('linkedListInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                linkedListAdd();
+            }
+        });
     </script>
 </body>
-
 </html>
-
