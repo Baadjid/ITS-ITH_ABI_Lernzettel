@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="de">
 <head>
+     <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Algorithmen & Datenstrukturen - Erweitert - Abitur TG 2026</title>
@@ -196,6 +197,67 @@
         .code-block .operator {
             color: #f87171;
         }
+
+        /* Code-Blöcke mit pre/code */
+pre {
+    background: var(--code-bg);
+    color: var(--code-text);
+    padding: 1.5rem;
+    border-radius: 8px;
+    margin: 1rem 0;
+    overflow-x: auto;
+    font-family: 'Fira Code', 'Consolas', 'Monaco', 'Courier New', monospace;
+    font-size: 0.85rem;
+    line-height: 1.6;
+    position: relative;
+    white-space: pre;
+    tab-size: 4;
+    max-height: 600px;
+    overflow-y: auto;
+}
+
+pre code {
+    background: none;
+    padding: 0;
+    font-size: inherit;
+    color: inherit;
+    font-family: inherit;
+}
+
+/* Scrollbar für Code-Blöcke */
+pre::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+pre::-webkit-scrollbar-track {
+    background: #0f172a;
+    border-radius: 4px;
+}
+
+pre::-webkit-scrollbar-thumb {
+    background: #475569;
+    border-radius: 4px;
+}
+
+pre::-webkit-scrollbar-thumb:hover {
+    background: #64748b;
+}
+
+/* Language Label (optional) */
+pre::before {
+    content: 'Java';
+    position: absolute;
+    top: 0.5rem;
+    right: 1rem;
+    background: var(--primary-color);
+    color: white;
+    padding: 0.2rem 0.6rem;
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    font-family: 'Segoe UI', sans-serif;
+}
 
         .visual-demo {
             background: var(--bg-light);
@@ -1102,62 +1164,59 @@ public class Generics<T> {
         </section>
 
         <!-- 6. VERKETTETE LISTEN MIT GENERICS - HAUPTTEIL -->
-        <section class="section">
-            <h2>🔗 6. Verkettete Listen mit Generics - Vollständig</h2>
-            
-            <div class="definition-box">
-                <strong>Verkettete Liste (Linked List):</strong> Eine dynamische Datenstruktur, bei der Elemente (Knoten) über Zeiger/Referenzen miteinander verbunden sind. Jeder Knoten enthält Daten und einen Verweis auf den nächsten Knoten.
-            </div>
+<section class="section">
+    <h2>🔗 6. Verkettete Listen mit Generics - Vollständig</h2>
+    
+    <div class="definition-box">
+        <strong>Verkettete Liste (Linked List):</strong> Eine dynamische Datenstruktur, bei der Elemente (Knoten) über Zeiger/Referenzen miteinander verbunden sind. Jeder Knoten enthält Daten und einen Verweis auf den nächsten Knoten.
+    </div>
 
-            <h3>📐 Struktur einer verketteten Liste</h3>
-            
-            <div class="visual-demo">
-                <h4>Visualisierung:</h4>
-                <div class="linked-list-visual">
-                    <div style="font-weight: bold; color: var(--primary-color);">head →</div>
-                    <div class="node-box">
-                        <div class="node-data">"Hallo"</div>
-                        <div>→</div>
-                    </div>
-                    <div class="node-box">
-                        <div class="node-data">"Welt"</div>
-                        <div>→</div>
-                    </div>
-                    <div class="node-box">
-                        <div class="node-data">"!"</div>
-                        <div>→</div>
-                    </div>
-                    <div class="null-box">null</div>
-                </div>
-                <p style="margin-top: 1rem;">Jeder Knoten hat: <strong>Daten</strong> und <strong>Verweis auf nächsten Knoten</strong></p>
+    <h3>📐 Struktur einer verketteten Liste</h3>
+    
+    <div class="visual-demo">
+        <h4>Visualisierung:</h4>
+        <div class="linked-list-visual">
+            <div style="font-weight: bold; color: var(--primary-color);">head →</div>
+            <div class="node-box">
+                <div class="node-data">"Hallo"</div>
+                <div>→</div>
             </div>
+            <div class="node-box">
+                <div class="node-data">"Welt"</div>
+                <div>→</div>
+            </div>
+            <div class="node-box">
+                <div class="node-data">"!"</div>
+                <div>→</div>
+            </div>
+            <div class="null-box">null</div>
+        </div>
+        <p style="margin-top: 1rem;">Jeder Knoten hat: <strong>Daten</strong> und <strong>Verweis auf nächsten Knoten</strong></p>
+    </div>
 
-            <h3>🏗️ Node-Klasse (Der Baustein)</h3>
-            
-            <div class="code-block">
-// Node als innere Klasse
-class Node<T> {
+    <h3>🏗️ Node-Klasse (Der Baustein)</h3>
+    
+    <pre><code class="language-java">// Node als innere Klasse
+class Node&lt;T&gt; {
     T data;           // Die eigentlichen Daten
-    Node<T> next;     // Verweis auf nächsten Knoten
+    Node&lt;T&gt; next;     // Verweis auf nächsten Knoten
     
     public Node(T data) {
         this.data = data;
         this.next = null;
     }
-}
-            </div>
+}</code></pre>
 
-            <h3>💻 Vollständige LinkedList-Implementierung</h3>
-            
-            <div class="code-block">
-public class LinkedList<T> {
-    private Node<T> head;  // Erstes Element
+    <h3>💻 Vollständige LinkedList-Implementierung</h3>
+    
+    <pre><code class="language-java">public class LinkedList&lt;T&gt; {
+    private Node&lt;T&gt; head;  // Erstes Element
     private int size;      // Größe der Liste
     
     // ========== INNERE NODE-KLASSE ==========
-    private class Node<T> {
+    private class Node&lt;T&gt; {
         T data;
-        Node<T> next;
+        Node&lt;T&gt; next;
         
         public Node(T data) {
             this.data = data;
@@ -1173,14 +1232,14 @@ public class LinkedList<T> {
     
     // ========== 1. ELEMENT AM ENDE HINZUFÜGEN ==========
     public void add(T element) {
-        Node<T> newNode = new Node<>(element);
+        Node&lt;T&gt; newNode = new Node&lt;&gt;(element);
         
         if (head == null) {
             // Liste ist leer
             head = newNode;
         } else {
             // Durchlaufe bis zum letzten Knoten
-            Node<T> current = head;
+            Node&lt;T&gt; current = head;
             while (current.next != null) {
                 current = current.next;
             }
@@ -1191,7 +1250,7 @@ public class LinkedList<T> {
     
     // ========== 2. ELEMENT AM ANFANG HINZUFÜGEN ==========
     public void addFirst(T element) {
-        Node<T> newNode = new Node<>(element);
+        Node&lt;T&gt; newNode = new Node&lt;&gt;(element);
         newNode.next = head;  // Neuer Knoten zeigt auf alten head
         head = newNode;       // head wird neuer Knoten
         size++;
@@ -1199,7 +1258,7 @@ public class LinkedList<T> {
     
     // ========== 3. ELEMENT AN POSITION EINFÜGEN ==========
     public void addAt(int index, T element) {
-        if (index < 0 || index > size) {
+        if (index &lt; 0 || index &gt; size) {
             throw new IndexOutOfBoundsException("Index: " + index);
         }
         
@@ -1208,11 +1267,11 @@ public class LinkedList<T> {
             return;
         }
         
-        Node<T> newNode = new Node<>(element);
-        Node<T> current = head;
+        Node&lt;T&gt; newNode = new Node&lt;&gt;(element);
+        Node&lt;T&gt; current = head;
         
         // Gehe zu Position index-1
-        for (int i = 0; i < index - 1; i++) {
+        for (int i = 0; i &lt; index - 1; i++) {
             current = current.next;
         }
         
@@ -1233,7 +1292,7 @@ public class LinkedList<T> {
         }
         
         // Suche Element in der Liste
-        Node<T> current = head;
+        Node&lt;T&gt; current = head;
         while (current.next != null) {
             if (current.next.data.equals(element)) {
                 current.next = current.next.next;
@@ -1248,7 +1307,7 @@ public class LinkedList<T> {
     
     // ========== 5. ELEMENT AN INDEX ENTFERNEN ==========
     public T removeAt(int index) {
-        if (index < 0 || index >= size) {
+        if (index &lt; 0 || index &gt;= size) {
             throw new IndexOutOfBoundsException("Index: " + index);
         }
         
@@ -1259,8 +1318,8 @@ public class LinkedList<T> {
             return data;
         }
         
-        Node<T> current = head;
-        for (int i = 0; i < index - 1; i++) {
+        Node&lt;T&gt; current = head;
+        for (int i = 0; i &lt; index - 1; i++) {
             current = current.next;
         }
         
@@ -1272,7 +1331,7 @@ public class LinkedList<T> {
     
     // ========== 6. ELEMENT SUCHEN ==========
     public boolean contains(T element) {
-        Node<T> current = head;
+        Node&lt;T&gt; current = head;
         while (current != null) {
             if (current.data.equals(element)) {
                 return true;
@@ -1284,12 +1343,12 @@ public class LinkedList<T> {
     
     // ========== 7. ELEMENT AN INDEX ABRUFEN ==========
     public T get(int index) {
-        if (index < 0 || index >= size) {
+        if (index &lt; 0 || index &gt;= size) {
             throw new IndexOutOfBoundsException("Index: " + index);
         }
         
-        Node<T> current = head;
-        for (int i = 0; i < index; i++) {
+        Node&lt;T&gt; current = head;
+        for (int i = 0; i &lt; index; i++) {
             current = current.next;
         }
         return current.data;
@@ -1302,12 +1361,12 @@ public class LinkedList<T> {
             return;
         }
         
-        Node<T> current = head;
+        Node&lt;T&gt; current = head;
         System.out.print("[");
         while (current != null) {
             System.out.print(current.data);
             if (current.next != null) {
-                System.out.print(" -> ");
+                System.out.print(" -&gt; ");
             }
             current = current.next;
         }
@@ -1329,45 +1388,43 @@ public class LinkedList<T> {
         head = null;
         size = 0;
     }
-}
-            </div>
+}</code></pre>
 
-            <h3>🎮 Verwendungsbeispiele</h3>
-            
-            <div class="code-block">
-public class Main {
+    <h3>🎮 Verwendungsbeispiele</h3>
+    
+    <pre><code class="language-java">public class Main {
     public static void main(String[] args) {
         
         // ===== STRING-LISTE =====
-        LinkedList<String> namen = new LinkedList<>();
+        LinkedList&lt;String&gt; namen = new LinkedList&lt;&gt;();
         namen.add("Anna");
         namen.add("Bob");
         namen.add("Clara");
         namen.addFirst("Zara");  // Am Anfang
         
         System.out.println("Namen:");
-        namen.display();  // [Zara -> Anna -> Bob -> Clara]
+        namen.display();  // [Zara -&gt; Anna -&gt; Bob -&gt; Clara]
         
         namen.remove("Bob");
-        namen.display();  // [Zara -> Anna -> Clara]
+        namen.display();  // [Zara -&gt; Anna -&gt; Clara]
         
         System.out.println("Enthält Anna? " + namen.contains("Anna"));
         System.out.println("Element an Index 1: " + namen.get(1));
         
         
         // ===== INTEGER-LISTE =====
-        LinkedList<Integer> zahlen = new LinkedList<>();
+        LinkedList&lt;Integer&gt; zahlen = new LinkedList&lt;&gt;();
         zahlen.add(10);
         zahlen.add(20);
         zahlen.add(30);
         zahlen.addAt(1, 15);  // An Position 1
         
         System.out.println("\nZahlen:");
-        zahlen.display();  // [10 -> 15 -> 20 -> 30]
+        zahlen.display();  // [10 -&gt; 15 -&gt; 20 -&gt; 30]
         
         
         // ===== AUTO-LISTE =====
-        LinkedList<Auto> autos = new LinkedList<>();
+        LinkedList&lt;Auto&gt; autos = new LinkedList&lt;&gt;();
         autos.add(new Auto("MH-AB 123", "Max"));
         autos.add(new Auto("MH-CD 456", "Anna"));
         autos.add(new Auto("MH-EF 789", "Peter"));
@@ -1391,146 +1448,143 @@ public class Main {
             return "Auto[" + FGN + ", " + Besitzer + "]";
         }
     }
-}
-            </div>
+}</code></pre>
 
-            <h3>📊 Operationen Visualisiert</h3>
-            
-            <div class="step-by-step">
-                <div class="step">
-                    <div class="step-number">1</div>
-                    <div>
-                        <strong>add("C") - Am Ende hinzufügen:</strong>
-                        <div class="visual-demo">
-                            <div style="text-align: left; font-family: monospace;">
-                                Vorher:  head → [A] → [B] → null<br>
-                                Nachher: head → [A] → [B] → [C] → null
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="step">
-                    <div class="step-number">2</div>
-                    <div>
-                        <strong>addFirst("Z") - Am Anfang hinzufügen:</strong>
-                        <div class="visual-demo">
-                            <div style="text-align: left; font-family: monospace;">
-                                Vorher:  head → [A] → [B] → null<br>
-                                Nachher: head → [Z] → [A] → [B] → null
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="step">
-                    <div class="step-number">3</div>
-                    <div>
-                        <strong>addAt(1, "X") - An Position 1:</strong>
-                        <div class="visual-demo">
-                            <div style="text-align: left; font-family: monospace;">
-                                Vorher:  head → [A] → [B] → [C] → null<br>
-                                Nachher: head → [A] → [X] → [B] → [C] → null
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="step">
-                    <div class="step-number">4</div>
-                    <div>
-                        <strong>remove("B") - Element entfernen:</strong>
-                        <div class="visual-demo">
-                            <div style="text-align: left; font-family: monospace;">
-                                Vorher:  head → [A] → [B] → [C] → null<br>
-                                Nachher: head → [A] → [C] → null
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <h3>⚖️ Vorteile vs. Nachteile</h3>
-            
-            <div class="comparison-grid">
-                <div class="comparison-card">
-                    <h4 class="pros">✅ Vorteile</h4>
-                    <ul>
-                        <li>Dynamische Größe (wächst nach Bedarf)</li>
-                        <li>Effizientes Einfügen/Löschen am Anfang: O(1)</li>
-                        <li>Kein Verschieben von Elementen nötig</li>
-                        <li>Mit Generics typsicher für alle Typen</li>
-                    </ul>
-                </div>
-                <div class="comparison-card">
-                    <h4 class="cons">❌ Nachteile</h4>
-                    <ul>
-                        <li>Langsamer Zugriff auf Elemente: O(n)</li>
-                        <li>Mehr Speicher (jeder Node braucht extra Platz)</li>
-                        <li>Kein direkter Index-Zugriff wie bei Arrays</li>
-                        <li>Komplexer als Arrays</li>
-                    </ul>
-                </div>
-            </div>
-
-            <h3>⏱️ Zeitkomplexität</h3>
-            
-            <table class="complexity-table">
-                <tr>
-                    <th>Operation</th>
-                    <th>Zeitkomplexität</th>
-                    <th>Erklärung</th>
-                </tr>
-                <tr class="complexity-bad">
-                    <td>add() (am Ende)</td>
-                    <td>O(n)</td>
-                    <td>Muss bis zum Ende durchlaufen</td>
-                </tr>
-                <tr class="complexity-good">
-                    <td>addFirst()</td>
-                    <td>O(1)</td>
-                    <td>Direkt am Anfang einfügen</td>
-                </tr>
-                <tr class="complexity-bad">
-                    <td>addAt(index)</td>
-                    <td>O(n)</td>
-                    <td>Muss bis zum Index durchlaufen</td>
-                </tr>
-                <tr class="complexity-bad">
-                    <td>remove()</td>
-                    <td>O(n)</td>
-                    <td>Muss Element suchen</td>
-                </tr>
-                <tr class="complexity-bad">
-                    <td>get(index)</td>
-                    <td>O(n)</td>
-                    <td>Muss bis zum Index durchlaufen</td>
-                </tr>
-                <tr class="complexity-bad">
-                    <td>contains()</td>
-                    <td>O(n)</td>
-                    <td>Muss gesamte Liste durchsuchen</td>
-                </tr>
-            </table>
-
-            <div class="example-box">
-                <h4>💡 Doppelt verkettete Liste</h4>
-                <p>Eine Erweiterung: Jeder Knoten hat auch einen Verweis auf den <strong>vorherigen</strong> Knoten.</p>
-                <div class="code-block">
-class Node<T> {
-    T data;
-    Node<T> next;
-    Node<T> prev;  // NEU: Verweis auf vorherigen Knoten
-}
-                </div>
+    <h3>📊 Operationen Visualisiert</h3>
+    
+    <div class="step-by-step">
+        <div class="step">
+            <div class="step-number">1</div>
+            <div>
+                <strong>add("C") - Am Ende hinzufügen:</strong>
                 <div class="visual-demo">
-                    <div style="font-family: monospace;">
-                        null ← [A] ⇄ [B] ⇄ [C] → null
+                    <div style="text-align: left; font-family: monospace;">
+                        Vorher:  head → [A] → [B] → null<br>
+                        Nachher: head → [A] → [B] → [C] → null
                     </div>
                 </div>
-                <p><strong>Vorteil:</strong> Kann in beide Richtungen durchlaufen werden!</p>
             </div>
-        </section>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">2</div>
+            <div>
+                <strong>addFirst("Z") - Am Anfang hinzufügen:</strong>
+                <div class="visual-demo">
+                    <div style="text-align: left; font-family: monospace;">
+                        Vorher:  head → [A] → [B] → null<br>
+                        Nachher: head → [Z] → [A] → [B] → null
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">3</div>
+            <div>
+                <strong>addAt(1, "X") - An Position 1:</strong>
+                <div class="visual-demo">
+                    <div style="text-align: left; font-family: monospace;">
+                        Vorher:  head → [A] → [B] → [C] → null<br>
+                        Nachher: head → [A] → [X] → [B] → [C] → null
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <div class="step-number">4</div>
+            <div>
+                <strong>remove("B") - Element entfernen:</strong>
+                <div class="visual-demo">
+                    <div style="text-align: left; font-family: monospace;">
+                        Vorher:  head → [A] → [B] → [C] → null<br>
+                        Nachher: head → [A] → [C] → null
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <h3>⚖️ Vorteile vs. Nachteile</h3>
+    
+    <div class="comparison-grid">
+        <div class="comparison-card">
+            <h4 class="pros">✅ Vorteile</h4>
+            <ul>
+                <li>Dynamische Größe (wächst nach Bedarf)</li>
+                <li>Effizientes Einfügen/Löschen am Anfang: O(1)</li>
+                <li>Kein Verschieben von Elementen nötig</li>
+                <li>Mit Generics typsicher für alle Typen</li>
+            </ul>
+        </div>
+        <div class="comparison-card">
+            <h4 class="cons">❌ Nachteile</h4>
+            <ul>
+                <li>Langsamer Zugriff auf Elemente: O(n)</li>
+                <li>Mehr Speicher (jeder Node braucht extra Platz)</li>
+                <li>Kein direkter Index-Zugriff wie bei Arrays</li>
+                <li>Komplexer als Arrays</li>
+            </ul>
+        </div>
+    </div>
+
+    <h3>⏱️ Zeitkomplexität</h3>
+    
+    <table class="complexity-table">
+        <tr>
+            <th>Operation</th>
+            <th>Zeitkomplexität</th>
+            <th>Erklärung</th>
+        </tr>
+        <tr class="complexity-bad">
+            <td>add() (am Ende)</td>
+            <td>O(n)</td>
+            <td>Muss bis zum Ende durchlaufen</td>
+        </tr>
+        <tr class="complexity-good">
+            <td>addFirst()</td>
+            <td>O(1)</td>
+            <td>Direkt am Anfang einfügen</td>
+        </tr>
+        <tr class="complexity-bad">
+            <td>addAt(index)</td>
+            <td>O(n)</td>
+            <td>Muss bis zum Index durchlaufen</td>
+        </tr>
+        <tr class="complexity-bad">
+            <td>remove()</td>
+            <td>O(n)</td>
+            <td>Muss Element suchen</td>
+        </tr>
+        <tr class="complexity-bad">
+            <td>get(index)</td>
+            <td>O(n)</td>
+            <td>Muss bis zum Index durchlaufen</td>
+        </tr>
+        <tr class="complexity-bad">
+            <td>contains()</td>
+            <td>O(n)</td>
+            <td>Muss gesamte Liste durchsuchen</td>
+        </tr>
+    </table>
+
+    <div class="example-box">
+        <h4>💡 Doppelt verkettete Liste</h4>
+        <p>Eine Erweiterung: Jeder Knoten hat auch einen Verweis auf den <strong>vorherigen</strong> Knoten.</p>
+        <pre><code class="language-java">class Node&lt;T&gt; {
+    T data;
+    Node&lt;T&gt; next;
+    Node&lt;T&gt; prev;  // NEU: Verweis auf vorherigen Knoten
+}</code></pre>
+        <div class="visual-demo">
+            <div style="font-family: monospace;">
+                null ← [A] ⇄ [B] ⇄ [C] → null
+            </div>
+        </div>
+        <p><strong>Vorteil:</strong> Kann in beide Richtungen durchlaufen werden!</p>
+    </div>
+</section>
 
         <!-- 7. Stack & Queue (gekürzt) -->
         <section class="section">
@@ -2916,3 +2970,4 @@ public static int fakultaet(int n) {
     </script>
 </body>
 </html>
+
