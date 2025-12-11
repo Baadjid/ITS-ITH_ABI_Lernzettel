@@ -478,6 +478,626 @@
         </table>
     </section>
 
+    <!-- Gini-Index & Decision Trees Section -->
+<section id="gini">
+    <h2>Gini-Index & Entscheidungsbäume (Decision Trees)</h2>
+
+    <div class="highlight">
+        <strong>Der Gini-Index</strong> ist ein Maß für die Unreinheit (Impurity) in einem Datensatz. Er wird verwendet, um zu entscheiden, welches Feature am besten für die Aufteilung eines Entscheidungsbaums geeignet ist.
+    </div>
+
+    <h3>Grundkonzept</h3>
+    <p>Decision Trees (Entscheidungsbäume) sind überwachte Lernverfahren zur Klassifikation und Regression. Der Baum wird durch rekursive Aufteilung der Daten nach Features erstellt, wobei das Ziel ist, möglichst "reine" Blätter zu erzeugen.</p>
+
+    <div class="card">
+        <p><strong>Charakteristika:</strong></p>
+        <ul>
+            <li>🔹 <strong>Überwachtes Lernen</strong>: Benötigt gelabelte Trainingsdaten</li>
+            <li>🔹 <strong>Wissensbasierter Ansatz</strong>: Entscheidungsregeln sind nachvollziehbar</li>
+            <li>🔹 Funktioniert für kategorische und numerische Features</li>
+            <li>🔹 Baumartige Struktur mit Entscheidungsknoten und Blättern</li>
+        </ul>
+    </div>
+
+    <h3>Gini-Index Formel</h3>
+    <div class="formula">
+Gini(D) = 1 - Σ(p<sub>i</sub>)²
+
+wobei:
+- D = Datensatz
+- p<sub>i</sub> = Anteil der Klasse i im Datensatz
+- Summe über alle Klassen
+    </div>
+
+    <div class="card card-success">
+        <p><strong>Interpretation:</strong></p>
+        <ul>
+            <li><strong>Gini = 0:</strong> Perfekte Reinheit (alle Datenpunkte gehören zur selben Klasse)</li>
+            <li><strong>Gini = 0.5:</strong> Maximale Unreinheit bei 2 Klassen (50/50 Verteilung)</li>
+            <li><strong>Gini klein:</strong> Datensatz ist homogen, gute Aufteilung</li>
+            <li><strong>Gini groß:</strong> Datensatz ist heterogen, schlechte Aufteilung</li>
+        </ul>
+    </div>
+
+    <h3>Gini-Index für Feature-Aufteilung</h3>
+    <p>Um zu entscheiden, welches Feature für die Aufteilung verwendet wird, berechnet man den <strong>gewichteten Gini-Index</strong> nach der Aufteilung:</p>
+
+    <div class="formula">
+Gini<sub>split</sub>(Feature) = Σ (n<sub>i</sub>/n) × Gini(D<sub>i</sub>)
+
+wobei:
+- n<sub>i</sub> = Anzahl Datenpunkte in Teilmenge i
+- n = Gesamtanzahl Datenpunkte
+- D<sub>i</sub> = Teilmenge nach Aufteilung
+    </div>
+
+    <div class="wichtig">
+        Das Feature mit dem <strong>niedrigsten gewichteten Gini-Index</strong> wird für die Aufteilung gewählt!
+    </div>
+
+    <h3>Beispielaufgabe: Gini-Berechnung</h3>
+    <div class="beispiel">
+        <h4>Gegeben: Dataset mit Feature "Money" und Klassen {Cinema, Tennis, Shopping, Stay In}</h4>
+        
+        <table>
+            <tr>
+                <th>Weekend</th>
+                <th>Weather</th>
+                <th>Money</th>
+                <th>Decision</th>
+            </tr>
+            <tr>
+                <td>W1</td>
+                <td>Sunny</td>
+                <td>Rich</td>
+                <td>Cinema</td>
+            </tr>
+            <tr>
+                <td>W2</td>
+                <td>Sunny</td>
+                <td>Rich</td>
+                <td>Tennis</td>
+            </tr>
+            <tr>
+                <td>W3</td>
+                <td>Windy</td>
+                <td>Rich</td>
+                <td>Cinema</td>
+            </tr>
+            <tr>
+                <td>W4</td>
+                <td>Rainy</td>
+                <td>Poor</td>
+                <td>Cinema</td>
+            </tr>
+            <tr>
+                <td>W5</td>
+                <td>Rainy</td>
+                <td>Rich</td>
+                <td>Stay In</td>
+            </tr>
+        </table>
+
+        <p><strong>Aufgabe:</strong> Berechne Gini(Money)</p>
+
+        <p><strong>Schritt 1: Aufteilung nach Money</strong></p>
+        <ul>
+            <li><strong>Rich:</strong> 4 Datenpunkte → {Cinema: 2, Tennis: 1, Stay In: 1}</li>
+            <li><strong>Poor:</strong> 1 Datenpunkt → {Cinema: 1}</li>
+        </ul>
+
+        <p><strong>Schritt 2: Gini für "Rich"</strong></p>
+        <pre>
+Gini(Rich) = 1 - [(2/4)² + (1/4)² + (1/4)² + (0/4)²]
+           = 1 - [0.25 + 0.0625 + 0.0625 + 0]
+           = 1 - 0.375
+           = 0.625
+        </pre>
+
+        <p><strong>Schritt 3: Gini für "Poor"</strong></p>
+        <pre>
+Gini(Poor) = 1 - [(1/1)²]
+           = 1 - 1
+           = 0  (perfekt rein!)
+        </pre>
+
+        <p><strong>Schritt 4: Gewichteter Gini für Money</strong></p>
+        <pre>
+Gini(Money) = (4/5) × 0.625 + (1/5) × 0
+            = 0.8 × 0.625 + 0.2 × 0
+            = 0.5
+        </pre>
+
+        <p><strong>Ergebnis:</strong> Gini(Money) = 0.5</p>
+    </div>
+
+    <h3>Algorithmus: Entscheidungsbaum erstellen</h3>
+    <div class="card card-success">
+        <ol>
+            <li><strong>Start:</strong> Wurzelknoten mit allen Trainingsdaten</li>
+            <li><strong>Feature-Auswahl:</strong> Berechne Gini-Index für jedes Feature</li>
+            <li><strong>Split:</strong> Wähle Feature mit niedrigstem Gini und teile Daten auf</li>
+            <li><strong>Rekursion:</strong> Wiederhole für jeden Teilbaum</li>
+            <li><strong>Stopp-Kriterien:</strong>
+                <ul>
+                    <li>Maximale Baumtiefe erreicht</li>
+                    <li>Minimale Anzahl Datenpunkte pro Knoten unterschritten</li>
+                    <li>Gini = 0 (perfekt rein)</li>
+                    <li>Keine Features mehr verfügbar</li>
+                </ul>
+            </li>
+        </ol>
+    </div>
+
+    <h3>Entropy vs. Gini-Index</h3>
+    <table>
+        <tr>
+            <th>Kriterium</th>
+            <th>Gini-Index</th>
+            <th>Entropy (Information Gain)</th>
+        </tr>
+        <tr>
+            <td><strong>Formel</strong></td>
+            <td>Gini = 1 - Σp<sub>i</sub>²</td>
+            <td>Entropy = -Σp<sub>i</sub> × log<sub>2</sub>(p<sub>i</sub>)</td>
+        </tr>
+        <tr>
+            <td><strong>Wertebereich</strong></td>
+            <td>[0, 0.5] bei 2 Klassen</td>
+            <td>[0, 1] bei 2 Klassen</td>
+        </tr>
+        <tr>
+            <td><strong>Berechnung</strong></td>
+            <td>Schneller (keine Logarithmen)</td>
+            <td>Langsamer (Logarithmen)</td>
+        </tr>
+        <tr>
+            <td><strong>Verwendung</strong></td>
+            <td>CART-Algorithmus</td>
+            <td>ID3, C4.5 Algorithmen</td>
+        </tr>
+        <tr>
+            <td><strong>Ergebnis</strong></td>
+            <td>Meist ähnlich zu Entropy</td>
+            <td>Meist ähnlich zu Gini</td>
+        </tr>
+    </table>
+
+    <h3>Vorteile und Nachteile von Decision Trees</h3>
+    <div class="two-column">
+        <div class="card card-success">
+            <h4>Vorteile ✅</h4>
+            <ul>
+                <li>Leicht verständlich und interpretierbar</li>
+                <li>Visuell darstellbar</li>
+                <li>Benötigt wenig Datenaufbereitung</li>
+                <li>Funktioniert mit numerischen und kategorischen Daten</li>
+                <li>Keine Annahmen über Datenverteilung</li>
+                <li>Schnell bei Vorhersagen</li>
+            </ul>
+        </div>
+        <div class="card card-danger">
+            <h4>Nachteile ❌</h4>
+            <ul>
+                <li>Neigung zu Overfitting</li>
+                <li>Instabil (kleine Änderungen → anderer Baum)</li>
+                <li>Bias zu Features mit vielen Werten</li>
+                <li>Kann keine XOR-Probleme lösen</li>
+                <li>Greedy-Algorithmus (nicht global optimal)</li>
+            </ul>
+        </div>
+    </div>
+
+    <h3>Pruning (Beschneidung)</h3>
+    <p>Um Overfitting zu vermeiden, werden Entscheidungsbäume nach dem Training "beschnitten":</p>
+    
+    <div class="card">
+        <p><strong>Pre-Pruning (frühes Stoppen):</strong></p>
+        <ul>
+            <li>Maximale Baumtiefe festlegen</li>
+            <li>Minimale Anzahl Samples pro Knoten</li>
+            <li>Minimaler Gini-Verbesserung für Split</li>
+        </ul>
+
+        <p><strong>Post-Pruning (nachträgliches Beschneiden):</strong></p>
+        <ul>
+            <li>Erst vollständigen Baum erstellen</li>
+            <li>Dann Zweige entfernen, die Generalisierung verbessern</li>
+            <li>Cost Complexity Pruning (α-Parameter)</li>
+        </ul>
+    </div>
+
+    <h3>Random Forest - Ensemble von Decision Trees</h3>
+    <div class="highlight">
+        <p><strong>Random Forest</strong> kombiniert viele Entscheidungsbäume, um Overfitting zu reduzieren und Genauigkeit zu verbessern.</p>
+        <p><strong>Prinzip:</strong> Trainiere viele Bäume mit zufälligen Teilmengen der Daten und Features → Mehrheitsentscheidung</p>
+    </div>
+
+    <h3>Anwendungen</h3>
+    <ul>
+        <li><strong>Medizin:</strong> Diagnose-Entscheidungen (z.B. Krankheitserkennung)</li>
+        <li><strong>Finanzen:</strong> Kreditwürdigkeit bewerten</li>
+        <li><strong>Marketing:</strong> Kundensegmentierung</li>
+        <li><strong>Qualitätskontrolle:</strong> Fehlerklassifikation</li>
+        <li><strong>Empfehlungssysteme:</strong> Produkt-Empfehlungen</li>
+    </ul>
+
+    <div class="wichtig">
+        <strong>Prüfungsrelevant:</strong>
+        <ul>
+            <li>Gini-Index für Features berechnen können</li>
+            <li>Verstehen, warum niedrigerer Gini besser ist</li>
+            <li>Gewichteten Gini nach Split berechnen</li>
+            <li>Feature mit bestem Split auswählen können</li>
+            <li>Overfitting-Problem und Pruning erklären</li>
+        </ul>
+    </div>
+</section>
+
+<!-- Dijkstra-Algorithmus Section -->
+<section id="dijkstra">
+    <h2>Dijkstra-Algorithmus (Kürzeste Wege)</h2>
+
+    <div class="highlight">
+        <strong>Der Dijkstra-Algorithmus</strong> wurde 1959 von Edsger W. Dijkstra entwickelt und findet die kürzesten Wege von einem Startknoten zu allen anderen Knoten in einem gewichteten Graphen mit nicht-negativen Kantengewichten.
+    </div>
+
+    <h3>Grundkonzept</h3>
+    <p>Dijkstra gehört zur Klasse der <strong>Greedy-Algorithmen</strong> (gierige Algorithmen): In jedem Schritt wird die lokal beste Entscheidung getroffen – der Knoten mit den aktuell geringsten bekannten Kosten.</p>
+
+    <div class="card">
+        <p><strong>Voraussetzungen:</strong></p>
+        <ul>
+            <li>🔹 Gewichteter, gerichteter oder ungerichteter Graph</li>
+            <li>🔹 <strong>Alle Kantengewichte müssen ≥ 0 sein</strong> (keine negativen Gewichte!)</li>
+            <li>🔹 Zusammenhängender Graph (alle Knoten erreichbar)</li>
+        </ul>
+
+        <p><strong>Ziel:</strong></p>
+        <ul>
+            <li>Finde kürzesten Weg vom Startknoten zu allen anderen Knoten</li>
+            <li>Berechne minimale Distanzen (Kosten)</li>
+        </ul>
+    </div>
+
+    <h3>Algorithmus-Schritte</h3>
+    <div class="card card-success">
+        <ol>
+            <li><strong>Initialisierung:</strong>
+                <ul>
+                    <li>Startknoten erhält Distanz 0</li>
+                    <li>Alle anderen Knoten: Distanz = ∞</li>
+                    <li>Alle Knoten als "unbesucht" markieren</li>
+                </ul>
+            </li>
+            <li><strong>Knotenwahl:</strong> Wähle unbesuchten Knoten mit kleinster Distanz</li>
+            <li><strong>Relaxation (Entspannung):</strong>
+                <ul>
+                    <li>Für jeden Nachbarn des aktuellen Knotens:</li>
+                    <li>Berechne: neue_distanz = distanz[aktuell] + kantengewicht</li>
+                    <li>Wenn neue_distanz < distanz[nachbar]:</li>
+                    <li>→ Aktualisiere distanz[nachbar]</li>
+                    <li>→ Speichere Vorgänger für Wegrekonstruktion</li>
+                </ul>
+            </li>
+            <li><strong>Markierung:</strong> Markiere aktuellen Knoten als "besucht"</li>
+            <li><strong>Wiederholung:</strong> Gehe zu Schritt 2, bis alle Knoten besucht sind</li>
+        </ol>
+    </div>
+
+    <h3>Pseudocode</h3>
+    <pre>
+FUNKTION dijkstra(Graph G, Knoten start):
+    // Initialisierung
+    FÜR JEDEN Knoten v IN G:
+        distanz[v] = ∞
+        vorgänger[v] = null
+        unbesucht.add(v)
+    ENDE FÜR
+    
+    distanz[start] = 0
+    
+    // Hauptschleife
+    SOLANGE unbesucht nicht leer:
+        // Wähle Knoten mit kleinster Distanz
+        u = knoten_mit_minimaler_distanz(unbesucht)
+        unbesucht.remove(u)
+        
+        // Relaxation für alle Nachbarn
+        FÜR JEDEN Nachbarn v von u:
+            alternative = distanz[u] + gewicht(u, v)
+            
+            WENN alternative < distanz[v]:
+                distanz[v] = alternative
+                vorgänger[v] = u
+            ENDE WENN
+        ENDE FÜR
+    ENDE SOLANGE
+    
+    RETURN distanz, vorgänger
+ENDE FUNKTION
+    </pre>
+
+    <h3>Beispiel: Dijkstra Schritt-für-Schritt</h3>
+    <div class="beispiel">
+        <h4>Gegeben: Graph mit Knoten A, B, C, D, E</h4>
+        
+        <p><strong>Kanten und Gewichte:</strong></p>
+        <ul>
+            <li>A → B: 100</li>
+            <li>A → D: 50</li>
+            <li>B → C: 100</li>
+            <li>B → E: 250</li>
+            <li>C → E: 50</li>
+            <li>D → B: 100</li>
+            <li>D → E: 250</li>
+        </ul>
+
+        <p><strong>Iteration 0 (Initialisierung):</strong></p>
+        <table>
+            <tr>
+                <th>Knoten</th>
+                <th>Distanz</th>
+                <th>Vorgänger</th>
+                <th>Besucht</th>
+            </tr>
+            <tr>
+                <td>A (Start)</td>
+                <td>0</td>
+                <td>-</td>
+                <td>❌</td>
+            </tr>
+            <tr>
+                <td>B</td>
+                <td>∞</td>
+                <td>-</td>
+                <td>❌</td>
+            </tr>
+            <tr>
+                <td>C</td>
+                <td>∞</td>
+                <td>-</td>
+                <td>❌</td>
+            </tr>
+            <tr>
+                <td>D</td>
+                <td>∞</td>
+                <td>-</td>
+                <td>❌</td>
+            </tr>
+            <tr>
+                <td>E</td>
+                <td>∞</td>
+                <td>-</td>
+                <td>❌</td>
+            </tr>
+        </table>
+
+        <p><strong>Iteration 1: Wähle A (Distanz = 0)</strong></p>
+        <ul>
+            <li>Nachbar B: 0 + 100 = 100 < ∞ → distanz[B] = 100, vorgänger[B] = A</li>
+            <li>Nachbar D: 0 + 50 = 50 < ∞ → distanz[D] = 50, vorgänger[D] = A</li>
+            <li>A als besucht markieren ✅</li>
+        </ul>
+
+        <p><strong>Iteration 2: Wähle D (Distanz = 50)</strong></p>
+        <ul>
+            <li>Nachbar B: 50 + 100 = 150 > 100 → keine Änderung</li>
+            <li>Nachbar E: 50 + 250 = 300 < ∞ → distanz[E] = 300, vorgänger[E] = D</li>
+            <li>D als besucht markieren ✅</li>
+        </ul>
+
+        <p><strong>Iteration 3: Wähle B (Distanz = 100)</strong></p>
+        <ul>
+            <li>Nachbar C: 100 + 100 = 200 < ∞ → distanz[C] = 200, vorgänger[C] = B</li>
+            <li>Nachbar E: 100 + 250 = 350 > 300 → keine Änderung</li>
+            <li>B als besucht markieren ✅</li>
+        </ul>
+
+        <p><strong>Iteration 4: Wähle C (Distanz = 200)</strong></p>
+        <ul>
+            <li>Nachbar E: 200 + 50 = 250 < 300 → distanz[E] = 250, vorgänger[E] = C</li>
+            <li>C als besucht markieren ✅</li>
+        </ul>
+
+        <p><strong>Iteration 5: Wähle E (Distanz = 250)</strong></p>
+        <ul>
+            <li>Keine unbesuchten Nachbarn</li>
+            <li>E als besucht markieren ✅</li>
+        </ul>
+
+        <p><strong>Endergebnis:</strong></p>
+        <table>
+            <tr>
+                <th>Zielknoten</th>
+                <th>Kürzeste Distanz</th>
+                <th>Kürzester Weg</th>
+            </tr>
+            <tr>
+                <td>A</td>
+                <td>0</td>
+                <td>A</td>
+            </tr>
+            <tr>
+                <td>B</td>
+                <td>100</td>
+                <td>A → B</td>
+            </tr>
+            <tr>
+                <td>C</td>
+                <td>200</td>
+                <td>A → B → C</td>
+            </tr>
+            <tr>
+                <td>D</td>
+                <td>50</td>
+                <td>A → D</td>
+            </tr>
+            <tr>
+                <td>E</td>
+                <td>250</td>
+                <td>A → B → C → E</td>
+            </tr>
+        </table>
+    </div>
+
+    <h3>Wegrekonstruktion</h3>
+    <p>Um den tatsächlichen Pfad zu erhalten, folgt man den Vorgängern rückwärts:</p>
+
+    <div class="formula">
+FUNKTION rekonstruiere_weg(vorgänger, start, ziel):
+    weg = []
+    aktuell = ziel
+    
+    SOLANGE aktuell ≠ null:
+        weg.add(aktuell)
+        aktuell = vorgänger[aktuell]
+    ENDE SOLANGE
+    
+    weg.reverse()  // Umdrehen für korrekte Reihenfolge
+    RETURN weg
+ENDE FUNKTION
+    </div>
+
+    <h3>Zeitkomplexität</h3>
+    <table>
+        <tr>
+            <th>Implementierung</th>
+            <th>Zeitkomplexität</th>
+            <th>Beschreibung</th>
+        </tr>
+        <tr>
+            <td><strong>Mit Array</strong></td>
+            <td>O(V²)</td>
+            <td>V = Anzahl Knoten; Lineare Suche nach Minimum</td>
+        </tr>
+        <tr>
+            <td><strong>Mit Binary Heap</strong></td>
+            <td>O((V + E) log V)</td>
+            <td>E = Anzahl Kanten; Effiziente Minimum-Suche</td>
+        </tr>
+        <tr>
+            <td><strong>Mit Fibonacci Heap</strong></td>
+            <td>O(E + V log V)</td>
+            <td>Optimal; In Praxis selten verwendet</td>
+        </tr>
+    </table>
+
+    <h3>Anwendungen</h3>
+    <ul>
+        <li><strong>Navigation:</strong> Google Maps, GPS-Systeme (kürzester/schnellster Weg)</li>
+        <li><strong>Netzwerk-Routing:</strong> OSPF-Protokoll im Internet</li>
+        <li><strong>Logistik:</strong> Transportplanung, Lieferrouten optimieren</li>
+        <li><strong>Spieleentwicklung:</strong> Pathfinding für NPCs</li>
+        <li><strong>Soziale Netzwerke:</strong> "Degrees of Separation" berechnen</li>
+        <li><strong>Robotik:</strong> Bewegungsplanung in bekannten Umgebungen</li>
+    </ul>
+
+    <h3>Dijkstra vs. andere Algorithmen</h3>
+    <table>
+        <tr>
+            <th>Algorithmus</th>
+            <th>Kantengewichte</th>
+            <th>Zeitkomplexität</th>
+            <th>Verwendung</th>
+        </tr>
+        <tr>
+            <td><strong>Dijkstra</strong></td>
+            <td>Nur nicht-negativ</td>
+            <td>O(V²) oder O((V+E) log V)</td>
+            <td>Kürzeste Wege von einem Startknoten</td>
+        </tr>
+        <tr>
+            <td><strong>Bellman-Ford</strong></td>
+            <td>Auch negativ erlaubt</td>
+            <td>O(V × E)</td>
+            <td>Erkennt negative Zyklen</td>
+        </tr>
+        <tr>
+            <td><strong>A* (A-Star)</strong></td>
+            <td>Nur nicht-negativ</td>
+            <td>Heuristikabhängig</td>
+            <td>Schneller mit guter Heuristik</td>
+        </tr>
+        <tr>
+            <td><strong>Floyd-Warshall</strong></td>
+            <td>Auch negativ</td>
+            <td>O(V³)</td>
+            <td>Kürzeste Wege zwischen allen Knotenpaaren</td>
+        </tr>
+    </table>
+
+    <h3>Vorteile und Nachteile</h3>
+    <div class="two-column">
+        <div class="card card-success">
+            <h4>Vorteile ✅</h4>
+            <ul>
+                <li>Garantiert kürzeste Wege</li>
+                <li>Effizient mit Priority Queue</li>
+                <li>Findet alle kürzesten Wege vom Startknoten</li>
+                <li>Einfach zu verstehen und implementieren</li>
+                <li>Weitverbreitet und gut getestet</li>
+            </ul>
+        </div>
+        <div class="card card-danger">
+            <h4>Nachteile ❌</h4>
+            <ul>
+                <li>Funktioniert nicht mit negativen Gewichten</li>
+                <li>Untersucht viele Knoten (keine Heuristik)</li>
+                <li>Nur Single-Source (ein Startknoten)</li>
+                <li>Langsam bei sehr großen Graphen</li>
+                <li>Benötigt alle Kantengewichte im Voraus</li>
+            </ul>
+        </div>
+    </div>
+
+    <h3>Wichtige Hinweise für die Prüfung</h3>
+    <div class="wichtig">
+        <strong>Prüfungsrelevant:</strong>
+        <ul>
+            <li>Dijkstra Schritt-für-Schritt auf Papier durchführen können</li>
+            <li>Distanzen korrekt aktualisieren (Relaxation verstehen)</li>
+            <li>Vorgänger für Wegrekonstruktion notieren</li>
+            <li>Erkennen, wann Algorithmus terminiert</li>
+            <li>Unterschied zu anderen Shortest-Path-Algorithmen kennen</li>
+            <li>Warum negative Gewichte nicht funktionieren erklären können</li>
+        </ul>
+    </div>
+
+    <div class="beispiel">
+        <h4>Typische Prüfungsfrage</h4>
+        <p><strong>Aufgabe:</strong> "Führe Dijkstra-Algorithmus auf folgendem Graphen aus. Dokumentiere jede Iteration mit Tabelle (Knoten, Distanz, Vorgänger, Besucht). Gib den kürzesten Weg von A nach E an."</p>
+        
+        <p><strong>Lösung:</strong></p>
+        <ol>
+            <li>Erstelle Initialisierungstabelle</li>
+            <li>Führe Algorithmus Schritt für Schritt aus</li>
+            <li>Dokumentiere jede Relaxation</li>
+            <li>Markiere besuchte Knoten</li>
+            <li>Rekonstruiere Pfad über Vorgänger</li>
+            <li>Gib Gesamtdistanz und Weg an</li>
+        </ol>
+    </div>
+
+    <h3>Optimierungen</h3>
+    <div class="card">
+        <p><strong>Bidirektionale Suche:</strong></p>
+        <ul>
+            <li>Suche gleichzeitig von Start und Ziel</li>
+            <li>Stoppe, wenn sich Suchfronten treffen</li>
+            <li>Kann Laufzeit halbieren</li>
+        </ul>
+
+        <p><strong>A* Algorithmus (Erweiterung):</strong></p>
+        <ul>
+            <li>Dijkstra + Heuristik (geschätzte Restdistanz)</li>
+            <li>f(n) = g(n) + h(n)</li>
+            <li>g(n) = bisherige Kosten, h(n) = Heuristik</li>
+            <li>Schneller, wenn Zielknoten bekannt</li>
+        </ul>
+    </div>
+</section>
+
     <!-- k-NN Section -->
     <section id="knn">
         <h2>k-Nächste-Nachbarn-Verfahren (k-NN)</h2>
@@ -2420,5 +3040,6 @@ Wenn α ≥ β, dann Pruning
 </body>
 
 </html>
+
 
 
