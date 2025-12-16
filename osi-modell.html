@@ -921,39 +921,152 @@
                 </div>
 
                 <!-- Schicht 3: Vermittlungsschicht -->
-                <div class="layer layer-3" onclick="toggleDetails('layer3-details')">
-                    <div class="layer-number">3</div>
-                    <div class="layer-name">Vermittlungsschicht<br>(Network Layer)</div>
-                    <div class="layer-description">
-                        Routing und logische Adressierung (IP-Adressen)
-                    </div>
-                    <div class="layer-details" id="layer3-details">
-                        <h4>🎯 Aufgaben:</h4>
-                        <ul>
-                            <li><strong>Routing:</strong> Besten Weg durch das Netzwerk finden</li>
-                            <li><strong>Logical Addressing:</strong> IP-Adressen verwalten</li>
-                            <li><strong>Packet Switching:</strong> Pakete weiterleiten</li>
-                            <li><strong>Congestion Control:</strong> Netzwerküberlastung vermeiden</li>
-                        </ul>
-                        
-                        <h4>📡 Wichtige Protokolle:</h4>
-                        <div class="protocols-grid">
-                            <div class="protocol">IPv4</div>
-                            <div class="protocol">IPv6</div>
-                            <div class="protocol">ICMP</div>
-                            <div class="protocol">IGMP</div>
-                            <div class="protocol">IPSec</div>
-                            <div class="protocol">OSPF</div>
-                            <div class="protocol">BGP</div>
-                        </div>
+<div class="layer layer-3" onclick="toggleDetails('layer3-details')">
+    <div class="layer-number">3</div>
+    <div class="layer-name">Vermittlungsschicht<br>(Network Layer)</div>
+    <div class="layer-description">
+        Routing und logische Adressierung (IP-Adressen)
+    </div>
+    <div class="layer-details" id="layer3-details">
+        <h4>🎯 Aufgaben:</h4>
+        <ul>
+            <li><strong>Routing:</strong> Besten Weg durch das Netzwerk finden</li>
+            <li><strong>Logical Addressing:</strong> IP-Adressen verwalten (IPv4/IPv6)</li>
+            <li><strong>Packet Switching:</strong> Pakete zwischen Netzen weiterleiten</li>
+            <li><strong>Congestion Control:</strong> Netzwerküberlastung vermeiden</li>
+            <li><strong>Fragmentierung:</strong> Große Pakete in kleinere Einheiten aufteilen</li>
+            <li><strong>Subnetting:</strong> Netze in logische Teilnetze unterteilen</li>
+        </ul>
+        
+        <h4>📡 Wichtige Protokolle:</h4>
+        <div class="protocols-grid">
+            <div class="protocol">IPv4</div>
+            <div class="protocol">IPv6</div>
+            <div class="protocol">ICMP</div>
+            <div class="protocol">IGMP</div>
+            <div class="protocol">IPSec</div>
+            <div class="protocol">OSPF</div>
+            <div class="protocol">BGP</div>
+            <div class="protocol">ARP</div>
+            <div class="protocol">DHCP</div>
+        </div>
 
-                        <div class="example-box">
-                            <h4>💡 Beispiel:</h4>
-                            Wenn du eine E-Mail nach Japan schickst, entscheidet diese Schicht, über welche 
-                            Router und Netzwerke die E-Mail den kürzesten oder schnellsten Weg nimmt.
-                        </div>
-                    </div>
-                </div>
+        <h4>🌐 IP-Adressierung:</h4>
+        <ul>
+            <li><strong>IPv4:</strong> 32 Bit (4 Oktette: 0.0.0.0 - 255.255.255.255)</li>
+            <li><strong>IPv6:</strong> 128 Bit</li>
+            <li><strong>Aufbau:</strong> Netzanteil + Teilnehmerbereich</li>
+            <li><strong>Vollständige Kennzeichnung:</strong> IP-Adresse + Subnetmaske</li>
+            <li><strong>Notation:</strong> Dezimal-Dotted-System oder CIDR (z.B. 192.168.1.0/24)</li>
+        </ul>
+
+        <h4>📊 Netzklassen (klassisch):</h4>
+        <ul>
+            <li><strong>Klasse A:</strong> 0-127.x.x.x | /8 | 255.0.0.0 | ~16 Mio. Hosts | Große Unternehmen</li>
+            <li><strong>Klasse B:</strong> 128-191.x.x.x | /16 | 255.255.0.0 | ~65.000 Hosts | Mittelgroße Netze</li>
+            <li><strong>Klasse C:</strong> 192-223.x.x.x | /24 | 255.255.255.0 | 254 Hosts | Kleine Netze</li>
+            <li><strong>Ersetzt durch:</strong> CIDR (Classless Inter-Domain Routing) für effizientere Nutzung</li>
+        </ul>
+
+        <h4>🔒 Private IP-Bereiche (RFC 1918):</h4>
+        <ul>
+            <li><strong>Klasse A:</strong> 10.0.0.0/8 (10.0.0.0 - 10.255.255.255)</li>
+            <li><strong>Klasse B:</strong> 172.16.0.0/12 (172.16.0.0 - 172.31.255.255)</li>
+            <li><strong>Klasse C:</strong> 192.168.0.0/16 (192.168.0.0 - 192.168.255.255)</li>
+            <li><strong>Verwendung:</strong> Lokale Netze (nicht routbar im Internet), Sicherheit</li>
+        </ul>
+
+        <h4>🔧 Router-Funktion:</h4>
+        <ul>
+            <li><strong>Verbindungspunkt:</strong> Zwischen verschiedenen Netzen</li>
+            <li><strong>Liest:</strong> Zieladresse zur Routing-Entscheidung</li>
+            <li><strong>TTL:</strong> Verringert Time To Live bei jedem Hop (verhindert Endlosschleifen)</li>
+            <li><strong>Header-Prüfsumme:</strong> Wird bei jeder Änderung neu berechnet</li>
+            <li><strong>Quelladresse:</strong> Bleibt unverändert, kann für Filterregeln genutzt werden</li>
+        </ul>
+
+        <h4>📦 IPv4-Header (20-60 Bytes):</h4>
+        <ul>
+            <li><strong>Version (4 Bit):</strong> IP-Protokollversion (Wert: 4)</li>
+            <li><strong>IHL (4 Bit):</strong> Header-Länge in 32-Bit-Wörtern (Min: 5 = 20 Bytes)</li>
+            <li><strong>TOS/DSCP (8 Bit):</strong> Quality of Service, Priorisierung</li>
+            <li><strong>Total Length (16 Bit):</strong> Gesamtlänge des Pakets (Header + Daten, max 65.535 Bytes)</li>
+            <li><strong>Identification, Flags, Fragment Offset:</strong> Für Fragmentierung großer Pakete</li>
+            <li><strong>TTL (8 Bit):</strong> Time To Live - max. Anzahl Hops/Router</li>
+            <li><strong>Protocol (8 Bit):</strong> Protokoll der Nutzdaten (6=TCP, 17=UDP, 1=ICMP)</li>
+            <li><strong>Header Checksum (16 Bit):</strong> Fehlererkennung nur für Header</li>
+            <li><strong>Source Address (32 Bit):</strong> Absender-IP</li>
+            <li><strong>Destination Address (32 Bit):</strong> Empfänger-IP</li>
+            <li><strong>Options (0-40 Bytes):</strong> Optionale Zusatzinformationen (selten genutzt)</li>
+        </ul>
+
+        <h4>🔄 ARP (Address Resolution Protocol):</h4>
+        <ul>
+            <li><strong>Funktion:</strong> Zuordnung IP-Adresse (Layer 3) ↔ MAC-Adresse (Layer 2)</li>
+            <li><strong>ARP Request:</strong> Broadcast im lokalen Netz ("Wer hat IP X.X.X.X?")</li>
+            <li><strong>ARP Reply:</strong> Unicast-Antwort vom Host mit dieser IP</li>
+            <li><strong>ARP-Cache:</strong> Speichert Zuordnungen für zukünftige Anfragen</li>
+            <li><strong>Nur für:</strong> IPv4 und Ethernet (IPv6 nutzt NDP)</li>
+            <li><strong>RARP:</strong> Reverse ARP (findet IP zu MAC, veraltet, ersetzt durch DHCP)</li>
+        </ul>
+
+        <h4>⚙️ DHCP (Dynamic Host Configuration Protocol):</h4>
+        <ul>
+            <li><strong>Funktion:</strong> Automatische IP-Adressvergabe</li>
+            <li><strong>Vergibt:</strong> IP-Adresse, Subnetmaske, Gateway, DNS-Server</li>
+            <li><strong>Vorteil:</strong> Keine manuelle Konfiguration nötig</li>
+        </ul>
+
+        <h4>🔀 Subnetting:</h4>
+        <ul>
+            <li><strong>Zweck:</strong> Netz in kleinere Teilnetze (Subnetze) aufteilen</li>
+            <li><strong>Vorteile:</strong> Kleinere Kollisionsdomänen, bessere Organisation, Sicherheit</li>
+            <li><strong>Methode:</strong> Bits aus Teilnehmerbereich "leihen" für Subnetz-ID</li>
+            <li><strong>Netzwerkadresse:</strong> Kleinste Adresse im Subnetz (nicht verwendbar)</li>
+            <li><strong>Broadcast-Adresse:</strong> Größte Adresse im Subnetz (nicht verwendbar)</li>
+            <li><strong>Hosts berechnen:</strong> 2^(Host-Bits) - 2 (ohne Netz- und Broadcast-Adresse)</li>
+            <li><strong>Beispiel /24:</strong> 8 Host-Bits → 2^8 - 2 = 254 nutzbare Hosts</li>
+            <li><strong>Router-Anforderung:</strong> Jedes Subnetz braucht eigenes Interface/Schnittstelle</li>
+        </ul>
+
+        <h4>🏢 VLAN (Virtual Local Area Network):</h4>
+        <ul>
+            <li><strong>Definition:</strong> Logisch getrenntes Netzwerk innerhalb physischen Netzwerks</li>
+            <li><strong>Standard:</strong> IEEE 802.1Q Tagging</li>
+            <li><strong>Access-Port:</strong> Gehört zu genau einem VLAN</li>
+            <li><strong>Trunk-Port:</strong> Überträgt mehrere VLANs zwischen Switches/Routern (mit VLAN-Tag)</li>
+            <li><strong>Kommunikation zwischen VLANs:</strong> Nur über Router oder Layer-3-Switch möglich</li>
+        </ul>
+
+        <h4>🔢 Spezielle Adressen:</h4>
+        <ul>
+            <li><strong>Netzwerkadresse:</strong> Alle Host-Bits = 0 (z.B. 192.168.1.0/24)</li>
+            <li><strong>Broadcast-Adresse:</strong> Alle Host-Bits = 1 (z.B. 192.168.1.255/24)</li>
+            <li><strong>Loopback:</strong> 127.0.0.0/8 (localhost, z.B. 127.0.0.1)</li>
+            <li><strong>Link-Local:</strong> 169.254.0.0/16 (automatische Konfiguration ohne DHCP)</li>
+        </ul>
+
+        <div class="example-box">
+            <h4>💡 Praktisches Beispiel:</h4>
+            <p><strong>Szenario:</strong> Du schickst eine E-Mail von deinem Computer (192.168.1.100/24) nach Japan.</p>
+            <ul>
+                <li><strong>1. ARP:</strong> Dein Computer findet über ARP die MAC-Adresse des Routers im lokalen Netz</li>
+                <li><strong>2. IP-Paket:</strong> Wird mit Quell-IP (192.168.1.100) und Ziel-IP (Japan-Server) erstellt</li>
+                <li><strong>3. Routing:</strong> Jeder Router auf dem Weg liest die Ziel-IP und entscheidet über den nächsten Hop</li>
+                <li><strong>4. TTL:</strong> Wird bei jedem Router um 1 reduziert (Start z.B. 64, verhindert Endlosschleifen)</li>
+                <li><strong>5. Subnetting:</strong> Router erkennen anhand Subnetmaske, ob Ziel im lokalen Netz oder extern ist</li>
+                <li><strong>6. NAT:</strong> Deine private IP wird am Gateway in öffentliche IP übersetzt</li>
+            </ul>
+            <p><strong>Subnetting-Beispiel:</strong> Firma mit 192.168.1.0/24 will 4 Abteilungen trennen:</p>
+            <ul>
+                <li>Marketing: 192.168.1.0/26 (62 Hosts)</li>
+                <li>Vertrieb: 192.168.1.64/26 (62 Hosts)</li>
+                <li>IT: 192.168.1.128/26 (62 Hosts)</li>
+                <li>Verwaltung: 192.168.1.192/26 (62 Hosts)</li>
+            </ul>
+        </div>
+    </div>
+</div>
 
  <!-- Schicht 2: Sicherungsschicht -->
 <div class="layer layer-2" onclick="toggleDetails('layer2-details')">
@@ -1989,6 +2102,7 @@ text
 </body>
 
 </html>
+
 
 
 
