@@ -2086,45 +2086,44 @@ ArrayList<String> liste = new ArrayList<>(ohneDuplikate);
 
             <h4>💻 TreeSet Beispiele</h4>
             
-            <div class="code-block">
-import java.util.TreeSet;
+            <div class="code-container">
+    <pre><code>import java.util.TreeSet;
 
 public class TreeSetBeispiel {
     public static void main(String[] args) {
-        TreeSet<Integer> zahlen = new TreeSet<>();
+        TreeSet&lt;Integer&gt; zahlen = new TreeSet&lt;&gt;();
         
         // ===== ELEMENTE HINZUFÜGEN =====
         zahlen.add(50);
         zahlen.add(20);
         zahlen.add(80);
         zahlen.add(10);
-        zahlen.add(20);      // Duplikat - ignoriert!
+        zahlen.add(20);  // Duplikat - ignoriert!
         
         System.out.println(zahlen);
         // Output: [10, 20, 50, 80] - AUTOMATISCH SORTIERT! ✨
         
         // ===== NAVIGATIONSMETHODEN =====
-        int erstes = zahlen.first();      // 10 (kleinstes)
-        int letztes = zahlen.last();      // 80 (größtes)
-        
-        int kleinerAls50 = zahlen.lower(50);     // 20
-        int größerAls50 = zahlen.higher(50);     // 80
+        int erstes = zahlen.first();           // 10 (kleinstes)
+        int letztes = zahlen.last();           // 80 (größtes)
+        int kleinerAls50 = zahlen.lower(50);   // 20
+        int größerAls50 = zahlen.higher(50);   // 80
         
         // ===== TEILMENGEN =====
         // Alle Elemente kleiner als 50
-        TreeSet<Integer> kleineTeil = new TreeSet<>(zahlen.headSet(50));
-        System.out.println("< 50: " + kleineTeil);  // [10, 20]
+        TreeSet&lt;Integer&gt; kleineTeil = new TreeSet&lt;&gt;(zahlen.headSet(50));
+        System.out.println("&lt; 50: " + kleineTeil);  // [10, 20]
         
         // Alle Elemente größer/gleich 50
-        TreeSet<Integer> großeTeil = new TreeSet<>(zahlen.tailSet(50));
-        System.out.println(">= 50: " + großeTeil);  // [50, 80]
+        TreeSet&lt;Integer&gt; großeTeil = new TreeSet&lt;&gt;(zahlen.tailSet(50));
+        System.out.println("&gt;= 50: " + großeTeil);  // [50, 80]
         
         // Bereich von-bis
-        TreeSet<Integer> bereich = new TreeSet<>(zahlen.subSet(20, 80));
+        TreeSet&lt;Integer&gt; bereich = new TreeSet&lt;&gt;(zahlen.subSet(20, 80));
         System.out.println("20-80: " + bereich);  // [20, 50]
         
         // ===== MIT STRINGS =====
-        TreeSet<String> namen = new TreeSet<>();
+        TreeSet&lt;String&gt; namen = new TreeSet&lt;&gt;();
         namen.add("Zara");
         namen.add("Anna");
         namen.add("Bob");
@@ -2134,14 +2133,10 @@ public class TreeSetBeispiel {
         // Output: [Anna, Bob, Max, Zara] - alphabetisch sortiert!
     }
 }
-            </div>
 
-            <div class="example-box">
-                <h4>🎓 Praktisches Beispiel: Rangliste</h4>
-                <div class="code-block">
+// 🎓 Praktisches Beispiel: Rangliste
 // Spieler-Scores automatisch sortiert
-TreeSet<Integer> highscores = new TreeSet<>();
-
+TreeSet&lt;Integer&gt; highscores = new TreeSet&lt;&gt;();
 highscores.add(1500);
 highscores.add(2300);
 highscores.add(1800);
@@ -2157,9 +2152,8 @@ System.out.println("2. Platz: " + highscores.pollLast());  // 2100
 System.out.println("1. Platz: " + highscores.pollLast());  // 1800
 
 // Oder mit descendingSet() für absteigende Sortierung
-TreeSet<Integer> absteigend = (TreeSet<Integer>) highscores.descendingSet();
-                </div>
-            </div>
+TreeSet&lt;Integer&gt; absteigend = (TreeSet&lt;Integer&gt;) highscores.descendingSet();</code></pre>
+</div>
 
             <div class="warning-box">
                 <strong>⚠️ TreeSet Voraussetzung:</strong><br>
@@ -2970,4 +2964,5 @@ public static int fakultaet(int n) {
     </script>
 </body>
 </html>
+
 
