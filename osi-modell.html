@@ -920,7 +920,7 @@
                     </div>
                 </div>
 
-                <!-- Schicht 3: Vermittlungsschicht -->
+<!-- Schicht 3: Vermittlungsschicht -->
 <div class="layer layer-3" onclick="toggleDetails('layer3-details')">
     <div class="layer-number">3</div>
     <div class="layer-name">Vermittlungsschicht<br>(Network Layer)</div>
@@ -954,120 +954,316 @@
         <h4>🌐 IP-Adressierung:</h4>
         <ul>
             <li><strong>IPv4:</strong> 32 Bit (4 Oktette: 0.0.0.0 - 255.255.255.255)</li>
-            <li><strong>IPv6:</strong> 128 Bit</li>
-            <li><strong>Aufbau:</strong> Netzanteil + Teilnehmerbereich</li>
-            <li><strong>Vollständige Kennzeichnung:</strong> IP-Adresse + Subnetmaske</li>
-            <li><strong>Notation:</strong> Dezimal-Dotted-System oder CIDR (z.B. 192.168.1.0/24)</li>
+            <li><strong>IPv6:</strong> 128 Bit (8 Blöcke à 16 Bit, hexadezimal)</li>
+            <li><strong>Aufbau:</strong> Netzanteil + Teilnehmerbereich (Host-Bereich)</li>
+            <li><strong>Vollständige Kennzeichnung:</strong> IP-Adresse + Subnetmaske (oder CIDR-Notation)</li>
+            <li><strong>Notation:</strong> Dezimal-Dotted-System (z.B. 192.168.1.100) oder CIDR (z.B. 192.168.1.0/24)</li>
         </ul>
 
-        <h4>📊 Netzklassen (klassisch):</h4>
+        <h4>📊 Netzklassen (klassisch - heute durch CIDR ersetzt):</h4>
+        <div class="responsive-table-container">
+            <p>↔️ Bei schmalen Bildschirmen horizontal scrollen</p>
+            <table class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>Klasse</th>
+                        <th>Adressbereich</th>
+                        <th>Standard-Subnetmaske</th>
+                        <th>CIDR</th>
+                        <th>Max. Hosts</th>
+                        <th>Verwendung</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>A</td>
+                        <td>0-127.x.x.x</td>
+                        <td>255.0.0.0</td>
+                        <td>/8</td>
+                        <td>~16 Mio.</td>
+                        <td>Große Unternehmen</td>
+                    </tr>
+                    <tr>
+                        <td>B</td>
+                        <td>128-191.x.x.x</td>
+                        <td>255.255.0.0</td>
+                        <td>/16</td>
+                        <td>~65.000</td>
+                        <td>Mittelgroße Netze</td>
+                    </tr>
+                    <tr>
+                        <td>C</td>
+                        <td>192-223.x.x.x</td>
+                        <td>255.255.255.0</td>
+                        <td>/24</td>
+                        <td>254</td>
+                        <td>Kleine Netze</td>
+                    </tr>
+                    <tr>
+                        <td>D</td>
+                        <td>224-239.x.x.x</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>Multicast</td>
+                    </tr>
+                    <tr>
+                        <td>E</td>
+                        <td>240-255.x.x.x</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>Experimentell</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
         <ul>
-            <li><strong>Klasse A:</strong> 0-127.x.x.x | /8 | 255.0.0.0 | ~16 Mio. Hosts | Große Unternehmen</li>
-            <li><strong>Klasse B:</strong> 128-191.x.x.x | /16 | 255.255.0.0 | ~65.000 Hosts | Mittelgroße Netze</li>
-            <li><strong>Klasse C:</strong> 192-223.x.x.x | /24 | 255.255.255.0 | 254 Hosts | Kleine Netze</li>
-            <li><strong>Ersetzt durch:</strong> CIDR (Classless Inter-Domain Routing) für effizientere Nutzung</li>
+            <li><strong>Wichtig:</strong> Netzklassen wurden durch CIDR (Classless Inter-Domain Routing) ersetzt für effizientere Nutzung des IP-Adressraums</li>
+            <li><strong>CIDR-Vorteil:</strong> Flexible Netzgrößen statt fester Klassengrößen</li>
         </ul>
 
         <h4>🔒 Private IP-Bereiche (RFC 1918):</h4>
         <ul>
-            <li><strong>Klasse A:</strong> 10.0.0.0/8 (10.0.0.0 - 10.255.255.255)</li>
-            <li><strong>Klasse B:</strong> 172.16.0.0/12 (172.16.0.0 - 172.31.255.255)</li>
-            <li><strong>Klasse C:</strong> 192.168.0.0/16 (192.168.0.0 - 192.168.255.255)</li>
-            <li><strong>Verwendung:</strong> Lokale Netze (nicht routbar im Internet), Sicherheit</li>
+            <li><strong>Klasse A:</strong> 10.0.0.0/8 (10.0.0.0 - 10.255.255.255) → ~16 Mio. Adressen</li>
+            <li><strong>Klasse B:</strong> 172.16.0.0/12 (172.16.0.0 - 172.31.255.255) → ~1 Mio. Adressen</li>
+            <li><strong>Klasse C:</strong> 192.168.0.0/16 (192.168.0.0 - 192.168.255.255) → ~65.000 Adressen</li>
+            <li><strong>Verwendung:</strong> Lokale Netze (nicht routbar im Internet), erhöhte Sicherheit, NAT erforderlich für Internetzugang</li>
+            <li><strong>Vorteil:</strong> Adresseinsparung und zusätzliche Sicherheitsebene</li>
         </ul>
 
         <h4>🔧 Router-Funktion:</h4>
         <ul>
-            <li><strong>Verbindungspunkt:</strong> Zwischen verschiedenen Netzen</li>
+            <li><strong>Verbindungspunkt:</strong> Zwischen verschiedenen Netzen (Interfaces/Schnittstellen)</li>
             <li><strong>Liest:</strong> Zieladresse zur Routing-Entscheidung</li>
             <li><strong>TTL:</strong> Verringert Time To Live bei jedem Hop (verhindert Endlosschleifen)</li>
             <li><strong>Header-Prüfsumme:</strong> Wird bei jeder Änderung neu berechnet</li>
             <li><strong>Quelladresse:</strong> Bleibt unverändert, kann für Filterregeln genutzt werden</li>
+            <li><strong>Routing-Tabelle:</strong> Enthält Informationen über erreichbare Netze und beste Wege</li>
+            <li><strong>Wichtig:</strong> Jedes Subnetz benötigt ein eigenes Router-Interface</li>
         </ul>
 
         <h4>📦 IPv4-Header (20-60 Bytes):</h4>
-        <ul>
-            <li><strong>Version (4 Bit):</strong> IP-Protokollversion (Wert: 4)</li>
-            <li><strong>IHL (4 Bit):</strong> Header-Länge in 32-Bit-Wörtern (Min: 5 = 20 Bytes)</li>
-            <li><strong>TOS/DSCP (8 Bit):</strong> Quality of Service, Priorisierung</li>
-            <li><strong>Total Length (16 Bit):</strong> Gesamtlänge des Pakets (Header + Daten, max 65.535 Bytes)</li>
-            <li><strong>Identification, Flags, Fragment Offset:</strong> Für Fragmentierung großer Pakete</li>
-            <li><strong>TTL (8 Bit):</strong> Time To Live - max. Anzahl Hops/Router</li>
-            <li><strong>Protocol (8 Bit):</strong> Protokoll der Nutzdaten (6=TCP, 17=UDP, 1=ICMP)</li>
-            <li><strong>Header Checksum (16 Bit):</strong> Fehlererkennung nur für Header</li>
-            <li><strong>Source Address (32 Bit):</strong> Absender-IP</li>
-            <li><strong>Destination Address (32 Bit):</strong> Empfänger-IP</li>
-            <li><strong>Options (0-40 Bytes):</strong> Optionale Zusatzinformationen (selten genutzt)</li>
-        </ul>
+        <div class="responsive-table-container">
+            <p>↔️ Bei schmalen Bildschirmen horizontal scrollen</p>
+            <table class="responsive-table">
+                <thead>
+                    <tr>
+                        <th>Feld</th>
+                        <th>Größe</th>
+                        <th>Beschreibung</th>
+                        <th>Wichtige Werte</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Version</td>
+                        <td>4 Bit</td>
+                        <td>IP-Protokollversion</td>
+                        <td>4 für IPv4</td>
+                    </tr>
+                    <tr>
+                        <td>IHL</td>
+                        <td>4 Bit</td>
+                        <td>Header-Länge in 32-Bit-Wörtern</td>
+                        <td>Min: 5 (=20 Bytes), Max: 15 (=60 Bytes)</td>
+                    </tr>
+                    <tr>
+                        <td>TOS/DSCP</td>
+                        <td>8 Bit</td>
+                        <td>Type of Service / Quality of Service</td>
+                        <td>Priorisierung, Traffic-Klassen</td>
+                    </tr>
+                    <tr>
+                        <td>Total Length</td>
+                        <td>16 Bit</td>
+                        <td>Gesamtlänge (Header + Daten)</td>
+                        <td>Max: 65.535 Bytes</td>
+                    </tr>
+                    <tr>
+                        <td>Identification</td>
+                        <td>16 Bit</td>
+                        <td>ID für Fragmentzuordnung</td>
+                        <td>Eindeutige Paket-ID</td>
+                    </tr>
+                    <tr>
+                        <td>Flags</td>
+                        <td>3 Bit</td>
+                        <td>Fragmentierungs-Steuerung</td>
+                        <td>DF (Don't Fragment), MF (More Fragments)</td>
+                    </tr>
+                    <tr>
+                        <td>Fragment Offset</td>
+                        <td>13 Bit</td>
+                        <td>Position des Fragments</td>
+                        <td>In 8-Byte-Blöcken</td>
+                    </tr>
+                    <tr>
+                        <td>TTL</td>
+                        <td>8 Bit</td>
+                        <td>Time To Live - max. Hops</td>
+                        <td>Typisch: 64 oder 128, Min: 1</td>
+                    </tr>
+                    <tr>
+                        <td>Protocol</td>
+                        <td>8 Bit</td>
+                        <td>Protokoll der Nutzdaten</td>
+                        <td>6=TCP, 17=UDP, 1=ICMP, 2=IGMP</td>
+                    </tr>
+                    <tr>
+                        <td>Header Checksum</td>
+                        <td>16 Bit</td>
+                        <td>Fehlererkennung (nur Header)</td>
+                        <td>Wird bei jedem Router neu berechnet</td>
+                    </tr>
+                    <tr>
+                        <td>Source Address</td>
+                        <td>32 Bit</td>
+                        <td>Absender-IP</td>
+                        <td>IPv4-Adresse (4 Oktette)</td>
+                    </tr>
+                    <tr>
+                        <td>Destination Address</td>
+                        <td>32 Bit</td>
+                        <td>Empfänger-IP</td>
+                        <td>IPv4-Adresse (4 Oktette)</td>
+                    </tr>
+                    <tr>
+                        <td>Options</td>
+                        <td>0-40 Bytes</td>
+                        <td>Optionale Zusatzinformationen</td>
+                        <td>Selten genutzt, z.B. für Debugging</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
         <h4>🔄 ARP (Address Resolution Protocol):</h4>
         <ul>
             <li><strong>Funktion:</strong> Zuordnung IP-Adresse (Layer 3) ↔ MAC-Adresse (Layer 2)</li>
-            <li><strong>ARP Request:</strong> Broadcast im lokalen Netz ("Wer hat IP X.X.X.X?")</li>
-            <li><strong>ARP Reply:</strong> Unicast-Antwort vom Host mit dieser IP</li>
-            <li><strong>ARP-Cache:</strong> Speichert Zuordnungen für zukünftige Anfragen</li>
-            <li><strong>Nur für:</strong> IPv4 und Ethernet (IPv6 nutzt NDP)</li>
+            <li><strong>ARP Request:</strong> Broadcast im lokalen Netz ("Wer hat IP X.X.X.X? Bitte melde dich mit deiner MAC-Adresse")</li>
+            <li><strong>ARP Reply:</strong> Unicast-Antwort vom Host mit dieser IP ("Ich habe IP X.X.X.X, meine MAC ist YY:YY:YY:YY:YY:YY")</li>
+            <li><strong>ARP-Cache:</strong> Speichert Zuordnungen für zukünftige Anfragen (typisch 2-20 Min.)</li>
+            <li><strong>Nur für:</strong> IPv4 und Ethernet im lokalen Netz (IPv6 nutzt NDP - Neighbor Discovery Protocol)</li>
             <li><strong>RARP:</strong> Reverse ARP (findet IP zu MAC, veraltet, ersetzt durch DHCP)</li>
+            <li><strong>Gratuitous ARP:</strong> Ankündigung eigener IP beim Netzwerkbeitritt</li>
         </ul>
 
         <h4>⚙️ DHCP (Dynamic Host Configuration Protocol):</h4>
         <ul>
-            <li><strong>Funktion:</strong> Automatische IP-Adressvergabe</li>
-            <li><strong>Vergibt:</strong> IP-Adresse, Subnetmaske, Gateway, DNS-Server</li>
-            <li><strong>Vorteil:</strong> Keine manuelle Konfiguration nötig</li>
+            <li><strong>Funktion:</strong> Automatische IP-Adressvergabe und Netzwerkkonfiguration</li>
+            <li><strong>Vergibt:</strong> IP-Adresse, Subnetmaske, Standard-Gateway, DNS-Server, weitere Parameter</li>
+            <li><strong>DHCP-Prozess (DORA):</strong>
+                <ul>
+                    <li>D = Discover (Client sucht Server)</li>
+                    <li>O = Offer (Server bietet Konfiguration an)</li>
+                    <li>R = Request (Client fordert Konfiguration an)</li>
+                    <li>A = Acknowledge (Server bestätigt)</li>
+                </ul>
+            </li>
+            <li><strong>Lease-Time:</strong> Zeitbegrenzte Adressvergabe (typisch 24h-7 Tage)</li>
+            <li><strong>Vorteil:</strong> Keine manuelle Konfiguration nötig, zentrale Verwaltung, effiziente Adressnutzung</li>
         </ul>
 
         <h4>🔀 Subnetting:</h4>
         <ul>
             <li><strong>Zweck:</strong> Netz in kleinere Teilnetze (Subnetze) aufteilen</li>
-            <li><strong>Vorteile:</strong> Kleinere Kollisionsdomänen, bessere Organisation, Sicherheit</li>
+            <li><strong>Vorteile:</strong> Kleinere Broadcast-Domänen, bessere Organisation, erhöhte Sicherheit, effizientere Bandbreitennutzung</li>
             <li><strong>Methode:</strong> Bits aus Teilnehmerbereich "leihen" für Subnetz-ID</li>
-            <li><strong>Netzwerkadresse:</strong> Kleinste Adresse im Subnetz (nicht verwendbar)</li>
-            <li><strong>Broadcast-Adresse:</strong> Größte Adresse im Subnetz (nicht verwendbar)</li>
+            <li><strong>Netzwerkadresse:</strong> Kleinste Adresse im Subnetz (alle Host-Bits = 0, nicht verwendbar)</li>
+            <li><strong>Broadcast-Adresse:</strong> Größte Adresse im Subnetz (alle Host-Bits = 1, nicht verwendbar)</li>
             <li><strong>Hosts berechnen:</strong> 2^(Host-Bits) - 2 (ohne Netz- und Broadcast-Adresse)</li>
             <li><strong>Beispiel /24:</strong> 8 Host-Bits → 2^8 - 2 = 254 nutzbare Hosts</li>
-            <li><strong>Router-Anforderung:</strong> Jedes Subnetz braucht eigenes Interface/Schnittstelle</li>
+            <li><strong>Beispiel /26:</strong> 6 Host-Bits → 2^6 - 2 = 62 nutzbare Hosts</li>
+            <li><strong>Router-Anforderung:</strong> Jedes Subnetz braucht eigenes Interface am Router</li>
+            <li><strong>Unsymmetrisches Subnetting:</strong> Verschiedene Subnetzgrößen im gleichen Netz (z.B. /25 + drei /27)</li>
+        </ul>
+
+        <h4>🧮 Subnetmaske:</h4>
+        <ul>
+            <li><strong>Funktion:</strong> Gibt an, welche Bits der IP-Adresse zum Netzanteil gehören</li>
+            <li><strong>Aufbau:</strong> Binär: aufeinanderfolgende Einsen (Netzanteil), dann Nullen (Host-Anteil)</li>
+            <li><strong>Beispiel 255.255.255.0:</strong> 11111111.11111111.11111111.00000000 = /24</li>
+            <li><strong>CIDR-Notation:</strong> /24 bedeutet 24 Bits für Netzanteil, 8 Bits für Hosts</li>
+            <li><strong>Ermittlung der Netzadresse:</strong> IP-Adresse UND Subnetmaske (bitweise AND-Operation)</li>
         </ul>
 
         <h4>🏢 VLAN (Virtual Local Area Network):</h4>
         <ul>
-            <li><strong>Definition:</strong> Logisch getrenntes Netzwerk innerhalb physischen Netzwerks</li>
-            <li><strong>Standard:</strong> IEEE 802.1Q Tagging</li>
-            <li><strong>Access-Port:</strong> Gehört zu genau einem VLAN</li>
-            <li><strong>Trunk-Port:</strong> Überträgt mehrere VLANs zwischen Switches/Routern (mit VLAN-Tag)</li>
+            <li><strong>Definition:</strong> Logisch getrenntes Netzwerk innerhalb eines physischen Netzwerks</li>
+            <li><strong>Standard:</strong> IEEE 802.1Q Tagging (VLAN-Tag im Ethernet-Frame)</li>
+            <li><strong>Access-Port:</strong> Gehört zu genau einem VLAN (untagged)</li>
+            <li><strong>Trunk-Port:</strong> Überträgt mehrere VLANs zwischen Switches/Routern (tagged)</li>
             <li><strong>Kommunikation zwischen VLANs:</strong> Nur über Router oder Layer-3-Switch möglich</li>
+            <li><strong>Vorteile:</strong> Logische Trennung, Sicherheit, flexible Netzwerkgestaltung unabhängig von physischer Struktur</li>
         </ul>
 
         <h4>🔢 Spezielle Adressen:</h4>
         <ul>
-            <li><strong>Netzwerkadresse:</strong> Alle Host-Bits = 0 (z.B. 192.168.1.0/24)</li>
-            <li><strong>Broadcast-Adresse:</strong> Alle Host-Bits = 1 (z.B. 192.168.1.255/24)</li>
-            <li><strong>Loopback:</strong> 127.0.0.0/8 (localhost, z.B. 127.0.0.1)</li>
-            <li><strong>Link-Local:</strong> 169.254.0.0/16 (automatische Konfiguration ohne DHCP)</li>
+            <li><strong>Netzwerkadresse:</strong> Alle Host-Bits = 0 (z.B. 192.168.1.0/24) → identifiziert das Netz</li>
+            <li><strong>Broadcast-Adresse:</strong> Alle Host-Bits = 1 (z.B. 192.168.1.255/24) → erreicht alle Hosts im Netz</li>
+            <li><strong>Loopback:</strong> 127.0.0.0/8 (localhost, typisch 127.0.0.1) → Test der eigenen IP-Implementierung</li>
+            <li><strong>Link-Local:</strong> 169.254.0.0/16 (APIPA) → automatische Konfiguration ohne DHCP</li>
+            <li><strong>Default-Route:</strong> 0.0.0.0/0 → Alle Netze (für Routing-Tabellen)</li>
+            <li><strong>This Network:</strong> 0.0.0.0 → Dieses Netzwerk (z.B. bei DHCP-Anfragen)</li>
         </ul>
 
         <div class="example-box">
-            <h4>💡 Praktisches Beispiel:</h4>
-            <p><strong>Szenario:</strong> Du schickst eine E-Mail von deinem Computer (192.168.1.100/24) nach Japan.</p>
+            <h4>💡 Praktische Beispiele:</h4>
+            
+            <p><strong>Szenario 1:</strong> Du schickst eine E-Mail von deinem Computer (192.168.1.100/24) nach Japan.</p>
             <ul>
-                <li><strong>1. ARP:</strong> Dein Computer findet über ARP die MAC-Adresse des Routers im lokalen Netz</li>
-                <li><strong>2. IP-Paket:</strong> Wird mit Quell-IP (192.168.1.100) und Ziel-IP (Japan-Server) erstellt</li>
+                <li><strong>1. ARP:</strong> Dein Computer findet über ARP die MAC-Adresse des Standard-Gateways (Router) im lokalen Netz</li>
+                <li><strong>2. IP-Paket erstellen:</strong> Wird mit Quell-IP (192.168.1.100) und Ziel-IP (z.B. 203.0.113.50 in Japan) erstellt</li>
                 <li><strong>3. Routing:</strong> Jeder Router auf dem Weg liest die Ziel-IP und entscheidet über den nächsten Hop</li>
-                <li><strong>4. TTL:</strong> Wird bei jedem Router um 1 reduziert (Start z.B. 64, verhindert Endlosschleifen)</li>
+                <li><strong>4. TTL:</strong> Wird bei jedem Router um 1 reduziert (Start z.B. 64), verhindert Endlosschleifen</li>
                 <li><strong>5. Subnetting:</strong> Router erkennen anhand Subnetmaske, ob Ziel im lokalen Netz oder extern ist</li>
-                <li><strong>6. NAT:</strong> Deine private IP wird am Gateway in öffentliche IP übersetzt</li>
+                <li><strong>6. NAT:</strong> Deine private IP (192.168.1.100) wird am Gateway in öffentliche IP übersetzt</li>
+                <li><strong>7. Rückweg:</strong> Antwort-Paket nimmt nicht zwingend denselben Weg zurück</li>
             </ul>
-            <p><strong>Subnetting-Beispiel:</strong> Firma mit 192.168.1.0/24 will 4 Abteilungen trennen:</p>
+            
+            <p><strong>Szenario 2 - Subnetting-Beispiel:</strong> Firma mit 192.168.1.0/24 will 4 Abteilungen trennen:</p>
             <ul>
-                <li>Marketing: 192.168.1.0/26 (62 Hosts)</li>
-                <li>Vertrieb: 192.168.1.64/26 (62 Hosts)</li>
-                <li>IT: 192.168.1.128/26 (62 Hosts)</li>
-                <li>Verwaltung: 192.168.1.192/26 (62 Hosts)</li>
+                <li><strong>Marketing:</strong> 192.168.1.0/26 (Hosts: .1 bis .62, Broadcast: .63) → 62 Hosts</li>
+                <li><strong>Vertrieb:</strong> 192.168.1.64/26 (Hosts: .65 bis .126, Broadcast: .127) → 62 Hosts</li>
+                <li><strong>IT:</strong> 192.168.1.128/26 (Hosts: .129 bis .190, Broadcast: .191) → 62 Hosts</li>
+                <li><strong>Verwaltung:</strong> 192.168.1.192/26 (Hosts: .193 bis .254, Broadcast: .255) → 62 Hosts</li>
+                <li><strong>Subnetmaske:</strong> /26 = 255.255.255.192</li>
+                <li><strong>Berechnung:</strong> /26 lässt 6 Bits für Hosts → 2^6 - 2 = 62 nutzbare Adressen</li>
+            </ul>
+
+            <p><strong>Szenario 3 - Unsymmetrisches Subnetting:</strong> 192.168.1.0/24 mit unterschiedlichen Anforderungen:</p>
+            <ul>
+                <li><strong>Großes Subnetz (70 Hosts):</strong> 192.168.1.0/25 → 126 nutzbare Hosts</li>
+                <li><strong>Kleines Subnetz 1 (15 Hosts):</strong> 192.168.1.128/27 → 30 nutzbare Hosts</li>
+                <li><strong>Kleines Subnetz 2 (15 Hosts):</strong> 192.168.1.160/27 → 30 nutzbare Hosts</li>
+                <li><strong>Kleines Subnetz 3 (15 Hosts):</strong> 192.168.1.192/27 → 30 nutzbare Hosts</li>
+                <li><strong>Vorgehen:</strong> Zuerst größtes Subnetz, dann kleinere in freien Bereich</li>
+            </ul>
+
+            <p><strong>Szenario 4 - Netzadresse ermitteln:</strong> IP 192.168.1.27 mit Subnetmaske 255.255.255.0</p>
+            <ul>
+                <li><strong>IP binär:</strong> 11000000.10101000.00000001.00011011</li>
+                <li><strong>Maske binär:</strong> 11111111.11111111.11111111.00000000</li>
+                <li><strong>UND-Verknüpfung:</strong> 11000000.10101000.00000001.00000000</li>
+                <li><strong>Netzadresse:</strong> 192.168.1.0/24</li>
+                <li><strong>Broadcast:</strong> 192.168.1.255</li>
+            </ul>
+        </div>
+
+        <div class="important-note">
+            <h4>⚠️ Wichtige Hinweise:</h4>
+            <ul>
+                <li><strong>NAT (Network Address Translation):</strong> Übersetzt private in öffentliche IPs und umgekehrt</li>
+                <li><strong>Adressknappheit IPv4:</strong> Nur ~4,3 Milliarden Adressen → Übergang zu IPv6 notwendig</li>
+                <li><strong>Fragmentierung vermeiden:</strong> Moderne Netze nutzen Path MTU Discovery</li>
+                <li><strong>ICMP:</strong> Wichtig für Ping, Traceroute und Fehlermeldungen (z.B. "Destination Unreachable")</li>
+                <li><strong>Routing-Protokolle:</strong> OSPF (intern), BGP (Internet-Backbone) automatisieren Routing</li>
             </ul>
         </div>
     </div>
 </div>
-
+                
  <!-- Schicht 2: Sicherungsschicht -->
 <div class="layer layer-2" onclick="toggleDetails('layer2-details')">
     <div class="layer-number">2</div>
@@ -2102,6 +2298,7 @@ text
 </body>
 
 </html>
+
 
 
 
